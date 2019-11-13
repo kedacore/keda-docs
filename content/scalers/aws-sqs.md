@@ -13,48 +13,78 @@ Scale applications based on AWS SQS Queue.
 
 ### Trigger Specification
 
-This specification describes the `aws-sqs-queue` trigger for AWS SQS Queue.
+This specification describes the `aws-sqs-queue` trigger that scales based on an AWS SQS Queue.
 
 ```yaml
 triggers:
   - type: aws-sqs-queue
+    authenticationRef: 
+      name: keda-trigger-auth-aws-role
     metadata:
       # Required: queueURL
-      queueURL: https://sqs.eu-west-1.amazonaws.com/<acccount_id>/testQueue
-      # Optional: region
-      awsRegion: "eu-west-1"
-      # Optional: AWS Access Key ID
-      awsAccessKeyID: AWS_ACCESS_KEY_ID_ENV_VAR # default AWS_ACCESS_KEY_ID
-      # Optional: AWS Secret Access Key
-      awsSecretAccessKey: AWS_SECRET_ACCESS_KEY_ENV_VAR # default AWS_SECRET_ACCESS_KEY
-      # Optional
-      queueLength: "5" # default 5
+      queueURL: myQueue
+      queueLength: "5"  # Default: "5"
+      # Required: awsRegion
+      awsRegion: "eu-west-1" 
 ```
 
 ### Authentication Parameters
 
-Not supported yet.
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
+
+**Role based authentication:**
+
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
+
+**Credential based authentication:**
+
+- `awsAccessKeyID` - Id of the user
+- `awsSecretAccessKey` - Access key for the user to authenticate with
+
+The user will need access to read data from AWS Cloudwatch.
 
 ### Example
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secrets
+data:
+  AWS_ACCESS_KEY_ID: <user-id>
+  AWS_SECRET_ACCESS_KEY: <key>
+--- 
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+  namespace: keda-test
+spec:
+  secretTargetRef:
+  - parameter: awsAccessKeyID     # Required.
+    name: keda-aws-secrets        # Required.
+    key: AWS_ACCESS_KEY_ID        # Required.
+  - parameter: awsSecretAccessKey # Required.
+    name: keda-aws-secrets        # Required.
+    key: AWS_SECRET_ACCESS_KEY    # Required.
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: aws-sqs-queue-scaledobject
-  namespace: default
+  namespace: keda-test
   labels:
     deploymentName: nginx-deployment
     test: nginx-deployment
 spec:
   scaleTargetRef:
     deploymentName: nginx-deployment
+  authenticationRef:
+    name: keda-trigger-auth-aws-credentials
   triggers:
   - type: aws-sqs-queue
     metadata:
-      queueURL: https://sqs.eu-west-1.amazonaws.com/<acccount_id>/testQueue
-      awsRegion: "eu-west-1"
-      awsAccessKeyID: AWS_ACCESS_KEY_ID_ENV_VAR
-      awsSecretAccessKey: AWS_SECRET_ACCESS_KEY_ENV_VAR
+      queueURL: myQueue
       queueLength: "5"
+      awsRegion: "eu-west-1" 
 ```
