@@ -37,11 +37,44 @@ triggers:
 
 ### Authentication Parameters
 
-Not supported yet.
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
+
+**Role based authentication:**
+
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
+
+**Credential based authentication:**
+
+- `awsAccessKeyID` - Id of the user
+- `awsSecretAccessKey` - Access key for the user to authenticate with
+
+The user will need access to read data from AWS Cloudwatch.
 
 ### Example
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secrets
+data:
+  AWS_ACCESS_KEY_ID: <user-id>
+  AWS_SECRET_ACCESS_KEY: <key>
+--- 
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+  namespace: keda-test
+spec:
+  secretTargetRef:
+  - parameter: awsAccessKeyID     # Required.
+    name: keda-aws-secrets        # Required.
+    key: AWS_ACCESS_KEY_ID        # Required.
+  - parameter: awsSecretAccessKey # Required.
+    name: keda-aws-secrets        # Required.
+    key: AWS_SECRET_ACCESS_KEY    # Required.
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
@@ -63,6 +96,4 @@ spec:
       targetMetricValue: "2"
       minMetricValue: "0"
       awsRegion: "eu-west-1"
-      awsAccessKeyID: AWS_ACCESS_KEY_ID
-      awsSecretAccessKey: AWS_SECRET_ACCESS_KEY
 ```
