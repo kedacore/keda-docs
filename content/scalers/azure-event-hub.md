@@ -5,11 +5,13 @@ title = "Azure Event Hubs"
 background = "light"
 +++
 
-Scale applications based on Azure Event Hubs.
+Scale applications based on Azure Event Hubs†.
 
 **Availability:** v1.0+ | **Maintainer:** Microsoft
 
 <!--more-->
+
+_†: As of now, the Event Hub scaler only supports reading from Blob Storage, as well as scaling only Event Hub applications written in C#, Python or created with Azure Functions._
 
 ### Trigger Specification
 
