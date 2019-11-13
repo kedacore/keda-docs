@@ -62,14 +62,14 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 10
 
 [[menu.main]]
-  url = "/getting-started"
-  name = "Getting Started"
-  weight = 20
+  url = "/contributing"
+  name = "Contributor Guide"
+  weight = 30
 
 [[menu.main]]
   url = "/deploy"
   name = "Deploying KEDA"
-  weight = 30
+  weight = 20
 
 [[menu.main]]
   url = "/architecture"
@@ -82,14 +82,14 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 50
 
 [[menu.footer]]
-  url = "/getting-started"
-  name = "Getting Started"
-  weight = 10
+  url = "/contributing"
+  name = "Contributor Guide"
+  weight = 20
 
 [[menu.footer]]
   url = "/deploy"
   name = "Deploying KEDA"
-  weight = 20
+  weight = 10
 
 [[menu.footer]]
   url = "/architecture"

@@ -6,4 +6,4 @@ weight = 10
   icon = "fas fa-rocket"
 +++
 
-Just let us know how to scale, we've got this
+Bring rich scaling to every container

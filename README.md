@@ -11,6 +11,12 @@ Windows:
 choco install hugo-extended
 ```
 
+Mac:
+
+```
+brew install hugo
+```
+
 Run docs locally:
 
 ```

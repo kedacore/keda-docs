@@ -1,6 +1,6 @@
 +++
-title = "Getting Started KEDA"
-date = "2017-10-05"
+title = "Contributing to KEDA"
+date = "2019-11-11"
 fragment = "content"
 weight = 100
 +++

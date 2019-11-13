@@ -4,5 +4,5 @@ weight = "200"
 
 background = "light"
 title = "Scalers"
-subtitle = "Syna comes with a lot of fragments, allowing you to design your pages as you want them"
+subtitle = "Scalers represent event sources that KEDA can scale based on"
 +++
