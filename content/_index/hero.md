@@ -28,7 +28,7 @@ subtitle = "Kubernetes Event-driven Autoscaling (KEDA)"
 
 [[buttons]]
   text = "Architecture"
-  url = "/Architecture"
+  url = "/architecture"
   color = "info" # primary, secondary, success, danger, warning, info, light, dark, link - default: primary
 
 [[buttons]]
