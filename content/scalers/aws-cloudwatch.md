@@ -29,9 +29,9 @@ triggers:
       minMetricValue: "0"
       # Required: region
       awsRegion: "eu-west-1"
-      # Optional: AWS Access Key ID
+      # Optional: AWS Access Key ID, can use TriggerAuthentication as well
       awsAccessKeyID: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
-      # Optional: AWS Secret Access Key
+      # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
       awsSecretAccessKey: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
 ```
 
