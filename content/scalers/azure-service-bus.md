@@ -34,11 +34,25 @@ The `connection` value is the name of the environment variable your deployment u
 
 ### Authentication Parameters
 
-To be documented.
+You can authenticate by using pod identity or connection string authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for Azure Service Bus Namespace
 
 ### Example
 
+Here is an example of how to use managed identity:
+
 ```yaml
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-servicebus-auth
+spec:
+  podIdentity:
+    provider: azure
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
@@ -49,6 +63,8 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: azure-servicebus-queue-function
+  authenticationRef:
+      name: azure-servicebus-auth
   triggers:
   - type: azure-servicebus
     metadata:
@@ -61,5 +77,4 @@ spec:
       connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME
       # Optional
       queueLength: "5" # default 5
-
 ```
