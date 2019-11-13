@@ -24,7 +24,7 @@ This specification describes the `azure-servicebus` trigger for Azure Service Bu
       # or
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
-      # Required
+      # Optional, can use TriggerAuthentication as well
       connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
       # Optional
       queueLength: "5" # Optional. Subscription length target for HPA. Default: 5 messages
