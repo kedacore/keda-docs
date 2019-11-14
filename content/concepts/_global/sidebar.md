@@ -3,7 +3,7 @@ fragment = "list"
 slot = "content/sidebar"
 weight = 10
 
-section = "docs"
+section = "concepts"
 images = false
 display_categories = false
 display_date = false

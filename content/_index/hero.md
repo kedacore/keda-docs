@@ -18,7 +18,7 @@ subtitle = "Kubernetes Event-driven Autoscaling (KEDA)"
 
 [[buttons]]
   text = "Documentation"
-  url = "/docs/overview"
+  url = "/concepts/overview"
   color = "success" # primary, secondary, success, danger, warning, info, light, dark, link - default: primary
 
 [[buttons]]
@@ -28,7 +28,7 @@ subtitle = "Kubernetes Event-driven Autoscaling (KEDA)"
 
 [[buttons]]
   text = "Architecture"
-  url = "/docs/overview/#how-keda-works"
+  url = "/concepts/overview/#how-keda-works"
   color = "info" # primary, secondary, success, danger, warning, info, light, dark, link - default: primary
 
 [[buttons]]
