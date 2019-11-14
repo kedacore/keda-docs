@@ -62,8 +62,8 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 10
 
 [[menu.main]]
-  url = "/getting-started"
-  name = "Getting Started"
+  url = "/docs"
+  name = "Docs"
   weight = 20
 
 [[menu.main]]
@@ -72,7 +72,7 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 30
 
 [[menu.main]]
-  url = "/architecture"
+  url = "/docs/overview/#how-keda-works"
   name = "Architecture"
   weight = 40
 
@@ -82,8 +82,8 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 50
 
 [[menu.footer]]
-  url = "/getting-started"
-  name = "Getting Started"
+  url = "/docs"
+  name = "Documentation"
   weight = 10
 
 [[menu.footer]]
@@ -92,7 +92,7 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 20
 
 [[menu.footer]]
-  url = "/architecture"
+  url = "/docs/overview/#how-keda-works"
   name = "Architecture"
   weight = 30
 
