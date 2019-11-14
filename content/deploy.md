@@ -15,7 +15,7 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
 - Operator framework
 - Helm charts
-- Azure Function Core Tool
+- Azure Function Core Tools
 - YAML declarations
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
