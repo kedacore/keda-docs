@@ -27,7 +27,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 ### Authentication Parameters
 
-Not supported yet.
+No authentication required.
 
 ### Example
 
