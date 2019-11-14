@@ -22,7 +22,7 @@ subtitle = "Kubernetes Event-driven Autoscaling (KEDA)"
   color = "success" # primary, secondary, success, danger, warning, info, light, dark, link - default: primary
 
 [[buttons]]
-  text = "Installing KEDA"
+  text = "Deploy KEDA"
   url = "/deploy"
   color = "primary" # primary, secondary, success, danger, warning, info, light, dark, link - default: primary
 

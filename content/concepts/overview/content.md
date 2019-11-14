@@ -26,6 +26,6 @@ KEDA has a number of "scalers" that can both detect if a deployment should be ac
 
 When you install KEDA, it will create two custom resources: `scaledobjects.keda.k8s.io` and `triggerauthentications.keda.k8s.io`.  These custom resources enable you to map an event source (and the authentication to that event source) to a deployment or job for scaling.  The `ScaledObjects` represent the desired mapping between an event source (e.g. Rabbit MQ) and the Kubernetes deployment.  A `ScaledObject` may also reference a `TriggerAuthentication` which contains the authentication configuration or secrets to monitor the event source.
 
-### Installing KEDA
+### Deploy KEDA
 
-[Click here for instructions on how to install KEDA into any cluster using a variety of tools](/deploy)
+[Click here for instructions on how to deploy KEDA into any cluster using a variety of tools](/deploy)
