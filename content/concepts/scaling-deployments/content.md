@@ -10,7 +10,11 @@ title = "Scaling Deployments"
 
 ## Overview
 
-The most common way to use KEDA is to scale a deployment.  In this model, KEDA acts to monitor the event source and feed that data to Kubernetes and the HPA (Horizontal Pod Autoscaler) to drive rapid scale of a deployment.  Each replica of a deployment is actively pulling items from the event source.  With KEDA and scaling deployments you can scale based on events while also preserving rich connection and processing semantics with the event source (e.g. in-order processing, retries, deadletter, checkpointing).
+Deployments are the most common way to scale workloads with KEDA.
+
+It allows you to define the Kubernetes Deployment that you want KEDA to scale based on a scale trigger. KEDA will monitor that service and based on the events that occur it will automatically scale your deployment out/in accordingly.
+
+Behind the scenes, KEDA acts to monitor the event source and feed that data to Kubernetes and the HPA (Horizontal Pod Autoscaler) to drive rapid scale of a deployment.  Each replica of a deployment is actively pulling items from the event source.  With KEDA and scaling deployments you can scale based on events while also preserving rich connection and processing semantics with the event source (e.g. in-order processing, retries, deadletter, checkpointing).
 
 For example, if you wanted to use KEDA with an Apache Kafka Topic event source, the flow of information would be:
 
