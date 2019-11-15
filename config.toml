@@ -63,7 +63,7 @@ lastmod = ["lastmod", ":git", "date"]
 
 [[menu.main]]
   url = "/concepts"
-  name = "Docs"
+  name = "Concepts"
   weight = 20
 
 [[menu.main]]
@@ -83,7 +83,7 @@ lastmod = ["lastmod", ":git", "date"]
 
 [[menu.footer]]
   url = "/concepts"
-  name = "Documentation"
+  name = "Concepts"
   weight = 10
 
 [[menu.footer]]
