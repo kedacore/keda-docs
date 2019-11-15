@@ -11,7 +11,7 @@ Scale applications based on Azure Event Hubs†.
 
 <!--more-->
 
-_†: As of now, the Event Hub scaler only supports reading from Blob Storage, as well as scaling only Event Hub applications written in C#, Python or created with Azure Functions._
+_†: As of now, the Event Hub scaler only supports reading checkpoints from Blob Storage, as well as scaling only Event Hub applications written in C#, Python or created with Azure Functions._
 
 ### Trigger Specification
 
