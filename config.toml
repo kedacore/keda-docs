@@ -110,3 +110,9 @@ lastmod = ["lastmod", ":git", "date"]
   url = "https://github.com/kedacore/keda"
   name = "GitHub"
   weight = 10
+
+[[menu.footer_social]]
+  weight = 20
+  name = "twitter"
+  pre = "fab fa-twitter"
+  url = "https://twitter.com/kedaorg"
