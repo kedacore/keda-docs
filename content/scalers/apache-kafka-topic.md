@@ -7,7 +7,7 @@ background = "light"
 
 Scale applications based on Apache Kafka Topic.
 
-**Availability:** v1.0+ | **Maintainer:** Community
+**Availability:** v1.0+ | **Maintainer:** Microsoft
 
 <!--more-->
 

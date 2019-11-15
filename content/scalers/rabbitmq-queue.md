@@ -1,19 +1,19 @@
 +++
 fragment = "content"
 weight = 100
-title = "Rabbit MQ Queue"
+title = "RabbitMQ Queue"
 background = "light"
 +++
 
-Scale applications based on Rabbit MQ Queue.
+Scale applications based on RabbitMQ Queue.
 
-**Availability:** v1.0+ | **Maintainer:** Community
+**Availability:** v1.0+ | **Maintainer:** Microsoft
 
 <!--more-->
 
 ### Trigger Specification
 
-This specification describes the `rabbitmq` trigger for Rabbit MQ Queue.
+This specification describes the `rabbitmq` trigger for RabbitMQ Queue.
 
 ```yaml
   triggers:
