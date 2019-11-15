@@ -27,7 +27,7 @@ Deploying KEDA with Helm is very simple:
 1. Add Helm repo
 
 ```cli
-helm repo add kedacore https://kedacore.azureedge.net/helm
+helm repo add kedacore https://kedacore.github.io/charts
 ```
 
 2. Update Helm repo
@@ -35,13 +35,11 @@ helm repo add kedacore https://kedacore.azureedge.net/helm
 helm repo update
 ```
 
-3. Install `keda-edge` Helm chart
+3. Install `keda` Helm chart
 
 ```cli
-helm install kedacore/keda-edge --devel --set logLevel=debug --namespace keda --name keda
+helm install kedacore/keda --namespace keda --name keda
 ```
-
-You can use our ARM image instead by adding `--set image.tag=arm` to your helm install command.
 
 ### Deploying with the Azure Functions Core Tools
 KEDA supports autoscaling a variety of workloads which include Azure Functions and is included in their [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools).
