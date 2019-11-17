@@ -41,8 +41,6 @@ spec:
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
     containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
-  authenticationRef:
-    name: {trigger-authentication-name} #Optional. If using TriggerAuthentication pattern
   pollingInterval: 30  # Optional. Default: 30 seconds
   cooldownPeriod:  300 # Optional. Default: 300 seconds
   minReplicaCount: 0   # Optional. Default: 0

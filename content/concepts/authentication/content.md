@@ -69,7 +69,7 @@ If you have multiple containers in a deployment, you will need to include the na
 
 > TIP: If creating a deployment yaml that references a secret, be sure the secret is created before the deployment that references it, and the scaledObject after both of them to avoid race conditions.
 
-While this method works for many scenarios, there are some downsides.  With the container reference approach, it means every reference the `ScaledObject` needs must be included on the container.  It also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identiy.
+While this method works for many scenarios, there are some downsides.  With the container reference approach, it means every reference the `ScaledObject` needs must be included on the container.  It also makes sharing identity across many ScaledObjects more difficult.  It also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identiy.
 
 ## TriggerAuthentication
 
@@ -95,6 +95,19 @@ spec:
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
+
+The parameters you define in the `TriggerAuthentication` definition do not need to be included in the `metadata` of the `ScaledObject.spec.triggers` definition.  To reference a `TriggerAuthentication` from a `ScaledObject` you add the `authenticationRef` to the trigger.
+
+```yaml
+# some Scaled Object
+# ...
+  triggers:
+  - type: {scaler-type}
+    metadata:
+      param1: {some-value}
+    authenticationRef:
+      name: {trigger-authencation-name} # this may define other params not defined in metadata
+```
 
 ### Environment variable(s)
 

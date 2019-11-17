@@ -55,14 +55,17 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: azurequeue-function
-  authenticationRef:
-    name: azure-queue-auth
   triggers:
   - type: azure-queue
     metadata:
       # Required
       queueName: functionsqueue
+      # Required: connection OR authenticationRef that defines connection
+      connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Default: AzureWebJobsStorage. Reference to a connection string in deployment
+      # or authenticationRef as defined below
+      #
       # Optional
-      connection: STORAGE_CONNECTIONSTRING_ENV_NAME # default AzureWebJobsStorage. In this sample it will use pod identity. If not you do need a connection string reference.
       queueLength: "5" # default 5
+    authenticationRef:
+        name: azure-queue-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```

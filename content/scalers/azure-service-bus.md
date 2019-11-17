@@ -63,8 +63,6 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: azure-servicebus-queue-function
-  authenticationRef:
-      name: azure-servicebus-auth
   triggers:
   - type: azure-servicebus
     metadata:
@@ -73,8 +71,12 @@ spec:
       # or
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
-      # Required
-      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # in this sample it will use pod identity. If not you do need a connection string reference.
+      # Required: connection OR authenticationRef that defines connection
+      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
+      # or authenticationRef as defined below
+      #
       # Optional
       queueLength: "5" # default 5
+    authenticationRef:
+        name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```

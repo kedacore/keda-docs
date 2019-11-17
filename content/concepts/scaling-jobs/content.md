@@ -39,8 +39,6 @@ spec:
     backoffLimit: 6 # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
       # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
-  authenticationRef:
-    name: {trigger-authentication-name} #Optional. If using TriggerAuthentication pattern
   pollingInterval: 30  # Optional. Default: 30 seconds
   cooldownPeriod:  300 # Optional. Default: 300 seconds
   minReplicaCount: 0   # Optional. Default: 0
