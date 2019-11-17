@@ -40,7 +40,7 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
-    containerName: azure-functions-container  #Optional. Default: deployment.spec.template.spec.containers[0]
+    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
   pollingInterval: 30  # Optional. Default: 30 seconds
   cooldownPeriod:  300 # Optional. Default: 300 seconds
   minReplicaCount: 0   # Optional. Default: 0
@@ -55,7 +55,7 @@ You can find all supported triggers [here](/#scalers).
 ```yaml
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace
-    containerName: azure-functions-container  #Optional. Default: deployment.spec.template.spec.containers[0]
+    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
 ```
 
 The name of the deployment this scaledObject is for. This is the deployment KEDA will scale up and setup an HPA for based on the triggers defined in `triggers:`. Make sure to include the deployment name in the label as well, otherwise the metrics provider will not be able to query the metrics for the scaled object and 1-n scale will be broken.
