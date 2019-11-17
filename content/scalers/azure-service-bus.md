@@ -74,7 +74,7 @@ spec:
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
       # Required
-      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME
+      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # in this sample it will use pod identity. If not you do need a connection string reference.
       # Optional
       queueLength: "5" # default 5
 ```

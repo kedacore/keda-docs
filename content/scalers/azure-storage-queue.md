@@ -28,11 +28,23 @@ The `connection` value is the name of the environment variable your deployment u
 
 ### Authentication Parameters
 
-Not supported yet.
+You can authenticate by using pod identity or connection string authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for Azure Storage Account
 
 ### Example
 
 ```yaml
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-queue-auth
+spec:
+  podIdentity:
+    provider: azure
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
@@ -43,12 +55,14 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: azurequeue-function
+  authenticationRef:
+    name: azure-queue-auth
   triggers:
   - type: azure-queue
     metadata:
       # Required
       queueName: functionsqueue
       # Optional
-      connection: STORAGE_CONNECTIONSTRING_ENV_NAME # default AzureWebJobsStorage
+      connection: STORAGE_CONNECTIONSTRING_ENV_NAME # default AzureWebJobsStorage. In this sample it will use pod identity. If not you do need a connection string reference.
       queueLength: "5" # default 5
 ```
