@@ -8,13 +8,13 @@ title = "Authentication"
   sticky = true
 +++
 
-Often a scaler will require authentication or secrets and config in order for KEDA to check for events and monitor the event rate.  KEDA provides a few secure patterns to add those secrets to a `ScaledOjbect`.
+Often a scaler will require authentication or secrets and config to check for events.  KEDA provides a few secure patterns to add authentication to a `ScaledOjbect`.
 
 ## Referencing secrets and config maps
 
-Some metadata parameters will not allow resolving from a literal value, and will instead require a reference to a secret, config map, or environment variable defined on the target deployment.
+Some metadata parameters will not allow resolving from a literal value, and will instead require a reference to a secret, config map, or environment variable defined on the target container.
 
-For example, if using the [RabbitMQ scaler](https://keda.sh/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, mount that secret to the deployment, and reference it from the `ScaledObject` like below:
+For example, if using the [RabbitMQ scaler](https://keda.sh/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, reference that secret in the deployment, and map it to the `ScaledObject` metadata parameter like below:
 
 ```yaml
 apiVersion: v1
@@ -67,20 +67,20 @@ spec:
 
 If you have multiple containers in a deployment, you will need to include the name of the container that has the references in the `ScaledObject`.  If you do not include a `containerName` it will default to the first container.  KEDA will attempt to resolve references from secrets, config maps, and environment variables of the container.
 
-> TIP: If creating a deployment yaml that references a secret, be sure the secret is created before the deployment that references it, and the scaledObject after both of them to avoid race conditions.
+> TIP: If creating a deployment yaml that references a secret, be sure the secret is created before the deployment that references it, and the scaledObject after both of them to avoid invalid references.
 
-While this method works for many scenarios, there are some downsides.  With the container reference approach, it means every reference the `ScaledObject` needs must be included on the container.  It also makes sharing identity across many ScaledObjects more difficult.  It also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identiy.
+While this method works for many scenarios, there are some downsides.  This method makes it difficult to efficiently share auth config across `ScaledObjects`.  It also doesn’t support referencing a secret directly, only secrets that are referenced by the container.  This method also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identity.
 
 ## TriggerAuthentication
 
-`TriggerAuthentication` allows you to define once how to authenticate and use it for multiple triggers across different teams, without them knowing where the secrets are.  It also enables more advanced methods of authentication like "pod identity."
+`TriggerAuthentication` allows you to describe authentication parameters separate from the `ScaledObject` and the deployment containers.  It also enables more advanced methods of authentication like "pod identity."
 
 ```yaml
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: {trigger-auth-name}
-  namespace: keda
+  namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
       provider: none | azure | gcp | spiffe # Optional. Default: none
