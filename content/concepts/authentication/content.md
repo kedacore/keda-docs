@@ -19,7 +19,11 @@ KEDA provides a few secure patterns to manage authentication flows:
 
 Some metadata parameters will not allow resolving from a literal value, and will instead require a reference to a secret, config map, or environment variable defined on the target container.
 
-For example, if using the [RabbitMQ scaler](https://keda.sh/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, reference that secret in the deployment, and map it to the `ScaledObject` metadata parameter like below:
+> 💡 ***TIP:*** *If creating a deployment yaml that references a secret, be sure the secret is created before the deployment that references it, and the scaledObject after both of them to avoid invalid references.*
+
+### Example
+
+If using the [RabbitMQ scaler](https://keda.sh/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, reference that secret in the deployment, and map it to the `ScaledObject` metadata parameter like below:
 
 ```yaml
 apiVersion: v1
@@ -71,8 +75,6 @@ spec:
 ```
 
 If you have multiple containers in a deployment, you will need to include the name of the container that has the references in the `ScaledObject`.  If you do not include a `containerName` it will default to the first container.  KEDA will attempt to resolve references from secrets, config maps, and environment variables of the container.
-
-> 💡 ***TIP:*** *If creating a deployment yaml that references a secret, be sure the secret is created before the deployment that references it, and the scaledObject after both of them to avoid invalid references.*
 
 While this method works for many scenarios, there are some downsides.  This method makes it difficult to efficiently share auth config across `ScaledObjects`.  It also doesn’t support referencing a secret directly, only secrets that are referenced by the container.  This method also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identity.
 
