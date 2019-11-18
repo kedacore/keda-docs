@@ -31,54 +31,19 @@ Provide the `password` field if the redis server requires a password. Both the h
 
 The `listName` parameter in the spec points to the Redis List that you want to monitor. The `listLength` parameter defines the average target value for the Horizontal Pod Autoscaler (HPA).
 
+### Authentication Parameters
+
+You can authenticate by using a password.
+
+**Password Authentication:**
+
+- `password` - Redis password to authenticate with
+
 ### Example
 
-```yaml
-apiVersion: keda.k8s.io/v1alpha1
-kind: ScaledObject
-metadata:
-  name: redis-scaledobject
-  namespace: keda-redis-test
-  labels:
-    deploymentName: keda-redis-node
-spec:
-  scaleTargetRef:
-    deploymentName: keda-redis-node
-  triggers:
-  - type: redis
-    metadata:
-      address: REDIS_HOST # Required host:port format
-      password: REDIS_PASSWORD
-      listName: mylist # Required
-      listLength: "5" # Required
-```
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`.
 
-## Using Trigger Authentication CRD
-
-When using the Trigger Authentication CRD `secretTargetRef`, like the example below
-
-```yaml
-apiVersion: keda.k8s.io/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-redis-secret
-  namespace: my-project
-spec:
-  secretTargetRef: 
-  - parameter: password 
-    name: votes-db-secret 
-    key: redis_password 
-```    
-
-The `TriggerAuthentication` namespace must be the same as your consumer Pod's namespace.
-
-Where:
-
-* `parameter` value must be the same as the scaler's expecting field.  In the case of Redis scaler, the Redis password is expected to be in the field `password`.
-* `name` : the name of the kubernetes `Secret` manifest.
-* `key`: the Opaque key defined in the `Secret` manifest.
-
-Example below:
+You can also provide the `password` on the `ScaledObject` directly.
 
 ```yaml
 apiVersion: v1
@@ -89,11 +54,18 @@ metadata:
 type: Opaque
 data:
   redis_password: YWRtaW4=
-```
-
-The scaledObject definition must include `TriggerAuthentication` name in the `authenticationRef` as shown below:
-
-```yaml
+---
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-redis-secret
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: password
+    name: votes-db-secret
+    key: redis_password
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
@@ -107,9 +79,9 @@ spec:
   triggers:
   - type: redis
     metadata:
-      address: REDIS_ADDRESS # the environment Variable defined in the Pod, the value is in the format host:port
-      listName: mylist # Required
-      listLength: "10" # Required
-    authenticationRef: 
-      name: keda-trigger-auth-redis-secret       
+      address: REDIS_ADDRESS
+      listName: mylist
+      listLength: "10"
+    authenticationRef:
+      name: keda-trigger-auth-redis-secret
 ```
