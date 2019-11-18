@@ -152,8 +152,6 @@ Azure Pod Identity is an implementation of [Azure AD Pod Identity](https://githu
 
 You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
 
-- https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/
-
 ```yaml
 podIdentity:
   provider: azure # Optional. Default: false
