@@ -8,7 +8,6 @@ weight = 100
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
 - Helm charts
-- Azure Function Core Tools
 - YAML declarations
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
@@ -41,14 +40,6 @@ Deploying KEDA with Helm is very simple:
     kubectl create namespace keda
     helm install keda kedacore/keda --namespace keda
     ```
-
-### Deploying with the Azure Functions Core Tools
-KEDA supports autoscaling a variety of workloads which include Azure Functions and is included in their [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools).
-
-Here is how you can easily install KEDA with their CLI:
-```
-func kubernetes install --namespace keda
-```
 
 ### Deploying using the deploy yaml
 If you want to try KEDA on minikube or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
