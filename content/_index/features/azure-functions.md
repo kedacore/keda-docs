@@ -6,4 +6,4 @@ weight = 60
   icon = "fab fa-microsoft"
 +++
 
-Run & scale your Azure Functions on Kubernetes with production support.
+Run & scale your Azure Functions on Kubernetes in production workloads.
