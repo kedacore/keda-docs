@@ -5,15 +5,8 @@ fragment = "content"
 weight = 100
 +++
 
-KEDA consists of two components - [Runtime](#runtime) & [Dashboard](#dashboard).
-
-You'll find steps how to deploy them in this article.
-
-## Runtime
-
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
-- Operator framework
 - Helm charts
 - Azure Function Core Tools
 - YAML declarations
@@ -67,16 +60,6 @@ kubectl create namespace keda
 kubectl apply -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
 kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
 kubectl apply -f deploy/
-```
-
-## Dashboard
-
-You can install the KEDA dashboard by using the deployment YAML in the repo:
-
-```
-git clone https://github.com/kedacore/dashboard
-cd dashboard
-kubectl apply -f deploy/keda-dashboard.yaml
 ```
 
 <br/><br/>
