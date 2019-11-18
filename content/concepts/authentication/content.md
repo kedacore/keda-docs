@@ -12,8 +12,8 @@ Often a scaler will require authentication or secrets and config to check for ev
 
 KEDA provides a few secure patterns to manage authentication flows:
 
-- Configure authentication per `ScaledObject`
-- Re-use credentials or delegate authentication with `TriggerAuthentication`
+* Configure authentication per `ScaledObject`
+* Re-use credentials or delegate authentication with `TriggerAuthentication`
 
 ## Defining secrets and config maps on ScaledObject
 
@@ -76,9 +76,19 @@ If you have multiple containers in a deployment, you will need to include the na
 
 While this method works for many scenarios, there are some downsides.  This method makes it difficult to efficiently share auth config across `ScaledObjects`.  It also doesn’t support referencing a secret directly, only secrets that are referenced by the container.  This method also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identity.
 
-## TriggerAuthentication
+### The downsides
 
-`TriggerAuthentication` allows you to describe authentication parameters separate from the `ScaledObject` and the deployment containers.  It also enables more advanced methods of authentication like "pod identity."
+While this method works for many scenarios, there are some downsides:
+
+* **Difficult to efficiently share auth** config across `ScaledObjects`
+* **No support for referencing a secret directly**, only secrets that are referenced by the container
+* **No support for other types of authentication flows** such as *pod identity* where access to a source could be acquired with no secrets or connection strings
+
+For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`. This allows you to reference secrets directly, configure to use pod identity or use authentication object managed by a different team.
+
+## Re-use credentials or delegate authentication with TriggerAuthentication
+
+`TriggerAuthentication` allows you to describe authentication parameters separate from the `ScaledObject` and the deployment containers.  It also enables more advanced methods of authentication like "pod identity", authentication re-use or allowing IT to configure the authentication.
 
 ```yaml
 apiVersion: keda.k8s.io/v1alpha1
@@ -101,7 +111,7 @@ spec:
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
 
-The parameters you define in the `TriggerAuthentication` definition do not need to be included in the `metadata` of the `ScaledObject.spec.triggers` definition.  To reference a `TriggerAuthentication` from a `ScaledObject` you add the `authenticationRef` to the trigger.
+Every parameter you define in `TriggerAuthentication` definition does not need to be included in the `metadata` of the trigger for your `ScaledObject` definition. To reference a `TriggerAuthentication` from a `ScaledObject` you add the `authenticationRef` to the trigger.
 
 ```yaml
 # some Scaled Object
@@ -120,7 +130,7 @@ You can pull information via one or more environment variables by providing the 
 
 ```yaml
 env: # Optional.
-  - parameter: region # Required.
+  - parameter: region # Required - Defined by the scale trigger
     name: my-env-var # Required.
     containerName: my-container # Optional. Default: scaleTargetRef.containerName of ScaledObject
 ```
@@ -133,7 +143,7 @@ You can pull one or more secrets into the trigger by defining the `name` of the 
 
 ```yaml
 secretTargetRef: # Optional.
-  - parameter: connectionString # Required.
+  - parameter: connectionString # Required - Defined by the scale trigger
     name: my-keda-secret-entity # Required.
     key: azure-storage-connectionstring # Required.
 ```
