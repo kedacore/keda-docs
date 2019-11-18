@@ -1,6 +1,6 @@
 +++
 title = "Autoscaling Made Simple"
-weight = 10
+weight = 20
 
 [asset]
   icon = "fas fa-rocket"
