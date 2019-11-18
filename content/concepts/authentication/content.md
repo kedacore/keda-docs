@@ -88,7 +88,7 @@ While this method works for many scenarios, there are some downsides:
 
 For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`. This allows you to reference secrets directly, configure to use pod identity or use authentication object managed by a different team.
 
-## Re-use credentials or delegate authentication with TriggerAuthentication
+## Re-use credentials and delegate auth with TriggerAuthentication
 
 `TriggerAuthentication` allows you to describe authentication parameters separate from the `ScaledObject` and the deployment containers.  It also enables more advanced methods of authentication like "pod identity", authentication re-use or allowing IT to configure the authentication.
 
