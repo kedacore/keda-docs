@@ -24,7 +24,7 @@ This specification describes the `azure-servicebus` trigger for Azure Service Bu
       # or
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
-      # Required
+      # Optional, can use TriggerAuthentication as well
       connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
       # Optional
       queueLength: "5" # Optional. Subscription length target for HPA. Default: 5 messages
@@ -34,11 +34,25 @@ The `connection` value is the name of the environment variable your deployment u
 
 ### Authentication Parameters
 
-To be documented.
+You can authenticate by using pod identity or connection string authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for Azure Service Bus Namespace
 
 ### Example
 
+Here is an example of how to use managed identity:
+
 ```yaml
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-servicebus-auth
+spec:
+  podIdentity:
+    provider: azure
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
@@ -57,9 +71,12 @@ spec:
       # or
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
-      # Required
-      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME
+      # Required: connection OR authenticationRef that defines connection
+      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
+      # or authenticationRef as defined below
+      #
       # Optional
       queueLength: "5" # default 5
-
+    authenticationRef:
+        name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```

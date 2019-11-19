@@ -7,7 +7,7 @@ background = "light"
 
 Scale applications based on Apache Kafka Topic.
 
-**Availability:** v1.0+ | **Maintainer:** Community
+**Availability:** v1.0+ | **Maintainer:** Microsoft
 
 <!--more-->
 
@@ -27,7 +27,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 ### Authentication Parameters
 
-Not supported yet.
+No authentication required.
 
 ### Example
 

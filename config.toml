@@ -45,7 +45,7 @@ lastmod = ["lastmod", ":git", "date"]
 
   [params.colors]
     primary = "#00838F"
-    secondary = "#868e96"
+    secondary = "#D3DBE3"
     success = "#008f54"
     info = "#00c9dc"
     warning = "#fdf314"
@@ -62,8 +62,8 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 10
 
 [[menu.main]]
-  url = "/getting-started"
-  name = "Getting Started"
+  url = "/concepts"
+  name = "Concepts"
   weight = 20
 
 [[menu.main]]
@@ -72,18 +72,23 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 30
 
 [[menu.main]]
-  url = "/architecture"
+  url = "/concepts/overview/#how-keda-works"
   name = "Architecture"
   weight = 40
 
 [[menu.main]]
-  url = "/faq"
-  name = "FAQ"
+  url = "https://github.com/kedacore/samples"
+  name = "Samples"
   weight = 50
 
+[[menu.main]]
+  url = "/faq"
+  name = "FAQ"
+  weight = 60
+
 [[menu.footer]]
-  url = "/getting-started"
-  name = "Getting Started"
+  url = "/concepts"
+  name = "Concepts"
   weight = 10
 
 [[menu.footer]]
@@ -92,21 +97,32 @@ lastmod = ["lastmod", ":git", "date"]
   weight = 20
 
 [[menu.footer]]
-  url = "/architecture"
+  url = "/concepts/overview/#how-keda-works"
   name = "Architecture"
   weight = 30
 
 [[menu.footer]]
+  url = "https://github.com/kedacore/samples"
+  name = "Samples"
+  weight = 40
+
+[[menu.footer]]
   url = "https://github.com/kedacore/keda"
   name = "GitHub"
-  weight = 40
+  weight = 50
 
 [[menu.footer]]
   url = "/faq"
   name = "FAQ"
-  weight = 50
+  weight = 60
 
 [[menu.copyright_footer]]
   url = "https://github.com/kedacore/keda"
   name = "GitHub"
   weight = 10
+
+[[menu.footer_social]]
+  weight = 20
+  name = "twitter"
+  pre = "fab fa-twitter"
+  url = "https://twitter.com/kedaorg"
