@@ -82,10 +82,10 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: nginx-deployment
-  authenticationRef:
-    name: keda-trigger-auth-aws-credentials
   triggers:
   - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
     metadata:
       queueURL: myQueue
       queueLength: "5"
