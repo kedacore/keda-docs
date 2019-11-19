@@ -18,15 +18,18 @@ This specification describes the `aws-sqs-queue` trigger that scales based on an
 ```yaml
 triggers:
   - type: aws-sqs-queue
-    authenticationRef: 
-      name: keda-trigger-auth-aws-role
     metadata:
       # Required: queueURL
-      queueURL: myQueue
+      queueURL: https://sqs.eu-west-1.amazonaws.com/account_id/QueueName
       queueLength: "5"  # Default: "5"
       # Required: awsRegion
       awsRegion: "eu-west-1" 
 ```
+**Parameter list:**
+
+- `queueURL` - Full URL for the SQS Queue
+- `queueLength` - Target value for `ApproximateNumberOfMessages` in the SQS Queue
+- `awsRegion` - AWS Region for the SQS Queue
 
 ### Authentication Parameters
 
