@@ -86,8 +86,6 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: nginx-deployment
-  authenticationRef:
-    name: keda-trigger-auth-aws-credentials
   triggers:
   - type: aws-cloudwatch
     metadata:
@@ -98,4 +96,6 @@ spec:
       targetMetricValue: "2"
       minMetricValue: "0"
       awsRegion: "eu-west-1"
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
 ```

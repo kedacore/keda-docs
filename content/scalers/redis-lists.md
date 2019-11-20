@@ -33,26 +33,55 @@ The `listName` parameter in the spec points to the Redis List that you want to m
 
 ### Authentication Parameters
 
-Not supported yet.
+You can authenticate by using a password.
+
+**Password Authentication:**
+
+- `password` - Redis password to authenticate with
 
 ### Example
 
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`.
+
+You can also provide the `password` on the `ScaledObject` directly.
+
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: votes-db-secret
+  namespace: my-project
+type: Opaque
+data:
+  redis_password: YWRtaW4=
+---
+apiVersion: keda.k8s.io/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-redis-secret
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: password
+    name: votes-db-secret
+    key: redis_password
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: redis-scaledobject
-  namespace: keda-redis-test
+  namespace: my-project
   labels:
-    deploymentName: keda-redis-node
+    deploymentName: votes
 spec:
   scaleTargetRef:
-    deploymentName: keda-redis-node
+    deploymentName: votes
   triggers:
   - type: redis
     metadata:
-      address: REDIS_HOST # Required host:port format
-      password: REDIS_PASSWORD
-      listName: mylist # Required
-      listLength: "5" # Required
+      address: REDIS_ADDRESS
+      listName: mylist
+      listLength: "10"
+    authenticationRef:
+      name: keda-trigger-auth-redis-secret
 ```
