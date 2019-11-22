@@ -7,7 +7,7 @@ background = "light"
 
 Scale applications based on a Huawei Cloudeye.
 
-**Availability:** v1.0+ | **Maintainer:** Community
+**Availability:** v1.1+ | **Maintainer:** Community
 
 <!--more-->
 
@@ -19,10 +19,10 @@ This specification describes the `huawei-cloudeye` trigger that scales based on 
 triggers:
   - type: huawei-cloudeye
     metadata:
-      namespace: SYS.ELB
-      dimensionName: lbaas_instance_id
-      dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
-      metricName: mb_l7_qps
+      namespace: SYS.ELB                                    #Required: metrics namespace.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9 / a-z / A-Z / _, the total length of service.item is 3, the maximum is 32.
+      metricName: mb_l7_qps                                 #Required: metrics name.
+      dimensionName: lbaas_instance_id                      #Required: dimension name of metric.
+      dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2  #Required: dimension value of metric.
       targetMetricValue: "100"
       minMetricValue: "1"
 ```
