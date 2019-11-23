@@ -19,13 +19,25 @@ This specification describes the `huawei-cloudeye` trigger that scales based on 
 triggers:
   - type: huawei-cloudeye
     metadata:
-      namespace: SYS.ELB                                    #Required: metrics namespace.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9 / a-z / A-Z / _, the total length of service.item is 3, the maximum is 32.
-      metricName: mb_l7_qps                                 #Required: metrics name.
-      dimensionName: lbaas_instance_id                      #Required: dimension name of metric.
-      dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2  #Required: dimension value of metric.
+      namespace: SYS.ELB                                    
+      metricName: mb_l7_qps                                 
+      dimensionName: lbaas_instance_id                      
+      dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
       targetMetricValue: "100"
       minMetricValue: "1"
 ```
+
+**Parameter list:**
+
+- `namespace` is the namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32. This is required.
+- `metricName` is the name of the metric. This is required.
+- `dimensionName` is the dimension name of the metric. This is required.
+- `dimensionValue` is the dimension value of the metric. This is required.
+- `targetMetricValue` is the target value for your metric. This is required.
+- `minMetricValue` is the min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active. This is required.
+- `metricCollectionTime` is the collection time of the metric. Equivalent to the earliest start time of the end time. This is not required. The default value is 300, unit is second.
+- `metricFilter` is the aggregation method of the metric. This is not required. The default value is average. Other values ​​include max, min, sum, variance.
+- `metricPeriod` is the granularity of the metric. This is not required. The default value is 300, unit is second.
 
 ### Authentication Parameters
 
@@ -38,7 +50,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 - `DomainID` - Id of domain
 - `Domain` - Domain
 - `Region` - Region
-- `Cloud` - Cloud name
+- `Cloud` - Cloud name. The fefault value is myhuaweicloud.com
 - `AccessKey` - Id of the user
 - `SecretKey` - Access key for the user to authenticate with
 
@@ -83,9 +95,6 @@ spec:
   - parameter: Domain                # Required.
     name: keda-huawei-secrets        # Required.
     key: Domain                      # Required.
-  - parameter: Cloud               
-    name: keda-huawei-secrets       
-    key: Cloud                        
   - parameter: AccessKey             # Required.
     name: keda-huawei-secrets        # Required.
     key: AccessKey                   # Required.
