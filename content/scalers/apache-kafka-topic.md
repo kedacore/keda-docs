@@ -22,8 +22,18 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
       brokerList: kafka.svc:9092
       consumerGroup: my-group
       topic: test-topic
-      lagThreshold: '5' # Optional. How much the stream is lagging on the current consumer group
+      lagThreshold: '5'
+      authMode: "sasl_plaintext"
+      username: "admin"
+      passwd: "admin"
 ```
+
+**Parameter list:**
+
+- `lagThreshold` Optional. How much the stream is lagging on the current consumer group
+- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_scram_sha256, sasl_scram_sha512.
+- `username` Optional. If authmode is not none, this is required.
+- `passwd` Optional.If authmode is not none, this is required.
 
 ### Authentication Parameters
 
