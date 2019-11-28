@@ -35,9 +35,12 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Credential based authentication:**
 
-- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_scram_sha256, sasl_scram_sha512.
+- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_scram_sha256, sasl_scram_sha512.
 - `username` Optional. If authmode is not none, this is required.
 - `password` Optional.If authmode is not none, this is required.
+- `ca` Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `cert` Certificate for client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `key` Key for client authentication. Optional. If authmode is sasl_ssl, this is required.
 
 
 ### Example
@@ -72,13 +75,16 @@ Your kafka cluster turn on sasl auth
 apiVersion: v1
 kind: Secret
 metadata:
-  name: keda-kafka-secrets 
+  name: keda-kafka-secrets
   namespace: default
 data:
   authMode: "sasl_plaintext"
   username: "admin"
   password: "admin"
---- 
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:
@@ -95,6 +101,15 @@ spec:
   - parameter: password
     name: keda-kafka-secrets
     key: password
+  - parameter: ca
+    name: keda-kafka-secrets
+    key: ca
+  - parameter: cert
+    name: keda-kafka-secrets
+    key: cert
+  - parameter: key
+    name: keda-kafka-secrets
+    key: key
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
