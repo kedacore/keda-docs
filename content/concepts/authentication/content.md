@@ -184,10 +184,8 @@ You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
 
 ```yaml
 podIdentity:
-  provider: eks # Optional. Default: false
+  provider: aws-eks # Optional. Default: false
 ```
-
-EKS Pod Identity Webhook looks for the service account associated with the pod and then uses the role provided by the `eks.amazonaws.com/role-arn` annotation on that service account.
 
 #### Kiam Pod Identity for AWS
 
@@ -197,7 +195,5 @@ You can tell KEDA to use Kiam via `podIdentity.provider`.
 
 ```yaml
 podIdentity:
-  provider: kiam # Optional. Default: false
+  provider: aws-kiam # Optional. Default: false
 ```
-
-Kiam will give access to containers based on the role provided by the `iam.amazonaws.com/role` annotation on the pod.
