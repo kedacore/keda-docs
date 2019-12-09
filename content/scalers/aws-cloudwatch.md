@@ -41,7 +41,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Pod identity based authentication:**
 
-- `podIdentity.provider` needs to bet set on the `TriggerAuthentication` to either `kiam` or `eks` and the pod/service account must be configured correctly for your pod identity provider.
+- `podIdentity.provider` needs to be set to either `kiam` or `eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
 
 **Role based authentication:**
 
