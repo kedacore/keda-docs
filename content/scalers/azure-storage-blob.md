@@ -17,7 +17,7 @@ This specification describes the `azure-blob` trigger for Azure Storage Blob.
 triggers:
   - type: azure-blob
     metadata:
-      containerName: functions-blob # Required: Container name
+      containerName: functions-blob # Required: Name of Azure Blob Storage container
       blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
       connection: STORAGE_CONNECTIONSTRING_ENV_NAME
       blobPrefix:  # Optional. Prefix for the Blob. Use this to specifiy sub path for the blobs if required. Default : ""
