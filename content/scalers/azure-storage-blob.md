@@ -1,7 +1,7 @@
 +++
 fragment = "content"
 weight = 100
-title = "Azure Storage Blob"
+title = "Azure Blob Storage"
 background = "light"
 +++
 
