@@ -5,7 +5,7 @@ title = "Azure Blob Storage"
 background = "light"
 +++
 
-Scale applications based on Azure Storage Blobs.
+Scale applications based on Azure Blob Storage.
 
 <!--more-->
 
