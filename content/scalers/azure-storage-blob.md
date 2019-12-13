@@ -7,6 +7,8 @@ background = "light"
 
 Scale applications based on Azure Blob Storage.
 
+**Availability:** v1.1+ | **Maintainer:** Community
+
 <!--more-->
 
 ### Trigger Specification
