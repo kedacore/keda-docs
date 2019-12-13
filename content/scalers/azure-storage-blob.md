@@ -18,7 +18,7 @@ triggers:
   - type: azure-blob
     metadata:
       containerName: functions-blob # Required: Container name
-      blobCount: '5' # Optional. Blob count target for HPA. Default: 5 blobs 
+      blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
       connection: STORAGE_CONNECTIONSTRING_ENV_NAME
       blobPrefix:  # Optional. Prefix for the Blob. Use this to specifiy sub path for the blobs if required. Default : ""
       blobDelimiter: # Optional. Delimiter for identifying the blob Prefix. Default: "/"
