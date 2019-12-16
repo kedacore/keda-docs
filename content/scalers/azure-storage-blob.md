@@ -13,13 +13,13 @@ Scale applications based on Azure Blob Storage.
 
 ### Trigger Specification
 
-This specification describes the `azure-blob` trigger for Azure Storage Blob.
+This specification describes the `azure-blob` trigger for Azure Blob Storage.
 
 ```yaml
 triggers:
   - type: azure-blob
     metadata:
-      containerName: functions-blob # Required: Name of Azure Blob Storage container
+      blobContainerName: functions-blob # Required: Name of Azure Blob Storage container
       blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
       connection: STORAGE_CONNECTIONSTRING_ENV_NAME
       blobPrefix:  # Optional. Prefix for the Blob. Use this to specifiy sub path for the blobs if required. Default : ""
@@ -61,15 +61,15 @@ spec:
   - type: azure-blob
     metadata:
       # Required
-      containerName: functionsblob
+      blobContainerName: functionsblob
       # Required: connection OR authenticationRef that defines connection
       connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Default: AzureWebJobsStorage. Reference to a connection string in deployment
       # or authenticationRef as defined below
       #
       # Optional
       blobCount: "5" # default 5
-      blobPrefix:  # Default : ""
-      blobDelimiter: # Default: "/"
+      blobPrefix: blobsubpath # Default : ""
+      blobDelimiter: "/" # Default: "/"
     authenticationRef:
         name: azure-blob-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
