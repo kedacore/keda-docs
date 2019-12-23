@@ -46,3 +46,50 @@ Yes! KEDA is now 1.0 and suited for production workloads.
 
 #### What does it cost?
 There is no charge for using KEDA itself.
+
+#### How do I access KEDA resources using `client-go`?
+
+KEDA resources can be accessed using the [dynamic
+client](https://godoc.org/k8s.io/client-go/dynamic) from the `client-go` package.  The dynamic client's `Resource()` method accepts a
+[GroupVersionResource](https://godoc.org/k8s.io/apimachinery/pkg/runtime/schema#GroupVersionResource)
+describing the type of resource to be accessed and returns a
+[NamespaceableResourceInterface](https://godoc.org/k8s.io/client-go/dynamic#NamespaceableResourceInterface)
+which contains methods to retrieve, create, or maniuplate that resource.  Here's a code sample
+containing a function that retrieves a KEDA `ScaledObject` resource by name.
+
+```Go
+package main
+
+import (
+	"fmt"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/dynamic"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
+	"k8s.io/client-go/tools/clientcmd"
+	"os"
+)
+
+var (
+	kedaGVR = schema.GroupVersionResource{
+		Group:    "keda.k8s.io",
+		Version:  "v1alpha1",
+		Resource: "scaledobjects",
+	}
+)
+
+func GetScaledObjectByName(name string) {
+	config, err := clientcmd.BuildConfigFromFlags("", os.Getenv("HOME")+"/.kube/config")
+	dynClient, err := dynamic.NewForConfig(config)
+	if err != nil {
+		panic(err)
+	}
+	scaledObjectClient := dynClient.Resource(kedaGVR)
+	scaledObject, err := scaledObjectClient.Namespace("default").Get(name, metav1.GetOptions{})
+	if err != nil {
+		fmt.Printf("Error retrieving scaledobjects: %s\n", err)
+	} else {
+		fmt.Printf("Got ScaledObject:\n %v", scaledObject)
+	}
+}
+```
