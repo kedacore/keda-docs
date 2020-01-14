@@ -25,7 +25,9 @@ No, KEDA can scale up/down any container that you specify in your deployment. Th
 * Specific need for more control (GPU enabled compute clusters, policies, etc.)
 
 #### Can I scale my HTTP container or function with KEDA and Kubernetes?
-KEDA will scale a container using metrics from a scaler.  There is no scaler today for HTTP workloads directly.  We recommend using the prometheus scaler to create scale rule based on metrics around HTTP events for now.
+KEDA will scale a container using metrics from a scaler, but unfortunately there is no scaler today for HTTP workloads. 
+
+We recommend using the [Prometheus scaler](https://keda.sh/scalers/prometheus/) to create scale rule based on metrics around HTTP events for now. Read [Anirudh Garg's blog post](https://dev.to/anirudhgarg_99/scale-up-and-down-a-http-triggered-function-app-in-kubernetes-using-keda-4m42) to learn more.
 
 ####  Where can I get to the code for the Scalers?
 All scalers have their code [here](https://github.com/kedacore/keda/tree/master/pkg/scalers)
