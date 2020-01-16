@@ -5,9 +5,11 @@ title = "Azure Blob Storage"
 background = "light"
 +++
 
-Scale applications based on the count of blobs in a given Azure Blob Storage container.
+Scale applications based on the count of blobs in a given Azure Blob Storage† container.
 
 **Availability:** v1.1+ | **Maintainer:** Community
+
+†: As of now, this Azure Blob Storage scaler scales based on the count of the blobs in a container as oppose to the Azure Functions behaviour where code is only triggered on new blobs.
 
 <!--more-->
 
