@@ -5,15 +5,17 @@ title = "Azure Blob Storage"
 background = "light"
 +++
 
-Scale applications based on Azure Blob Storage.
+Scale applications based on the count of blobs in a given Azure Blob Storage† container.
 
 **Availability:** v1.1+ | **Maintainer:** Community
+
+†: As of now, this Azure Blob Storage scaler scales based on the count of the blobs in a container as oppose to the Azure Functions behaviour where code is only triggered on new blobs.
 
 <!--more-->
 
 ### Trigger Specification
 
-This specification describes the `azure-blob` trigger for Azure Blob Storage.
+This specification describes the `azure-blob` trigger for Azure Blob Storage. It scales based on the count of blobs in a given blob storage container and assumes the worker is responsible for clearing the container by delete/move the blobs once the blob processing completed.
 
 ```yaml
 triggers:
