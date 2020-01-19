@@ -24,7 +24,7 @@ This specification describes the `rabbitmq` trigger for RabbitMQ Queue.
       queueName: testqueue
 ```
 
-The `host` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/`
+The `host` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost`
 
 ### Authentication Parameters
 
@@ -47,7 +47,7 @@ spec:
   - type: rabbitmq
     metadata:
       # Required
-      host: RabbitMqHost # references a value of format amqp://guest:password@localhost:5672/
+      host: RabbitMqHost # references a value of format amqp://guest:password@localhost:5672/vhost
       queueName: testqueue
       queueLength: "20"
 ```
