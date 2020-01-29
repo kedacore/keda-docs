@@ -35,7 +35,7 @@ The `listName` parameter in the spec points to the Redis List that you want to m
 
 The `enableTLS` parameter if set to true allow a connection to a redis queue using tls, the default value for this parameter is false.
 
-The `databaseIndex` parameter let the suer select the redis database to use. If not specified the default value is 0
+The `databaseIndex` parameter let the user select the redis database to use. If not specified, the default value is 0
 
 ### Authentication Parameters
 
