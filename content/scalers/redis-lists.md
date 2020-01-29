@@ -24,6 +24,7 @@ triggers:
     listName: mylist # Required
     listLength: "5" # Required
     enableTLS: "false" # optional
+    databaseIndex: "0" # optional
 ```
 
 The `address` field in the spec holds the host and port of the redis server. This could be an external redis server or one running in the kubernetes cluster.
@@ -32,7 +33,9 @@ Provide the `password` field if the redis server requires a password. Both the h
 
 The `listName` parameter in the spec points to the Redis List that you want to monitor. The `listLength` parameter defines the average target value for the Horizontal Pod Autoscaler (HPA).
 
-The `enableTLS` parameter if set to true allow a connection to a redis queue using tls, the default value for this parameter is false. 
+The `enableTLS` parameter if set to true allow a connection to a redis queue using tls, the default value for this parameter is false.
+
+The `databaseIndex` parameter let the user select the redis database to use. If not specified, the default value is 0
 
 ### Authentication Parameters
 
