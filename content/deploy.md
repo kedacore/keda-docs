@@ -31,7 +31,7 @@ Deploying KEDA with Helm is very simple:
     ###### Helm 2
 
     ```cli
-    helm install kedacore/keda --namespace keda --name keda
+    helm install kedacore/keda --namespace keda --name keda --set customResourceDefinition.create=true
     ```
 
     ###### Helm 3
