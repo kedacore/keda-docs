@@ -47,7 +47,6 @@ If you want to try KEDA on minikube or a different Kubernetes deployment without
 We provide sample YAML declarations which includes our CRD - You can find them in our `/deploy` directory on our [GitHub repo](https://github.com/kedacore/keda).
 
 ```
-kubectl create namespace keda
 kubectl apply -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
 kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
 kubectl apply -f deploy/
