@@ -4,6 +4,6 @@ fragment = "portfolio"
 weight = 300
 background = "light"
 
-title = "Customers"
+title = "Users"
 subtitle = "A variety of using Kubernetes Event-driven Autoscaling (KEDA) users are:"
 +++
