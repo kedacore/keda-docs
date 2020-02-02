@@ -27,7 +27,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Parameter list:**
 
-- `lagThreshold` Optional. How much the stream is lagging on the current consumer group
+- `lagThreshold` Optional. How much the stream is lagging on the current consumer group. Default is 10.
 
 ### Authentication Parameters
 
