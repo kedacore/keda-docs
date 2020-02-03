@@ -23,7 +23,7 @@ The trigger always requires the following information:
 To provide information about how to connect to MySQL you can provide 
 - `connectionString` MySQL connection string that should point to environment variable with valid value
 
-Or
+Or provide more detailed information:
 
 - `username` used to access MySQL database
 - `password` used for the given user, this should be blank (no password) or point to an environment
@@ -33,7 +33,15 @@ Or
 
 ### Authentication Parameters
 
-Both `connectionString` and `password` can be configured by `TriggerAuthentication` CRD or as environment
+You can authenticate by using connection string or password authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for MySQL database
+
+**Password Authentication:**
+
+- `connection` - Password for configured user to login to MySQL database
 variables.
 
 ### Example
