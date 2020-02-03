@@ -5,7 +5,7 @@ title = "Apache Kafka Topic"
 background = "light"
 +++
 
-Scale applications based on Apache Kafka Topic or other services that support Kafka protocol such as Azure Event Hubs.
+Scale applications based on Apache Kafka Topic or other services that support Kafka protocol.
 
 **Availability:** v1.0+ | **Maintainer:** Microsoft
 
@@ -32,8 +32,6 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authenticate by providing authMode, username, password. If your kafka cluster does not have sasl authentication turned on, you will not need to pay attention to it.
-
- The sasl_ssl_plain authMode can also be used when using the Kafka head on Azure Event Hubs to act as trigger.
 
 **Credential based authentication:**
 
