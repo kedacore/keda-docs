@@ -5,5 +5,5 @@ weight = 300
 background = "light"
 
 title = "Users"
-subtitle = "A variety of using Kubernetes Event-driven Autoscaling (KEDA) users are:"
+subtitle = "A variety of users are autoscaling applications with Kubernetes Event-driven Autoscaling (KEDA):"
 +++
