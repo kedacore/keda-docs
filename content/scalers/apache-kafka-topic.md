@@ -5,7 +5,7 @@ title = "Apache Kafka Topic"
 background = "light"
 +++
 
-Scale applications based on Apache Kafka Topic.
+Scale applications based on Apache Kafka Topic or other services that support Kafka protocol.
 
 **Availability:** v1.0+ | **Maintainer:** Microsoft
 
@@ -35,7 +35,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Credential based authentication:**
 
-- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_scram_sha256, sasl_scram_sha512.
+- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_ssl_plain, sasl_scram_sha256, sasl_scram_sha512.
 - `username` Optional. If authmode is not none, this is required.
 - `password` Optional.If authmode is not none, this is required.
 - `ca` Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
