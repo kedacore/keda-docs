@@ -16,11 +16,25 @@ Scale applications based on a PostgreSQL query
 This specification describes the `postgresql` trigger that scales based on a postgresql query
 
 The Postgresql scaler allows for two connection options:
-1. A user can offer a full connection string 
-(often in the form of an environment variable secret), 
-2. A user can specify individual
+
+A user can offer a full connection string 
+(often in the form of an environment variable secret)
+
+- `connectionString` MySQL connection string that should point to environment variable with valid value
+
+Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string 
 internally.
+- `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
+- `userName:` Username for postgresql user
+- `password:` Password for postgresql user
+- `port:` Postgresql port
+- `dbName:` Postgresql Database name
+- `sslmode:` SSL policy for communicating with database
+
+Finally, a user inserts a query that returns the desired value
+
+- `query:` What query to poll postgresql with. Query must return an integer.
 
 This is an example of using a full connection string:
 ```yaml
@@ -46,18 +60,6 @@ While this is an example of specifying each parameter:
         sslmode: disable
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
 ```
-
-
-* **host:** Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact 
-postgresql from a different namespace
-* **userName:** Username for postgresql user
-* **passworkd:** Password for postgresql user
-* **port:** Postgresql port
-* **dbName:** Postgresql Database name
-* **sslmode:** SSL policy for communicating with database
-* **query:** What query to poll postgresql with. Query must return an integer.
-
-**Note:** If you include a connStr, the scaler will ignore all other connection parameters.
 
 ### Authentication Parameters
 
