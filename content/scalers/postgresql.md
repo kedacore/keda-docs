@@ -13,18 +13,19 @@ Scale applications based on a PostgreSQL query
 
 ### Trigger Specification
 
-This specification describes the `postgres` trigger that scales based on a postgres query
+This specification describes the `postgresql` trigger that scales based on a postgresql query
 
-The Postgres scaler allows for two connection options. 
-Either a user can offer a full connection string 
-(often in the form of an environment variable secret), or the user can specify individual
+The Postgresql scaler allows for two connection options:
+1. A user can offer a full connection string 
+(often in the form of an environment variable secret), 
+2. A user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string 
 internally.
 
 This is an example of using a full connection string:
 ```yaml
   triggers:
-    - type: postgres
+    - type: postgresql
       metadata:
         connStr: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
@@ -34,27 +35,27 @@ While this is an example of specifying each parameter:
 
 ```yaml
   triggers:
-    - type: postgres
+    - type: postgresql
       metadata:
         userName: "kedaUser"
         password: PG_PASSWORD
         host: postgres-svc.namespace.cluster.local #use the cluster-wide namespace as KEDA 
                                                    #lives in a different namespace from your postgres
         port: "5432"
-        dbName: postgres
+        dbName: postgresql
         sslmode: disable
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
 ```
 
 
-* **host:** Service URL to postgres. Note that you should use a full svc URL as KEDA will need to contact 
-postgres from a different namespace
-* **userName:** Username for postgres user
-* **passworkd:** Password for postgres user
-* **port:** Postgres port
-* **dbName:** Postgres Database name
+* **host:** Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact 
+postgresql from a different namespace
+* **userName:** Username for postgresql user
+* **passworkd:** Password for postgresql user
+* **port:** Postgresql port
+* **dbName:** Postgresql Database name
 * **sslmode:** SSL policy for communicating with database
-* **query:** What query to poll postgres with. Query must return an integer.
+* **query:** What query to poll postgresql with. Query must return an integer.
 
 **Note:** If you include a connStr, the scaler will ignore all other connection parameters.
 
@@ -64,7 +65,7 @@ You can authenticate by using a password or store the password within the connSt
 
 **Password Authentication:**
 
-- `password` - Postgres password to authenticate with
+- `password` - Postgresql password to authenticate with
 
 ### Example
 
@@ -80,7 +81,7 @@ spec:
   cooldownPeriod: 30    # Optional. Default: 300 seconds
   maxReplicaCount: 10   # Optional. Default: 100
   triggers:
-    - type: postgres
+    - type: postgresql
       metadata:
         connStr: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
