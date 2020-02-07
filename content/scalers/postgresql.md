@@ -25,6 +25,7 @@ A user can offer a full connection string
 Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string 
 internally.
+
 - `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
 - `userName:` Username for postgresql user
 - `password:` Password for postgresql user
@@ -63,7 +64,7 @@ While this is an example of specifying each parameter:
 
 ### Authentication Parameters
 
-You can authenticate by using a password or store the password within the connStr.
+You can authenticate by using a password or store the password within the connectionString.
 
 **Connection String Authentication:**
 
@@ -92,5 +93,4 @@ spec:
       metadata:
         connection: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
-
 ```
