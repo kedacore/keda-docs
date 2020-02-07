@@ -87,5 +87,4 @@ spec:
       metadata:
         connStr: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
-
 ```
