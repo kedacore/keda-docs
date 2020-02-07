@@ -20,7 +20,7 @@ The Postgresql scaler allows for two connection options:
 A user can offer a full connection string 
 (often in the form of an environment variable secret)
 
-- `connectionString` MySQL connection string that should point to environment variable with valid value
+- `connection` postgreSQL connection string that should point to environment variable with valid value
 
 Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string 
@@ -41,7 +41,7 @@ This is an example of using a full connection string:
   triggers:
     - type: postgresql
       metadata:
-        connStr: AIRFLOW_CONN_AIRFLOW_DB
+        connection: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
 ```
 
@@ -65,9 +65,14 @@ While this is an example of specifying each parameter:
 
 You can authenticate by using a password or store the password within the connStr.
 
+**Connection String Authentication:**
+
+- `connection` - Connection string for postgreSQL database
+
 **Password Authentication:**
 
-- `password` - Postgresql password to authenticate with
+- `password` - Password for configured user to login to postgreSQL database
+variables.
 
 ### Example
 
@@ -85,7 +90,7 @@ spec:
   triggers:
     - type: postgresql
       metadata:
-        connStr: AIRFLOW_CONN_AIRFLOW_DB
+        connection: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
 
 ```
