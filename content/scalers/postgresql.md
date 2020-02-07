@@ -25,6 +25,7 @@ A user can offer a full connection string
 Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string 
 internally.
+
 - `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
 - `userName:` Username for postgresql user
 - `password:` Password for postgresql user
