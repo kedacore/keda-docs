@@ -64,7 +64,7 @@ While this is an example of specifying each parameter:
 
 ### Authentication Parameters
 
-You can authenticate by using a password or store the password within the connStr.
+You can authenticate by using a password or store the password within the connectionString.
 
 **Password Authentication:**
 
