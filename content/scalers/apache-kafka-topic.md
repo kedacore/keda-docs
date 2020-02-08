@@ -19,7 +19,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
   triggers:
   - type: kafka
     metadata:
-      brokerList: kafka.svc:9092
+      bootstrapServers: kafka.svc:9092
       consumerGroup: my-group
       topic: test-topic
       lagThreshold: '5'
@@ -63,9 +63,10 @@ spec:
   - type: kafka
     metadata:
       # Required
-      brokerList: localhost:9092
+      bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
+      # Optional
       lagThreshold: "50"
 ```
 
@@ -126,9 +127,10 @@ spec:
   - type: kafka
     metadata:
       # Required
-      brokerList: localhost:9092
+      bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
+      # Optional
       lagThreshold: "50"
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
