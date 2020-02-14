@@ -7,7 +7,7 @@ background = "light"
 
 Scale applications based on Azure Monitor metrics.
 
-**Availability:** ?? | **Maintainer:** Community
+**Availability:** v1.3+ | **Maintainer:** Community
 
 <!--more-->
 
