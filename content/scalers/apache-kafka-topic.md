@@ -19,6 +19,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
   triggers:
   - type: kafka
     metadata:
+      # brokerList: kafka.svc:9092 - deprecated
       bootstrapServers: kafka.svc:9092
       consumerGroup: my-group
       topic: test-topic
@@ -63,6 +64,7 @@ spec:
   - type: kafka
     metadata:
       # Required
+      # brokerList: kafka.svc:9092 - deprecated
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
@@ -127,6 +129,7 @@ spec:
   - type: kafka
     metadata:
       # Required
+      # brokerList: kafka.svc:9092 - deprecated
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
