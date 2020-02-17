@@ -31,8 +31,6 @@ triggers:
       activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME
 ```
 
-The `activeDirectoryClientId` value is the name of the environment variable your deployment uses to get the active directory client id. The `activeDirectoryClientPassword` value is the name of the environment variable your deployment uses to get the active directory client password. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
-
 **Parameter list:**
 
 - `resourceURI` is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required. 
@@ -44,8 +42,8 @@ The `activeDirectoryClientId` value is the name of the environment variable your
 - `metricAggregationInterval` is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
 - `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
 - `targetValue` is the target value for the Azure metric to use in the HPA. Required.
-- `activeDirectoryClientId` is the name of the environment variable that contains the client id. Optional. Required when `TriggerAuthentication` is not provided. 
-- `activeDirectoryClientPassword` is the name of the environment variable that contains the client password. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientId` is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientPassword` is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
 
 ### Authentication Parameters
 
