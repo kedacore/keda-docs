@@ -42,7 +42,7 @@ The `activeDirectoryClientId` value is the name of the environment variable your
 - `metricName` is the name of the metric. Must be an officially supported metric from https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported. Required.
 - `metricFilter` is used to define a more specific part of the resource. You can filter by supported dimensions of the metric found in https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported. Optional.
 - `metricAggregationInterval` is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
-- `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include Average, Total, Maximum. Based on what is supported in https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported. No default. Required.
+- `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
 - `targetValue` is the target value for the Azure metric to use in the HPA. Required.
 - `activeDirectoryClientId` is the name of the environment variable that contains the client id. Optional. Required when `TriggerAuthentication` is not provided. 
 - `activeDirectoryClientPassword` is the name of the environment variable that contains the client password. Optional. Required when `TriggerAuthentication` is not provided.
