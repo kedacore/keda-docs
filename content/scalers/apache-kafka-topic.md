@@ -28,7 +28,10 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Parameter list:**
 
-- `lagThreshold` Optional. How much the stream is lagging on the current consumer group. Default is 10.
+- `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
+- `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
+- `topic`: topic on which processing the offset lag.
+- `lagThreshold` How much the stream is lagging on the current consumer group. Default is 10. Optional.
 
 ### Authentication Parameters
 
@@ -63,8 +66,6 @@ spec:
   triggers:
   - type: kafka
     metadata:
-      # Required
-      # brokerList: kafka.svc:9092 - deprecated
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
@@ -128,8 +129,6 @@ spec:
   triggers:
   - type: kafka
     metadata:
-      # Required
-      # brokerList: kafka.svc:9092 - deprecated
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
