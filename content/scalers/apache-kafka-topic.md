@@ -28,6 +28,7 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Parameter list:**
 
+- `brokerList`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap (DEPRECATED).
 - `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
 - `topic`: topic on which processing the offset lag.
