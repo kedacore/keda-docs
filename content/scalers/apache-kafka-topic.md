@@ -19,7 +19,8 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
   triggers:
   - type: kafka
     metadata:
-      brokerList: kafka.svc:9092
+      # brokerList: kafka.svc:9092 - deprecated
+      bootstrapServers: kafka.svc:9092
       consumerGroup: my-group
       topic: test-topic
       lagThreshold: '5'
@@ -27,7 +28,11 @@ This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 **Parameter list:**
 
-- `lagThreshold` Optional. How much the stream is lagging on the current consumer group. Default is 10.
+- `brokerList`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap (DEPRECATED).
+- `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
+- `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
+- `topic`: topic on which processing the offset lag.
+- `lagThreshold` How much the stream is lagging on the current consumer group. Default is 10. Optional.
 
 ### Authentication Parameters
 
@@ -62,10 +67,10 @@ spec:
   triggers:
   - type: kafka
     metadata:
-      # Required
-      brokerList: localhost:9092
+      bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
+      # Optional
       lagThreshold: "50"
 ```
 
@@ -125,10 +130,10 @@ spec:
   triggers:
   - type: kafka
     metadata:
-      # Required
-      brokerList: localhost:9092
+      bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
+      # Optional
       lagThreshold: "50"
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
