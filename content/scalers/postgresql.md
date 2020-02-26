@@ -36,6 +36,7 @@ internally.
 Finally, a user inserts a query that returns the desired value
 
 - `query:` What query to poll postgresql with. Query must return an integer.
+- `targetQueryValue` - a threshold that is used as `targetAverageValue` in HPA.
 
 This is an example of using a full connection string:
 ```yaml
@@ -44,6 +45,7 @@ This is an example of using a full connection string:
       metadata:
         connection: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+        targetQueryValue: 1
 ```
 
 While this is an example of specifying each parameter:
@@ -60,6 +62,7 @@ While this is an example of specifying each parameter:
         dbName: postgresql
         sslmode: disable
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+        targetQueryValue: 1
 ```
 
 ### Authentication Parameters
@@ -93,4 +96,5 @@ spec:
       metadata:
         connection: AIRFLOW_CONN_AIRFLOW_DB
         query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+        targetQueryValue: 1
 ```
