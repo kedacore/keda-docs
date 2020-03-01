@@ -54,8 +54,6 @@ kind: ScaledObject
 metadata:
   name: azure-blob-scaledobject
   namespace: default
-  labels:
-    deploymentName: azureblob-function
 spec:
   scaleTargetRef:
     deploymentName: azureblob-function

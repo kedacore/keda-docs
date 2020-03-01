@@ -35,8 +35,6 @@ apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
-  labels:
-    deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
 spec:
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject

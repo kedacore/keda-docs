@@ -81,7 +81,6 @@ metadata:
   name: aws-sqs-queue-scaledobject
   namespace: keda-test
   labels:
-    deploymentName: nginx-deployment
     test: nginx-deployment
 spec:
   scaleTargetRef:

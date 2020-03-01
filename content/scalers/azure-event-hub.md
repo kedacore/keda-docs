@@ -44,8 +44,6 @@ kind: ScaledObject
 metadata:
   name: azure-eventhub-scaledobject
   namespace: default
-  labels:
-    deploymentName: azureeventhub-function
 spec:
   scaleTargetRef:
     deploymentName: azureeventhub-function

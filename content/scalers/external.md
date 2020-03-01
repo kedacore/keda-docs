@@ -38,8 +38,6 @@ kind: ScaledObject
 metadata:
   name: redis-scaledobject
   namespace: keda-redis-test
-  labels:
-    deploymentName: keda-redis-node
 spec:
   scaleTargetRef:
     deploymentName: keda-redis-node

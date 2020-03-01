@@ -58,8 +58,6 @@ kind: ScaledObject
 metadata:
   name: kafka-scaledobject
   namespace: default
-  labels:
-    deploymentName: azure-functions-deployment
 spec:
   scaleTargetRef:
     deploymentName: azure-functions-deployment
@@ -121,8 +119,6 @@ kind: ScaledObject
 metadata:
   name: kafka-scaledobject
   namespace: default
-  labels:
-    deploymentName: azure-functions-deployment
 spec:
   scaleTargetRef:
     deploymentName: azure-functions-deployment

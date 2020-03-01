@@ -40,8 +40,6 @@ kind: ScaledObject
 metadata:
   name: liiklus-scaledobject
   namespace: default
-  labels:
-    deploymentName: function-deployment
 spec:
   scaleTargetRef:
     deploymentName: function-deployment

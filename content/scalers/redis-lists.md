@@ -77,8 +77,6 @@ kind: ScaledObject
 metadata:
   name: redis-scaledobject
   namespace: my-project
-  labels:
-    deploymentName: votes
 spec:
   scaleTargetRef:
     deploymentName: votes

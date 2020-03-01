@@ -42,8 +42,6 @@ kind: ScaledObject
 metadata:
   name: pubsub-scaledobject
   namespace: keda-pubsub-test
-  labels:
-    deploymentName: keda-pubsub-go
 spec:
   scaleTargetRef:
     deploymentName: keda-pubsub-go

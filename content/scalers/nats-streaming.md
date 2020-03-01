@@ -38,8 +38,6 @@ kind: ScaledObject
 metadata:
   name: stan-scaledobject
   namespace: gonuts
-  labels:
-    deploymentName: gonuts-sub
 spec:
   pollingInterval: 10   # Optional. Default: 30 seconds
   cooldownPeriod: 30   # Optional. Default: 300 seconds
