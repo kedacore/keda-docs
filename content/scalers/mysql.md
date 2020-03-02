@@ -75,8 +75,6 @@ kind: ScaledObject
 metadata:
   name: mysql-scaledobject
   namespace: my-project
-  labels:
-    deploymentName: worker
 spec:
   scaleTargetRef:
     deploymentName: worker

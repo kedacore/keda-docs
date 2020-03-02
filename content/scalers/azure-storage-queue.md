@@ -50,8 +50,6 @@ kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject
   namespace: default
-  labels:
-    deploymentName: azurequeue-function
 spec:
   scaleTargetRef:
     deploymentName: azurequeue-function

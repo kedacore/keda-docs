@@ -58,8 +58,6 @@ kind: ScaledObject
 metadata:
   name: azure-servicebus-queue-scaledobject
   namespace: default
-  labels:
-    deploymentName: azure-servicebus-queue-function
 spec:
   scaleTargetRef:
     deploymentName: azure-servicebus-queue-function

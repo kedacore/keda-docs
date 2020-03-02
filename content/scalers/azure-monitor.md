@@ -86,7 +86,6 @@ metadata:
   name: azure-monitor-scaler
   labels:
     app: azure-monitor-example
-    deploymentName: azure-monitor-example
 spec:
   scaleTargetRef:
     deploymentName: azure-monitor-example

@@ -61,8 +61,6 @@ kind: ScaledObject
 metadata:
   name: {deployment-name}
   namespace: default
-  labels:
-    deploymentName: {deployment-name}
 spec:
   scaleTargetRef:
     deploymentName: {deployment-name}

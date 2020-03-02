@@ -85,7 +85,6 @@ metadata:
   name: aws-cloudwatch-queue-scaledobject
   namespace: keda-test
   labels:
-    deploymentName: nginx-deployment
     test: nginx-deployment
 spec:
   scaleTargetRef:

@@ -40,8 +40,6 @@ kind: ScaledObject
 metadata:
   name: prometheus-scaledobject
   namespace: default
-  labels:
-    deploymentName: my-deployment
 spec:
   scaleTargetRef:
     deploymentName: my-deployment
