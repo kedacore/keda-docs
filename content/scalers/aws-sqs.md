@@ -35,10 +35,6 @@ triggers:
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
-**Pod identity based authentication:**
-
-- `podIdentity.provider` needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
-
 **Role based authentication:**
 
 - `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
@@ -48,7 +44,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 - `awsAccessKeyID` - Id of the user
 - `awsSecretAccessKey` - Access key for the user to authenticate with
 
-The user will need access to read properties from the specified AWS SQS queue.
+The user will need access to read data from AWS Cloudwatch.
 
 ### Example
 
