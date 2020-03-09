@@ -24,14 +24,22 @@ triggers:
       queueLength: "5"  # Default: "5"
       # Required: awsRegion
       awsRegion: "eu-west-1" 
+      podIdentity: "false"  # Default: "true"
 ```
 **Parameter list:**
 
 - `queueURL` - Full URL for the SQS Queue
 - `queueLength` - Target value for `ApproximateNumberOfMessages` in the SQS Queue
 - `awsRegion` - AWS Region for the SQS Queue
+- `podIdentity` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below).
+
+
+> When `podIdentity` set to `false` - the only requirement is that the Keda operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.
+
 
 ### Authentication Parameters
+
+> These parameters are relevant only when `podIdentity` is set to `true`. 
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
