@@ -1,3 +1,6 @@
+[Settings]
+ID = "fe8a3813-54ab-4e7a-b01f-e3b52e382bf7"
+
 [build]
 publish = "public"
 command = "hugo --gc --minify"
