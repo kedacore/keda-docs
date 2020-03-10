@@ -13,11 +13,11 @@ Scale applications based on a *Scaler Name*.
 
 ### Trigger Specification
 
-This specification describes the `huawei-cloudeye` trigger that scales based on a Huawei Cloudeye.
+This specification describes the `*Scaler Type*` trigger that scales based on a Huawei Cloudeye.
 
 ```yaml
 triggers:
-  - type: huawei-cloudeye
+  - type: *Scaler Type*
     metadata:
       namespace: SYS.ELB
 ```
@@ -32,7 +32,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Credential based authentication:**
 
-- `IdentityEndpoint` - Identity Endpoint
+- `IdentityEndpoint` - Endpoint to verify the identity against
 
 The user will need access to read data from Huawei Cloudeye.
 
