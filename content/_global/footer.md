@@ -11,4 +11,6 @@ menu_title = "Learn More"
   url = "#"
 +++
 
-KEDA is open-source under MIT License
+We are a Cloud Native Computing Foundation (CNCF) sandbox project.
+
+![CNCF Logo](./../../images/logo-cncf.svg)
