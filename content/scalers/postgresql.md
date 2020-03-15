@@ -5,7 +5,7 @@ title = "PostgreSQL"
 background = "light"
 +++
 
-Scale applications based on a PostgreSQL query
+Scale applications based on a PostgreSQL query.
 
 **Availability:** v1.2+ | **Maintainer:** Community
 
