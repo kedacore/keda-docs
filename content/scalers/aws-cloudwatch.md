@@ -33,9 +33,19 @@ triggers:
       awsAccessKeyID: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
       # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
       awsSecretAccessKey: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
+      identityOwner: pod | operator # Optional. Default: pod
 ```
 
+**Parameter list:**
+
+- `identityOwner` - Receive permissions on the Cloudwatch via Pod Identity or from the KEDA operator itself (see below).
+
+
+> When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the Cloudwatch. Additional Authentication Parameters are not required.
+
 ### Authentication Parameters
+
+> These parameters are relevant only when `identityOwner` is set to `pod`. 
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
