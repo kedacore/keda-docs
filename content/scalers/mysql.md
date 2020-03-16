@@ -79,7 +79,7 @@ spec:
   scaleTargetRef:
     deploymentName: worker
   triggers:
-  - type: redis
+  - type: mysql
     metadata:
       queryValue: "4"
       query: "SELECT CEIL(COUNT(*) / 6) FROM task_instance WHERE state='running' OR state='queued'"
