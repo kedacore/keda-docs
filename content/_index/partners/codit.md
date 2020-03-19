@@ -1,5 +1,5 @@
 +++
-weight = 30
+weight = 20
 item_url = "https://www.codit.eu"
 
 [asset]
