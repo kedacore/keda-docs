@@ -1,5 +1,5 @@
 +++
-weight = 20
+weight = 40
 item_url = "https://www.redhat.com"
 
 [asset]
