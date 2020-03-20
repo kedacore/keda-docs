@@ -1,5 +1,5 @@
 +++
-weight = 30
+weight = 40
 item_url = "https://www.purefacts.com/"
 
 [asset]
