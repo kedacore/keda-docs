@@ -1,0 +1,16 @@
+{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+<div class="list is-hoverable">
+  {{ range $scalers }}
+  <div class="list-item">
+    <a class="is-size-5 is-size-6-mobile" href="{{ .RelPermalink }}">
+      {{ .Title }}
+    </a>
+
+    <br />
+
+    <p>
+      {{ .Params.description }}
+    </p>
+  </div>
+  {{ end }}
+</div>

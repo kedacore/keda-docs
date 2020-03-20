@@ -1,0 +1,34 @@
+{{ $samples := site.Params.samples }}
+<section class="section has-background-white-bis">
+  <div class="container">
+    <p class="title is-size-2 is-size-3-mobile" id="samples">
+      Highlighted Samples
+    </p>
+
+    <div class="columns">
+      {{ range $samples }}
+      <div class="column is-one-third">
+        <div class="card is-dark">
+          <div class="card-content">
+            <p class="title is-size-2 is-size-3-mobile is-spaced">
+              <span class="icon has-text-primary">
+                <i class="{{ .icon }}"></i>
+              </span>
+            </p>
+    
+            <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold">
+              <a href="{{ .url }}" target="_blank">
+                {{ .title }}
+              </a>
+            </p>
+    
+            <p class="content is-medium">
+              {{ .content | markdownify }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>

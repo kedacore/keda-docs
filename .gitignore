@@ -1,3 +1,8 @@
+node_modules/
 public/
 .idea
-resources/_gen/
+resources/
+
+# Link checker artifacts
+bin/
+tmp/

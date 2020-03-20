@@ -1,0 +1,22 @@
+{{ $notice := .Params.notice }}
+
+<section class="section">
+  <div class="container">
+    <div class="content is-constrained has-bottom-padding">
+      {{ with $notice }}
+      <article class="message is-warning">
+        <div class="message-header">
+          <p>
+            Notice
+          </p>
+        </div>
+        <div class="message-body">
+          {{ . }}
+        </div>
+      </article>
+      {{ end }}
+      
+      {{ .Content | replaceRE "(<h[2-9] id=\"([^\"]+)\".+)(</h[2-9]+>)" `${1} <a class="headline-hash" href="#${2}"><span class="icon hashlink"><i class="fas fa-hashtag"></i></span></a>${3}` | safeHTML }}
+    </div>
+  </div>
+</section>

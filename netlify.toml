@@ -1,33 +1,12 @@
-[Settings]
-ID = "fe8a3813-54ab-4e7a-b01f-e3b52e382bf7"
-
 [build]
 publish = "public"
-command = "hugo --gc --minify"
+command = "make production-build"
 
-[context.production.environment]
-HUGO_VERSION = "0.59.1"
-HUGO_ENV = "production"
-HUGO_ENABLEGITINFO = "true"
-
-[context.split1]
-command = "hugo --gc --minify --enableGitInfo"
-
-[context.split1.environment]
-HUGO_VERSION = "0.59.1"
-HUGO_ENV = "production"
+[build.environment]
+HUGO_VERSION = "0.67.0"
 
 [context.deploy-preview]
-command = "hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
-
-[context.deploy-preview.environment]
-HUGO_VERSION = "0.59.1"
+command = "make preview-build"
 
 [context.branch-deploy]
-command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
-
-[context.branch-deploy.environment]
-HUGO_VERSION = "0.59.1"
-
-[context.next.environment]
-HUGO_ENABLEGITINFO = "true"
+command = "make preview-build"

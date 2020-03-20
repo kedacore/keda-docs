@@ -1,0 +1,15 @@
+{{ $title := .Title }}
+{{ $desc  := .Description }}
+<section class="hero is-dark has-background-pattern">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced">
+        {{ .Title }}
+      </p>
+
+      <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold">
+        {{ $desc }}
+      </p>
+    </div>
+  </div>
+</section>

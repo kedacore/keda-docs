@@ -1,0 +1,8 @@
+{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+<div class="buttons">
+  {{ range $scalers }}
+  <a class="button is-primary is-outlined" href="{{ .RelPermalink }}">
+    {{ .Title }}
+  </a>
+  {{ end }}
+</div>

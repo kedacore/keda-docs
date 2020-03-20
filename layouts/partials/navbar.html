@@ -1,0 +1,54 @@
+{{ $home   := site.BaseURL }}
+{{ $here   := .RelPermalink }}
+{{ $title  := site.Title }}
+{{ $logo   := site.Params.logos.navbar }}
+{{ $menu   := site.Menus.main }}
+{{ $social := site.Params.social }}
+<nav class="navbar is-black is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{{ $home }}">
+        {{ $url := printf "img/logos/%s" $logo | relURL }}
+        <img src="{{ $url }}">
+      </a>
+
+      {{ if or $social $menu }}
+      <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+      {{ end }}
+    </div>
+
+    {{ if or $social $menu }}
+    <div class="navbar-menu" id="navbar-menu" :class="{ 'is-active': open }">
+      {{ with $menu }}
+      <div class="navbar-end">
+        {{ range . }}
+        {{ $isExternal := hasPrefix .URL "http" }}
+        <a class="navbar-item is-size-5-desktop" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
+          <span>
+            {{ .Name }}
+          </span>
+          {{ if $isExternal }}
+          <span class="icon has-text-secondary">
+            <i class="fas fa-xs fa-external-link-alt"></i>
+          </span>
+          {{ end }}
+        </a>
+        {{ end }}
+
+        {{ with $social }}
+        <div class="navbar-item">
+          <div class="buttons">
+            {{ partial "social-buttons.html" (dict "btns" . "compact" true "color" "dark") }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</nav>
