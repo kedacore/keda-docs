@@ -92,11 +92,11 @@ name = "Scalers"
 pre = "fas fa-ruler-vertical"
 weight = 4
 
-#[[menu.buttons]]
-#url = "/blog"
-#name = "Blog"
-#pre = "fa fa-rss"
-#weight = 5
+[[menu.buttons]]
+url = "/blog"
+name = "Blog"
+pre = "fa fa-rss"
+weight = 5
 
 [[menu.buttons]]
 url = "/community"
@@ -134,10 +134,10 @@ url = "/community/"
 name = "Community"
 weight = 6
 
-#[[menu.main]]
-#url = "/blog"
-#name = "Blog"
-#weight = 6
+[[menu.main]]
+url = "/blog"
+name = "Blog"
+weight = 6
 
 [[menu.main]]
 url = "https://github.com/kedacore/samples"
