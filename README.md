@@ -2,27 +2,35 @@
 
 Documentation and landing page for the KEDA project at https://keda.sh.
 
-## Building docs locally
+## Running the site locally
 
-Install Hugo Extended:
+Install [Hugo](https://gohugo.io/getting-started/installing/) (the "extended" version with [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) support) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable):
 
 ### Windows
 
 ```sh
 choco install hugo-extended
+choco install yarn
 ```
 
 ### Mac
 
 ```sh
 brew install hugo
+brew install yarn
 ```
 
-Run docs locally:
+Now you can run the docs locally:
 
 ```sh
-hugo server -D
+yarn
+
+hugo server -D -F
 ```
+
+## Publishing the site
+
+The KEDA website is published automatically by [Netlify](https://netlify.com). Any time changes to this repo are pushed to `master`, the site is re-built and re-published in roughly two minutes.
 
 ## Adding blog posts
 
