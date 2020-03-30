@@ -3,6 +3,7 @@ title = "Redis Lists"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Redis Lists."
+go_file = "redis_scaler"
 +++
 
 ### Trigger Specification

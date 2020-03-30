@@ -3,6 +3,7 @@ title = "Google Cloud Platform‎ Pub/Sub"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
+go_file = "gcp_pub_sub_scaler"
 +++
 
 ### Trigger Specification

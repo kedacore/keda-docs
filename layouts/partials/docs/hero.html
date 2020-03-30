@@ -1,8 +1,10 @@
 {{ $title := .Title }}
 {{ $desc  := .Description }}
 {{ $src   := printf "https://github.com/kedacore/keda-docs/blob/master/content/%s" .File.Path }}
-{{ $availability := .Params.availability }}
-{{ $maintainer   := .Params.maintainer }}
+{{ $availability  := .Params.availability }}
+{{ $maintainer    := .Params.maintainer }}
+{{ $isScaler      := eq .CurrentSection.Title "Scalers" }}
+{{ $isSectionRoot := eq .File.BaseFileName "_index" }}
 <section class="hero">
   <div class="hero-body">
     <div class="container">
@@ -16,20 +18,42 @@
       </p>
       {{ end }}
 
-      {{ if or $availability $maintainer }}
       <div class="field is-grouped">
         <p class="control">
           <div class="tags are-medium has-addons">
-            <span class="tag is-black">Availability</span>
-            <span class="tag is-primary has-text-weight-bold">{{ $availability }}</span>
-            <span class="tag is-black">Maintainer</span>
-            <span class="tag is-primary has-text-weight-bold">{{ $maintainer }}</span>
+            {{ with $availability }}
+          <span class="tag is-black">
+            Availability
+          </span>
+          <span class="tag is-primary has-text-weight-bold">
+            {{ . }}
+          </span>
+          {{ end }}
+
+          {{ with $maintainer }}
+          <span class="tag is-black">
+            Maintainer
+          </span>
+          <span class="tag is-primary has-text-weight-bold">
+            {{ . }}
+          </span>
+          {{ end }}
+
+          {{ if and $isScaler (not $isSectionRoot) }}
+          {{ $url := printf "https://github.com/kedacore/keda/blob/master/pkg/scalers/%s.go" .Params.go_file }}
+          <div class="tag is-black">
+            <span class="icon">
+              <i class="fab fa-github"></i>
+            </span>
+            <a class="has-text-light" href="{{ $url }}" target="_blank">
+              Scaler code
+            </a>
           </div>
+          {{ end }}
         </p>
       </div>
 
       <br />
-      {{ end }}
 
       <div class="buttons are-small">
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">

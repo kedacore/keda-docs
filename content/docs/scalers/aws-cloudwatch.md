@@ -3,6 +3,7 @@ title = "AWS Cloudwatch"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on AWS Cloudwatch."
+go_file = "aws_cloudwatch_scaler"
 +++
 
 ### Trigger Specification

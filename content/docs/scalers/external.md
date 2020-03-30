@@ -3,6 +3,7 @@ title = "External"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on an external scaler."
+go_file = "external_scaler"
 +++
 
 ### Trigger Specification

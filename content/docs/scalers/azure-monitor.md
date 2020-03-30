@@ -3,6 +3,7 @@ title = "Azure Monitor"
 availability = "v1.3+"
 maintainer = "Community"
 description = "Scale applications based on Azure Monitor metrics."
+go_file = "azure_monitor_scaler"
 +++
 
 ### Trigger Specification

@@ -3,6 +3,7 @@ title = "RabbitMQ Queue"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on RabbitMQ Queue."
+go_file = "rabbitmq_scaler"
 +++
 
 ### Trigger Specification

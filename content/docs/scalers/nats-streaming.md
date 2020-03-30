@@ -3,6 +3,7 @@ title = "NATS Streaming"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on NATS Streaming."
+go_file = "stan_scaler"
 +++
 
 ### Trigger Specification

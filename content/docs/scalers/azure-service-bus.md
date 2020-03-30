@@ -3,6 +3,7 @@ title = "Azure Service Bus"
 maintainer = "Microsoft"
 description = "Scale applications based on Azure Service Bus Queues or Topics."
 availability = "v1.0+"
+go_file = "azure_servicebus_scaler"
 +++
 
 ### Trigger Specification
