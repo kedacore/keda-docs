@@ -36,6 +36,7 @@ $navbar-burger-color: $primary
 $code: $primary
 $code-background: $white-bis
 $modal-content-width: 50%
+$list-radius: none
 
 // Font overrides
 {{ if $fonts }}
@@ -65,6 +66,10 @@ $card-shadow: none
 $card-header-weight: $weight-bold
 $card-header-shadow:  0 0.125em 0.125em rgba($scheme-invert, 0.1) 
 $card-footer-border-top: $card-border
+$message-header-color: $dark !important
+$message-body-color: $dark !important
+$message-header-padding: 1em 1.25em
+$message-body-padding: $message-header-padding
 
 // Bulma core
 @import "bulma/sass/utilities/_all"
@@ -117,6 +122,13 @@ $card-footer-border-top: $card-border
 @import "card"
 @import "content"
 @import "nav"
+
+.list-item
+  padding: 1rem 1.5rem
+
+  .content
+    margin-top: 0.5rem
+  
 
 .feature-card
   margin-bottom: 2rem

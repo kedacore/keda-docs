@@ -186,12 +186,12 @@ type = "sans_serif"
 
 [[params.features]]
 title = "Event-driven"
-content = "Scale your event-driven application"
+content = "Intelligently scale your event-driven application"
 icon = "fas fa-bolt"
 
 [[params.features]]
 title = "Autoscaling Made Simple"
-content = "Bring rich scaling to every container"
+content = "Bring rich scaling to every container in your [Kubernetes](https://kubernetes.io) cluster"
 icon = "fas fa-rocket"
 
 [[params.features]]
