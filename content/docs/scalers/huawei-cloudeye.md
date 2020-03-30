@@ -12,14 +12,14 @@ This specification describes the `huawei-cloudeye` trigger that scales based on 
 
 ```yaml
 triggers:
-  - type: huawei-cloudeye
-    metadata:
-      namespace: SYS.ELB                                    
-      metricName: mb_l7_qps                                 
-      dimensionName: lbaas_instance_id                      
-      dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
-      targetMetricValue: "100"
-      minMetricValue: "1"
+- type: huawei-cloudeye
+  metadata:
+    namespace: SYS.ELB                                    
+    metricName: mb_l7_qps                                 
+    dimensionName: lbaas_instance_id                      
+    dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
+    targetMetricValue: "100"
+    minMetricValue: "1"
 ```
 
 **Parameter list:**

@@ -12,15 +12,15 @@ This specification describes the `aws-kinesis-stream` trigger that scales based 
 
 ```yaml
 triggers:
-  - type: aws-kinesis-stream
-    metadata:
-      # Required
-      streamName: myKinesisStream
-      # Required
-      awsRegion: "eu-west-1"
-      # Optional: Default: 2
-      shardCount: "2"
-      identityOwner: pod | operator # Optional. Default: pod
+- type: aws-kinesis-stream
+  metadata:
+    # Required
+    streamName: myKinesisStream
+    # Required
+    awsRegion: "eu-west-1"
+    # Optional: Default: 2
+    shardCount: "2"
+    identityOwner: pod | operator # Optional. Default: pod
 ```
 
 **Parameter list:**

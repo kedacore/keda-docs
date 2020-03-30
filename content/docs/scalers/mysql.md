@@ -41,8 +41,7 @@ variables.
 
 ### Example
 
-Here is an example of how to deploy a scaled object with the `mysql` scale trigger which uses
- `TriggerAuthentication`.
+Here is an example of how to deploy a scaled object with the `mysql` scale trigger which uses `TriggerAuthentication`.
 
 ```yaml
 apiVersion: v1

@@ -12,18 +12,18 @@ This specification describes the `azure-monitor` trigger that scales based on an
 
 ```yaml
 triggers:
-  - type: azure-monitor
-    metadata:
-      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster
-      tenantId: xxx-xxx-xxx-xxx-xxx
-      subscriptionId: yyy-yyy-yyy-yyy-yyy
-      resourceGroupName: azureMonitor
-      metricName: kube_pod_status_ready
-      metricFilter: namespace eq 'default'
-      metricAggregationInterval: "0:1:0"
-      targetValue: "1"
-      activeDirectoryClientId: CLIENT_ID_ENV_NAME
-      activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME
+- type: azure-monitor
+  metadata:
+    resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster
+    tenantId: xxx-xxx-xxx-xxx-xxx
+    subscriptionId: yyy-yyy-yyy-yyy-yyy
+    resourceGroupName: azureMonitor
+    metricName: kube_pod_status_ready
+    metricFilter: namespace eq 'default'
+    metricAggregationInterval: "0:1:0"
+    targetValue: "1"
+    activeDirectoryClientId: CLIENT_ID_ENV_NAME
+    activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME
 ```
 
 **Parameter list:**

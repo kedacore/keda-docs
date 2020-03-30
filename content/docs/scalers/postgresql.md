@@ -34,30 +34,31 @@ Finally, a user inserts a query that returns the desired value
 - `targetQueryValue` - a threshold that is used as `targetAverageValue` in HPA.
 
 This is an example of using a full connection string:
+
 ```yaml
-  triggers:
-    - type: postgresql
-      metadata:
-        connection: AIRFLOW_CONN_AIRFLOW_DB
-        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
-        targetQueryValue: 1
+triggers:
+- type: postgresql
+  metadata:
+    connection: AIRFLOW_CONN_AIRFLOW_DB
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    targetQueryValue: 1
 ```
 
 While this is an example of specifying each parameter:
 
 ```yaml
-  triggers:
-    - type: postgresql
-      metadata:
-        userName: "kedaUser"
-        password: PG_PASSWORD
-        host: postgres-svc.namespace.cluster.local #use the cluster-wide namespace as KEDA 
-                                                   #lives in a different namespace from your postgres
-        port: "5432"
-        dbName: postgresql
-        sslmode: disable
-        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
-        targetQueryValue: 1
+triggers:
+- type: postgresql
+  metadata:
+    userName: "kedaUser"
+    password: PG_PASSWORD
+    host: postgres-svc.namespace.cluster.local #use the cluster-wide namespace as KEDA 
+                                                #lives in a different namespace from your postgres
+    port: "5432"
+    dbName: postgresql
+    sslmode: disable
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    targetQueryValue: 1
 ```
 
 ### Authentication Parameters

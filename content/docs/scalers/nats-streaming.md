@@ -11,14 +11,14 @@ go_file = "stan_scaler"
 This specification describes the `stan` trigger for NATS Streaming.
 
 ```yaml
-  triggers:
-  - type: stan
-    metadata:
-      natsServerMonitoringEndpoint: "stan-nats-ss.stan.svc.cluster.local:8222" # Location of the Nats Streaming monitoring endpoint
-      queueGroup: "grp1" # Queue group name of the subscribers
-      durableName: "ImDurable" # Must identify the durability name used by the subscribers
-      subject: "Test" # Name of channel
-      lagThreshold: "10" # Configures the TargetAverageValue on the Horizontal Pod Autoscaler (HPA)).
+triggers:
+- type: stan
+  metadata:
+    natsServerMonitoringEndpoint: "stan-nats-ss.stan.svc.cluster.local:8222" # Location of the Nats Streaming monitoring endpoint
+    queueGroup: "grp1" # Queue group name of the subscribers
+    durableName: "ImDurable" # Must identify the durability name used by the subscribers
+    subject: "Test" # Name of channel
+    lagThreshold: "10" # Configures the TargetAverageValue on the Horizontal Pod Autoscaler (HPA)).
 ```
 
 ### Authentication Parameters

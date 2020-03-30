@@ -12,14 +12,14 @@ This specification describes the `aws-sqs-queue` trigger that scales based on an
 
 ```yaml
 triggers:
-  - type: aws-sqs-queue
-    metadata:
-      # Required: queueURL
-      queueURL: https://sqs.eu-west-1.amazonaws.com/account_id/QueueName
-      queueLength: "5"  # Default: "5"
-      # Required: awsRegion
-      awsRegion: "eu-west-1" 
-      identityOwner: pod | operator # Optional. Default: pod
+- type: aws-sqs-queue
+  metadata:
+    # Required: queueURL
+    queueURL: https://sqs.eu-west-1.amazonaws.com/account_id/QueueName
+    queueLength: "5"  # Default: "5"
+    # Required: awsRegion
+    awsRegion: "eu-west-1" 
+    identityOwner: pod | operator # Optional. Default: pod
 ```
 **Parameter list:**
 

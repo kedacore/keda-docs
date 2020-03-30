@@ -1,0 +1,10 @@
+{{ $here    := $.Page.RelPermalink }}
+{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+<div class="buttons has-extra-top-margin">
+  {{ range $scalers }}
+  {{ $isHere := eq .RelPermalink $here }}
+  <a class="button is-primary{{ if not $isHere }} is-outlined{{ end }}" href="{{ .RelPermalink }}">
+    {{ .Title }}
+  </a>
+  {{ end }}
+</div>

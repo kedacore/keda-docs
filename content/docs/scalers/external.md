@@ -12,13 +12,13 @@ This specification describes the `external` trigger for an external scaler.
 
 ```yaml
 triggers:
-  - type: external
-    metadata:
-      scalerAddress: redis-external-scaler-service:8080
-      address: REDIS_HOST # Required host:port format
-      password: REDIS_PASSWORD
-      listName: mylist # Required
-      listLength: "5" # Required
+- type: external
+  metadata:
+    scalerAddress: redis-external-scaler-service:8080
+    address: REDIS_HOST # Required host:port format
+    password: REDIS_PASSWORD
+    listName: mylist # Required
+    listLength: "5" # Required
 ```
 
 ### Authentication Parameters

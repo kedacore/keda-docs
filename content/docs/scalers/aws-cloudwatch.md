@@ -12,23 +12,23 @@ This specification describes the `aws-cloudwatch` trigger that scales based on a
 
 ```yaml
 triggers:
-  - type: aws-cloudwatch
-    metadata:
-      # Required: namespace
-      namespace: AWS/SQS
-      # Required: Dimension Name
-      dimensionName: QueueName
-      dimensionValue: keda
-      metricName: ApproximateNumberOfMessagesVisible
-      targetMetricValue: "2"
-      minMetricValue: "0"
-      # Required: region
-      awsRegion: "eu-west-1"
-      # Optional: AWS Access Key ID, can use TriggerAuthentication as well
-      awsAccessKeyID: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
-      # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
-      awsSecretAccessKey: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
-      identityOwner: pod | operator # Optional. Default: pod
+- type: aws-cloudwatch
+  metadata:
+    # Required: namespace
+    namespace: AWS/SQS
+    # Required: Dimension Name
+    dimensionName: QueueName
+    dimensionValue: keda
+    metricName: ApproximateNumberOfMessagesVisible
+    targetMetricValue: "2"
+    minMetricValue: "0"
+    # Required: region
+    awsRegion: "eu-west-1"
+    # Optional: AWS Access Key ID, can use TriggerAuthentication as well
+    awsAccessKeyID: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
+    # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
+    awsSecretAccessKey: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
+    identityOwner: pod | operator # Optional. Default: pod
 ```
 
 **Parameter list:**

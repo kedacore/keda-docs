@@ -11,14 +11,14 @@ go_file = "kafka_scaler"
 This specification describes the `kafka` trigger for Apache Kafka Topic.
 
 ```yaml
-  triggers:
-  - type: kafka
-    metadata:
-      # brokerList: kafka.svc:9092 - deprecated
-      bootstrapServers: kafka.svc:9092
-      consumerGroup: my-group
-      topic: test-topic
-      lagThreshold: '5'
+triggers:
+- type: kafka
+  metadata:
+    # brokerList: kafka.svc:9092 - deprecated
+    bootstrapServers: kafka.svc:9092
+    consumerGroup: my-group
+    topic: test-topic
+    lagThreshold: '5'
 ```
 
 **Parameter list:**
