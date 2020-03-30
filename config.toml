@@ -196,12 +196,12 @@ icon = "fas fa-rocket"
 
 [[params.features]]
 title = "Built-in Scalers"
-content = "Out-of-the-box scalers for various vendors"
+content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
 title = "Multiple Workload Types"
-content = "Support for variety of workload types such as deployments & jobs"
+content = "Support for variety of workload types such as deployments and jobs"
 icon = "fas fa-shapes"
 
 [[params.features]]
@@ -211,7 +211,7 @@ icon = "fas fa-cloud"
 
 [[params.features]]
 title = "Azure Functions Support"
-content = "Run & scale your Azure Functions on Kubernetes in production workloads"
+content = "Run and scale your Azure Functions on Kubernetes in production workloads"
 icon = "fab fa-microsoft"
 
 [[params.users]]
