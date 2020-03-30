@@ -1,0 +1,34 @@
+<nav class="pagination" role="navigation" aria-label="pagination">
+  {{ with .PrevInSection }}
+  <a class="pagination-next button is-primary is-outlined" href="{{ .RelPermalink }}">
+    <span class="icon">
+      <i class="fas fa-chevron-left"></i>
+    </span>
+    <span>
+      Previous:&nbsp;<strong>{{ .Title }}</strong>
+    </span>
+  </a>
+  {{ end }}
+
+  {{ with .NextInSection }}
+  <a class="pagination-next button is-primary is-outlined" href="{{ .RelPermalink }}">
+    <span>
+      Next:&nbsp;<strong>{{ .Title }}</strong>
+    </span>
+    <span class="icon">
+      <i class="fas fa-chevron-right"></i>
+    </span>
+  </a>
+  {{ end }}
+
+  <div class="pagination-list">
+    <a class="pagination-link button is-primary" href="/blog">
+      <span class="icon">
+        <i class="fas fa-arrow-left"></i>
+      </span>
+      <span>
+        Back to blog
+      </span>
+    </a>
+  </div>
+</nav>

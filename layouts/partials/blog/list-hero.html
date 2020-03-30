@@ -1,15 +1,17 @@
 {{ $title := .Title }}
 {{ $desc  := .Description }}
-<section class="hero is-dark has-background-pattern">
+<section class="hero is-dark is-medium has-background-pattern">
   <div class="hero-body">
     <div class="container">
-      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced">
+      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced has-shadow">
         {{ .Title }}
       </p>
 
-      <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold">
+      <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold has-shadow">
         {{ $desc }}
       </p>
+
+      {{ partial "blog/rss-button.html" . }}
     </div>
   </div>
 </section>

@@ -1,0 +1,11 @@
+{{ $rss   := .CurrentSection.OutputFormats.Get "rss" }}
+<div class="buttons hero-buttons">
+  <a class="button is-orange" href="{{ $rss.RelPermalink }}">
+    <span class="icon">
+      <i class="fas fa-rss"></i>
+    </span>
+    <span class="has-text-weight-bold">
+      RSS
+    </span>
+  </a>
+</div>
