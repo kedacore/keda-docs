@@ -109,7 +109,7 @@ $message-body-padding: $message-header-padding
 // @import "bulma/sass/components/dropdown"
 @import "bulma/sass/components/level"
 @import "bulma/sass/components/list"
-// @import "bulma/sass/components/media"
+@import "bulma/sass/components/media"
 @import "bulma/sass/components/menu"
 @import "bulma/sass/components/message"
 @import "bulma/sass/components/modal"
@@ -131,12 +131,13 @@ $message-body-padding: $message-header-padding
   
 .title, .subtitle
   &.has-shadow
-    text-shadow: 0 0 10px #000 !important
+    text-shadow: 0 0 10px #000
 
-.feature-card
-  margin-bottom: 2rem
+.card
+  &.is-borderless
+    border: none
 
-  .title
+  &.has-extra-bottom-margin
     margin-bottom: 2rem
 
 .has-mouse-icon

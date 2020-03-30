@@ -10,19 +10,23 @@
     <div class="columns is-multiline is-variable is-4">
       {{ range $features }}
       <div class="column is-one-third">
-        <div class="feature-card">
-          <p class="title is-size-4 is-size-5-mobile has-text-secondary">
-            <i class="fa-2x {{ .icon }}"></i>
-          </p>
+        <div class="card is-borderless has-extra-bottom-margin">
+          <div class="card-content is-paddingless">
+            <p class="title has-text-secondary is-spaced">
+              <span class="icon">
+                <i class="fa-lg {{ .icon }}"></i>
+              </span>
+            </p>
 
-          <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold">
-            {{ .title }}
-          </p>
-  
-          <p class="content is-medium">
-            {{ .content | markdownify }}
-          </p>
-        </div>     
+            <p class="subtitle is-size-3 is-size-4-mobile has-text-weight-bold">
+              {{ .title }}
+            </p>
+     
+            <p class="content is-medium">
+              {{ .content | markdownify }}
+            </p>
+          </div>
+        </div>
       </div>
       {{ end }}
     </div>
