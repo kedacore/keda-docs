@@ -167,9 +167,14 @@ name = "Blog"
 weight = 2
 
 [[menu.main]]
+url = "/community/"
+name = "Community"
+weight = 3
+
+[[menu.main]]
 url = "/resources/"
 name = "Resources"
-weight = 3
+weight = 4
 
 [[menu.main]]
 url = "https://github.com/kedacore/samples"
