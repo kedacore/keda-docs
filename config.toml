@@ -98,86 +98,62 @@ name = "Blog"
 pre = "fa fa-rss"
 weight = 5
 
-[[menu.buttons]]
-url = "/community"
-name = "Community"
-pre = "fas fa-users"
-weight = 6
-
 [[menu.main]]
-url = "/docs/concepts"
-name = "Concepts"
+url = "/docs/"
+name = "Docs"
+identifier = "docs"
 weight = 1
 
 [[menu.main]]
 url = "/docs/deploy"
 name = "Deploying KEDA"
+parent = "docs"
+weight = 1
+
+[[menu.main]]
+url = "/docs/concepts/"
+name = "Concepts"
+parent = "docs"
 weight = 2
+
+[[menu.main]]
+url = "/docs/scalers/"
+name = "Scalers"
+parent = "docs"
+weight = 3
 
 [[menu.main]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
-weight = 3
+parent = "docs"
+weight = 4
 
 [[menu.main]]
-url = "/docs/faq"
+url = "/docs/faq/"
 name = "FAQ"
-weight = 4
+parent = "docs"
+weight = 5
 
 [[menu.main]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
+parent = "docs"
 weight = 5
 
 [[menu.main]]
-url = "/community/"
-name = "Community"
-weight = 6
-
-[[menu.main]]
-url = "/blog"
+url = "/blog/"
 name = "Blog"
-weight = 6
-
-[[menu.main]]
-url = "https://github.com/kedacore/samples"
-name = "Samples"
-weight = 7
-
-[[menu.footer]]
-url = "/docs/concepts"
-name = "Concepts"
-weight = 1
-
-[[menu.footer]]
-url = "/deploy"
-name = "Deploying KEDA"
 weight = 2
 
-[[menu.footer]]
-url = "/docs/concepts/#architecture"
-name = "Architecture"
+[[menu.main]]
+url = "/"
+name = "Resources"
 weight = 3
 
-[[menu.footer]]
-url = "https://keda.devstats.cncf.io/"
-name = "Developer Stats"
-weight = 4
-
-[[menu.footer]]
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 weight = 5
-
-[[menu.footer]]
-url = "https://github.com/kedacore/keda"
-name = "GitHub"
-weight = 6
-
-[[menu.footer]]
-url = "/faq"
-name = "FAQ"
-weight = 7
 
 [[params.fonts]]
 name = "Inria Sans"

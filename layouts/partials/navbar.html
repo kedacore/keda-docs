@@ -12,21 +12,44 @@
         <img src="{{ $url }}">
       </a>
 
-      {{ if or $social $menu }}
       <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
-      {{ end }}
     </div>
 
-    {{ if or $social $menu }}
     <div class="navbar-menu" id="navbar-menu" :class="{ 'is-active': open }">
-      {{ with $menu }}
       <div class="navbar-end">
-        {{ range . }}
+        {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
+        {{ if .HasChildren }}
+        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}"{{ end }}>
+            <span>
+              {{ .Name }}
+            </span>
+            <span class="icon has-text-secondary">
+              <i class="fas fa-md fa-caret-down"></i>
+            </span>
+          </a>
+
+          <div class="navbar-dropdown is-radiusless">
+            {{ range .Children }}
+            <a class="navbar-item" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
+              <span>
+                {{ .Name }}
+              </span>
+              {{ if $isExternal }}
+              <span class="icon has-text-secondary">
+                <i class="fas fa-xs fa-external-link-alt"></i>
+              </span>
+              {{ end }}
+            </a>
+            {{ end }}
+          </div>
+        </div>
+        {{ else }}
         <a class="navbar-item is-size-5-desktop" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
           <span>
             {{ .Name }}
@@ -38,17 +61,14 @@
           {{ end }}
         </a>
         {{ end }}
+        {{ end }}
 
-        {{ with $social }}
         <div class="navbar-item">
           <div class="buttons">
-            {{ partial "social-buttons.html" (dict "btns" . "compact" true "color" "dark") }}
+            {{ partial "social-buttons.html" (dict "btns" $social "compact" true "color" "dark") }}
           </div>
         </div>
-        {{ end }}
       </div>
-      {{ end }}
     </div>
-    {{ end }}
   </div>
 </nav>
