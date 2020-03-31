@@ -7,27 +7,27 @@
       {{ $url    := .RelPermalink }}
       {{ $author := .Params.author }}
       {{ $date   := dateFormat "January 2, 2006" .Date }}
-      <div class="column is-one-third">
+      <div class="column is-half">
         <div class="card">
           <div class="card-content">
-            <p class="title has-text-weight-bold">
+            <p class="title has-text-weight-bold is-spaced">
               <a href="{{ $url }}">
                 {{ $title }}
               </a>
             </p>
 
             {{ with $author }}
-            <p class="subtitle has-text-weight-bold">
+            <p class="subtitle is-size-4 is-size-5-mobile has-text-weight-bold">
               {{ . }}
             </p>
             {{ end }}
 
-            <p class="subtitle has-text-grey">
+            <p class="subtitle is-size-5 is-size-6-mobile has-text-grey">
               {{ $date }}
             </p>
 
             {{ with .Summary }}
-            <p class="content">
+            <p class="content is-medium">
               {{ . }}
             </p>
             {{ end }}
