@@ -1,5 +1,5 @@
 {{ $url     := .Permalink }}
-{{ $title   := cond .IsHome site.Title .Title }}
+{{ $title   := cond .IsHome site.Title (printf "%s | %s" site.Title .Title) }}
 {{ $type    := cond .IsHome "website" "article" }}
 {{ $desc    := cond .IsHome site.Params.description .Description }}
 {{ $twitter := site.Params.twitter_handle }}
