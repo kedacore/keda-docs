@@ -167,7 +167,7 @@ name = "Blog"
 weight = 2
 
 [[menu.main]]
-url = "/"
+url = "/resources/"
 name = "Resources"
 weight = 3
 
