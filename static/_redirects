@@ -1,3 +1,4 @@
 /concepts/*     /docs/concepts/:splat
 /concepts/overview     /docs/concepts
 /deploy/*     /docs/deploy/:splat
+/faq/*     /docs/faq/
