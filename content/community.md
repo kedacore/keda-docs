@@ -10,3 +10,9 @@ If you're interested in contributing to or participating in the direction of KED
 * Meeting agenda: https://hackmd.io/s/r127ErYiN
 
 Just want to learn or chat about KEDA? Feel free to join the conversation in the [#KEDA](https://keda.sh/kubernetes.slack.com/messages/CKZJ36A5D) channel on the [Kubernetes Slack](https://slack.k8s.io)!
+
+## Partners
+
+ Kubernetes Event-driven Autoscaling (KEDA) is supported and built by our community, including the following companies:
+
+{{< community-icons >}}
