@@ -18,6 +18,7 @@
       </p>
       {{ end }}
 
+      {{ if and $isScaler }}
       <div class="field is-grouped">
         <p class="control">
           <div class="tags are-medium">
@@ -47,8 +48,7 @@
           </div>
         </p>
       </div>
-
-      <br />
+      {{ end }}
 
       <div class="buttons are-small">
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
