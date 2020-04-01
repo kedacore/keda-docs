@@ -1,0 +1,2 @@
+{{ $path := printf "includes/%s" . }}
+{{ readFile $path | markdownify }}
