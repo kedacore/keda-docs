@@ -1,0 +1,13 @@
+{{ with site.GetPage "/community" }}
+<section class="section has-background-light">
+  <div class="container">
+    <p class="title is-size-2 is-size-3-mobile" id="get-involved">
+      Get Involved
+    </p>
+    
+    <div class="content is-medium">
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+{{ end }}

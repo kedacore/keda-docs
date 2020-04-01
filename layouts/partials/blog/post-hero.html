@@ -1,0 +1,33 @@
+{{ $title  := .Title }}
+{{ $author := .Params.author }}
+{{ $date   := dateFormat "January 2, 2006" .Date }}
+
+{{ if not $title }}
+{{ errorf "no title specified in the post you created in content/%s" .File.Path }}
+{{ end }}
+
+{{ if not $date }}
+{{ errorf "no date specified in the post you created in content/%s" .File.Path }}
+{{ end }}
+
+{{ if not $author }}
+{{ errorf "no author specified in the post you created in content/%s" .File.Path }}
+{{ end }}
+
+<section class="hero is-dark is-medium has-background-pattern">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced">
+        {{ $title }}
+      </p>
+
+      <p class="subtitle is-size-2 is-size-3-mobile">
+        {{ $author }}
+      </p>
+
+      <p class="subtitle is-size-4 is-size-5-mobile">
+        {{ $date }}
+      </p>
+    </div>
+  </div>
+</section>

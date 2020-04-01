@@ -1,0 +1,20 @@
+{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+<section class="section">
+  <div class="container">
+    <p class="title is-size-2 is-size-3-mobile is-spaced" id="scalers">
+      Scalers
+    </p>
+
+    <p class="subtitle has-text-dark is-size-4 is-size-5-mobile">
+      Scalers represent event sources that KEDA can scale based on
+    </p>
+
+    <br />
+
+    <div class="columns is-multiline">
+      {{ range $scalers }}
+      {{ .Render "scaler" }}
+      {{ end }}
+    </div>
+  </div>
+</section>

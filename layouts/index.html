@@ -1,0 +1,18 @@
+{{ define "title" }}
+{{ site.Title }} | {{ site.Params.tagline }}
+{{ end }}
+
+{{ define "main" }}
+{{ partial "home/hero.html" . }}
+{{ partial "home/what-is.html" . }}
+{{ partial "home/features.html" . }}
+{{ partial "home/video.html" . }}
+{{ partial "home/scalers.html" . }}
+{{ partial "home/samples.html" . }}
+{{ partial "logo-section.html" (dict "title" "Users" "description" "A variety of users are autoscaling applications with Kubernetes Event-driven Autoscaling (KEDA)" "logos" site.Params.users) }}
+<hr />
+{{ partial "logo-section.html" (dict "title" "Community" "description" "Kubernetes Event-driven Autoscaling (KEDA) is supported by and built by our community, including the following companies" "logos" site.Params.community) }}
+
+{{ partial "home/get-involved.html" . }}
+{{ partial "home/cncf.html" . }}
+{{ end }}

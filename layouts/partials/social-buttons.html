@@ -1,0 +1,15 @@
+{{ $compact  := .compact }}
+{{ $outlined := .outlined }}
+{{ range .btns }}
+<a class="button is-{{ .bg_color }}" href="{{ .url }}" target="_blank">
+  <span class="icon has-text-{{ .icon_color }}">
+    <i class="{{ .icon }}"></i>
+  </span>
+
+  {{ if not $compact }}
+  <span class="has-text-weight-bold has-text-{{ .text_color }}">
+    {{ .name }}
+  </span>
+  {{ end }}
+</a>
+{{ end }}

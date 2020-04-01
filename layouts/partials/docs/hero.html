@@ -1,0 +1,65 @@
+{{ $title := .Title }}
+{{ $desc  := .Description }}
+{{ $src   := printf "https://github.com/kedacore/keda-docs/blob/master/content/%s" .File.Path }}
+{{ $availability  := .Params.availability }}
+{{ $maintainer    := .Params.maintainer }}
+{{ $isScaler      := eq .CurrentSection.Title "Scalers" }}
+{{ $isSectionRoot := eq .File.BaseFileName "_index" }}
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
+        {{ $title }}
+      </p>
+
+      {{ with $desc }}
+      <p class="subtitle">
+        {{ . }}
+      </p>
+      {{ end }}
+
+      <div class="field is-grouped">
+        <p class="control">
+          <div class="tags are-medium">
+            {{ with $availability }}
+            <span class="tag">
+              Availability:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
+            </span>
+            {{ end }}
+
+            {{ with $maintainer }}
+            <span class="tag is-outlined">
+              Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
+            </span>
+            {{ end }}
+
+            {{ if and $isScaler (not $isSectionRoot) }}
+            {{ $url := printf "https://github.com/kedacore/keda/blob/master/pkg/scalers/%s.go" .Params.go_file }}
+            <div class="tag is-black">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <a class="has-text-light" href="{{ $url }}" target="_blank">
+                Scaler code
+              </a>
+            </div>
+            {{ end }}
+          </div>
+        </p>
+      </div>
+
+      <br />
+
+      <div class="buttons are-small">
+        <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
+          <span class="icon">
+            <i class="fab fa-github"></i>
+          </span>
+          <span>
+            Suggest a change
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

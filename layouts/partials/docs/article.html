@@ -1,0 +1,13 @@
+{{ $isScaler := eq .CurrentSection.Title "Scalers" }}
+<div class="container">
+  <div class="columns is-variable is-8">
+    <div class="column is-one-quarter is-hidden-touch">
+      {{ partial "docs/nav.html" . }}
+    </div>
+
+    <div class="column is-content-column">
+      {{ partial "docs/hero.html" . }}
+      {{ partial "content.html" . }}
+    </div>
+  </div>
+</div>
