@@ -5,7 +5,7 @@
 {{ $maintainer    := .Params.maintainer }}
 {{ $isScaler      := eq .CurrentSection.Title "Scalers" }}
 {{ $isSectionRoot := eq .File.BaseFileName "_index" }}
-<section class="hero">
+<section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
@@ -47,8 +47,6 @@
           </div>
         </p>
       </div>
-
-      <br />
 
       <div class="buttons are-small">
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
