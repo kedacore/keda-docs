@@ -19,9 +19,6 @@
       {{ .Content | replaceRE "(<h[2-9] id=\"([^\"]+)\".+)(</h[2-9]+>)" `${1} <a class="headline-hash" href="#${2}"><span class="icon hashlink"><i class="fas fa-hashtag"></i></span></a>${3}` | safeHTML }}
 
       {{ if $isScaler }}
-      <br />
-      <br />
-
       <h2 id="available-schedulers">
         Currently available schedulers for KEDA
       </h2>
