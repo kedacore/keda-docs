@@ -1,0 +1,232 @@
+@charset "utf-8"
+{{ $fontAwesomeVersion := site.Params.font_awesome_version }}
+{{ $fonts := site.Params.fonts }}
+{{ if $fonts }}
+{{ $fontSlice := (slice) }}
+{{ range $fonts }}
+{{ $fontSlice = $fontSlice | append (printf "%s:%s" (replace .name " " "+") (delimit .sizes ",")) }}
+{{ end }}
+{{ $fontsUrl := printf "https://fonts.googleapis.com/css?family=%s" (delimit $fontSlice "|") }}
+@import url("{{ $fontsUrl }}")
+{{ end }}
+
+{{ with $fontAwesomeVersion }}
+{{ $fontAwesomeUrl := printf "https://use.fontawesome.com/releases/v%s/css/all.css" . }}
+@import url("{{ $fontAwesomeUrl }}")
+{{ end }}
+
+// Site-specific variables here
+$keda-blue: #326de6 
+$keda-light-blue: #679bf0
+$twitter-blue: rgb(29, 161, 242)
+$slack-green: #2EB67D
+$k8s-blue: #326ce5
+
+// Initial Bulma imports
+@import "bulma/sass/utilities/initial-variables"
+@import "bulma/sass/utilities/functions"
+
+// Bulma-specific overrides
+$primary: $keda-blue
+$secondary: $keda-light-blue
+$footer-color: $white-bis
+$footer-background-color: $black
+$navbar-height: 4rem
+$navbar-burger-color: $primary
+$code: $primary
+$code-background: $white-bis
+$modal-content-width: 50%
+$list-radius: none
+
+// Font overrides
+{{ if $fonts }}
+// Sans-serif font
+{{ with (index (where $fonts ".type" "sans_serif") 0).name }}
+$family-sans-serif: "{{ . }}", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+{{ end }}
+
+// Monospace font
+{{ with (index (where $fonts ".type" "monospace") 0).name }}
+$family-monospace: "{{ . }}", monospace
+{{ end }}
+{{ end }}
+
+// Final Bulma imports
+@import "bulma/sass/utilities/derived-variables"
+
+$card-border: 1.5px solid $grey-lighter
+
+$colors: mergeColorMaps(("secondary": ($secondary, $white-bis), "slack-green": ($slack-green, $white), "twitter-blue": ($twitter-blue, $white), "orange": ($orange, $white)), $colors)
+
+$card-shadow: none
+$card-color: $black
+//$card-content-padding: 1.5rem 2rem
+//$card-header-padding: 1rem $card-content-padding
+$card-shadow: none
+$card-header-weight: $weight-bold
+$card-header-shadow:  0 0.125em 0.125em rgba($scheme-invert, 0.1) 
+$card-footer-border-top: $card-border
+$message-header-color: $dark !important
+$message-body-color: $dark !important
+$message-header-padding: 1em 1.25em
+$message-body-padding: $message-header-padding
+
+// Bulma core
+@import "bulma/sass/utilities/_all"
+@import "bulma/sass/base/_all"
+@import "bulma/sass/elements/container"
+@import "bulma/sass/grid/columns"
+@import "bulma/sass/grid/tiles"
+@import "bulma/sass/layout/hero"
+@import "bulma/sass/layout/section"
+@import "bulma/sass/layout/footer"
+
+// Elements
+
+// @import "bulma/sass/elements/box"
+@import "bulma/sass/elements/button"
+@import "bulma/sass/elements/content"
+@import "bulma/sass/elements/icon"
+// @import "bulma/sass/elements/image"
+// @import "bulma/sass/elements/notification"
+// @import "bulma/sass/elements/progress"
+// @import "bulma/sass/elements/table"
+@import "bulma/sass/elements/tag"
+@import "bulma/sass/elements/title"
+// @import "bulma/sass/elements/other"
+
+// Forms
+// @import "bulma/sass/form/shared"
+// @import "bulma/sass/form/input-textarea"
+// @import "bulma/sass/form/checkbox-radio"
+// @import "bulma/sass/form/select"
+// @import "bulma/sass/form/file"
+// @import "bulma/sass/form/tools"
+
+// Components
+// @import "bulma/sass/components/breadcrumb"
+@import "bulma/sass/components/card"
+// @import "bulma/sass/components/dropdown"
+@import "bulma/sass/components/level"
+@import "bulma/sass/components/list"
+@import "bulma/sass/components/media"
+@import "bulma/sass/components/menu"
+@import "bulma/sass/components/message"
+@import "bulma/sass/components/modal"
+@import "bulma/sass/components/navbar"
+@import "bulma/sass/components/pagination"
+// @import "bulma/sass/components/panel"
+// @import "bulma/sass/components/tabs"
+
+// Custom CSS
+@import "card"
+@import "content"
+@import "nav"
+
+.has-extra-top-margin
+  margin-top: 1.5rem
+
+.list-item
+  padding: 1rem 1.5rem
+
+  .content
+    margin-top: 0.5rem
+  
+.title, .subtitle
+  &.has-shadow
+    text-shadow: 0 0 10px #000
+
+.card
+  &.is-borderless
+    border: none
+
+  &.has-extra-bottom-margin
+    margin-bottom: 2rem
+
+.has-mouse-icon
+  &:hover
+    cursor: pointer
+
+.is-sticky
+  position: sticky
+  position: -webkit-sticky
+  top: $navbar-height + 2.5rem
+
+.is-page
+  display: flex
+  flex-direction: column
+  min-height: 100vh
+
+  .is-main
+    flex: 1
+
+=logo($desk, $tab, $touch)
+  +desktop
+    width: $desk
+  +tablet-only
+    width: $tab
+  +mobile
+    width: $touch
+
+.is-cncf-logo
+  +logo(40%, 20%, 70%)
+
+.is-hero-logo
+  +logo(75%, 80%, 50%)
+
+.is-footer-logo
+  +logo(40%, 60%, 40%)
+
+.is-org-logo
+  width: auto
+  max-height: 8rem
+
+.is-bold-letter
+  color: $secondary
+  border-bottom: 4px solid $primary
+
+.title
+  line-height: 1.5
+
+  .icon
+    margin-left: 0.75rem
+
+.has-background-pattern
+  background-image: url("/img/circuit-board.svg")
+
+.has-extra-padding
+  margin: 1.5rem 0
+
+.is-youtube-embed
+  width: 100%
+  height: 20rem
+
+.pagination
+  &.has-bottom-margin
+    margin-bottom: 4rem
+
+.footer
+  .buttons
+    +touch
+      margin-top: 1rem
+
+  a
+    color: $secondary
+
+    &:hover
+      color: $primary
+
+hr
+  &.is-thick
+    margin: 3rem 0
+
+.subtitle
+  a
+    color: $secondary !important
+
+    &:hover
+      color: $grey-light !important
+
+.navbar-item
+  .icon
+    margin-left: 0.1rem

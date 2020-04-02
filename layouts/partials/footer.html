@@ -1,0 +1,53 @@
+{{ $title := site.Title }}
+{{ $logo  := printf "img/logos/%s" site.Params.logos.footer | relURL }}
+{{ $year  := now.Year }}
+{{ $menu  := site.Menus.main }}
+{{ $btns  := dict "btns" site.Params.social "color" "white" "outlined" true }}
+<footer class="footer">
+
+  <div class="container">
+    <div class="columns is-vcentered is-variable is-8">
+      <div class="column is-one-third">
+        <img class="is-footer-logo" src="{{ $logo }}" alt="{{ $title }} footer logo">
+      </div>
+
+      <div class="column">
+        {{ range $menu }}
+        {{ $isExternal := hasPrefix .URL "http" }}
+        <p class="is-size-5">
+          <a href="{{ .URL }}">
+            <span>
+              {{ .Name }}
+            </span>
+            {{ if $isExternal }}
+            <span class="icon has-text-white-bis">
+              <i class="fas fa-xs fa-external-link-alt"></i>
+            </span>
+            {{ end }}
+          </a>
+        </p>
+        {{ end }}
+      </div>
+
+      <div class="column">     
+        <div class="buttons are-small">
+          {{ partial "social-buttons.html" $btns }}
+        </div>
+      </div>
+    </div>
+
+    <hr class="has-background-primary is-thick" />
+
+    <div class="has-text-weight-medium">
+      <p>
+        &copy; KEDA Authors 2014-{{ $year }} | Documentation Distributed under <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">CC-BY-4.0</a>
+      </p>
+
+      <br />
+
+      <p>
+        &copy; {{ $year }} <a href="https://linuxfoundation.org" target="_blank">The Linux Foundation</a>. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://linuxfoundation.org/trademark-usage" target="_blank">Trademark Usage</a> page. 
+      </p>
+    </div>
+  </div>
+</footer>

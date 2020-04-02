@@ -1,0 +1,78 @@
+{{ $here           := .RelPermalink }}
+{{ $docsSections   := (index (where site.Sections "Section" "docs") 0).Sections }}
+{{ $currentSection := .CurrentSection }}
+{{ $root           := .FirstSection }}
+
+<div class="nav is-sticky">
+  {{ with $root }}
+  {{ $isHere := eq $here .RelPermalink }}
+  <div class="nav-section">
+    <div class="nav-section-title is-size-5 is-size-6-mobile{{ if $isHere }} is-active{{ end }}">
+      <a href="{{ .RelPermalink }}">
+        {{ .Title }}
+      </a>
+    </div>
+
+    <ul class="nav-section-links">
+      {{ range .RegularPages }}
+      {{ $isHere := eq $here .RelPermalink }}
+      {{ $title := cond (isset .Params "short") .Params.short .Title }}
+      <li class="nav-section-link{{ if $isHere }} is-active{{ end }}">
+        <a href="{{ .RelPermalink }}">
+          {{ $title }}
+        </a>
+      </li>
+      
+      {{ if $isHere }}
+      {{ if gt (len .TableOfContents) 32 }}
+      <div class="nav-section-toc">
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+      {{ end }}
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+
+  {{ range $docsSections }}
+  {{ $isThisSection := eq .CurrentSection.Title $currentSection.Title }}
+  <div class="nav-section" x-data="{ open: {{ $isThisSection }} }">
+    {{ $isHere := eq $here .RelPermalink }}
+    <div class="nav-section-title is-size-5 is-size-6-mobile{{ if $isHere }} is-active{{ end }}" href="{{ .RelPermalink }}">
+      <a href="{{ .RelPermalink }}">
+        {{ .Title }}
+      </a>
+      {{ if .RegularPages }}
+      <span @click="open = !open">
+        <i class="fas fa-md has-text-secondary" :class="{ 'fa-caret-down': !open, 'fa-caret-up': open }"></i>
+      </span>
+      {{ end }}
+    </div>
+
+    </nav>
+
+    {{ with .RegularPages }}
+    <ul class="nav-section-links" x-show="open">
+      {{ range . }}
+      {{ $isHere := eq $here .RelPermalink }}
+      {{ $title := cond (isset .Params "short") .Params.short .Title }}
+      <li class="nav-section-link{{ if $isHere }} is-active{{ end }}">
+        <a href="{{ .RelPermalink }}">
+          {{ $title }}
+        </a>
+      </li>
+      
+      {{ if $isHere }}
+      {{ if gt (len .TableOfContents) 32 }}
+      <div class="nav-section-toc">
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+      {{ end }}
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>

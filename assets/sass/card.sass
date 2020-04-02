@@ -1,0 +1,18 @@
+.card
+  height: 100%
+  border: $card-border
+  border-radius: 5px
+
+  display: flex
+  flex-direction: column
+
+  &.is-dark
+    background-color: $black-bis
+    color: $white-bis
+
+  &-content
+    flex: 1
+  
+  &.is-collapsible
+    & + &
+      margin-top: 0.5rem

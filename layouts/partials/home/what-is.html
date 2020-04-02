@@ -1,0 +1,18 @@
+{{ $whatIs := site.Params.what_is | markdownify }}
+<section class="section has-background-light">
+  <div class="container">
+    <div class="columns is-vcentered is-flexible is-8">
+      <div class="column is-one-third">
+        <p class="title is-size-2 is-size-3-mobile">
+          What is KEDA?
+        </p>
+      </div>
+
+      <div class="column">
+        <div class="content is-medium">
+          {{ $whatIs }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

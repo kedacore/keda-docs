@@ -1,0 +1,42 @@
+{{ $logo  := printf "img/logos/%s" site.Params.logos.hero | relURL }}
+{{ $title := site.Title }}
+{{ $desc  := site.Params.description | markdownify }}
+{{ $btns  := site.Menus.buttons }}
+<section class="hero is-dark is-medium has-background-pattern">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered is-variable is-8">
+        <div class="column is-one-third">
+          <img class="is-hero-logo" src="{{ $logo }}" alt="{{ $title }} home hero logo">
+        </div>
+
+        <div class="column">
+          <p class="title is-size-1 is-size-2-mobile has-text-white-bis has-text-weight-bold has-shadow is-spaced">
+            Kubernetes Event-driven Autoscaling
+          </p>
+
+          <p class="subtitle is-size-3 has-text-light is-size-4-mobile has-shadow">
+            {{ $desc }}
+          </p>
+
+          <br />
+
+          <div class="buttons">
+            {{ range $btns }}
+            <a class="button is-black is-inverted has-text-weight-bold" href="{{ .URL }}">
+              {{ with .Pre }}
+              <span class="icon has-text-primary">
+                <i class="{{ . }}"></i>
+              </span>
+              {{ end }}
+              <span>
+                {{ .Name }}
+              </span>
+            </a>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

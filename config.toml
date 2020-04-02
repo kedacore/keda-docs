@@ -1,138 +1,247 @@
-# Site settings
-baseurl = "/"
+baseURL = "https://keda.sh"
 languageCode = "en-us"
-title = "Kubernetes event-driven Autoscaling (KEDA)"
-theme = "syna"
+title = "KEDA"
 enableGitInfo = true
-version = "0.15.2"
+disableKinds = ["taxonomy", "taxonomyTerm"]
 
-# Google Analytics tracking
-googleAnalytics = ""
-
-[outputs]
-  home = ["HTML", "JSON"]
-
-[frontmatter]
-date = ["date", "lastmod"]
-lastmod = ["lastmod", ":git", "date"]
+# See other available styles here: https://xyproto.github.io/splash/docs/
+[markup.highlight]
+style = "dracula"
 
 [params]
-  name = "KEDA"
-  description = "Kubernetes Event-driven Autoscaling"
+# Main page hero
+tagline = "Kubernetes Event-driven Autoscaling"
+description = "Application autoscaling made simple"
 
-  [params.style]
-    #background = "secondary"
+# "What is KEDA?" section on main page
+what_is = """
+**KEDA** is a Kubernetes-based event-driven autoscaler. KEDA determines how any container in [Kubernetes](https://kubernetes.io) should be scaled based on the number of events that need to be processed.
 
-  # Theme customizations
-  # Assets relative to 'static/'
-  [params.custom]
-    favicon = "images/favicon.ico"
-    favicon_ico_sizes = "16x16 32x32"
+KEDA is a single-purpose and lightweight component that can be added to any Kubernetes cluster. It works alongside standard Kubernetes components like the [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale) and can extend functionality without overwriting or duplication. With KEDA you can specify the that apps you want to scale in an event-driven way while other apps continue to function. This makes KEDA a flexible and safe option to run alongside other Kubernetes applications and frameworks.
+"""
 
-  # Piwik tracking
-  [params.analytics.piwik]
-    #url = ""
-    #id = ""
-    #domain = "" # Track subdomains via "*.example.com"
-    # Optional hash for integrity check
-    #hash = "sha512-RfeD0pacGTqy9m7U6PgehQfS4cc7SIt+e+P+H5e848kEvB/RW84CUGO3O4O3LNbxjevym6KPUZ8muPsMrI8WIw=="
+locale = "en_US"
+twitter_handle = "kedaorg"
+font_awesome_version = "5.12.1"
+alpine_js_version = "2.2.1"
+favicon = "favicon.png"
 
-  # Optional, global disable switch for fontawesome related files
-  # For custom fontawesome js files use the custom.js method
-  [params.fontawesome]
-    disabled = false
-    pro = false
+# Site fonts. For more options see https://fonts.google.com.
+[[params.fonts]]
+name = "Inria Sans"
+sizes = [300, 400, 600, 700]
+type = "sans_serif"
 
-  [params.colors]
-    primary = "#00838F"
-    secondary = "#D3DBE3"
-    success = "#008f54"
-    info = "#00c9dc"
-    warning = "#fdf314"
-    danger = "#dc1200"
-    light = "#f8f9fa"
-    dark = "#343a40"
+[[params.fonts]]
+name = "Roboto Mono"
+sizes = [300, 400, 600, 700]
+type = "monospace"
 
-# main/prepend/postpend menus are displayed in nav fragment.
-# Keep an eye out for updates. These will be moved out to make navbar more
-# configurable.
+# All logos are in static/img/logos
+[params.logos]
+navbar = "keda-horizontal-color.png"
+hero = "keda-icon-color.png"
+footer = "keda-icon-white.png"
+
+# "Highlighted Samples" section on the main page
+[[params.samples]]
+title = "RabbitMQ and Go"
+content = "RabbitMQ Consumer written in Go that is scaled with KEDA."
+url = "https://github.com/kedacore/sample-go-rabbitmq"
+icon = "fas fa-envelope"
+
+[[params.samples]]
+title = "Azure Functions and Queue"
+content = "Azure Function that triggers on Azure Storage Queues."
+url = "https://github.com/kedacore/sample-hello-world-azure-functions"
+icon = "fas fa-bolt"
+
+[[params.samples]]
+title = "Python Jobs and Queues"
+content = "Run a Python job for each queue message."
+url = "https://github.com/tomconte/sample-keda-queue-jobs"
+icon = "fas fa-clock"
+
+# Social media buttons
+[[params.social]]
+name = "Twitter"
+icon = "fab fa-twitter"
+bg_color = "twitter-blue"
+icon_color = "white"
+text_color = "white"
+url = "https://twitter.com/kedaorg"
+
+[[params.social]]
+name = "GitHub"
+icon = "fab fa-github"
+bg_color = "white"
+icon_color = "black"
+text_color = "black"
+url = "https://github.com/kedacore/keda"
+
+[[params.social]]
+name = "Slack"
+icon = "fab fa-slack"
+bg_color = "slack-green"
+icon_color = "white"
+text_color = "white"
+url = "https://kubernetes.slack.com/messages/CKZJ36A5D"
+
+# Main page hero buttons
+[[menu.buttons]]
+url = "/docs/concepts"
+name = "Concepts"
+pre = "fas fa-stream"
+weight = 1
+
+[[menu.buttons]]
+url = "/docs/deploy"
+name = "Deploying KEDA"
+pre = "fas fa-play-circle"
+weight = 2
+
+[[menu.buttons]]
+url = "/docs/concepts/#architecture"
+name = "Architecture"
+pre = "fas fa-project-diagram"
+weight = 3
+
+[[menu.buttons]]
+url = "/docs/scalers"
+name = "Scalers"
+pre = "fas fa-ruler-vertical"
+weight = 4
+
+[[menu.buttons]]
+url = "/blog"
+name = "Blog"
+pre = "fa fa-rss"
+weight = 5
+
+# Navbar and footer menu
 [[menu.main]]
-  url = "/"
-  name = "Home"
-  weight = 10
+url = "/docs/"
+name = "Docs"
+identifier = "docs"
+weight = 1
 
 [[menu.main]]
-  url = "/concepts"
-  name = "Concepts"
-  weight = 20
+url = "/docs/deploy"
+name = "Deploying KEDA"
+parent = "docs"
+weight = 1
 
 [[menu.main]]
-  url = "/deploy"
-  name = "Deploying KEDA"
-  weight = 30
+url = "/docs/concepts/"
+name = "Concepts"
+parent = "docs"
+weight = 2
 
 [[menu.main]]
-  url = "/concepts/overview/#how-keda-works"
-  name = "Architecture"
-  weight = 40
+url = "/docs/scalers/"
+name = "Scalers"
+parent = "docs"
+weight = 3
 
 [[menu.main]]
-  url = "https://github.com/kedacore/samples"
-  name = "Samples"
-  weight = 50
+url = "/docs/concepts/#architecture"
+name = "Architecture"
+parent = "docs"
+weight = 4
 
 [[menu.main]]
-  url = "/faq"
-  name = "FAQ"
-  weight = 60
+url = "/docs/faq/"
+name = "FAQ"
+parent = "docs"
+weight = 5
 
 [[menu.main]]
-  url = "/troubleshooting"
-  name = "Troubleshooting"
-  weight = 70
+url = "/docs/troubleshooting/"
+name = "Troubleshooting"
+parent = "docs"
+weight = 5
 
-[[menu.footer]]
-  url = "/concepts"
-  name = "Concepts"
-  weight = 10
+[[menu.main]]
+url = "/blog/"
+name = "Blog"
+weight = 2
 
-[[menu.footer]]
-  url = "/deploy"
-  name = "Deploying KEDA"
-  weight = 20
+[[menu.main]]
+url = "/community/"
+name = "Community"
+weight = 3
 
-[[menu.footer]]
-  url = "/concepts/overview/#how-keda-works"
-  name = "Architecture"
-  weight = 30
+[[menu.main]]
+url = "/resources/"
+name = "Resources"
+weight = 4
 
-[[menu.footer]]
-  url = "https://keda.devstats.cncf.io/"
-  name = "Developer Stats"
-  weight = 40
+[[menu.main]]
+url = "https://github.com/kedacore/samples"
+name = "Samples"
+weight = 5
 
-[[menu.footer]]
-  url = "https://github.com/kedacore/samples"
-  name = "Samples"
-  weight = 50
+# "Features" section on the main page
+[[params.features]]
+title = "Event-driven"
+content = "Intelligently scale your event-driven application"
+icon = "fas fa-bolt"
 
-[[menu.footer]]
-  url = "https://github.com/kedacore/keda"
-  name = "GitHub"
-  weight = 60
+[[params.features]]
+title = "Autoscaling Made Simple"
+content = "Bring rich scaling to every container in your [Kubernetes](https://kubernetes.io) cluster"
+icon = "fas fa-rocket"
 
-[[menu.footer]]
-  url = "/faq"
-  name = "FAQ"
-  weight = 70
+[[params.features]]
+title = "Built-in Scalers"
+content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, and more"
+icon = "fas fa-cubes"
 
-[[menu.copyright_footer]]
-  url = "https://github.com/kedacore/keda"
-  name = "GitHub"
-  weight = 10
+[[params.features]]
+title = "Multiple Workload Types"
+content = "Support for variety of workload types such as deployments and jobs"
+icon = "fas fa-shapes"
 
-[[menu.footer_social]]
-  weight = 20
-  name = "twitter"
-  pre = "fab fa-twitter"
-  url = "https://twitter.com/kedaorg"
+[[params.features]]
+title = "Vendor-Agnostic"
+content = "Support for triggers across multiple vendors"
+icon = "fas fa-cloud"
+
+[[params.features]]
+title = "Azure Functions Support"
+content = "Run and scale your Azure Functions on Kubernetes in production workloads"
+icon = "fab fa-microsoft"
+
+# "Users" section on the main page
+[[params.users]]
+url = "https://www.astronomer.io"
+logo = "astronomer.svg"
+
+[[params.users]]
+url = "https://www.cloud-trade.com"
+logo = "cloud-trade.png"
+
+[[params.users]]
+url = "https://www.mivation.com"
+logo = "mivation-inc.png"
+
+[[params.users]]
+url = "https://www.purefacts.com"
+logo = "purefacts.png"
+
+# "Community" section on the main page
+[[params.community]]
+url = "https://www.astronomer.io"
+logo = "astronomer.svg"
+
+[[params.community]]
+url = "https://codit.eu"
+logo = "codit.jpg"
+
+[[params.community]]
+url = "https://microsoft.com"
+logo = "microsoft.png"
+
+[[params.community]]
+url = "https://redhat.com"
+logo = "red-hat.png"

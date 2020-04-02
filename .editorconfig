@@ -1,0 +1,14 @@
+root = true
+
+[*]
+end_of_line = lf
+
+[Makefile]
+indent_style = tab
+
+[*.{html,js,json,md,sass,toml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.{js,json,md,sass,toml,yaml}]
+insert_final_newline = true
