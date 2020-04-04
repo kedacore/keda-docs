@@ -36,6 +36,7 @@
 
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
+            {{ $isExternal := hasPrefix .URL "http" }}
             <a class="navbar-item" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
               <span>
                 {{ .Name }}

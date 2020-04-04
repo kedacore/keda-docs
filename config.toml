@@ -172,9 +172,57 @@ name = "Community"
 weight = 3
 
 [[menu.main]]
-url = "/resources/"
-name = "Resources"
+name = "Project"
+identifier = "project"
 weight = 4
+
+[[menu.main]]
+url = "/resources/"
+name = "Learning Resources"
+parent = "project"
+weight = 1
+
+[[menu.main]]
+url = "https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
+name = "Code of Conduct"
+parent = "project"
+weight = 2
+
+[[menu.main]]
+url = "https://github.com/kedacore/keda/blob/master/GOVERNANCE.md"
+name = "Governancce"
+parent = "project"
+weight = 3
+
+[[menu.main]]
+url = "https://github.com/kedacore/keda/blob/master/CONTRIBUTING.md"
+name = "Contributing"
+parent = "project"
+weight = 4
+
+[[menu.main]]
+url = "https://github.com/kedacore/keda/blob/master/CHANGELOG.md"
+name = "Changelog"
+parent = "project"
+weight = 5
+
+[[menu.main]]
+url = "https://github.com/kedacore/keda/blob/master/MAINTAINERS.md"
+name = "Maintainers"
+parent = "project"
+weight = 6
+
+[[menu.main]]
+url = "https://branding.cncf.io/projects/keda"
+name = "Colors and Logos"
+parent = "project"
+weight = 7
+
+[[menu.main]]
+url = "https://github.com/kedacore/keda/blob/master/LICENSE"
+name = "License"
+parent = "project"
+weight = 7
 
 [[menu.main]]
 url = "https://github.com/kedacore/samples"
