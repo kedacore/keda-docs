@@ -1,6 +1,6 @@
-{{ $companies := site.Params.community }}
+{{ $users := site.Params.users }}
 <div class="columns is-vcentered is-variable is-8">
-  {{ range $companies }}
+  {{ range $users }}
   {{ $logo := printf "img/logos/%s" .logo | relURL }}
   <div class="column is-one-quarter">
     <a href="{{ .url }}" target="_blank">
