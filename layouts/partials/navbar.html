@@ -21,6 +21,15 @@
 
     <div class="navbar-menu" id="navbar-menu" :class="{ 'is-active': open }">
       <div class="navbar-end">
+        <div class="navbar-item">
+          <p class="control has-icons-left">
+            <input class="input is-rounded" type="text" placeholder="Search" id="search-bar">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+        </div>
+
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
