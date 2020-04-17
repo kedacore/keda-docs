@@ -1,5 +1,6 @@
 +++
 title = "Azure Service Bus"
+layout = "scaler"
 maintainer = "Microsoft"
 description = "Scale applications based on Azure Service Bus Queues or Topics."
 availability = "v1.0+"

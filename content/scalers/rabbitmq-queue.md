@@ -1,5 +1,6 @@
 +++
 title = "RabbitMQ Queue"
+layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on RabbitMQ Queue."

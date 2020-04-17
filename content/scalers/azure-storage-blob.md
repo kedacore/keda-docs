@@ -1,5 +1,6 @@
 +++
 title = "Azure Blob Storage"
+layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on the count of blobs in a given Azure Blob Storage container."

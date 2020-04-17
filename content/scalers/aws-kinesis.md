@@ -1,5 +1,6 @@
 +++
 title = "AWS Kinesis Stream"
+layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on AWS Kinesis Stream."

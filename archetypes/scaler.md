@@ -3,6 +3,7 @@ title = "{{ replace .Name "-" " " | title }}"
 availability = ""
 maintainer = ""
 description = "Insert description here"
+layout = "scaler"
 +++
 
 ### Trigger Specification

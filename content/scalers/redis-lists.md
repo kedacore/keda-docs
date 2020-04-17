@@ -1,5 +1,6 @@
 +++
 title = "Redis Lists"
+layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Redis Lists."
