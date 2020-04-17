@@ -23,7 +23,7 @@ The diagram below shows how KEDA works in conjunction with the Kubernetes Horizo
 
 ### Event sources and scalers
 
-KEDA has a wide range of [**scalers**](/docs/scalers) that can both detect if a deployment should be activated or deactivated, and feed custom metrics for a specific event source. The following scalers are available:
+KEDA has a wide range of [**scalers**](/scalers) that can both detect if a deployment should be activated or deactivated, and feed custom metrics for a specific event source. The following scalers are available:
 
 {{< scalers-compact >}}
 

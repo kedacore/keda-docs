@@ -117,7 +117,7 @@ pre = "fas fa-project-diagram"
 weight = 3
 
 [[menu.buttons]]
-url = "/docs/scalers"
+url = "/scalers"
 name = "Scalers"
 pre = "fas fa-ruler-vertical"
 weight = 4
