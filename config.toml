@@ -43,6 +43,16 @@ navbar = "keda-horizontal-color.png"
 hero = "keda-icon-color.png"
 footer = "keda-icon-white.png"
 
+[mediaTypes."text/netlify"]
+delimiter = ""
+
+[outputFormats.REDIRECTS]
+mediaType = "text/netlify"
+baseName = "_redirects"
+
+[outputs]
+home = [ "HTML", "REDIRECTS" ]
+
 # "Highlighted Samples" section on the main page
 [[params.samples]]
 title = "RabbitMQ and Go"
