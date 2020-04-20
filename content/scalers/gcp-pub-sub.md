@@ -1,5 +1,6 @@
 +++
 title = "Google Cloud Platform‎ Pub/Sub"
+layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."

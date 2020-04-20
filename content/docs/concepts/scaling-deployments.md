@@ -42,7 +42,7 @@ spec:
   # {list of triggers to activate the deployment}
 ```
 
-You can find all supported triggers [here](/docs/scalers).
+You can find all supported triggers [here](/scalers).
 
 ### Details
 ```yaml

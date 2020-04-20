@@ -1,36 +1,7 @@
-{{ $desc         := .Description | markdownify }}
-{{ $availability := .Params.availability }}
-{{ $maintainer   := .Params.maintainer }}
-<div class="column is-one-third">
-  <div class="card">
-    <div class="card-content">
-      <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold" href="{{ .RelPermalink }}">
-        {{ .Title }}
-      </a>
+{{ define "title" }}
+KEDA Scaler | {{ .Title }}
+{{ end }}
 
-      <br /><br />
-
-      {{ with $desc }}
-      <div class="content is-medium">
-        {{ . }}
-      </div>
-      {{ end }}
-    </div>
-
-    {{ if or $availability $maintainer }}
-    <footer class="card-footer">
-      {{ with $availability }}
-      <div class="card-footer-item is-spaced">
-        Availability&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
-      </div>
-      {{ end }}
-
-      {{ with $maintainer }}
-      <div class="card-footer-item">
-        Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
-      </div>
-      {{ end }}
-    </footer>
-    {{ end }}
-  </div>
-</div>
+{{ define "main" }}
+{{ partial "article.html" . }}
+{{ end }}

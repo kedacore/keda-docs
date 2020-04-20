@@ -1,5 +1,6 @@
 +++
 title = "Huawei Cloudeye"
+layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on a Huawei Cloudeye."
@@ -14,9 +15,9 @@ This specification describes the `huawei-cloudeye` trigger that scales based on 
 triggers:
 - type: huawei-cloudeye
   metadata:
-    namespace: SYS.ELB                                    
-    metricName: mb_l7_qps                                 
-    dimensionName: lbaas_instance_id                      
+    namespace: SYS.ELB
+    metricName: mb_l7_qps
+    dimensionName: lbaas_instance_id
     dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
     targetMetricValue: "100"
     minMetricValue: "1"
@@ -80,13 +81,13 @@ spec:
     key: IdentityEndpoint            # Required.
   - parameter: ProjectID             # Required.
     name: keda-huawei-secrets        # Required.
-    key: ProjectID                   # Required.       
+    key: ProjectID                   # Required.
   - parameter: DomainID              # Required.
     name: keda-huawei-secrets        # Required.
     key: DomainID                    # Required.
   - parameter: Region                # Required.
     name: keda-huawei-secrets        # Required.
-    key: Region                      # Required.   
+    key: Region                      # Required.
   - parameter: Domain                # Required.
     name: keda-huawei-secrets        # Required.
     key: Domain                      # Required.
@@ -95,7 +96,7 @@ spec:
     key: AccessKey                   # Required.
   - parameter: SecretKey             # Required.
     name: keda-huawei-secrets        # Required.
-    key: SecretKey                   # Required.    
+    key: SecretKey                   # Required.
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
@@ -117,7 +118,7 @@ spec:
       dimensionValue: 5e052238-0346-47b0-xxea-92d9f33e29d2
       metricName: mb_l7_qps
       targetMetricValue: "100"
-      minMetricValue: "1"  
+      minMetricValue: "1"
     authenticationRef:
       name: keda-trigger-auth-huawei-credential
 ```

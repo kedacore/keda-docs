@@ -43,6 +43,16 @@ navbar = "keda-horizontal-color.png"
 hero = "keda-icon-color.png"
 footer = "keda-icon-white.png"
 
+[mediaTypes."text/netlify"]
+delimiter = ""
+
+[outputFormats.REDIRECTS]
+mediaType = "text/netlify"
+baseName = "_redirects"
+
+[outputs]
+home = [ "HTML", "REDIRECTS" ]
+
 # "Highlighted Samples" section on the main page
 [[params.samples]]
 title = "RabbitMQ and Go"
@@ -107,7 +117,7 @@ pre = "fas fa-project-diagram"
 weight = 3
 
 [[menu.buttons]]
-url = "/docs/scalers"
+url = "/scalers"
 name = "Scalers"
 pre = "fas fa-ruler-vertical"
 weight = 4
@@ -138,22 +148,16 @@ parent = "docs"
 weight = 2
 
 [[menu.main]]
-url = "/docs/scalers/"
-name = "Scalers"
-parent = "docs"
-weight = 3
-
-[[menu.main]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 4
+weight = 3
 
 [[menu.main]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 5
+weight = 4
 
 [[menu.main]]
 url = "/docs/troubleshooting/"

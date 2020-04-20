@@ -1,0 +1,5 @@
+{{- $scalers := where site.RegularPages "Section" "scalers" }}
+{{- range $scalers -}}
+{{- $path := index (split .RelPermalink "/") 2 }}
+/docs/scalers/{{ $path }}     /scalers/{{ $path }}
+{{- end -}}
