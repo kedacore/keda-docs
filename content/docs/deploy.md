@@ -53,7 +53,15 @@ Deploying KEDA with Helm is very simple:
 
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
-We provide sample YAML declarations which includes our CRD - You can find them in our `/deploy` directory on our [GitHub repo](https://github.com/kedacore/keda).
+We provide sample YAML declarations which includes our CRD in the released zip and tar.gz package files which are available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
+Download the zip or tar.gz file, unpack it, enter the unpacked folder and just run the following commands.
+
+```sh
+kubectl apply -f ./crds
+kubectl apply -f ./
+```
+
+You can also find the same YAML declarations in our `/deploy` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
 
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
