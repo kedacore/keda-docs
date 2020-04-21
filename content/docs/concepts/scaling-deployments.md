@@ -11,7 +11,7 @@ It allows you to define the Kubernetes Deployment that you want KEDA to scale ba
 
 Behind the scenes, KEDA acts to monitor the event source and feed that data to Kubernetes and the HPA (Horizontal Pod Autoscaler) to drive rapid scale of a deployment.  Each replica of a deployment is actively pulling items from the event source.  With KEDA and scaling deployments you can scale based on events while also preserving rich connection and processing semantics with the event source (e.g. in-order processing, retries, deadletter, checkpointing).
 
-For example, if you wanted to use KEDA with an Apache Kafka Topic event source, the flow of information would be:
+For example, if you wanted to use KEDA with an Apache Kafka topic as event source, the flow of information would be:
 
 * When no messages are pending processing, KEDA can scale the deployment to zero.
 * When a message arrives, KEDA detects this event and activates the deployment.
