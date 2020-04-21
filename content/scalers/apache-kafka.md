@@ -1,15 +1,15 @@
 +++
-title = "Apache Kafka Topic"
+title = "Apache Kafka"
 layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
-description = "Scale applications based on Apache Kafka Topic or other services that support Kafka protocol."
+description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
 go_file = "kafka_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `kafka` trigger for Apache Kafka Topic.
+This specification describes the `kafka` trigger for an Apache Kafka topic.
 
 ```yaml
 triggers:
