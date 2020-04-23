@@ -13,9 +13,17 @@
   padding-bottom: 2rem
 
   &-subsection
-    margin-left: 1rem
+    &-title
+      a
+        font-weight: 500
+        color: $dark
 
-  &-section, &-subsection
+      +split-x
+
+      &.is-active
+        +active
+
+  &-section
     &-title
       a
         font-weight: 600
@@ -26,6 +34,7 @@
       &.is-active
         +active
 
+  &-section, &-subsection
     &-toc
       padding: 0.35rem 0 0.75rem 1rem
       //padding: 0.75rem 0 0.75rem 1rem

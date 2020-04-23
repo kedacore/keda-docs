@@ -28,6 +28,7 @@ favicon = "favicon.png"
 
 [params.versions]
 docs = ["2.0.0", "1.4.0"]
+scalers = ["1.0.0"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
