@@ -3,8 +3,11 @@
 {{ $title   := site.Title }}
 {{ $logo    := site.Params.logos.navbar }}
 {{ $menu    := site.Menus.main }}
+{{ $docs    := site.Menus.docs }}
 {{ $social  := site.Params.social }}
 {{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+{{ $versions := site.Params.versions.docs }}
+{{ $latest  := index $versions 0 }}
 <nav class="navbar is-black is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
   <div class="container">
     <div class="navbar-brand">
@@ -49,6 +52,39 @@
             {{ end }}
           </div>
         </div>
+
+        {{ range $docs }}
+        {{ $isExternal := hasPrefix .URL "http" }}
+        {{ if .HasChildren }}
+        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}"{{ end }}>
+            <span>
+              {{ .Name }}
+            </span>
+            <span class="icon has-text-secondary">
+              <i class="fas fa-md fa-caret-down"></i>
+            </span>
+          </a>
+
+          <div class="navbar-dropdown is-radiusless">
+            {{ range .Children }}
+            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+            {{ $isExternal := hasPrefix .URL "http" }}
+            <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+              <span>
+                {{ .Name }}
+              </span>
+              {{ if $isExternal }}
+              <span class="icon has-text-secondary">
+                <i class="fas fa-xs fa-external-link-alt"></i>
+              </span>
+              {{ end }}
+            </a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        {{ end }}
 
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}

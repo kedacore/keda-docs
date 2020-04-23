@@ -26,6 +26,9 @@ font_awesome_version = "5.12.1"
 alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
+[params.versions]
+docs = ["2.0.0", "1.4.0"]
+
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
 name = "Inria Sans"
@@ -129,37 +132,37 @@ pre = "fa fa-rss"
 weight = 5
 
 # Navbar and footer menu
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/"
 name = "Docs"
 identifier = "docs"
 weight = 1
 
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/deploy"
 name = "Deploying KEDA"
 parent = "docs"
 weight = 1
 
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/concepts/"
 name = "Concepts"
 parent = "docs"
 weight = 2
 
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
 weight = 3
 
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
 weight = 4
 
-[[menu.main]]
+[[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
@@ -194,7 +197,7 @@ weight = 2
 
 [[menu.main]]
 url = "https://github.com/kedacore/keda/blob/master/GOVERNANCE.md"
-name = "Governancce"
+name = "Governance"
 parent = "project"
 weight = 3
 

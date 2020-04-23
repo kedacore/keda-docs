@@ -3,17 +3,19 @@
 
   a
     color: $primary !important
-  
+
 =split-x
   display: flex
   flex-direction: row
   justify-content: space-between
 
-
 .nav
   padding-bottom: 2rem
 
-  &-section
+  &-subsection
+    margin-left: 1rem
+
+  &-section, &-subsection
     &-title
       a
         font-weight: 600
@@ -39,7 +41,7 @@
 
       li.nav-section-link
         font-size: 1.1rem
-        
+
         a
           color: $dark
 

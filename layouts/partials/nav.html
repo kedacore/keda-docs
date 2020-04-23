@@ -4,8 +4,14 @@
 {{ $currentSection := .CurrentSection }}
 {{ $root           := .FirstSection }}
 {{ $all            := slice $docs $scalers }}
+{{ $thisVersion    := index (split .File.Path "/") 1 }}
+
 <div class="nav is-sticky">
-  {{ range $all }}
+  {{ range (where site.Sections "Section" "docs") }}
+  {{ range .Sections }}
+  {{ $version := index (split .File.Path "/") 1 }}
+  {{ $sameVersion := eq $version $thisVersion }}
+  {{ if $sameVersion }}
   {{ $isThisSection := eq .CurrentSection.Title $currentSection.Title }}
   {{ $isHere := eq $here .RelPermalink }}
   <div class="nav-section" x-data="{ open: {{ $isThisSection }} }">
@@ -46,7 +52,7 @@
   {{ with .Sections }}
   {{ range . }}
   {{ $isThisSection := eq .CurrentSection.Title $currentSection.Title }}
-  <div class="nav-section" x-data="{ open: {{ $isThisSection }} }">
+  <div class="nav-subsection" x-data="{ open: {{ $isThisSection }} }">
     <div class="nav-section-title is-size-5 is-size-6-mobile{{ if $isHere }} is-active{{ end }}" href="{{ .RelPermalink }}">
       <a href="{{ .RelPermalink }}">
         {{ .Title }}
@@ -82,5 +88,8 @@
   </div>
   {{ end }}
   {{ end }}
-  {{ end }}
+
+  {{ end }} <!-- docs with same version -->
+  {{ end }} <!-- versions -->
+  {{ end }} <!-- docs sections -->
 </div>
