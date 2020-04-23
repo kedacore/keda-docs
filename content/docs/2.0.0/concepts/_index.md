@@ -38,4 +38,4 @@ These custom resources enable you to map an event source (and the authentication
 
 ## Deploy KEDA
 
-See the [Deployment](/docs/deploy) documentation for instructions on how to deploy KEDA into any cluster using tools like [Helm](/docs/deploy/#helm).
+See the [Deployment](../deploy) documentation for instructions on how to deploy KEDA into any cluster using tools like [Helm](../deploy/#helm).
