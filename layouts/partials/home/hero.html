@@ -2,7 +2,9 @@
 {{ $title  := site.Title }}
 {{ $desc   := site.Params.description | markdownify }}
 {{ $btns   := site.Menus.buttons }}
-{{ $latest := index site.Params.versions.docs 0 }}
+{{ $sect   := .Section }}
+{{ $docsL  := index site.Params.versions.docs 0 }}
+{{ $scalL  := index site.Params.versions.scalers 0 }}
 <section class="hero is-dark is-medium has-background-pattern">
   <div class="hero-body">
     <div class="container">
@@ -24,7 +26,14 @@
 
           <div class="buttons">
             {{ range $btns }}
-            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+            {{ $url := "" }}
+            {{ if (hasPrefix .URL "/docs") }}
+            {{ $url = replaceRE "/docs" (printf "/docs/%s" $docsL) .URL }}
+            {{ else if hasPrefix .URL "/scalers" }}
+            {{ $url = replaceRE "/scalers" (printf "/scalers/%s" $scalL) .URL }}
+            {{ else }}
+            {{ $url = .URL }}
+            {{ end }}
             <a class="button is-black is-inverted has-text-weight-bold" href="{{ $url }}">
               {{ with .Pre }}
               <span class="icon has-text-primary">
