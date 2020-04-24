@@ -12,8 +12,8 @@ serve: yarn
 production-build: clean
 	hugo \
 		--minify
-	
-	make check-links
+
+	#make check-links
 
 preview-build: clean
 	hugo \
@@ -21,8 +21,8 @@ preview-build: clean
 		--buildDrafts \
 		--buildFuture \
 		--minify
-	
-	make check-links
+
+	#make check-links
 
 open:
 	open https://keda.sh
