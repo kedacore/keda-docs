@@ -109,7 +109,7 @@ $message-body-padding: $message-header-padding
 // Components
 // @import "bulma/sass/components/breadcrumb"
 @import "bulma/sass/components/card"
-// @import "bulma/sass/components/dropdown"
+@import "bulma/sass/components/dropdown"
 @import "bulma/sass/components/level"
 @import "bulma/sass/components/list"
 @import "bulma/sass/components/media"
@@ -233,3 +233,8 @@ hr
 .navbar-item
   .icon
     margin-left: 0.1rem
+
+.buttons
+  &.are-spaced
+    .button:not(:first-child)
+      margin-left: 0.5rem

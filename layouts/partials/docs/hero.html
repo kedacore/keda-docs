@@ -6,7 +6,7 @@
 {{ $isScaler      := eq .CurrentSection.Title "Scalers" }}
 {{ $isSectionRoot := eq .File.BaseFileName "_index" }}
 {{ $version       := index (split .File.Path "/") 1 }}
-{{ $latest        := index site.Params.versions.docs 0 }}
+{{ $latest        := index (index site.Params.versions .Section) 0 }}
 {{ $isLatest      := eq $version $latest }}
 <section class="hero is-small">
   <div class="hero-body">
@@ -61,7 +61,9 @@
         </p>
       </div>
 
-      <div class="buttons are-small">
+      <div class="buttons are-small are-spaced">
+        {{ partial "version-selector.html" . }}
+
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
           <span class="icon">
             <i class="fab fa-github"></i>

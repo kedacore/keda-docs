@@ -5,7 +5,6 @@
 {{ $root           := .FirstSection }}
 {{ $all            := slice $docs $scalers }}
 {{ $thisVersion    := index (split .File.Path "/") 1 }}
-
 <div class="nav is-sticky">
   {{ range $all }}
   {{ range .Sections }}
