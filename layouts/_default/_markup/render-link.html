@@ -7,7 +7,4 @@
 {{- with $url.Fragment }}{{ $fragment = printf "#%s" . }}{{ end -}}
 {{- if .Page.GetPage $url.Path }}{{ $link = printf "%s%s" (.Page.GetPage $url.Path).RelPermalink $fragment }}{{ end }}{{ end -}}
 {{- end -}}
-{{- if hasPrefix $link "/scalers" -}}
-{{- $link = replace $link "/scalers" (printf "/scalers/" (index site.Params.versions.scalers 0)) -}}
-{{- end -}}
 <a href="{{ $link | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $isRemote }} target="_blank"{{ end }}>{{- .Text | safeHTML -}}{{ if $isRemote }}<sup><i class="fas fa-xs fa-external-link-alt"></i></sup>{{ end }}</a>

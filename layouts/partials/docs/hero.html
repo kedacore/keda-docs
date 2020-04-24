@@ -31,7 +31,7 @@
       </p>
       {{ end }}
 
-      <div class="field is-grouped">
+      <div class="field">
         <p class="control">
           <div class="tags are-medium">
             {{ with $availability }}
@@ -62,7 +62,7 @@
       </div>
 
       <div class="buttons are-small are-spaced">
-        {{ partial "version-selector.html" . }}
+        {{ partial "doc-version-selector.html" . }}
 
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
           <span class="icon">

@@ -1,12 +1,10 @@
 {{ $here           := .RelPermalink }}
-{{ $docs           := index (where site.Sections "Section" "docs") 0 }}
-{{ $scalers        := index (where site.Sections "Section" "scalers") 0 }}
+{{ $docs           :=  where site.Sections "Section" "docs" }}
 {{ $currentSection := .CurrentSection }}
 {{ $root           := .FirstSection }}
-{{ $all            := slice $docs $scalers }}
 {{ $thisVersion    := index (split .File.Path "/") 1 }}
 <div class="nav is-sticky">
-  {{ range $all }}
+  {{ range $docs }}
   {{ range .Sections }}
   {{ $version := index (split .File.Path "/") 1 }}
   {{ $sameVersion := eq $version $thisVersion }}

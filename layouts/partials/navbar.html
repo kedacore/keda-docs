@@ -9,7 +9,6 @@
 {{ $docsVs   := site.Params.versions.docs }}
 {{ $scalerVs := site.Params.versions.scalers }}
 {{ $docsL    := index $docsVs 0 }}
-{{ $scalersL := index $scalerVs 0 }}
 <nav class="navbar is-black is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
   <div class="container">
     <div class="navbar-brand">
@@ -37,7 +36,7 @@
         </div>
 
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless" href="/scalers/{{ $scalersL }}">
+          <a class="navbar-link is-arrowless" href="/docs/scalers/{{ $docsL }}">
             <span>
               Scalers
             </span>
@@ -49,7 +48,7 @@
           <div class="navbar-dropdown is-radiusless">
             {{ range $scalers }}
             {{ $version := index (split .File.Path "/") 1 }}
-            {{ $url := replaceRE $version $scalersL .RelPermalink }}
+            {{ $url := replaceRE $version $docsL .RelPermalink }}
             <a class="navbar-item" href="{{ $url }}">
               {{ .Title }}
             </a>
