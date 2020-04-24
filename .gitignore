@@ -2,7 +2,3 @@ node_modules/
 public/
 .idea
 resources/
-
-# Link checker artifacts
-bin/
-tmp/

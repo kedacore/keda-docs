@@ -12,8 +12,6 @@ serve: yarn
 production-build: clean
 	hugo \
 		--minify
-	
-	make check-links
 
 preview-build: clean
 	hugo \
@@ -21,16 +19,6 @@ preview-build: clean
 		--buildDrafts \
 		--buildFuture \
 		--minify
-	
-	make check-links
 
 open:
 	open https://keda.sh
-
-link-checker-setup:
-	curl https://htmltest.wjdp.uk | bash
-
-run-link-checker:
-	bin/htmltest
-
-check-links: link-checker-setup run-link-checker
