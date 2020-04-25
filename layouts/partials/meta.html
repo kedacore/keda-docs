@@ -6,6 +6,7 @@
 {{ $img     := "img/logos/keda-icon-color.png" | absURL }}
 {{ $imgAlt  := printf "%s color logo" site.Title }}
 {{ $locale  := site.Params.locale }}
+{{ $prod    := eq hugo.Environment "production" }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,6 +14,7 @@
 {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
 {{ end -}}
 
+{{ if $prod }}
 <link rel="canonical" href="{{ $url }}">
 
 {{/* Twitter Card metadata */}}
@@ -34,3 +36,4 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:alt" content="{{ $imgAlt }}">
 <meta property="og:locale" content="{{ $locale }}">
+{{ end }}
