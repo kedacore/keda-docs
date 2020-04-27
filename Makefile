@@ -13,16 +13,12 @@ production-build: clean
 	hugo \
 		--minify
 
-	#make check-links
-
 preview-build: clean
 	hugo \
 		--baseURL $(DEPLOY_PRIME_URL) \
 		--buildDrafts \
 		--buildFuture \
 		--minify
-
-	#make check-links
 
 open:
 	open https://keda.sh

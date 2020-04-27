@@ -51,7 +51,7 @@ This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose 
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
 
 ```sh
-hugo new --kind scaler scalers/VERSION/my-new-scaler.md
+hugo new --kind scaler scalers/<VERSION>/my-new-scaler.md
 ```
 
 This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.md` whose contents you can modify. Make sure to update the following metadata fields:
@@ -76,7 +76,7 @@ a = "You're looking at it! 😀"
 To add a new section to the [troubleshooting page](https://keda.sh/docs/troubleshooting):
 
 ```sh
-hugo new troubleshooting/VERSION/my-new-issue.md
+hugo new troubleshooting/<VERSION>/my-new-issue.md
 ```
 
 To adjust the order in which the troubleshooting tiles appear, use the `weight` parameter in each page's metadata.
