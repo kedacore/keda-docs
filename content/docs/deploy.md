@@ -12,6 +12,8 @@ Don't see what you need? Feel free to [create an issue](https://github.com/kedac
 
 ## Deploying with Helm {#helm}
 
+### Install
+
 Deploying KEDA with Helm is very simple:
 
 1. Add Helm repo
@@ -41,7 +43,29 @@ Deploying KEDA with Helm is very simple:
     helm install keda kedacore/keda --namespace keda
     ```
 
+### Uninstall
+
+If you want to remove KEDA from a cluster you can run one of the following:
+
+**Using Helm 3**
+
+```sh
+helm uninstall -n keda keda
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
+```
+
+**Using Helm 2**
+
+```sh
+helm delete --purge keda
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
+```
+
 ## Deploying with Operator Hub {#operatorhub}
+
+### Install
 
 1. On Operator Hub Marketplace locate and install KEDA operator
 2. Create namespace `keda`
@@ -49,7 +73,13 @@ Deploying KEDA with Helm is very simple:
 ![Operator Hub installation](https://raw.githubusercontent.com/kedacore/keda-olm-operator/master/images/keda-olm-install.gif)
 > Note: Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
 
+### Uninstall
+
+Locate installed KEDA Operator in `keda` namespace, then remove created `KedaController` resource and uninstall KEDA operator.
+
 ## Deploying using the deployment YAML files {#yaml}
+
+### Install
 
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
@@ -71,30 +101,7 @@ kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
 kubectl apply -f deploy/
 ```
 
-## Uninstalling KEDA
-
-If you want to remove KEDA from a cluster you can run one of the following:
-
-### Using Helm 3
-
-```sh
-helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
-```
-
-### Using Helm 2
-
-```sh
-helm delete --purge keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
-```
-
-### Using Operator Hub
-Locate installed KEDA Operator in `keda` namespace, then remove created `KedaController` resource and uninstall KEDA operator.
-
-### Using YAML
+### Uninstall
 
 You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
