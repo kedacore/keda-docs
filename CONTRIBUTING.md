@@ -14,8 +14,8 @@ We provide easy ways to introduce new content:
 
 - [Adding new blog post](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
 - [Adding new scaler documentation](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
-- [Add new Frequently Asked Question (FAQ)](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
-- [Add new troubleshooting guidance](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
+- [Add new Frequently Asked Question (FAQ)](https://github.com/kedacore/keda-docs#add-new-frequently-asked-question-faq)
+- [Add new troubleshooting guidance](https://github.com/kedacore/keda-docs#add-new-troubleshooting-guidance)
 
 ## Creating and building a local environment
 
