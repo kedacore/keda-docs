@@ -81,3 +81,12 @@ hugo new troubleshooting/<VERSION>/my-new-issue.md
 
 To adjust the order in which the troubleshooting tiles appear, use the `weight` parameter in each page's metadata.
 
+## Working with documentation versions
+
+The KEDA documentation is versioned. Each version has its own subdirectory under [`content/docs`](./content/docs). To add a new version, copy the directory for the most recent version. Here's an example:
+
+```sh
+cp -rf content/docs/2.0.0 content/docs/2.1.0
+```
+
+In addition, add the new version to the `params.versions.docs` list in [`config.toml`](./config.toml). More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
