@@ -4,6 +4,8 @@ Thanks for helping make KEDA better 😍.
 
 There are many areas we can use contributions - documenting scalers, adding FAQ, troubleshooting, samples, and more.
 
+Our documentation is versioned so it's important to make the changes for the correct KEDA version. If you need to introduce a new version, we recommend reading our documentation about it [here](https://github.com/kedacore/keda-docs#working-with-documentation-versions).
+
 ## Getting Help
 
 If you have a question about KEDA or how best to contribute, the [#KEDA](https://kubernetes.slack.com/archives/CKZJ36A5D) channel on the Kubernetes slack channel ([get an invite if you don't have one already](https://slack.k8s.io/)) is a good place to start.  We also have regular [community stand-ups](https://github.com/kedacore/keda#community-standup) to track ongoing work and discuss areas of contribution.  For any issues with the product you can [create an issue](https://github.com/kedacore/keda/issues/new) in this repo.
