@@ -1,3 +1,4 @@
+{{ $latest  := index site.Params.versions.docs 0 }}
 {{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
 <section class="section">
   <div class="container">
@@ -13,7 +14,10 @@
 
     <div class="columns is-multiline">
       {{ range $scalers }}
+      {{ $version := index (split .File.Path "/") 1 }}
+      {{ if eq $version $latest }}
       {{ .Render "scaler-info" }}
+      {{ end }}
       {{ end }}
     </div>
   </div>
