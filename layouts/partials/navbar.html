@@ -47,10 +47,11 @@
           <div class="navbar-dropdown is-radiusless">
             {{ range $scalers }}
             {{ $version := index (split .File.Path "/") 1 }}
-            {{ $url := replaceRE $version $latest .RelPermalink }}
+            {{ if eq $version $latest }}
             <a class="navbar-item" href="{{ $url }}">
               {{ .Title }}
             </a>
+            {{ end }}
             {{ end }}
           </div>
         </div>
