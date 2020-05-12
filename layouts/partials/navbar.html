@@ -48,7 +48,7 @@
             {{ range $scalers }}
             {{ $version := index (split .File.Path "/") 1 }}
             {{ if eq $version $latest }}
-            <a class="navbar-item" href="{{ $url }}">
+            <a class="navbar-item" href="{{ .RelPermalink }}">
               {{ .Title }}
             </a>
             {{ end }}
