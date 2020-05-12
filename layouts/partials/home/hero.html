@@ -1,7 +1,9 @@
-{{ $logo  := printf "img/logos/%s" site.Params.logos.hero | relURL }}
-{{ $title := site.Title }}
-{{ $desc  := site.Params.description | markdownify }}
-{{ $btns  := site.Menus.buttons }}
+{{ $logo   := printf "img/logos/%s" site.Params.logos.hero | relURL }}
+{{ $title  := site.Title }}
+{{ $desc   := site.Params.description | markdownify }}
+{{ $btns   := site.Menus.buttons }}
+{{ $sect   := .Section }}
+{{ $docsL  := index site.Params.versions.docs 0 }}
 <section class="hero is-dark is-medium has-background-pattern">
   <div class="hero-body">
     <div class="container">
@@ -23,7 +25,12 @@
 
           <div class="buttons">
             {{ range $btns }}
-            <a class="button is-black is-inverted has-text-weight-bold" href="{{ .URL }}">
+            {{ $url := "" }}
+            {{ if (hasPrefix .URL "/docs") }}
+            {{ $url = replaceRE "/docs" (printf "/docs/%s" $docsL) .URL }}
+            {{ $url = .URL }}
+            {{ end }}
+            <a class="button is-black is-inverted has-text-weight-bold" href="{{ $url }}">
               {{ with .Pre }}
               <span class="icon has-text-primary">
                 <i class="{{ . }}"></i>
