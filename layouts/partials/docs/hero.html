@@ -1,15 +1,28 @@
-{{ $title := .Title }}
-{{ $desc  := .Description }}
-{{ $src   := printf "https://github.com/kedacore/keda-docs/blob/master/content/%s" .File.Path }}
+{{ $title         := .Title }}
+{{ $desc          := .Description }}
+{{ $src           := printf "https://github.com/kedacore/keda-docs/blob/master/content/%s" .File.Path }}
 {{ $availability  := .Params.availability }}
 {{ $maintainer    := .Params.maintainer }}
 {{ $isScaler      := eq .CurrentSection.Title "Scalers" }}
 {{ $isSectionRoot := eq .File.BaseFileName "_index" }}
-<section class="hero is-small">
+{{ $version       := index (split .File.Path "/") 1 }}
+{{ $latest        := index (index site.Params.versions .Section) 0 }}
+{{ $isLatest      := eq $version $latest }}
+<section class="hero">
   <div class="hero-body">
     <div class="container">
       <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
         {{ $title }}
+        <sup>
+          {{ if $isLatest }}
+          <span class="tag is-success">Latest</span>
+          {{ else }}
+          {{ $url := replaceRE $version $latest .RelPermalink }}
+          <a href="{{ $url }}">
+            <span class="tag is-warning">Click here for latest</span>
+          </a>
+          {{ end }}
+        </sup>
       </p>
 
       {{ with $desc }}
@@ -18,7 +31,7 @@
       </p>
       {{ end }}
 
-      <div class="field is-grouped">
+      <div class="field">
         <p class="control">
           <div class="tags are-medium">
             {{ with $availability }}
@@ -48,7 +61,9 @@
         </p>
       </div>
 
-      <div class="buttons are-small">
+      <div class="buttons are-small are-spaced">
+        {{ partial "doc-version-selector.html" . }}
+
         <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
           <span class="icon">
             <i class="fab fa-github"></i>

@@ -1,0 +1,57 @@
+{{ $allVersions   := index site.Params.versions .Section }}
+{{ $latest        := index $allVersions 0 }}
+{{ $version       := index (split .File.Path "/") 1 }}
+{{ $isLatest      := eq $latest $version }}
+{{ $versionsOfDoc := slice }}
+{{ $here          := .RelPermalink }}
+{{ $path          := .File.Path }}
+{{ $section       := .Section }}
+{{ range $allVersions }}
+{{ $fileToCheck := replace $path $version . }}
+{{ if fileExists $fileToCheck }}
+{{ $versionsOfDoc = $versionsOfDoc | append . }}
+{{ end }}
+{{ end }}
+{{ $onlyOne     := eq (len $versionsOfDoc) 1 }}
+<div class="dropdown" x-data="{ open: false }" :class="{ 'is-active': open }">
+  <div class="dropdown-trigger">
+    <button class="button is-black" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open" @click.away="open = false">
+      Version
+      &nbsp;
+      <span class="has-text-weight-bold">
+        {{ $version }}
+      </span>
+      {{ if $isLatest }}
+      &nbsp;
+      <span>
+        (latest)
+      </span>
+      {{ end }}
+      {{ if not $onlyOne }}
+      <span class="icon is-small has-text-primary">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+      {{ end }}
+    </button>
+  </div>
+  {{ if not $onlyOne }}
+  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+      {{ range $versionsOfDoc }}
+      {{ $isLatest := eq . $version }}
+      <a class="dropdown-item" href="/{{ $section }}/{{ . }}">
+        <span>
+          {{ . }}
+        </span>
+        {{ if $isLatest }}
+        &nbsp;
+        <span>
+          (latest)
+        </span>
+        {{ end }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</div>

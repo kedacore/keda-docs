@@ -51,7 +51,7 @@ This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose 
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
 
 ```sh
-hugo new --kind scaler docs/scalers/my-new-scaler.md
+hugo new --kind scaler scalers/<VERSION>/my-new-scaler.md
 ```
 
 This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.md` whose contents you can modify. Make sure to update the following metadata fields:
@@ -76,8 +76,17 @@ a = "You're looking at it! 😀"
 To add a new section to the [troubleshooting page](https://keda.sh/docs/troubleshooting):
 
 ```sh
-hugo new troubleshooting/my-new-issue.md
+hugo new troubleshooting/<VERSION>/my-new-issue.md
 ```
 
 To adjust the order in which the troubleshooting tiles appear, use the `weight` parameter in each page's metadata.
 
+## Working with documentation versions
+
+The KEDA documentation is versioned. Each version has its own subdirectory under [`content/docs`](./content/docs). To add a new version, copy the directory for the most recent version. Here's an example:
+
+```sh
+cp -rf content/docs/2.0.0 content/docs/2.1.0
+```
+
+In addition, add the new version to the `params.versions.docs` list in [`config.toml`](./config.toml). More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).

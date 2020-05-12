@@ -1,4 +1,7 @@
-{{- $scalers := where site.RegularPages "Section" "scalers" }}
+{{- $docsLatest := index site.Params.versions.docs 0 -}}
+{{- $scalers    := where site.RegularPages "Section" "scalers" }}
+/docs     /docs/{{ $docsLatest }}     301!
+/docs/latest/*     /docs/{{ $docsLatest }}/:splat
 {{- range $scalers -}}
 {{- $path := index (split .RelPermalink "/") 2 }}
 /docs/scalers/{{ $path }}     /scalers/{{ $path }}
