@@ -34,7 +34,7 @@ The KEDA website is published automatically by [Netlify](https://netlify.com). A
 
 ## Adding blog posts
 
-To add a new post to the [Keda blog](https://keda.sh/blog):
+To add a new post to the [KEDA blog](https://keda.sh/blog):
 
 ```sh
 hugo new blog/my-new-post.md
@@ -89,4 +89,10 @@ The KEDA documentation is versioned. Each version has its own subdirectory under
 cp -rf content/docs/2.0.0 content/docs/2.1.0
 ```
 
-In addition, add the new version to the `params.versions.docs` list in [`config.toml`](./config.toml). More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
+By default, new documentation versions are not listed as available version so it's safe to make changes to them. After every release, the version will be published as new version.
+
+### Publishing a new version
+
+Once a version is ready to be published, we must add the version to the `params.versions.docs` list in [`config.toml`](./config.toml).
+
+More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
