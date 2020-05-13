@@ -4,4 +4,4 @@ If you're interested in contributing to or participating in the direction of KED
 * Zoom link: https://zoom.us/j/150360492
 * Meeting agenda: https://hackmd.io/s/r127ErYiN
 
-Just want to learn or chat about KEDA? Feel free to join the conversation in the [#KEDA](https://keda.sh/kubernetes.slack.com/messages/CKZJ36A5D) channel on the [Kubernetes Slack](https://slack.k8s.io)!
+Just want to learn or chat about KEDA? Feel free to join the conversation in the [#KEDA](https://kubernetes.slack.com/messages/CKZJ36A5D) channel on the [Kubernetes Slack](https://slack.k8s.io)!
