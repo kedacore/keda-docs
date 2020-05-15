@@ -16,18 +16,18 @@ triggers:
 - type: cron
   metadata:
     # Required
-    timezone: <time zone the cron should be run>
-    start: <start of cron>
-    end: <end of cron>
-    metricName: replicacount
+    timezone: Asia/Kolkata  # The acceptable values would be a value from the IANA Time Zone Database.
+    start: 0 0/30 * * *
+    end: 0 15/30 * * *
     desiredReplicas: "10"
 ```
 
-The `start` indicates the start of the Cron schedule and end indicates the end of the Cron schedule.
+**Parameter list:**
 
-### Authentication Parameters
-
-Not supported.
+- `timezone` is one of the acceptable values from the IANA Time Zone Database. Required.
+- `start` is the cron expression indicating the start of the cron schedule. Required.
+- `end` is the cron expression indicating the end of the cron schedule. Required.
+- `desiredReplicas` is the number of replicas to which the resource has to be scaled between the start and end of the cron schedule. Required.
 
 ### Example
 
