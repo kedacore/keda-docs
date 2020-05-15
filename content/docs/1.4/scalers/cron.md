@@ -3,7 +3,7 @@ title = "Cron"
 layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
-description = "Scale applications based on Cron Schedules."
+description = "Scale applications based on a cron schedule."
 go_file = "cron_scaler"
 +++
 
