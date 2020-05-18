@@ -17,8 +17,8 @@ triggers:
   metadata:
     # Required
     timezone: Asia/Kolkata  # The acceptable values would be a value from the IANA Time Zone Database.
-    start: 0 0/30 * * *
-    end: 0 15/30 * * *
+    start: 30 * * * *       # Every hour on the 30th minute
+    end: 45 * * * *         # Every hour on the 45th minute
     desiredReplicas: "10"
 ```
 
@@ -44,7 +44,7 @@ spec:
   - type: cron
     metadata:
       timezone: Asia/Kolkata
-      start: 0 0/30 * * *
-      end: 0 15/30 * * *
+      start: 30 * * * *
+      end: 45 * * * *
       desiredReplicas: "10"
 ```
