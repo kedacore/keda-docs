@@ -73,13 +73,15 @@ This is the interval to check each trigger on. By default KEDA will check each t
 
 The period to wait after the last trigger reported active before scaling the deployment back to 0. By default it's 5 minutes (300 seconds).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment`, KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldown-delay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment`, KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
 
 ```yaml
   minReplicaCount: 0   # Optional. Default: 0
 ```
+
+---
 
 Minimum number of replicas KEDA will scale the deployment down to. By default it's scale to zero, but you can use it with some other value as well. KEDA will not enforce that value, meaning you can manually scale the deployment to 0 and KEDA will not scale it back up. However, when KEDA itself is scaling the deployment it will respect the value set there.
 
