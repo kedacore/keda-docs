@@ -102,7 +102,7 @@ url = "https://kubernetes.slack.com/messages/CKZJ36A5D"
 
 # Main page hero buttons
 [[menu.buttons]]
-URL = "/docs/concepts"
+url = "/docs/concepts"
 name = "Concepts"
 pre = "fas fa-stream"
 weight = 1
