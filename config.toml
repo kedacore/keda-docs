@@ -120,7 +120,7 @@ pre = "fas fa-project-diagram"
 weight = 3
 
 [[menu.buttons]]
-url = "/scalers"
+url = "/docs/scalers"
 name = "Scalers"
 pre = "fas fa-ruler-vertical"
 weight = 4
@@ -169,7 +169,7 @@ parent = "docs"
 weight = 5
 
 [[menu.main]]
-url = "/blog/"
+url = "/blog"
 name = "Blog"
 weight = 2
 

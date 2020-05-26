@@ -28,6 +28,7 @@
             {{ $url := "" }}
             {{ if (hasPrefix .URL "/docs") }}
             {{ $url = replaceRE "/docs" (printf "/docs/%s" $docsL) .URL }}
+            {{ else }}
             {{ $url = .URL }}
             {{ end }}
             <a class="button is-black is-inverted has-text-weight-bold" href="{{ $url }}">
