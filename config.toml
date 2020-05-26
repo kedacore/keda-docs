@@ -133,7 +133,7 @@ weight = 5
 
 # Navbar and footer menu
 [[menu.docs]]
-url = "/docs"
+url = "/docs/"
 name = "Docs"
 identifier = "docs"
 weight = 1
