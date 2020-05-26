@@ -28,6 +28,8 @@ triggers:
 
 The `connection` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
+Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
+
 ### Authentication Parameters
 
 You can authenticate by using pod identity or connection string authentication.
