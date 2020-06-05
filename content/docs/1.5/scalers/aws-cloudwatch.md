@@ -1,15 +1,15 @@
 +++
-title = "AWS Cloudwatch"
+title = "AWS CloudWatch"
 layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
-description = "Scale applications based on AWS Cloudwatch."
+description = "Scale applications based on AWS CloudWatch."
 go_file = "aws_cloudwatch_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `aws-cloudwatch` trigger that scales based on a AWS Cloudatch.
+This specification describes the `aws-cloudwatch` trigger that scales based on a AWS CloudWatch.
 
 ```yaml
 triggers:
@@ -34,10 +34,9 @@ triggers:
 
 **Parameter list:**
 
-- `identityOwner` - Receive permissions on the Cloudwatch via Pod Identity or from the KEDA operator itself (see below).
+- `identityOwner` - Receive permissions on the CloudWatch via Pod Identity or from the KEDA operator itself (see below).
 
-
-> When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the Cloudwatch. Additional Authentication Parameters are not required.
+> When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
 ### Authentication Parameters
 
@@ -58,7 +57,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 - `awsAccessKeyID` - Id of the user
 - `awsSecretAccessKey` - Access key for the user to authenticate with
 
-The user will need access to read data from AWS Cloudwatch.
+The user will need access to read data from AWS CloudWatch.
 
 ### Example
 
