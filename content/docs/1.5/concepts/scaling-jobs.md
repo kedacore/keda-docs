@@ -43,4 +43,4 @@ spec:
   # {list of triggers to create jobs}
 ```
 
-You can find all supported triggers [here](/scalers).
+You can find all supported triggers [here](../scalers).
