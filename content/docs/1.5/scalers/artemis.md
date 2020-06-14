@@ -3,7 +3,7 @@ title = "ActiveMQ Artemis"
 layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
-description = "Scale applications based on ActiveMQ Artemis."
+description = "Scale applications based on ActiveMQ Artemis"
 go_file = "artemis_scaler"
 +++
 
