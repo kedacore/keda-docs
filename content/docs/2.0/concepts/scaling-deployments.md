@@ -34,11 +34,11 @@ spec:
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
     containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
-  pollingInterval: 30  # Optional. Default: 30 seconds
-  cooldownPeriod:  300 # Optional. Default: 300 seconds
-  minReplicaCount: 0   # Optional. Default: 0
-  maxReplicaCount: 100 # Optional. Default: 100
-  hpaConfig:           # Optional. If not set, KEDA won't scale based on resource utilization
+  pollingInterval: 30            # Optional. Default: 30 seconds
+  cooldownPeriod:  300           # Optional. Default: 300 seconds
+  minReplicaCount: 0             # Optional. Default: 0
+  maxReplicaCount: 100           # Optional. Default: 100
+  horizontalPodAutoscalerConfig: # Optional. If not set, KEDA won't scale based on resource utilization
     resourceMetrics:
       name: cpu/memory # Name of the resource to be targeted
       target:
@@ -105,7 +105,7 @@ This setting is passed to the HPA definition that KEDA will create for a given d
 ---
 
 ```yaml
-  hpaConfig:
+  horizontalPodAutoscalerConfig:
     resourceMetrics:
       name: cpu/memory
       target:
@@ -116,7 +116,7 @@ This setting is passed to the HPA definition that KEDA will create for a given d
     behavior: 
 ```
 
-hpaConfig:
+horizontalPodAutoscalerConfig:
   resourceMetrics:
     Name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
     Target:
