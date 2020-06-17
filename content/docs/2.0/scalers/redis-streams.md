@@ -65,7 +65,7 @@ triggers:
 
 The scaler supports two modes of authentication:
 
-**`password` metadata field**
+#### Using password authentication
 
 Use the `password` field in the `metadata` to specify the name of an environment variable that your deployment uses to get the Redis password.
 
@@ -98,7 +98,7 @@ spec:
         pendingEntriesCount: "10"
 ```
 
-**Using `TriggerAuthentication`**
+#### Using `TriggerAuthentication`
 
 You can use `TriggerAuthentication` CRD to configure the authentication. For example:
 
