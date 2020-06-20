@@ -20,6 +20,8 @@ triggers:
     brokerName: "artemis-activemq"
     brokerAddress: "test"
     queueLength: '10' 
+    username: 'ARTEMIS_USERNAME'
+    password: 'ARTEMIS_PASSWORD'
 ```
 
 **Parameter list:**
@@ -29,7 +31,7 @@ triggers:
 - `brokerName`: the name of the broker as defined in Artemis.
 - `brokerAddress`: the address name of the broker.
 - `queueLength` How much messages is in the queue. Default is 10. Optional.
-- 
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the `username` and `password` to connect to the management endpoint.
