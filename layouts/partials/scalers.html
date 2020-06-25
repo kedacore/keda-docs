@@ -3,6 +3,7 @@
 <div class="buttons has-extra-top-margin">
   {{ range $scalers }}
   {{ $isHere := eq .RelPermalink $here }}
+  {{ $version := index (split .Dir "/") 1 }}
   {{ $version1 := index (split .Dir "/") 0 }}
   {{ $version2 := index (split .Dir "/") 1 }}
   {{ $version3 := index (split .Dir "/") 3 }}
@@ -11,6 +12,9 @@
        {{ $version := index (split .Dir "\\") 1 }} -->
   <a class="button is-primary{{ if not $isHere }} is-outlined{{ end }}" href="{{ .RelPermalink }}">
     {{ .Title }} (Version: {{ $version1 }}-{{ $version2 }}-{{ $version3 }}-{{ $version4 }})
+  </a>
+  <a class="button is-primary{{ if not $isHere }} is-outlined{{ end }}" href="{{ .RelPermalink }}">
+    {{ .Title }} (Version: {{ $version }})
   </a>
   {{ end }}
 </div>
