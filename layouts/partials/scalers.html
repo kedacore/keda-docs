@@ -1,13 +1,11 @@
 {{ $here    := $.Page.RelPermalink }}
 {{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-{{ $thisVersion    := index (split .File.Path "/") 1 }}
 <div class="buttons has-extra-top-margin">
   {{ range $scalers }}
   {{ $isHere := eq .RelPermalink $here }}
-  {{ $version := index (split .Dir "/") 1 }}
-  {{ $sameVersion := eq $version $thisVersion }}
+  {{ $version := index (split .Dir "\\") 1 }}
   <a class="button is-primary{{ if not $isHere }} is-outlined{{ end }}" href="{{ .RelPermalink }}">
-    {{ .Title }} (Same Version: {{ $sameVersion }})-{{ $version }}-{{ $thisVersion }}
+    {{ .Title }} (Version: {{ $version }})
   </a>
   {{ end }}
 </div>
