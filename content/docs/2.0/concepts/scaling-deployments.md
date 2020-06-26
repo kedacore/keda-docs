@@ -108,7 +108,7 @@ This setting is passed to the HPA definition that KEDA will create for a given d
 ```yaml
 advanced:
   horizontalPodAutoscalerConfig:
-    resourceMetrics:
+    - resourceMetrics:
       name: cpu/memory
       target:
         type: value/ utilization/ averagevalue
