@@ -40,7 +40,7 @@ spec:
   maxReplicaCount: 100           # Optional. Default: 100
   advanced:
     horizontalPodAutoscalerConfig: # Optional. If not set, KEDA won't scale based on resource utilization
-      resourceMetrics:
+      - resourceMetrics:
         name: cpu/memory # Name of the resource to be targeted
         target:
           type: value/ utilization/ averagevalue
@@ -119,7 +119,7 @@ advanced:
 ```
 advanced:
   horizontalPodAutoscalerConfig:
-    resourceMetrics:
+    - resourceMetrics:
       Name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
       Target:
         type: type represents whether the metric type is utilization, value, or averagevalue.
