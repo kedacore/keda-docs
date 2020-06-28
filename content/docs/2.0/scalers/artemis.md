@@ -3,17 +3,17 @@ title = "ActiveMQ Artemis"
 layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
-description = "Scale applications based on ActiveMQ Artemis"
+description = "Scale applications based on ActiveMQ Artemis queues"
 go_file = "artemis_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `artemis` trigger for ActiveMQ Artemis.
+This specification describes the `artemis-queue` trigger for ActiveMQ Artemis queues.
 
 ```yaml
 triggers:
-- type: artemis
+- type: artemis-queue
   metadata:
     managementEndpoint: "artemis-activemq.artemis:8161" 
     queueName: "test"
@@ -30,8 +30,8 @@ triggers:
 - `queueName`: the name of the queue to check for the number of messages available.
 - `brokerName`: the name of the broker as defined in Artemis.
 - `brokerAddress`: the address name of the broker.
-- `queueLength` How much messages is in the queue. Default is 10. Optional.
-
+- `queueLength` How much messages are in the queue. Default is 10. Optional.
+  
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the `username` and `password` to connect to the management endpoint.
@@ -81,7 +81,7 @@ spec:
   scaleTargetRef:
     deploymentName: kedartemis-consumer
   triggers:
-    - type: artemis
+    - type: artemis-queue
       metadata:
         managementEndpoint: "artemis-activemq.artemis:8161"
         queueName: "test"
