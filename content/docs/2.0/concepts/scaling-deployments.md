@@ -118,6 +118,7 @@ advanced:
     behavior: 
 ```
 ---
+The above configuration can be used to scale deployments based on standard resource metrics like CPU / Memory. This configuration is the same as the standard HorizontalPodAutoscaler configuration. KEDA would feed this value as resource metric(s) into the HPA itself. 
 name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
 target:
 type: type represents whether the metric type is Utilization, Value, or AverageValue.
