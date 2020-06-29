@@ -117,18 +117,16 @@ advanced:
         averageUtilization: 50 # Optional
     behavior: 
 ```
-advanced:
-  horizontalPodAutoscalerConfig:
-    resourceMetrics:
-    - name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
-      target:
-        type: type represents whether the metric type is utilization, value, or averagevalue.
-        value: value is the target value of the metric (as a quantity).
-        averageValue: averageValue is the target value of the average of the metric across all relevant pods (quantity)
-        averageUtilization: averageUtilization is the target value of the average of the resource metric across all
-                          relevant pods, represented as a percentage of the requested value of the resource for the
-                          pods. Currently only valid for Resource metric source type.
-    behavior:      
+---
+name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
+target:
+type: type represents whether the metric type is Utilization, Value, or AverageValue.
+value: value is the target value of the metric (as a quantity).
+averageValue: averageValue is the target value of the average of the metric across all relevant pods (quantity)
+averageUtilization: averageUtilization is the target value of the average of the resource metric across all
+                    relevant pods, represented as a percentage of the requested value of the resource for the
+                    pods. Currently only valid for Resource metric source type.
+--- 
 
 ## Long-running executions
 
