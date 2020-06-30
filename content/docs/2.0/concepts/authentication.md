@@ -107,7 +107,7 @@ spec:
     authentication: token | kubernetes # Required.
     role: {hashicorp-vault-role} # Optional.
     mount: {hashicorp-vault-mount} # Optional.
-    credetial: # Optional.
+    credential: # Optional.
       token: {hashicorp-vault-token} # Optional.
       serviceAccount: {path-to-service-account-file} # Optional.
     secrets: # Required.
@@ -169,7 +169,7 @@ hashiCorpVault: # Optional.
   authentication: token | kubernetes # Required.
   role: {hashicorp-vault-role} # Optional.
   mount: {hashicorp-vault-mount} # Optional.
-  credetial: # Optional.
+  credential: # Optional.
     token: {hashicorp-vault-token} # Optional.
     serviceAccount: {path-to-service-account-file} # Optional.
   secrets: # Required.
