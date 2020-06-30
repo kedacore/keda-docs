@@ -102,6 +102,18 @@ spec:
   - parameter: {scaledObject-parameter-name} # Required.
     name: {env-name} # Required.
     containerName: {container-name} # Optional. Default: scaleTargetRef.containerName of ScaledObject
+  hashiCorpVault: # Optional.
+    address: {hashicorp-vault-address} # Required.
+    authentication: token | kubernetes # Required.
+    role: {hashicorp-vault-role} # Optional.
+    mount: {hashicorp-vault-mount} # Optional.
+    credential: # Optional.
+      token: {hashicorp-vault-token} # Optional.
+      serviceAccount: {path-to-service-account-file} # Optional.
+    secrets: # Required.
+    - parameter: {scaledObject-parameter-name} # Required.
+      key: {hasicorp-vault-secret-key-name} # Required.
+      path: {hasicorp-vault-secret-path} # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -144,6 +156,27 @@ secretTargetRef: # Optional.
 ```
 
 **Assumptions:** `namespace` is in the same deployment as the configured `scaleTargetRef.deploymentName` in the ScaledObject, unless specified otherwise.
+
+### Hashicorp Vault secret(s)
+
+You can pull one or more Hashicorp Vault secrets into the trigger by defining the autentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
+`secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
+
+```yaml
+hashiCorpVault: # Optional.
+  address: {hashicorp-vault-address} # Required.
+  authentication: token | kubernetes # Required.
+  role: {hashicorp-vault-role} # Optional.
+  mount: {hashicorp-vault-mount} # Optional.
+  credential: # Optional.
+    token: {hashicorp-vault-token} # Optional.
+    serviceAccount: {path-to-service-account-file} # Optional.
+  secrets: # Required.
+  - parameter: {scaledObject-parameter-name} # Required.
+    key: {hasicorp-vault-secret-key-name} # Required.
+    path: {hasicorp-vault-secret-path} # Required.
+```
 
 ### Pod Authentication Providers
 
