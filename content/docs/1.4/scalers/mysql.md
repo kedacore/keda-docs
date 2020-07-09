@@ -79,5 +79,5 @@ spec:
       queryValue: "4"
       query: "SELECT CEIL(COUNT(*) / 6) FROM task_instance WHERE state='running' OR state='queued'"
     authenticationRef:
-      connectionString: keda-trigger-auth-mysql-secret
+      name: keda-trigger-auth-mysql-secret
 ```
