@@ -288,6 +288,10 @@ logo = "purefacts.png"
 url = "https://coralogix.com/"
 logo = "coralogix.gif"
 
+[[params.users]]
+url = "https://airflow.apache.org/"
+logo = "apache-airflow.png"
+
 # "Community" section on the main page
 [[params.community]]
 url = "https://www.astronomer.io"
