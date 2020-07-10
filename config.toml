@@ -269,6 +269,10 @@ icon = "fab fa-microsoft"
 
 # "Users" section on the main page
 [[params.users]]
+url = "https://airflow.apache.org/"
+logo = "apache-airflow.png"
+
+[[params.users]]
 url = "https://www.astronomer.io"
 logo = "astronomer.svg"
 
@@ -277,20 +281,16 @@ url = "https://www.cloud-trade.com"
 logo = "cloud-trade.png"
 
 [[params.users]]
+url = "https://coralogix.com/"
+logo = "coralogix.gif"
+
+[[params.users]]
 url = "https://www.mivation.com"
 logo = "mivation-inc.png"
 
 [[params.users]]
 url = "https://www.purefacts.com"
 logo = "purefacts.png"
-
-[[params.users]]
-url = "https://coralogix.com/"
-logo = "coralogix.gif"
-
-[[params.users]]
-url = "https://airflow.apache.org/"
-logo = "apache-airflow.png"
 
 # "Community" section on the main page
 [[params.community]]
