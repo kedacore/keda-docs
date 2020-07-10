@@ -1,5 +1,5 @@
 {{ $users := site.Params.users }}
-<div class="columns is-vcentered is-variable is-8">
+<div class="columns is-centered is-multiline is-vcentered is-variable is-8">
   {{ range $users }}
   {{ $logo := printf "img/logos/%s" .logo | relURL }}
   <div class="column is-one-quarter">
