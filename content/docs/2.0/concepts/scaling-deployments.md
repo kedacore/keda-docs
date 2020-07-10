@@ -34,10 +34,20 @@ spec:
   scaleTargetRef:
     deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
     containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
-  pollingInterval: 30  # Optional. Default: 30 seconds
-  cooldownPeriod:  300 # Optional. Default: 300 seconds
-  minReplicaCount: 0   # Optional. Default: 0
-  maxReplicaCount: 100 # Optional. Default: 100
+  pollingInterval: 30            # Optional. Default: 30 seconds
+  cooldownPeriod:  300           # Optional. Default: 300 seconds
+  minReplicaCount: 0             # Optional. Default: 0
+  maxReplicaCount: 100           # Optional. Default: 100
+  advanced:
+    horizontalPodAutoscalerConfig: # Optional. If not set, KEDA won't scale based on resource utilization
+      resourceMetrics:
+      - name: cpu/memory # Name of the resource to be targeted
+        target:
+          type: value/ utilization/ averagevalue
+          value: 60 # Optional
+          averageValue: 40 # Optional
+          averageUtilization: 50 # Optional
+      behavior:
   triggers:
   # {list of triggers to activate the deployment}
 ```
@@ -92,6 +102,28 @@ Minimum number of replicas KEDA will scale the deployment down to. By default it
 ```
 
 This setting is passed to the HPA definition that KEDA will create for a given deployment.
+
+---
+
+```yaml
+advanced:
+  horizontalPodAutoscalerConfig:
+    resourceMetrics:
+    - name: cpu/memory
+      target:
+        type: value/ utilization/ averagevalue
+        value: 60 # Optional
+        averageValue: 40 # Optional
+        averageUtilization: 50 # Optional
+    behavior: 
+```
+
+The above configuration can be used to scale deployments based on standard resource metrics like CPU / Memory. This configuration is the same as the standard HorizontalPodAutoscaler configuration. KEDA would feed this value as resource metric(s) into the HPA itself. 
+* name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
+* type: type represents whether the metric type is Utilization, Value, or AverageValue.
+* value: value is the target value of the metric (as a quantity).
+* averageValue: averageValue is the target value of the average of the metric across all relevant pods (quantity)
+* averageUtilization: averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type.
 
 ## Long-running executions
 
