@@ -19,7 +19,7 @@ triggers:
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
     includeUnacked: 'true' # Optional, use unacked + ready messages count
-    apiHost: RabbitApiHost # Optional HTTP managemet API endpoint
+    apiHost: RabbitApiHost # Optional HTTP management API endpoint
 ```
 
 The `host` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost`
