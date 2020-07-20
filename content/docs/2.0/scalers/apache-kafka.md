@@ -20,6 +20,7 @@ triggers:
     consumerGroup: my-group
     topic: test-topic
     lagThreshold: '5'
+    offsetResetPolicy: latest
 ```
 
 **Parameter list:**
@@ -29,6 +30,7 @@ triggers:
 - `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
 - `topic`: topic on which processing the offset lag.
 - `lagThreshold` How much the stream is lagging on the current consumer group. Default is 10. Optional.
+- `offsetResetPolicy` the offset reset policy for the consumer. Can be either "latest" or "earliest". Default is "latest" as in Kafka Consumer defaults.
 
 ### Authentication Parameters
 
@@ -66,6 +68,7 @@ spec:
       topic: test-topic
       # Optional
       lagThreshold: "50"
+      offsetResetPolicy: latest
 ```
 
 Your kafka cluster turn on sasl auth
@@ -127,6 +130,7 @@ spec:
       topic: test-topic
       # Optional
       lagThreshold: "50"
+      offsetResetPolicy: latest
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
 ```
