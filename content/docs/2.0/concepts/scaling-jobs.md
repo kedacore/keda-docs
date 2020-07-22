@@ -15,19 +15,18 @@ For example, if you wanted to use KEDA to run a job for each message that lands 
 1. When the job starts running, it pulls *a single* message and processes it to completion.
 1. As additional messages arrive, additional jobs are created.  Each job processes a single message to completion.
 
-## ScaledObject spec
+## ScaledJob spec
 
-This specification describes the `ScaledObject` custom resource definition which is used to define how KEDA should scale your application and what the triggers are.
+This specification describes the `ScaledJob` custom resource definition which is used to define how KEDA should scale your application and what the triggers are.
 
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/master/pkg/apis/keda/v1alpha1/scaledobject_types.go)
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
-kind: ScaledObject
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
 metadata:
-  name: {scaled-object-name}
+  name: {scaled-job-name}
 spec:
-  scaleType: job
   jobTargetRef:
     parallelism: 1 # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
     completions: 1 # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)

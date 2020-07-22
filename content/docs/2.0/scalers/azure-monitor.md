@@ -63,7 +63,7 @@ data:
   activeDirectoryClientId: <clientId>
   activeDirectoryClientPassword: <clientPassword>
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata: 
   name: azure-monitor-trigger-auth
@@ -76,7 +76,7 @@ spec:
       name: azure-monitor-secrets
       key: activeDirectoryClientPassword
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-monitor-scaler

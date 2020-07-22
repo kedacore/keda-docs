@@ -74,7 +74,7 @@ This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `en
 Here is an example:
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: redis-streams-scaledobject
@@ -111,7 +111,7 @@ type: Opaque
 data:
   redis_password: YWRtaW4=
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-redis-stream-triggerauth
@@ -121,7 +121,7 @@ spec:
       name: redis-streams-password # name of the Secret
       key: redis_password # name of the key in the Secret
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: redis-streams-scaledobject

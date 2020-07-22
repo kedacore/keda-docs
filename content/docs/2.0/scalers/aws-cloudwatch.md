@@ -71,7 +71,7 @@ data:
   AWS_ACCESS_KEY_ID: <user-id>
   AWS_SECRET_ACCESS_KEY: <key>
 --- 
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-aws-credentials
@@ -85,7 +85,7 @@ spec:
     name: keda-aws-secrets        # Required.
     key: AWS_SECRET_ACCESS_KEY    # Required.
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: aws-cloudwatch-queue-scaledobject

@@ -69,7 +69,7 @@ data:
   AccessKey: <AccessKey>
   SecretKey: <SecretKey>
 --- 
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-huawei-credential
@@ -98,7 +98,7 @@ spec:
     name: keda-huawei-secrets        # Required.
     key: SecretKey                   # Required.
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: huawei-cloudeye-scaledobject

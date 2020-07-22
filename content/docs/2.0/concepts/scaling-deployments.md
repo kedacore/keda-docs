@@ -26,13 +26,13 @@ This specification describes the `ScaledObject` custom resource definition which
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/master/pkg/apis/keda/v1alpha1/scaledobject_types.go)
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
 spec:
   scaleTargetRef:
-    deploymentName: {deployment-name} # must be in the same namespace as the ScaledObject
+    name: {deployment-name} # must be in the same namespace as the ScaledObject
     containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
   pollingInterval: 30            # Optional. Default: 30 seconds
   cooldownPeriod:  300           # Optional. Default: 300 seconds
