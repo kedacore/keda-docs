@@ -31,7 +31,7 @@ Not supported yet.
 ### Example
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: liiklus-scaledobject

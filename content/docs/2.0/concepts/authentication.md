@@ -51,7 +51,7 @@ spec:
         - secretRef:
             name: {secret-name}
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: {deployment-name}
@@ -86,7 +86,7 @@ For these and other reasons, we also provide a `TriggerAuthentication` resource 
 `TriggerAuthentication` allows you to describe authentication parameters separate from the `ScaledObject` and the deployment containers.  It also enables more advanced methods of authentication like "pod identity", authentication re-use or allowing IT to configure the authentication.
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: {trigger-auth-name}

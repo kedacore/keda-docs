@@ -38,7 +38,7 @@ Not supported yet.
 AMQP protocol:
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-scaledobject
@@ -58,7 +58,7 @@ spec:
 HTTP protocol:
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-scaledobject

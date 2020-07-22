@@ -33,7 +33,7 @@ You can authenticate by using pod identity or connection string authentication.
 ### Example
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-queue-auth
@@ -41,7 +41,7 @@ spec:
   podIdentity:
     provider: azure
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-queue-scaledobject

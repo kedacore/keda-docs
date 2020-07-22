@@ -43,7 +43,7 @@ You can authenticate by using pod identity or connection string authentication.
 Here is an example of how to use managed identity:
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: azure-servicebus-auth
@@ -51,7 +51,7 @@ spec:
   podIdentity:
     provider: azure
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-servicebus-queue-scaledobject

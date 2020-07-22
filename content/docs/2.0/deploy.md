@@ -51,16 +51,18 @@ If you want to remove KEDA from a cluster you can run one of the following:
 
 ```sh
 helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledobjects_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledjobs_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_triggerauthentications_crd.yaml
 ```
 
 **Using Helm 2**
 
 ```sh
 helm delete --purge keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledobjects_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledjobs_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_triggerauthentications_crd.yaml
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
@@ -96,8 +98,9 @@ You can also find the same YAML declarations in our `/deploy` directory on our [
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-kubectl apply -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
+kubectl apply -f deploy/crds/keda.sh_scaledobjects_crd.yaml
+kubectl apply -f deploy/crds/keda.sh_scaledjobs_crd.yaml
+kubectl apply -f deploy/crds/keda.sh_triggerauthentications_crd.yaml
 kubectl apply -f deploy/
 ```
 
@@ -106,7 +109,15 @@ kubectl apply -f deploy/
 You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-kubectl delete -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
-kubectl delete -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
 kubectl delete -f deploy/
+kubectl delete -f deploy/crds/keda.sh_scaledobjects_crd.yaml
+kubectl delete -f deploy/crds/keda.sh_scaledjobs_crd.yaml
+kubectl delete -f deploy/crds/keda.sh_triggerauthentications_crd.yaml
+```
+
+In case of installing from released .zip or .tar package, enter the unpacked folder and just run the following commands:
+
+```sh
+kubectl delete -f ./
+kubectl delete -f ./crds
 ```

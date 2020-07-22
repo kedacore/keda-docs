@@ -54,7 +54,7 @@ type: Opaque
 data:
   mysql_conn_str: user@tcp(mysql:3306)/stats_db
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-mysql-secret
@@ -65,7 +65,7 @@ spec:
     name: mysql-secrets
     key: mysql_conn_str
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: mysql-scaledobject

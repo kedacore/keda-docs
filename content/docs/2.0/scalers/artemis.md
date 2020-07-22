@@ -56,7 +56,7 @@ data:
   artemis-password: "YXJ0ZW1pcw=="
   artemis-username: "YXJ0ZW1pcw=="
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: trigger-auth-kedartemis
@@ -70,7 +70,7 @@ spec:
       name: kedartemis
       key: artemis-password
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: kedartemis-consumer-scaled-object

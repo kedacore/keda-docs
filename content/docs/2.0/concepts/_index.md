@@ -29,12 +29,16 @@ KEDA has a wide range of [**scalers**](/scalers) that can both detect if a deplo
 
 ### Custom Resources (CRD)
 
-When you install KEDA, it creates two custom resources:
+When you install KEDA, it creates three custom resources:
 
-1. `scaledobjects.keda.k8s.io`
-1. `triggerauthentications.keda.k8s.io`
+1. `scaledobjects.keda.sh`
+1. `scaledjobs.keda.sh`
+1. `triggerauthentications.keda.sh`
 
-These custom resources enable you to map an event source (and the authentication to that event source) to a deployment or job for scaling.  The `ScaledObjects` represent the desired mapping between an event source (e.g. Rabbit MQ) and the Kubernetes deployment.  A `ScaledObject` may also reference a `TriggerAuthentication` which contains the authentication configuration or secrets to monitor the event source.
+These custom resources enable you to map an event source (and the authentication to that event source) to a Deployment, StatefulSet, Custom Resource or Job for scaling.  
+- `ScaledObjects` represent the desired mapping between an event source (e.g. Rabbit MQ) and the Kubernetes Deployment, StatefulSet or any Custom Resource that defines `/scale` subresource. 
+- `ScaledJobs` represent the mapping between event source and Kubernetes Job.  
+- `ScaledObject`/`ScaledJob` may also reference a `TriggerAuthentication` which contains the authentication configuration or secrets to monitor the event source.
 
 ## Deploy KEDA
 
