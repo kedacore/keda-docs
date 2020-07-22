@@ -1,15 +1,17 @@
 +++
-title = "Scaling Deployments"
+title = "Scaling Deployments, StatefulSets & Custom Resources"
 weight = 200
 +++
 
 ## Overview
 
-Deployments are the most common way to scale workloads with KEDA.
+### Scaling of Deployments and StatefulSets
 
-It allows you to define the Kubernetes Deployment that you want KEDA to scale based on a scale trigger. KEDA will monitor that service and based on the events that occur it will automatically scale your deployment out/in accordingly.
+Deployments and StatefulSets are the most common way to scale workloads with KEDA.
 
-Behind the scenes, KEDA acts to monitor the event source and feed that data to Kubernetes and the HPA (Horizontal Pod Autoscaler) to drive rapid scale of a deployment.  Each replica of a deployment is actively pulling items from the event source.  With KEDA and scaling deployments you can scale based on events while also preserving rich connection and processing semantics with the event source (e.g. in-order processing, retries, deadletter, checkpointing).
+It allows you to define the Kubernetes Deployment or StatefulSet that you want KEDA to scale based on a scale trigger. KEDA will monitor that service and based on the events that occur it will automatically scale your resource out/in accordingly.
+
+Behind the scenes, KEDA acts to monitor the event source and feed that data to Kubernetes and the HPA (Horizontal Pod Autoscaler) to drive rapid scale of a resource.  Each replica of a resource is actively pulling items from the event source.  With KEDA and scaling Deployments/StatefulSet you can scale based on events while also preserving rich connection and processing semantics with the event source (e.g. in-order processing, retries, deadletter, checkpointing).
 
 For example, if you wanted to use KEDA with an Apache Kafka topic as event source, the flow of information would be:
 
@@ -19,9 +21,15 @@ For example, if you wanted to use KEDA with an Apache Kafka topic as event sourc
 * As more messages arrive on the Kafka Topic, KEDA can feed this data to the HPA to drive scale out.
 * Each replica of the deployment is actively processing messages.  Very likely, each replica is processing a batch of messages in a distributed manner.
 
+### Scaling of Custom Resources
+
+With KEDA you can scale any workload defined as any `Custom Resource` (for example `ArgoRollout` [resource](https://argoproj.github.io/argo-rollouts/)). The scaling behaves the same way as scaling for arbitrary Kubernetes `Deployment` or `StatefulSet`.
+
+The only constraint is that the target `Custom Resource` must define `/scale` [subresource](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#scale-subresource).
+
 ## ScaledObject spec
 
-This specification describes the `ScaledObject` custom resource definition which is used to define how KEDA should scale your application and what the triggers are.
+This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
 
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/master/pkg/apis/keda/v1alpha1/scaledobject_types.go)
 
@@ -32,24 +40,32 @@ metadata:
   name: {scaled-object-name}
 spec:
   scaleTargetRef:
-    name: {deployment-name} # must be in the same namespace as the ScaledObject
-    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
-  pollingInterval: 30            # Optional. Default: 30 seconds
-  cooldownPeriod:  300           # Optional. Default: 300 seconds
-  minReplicaCount: 0             # Optional. Default: 0
-  maxReplicaCount: 100           # Optional. Default: 100
-  advanced:
-    horizontalPodAutoscalerConfig: # Optional. If not set, KEDA won't scale based on resource utilization
+    apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
+    kind:          {kind-of-target-resource}         # Optional. Default: Deployment
+    name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
+    containerName: {container-name}                  # Optional. Default: .spec.template.spec.containers[0]
+  pollingInterval: 30                                # Optional. Default: 30 seconds
+  cooldownPeriod:  300                               # Optional. Default: 300 seconds
+  minReplicaCount: 0                                 # Optional. Default: 0
+  maxReplicaCount: 100                               # Optional. Default: 100
+  advanced:                                          # Optional. Section to specify advanced options.
+    horizontalPodAutoscalerConfig:                   # Optional. If not set, KEDA won't scale based on resource utilization
       resourceMetrics:
-      - name: cpu/memory # Name of the resource to be targeted
+      - name: cpu/memory                             # Name of the metric to scale on
         target:
           type: value/ utilization/ averagevalue
-          value: 60 # Optional
-          averageValue: 40 # Optional
-          averageUtilization: 50 # Optional
-      behavior:
+          value: 60                                  # Optional
+          averageValue: 40                           # Optional
+          averageUtilization: 50                     # Optional
+      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15                                     
   triggers:
-  # {list of triggers to activate the deployment}
+  # {list of triggers to activate scaling of the target resource}
 ```
 
 You can find all supported triggers [here](/scalers).
@@ -57,13 +73,19 @@ You can find all supported triggers [here](/scalers).
 ### Details
 ```yaml
   scaleTargetRef:
-    deploymentName: {deployment-name} # must be in the same namespace
-    containerName: {container-name}  #Optional. Default: deployment.spec.template.spec.containers[0]
+    apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
+    kind:          {kind-of-target-resource}         # Optional. Default: Deployment
+    name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
+    containerName: {container-name}                  # Optional. Default: .spec.template.spec.containers[0]
 ```
 
-The name of the deployment this scaledObject is for. This is the deployment KEDA will scale up and setup an HPA for based on the triggers defined in `triggers:`. Make sure to include the deployment name in the label as well, otherwise the metrics provider will not be able to query the metrics for the scaled object and 1-n scale will be broken.
+The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`. 
 
-**Assumptions:** `deploymentName` is in the same namespace as the scaledObject
+To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specfied.
+
+`containerName` is a name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.
+
+**Assumptions:** Resource referenced by `name` (and `apiVersion`, `kind`) is in the same namespace as the scaledObject
 
 ---
 
@@ -73,7 +95,7 @@ The name of the deployment this scaledObject is for. This is the deployment KEDA
 
 This is the interval to check each trigger on. By default KEDA will check each trigger source on every ScaledObject every 30 seconds.
 
-**Example:** in a queue scenario, KEDA will check the queueLength every `pollingInterval`, and scale the deployment up or down accordingly.
+**Example:** in a queue scenario, KEDA will check the queueLength every `pollingInterval`, and scale the resource up or down accordingly.
 
 ---
 
@@ -81,19 +103,19 @@ This is the interval to check each trigger on. By default KEDA will check each t
   cooldownPeriod:  300 # Optional. Default: 300 seconds
 ```
 
-The period to wait after the last trigger reported active before scaling the deployment back to 0. By default it's 5 minutes (300 seconds).
+The period to wait after the last trigger reported active before scaling the resource back to 0. By default it's 5 minutes (300 seconds).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment`, KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
+
+---
 
 ```yaml
   minReplicaCount: 0   # Optional. Default: 0
 ```
 
----
-
-Minimum number of replicas KEDA will scale the deployment down to. By default it's scale to zero, but you can use it with some other value as well. KEDA will not enforce that value, meaning you can manually scale the deployment to 0 and KEDA will not scale it back up. However, when KEDA itself is scaling the deployment it will respect the value set there.
+Minimum number of replicas KEDA will scale the resource down to. By default it's scale to zero, but you can use it with some other value as well. KEDA will not enforce that value, meaning you can manually scale the resource to 0 and KEDA will not scale it back up. However, when KEDA itself is scaling the resource it will respect the value set there.
 
 ---
 
@@ -101,7 +123,7 @@ Minimum number of replicas KEDA will scale the deployment down to. By default it
   maxReplicaCount: 100 # Optional. Default: 100
 ```
 
-This setting is passed to the HPA definition that KEDA will create for a given deployment.
+This setting is passed to the HPA definition that KEDA will create for a given resource.
 
 ---
 
@@ -109,21 +131,40 @@ This setting is passed to the HPA definition that KEDA will create for a given d
 advanced:
   horizontalPodAutoscalerConfig:
     resourceMetrics:
-    - name: cpu/memory
+    - name: cpu/memory                             # Name of the metric to scale on
       target:
         type: value/ utilization/ averagevalue
-        value: 60 # Optional
-        averageValue: 40 # Optional
-        averageUtilization: 50 # Optional
+        value: 60                                  # Optional
+        averageValue: 40                           # Optional
+        averageUtilization: 50                     # Optional
     behavior: 
+      scaleDown:
+        stabilizationWindowSeconds: 300
+        policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
 ```
 
-The above configuration can be used to scale deployments based on standard resource metrics like CPU / Memory. This configuration is the same as the standard HorizontalPodAutoscaler configuration. KEDA would feed this value as resource metric(s) into the HPA itself. 
-* name: This is the name of the resource to be targeted as a metric (cpu, memory etc)
-* type: type represents whether the metric type is Utilization, Value, or AverageValue.
-* value: value is the target value of the metric (as a quantity).
-* averageValue: averageValue is the target value of the average of the metric across all relevant pods (quantity)
-* averageUtilization: averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type.
+
+**`horizontalPodAutoscalerConfig:`**
+
+ This section contains configuration that is the same as some parts of the standard HorizontalPodAutoscaler configuration. KEDA would feed properties from this section into a apropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
+
+**`horizontalPodAutoscalerConfig.resourceMetrics:`**
+
+This configuration can be used to scale resources based on standard resource metrics like CPU / Memory. KEDA would feed this value as resource metric(s) into the HPA itself. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for details.
+* `name`: This is the name of the resource to be targeted as a metric (cpu, memory etc)
+* `type`: represents whether the metric type is Utilization, Value, or AverageValue.
+* `value`: is the target value of the metric (as a quantity).
+* `averageValue`: is the target value of the average of the metric across all relevant pods (quantity)
+* `averageUtilization`: is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type.
+
+**`horizontalPodAutoscalerConfig.behavior`:**
+
+Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior) for details.
+
+**Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
 
 ## Long-running executions
 
@@ -141,4 +182,4 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 
 ### Run as jobs
 
-The other alternative to handling long running executions is by running the event driven code in Kubernetes Jobs instead of Deployments.  This approach is discussed [in the next section](../scaling-jobs).
+The other alternative to handling long running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).
