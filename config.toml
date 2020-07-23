@@ -15,9 +15,9 @@ description = "Application autoscaling made simple"
 
 # "What is KEDA?" section on main page
 what_is = """
-**KEDA** is a Kubernetes-based event-driven autoscaler. KEDA determines how any container in [Kubernetes](https://kubernetes.io) should be scaled based on the number of events that need to be processed.
+**KEDA** is a [Kubernetes](https://kubernetes.io)-based Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed.
 
-KEDA is a single-purpose and lightweight component that can be added to any Kubernetes cluster. It works alongside standard Kubernetes components like the [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale) and can extend functionality without overwriting or duplication. With KEDA you can specify the that apps you want to scale in an event-driven way while other apps continue to function. This makes KEDA a flexible and safe option to run alongside other Kubernetes applications and frameworks.
+**KEDA** is a single-purpose and lightweight component that can be added into any Kubernetes cluster. KEDA works alongside standard Kubernetes components like the [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) and can extend functionality without overwriting or duplication. With KEDA you can explicitly map the apps you want to use event-driven scale, with other apps continuing to function.  This makes KEDA a flexible and safe option to run alongside any number of any other Kubernetes applications or frameworks.
 """
 
 locale = "en_US"
