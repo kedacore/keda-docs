@@ -285,6 +285,10 @@ url = "https://coralogix.com/"
 logo = "coralogix.gif"
 
 [[params.users]]
+url = "https://fission.io/"
+logo = "fission.png"
+
+[[params.users]]
 url = "https://www.mivation.com"
 logo = "mivation-inc.png"
 
