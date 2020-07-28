@@ -3,7 +3,7 @@ title = "External Scalers"
 weight = 500
 +++
 
-While KEDA ships with a set of [built-in scalers](../scalers), users can also extend KEDA through a GRPC service that implements the same interface as the built-in scalers.
+While KEDA ships with a set of [built-in scalers](../scalers), users can also extend KEDA through a GRPC service that implements the same interface as the built-in scalers. Built-in scalers run in the KEDA process/pod, while external scalers require an externally managed GRPC server that's accessible from KEDA with optional [TLS authentication](https://grpc.io/docs/guides/auth/). KEDA itself acts as a GRPC client and it exposes similar service interface for the built-in scalers, so external scalers can fully replace built-in ones.
 
 This document describes the external scaler interfaces and how to implement them in Go, Node, and .NET; however for more details on GRPC refer to [the official GRPC documentation](https://grpc.io/docs/)
 
