@@ -35,7 +35,7 @@ The `Scaler` interface defines 4 methods:
 - `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true
 - `Close` is called to allow the scaler to clean up connections or other resources.
 
-The `PushScaler` interface adds `Run` method. The `Run` method recieves a push channel (`active`), that the scaler can push `true` to any time to force activation independently from `pollingInterval`.
+The `PushScaler` interface adds `Run` method. The `Run` method receives a push channel (`active`), that the scaler can push `true` to any time to force scaling action independently from `pollingInterval`.
 
 
 ### External Scaler GRPC interface
