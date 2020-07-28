@@ -343,7 +343,7 @@ server.start()
 
 Unlike `IsActive`, `StreamingIsActive` is called once when KEDA reconciles the `ScaledObject`, and expects the external scaler to push `IsActiveResponse` whenever the scaler needs KEDA to activate the deployment.
 
-This implementation creates a timer and queries USGS APIs on that timer, effictivly ignoring `pollingInterval` set in the scaledObject. Alternativly any other asynchronus event can be used instead of a timer, like an HTTP request, or a network connection.
+This implementation creates a timer and queries USGS APIs on that timer, effectively ignoring `pollingInterval` set in the scaledObject. Alternatively any other asynchronous event can be used instead of a timer, like an HTTP request, or a network connection.
 
 
 {{< collapsible "Golang" >}}
