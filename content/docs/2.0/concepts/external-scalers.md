@@ -4,6 +4,7 @@ weight = 500
 +++
 
 While KEDA ships with a set of [built-in scalers](../scalers), users can also extend KEDA through a GRPC service that implements the same interface as the built-in scalers.
+
 This document describes the external scaler interfaces and how to implement them in Go, Node, and .NET; however for more details on GRPC refer to [the official GRPC documentation](https://grpc.io/docs/)
 
 Want to learn about existing external scalers? Explore our [external scaler community](https://github.com/kedacore/external-scalers).
