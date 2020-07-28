@@ -31,9 +31,12 @@ type PushScaler interface {
 ```
 
 The `Scaler` interface defines 4 methods:
-- `GetMetrics` and `GetMetricsSpecForScaling` that are used to build the HPA definition for that particular scaler.
 - `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true
 - `Close` is called to allow the scaler to clean up connections or other resources.
+- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec)
+- `GetMetrics` returns the value of the metric refered to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
+
+> Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates replicaCount based on metric value and target value.
 
 The `PushScaler` interface adds `Run` method. The `Run` method receives a push channel (`active`), that the scaler can push `true` to any time to force scaling action independently from `pollingInterval`.
 
@@ -498,7 +501,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
 
 #### 6. Implementing `GetMetrics`
 
-`GetMetrics` returns the value of the metric refered to from `GetMetricSpec`, in this example it's `earthquakeThreshold`. Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates replicaCount based on metric value and target value.
+`GetMetrics` returns the value of the metric refered to from `GetMetricSpec`, in this example it's `earthquakeThreshold`.
 
 {{< collapsible "Golang" >}}
 ```golang
