@@ -1,0 +1,12 @@
+<div class="card is-collapsible" x-data="{ open: false }">
+  <header class="has-mouse-icon" @click="open = !open">
+    <p class="card-header-title title is-size-4 is-size-4-mobile">
+      {{ .Get 0 }}
+    </p>
+  </header>
+  <div class="card-content" x-show="open">
+    <div class="content is-medium has-text-grey-dark">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</div>
