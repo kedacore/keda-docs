@@ -19,6 +19,8 @@ triggers:
     tlsCertFile: /path/to/tls/cert.pem # optional
 ```
 
+> For implementing an external scaler, refer to [External Scalers Concept](../concepts/external-scalers.md)
+
 **Parameter list:**
 
 - `scalerAddress`: "hostname:port" of the external push scaler implementing `ExternalScaler.StreamIsActive` in externalscaler.proto.

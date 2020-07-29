@@ -22,6 +22,8 @@ triggers:
     listLength: "5" # Required
 ```
 
+> For implementing an external scaler, refer to [External Scalers Concept](../concepts/external-scalers.md)
+
 ### Authentication Parameters
 
 Not supported yet.

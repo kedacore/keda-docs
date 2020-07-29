@@ -191,7 +191,7 @@ spec:
 
 {{< collapsible "Golang" >}}
 
-Full implementation can be found here: https://github.com/ahmelsayed/external-scaler-samples
+Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
 
 `main.go`
 ```golang
@@ -243,7 +243,7 @@ func (e *ExternalScaler) IsActive(ctx context.Context, scaledObject *pb.ScaledOb
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
-Full implementation can be found here: https://github.com/ahmelsayed/external-scaler-samples
+Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
 
 `Services/ExternalScalerService.cs`
 ```csharp
