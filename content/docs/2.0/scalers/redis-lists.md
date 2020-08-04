@@ -43,7 +43,7 @@ You can authenticate by using a password.
 
 - `address` - The host and port for the Redis server (host:port format).
 
-- `host` - The host of the Redis server. If specified, the `port` should also be specified
+- `host` - The hostname of the Redis server. If specified, the `port` should also be specified
 
 - `port` - The port of the Redis server. If specified, the `host` should also be specified
 
