@@ -2,20 +2,20 @@
 title = "Migration Guide"
 +++
 
-# Migrating from KEDA v1 to v2
+## Migrating from KEDA v1 to v2
 
 Please note that you **can not** run both KEDA v1 and v2 on the same Kubernetes cluster. You need to [uninstall](../../1.5/deploy) KEDA v1 first, in order to [install](../deploy) and use KEDA v2.
 
 KEDA v2 is using a new namespace for it's Custom Resources: `keda.sh` instead of `keda.k8s.io` and introduces a new Custom Resource for scaling of Jobs. See full details on KEDA Custom Resources [here](../concepts/#custom-resources-crd).
 
-## Scaling of Deployments
+### Scaling of Deployments
 In order to scale `Deployments` with KEDA v2, you need to do only a few modifications to existing v1 `ScaledObjects` definitions, so they comply with v2:
 - change the value of `apiVersion` property from `keda.k8s.io/v1alpha1` to `keda.sh/v1alpha1`
 - rename property `spec.scaleTargetRef.deploymentName` to `spec.scaleTargetRef.name`
 
-Please see the examples below or refer to the full [v2 ScaledObject documentation](../concepts/scaling-deployments)
+Please see the examples below or refer to the full [v2 ScaledObject Specification](../concepts/scaling-deployments/#scaledobject-spec)
 
-### Example of v1 ScaledObject
+ **Example of v1 ScaledObject**
 ```yaml
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
@@ -33,15 +33,15 @@ spec:
   # {list of triggers to activate the deployment}
 ```
 
-### Example of v2 ScaledObject
+**Example of v2 ScaledObject**
 ```yaml
-apiVersion: keda.sh/v1alpha1            # Changed
+apiVersion: keda.sh/v1alpha1            #  <--- Property value was changed
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
 spec:
   scaleTargetRef:
-    name: {deployment-name}             # Changed
+    name: {deployment-name}             #  <--- Property name was changed
     containerName: {container-name}     
   pollingInterval: 30            
   cooldownPeriod:  300           
@@ -52,12 +52,13 @@ spec:
 ```
 
 
-## Scaling of Jobs
+### Scaling of Jobs
 
 TODO description
-Please see the examples below or refer to the full [v2 ScaledJob documentation](../concepts/scaling-jobs)
 
-### Example of v1 ScaledObject for Jobs scaling
+Please see the examples below or refer to the full [v2 ScaledJob Specification](../concepts/scaling-jobs/#scaledjob-spec)
+
+**Example of v1 ScaledObject for Jobs scaling**
 ```yaml
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
@@ -80,5 +81,6 @@ spec:
   # {list of triggers to create jobs}
 ```
 
-### Example of v2 ScaledJob
+**Example of v2 ScaledJob**
+
 TODO
