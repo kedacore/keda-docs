@@ -14,6 +14,7 @@ For example, if you wanted to use KEDA to run a job for each message that lands 
 1. When a message arrives on the queue, KEDA creates a job.
 1. When the job starts running, it pulls *a single* message and processes it to completion.
 1. As additional messages arrive, additional jobs are created.  Each job processes a single message to completion.
+1. Periodically remove completed/failed job by the `SuccessfulJobsHistoryLimit` and `FailedJobsHistoryLimit.`
 
 ## ScaledJob spec
 
@@ -35,8 +36,8 @@ spec:
     template:
       # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
   pollingInterval: 30  # Optional. Default: 30 seconds
-  cooldownPeriod:  300 # Optional. Default: 300 seconds
-  minReplicaCount: 0   # Optional. Default: 0
+  SuccessfulJobsHistoryLimit: 5 # Optional. Default: 100 How many completed jobs should be kept.
+  FailedJobsHistoryLimit: 5 # Optional. Default: 100 How many failed jobs should be kept.
   maxReplicaCount: 100 # Optional. Default: 100
   triggers:
   # {list of triggers to create jobs}
