@@ -157,14 +157,14 @@ parent = "docs"
 weight = 3
 
 [[menu.docs]]
-url = "/docs/migration/"
-name = "Migration Guide"
+url = "/docs/operate/"
+name = "Operate"
 parent = "docs"
 weight = 4
 
 [[menu.docs]]
-url = "/docs/operate/"
-name = "Operate"
+url = "/docs/migration/"
+name = "Migration Guide"
 parent = "docs"
 weight = 5
 
