@@ -157,22 +157,28 @@ parent = "docs"
 weight = 3
 
 [[menu.docs]]
+url = "/docs/operate/"
+name = "Operate"
+parent = "docs"
+weight = 4
+
+[[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 4
+weight = 5
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 5
+weight = 6
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 6
+weight = 7
 
 [[menu.main]]
 url = "/blog"
