@@ -36,7 +36,7 @@ spec:
     template:
       # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
   pollingInterval: 30  # Optional. Default: 30 seconds
-  SuccessfulJobsHistoryLimit: 5 # Optional. Default: 100 How many completed jobs should be kept.
+  successfulJobsHistoryLimit: 5 # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5 # Optional. Default: 100. How many failed jobs should be kept.
   maxReplicaCount: 100 # Optional. Default: 100
   triggers:
