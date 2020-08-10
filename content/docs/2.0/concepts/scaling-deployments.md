@@ -48,9 +48,10 @@ spec:
   cooldownPeriod:  300                               # Optional. Default: 300 seconds
   minReplicaCount: 0                                 # Optional. Default: 0
   maxReplicaCount: 100                               # Optional. Default: 100
-  advanced:                                          # Optional. Section to specify advanced options.
-    horizontalPodAutoscalerConfig:                   # Optional. If not set, KEDA won't scale based on resource utilization
-      resourceMetrics:
+  advanced:                                          # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: true/false        # Optional. Default: false
+    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+      resourceMetrics:                               # Optional. If not set, KEDA won't scale based on resource utilization
       - name: cpu/memory                             # Name of the metric to scale on
         target:
           type: value/ utilization/ averagevalue
@@ -129,15 +130,29 @@ This setting is passed to the HPA definition that KEDA will create for a given r
 
 ```yaml
 advanced:
-  horizontalPodAutoscalerConfig:
-    resourceMetrics:
+  restoreToOriginalReplicaCount: true/false        # Optional. Default: false
+```
+
+This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted. 
+Default behavior is to keep the replica count at the same number as it is in the moment of `ScaledObject's` deletion.
+
+For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is created and the `Deployment` is scaled by KEDA to `10 replicas`. Then `ScaledObject` is deleted:
+ 1. if `restoreToOriginalReplicaCount = false` (default behavior) then `Deployment` replicas count is `10`
+ 2. if `restoreToOriginalReplicaCount = true` then `Deployment` replicas count is set back to `3` (the original value)
+
+---
+
+```yaml
+advanced:
+  horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+    resourceMetrics:                               # Optional. If not set, KEDA won't scale based on resource utilization
     - name: cpu/memory                             # Name of the metric to scale on
       target:
         type: value/ utilization/ averagevalue
         value: 60                                  # Optional
         averageValue: 40                           # Optional
         averageUtilization: 50                     # Optional
-    behavior: 
+    behavior:                                      # Optional. Use to modify HPA's scaling behavior
       scaleDown:
         stabilizationWindowSeconds: 300
         policies:
@@ -145,7 +160,6 @@ advanced:
           value: 100
           periodSeconds: 15
 ```
-
 
 **`horizontalPodAutoscalerConfig:`**
 
