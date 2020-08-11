@@ -38,7 +38,7 @@ metadata:
   namespace: keda-redis-test
 spec:
   scaleTargetRef:
-    deploymentName: keda-redis-node
+    name: keda-redis-node
   triggers:
   - type: external
     metadata:

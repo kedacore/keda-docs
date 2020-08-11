@@ -79,11 +79,9 @@ kind: ScaledObject
 metadata:
   name: redis-streams-scaledobject
   namespace: default
-  labels:
-    deploymentName: redis-streams-consumer
 spec:
   scaleTargetRef:
-    deploymentName: redis-streams-consumer
+    name: redis-streams-consumer
   pollingInterval: 15
   cooldownPeriod: 200
   maxReplicaCount: 25
@@ -126,11 +124,9 @@ kind: ScaledObject
 metadata:
   name: redis-streams-scaledobject
   namespace: default
-  labels:
-    deploymentName: redis-streams-consumer
 spec:
   scaleTargetRef:
-    deploymentName: redis-streams-consumer
+    name: redis-streams-consumer
   pollingInterval: 15
   cooldownPeriod: 200
   maxReplicaCount: 25

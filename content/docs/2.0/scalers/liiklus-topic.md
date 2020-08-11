@@ -38,7 +38,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: function-deployment
+    name: function-deployment
   pollingInterval: 30
   triggers:
   - type: liiklus

@@ -48,7 +48,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azurequeue-function
+    name: azurequeue-function
   triggers:
   - type: azure-queue
     metadata:

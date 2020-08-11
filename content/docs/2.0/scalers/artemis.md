@@ -77,11 +77,8 @@ kind: ScaledObject
 metadata:
   name: kedartemis-consumer-scaled-object
   namespace: kedartemis
-  labels:
-    deploymentName: kedartemis-consumer
 spec:
   scaleTargetRef:
-    kind: #Optional: Default: Deployment, Available Options: ReplicaSet, Deployment, DaemonSet, StatefulSet
     name: kedartemis-consumer
   triggers:
     - type: artemis-queue

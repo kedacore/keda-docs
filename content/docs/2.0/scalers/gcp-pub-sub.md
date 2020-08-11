@@ -40,7 +40,7 @@ metadata:
   namespace: keda-pubsub-test
 spec:
   scaleTargetRef:
-    deploymentName: keda-pubsub-go
+    name: keda-pubsub-go
   triggers:
   - type: gcp-pubsub
     metadata:

@@ -41,7 +41,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azureeventhub-function
+    name: azureeventhub-function
   triggers:
   - type: azure-eventhub
     metadata:
