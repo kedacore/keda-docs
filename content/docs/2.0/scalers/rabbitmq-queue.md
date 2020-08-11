@@ -45,7 +45,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: rabbitmq-deployment
+    name: rabbitmq-deployment
   triggers:
   - type: rabbitmq
     metadata:
@@ -65,7 +65,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: rabbitmq-deployment
+    name: rabbitmq-deployment
   triggers:
   - type: rabbitmq
     metadata:

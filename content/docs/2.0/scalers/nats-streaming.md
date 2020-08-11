@@ -40,7 +40,7 @@ spec:
   minReplicaCount: 0   # Optional. Default: 0
   maxReplicaCount: 30  # Optional. Default: 100  
   scaleTargetRef:
-    deploymentName: gonuts-sub
+    name: gonuts-sub
   triggers:
   - type: stan
     metadata:

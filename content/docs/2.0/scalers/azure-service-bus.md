@@ -58,7 +58,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azure-servicebus-queue-function
+    name: azure-servicebus-queue-function
   triggers:
   - type: azure-servicebus
     metadata:

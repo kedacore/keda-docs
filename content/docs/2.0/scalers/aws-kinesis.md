@@ -84,11 +84,9 @@ kind: ScaledObject
 metadata:
   name: aws-kinesis-stream-scaledobject
   namespace: keda-test
-  labels:
-    test: nginx-deployment
 spec:
   scaleTargetRef:
-    deploymentName: nginx-deployment
+    name: nginx-deployment
   triggers:
     - type: aws-kinesis-stream
       authenticationRef:

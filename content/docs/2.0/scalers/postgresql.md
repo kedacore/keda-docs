@@ -84,7 +84,7 @@ metadata:
   name: airflow-worker
 spec:
   scaleTargetRef:
-    deploymentName: airflow-worker
+    name: airflow-worker
   pollingInterval: 10   # Optional. Default: 30 seconds
   cooldownPeriod: 30    # Optional. Default: 300 seconds
   maxReplicaCount: 10   # Optional. Default: 100

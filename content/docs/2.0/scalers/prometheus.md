@@ -38,7 +38,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: my-deployment
+    name: my-deployment
   triggers:
   - type: prometheus
     metadata:

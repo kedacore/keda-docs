@@ -103,11 +103,9 @@ kind: ScaledObject
 metadata:
   name: huawei-cloudeye-scaledobject
   namespace: keda-test
-  labels:
-    test: nginx-deployment
 spec:
   scaleTargetRef:
-    deploymentName: nginx-deployment
+    name: nginx-deployment
   maxReplicaCount: 5
   minReplicaCount: 2
   triggers:

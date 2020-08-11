@@ -58,7 +58,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azure-functions-deployment
+    name: azure-functions-deployment
   pollingInterval: 30
   triggers:
   - type: kafka
@@ -120,7 +120,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azure-functions-deployment
+    name: azure-functions-deployment
   pollingInterval: 30
   triggers:
   - type: kafka

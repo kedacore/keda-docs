@@ -58,7 +58,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: {deployment-name}
+    name: {deployment-name}
   triggers:
   - type: rabbitmq
     metadata:
@@ -142,7 +142,7 @@ env: # Optional.
     containerName: my-container # Optional. Default: scaleTargetRef.containerName of ScaledObject
 ```
 
-**Assumptions:** `containerName` is in the same deployment as the configured `scaleTargetRef.deploymentName` in the ScaledObject, unless specified otherwise.
+**Assumptions:** `containerName` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
 
 ### Secret(s)
 
@@ -155,7 +155,7 @@ secretTargetRef: # Optional.
     key: azure-storage-connectionstring # Required.
 ```
 
-**Assumptions:** `namespace` is in the same deployment as the configured `scaleTargetRef.deploymentName` in the ScaledObject, unless specified otherwise.
+**Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
 
 ### Hashicorp Vault secret(s)
 

@@ -77,7 +77,7 @@ metadata:
   namespace: my-project
 spec:
   scaleTargetRef:
-    deploymentName: votes
+    name: votes
   triggers:
   - type: redis
     metadata:

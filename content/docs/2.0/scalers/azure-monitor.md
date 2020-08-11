@@ -80,11 +80,9 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-monitor-scaler
-  labels:
-    app: azure-monitor-example
 spec:
   scaleTargetRef:
-    deploymentName: azure-monitor-example
+    name: azure-monitor-example
   minReplicaCount: 1
   maxReplicaCount: 10
   triggers:

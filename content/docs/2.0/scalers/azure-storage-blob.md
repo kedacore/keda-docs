@@ -51,7 +51,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azureblob-function
+    name: azureblob-function
   triggers:
   - type: azure-blob
     metadata:

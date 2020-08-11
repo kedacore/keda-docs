@@ -72,7 +72,7 @@ metadata:
   namespace: my-project
 spec:
   scaleTargetRef:
-    deploymentName: worker
+    name: worker
   triggers:
   - type: mysql
     metadata:
