@@ -22,6 +22,7 @@ triggers:
     queueLength: '10' 
     username: 'ARTEMIS_USERNAME'
     password: 'ARTEMIS_PASSWORD'
+    restApiTemplate: # Optional. Default : "http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"
 ```
 
 **Parameter list:**
@@ -30,7 +31,8 @@ triggers:
 - `queueName`: the name of the queue to check for the number of messages available.
 - `brokerName`: the name of the broker as defined in Artemis.
 - `brokerAddress`: the address name of the broker.
-- `queueLength` How much messages are in the queue. Default is 10. Optional.
+- `queueLength`: How much messages are in the queue. Default is 10. Optional.
+- `restApiTemplate`: This value will be used as a template to build REST API url to get queue size. Default : `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`. In this example, `<<managementEndpoint>>`, `<<brokerName>>`, `<<brokerAddress>>` and `<<queueName>>` will be replaced automatically during runtime by values from metadata of YAML definition: `managementEndpoint`, `brokerName`, `brokerAddress`, `queueName`.
   
 ### Authentication Parameters
 
@@ -79,7 +81,8 @@ metadata:
     deploymentName: kedartemis-consumer
 spec:
   scaleTargetRef:
-    deploymentName: kedartemis-consumer
+    kind: #Optional: Default: Deployment, Available Options: ReplicaSet, Deployment, DaemonSet, StatefulSet
+    name: kedartemis-consumer
   triggers:
     - type: artemis-queue
       metadata:
@@ -88,6 +91,7 @@ spec:
         queueLength: "50"
         brokerName: "artemis-activemq"
         brokerAddress: "test"
+        restApiTemplate: # Optional. Default: "http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"
       authenticationRef:
         name: trigger-auth-kedartemis
 ```
