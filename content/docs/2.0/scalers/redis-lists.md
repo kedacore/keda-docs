@@ -41,10 +41,8 @@ You can authenticate by using a password.
 
 **Connection Authentication:**
 
-- `address` - The host and port for the Redis server (host:port format).
-
+- `address` - The hostname and port for the Redis server (host:port format).
 - `host` - The hostname of the Redis server. If specified, the `port` should also be specified
-
 - `port` - The port of the Redis server. If specified, the `host` should also be specified
 
 **Password Authentication:**
