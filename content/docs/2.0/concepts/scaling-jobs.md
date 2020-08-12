@@ -44,3 +44,92 @@ spec:
 ```
 
 You can find all supported triggers [here](../scalers).
+
+## Details
+
+```yaml
+  jobTargetRef:
+    parallelism: 1 # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    completions: 1 # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    activeDeadlineSeconds: 600 # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
+    backoffLimit: 6 # Specifies the number of retries before marking this job failed. Defaults to 6
+```
+
+The optional configuration parameter. Currently not implemented. It is going to be supported. 
+
+```yaml
+  pollingInterval: 30  # Optional. Default: 30 seconds
+```
+
+This is the interval to check each trigger on. By default, KEDA will check each trigger source on every ScaledJob every 30 seconds.
+
+
+```yaml
+  successfulJobsHistoryLimit: 5 # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 5 # Optional. Default: 100. How many failed jobs should be kept.
+```
+
+The `successfulJobsHistoryLimit` and `failedJobsHistoryLimit` fields are optional. These fields specify how many completed and failed jobs should be kept. By default, they are set to 100. This concept is similar to [Jobs Histry Limits](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#jobs-history-limits). The actual number of jobs could exceed the limit in a short time. However, it is going to resolve in the cleanup period. Currently, the cleanup period is the same as the Polling interval.
+
+```yaml
+  maxReplicaCount: 100 # Optional. Default: 100
+```
+
+The max number of pods that is created within a single polling period. If there are running jobs, the number of running jobs will be deducted. This table is an example of the scaling logic.
+
+| Queue Length | maxReplicaCount | TargetAvarageValue | RunningJobCount | Number of the Scale |
+| ------- | ------ | ------- | ------ | ----- |
+| 10 | 3 | 1 | 0 | 3 |
+| 10 | 3 | 2 | 0 | 3 |
+| 10 | 3 | 1 | 1 | 2 |
+| 10 | 100 | 1 | 0 | 10 | 
+| 4 | 3 | 5 | 0 | 1 |
+
+* **Queue Length:** The number of the length of the queue.
+* **Target Average Value:** How many pods do they have in a Job.
+* **Running Job Count:** How many jobs are running.
+* **Number of the Scale:** The number of the job that is created.
+
+# Sample
+
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rabbitmq-consumer
+data:
+  RabbitMqHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
+  LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+spec:
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+        - name: rabbitmq-client
+          image: tsuyoshiushio/rabbitmq-client:dev3
+          imagePullPolicy: Always
+          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "job"]
+          envFrom:
+            - secretRef:
+                name: rabbitmq-consumer
+        restartPolicy: Never
+    backoffLimit: 4  
+  pollingInterval: 10   # Optional. Default: 30 seconds
+  maxReplicaCount: 30  # Optional. Default: 100
+  successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: hello
+      host: RabbitMqHost
+      localhost: LocalHost
+      queueLength  : '5'
+```
