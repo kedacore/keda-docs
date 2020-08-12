@@ -23,11 +23,11 @@ triggers:
     databaseIndex: "0" # optional
 ```
 
-The `address` field in the spec holds the host and port of the redis server. This could be an external redis server or one running in the kubernetes cluster.
+The `address` field in the spec holds the host and port of the Redis server. The value should be the name of the environment variable in the deployment/job that contains the actual value for the Redis server address.
 
-As an alternative to the `address` field the user can specify `host` and `port` parameters. 
+As an alternative to the `address` field the user can specify `host` and `port` parameters. If you would prefer to specify on actual value for the `address`, then the TriggerAuthentication object could used to define the value.
 
-Provide the `password` field if the redis server requires a password. Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
+Provide the `password` field if the Redis server requires a password. Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
 
 The `listName` parameter in the spec points to the Redis List that you want to monitor. The `listLength` parameter defines the average target value for the Horizontal Pod Autoscaler (HPA).
 
@@ -38,6 +38,12 @@ The `databaseIndex` parameter let the user select the redis database to use. If 
 ### Authentication Parameters
 
 You can authenticate by using a password.
+
+**Connection Authentication:**
+
+- `address` - The hostname and port for the Redis server (host:port format).
+- `host` - The hostname of the Redis server. If specified, the `port` should also be specified
+- `port` - The port of the Redis server. If specified, the `host` should also be specified
 
 **Password Authentication:**
 
