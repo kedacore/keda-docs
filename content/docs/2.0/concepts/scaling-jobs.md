@@ -99,7 +99,7 @@ kind: Secret
 metadata:
   name: rabbitmq-consumer
 data:
-  RabbitMqHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
+  RabbitMqHost: <omitted>
   LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
 ---
 apiVersion: keda.sh/v1alpha1
