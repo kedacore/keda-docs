@@ -100,7 +100,7 @@ metadata:
   name: rabbitmq-consumer
 data:
   RabbitMqHost: <omitted>
-  LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
+  LocalHost: <omitted>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
