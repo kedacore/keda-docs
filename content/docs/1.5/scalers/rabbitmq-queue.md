@@ -16,7 +16,7 @@ triggers:
 - type: rabbitmq
   metadata:
     host: RabbitMqHost # Optional. If not specified, it must be done by using TriggerAuthentication.
-    queueLength: '20'
+    queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
     includeUnacked: 'true' # Optional, use unacked + ready messages count
     apiHost: RabbitApiHost # Optional. Represents the HTTP management API endpoint. If not specified, it must be done by using TriggerAuthentication.
