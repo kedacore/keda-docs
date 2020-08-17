@@ -1,6 +1,6 @@
 +++
 title = "Give KEDA 2.0 (Alpha) a test drive"
-date = 2020-08-19 # TODO: Update with actual date
+date = 2020-08-17 # TODO: Update with actual date
 author = "Tom Kerkhove"
 +++
 
