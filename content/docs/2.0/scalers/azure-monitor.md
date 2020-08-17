@@ -23,8 +23,8 @@ triggers:
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
     targetValue: "1"
-    activeDirectoryClientId: CLIENT_ID_ENV_NAME # Optional if podIdentity is defined
-    activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME # Optional if podIdentity is defined
+    activeDirectoryClientId: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
+    activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
 ```
 
 **Parameter list:**
@@ -43,8 +43,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials
-or by using pod identity.
+You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials or by using pod identity.
 
 **Credential based authentication:**
 
@@ -78,7 +77,7 @@ spec:
       key: activeDirectoryClientPassword
   # or Pod Identity, kind: Secret is not required in case of pod Identity
   podIdentity:
-      provider: azure    
+      provider: azure
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
