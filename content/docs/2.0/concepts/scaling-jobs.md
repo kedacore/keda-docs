@@ -81,7 +81,7 @@ The actual number of jobs could exceed the limit in a short time. However, it is
 
 The max number of pods that is created within a single polling period. If there are running jobs, the number of running jobs will be deducted. This table is an example of the scaling logic.
 
-| Queue Length | maxReplicaCount | TargetAvarageValue | RunningJobCount | Number of the Scale |
+| Queue Length | Max Replica Count | Target Average Value | Running Job Count | Number of the Scale |
 | ------- | ------ | ------- | ------ | ----- |
 | 10 | 3 | 1 | 0 | 3 |
 | 10 | 3 | 2 | 0 | 3 |
