@@ -6,4 +6,5 @@
 {{- range $scalers -}}
 {{- $path := index (split .RelPermalink "/") 2 }}
 /docs/scalers/{{ $path }}     /scalers/{{ $path }}
+/docs/scalers/{{ $path }}     /docs/{{ $docsLatest }}/scalers/{{ $path }}
 {{- end -}}
