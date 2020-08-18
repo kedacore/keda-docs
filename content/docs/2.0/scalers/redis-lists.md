@@ -9,7 +9,7 @@ go_file = "redis_scaler"
 
 ### Trigger Specification
 
-This specification describes the `redis` trigger that scales based on the length of a list in Redis.
+This specification describes the `redis` trigger that scales based on the length of a list,hash,set or sorted-set in Redis.
 
 ```yaml
 triggers:
