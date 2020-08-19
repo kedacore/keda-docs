@@ -102,7 +102,7 @@ kubectl apply -f keda-2.0.0.yaml
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-make deploy
+VERSION=2.0.0 make deploy
 ```
 
 ### Uninstall
@@ -122,5 +122,5 @@ kubectl delete -f keda-2.0.0.yaml
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-make undeploy
+VERSION=2.0.0 make undeploy
 ```
