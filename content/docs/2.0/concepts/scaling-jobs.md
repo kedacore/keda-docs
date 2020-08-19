@@ -104,7 +104,6 @@ metadata:
   name: rabbitmq-consumer
 data:
   RabbitMqHost: <omitted>
-  LocalHost: <omitted>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
@@ -134,6 +133,5 @@ spec:
     metadata:
       queueName: hello
       host: RabbitMqHost
-      localhost: LocalHost
       queueLength  : '5'
 ```
