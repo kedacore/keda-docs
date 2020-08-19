@@ -85,39 +85,42 @@ Locate installed KEDA Operator in `keda` namespace, then remove created `KedaCon
 
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
-We provide sample YAML declarations which includes our CRD in the released zip and tar.gz package files which are available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
-Download the zip or tar.gz file, unpack it, enter the unpacked folder and just run the following commands.
+- We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
+Run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
 
 ```sh
-kubectl apply -f ./crds
-kubectl apply -f ./
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0/keda-2.0.0.yaml
 ```
 
-You can also find the same YAML declarations in our `/deploy` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
+- Alternatively you can download the file and deploy it from the local path:
+```sh
+kubectl apply -f keda-2.0.0.yaml
+```
+
+- You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
 
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-kubectl apply -f deploy/crds/keda.sh_scaledobjects_crd.yaml
-kubectl apply -f deploy/crds/keda.sh_scaledjobs_crd.yaml
-kubectl apply -f deploy/crds/keda.sh_triggerauthentications_crd.yaml
-kubectl apply -f deploy/
+make deploy
 ```
 
 ### Uninstall
 
-You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
+- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
 
 ```sh
-kubectl delete -f deploy/
-kubectl delete -f deploy/crds/keda.sh_scaledobjects_crd.yaml
-kubectl delete -f deploy/crds/keda.sh_scaledjobs_crd.yaml
-kubectl delete -f deploy/crds/keda.sh_triggerauthentications_crd.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.0.0/keda-2.0.0.yaml
 ```
 
-In case of installing from released .zip or .tar package, enter the unpacked folder and just run the following commands:
+- If you have downloaded the file locally, you can run:
 
 ```sh
-kubectl delete -f ./
-kubectl delete -f ./crds
+kubectl delete -f keda-2.0.0.yaml
+```
+
+- You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
+
+```sh
+make undeploy
 ```
