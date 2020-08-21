@@ -12,6 +12,7 @@ KEDA v2 is using a new API namespace for it's Custom Resources Definitions (CRD)
 In order to scale `Deployments` with KEDA v2, you need to do only a few modifications to existing v1 `ScaledObjects` definitions, so they comply with v2:
 - Change the value of `apiVersion` property from `keda.k8s.io/v1alpha1` to `keda.sh/v1alpha1`
 - Rename property `spec.scaleTargetRef.deploymentName` to `spec.scaleTargetRef.name`
+- Rename property `spec.scaleTargetRef.containerName` to `spec.scaleTargetRef.envSourceContainerName`
 - Label `deploymentName` (in `metadata.labels.`) is no longer needed to be specified on v2 ScaledObject (it was mandatory on older versions of v1)
 
 Please see the examples below or refer to the full [v2 ScaledObject Specification](../concepts/scaling-deployments/#scaledobject-spec)
@@ -38,14 +39,14 @@ spec:
 
 **Example of v2 ScaledObject**
 ```yaml
-apiVersion: keda.sh/v1alpha1            #  <--- Property value was changed
+apiVersion: keda.sh/v1alpha1                  #  <--- Property value was changed
 kind: ScaledObject
-metadata:                               #  <--- labels.deploymentName is not needed
+metadata:                                     #  <--- labels.deploymentName is not needed
   name: {scaled-object-name}
 spec:
   scaleTargetRef:
-    name: {deployment-name}             #  <--- Property name was changed
-    containerName: {container-name}     
+    name: {deployment-name}                   #  <--- Property name was changed
+    envSourceContainerName: {container-name}  #  <--- Property name was changed   
   pollingInterval: 30            
   cooldownPeriod:  300           
   minReplicaCount: 0             

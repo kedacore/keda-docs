@@ -29,16 +29,17 @@ metadata:
   name: {scaled-job-name}
 spec:
   jobTargetRef:
-    parallelism: 1 # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    completions: 1 # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    activeDeadlineSeconds: 600 # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-    backoffLimit: 6 # Specifies the number of retries before marking this job failed. Defaults to 6
+    parallelism: 1                          # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    completions: 1                          # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    activeDeadlineSeconds: 600              #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
+    backoffLimit: 6                         # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
       # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
-  pollingInterval: 30  # Optional. Default: 30 seconds
-  successfulJobsHistoryLimit: 5 # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 5 # Optional. Default: 100. How many failed jobs should be kept.
-  maxReplicaCount: 100 # Optional. Default: 100
+  pollingInterval: 30                       # Optional. Default: 30 seconds
+  successfulJobsHistoryLimit: 5             # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 5                 # Optional. Default: 100. How many failed jobs should be kept.
+  envSourceContainerName: {container-name}  # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
+  maxReplicaCount: 100                      # Optional. Default: 100
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -49,13 +50,15 @@ You can find all supported triggers [here](../scalers).
 
 ```yaml
   jobTargetRef:
-    parallelism: 1 # Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    completions: 1 # Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    activeDeadlineSeconds: 600 # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-    backoffLimit: 6 # Specifies the number of retries before marking this job failed. Defaults to 6
+    parallelism: 1              # Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    completions: 1              # Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    activeDeadlineSeconds: 600  # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
+    backoffLimit: 6             # Specifies the number of retries before marking this job failed. Defaults to 6
 ```
 
 The optional configuration parameter. Currently not implemented. It is going to be supported. 
+
+---
 
 ```yaml
   pollingInterval: 30  # Optional. Default: 30 seconds
@@ -63,10 +66,11 @@ The optional configuration parameter. Currently not implemented. It is going to 
 
 This is the interval to check each trigger on. By default, KEDA will check each trigger source on every ScaledJob every 30 seconds.
 
+---
 
 ```yaml
-  successfulJobsHistoryLimit: 5 # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 5 # Optional. Default: 100. How many failed jobs should be kept.
+  successfulJobsHistoryLimit: 5  # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 5      # Optional. Default: 100. How many failed jobs should be kept.
 ```
 
 The `successfulJobsHistoryLimit` and `failedJobsHistoryLimit` fields are optional. These fields specify how many completed and failed jobs should be kept. By default, they are set to 100.
@@ -74,6 +78,17 @@ The `successfulJobsHistoryLimit` and `failedJobsHistoryLimit` fields are optiona
 This concept is similar to [Jobs History Limits](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#jobs-history-limits) allowing you to learn what the outcome of your jobs are.
 
 The actual number of jobs could exceed the limit in a short time. However, it is going to resolve in the cleanup period. Currently, the cleanup period is the same as the Polling interval.
+
+---
+
+
+```yaml
+  envSourceContainerName: {container-name}  # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
+```
+
+This optional property specifies the name of container in the Job, from which KEDA should try to get environment properties holding secrets etc. If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.JobTargetRef.template.spec.containers[0]`.
+
+---
 
 ```yaml
   maxReplicaCount: 100 # Optional. Default: 100
@@ -124,10 +139,10 @@ spec:
                 name: rabbitmq-consumer
         restartPolicy: Never
     backoffLimit: 4  
-  pollingInterval: 10   # Optional. Default: 30 seconds
-  maxReplicaCount: 30  # Optional. Default: 100
-  successfulJobsHistoryLimit: 3 # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 2 # Optional. Default: 100. How many failed jobs should be kept.
+  pollingInterval: 10             # Optional. Default: 30 seconds
+  maxReplicaCount: 30             # Optional. Default: 100
+  successfulJobsHistoryLimit: 3   # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 2       # Optional. Default: 100. How many failed jobs should be kept.
   triggers:
   - type: rabbitmq
     metadata:

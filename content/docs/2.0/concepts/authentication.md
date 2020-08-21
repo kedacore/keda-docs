@@ -67,7 +67,7 @@ spec:
       queueLength  : '5'
 ```
 
-If you have multiple containers in a deployment, you will need to include the name of the container that has the references in the `ScaledObject`.  If you do not include a `containerName` it will default to the first container.  KEDA will attempt to resolve references from secrets, config maps, and environment variables of the container.
+If you have multiple containers in a deployment, you will need to include the name of the container that has the references in the `ScaledObject`.  If you do not include a `envSourceContainerName` it will default to the first container.  KEDA will attempt to resolve references from secrets, config maps, and environment variables of the container.
 
 While this method works for many scenarios, there are some downsides.  This method makes it difficult to efficiently share auth config across `ScaledObjects`.  It also doesn’t support referencing a secret directly, only secrets that are referenced by the container.  This method also doesn't support a model where other types of authentication may work - namely "pod identity" where access to a source could be acquired with no secrets or connection strings.  For these and other reasons, we also provide a `TriggerAuthentication` resource to define authentication as a separate resource to a `ScaledObject`, which can reference secrets directly or supply configuration like pod identity.
 
@@ -93,27 +93,27 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | gcp | spiffe | aws-eks | aws-kiam # Optional. Default: none
-  secretTargetRef: # Optional.
-  - parameter: {scaledObject-parameter-name} # Required.
-    name: {secret-name} # Required.
-    key: {secret-key-name} # Required.
-  env: # Optional.
-  - parameter: {scaledObject-parameter-name} # Required.
-    name: {env-name} # Required.
-    containerName: {container-name} # Optional. Default: scaleTargetRef.containerName of ScaledObject
-  hashiCorpVault: # Optional.
-    address: {hashicorp-vault-address} # Required.
-    authentication: token | kubernetes # Required.
-    role: {hashicorp-vault-role} # Optional.
-    mount: {hashicorp-vault-mount} # Optional.
-    credential: # Optional.
-      token: {hashicorp-vault-token} # Optional.
-      serviceAccount: {path-to-service-account-file} # Optional.
-    secrets: # Required.
-    - parameter: {scaledObject-parameter-name} # Required.
-      key: {hasicorp-vault-secret-key-name} # Required.
-      path: {hasicorp-vault-secret-path} # Required.
+      provider: none | azure | gcp | spiffe | aws-eks | aws-kiam  # Optional. Default: none
+  secretTargetRef:                                    # Optional.
+  - parameter: {scaledObject-parameter-name}          # Required.
+    name: {secret-name}                               # Required.
+    key: {secret-key-name}                            # Required.
+  env:                                                # Optional.
+  - parameter: {scaledObject-parameter-name}          # Required.
+    name: {env-name}                                  # Required.
+    containerName: {container-name}                   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  hashiCorpVault:                                     # Optional.
+    address: {hashicorp-vault-address}                # Required.
+    authentication: token | kubernetes                # Required.
+    role: {hashicorp-vault-role}                      # Optional.
+    mount: {hashicorp-vault-mount}                    # Optional.
+    credential:                                       # Optional.
+      token: {hashicorp-vault-token}                  # Optional.
+      serviceAccount: {path-to-service-account-file}  # Optional.
+    secrets:                                          # Required.
+    - parameter: {scaledObject-parameter-name}        # Required.
+      key: {hasicorp-vault-secret-key-name}           # Required.
+      path: {hasicorp-vault-secret-path}              # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -136,10 +136,10 @@ Every parameter you define in `TriggerAuthentication` definition does not need t
 You can pull information via one or more environment variables by providing the `name` of the variable for a given `containerName`.
 
 ```yaml
-env: # Optional.
-  - parameter: region # Required - Defined by the scale trigger
-    name: my-env-var # Required.
-    containerName: my-container # Optional. Default: scaleTargetRef.containerName of ScaledObject
+env:                              # Optional.
+  - parameter: region             # Required - Defined by the scale trigger
+    name: my-env-var              # Required.
+    containerName: my-container   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
 ```
 
 **Assumptions:** `containerName` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
@@ -149,10 +149,10 @@ env: # Optional.
 You can pull one or more secrets into the trigger by defining the `name` of the Kubernetes Secret and the `key` to use.
 
 ```yaml
-secretTargetRef: # Optional.
-  - parameter: connectionString # Required - Defined by the scale trigger
-    name: my-keda-secret-entity # Required.
-    key: azure-storage-connectionstring # Required.
+secretTargetRef:                          # Optional.
+  - parameter: connectionString           # Required - Defined by the scale trigger
+    name: my-keda-secret-entity           # Required.
+    key: azure-storage-connectionstring   # Required.
 ```
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
@@ -164,18 +164,18 @@ You can pull one or more Hashicorp Vault secrets into the trigger by defining th
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 
 ```yaml
-hashiCorpVault: # Optional.
-  address: {hashicorp-vault-address} # Required.
-  authentication: token | kubernetes # Required.
-  role: {hashicorp-vault-role} # Optional.
-  mount: {hashicorp-vault-mount} # Optional.
-  credential: # Optional.
-    token: {hashicorp-vault-token} # Optional.
-    serviceAccount: {path-to-service-account-file} # Optional.
-  secrets: # Required.
-  - parameter: {scaledObject-parameter-name} # Required.
-    key: {hasicorp-vault-secret-key-name} # Required.
-    path: {hasicorp-vault-secret-path} # Required.
+hashiCorpVault:                                     # Optional.
+  address: {hashicorp-vault-address}                # Required.
+  authentication: token | kubernetes                # Required.
+  role: {hashicorp-vault-role}                      # Optional.
+  mount: {hashicorp-vault-mount}                    # Optional.
+  credential:                                       # Optional.
+    token: {hashicorp-vault-token}                  # Optional.
+    serviceAccount: {path-to-service-account-file}  # Optional.
+  secrets:                                          # Required.
+  - parameter: {scaledObject-parameter-name}        # Required.
+    key: {hasicorp-vault-secret-key-name}           # Required.
+    path: {hasicorp-vault-secret-path}              # Required.
 ```
 
 ### Pod Authentication Providers
@@ -186,7 +186,7 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure | gcp | spiffe | aws-eks | aws-kiam # Optional. Default: none
+  provider: none | azure | gcp | spiffe | aws-eks | aws-kiam  # Optional. Default: none
 ```
 
 #### Azure Pod Identity

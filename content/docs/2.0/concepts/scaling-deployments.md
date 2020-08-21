@@ -43,7 +43,7 @@ spec:
     apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
     kind:          {kind-of-target-resource}         # Optional. Default: Deployment
     name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
-    containerName: {container-name}                  # Optional. Default: .spec.template.spec.containers[0]
+    envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval: 30                                # Optional. Default: 30 seconds
   cooldownPeriod:  300                               # Optional. Default: 300 seconds
   minReplicaCount: 0                                 # Optional. Default: 0
@@ -77,16 +77,16 @@ You can find all supported triggers [here](/scalers).
     apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
     kind:          {kind-of-target-resource}         # Optional. Default: Deployment
     name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
-    containerName: {container-name}                  # Optional. Default: .spec.template.spec.containers[0]
+    envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
 ```
 
 The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`. 
 
 To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specfied.
 
-`containerName` is a name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.
+`envSourceContainerName` is an optional property that specifies the name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.  If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.template.spec.containers[0]`.
 
-**Assumptions:** Resource referenced by `name` (and `apiVersion`, `kind`) is in the same namespace as the scaledObject
+**Assumptions:** Resource referenced by `name` (and `apiVersion`, `kind`) is in the same namespace as the ScaledObject
 
 ---
 
