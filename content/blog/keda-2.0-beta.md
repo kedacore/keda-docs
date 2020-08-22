@@ -25,7 +25,7 @@ Here are some highlights:
     - Provide more information when quering KEDA resources with `kubectl`
 - **Extensibility**
     - Introduction of External Push scaler ([docs](https://keda.sh/docs/2.0/scalers/external-push/))
-    - Provide Go client
+    - Provide KEDA client-go library
 
 For a full list of changes, we highly recommend going through [our changelog](https://github.com/kedacore/keda/blob/v2/CHANGELOG.md#v200)!
 
