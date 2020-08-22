@@ -63,7 +63,7 @@ We are looking forward to hearing your feedback:
 - What issues did you find?
 - How can the migration be smoother?
 
-While we are eagerly waiting for feedback, we plan to release KEDA 2.0 by the end of August, 2020.
+While we are eagerly waiting for feedback, we plan to release KEDA 2.0 around the end of August/early September, 2020.
 
 Thanks for reading, and happy scaling!
 
