@@ -51,7 +51,7 @@ With our official release we will provide [migration scripts](https://github.com
 
 > **⚠ Running KEDA 1.x & 2.0 Beta side-by-side is not supported.**
 > 
-> KEDA is comes with a metrics server and Kubernetes only allows you to run one of them in a cluster.
+> KEDA comes with a metrics server and Kubernetes only allows you to run one of them in a cluster.
 > 
 >_Learn more about how KEDA is architected in [our docs](http://keda.sh/docs/latest/concepts/#architecture)._
 
