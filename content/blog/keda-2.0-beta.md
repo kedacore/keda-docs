@@ -1,10 +1,10 @@
 +++
-title = "Give KEDA 2.0 (Alpha) a test drive"
+title = "Give KEDA 2.0 (Beta) a test drive"
 date = 2020-08-17 # TODO: Update with actual date
 author = "KEDA Maintainers"
 +++
 
-Today, we are happy to share that our first **alpha version of KEDA 2.0 is available**! 🎊
+Today, we are happy to share that our first **beta version of KEDA 2.0 is available**! 🎊
 
 # Highlights
 
@@ -33,7 +33,7 @@ For a full list of changes, we highly recommend going through [our changelog](ht
 
 TODO but need input, just list Helm? This legit?
 
->$ helm install keda kedacore/keda --namespace keda --version 2.0.0-alpha
+>$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta
 
 
 # Migrating to KEDA 2.0
@@ -49,7 +49,7 @@ Learn more on how to migrate by using our [migration guide](https://keda.sh/docs
 
 With our official release we will provide [migration scripts](https://github.com/kedacore/keda/issues/946) allowing you to migrate your KEDA resources automatically.
 
-> **⚠ Running KEDA 1.x & 2.0 Alpha side-by-side is not supported.**
+> **⚠ Running KEDA 1.x & 2.0 Beta side-by-side is not supported.**
 > 
 > KEDA is comes with a metrics server and Kubernetes only allows you to run one of them in a cluster.
 > 
