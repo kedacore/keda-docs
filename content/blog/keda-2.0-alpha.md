@@ -1,7 +1,7 @@
 +++
 title = "Give KEDA 2.0 (Alpha) a test drive"
 date = 2020-08-17 # TODO: Update with actual date
-author = "Tom Kerkhove"
+author = "KEDA Maintainers"
 +++
 
 Today, we are happy to share that our first **alpha version of KEDA 2.0 is available**! 🎊
@@ -67,4 +67,4 @@ While we are eagerly waiting for feedback, we plan to release KEDA 2.0 by the en
 
 Thanks for reading, and happy scaling!
 
-Tom Kerkhove
+KEDA Maintainers.
