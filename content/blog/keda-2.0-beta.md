@@ -37,7 +37,7 @@ Get started now, and install our beta with Helm:
 
 As an alternative, you can use our deployment YAML:
 
->$ kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0.yaml
+>$ kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0-beta.yaml
 
 # Migrating to KEDA 2.0
 
