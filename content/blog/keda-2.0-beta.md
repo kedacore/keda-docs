@@ -27,7 +27,7 @@ Here are some highlights:
     - Introduction of External Push scaler ([docs](https://keda.sh/docs/2.0/scalers/external-push/))
     - Provide KEDA client-go library
 
-For a full list of changes, we highly recommend going through [our changelog](https://github.com/kedacore/keda/blob/v2/CHANGELOG.md#v200)!
+For a full list of changes, we highly recommend going through [our changelog](https://github.com/kedacore/keda/blob/v2/CHANGELOG.md#v200)! With our stable release, we'll provide a full overview of what's released in a new blog post.
 
 # Getting started
 
@@ -66,7 +66,7 @@ We are looking forward to hearing your feedback:
 - What issues did you find?
 - How can the migration be smoother?
 
-While we are eagerly waiting for feedback, we plan to release KEDA 2.0 around the end of August/early September, 2020.
+While we are eagerly waiting for feedback, we plan to release KEDA 2.0 stable around early September, 2020!
 
 Thanks for reading, and happy scaling!
 
