@@ -1,6 +1,6 @@
 +++
 title = "Give KEDA 2.0 (Beta) a test drive"
-date = 2020-08-17 # TODO: Update with actual date
+date = 2020-08-31 # TODO: Update with actual date
 author = "KEDA Maintainers"
 +++
 
@@ -31,10 +31,13 @@ For a full list of changes, we highly recommend going through [our changelog](ht
 
 # Getting started
 
-TODO but need input, just list Helm? This legit?
+Get started now, and install our beta with Helm:
 
 >$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta
 
+As an alternative, you can use our deployment YAML:
+
+>$ kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0.yaml
 
 # Migrating to KEDA 2.0
 
