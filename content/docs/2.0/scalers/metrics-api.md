@@ -12,24 +12,21 @@ go_file = "metrics_api_scaler"
 This specification describes the `metrics-api` trigger that scales based on a metric value from an API.
 
 The metrics API requires following configuration values:
-- `apiURL` string representing the base URL of the API (i.e `http://app:1317/api/v1/`).
-- `metricName` the metric name to be used to retive value .
+- `url` string representing the base URL of the API (i.e `http://app:1317/api/v1/`).
+- `metricName` the metric name to be used to retrieve value. Scaler will look for metric value under
+    `url/metric/{metricName}` endpoint. For more information check next section.
 - `targetValue` the target value is the target value to scale on. When the metric provided by the 
     API is equal or higher to this value, KEDA will start scaling out.
 
-An example of scaled object spec using metric API:
+An example of triggers configuration using metric API scaler:
 
 ```yaml
-spec:
-  maxReplicaCount: 4
-  scaleTargetRef:
-    name: dummy
-  triggers:
-    - type: metric-api
-      metadata:
-        targetValue: "1"
-        url: "http://api:3232/api/v1"
-        metricName: "workersNumber"
+triggers:
+- type: metric-api
+  metadata:
+    targetValue: "1"
+    url: "http://api:3232/api/v1"
+    metricName: "workersNumber"
 ```
 
 **Note**:
@@ -165,3 +162,5 @@ security:
   - basic_auth: []
   - api_key: []
 ```
+
+The `/health` endpoint is used once when creating new `metricsAPIScaler`.
