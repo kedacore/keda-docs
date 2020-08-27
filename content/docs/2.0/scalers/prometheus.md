@@ -4,7 +4,7 @@ layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Prometheus."
-go_file = "prometheus_scaler"
+go_file = "prometheus"
 +++
 
 ### Trigger Specification
