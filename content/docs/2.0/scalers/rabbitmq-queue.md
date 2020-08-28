@@ -40,6 +40,9 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 - `host`: AMQP URI connection string, like `amqp://guest:password@localhost:5672/vhost`.
 - `apiHost`: HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`. 
+- `ca` Certificate authority file for TLS client authentication. Optional. If host is being with amqps, this is required.
+- `cert` Certificate for client authentication. Optional. If host is being with amqps, this is required.
+- `key` Key for client authentication. Optional. If host is being with amqps, this is required.
 
 ### Example
 
@@ -52,6 +55,9 @@ metadata:
   name: keda-rabbitmq-secret
 data:
   host: <AMQP URI connection string> # base64 encoded value of format amqp://guest:password@localhost:5672/vhost
+  ca.pem: #Certificate authority file content
+  cert.pem: #Certificate file content
+  key.pem: #Key file content for client authentication
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
@@ -63,6 +69,15 @@ spec:
     - parameter: host
       name: keda-rabbitmq-secret
       key: host
+    - parameter: ca
+      name: keda-rabbitmq-secret
+      key: ca.pem
+    - parameter: cert
+      name: keda-rabbitmq-secret
+      key: cert.pem
+    - parameter: key
+      name: keda-rabbitmq-secret
+      key: key.pem
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
