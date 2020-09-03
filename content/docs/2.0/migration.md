@@ -87,3 +87,9 @@ spec:
 **Example of v2 ScaledJob**
 
 TODO
+
+
+### Scalers
+ 
+**Kafka**
+ - `authMode` property was replaced with `sasl` and `tls` properties. Please refer [documentation](../scalers/apache-kafka/#authentication-parameters) for Kafka Authentication Parameters details.
