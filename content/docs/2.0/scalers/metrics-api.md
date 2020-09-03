@@ -13,7 +13,7 @@ This specification describes the `metrics-api` trigger that scales based on a me
 allows users to utilize any existing APIs as a source of metric.  
 
 The metrics-api trigger requires following configuration values:
-- `url` string representing the full URL that will be used to get the metric (i.e `http://app:1317/api/v1/stats`).
+- `url` string representing the full URL that will be used to get the metric (eg. `http://app:1317/api/v1/stats`).
 - `valueLocation` string using [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to point to
     required value that will be used as current metric value 
 - `targetValue` the target value is the target value to scale on. When the metric provided by the 
@@ -31,8 +31,8 @@ triggers:
 ```
 
 When checking current metric this scaler sends GET request to provided `url` and then uses `valueLocation`
-to access the value in response's payload. The above example expects that used API will return response similar to this
-one:
+to access the value in response's payload. The above example expects that the API endpoint will return response
+similar to this one:
 ```json
 {
   "components": {
@@ -45,8 +45,7 @@ one:
   ...
 }
 ```
-Assuming such response, metric-api trigger will figure out that current metric value is 12. And because 12 > 8 it
-would make KEDA to start scaling out.  
+Assuming such response, metric-api trigger will figure out that current metric value is 12.
 
 **Note**:
 This scaler scales deployment to 0 if and only if the value of the metric is lower or equal to zero.
