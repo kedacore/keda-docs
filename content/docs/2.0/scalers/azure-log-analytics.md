@@ -31,7 +31,8 @@ triggers:
 
 - `clientSecret`: Password from your Azure AD Application/service principal.
 
-- `workspaceID`: Your Log Analytics WorkspaceId. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics WorkspaceId.
+- `workspaceID`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+
 - `query`: Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold`: An int64 value will be used as a threshold to calculate # of pods for scale target.
 
