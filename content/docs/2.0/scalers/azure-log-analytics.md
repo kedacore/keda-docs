@@ -79,7 +79,7 @@ Perf
 
 You can convert your query in JSON escaped string using [this](https://www.freeformatter.com/json-escape.html) tool and check yaml specific escapes.
 
-**Scaler limitations (READ CAREFULLY):**
+### Scaler Limitations
 
 - As Log Analytics Scaler using Service Principal to authorize REST API requests, you should be aware of throttling. You should take to account the following AAD limit: 200 requests per 30 seconds. Each Log Analytics Scaler request's Access Token twice per pooling interval (one by Keda Operator and one by Keda Metrics Server). So, theoretical maximum number of Log Analytics scalers, created with the same Service Principal for 30sec pooling interval can be 100. Read more about throttling: [here](https://dev.applicationinsights.io/documentation/Authorization/Rate-limits), [here](https://docs.microsoft.com/en-us/previous-versions/azure/ad/graph/howto/azure-ad-graph-api-throttling#what-is-throttling) and [here](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-service-limits-restrictions)
 - As it was mentioned before, you can define a threshold using query (2d cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to HPA target.
