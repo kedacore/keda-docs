@@ -25,7 +25,8 @@ triggers:
 
 **Parameter list:**
 
-- `tenantID`: Azure Active Directory TenantId. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your TenantId.
+- `tenantID`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+
 - `clientID`: appId from your Service Principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your Service Principal.
 - `clientSecret`: password from your Service Principal.
 - `workspaceID`: Your Log Analytics WorkspaceId. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics WorkspaceId.
