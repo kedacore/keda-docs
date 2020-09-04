@@ -39,7 +39,9 @@ triggers:
 ### Query Guidance
 
 It is important to design your query to return 1 table with 1 row. A good practice is to add "| limit 1" at the end of your query.
+
 Scaler will take value from:
+
 
 - 1st cell as Metrics Value.
 - 2d cell as Threshold (optional).
