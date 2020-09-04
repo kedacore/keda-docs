@@ -79,21 +79,25 @@ Perf
 
 You can convert your query in JSON escaped string using [this](https://www.freeformatter.com/json-escape.html) tool and check yaml specific escapes.
 
+Example result:
+
+![Azure Log Analytics query example](/img/azure-log-analytics-scaler-query-example.png)
+
 ### Scaler Limitations
 
-- As Log Analytics Scaler using Service Principal to authorize REST API requests, you should be aware of throttling. You should take to account the following AAD limit: 200 requests per 30 seconds. Each Log Analytics Scaler request's Access Token twice per pooling interval (one by Keda Operator and one by Keda Metrics Server). So, theoretical maximum number of Log Analytics scalers, created with the same Service Principal for 30sec pooling interval can be 100. Read more about throttling: [here](https://dev.applicationinsights.io/documentation/Authorization/Rate-limits), [here](https://docs.microsoft.com/en-us/previous-versions/azure/ad/graph/howto/azure-ad-graph-api-throttling#what-is-throttling) and [here](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-service-limits-restrictions)
-- As it was mentioned before, you can define a threshold using query (2d cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to HPA target.
+- As Log Analytics Scaler using Service Principal to authorize REST API requests, you should be aware of throttling. You should take to account the following Azure AD limit: 200 requests per 30 seconds. Each Log Analytics Scaler request's Access Token twice per pooling interval (one by Keda Operator and one by Keda Metrics Server). So, theoretical maximum number of Log Analytics scalers, created with the same Service Principal for 30sec pooling interval can be 100. Read more about throttling: [here](https://dev.applicationinsights.io/documentation/Authorization/Rate-limits), [here](https://docs.microsoft.com/en-us/previous-versions/azure/ad/graph/howto/azure-ad-graph-api-throttling#what-is-throttling) and [here](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-service-limits-restrictions)
+- As it was mentioned before, you can define a threshold using query (2d cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to Horizontal Pod Autoscaler target.
   
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the `tenantID`, `clientID`, `clientSecret` and `workspaceID` to connect to Log Analytics API.
+ You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials and resource identifiers.
 
 **Service Principal based authentication:**
 
-- `tenantID` required: Azure Active Directory TenantId. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your TenantId.
-- `clientID` required: appId from your Service Principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your Service Principal.
-- `clientSecret` required: password from your Service Principal.
-- `workspaceID` required: Your Log Analytics WorkspaceId. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics WorkspaceId.
+- `tenantID`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientID`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
+- `clientSecret`: Password from your Azure AD Application/service principal.
+- `workspaceID`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
 ### Example
 
