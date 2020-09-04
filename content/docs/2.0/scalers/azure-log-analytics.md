@@ -9,7 +9,7 @@ go_file = "azure_log_analytics_scaler"
 
 ### Trigger Specification
 
-This specification describes the `azure-log-analytics` trigger for Azure Log Analytics query result (All auth parameters in metadata is not real, generated randomly).
+This specification describes the `azure-log-analytics` trigger for Azure Log Analytics query result.
 
 ```yaml
 triggers:
