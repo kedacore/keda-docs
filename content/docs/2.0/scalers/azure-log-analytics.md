@@ -36,7 +36,7 @@ triggers:
 - `query`: Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold`: An int64 value will be used as a threshold to calculate # of pods for scale target.
 
-**Threshold and query results:**
+### Query Guidance
 
 It is important to design your query to return 1 table with 1 row. A good practice is to add "| limit 1" at the end of your query.
 Scaler will take value from:
