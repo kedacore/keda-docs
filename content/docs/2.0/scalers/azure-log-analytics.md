@@ -52,7 +52,8 @@ A data types of your query result should be: real, int or long. Other data types
 
 Be careful with setting up "pollingInterval" and long running queries. Test your query before.
 
-Example query to get MetricValue and Threshold based on CPU usage and Limits, defined for the pod.
+Example query to get `MetricValue` and `Threshold` based on CPU usage and limits, defined for the pod.
+
 ```
 let AppName = "web";
 let ClusterName = "demo-cluster";
