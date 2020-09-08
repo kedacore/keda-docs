@@ -2,6 +2,22 @@
 
 Documentation and landing page for the KEDA project at https://keda.sh.
 
+## Become a listed KEDA user!
+
+Are you using KEDA in production? Do you want to become a [listed user](https://keda.sh/community/#users)? Say no more!
+
+You can easily get listed by following these steps:
+1. Upload your logo to `static/img/logos/` _(350x180)_
+2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+
+```toml
+[[params.users]]
+url = "https://coralogix.com/"
+logo = "coralogix.gif"
+```
+
+Here's a good example of [Coralogix becoming a listed user](https://github.com/kedacore/keda-docs/pull/182)!
+
 ## Running the site locally
 
 Install [Hugo](https://gohugo.io/getting-started/installing/) (the "extended" version with [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) support) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable):
