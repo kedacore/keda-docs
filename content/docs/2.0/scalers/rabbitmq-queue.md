@@ -117,5 +117,5 @@ spec:
       queueName: testqueue
       queueLength: "20"
     authenticationRef:
-      name: rabbitmq-consumer-trigger
+      name: keda-trigger-auth-rabbitmq-conn
 ```
