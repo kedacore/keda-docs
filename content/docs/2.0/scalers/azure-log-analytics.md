@@ -15,24 +15,20 @@ This specification describes the `azure-log-analytics` trigger for Azure Log Ana
 triggers:
   - type: azure-log-analytics
     metadata:
-      tenantID: "72f988bf-86f1-41af-91ab-2d7cd011db47"
-      clientID: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
+      tenantId: "72f988bf-86f1-41af-91ab-2d7cd011db47"
+      clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
       clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
-      workspaceID: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+      workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
       query: "let AppName = \"web\";\r\nlet ClusterName = \"demo-cluster\";\r\nlet AvgDuration = ago(10m);\r\nlet ThresholdCoefficient = 0.8;\r\nPerf\r\n| where InstanceName contains AppName\r\n| where InstanceName contains ClusterName\r\n| where CounterName == \"cpuUsageNanoCores\"\r\n| where TimeGenerated > AvgDuration\r\n| extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n| summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName\r\n| join (Perf \r\n        | where InstanceName contains AppName\r\n        | where InstanceName contains ClusterName\r\n        | where CounterName == \"cpuLimitNanoCores\"\r\n        | where TimeGenerated > AvgDuration\r\n        | extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n        | summarize arg_max(TimeGenerated, *) by AppName, CounterName\r\n        | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)\r\n        on AppName\r\n| project MetricValue, Threshold = Limit * ThresholdCoefficient"
       threshold: "1900000000"
 ```
 
 **Parameter list:**
 
-- `tenantID`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-
-- `clientID`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
-
+- `tenantId`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientId`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
 - `clientSecret`: Password from your Azure AD Application/service principal.
-
-- `workspaceID`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
-
+- `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 - `query`: Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold`: An int64 value will be used as a threshold to calculate # of pods for scale target.
 
@@ -41,7 +37,6 @@ triggers:
 It is important to design your query to return 1 table with 1 row. A good practice is to add "| limit 1" at the end of your query.
 
 Scaler will take value from:
-
 
 - 1st cell as Metrics Value.
 - 2d cell as Threshold (optional).
@@ -54,7 +49,7 @@ Be careful with setting up "pollingInterval" and long running queries. Test your
 
 Example query to get `MetricValue` and `Threshold` based on CPU usage and limits, defined for the pod.
 
-```
+```kusto
 let AppName = "web";
 let ClusterName = "demo-cluster";
 let AvgDuration = ago(10m);
@@ -95,10 +90,10 @@ Example result:
 
 **Service Principal based authentication:**
 
-- `tenantID`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-- `clientID`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
+- `tenantId`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientId`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
 - `clientSecret`: Password from your Azure AD Application/service principal.
-- `workspaceID`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+- `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
 ### Example
 
@@ -112,10 +107,10 @@ metadata:
     app: kedaloganalytics
 type: Opaque
 data:
-  tenantID: "72f988bf-86f1-41af-91ab-2d7cd011db47"
-  clientID: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
+  tenantId: "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
   clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
-  workspaceID: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+  workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -124,18 +119,18 @@ metadata:
   namespace: kedaloganalytics
 spec:
   secretTargetRef:
-    - parameter: tenantID
+    - parameter: tenantId
       name: kedaloganalytics
-      key: tenantID
-    - parameter: clientID
+      key: tenantId
+    - parameter: clientId
       name: kedaloganalytics
-      key: clientID
+      key: clientId
     - parameter: clientSecret
       name: kedaloganalytics
       key: clientSecret
-    - parameter: workspaceID
+    - parameter: workspaceId
       name: kedaloganalytics
-      key: workspaceID
+      key: workspaceId
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
