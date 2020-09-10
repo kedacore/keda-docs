@@ -15,19 +15,19 @@ This specification describes the `redis` trigger that scales based on the length
 triggers:
 - type: redis
   metadata:
-    address: REDIS_HOST # Required host:port format
-    password: REDIS_PASSWORD
+    addressFromEnv: REDIS_HOST # Required host:port format
+    passwordFromEnv: REDIS_PASSWORD
     listName: mylist # Required
     listLength: "5" # Required
     enableTLS: "false" # optional
     databaseIndex: "0" # optional
 ```
 
-The `address` field in the spec holds the host and port of the Redis server. The value should be the name of the environment variable in the deployment/job that contains the actual value for the Redis server address.
+The `address`/`addressFromEnv` field in the spec holds the host and port of the Redis server. `addressFromEnv` value should be the name of the environment variable in the deployment/job that contains the actual value for the Redis server address.
 
-As an alternative to the `address` field the user can specify `host` and `port` parameters. If you would prefer to specify on actual value for the `address`, then the TriggerAuthentication object could used to define the value.
+As an alternative to the `address`/`addressFromEnv` field the user can specify `host`/`hostFromEnv` and `port`/`portFromEnv` parameters. TriggerAuthentication object can also be used to specify `address`, or `host` used to define the value.
 
-Provide the `password` field if the Redis server requires a password. Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
+Provide the `passwordFromEnv` field if the Redis server requires a password. Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
 
 The `listName` parameter in the spec points to the Redis List that you want to monitor. The `listLength` parameter defines the average target value for the Horizontal Pod Autoscaler (HPA).
 
@@ -53,7 +53,7 @@ You can authenticate by using a password.
 
 Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`.
 
-You can also provide the `password` on the `ScaledObject` directly.
+You can also provide the `passwordFromEnv` on the `ScaledObject` directly.
 
 ```yaml
 apiVersion: v1

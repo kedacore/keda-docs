@@ -17,13 +17,13 @@ triggers:
 - type: azure-blob
   metadata:
     blobContainerName: functions-blob # Required: Name of Azure Blob Storage container
-    blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
-    connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Optional if TriggerAuthentication defined with pod identity or connection string authentication.
+    blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs
+    connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME # Optional if TriggerAuthentication defined with pod identity or connection string authentication.
     blobPrefix:  # Optional. Prefix for the Blob. Use this to specifiy sub path for the blobs if required. Default : ""
     blobDelimiter: # Optional. Delimiter for identifying the blob Prefix. Default: "/"
 ```
 
-The `connection` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+The `connectionFromEnv` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 ### Authentication Parameters
 

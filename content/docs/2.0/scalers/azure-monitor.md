@@ -23,13 +23,14 @@ triggers:
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
     targetValue: "1"
-    activeDirectoryClientId: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
-    activeDirectoryClientPassword: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
+    activeDirectoryClientId: <client id value> # Optional, can use TriggerAuthentication as well
+    activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
+    activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
 ```
 
 **Parameter list:**
 
-- `resourceURI` is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required. 
+- `resourceURI` is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required.
 - `tenantId` is the tenant id for the Azure resource. Used for authentication. Required.
 - `subscriptionId` is the subscription id for the Azure resource. Used for determining the full resource URI. Required.
 - `resourceGroupName` is the resource group for the Azure resource. Required.
@@ -38,8 +39,9 @@ triggers:
 - `metricAggregationInterval` is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
 - `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
 - `targetValue` is the target value for the Azure metric to use in the HPA. Required.
-- `activeDirectoryClientId` is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
-- `activeDirectoryClientPassword` is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientId` active directory client id.
+- `activeDirectoryClientIdFromEnv` is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientPasswordFromEnv` is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
 
 ### Authentication Parameters
 
@@ -65,7 +67,7 @@ data:
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
-metadata: 
+metadata:
   name: azure-monitor-trigger-auth
 spec:
   secretTargetRef:
@@ -91,7 +93,7 @@ spec:
   triggers:
   - type: azure-monitor
     metadata:
-      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster 
+      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster
       tenantId: xxx-xxx-xxx-xxx-xxx
       subscriptionId: yyy-yyy-yyy-yyy-yyy
       resourceGroupName: azureMonitor
