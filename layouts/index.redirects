@@ -2,8 +2,6 @@
 {{- $scalers    := where site.RegularPages "Section" "scalers" }}
 /docs     /docs/{{ $docsLatest }}     301!
 /docs/latest/*     /docs/{{ $docsLatest }}/:splat
-/scalers     /docs/{{ $docsLatest }}/scalers     301!
-/docs/scalers/*     /docs/{{ $docsLatest }}/scalers/:splat
 {{- range $scalers -}}
 {{- $path := index (split .RelPermalink "/") 2 }}
 /docs/scalers/{{ $path }}     /scalers/{{ $path }}
