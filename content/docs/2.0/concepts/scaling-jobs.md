@@ -56,8 +56,6 @@ You can find all supported triggers [here](../scalers).
     backoffLimit: 6             # Specifies the number of retries before marking this job failed. Defaults to 6
 ```
 
-The optional configuration parameter. Currently not implemented. It is going to be supported. 
-
 ---
 
 ```yaml
