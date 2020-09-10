@@ -25,7 +25,6 @@ triggers:
 
 **Parameter list:**
 
-- `brokerList`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap (DEPRECATED).
 - `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
 - `topic`: topic on which processing the offset lag.
@@ -34,21 +33,25 @@ triggers:
 
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing authMode, username, password. If your kafka cluster does not have sasl authentication turned on, you will not need to pay attention to it.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enabled` and provide `ca`, `cert` and `key`.
 
 **Credential based authentication:**
 
-- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_ssl_plain, sasl_scram_sha256, sasl_scram_sha512.
-- `username` Optional. If authmode is not none, this is required.
-- `password` Optional.If authmode is not none, this is required.
-- `ca` Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `cert` Certificate for client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `key` Key for client authentication. Optional. If authmode is sasl_ssl, this is required.
+SASL:
+- `sasl`: Kafka SASL auth mode. Optional. If not set, SASL for Kafka is not used. If set, it must be one of `plaintext`, `scram_sha256` or `scram_sha512`.
+- `username`: Optional. If `sasl` is set, this is required.
+- `password`: Optional. If `sasl` is set, this is required.
+
+TLS:
+- `tls`: Optional. To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used.
+- `ca`: Certificate authority file for TLS client authentication. Optional. If `tls` is enabled, this is required.
+- `cert`: Certificate for client authentication. Optional.If `tls` is enabled, this is required.
+- `key`: Key for client authentication. Optional. If `tls` is enabled, this is required.
 
 
 ### Example
 
-Your kafka cluster no sasl auth:
+Your kafka cluster no SASL/TLS auth:
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -71,7 +74,7 @@ spec:
       offsetResetPolicy: latest
 ```
 
-Your kafka cluster turn on sasl auth
+Your kafka cluster turn on SASL/TLS auth:
 
 ```yaml
 apiVersion: v1
@@ -80,9 +83,10 @@ metadata:
   name: keda-kafka-secrets
   namespace: default
 data:
-  authMode: "sasl_plaintext"
+  sasl: "plaintext"
   username: "admin"
   password: "admin"
+  tls: "enable"
   ca: <your ca>
   cert: <your cert>
   key: <your key>
@@ -94,15 +98,18 @@ metadata:
   namespace: default
 spec:
   secretTargetRef:
-  - parameter: authMode
+  - parameter: sasl
     name: keda-kafka-secrets
-    key: authMode
+    key: sasl
   - parameter: username
     name: keda-kafka-secrets
     key: username
   - parameter: password
     name: keda-kafka-secrets
     key: password
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
   - parameter: ca
     name: keda-kafka-secrets
     key: ca
