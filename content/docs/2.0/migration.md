@@ -94,3 +94,31 @@ TODO
  
 **Kafka**
  - `authMode` property was replaced with `sasl` and `tls` properties. Please refer [documentation](../scalers/apache-kafka/#authentication-parameters) for Kafka Authentication Parameters details.
+
+**RabbitMQ**
+
+In KEDA 2.0 the RabbitMQ scaler has only `host` parameter, and the protocol for communication can be specified by
+`protocol` (http or amqp). The default value is `amqp`. The behavior changes only for scalers that were using HTTP 
+protocol. 
+
+Example of RabbitMQ trigger before 2.0:
+```yaml
+triggers:
+- type: rabbitmq
+  metadata:
+    queueLength: '20'
+    queueName: testqueue
+    includeUnacked: 'true'
+    apiHost: 'https://guest:password@localhost:443/vhostname'
+``` 
+
+The same trigger in 2.0:
+```yaml
+triggers:
+- type: rabbitmq
+  metadata:
+    queueLength: '20'
+    queueName: testqueue
+    protocol: 'http'
+    host: 'https://guest:password@localhost:443/vhostname'
+``` 
