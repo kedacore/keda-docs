@@ -20,15 +20,24 @@ triggers:
     # or
     topicName: functions-sbtopic
     subscriptionName: sbtopic-sub1
+    # Optional, required when pod identity is used
+    namespace: service-bus-namespace
     # Optional, can use TriggerAuthentication as well
     connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     queueLength: "5" # Optional. Subscription length target for HPA. Default: 5 messages
 ```
 
-The `connectionFromEnv` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+**Parameter list:**
 
-Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
+- `queueName` - Name of the Azure Service Bus queue to scale on. *(Optional)*
+- `topicName` - Name of the Azure Service Bus topic to scale on. *(Optional)*
+- `subscriptionName` - Name of the Azure Service Bus queue to scale on. *(Optional, required when `topicName` is specified)*
+- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. *(Optional, required when pod identity is used)*
+- `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. *(Optional, can use TriggerAuthentication as well)*
+- `queueLength` - Amount of active messages in your Azure Service Bus queue or topic to scale on. *(Required)*
+
+> 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 
 ### Authentication Parameters
 
