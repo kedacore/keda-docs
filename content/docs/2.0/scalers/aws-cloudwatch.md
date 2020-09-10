@@ -26,9 +26,9 @@ triggers:
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS Access Key ID, can use TriggerAuthentication as well
-    awsAccessKeyID: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
+    awsAccessKeyIDFromEnv: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
     # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
-    awsSecretAccessKey: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
+    awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
     identityOwner: pod | operator # Optional. Default: pod
 ```
 
@@ -41,7 +41,7 @@ triggers:
 
 ### Authentication Parameters
 
-> These parameters are relevant only when `identityOwner` is set to `pod`. 
+> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
@@ -70,7 +70,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: <user-id>
   AWS_SECRET_ACCESS_KEY: <key>
---- 
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:

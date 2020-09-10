@@ -15,7 +15,8 @@ This specification describes the `rabbitmq` trigger for RabbitMQ Queue.
 triggers:
 - type: rabbitmq
   metadata:
-    host: RabbitMqHost # Optional. If not specified, it must be done by using TriggerAuthentication.
+    host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
+    hostFromEnv: RABBITMQ_HOST # Optional. If not specified, it must be done by using TriggerAuthentication.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
     includeUnacked: 'true' # Optional, use unacked + ready messages count
@@ -26,20 +27,21 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost`
+- `host`: rabbitmq host in this format `amqp://<host>:<port>/vhost`. If using a username/password consider using `hostFromEnv` or a TriggerAuthentication. 
+- `hostFromEnv`: Value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost`
 - `queueName`: Name of the queue to read message from. Required.
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
 - `includeUnacked`: By default `includeUnacked` is `false` in this case scaler uses AMQP protocol, requires `host` and only counts messages in the queue and ignores unacked messages. If `includeUnacked` is `true` then `host` is not required but `apiHost` is required in this case scaler uses HTTP management API and counts messages in the queue + unacked messages count. Optional. `host` or `apiHost` value comes from authencation trigger.
-- `apiHost`: It has similar format as of `host` but for HTTP API endpoint, like https://guest:password@localhost:443/vhostname. 
+- `apiHost`/`apiHostFromEnv`: It has similar format as of `host` but for HTTP API endpoint, like https://guest:password@localhost:443/vhostname.
 
-Note `host` and `apiHost` both have an optional vhost name after the host slash which will be used to scope API request. 
+Note `host`/`hostFromEnv` and `apiHost`/`apiHostFromEnv` both have an optional vhost name after the host slash which will be used to scope API request.
 
 ### Authentication Parameters
 
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 - `host`: AMQP URI connection string, like `amqp://guest:password@localhost:5672/vhost`.
-- `apiHost`: HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`. 
+- `apiHost`: HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`.
 
 ### Example
 

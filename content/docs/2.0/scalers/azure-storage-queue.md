@@ -17,10 +17,10 @@ triggers:
   metadata:
     queueName: functionsqueue
     queueLength: '5' # Optional. Queue length target for HPA. Default: 5 messages
-    connection: STORAGE_CONNECTIONSTRING_ENV_NAME
+    connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
 ```
 
-The `connection` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+The `connectionFromEnv` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 ### Authentication Parameters
 
@@ -55,7 +55,7 @@ spec:
       # Required
       queueName: functionsqueue
       # Required: connection OR authenticationRef that defines connection
-      connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Default: AzureWebJobsStorage. Reference to a connection string in deployment
+      connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME # Default: AzureWebJobsStorage. Reference to a connection string in deployment
       # or authenticationRef as defined below
       #
       # Optional

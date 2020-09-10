@@ -20,10 +20,13 @@ This specification describes the `redis-streams` trigger that scales based on th
 triggers:
 - type: redis-streams
   metadata:
-    address: REDIS_SERVER # Required if host and port are not provided. Format - host:port
-    host: REDIS_HOST # Required if address is not provided
-    port: REDIS_PORT # Required if address is not provided and host has been provided
-    password: REDIS_PASSWORD # optional (can also use authenticationRef)
+    address: localhost:6379 # Required if host and port are not provided. Format - host:port
+    addressFromEnv: REDIS_ADDRESS # Required if host and port are not provided.
+    host: localhost # Required if address is not provided
+    hostFromEnv: REDIS_HOST # Required if address is not provided.
+    port: "6379" # Required if address is not provided and host has been provided.
+    portFromEnv: REDIS_PORT # Required if address is not provided and host has been provided.
+    passwordFromEnv: REDIS_PASSWORD # optional (can also use authenticationRef)
     stream: my-stream # Required - name of the Redis Stream
     consumerGroup: my-consumer-group # Required - name of consumer group associated with Redis Stream
     pendingEntriesCount: "10" # Required - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
@@ -33,29 +36,32 @@ triggers:
 
 **Parameter list:**
 
-- `address`: Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
-   - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+- `address`: redis address in the format `host:port`
+- `addressFromEnv`: Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
+   - This is resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> As an alternative to the `address` field, the user can specify `host` and `port` parameters. 
+> As an alternative to the `address` field, the user can specify `host` and `port` parameters.
 
-- `host`: Name of the environment variable your deployment uses to get the Redis server host. 
-    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+- `host`: redis host value
+- `hostFromEnv`: Name of the environment variable your deployment uses to get the Redis server host.
+    - This is resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 > It is not required if `address` has been provided
 
-- `port`: Name of the environment variable your deployment uses to get the Redis server port. 
+- `port`: redis port value
+- `portFromEnv`: Name of the environment variable your deployment uses to get the Redis server port.
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> It is only to be used along with the `host` attribute and not required if `address` has been provided
+> It is only to be used along with the `host`/`hostFromEnv` attribute and not required if `address` has been provided
 
-- `password` (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `passwordFromEnv` (optional): Name of the environment variable your deployment uses to get the Redis password.
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 - `stream`: Name of the Redis Stream
 
 - `consumerGroup`: Name of the Consumer group associated with Redis Stream
 
-- `pendingEntriesCount`: Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5` 
+- `pendingEntriesCount`: Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5`
 
 - `databaseIndex`: The Redis database index. Defaults to `0` if not specified
 
@@ -89,8 +95,8 @@ spec:
   triggers:
     - type: redis-streams
       metadata:
-        address: REDIS_HOST
-        password: REDIS_PASSWORD # name of the environment variable in the Deployment
+        addressFromEnv: REDIS_HOST
+        passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
         stream: my-stream
         consumerGroup: consumer-group-1
         pendingEntriesCount: "10"
@@ -134,7 +140,7 @@ spec:
   triggers:
     - type: redis-streams
       metadata:
-        address: REDIS_HOST
+        address: localhost:6379
         stream: my-stream
         consumerGroup: consumer-group-1
         pendingEntriesCount: "10"

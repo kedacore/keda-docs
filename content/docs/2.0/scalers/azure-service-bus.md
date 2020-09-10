@@ -21,12 +21,12 @@ triggers:
     topicName: functions-sbtopic
     subscriptionName: sbtopic-sub1
     # Optional, can use TriggerAuthentication as well
-    connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
+    connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     queueLength: "5" # Optional. Subscription length target for HPA. Default: 5 messages
 ```
 
-The `connection` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+The `connectionFromEnv` value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 
@@ -68,7 +68,7 @@ spec:
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
       # Required: connection OR authenticationRef that defines connection
-      connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
+      connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
       # or authenticationRef as defined below
       #
       # Optional
