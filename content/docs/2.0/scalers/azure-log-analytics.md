@@ -9,7 +9,7 @@ go_file = "azure_log_analytics_scaler"
 
 ### Trigger Specification
 
-This specification describes the `azure-log-analytics` trigger for Azure Log Analytics query result.
+This specification describes the `azure-log-analytics` trigger for Azure Log Analytics query result. Here is an example of providing values in metadata:
 
 ```yaml
 triggers:
@@ -19,6 +19,20 @@ triggers:
       clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
       clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
       workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+      query: "let AppName = \"web\";\r\nlet ClusterName = \"demo-cluster\";\r\nlet AvgDuration = ago(10m);\r\nlet ThresholdCoefficient = 0.8;\r\nPerf\r\n| where InstanceName contains AppName\r\n| where InstanceName contains ClusterName\r\n| where CounterName == \"cpuUsageNanoCores\"\r\n| where TimeGenerated > AvgDuration\r\n| extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n| summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName\r\n| join (Perf \r\n        | where InstanceName contains AppName\r\n        | where InstanceName contains ClusterName\r\n        | where CounterName == \"cpuLimitNanoCores\"\r\n        | where TimeGenerated > AvgDuration\r\n        | extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n        | summarize arg_max(TimeGenerated, *) by AppName, CounterName\r\n        | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)\r\n        on AppName\r\n| project MetricValue, Threshold = Limit * ThresholdCoefficient"
+      threshold: "1900000000"
+```
+
+The authentication parameters could be provided using environmental variables. You can refer to those variables using `FromEnv` suffix after variable name in metadata. Here is an example configuration to retrieve values from environmental variables:
+
+```yaml
+triggers:
+  - type: azure-log-analytics
+    metadata:
+      tenantIdFromEnv: TENANT_ID_ENV_NAME
+      clientIdFromEnv: CLIENT_ID_ENV_NAME
+      clientSecretFromEnv: CLIENT_SECRET_ENV_NAME
+      workspaceIdFromEnv: WORKSPACE_ID_ENV_NAME
       query: "let AppName = \"web\";\r\nlet ClusterName = \"demo-cluster\";\r\nlet AvgDuration = ago(10m);\r\nlet ThresholdCoefficient = 0.8;\r\nPerf\r\n| where InstanceName contains AppName\r\n| where InstanceName contains ClusterName\r\n| where CounterName == \"cpuUsageNanoCores\"\r\n| where TimeGenerated > AvgDuration\r\n| extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n| summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName\r\n| join (Perf \r\n        | where InstanceName contains AppName\r\n        | where InstanceName contains ClusterName\r\n        | where CounterName == \"cpuLimitNanoCores\"\r\n        | where TimeGenerated > AvgDuration\r\n        | extend AppName = substring(InstanceName, indexof((InstanceName), \"/\", 0, -1, 10) + 1)\r\n        | summarize arg_max(TimeGenerated, *) by AppName, CounterName\r\n        | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)\r\n        on AppName\r\n| project MetricValue, Threshold = Limit * ThresholdCoefficient"
       threshold: "1900000000"
 ```
