@@ -20,7 +20,7 @@ This specification describes the `redis-streams` trigger that scales based on th
 triggers:
 - type: redis-streams
   metadata:
-    address: REDIS_SERVER # Required if host and port are not provided. Format - host:port
+    address: localhost:6379 # Required if host and port are not provided. Format - host:port
     host: REDIS_HOST # Required if address is not provided
     port: REDIS_PORT # Required if address is not provided and host has been provided
     password: REDIS_PASSWORD # optional (can also use authenticationRef)

@@ -68,11 +68,11 @@ You can authenticate by using a password or store the password within the connec
 
 **Connection String Authentication:**
 
-- `connectionFromEnv` - Connection string for postgreSQL database
+- `connection` - Connection string for postgreSQL database
 
 **Password Authentication:**
 
-- `passwordFromEnv` - Password for configured user to login to postgreSQL database
+- `password` - Password for configured user to login to postgreSQL database
 variables.
 
 ### Example

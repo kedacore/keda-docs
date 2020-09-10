@@ -33,11 +33,11 @@ You can authenticate by using connection string or password authentication.
 
 **Connection String Authentication:**
 
-- `connectionFromEnv` - Connection string for MySQL database
+- `connectionString` - Connection string for MySQL database
 
 **Password Authentication:**
 
-- `connectionFromEnv` - Password for configured user to login to MySQL database
+- `password` - Password for configured user to login to MySQL database
 variables.
 
 ### Example

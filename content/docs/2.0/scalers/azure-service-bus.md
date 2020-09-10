@@ -36,7 +36,7 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connectionFromEnv` - Connection string for Azure Service Bus Namespace
+- `connection` - Connection string for Azure Service Bus Namespace
 
 ### Example
 

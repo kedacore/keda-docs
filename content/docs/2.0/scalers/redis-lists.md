@@ -15,6 +15,7 @@ This specification describes the `redis` trigger that scales based on the length
 triggers:
 - type: redis
   metadata:
+    address: localhost:6379 # Required host:port format
     addressFromEnv: REDIS_HOST # Required host:port format
     passwordFromEnv: REDIS_PASSWORD
     listName: mylist # Required
