@@ -16,44 +16,13 @@ triggers:
   - type: azure-log-analytics
     metadata:
       tenantId: "72f988bf-86f1-41af-91ab-2d7cd011db47"
+      tenantIdFromEnv: TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter. See details in "Parameter list" section
       clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
+      clientIdFromEnv: CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter. See details in "Parameter list" section
       clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
+      clientSecretFromEnv: CLIENT_SECRET_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter. See details in "Parameter list" section
       workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
-      query: |
-        let AppName = "web";
-        let ClusterName = "demo-cluster";
-        let AvgDuration = ago(10m);
-        let ThresholdCoefficient = 0.8;
-        Perf
-        | where InstanceName contains AppName
-        | where InstanceName contains ClusterName
-        | where CounterName == "cpuUsageNanoCores"
-        | where TimeGenerated > AvgDuration
-        | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
-        | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
-                | where InstanceName contains AppName
-                | where InstanceName contains ClusterName
-                | where CounterName == "cpuLimitNanoCores"
-                | where TimeGenerated > AvgDuration
-                | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
-                | summarize arg_max(TimeGenerated, *) by AppName, CounterName
-                | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
-                on AppName
-        | project MetricValue, Threshold = Limit * ThresholdCoefficient
-      threshold: "1900000000"
-```
-
-The authentication parameters could be provided using environmental variables. You can refer to those variables using `FromEnv` suffix after variable name in metadata. Here is an example configuration to retrieve values from environmental variables:
-
-```yaml
-triggers:
-  - type: azure-log-analytics
-    metadata:
-      tenantIdFromEnv: TENANT_ID_ENV_NAME
-      clientIdFromEnv: CLIENT_ID_ENV_NAME
-      clientSecretFromEnv: CLIENT_SECRET_ENV_NAME
-      workspaceIdFromEnv: WORKSPACE_ID_ENV_NAME
+      workspaceIdFromEnv: WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter. See details in "Parameter list" section
       query: |
         let AppName = "web";
         let ClusterName = "demo-cluster";
@@ -87,6 +56,13 @@ triggers:
 - `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 - `query`: Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold`: An int64 value will be used as a threshold to calculate # of pods for scale target.
+
+The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
+
+- `tenantIdFromEnv` optional: An environmental variable name, that stores Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientIdFromEnv` optional: An environmental variable name, that stores Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
+- `clientSecretFromEnv` optional: An environmental variable name, that stores password from your Azure AD Application/service principal.
+- `workspaceIdFromEnv` optional: An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
 ### Query Guidance
 
