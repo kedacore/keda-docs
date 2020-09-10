@@ -14,7 +14,7 @@ Here are some highlights:
 
 - **Making scaling more powerful**
     - Introduction of `ScaledJob` ([docs](https://keda.sh/docs/2.0/concepts/scaling-jobs/))
-	- Introduction of  Azure Log Analytics scaler ([docs](https://keda.sh/docs/2.0/scalers/azure-log-analytics/))
+    - Introduction of  Azure Log Analytics scaler ([docs](https://keda.sh/docs/2.0/scalers/azure-log-analytics/))
     - Support for scaling Deployments, Stateful Sets and/or any Custom Resources ([docs](https://keda.sh/docs/2.0/concepts/scaling-deployments/))
     - Support for scaling on standard resource metrics (CPU/Memory)
     - Support for multiple triggers in a single `ScaledObject` ([docs](https://keda.sh/docs/2.0/concepts/scaling-deployments/))
