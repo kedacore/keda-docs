@@ -21,9 +21,12 @@ triggers:
 - type: redis-streams
   metadata:
     address: localhost:6379 # Required if host and port are not provided. Format - host:port
-    host: REDIS_HOST # Required if address is not provided
-    port: REDIS_PORT # Required if address is not provided and host has been provided
-    password: REDIS_PASSWORD # optional (can also use authenticationRef)
+    addressFromEnv: REDIS_ADDRESS # Required if host and port are not provided.
+    host: localhost # Required if address is not provided
+    hostFromEnv: REDIS_HOST # Required if address is not provided.
+    port: "6379" # Required if address is not provided and host has been provided.
+    portFromEnv: REDIS_PORT # Required if address is not provided and host has been provided.
+    passwordFromEnv: REDIS_PASSWORD # optional (can also use authenticationRef)
     stream: my-stream # Required - name of the Redis Stream
     consumerGroup: my-consumer-group # Required - name of consumer group associated with Redis Stream
     pendingEntriesCount: "10" # Required - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
@@ -137,7 +140,7 @@ spec:
   triggers:
     - type: redis-streams
       metadata:
-        address: REDIS_HOST
+        address: localhost:6379
         stream: my-stream
         consumerGroup: consumer-group-1
         pendingEntriesCount: "10"

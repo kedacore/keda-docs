@@ -88,7 +88,7 @@ spec:
   triggers:
   - type: redis
     metadata:
-      address: REDIS_ADDRESS
+      address: localhost:6379
       listName: mylist
       listLength: "10"
     authenticationRef:
