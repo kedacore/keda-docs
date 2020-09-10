@@ -1,0 +1,34 @@
+{{ define "main"}}
+<section class="section">
+    <div class="container">
+      <div class="content is-medium is-constrained has-bottom-margin">
+        
+        <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced">
+            Woops! Dead link...
+          </p>
+
+        That's not very conventient, sorry about that!
+
+        Maybe you were looking for:
+        <ul>
+            <li><a href="{{ .Site.BaseURL }}/docs/latest/concepts">An overview of our concepts</a></li>
+            <li><a href="{{ .Site.BaseURL }}/docs/latest/scalers">A list of all our supported scalers</a></li>
+            <li><a href="{{ .Site.BaseURL }}/docs/latest/deploy">How to deploy KEDA</a></li>
+            <li><a href="{{ .Site.BaseURL }}/docs/latest/operate">How to operate KEDA</a></li>
+        </ul>
+        
+        
+        <article class="message is-info">
+            <div class="message-header">
+              <p class="is-size-5 is-size-6-mobile">
+                Let us know
+              </p>
+            </div>
+            <div class="message-body">
+              Let us know so we can fix this dead link, you can report it <a href="https://github.com/kedacore/keda-docs/issues/new">here</a>.
+            </div>
+          </article></div>
+      </div>
+    </div>
+  </section>
+{{ end }}
