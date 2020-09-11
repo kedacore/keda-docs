@@ -91,6 +91,9 @@ TODO
 
 
 ### Scalers
- 
+
+**Azure Service Bus**
+ - `queueLength` was renamed to `messageCount`
+
 **Kafka**
  - `authMode` property was replaced with `sasl` and `tls` properties. Please refer [documentation](../scalers/apache-kafka/#authentication-parameters) for Kafka Authentication Parameters details.
