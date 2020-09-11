@@ -104,7 +104,7 @@ apiVersion: keda.sh/v1alpha1              #  <--- Property value was changed
 kind: ScaledJob                           #  <--- Property value was changed
 metadata:
   name: {scaled-job-name}
-spec:                                     #  <--- spec.scaleType are not needed
+spec:                                     #  <--- spec.scaleType is not needed
   jobTargetRef:
     parallelism: 1 
     completions: 1 
