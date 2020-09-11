@@ -38,6 +38,7 @@ spec:
 ```
 
 **Example of v2 ScaledObject**
+
 ```yaml
 apiVersion: keda.sh/v1alpha1                  #  <--- Property value was changed
 kind: ScaledObject
@@ -55,10 +56,15 @@ spec:
   # {list of triggers to activate the deployment}
 ```
 
-
 ### Scaling of Jobs
 
-TODO description
+In order to scale `Jobs` with KEDA v2, you need to do only a few modifications to existing v1 `ScaledObjects` definitions, so they comply with v2:
+- Change the value of `apiVersion` property from `keda.k8s.io/v1alpha1` to `keda.sh/v1alpha1`
+- Change the value of `kind` property from `ScaledObject` to `ScaledJob`
+- Remove property `spec.scaleType`
+- Remove properties `spec.cooldownPeriod` and `spec.minReplicaCount`   
+
+You can configure `successfulJobsHistoryLimit` and `failedJobsHistoryLimit`. They will remove the old job histories automatically.
 
 Please see the examples below or refer to the full [v2 ScaledJob Specification](../concepts/scaling-jobs/#scaledjob-spec)
 
@@ -87,8 +93,26 @@ spec:
 
 **Example of v2 ScaledJob**
 
-TODO
-
+```yaml
+apiVersion: keda.sh/v1alpha1              #  <--- Property value was changed
+kind: ScaledJob                           #  <--- Property value was changed
+metadata:
+  name: {scaled-job-name}
+spec:                                     #  <--- spec.scaleType are not needed
+  jobTargetRef:
+    parallelism: 1 
+    completions: 1 
+    activeDeadlineSeconds: 600
+    backoffLimit: 6
+    template:
+      # {job template}
+  pollingInterval: 30                     #  <--- spec.cooldownPeriod and spec.minReplicaCount are not needed
+  successfulJobsHistoryLimit: 5           #  <--- property is added
+  failedJobsHistoryLimit: 5               #  <--- Property is added
+  maxReplicaCount: 100
+  triggers:
+  # {list of triggers to create jobs}
+```
 
 ### Scalers
 
