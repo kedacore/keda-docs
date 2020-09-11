@@ -17,10 +17,9 @@ triggers:
   metadata:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
     hostFromEnv: RABBITMQ_HOST # Optional. If not specified, it must be done by using TriggerAuthentication.
+    protocol: amqp # Specifies protocol to use, either amqp or http. Default value is amqp.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
-    includeUnacked: 'true' # Optional, use unacked + ready messages count
-    apiHost: RabbitApiHost # Optional. Represents the HTTP management API endpoint. If not specified, it must be done by using TriggerAuthentication.
   authenticationRef:
     name: keda-trigger-auth-rabbitmq-conn
 ```
@@ -28,20 +27,22 @@ triggers:
 **Parameter list:**
 
 - `host`: rabbitmq host in this format `amqp://<host>:<port>/vhost`. If using a username/password consider using `hostFromEnv` or a TriggerAuthentication. 
-- `hostFromEnv`: Value is the name of the environment variable your deployment uses to get the connection string. This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost`
+- `hostFromEnv`: Value is the name of the environment variable your deployment uses to get the connection string. 
+    This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  
+    The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
+    `https://guest:password@localhost:443/vhostname`
 - `queueName`: Name of the queue to read message from. Required.
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
-- `includeUnacked`: By default `includeUnacked` is `false` in this case scaler uses AMQP protocol, requires `host` and only counts messages in the queue and ignores unacked messages. If `includeUnacked` is `true` then `host` is not required but `apiHost` is required in this case scaler uses HTTP management API and counts messages in the queue + unacked messages count. Optional. `host` or `apiHost` value comes from authencation trigger.
-- `apiHost`/`apiHostFromEnv`: It has similar format as of `host` but for HTTP API endpoint, like https://guest:password@localhost:443/vhostname.
+- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value. 
 
-Note `host`/`hostFromEnv` and `apiHost`/`apiHostFromEnv` both have an optional vhost name after the host slash which will be used to scope API request.
+Note `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
 ### Authentication Parameters
 
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
-- `host`: AMQP URI connection string, like `amqp://guest:password@localhost:5672/vhost`.
-- `apiHost`: HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`.
+- For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/vhost`
+- For HTTP, the URI should look similar to `https://guest:password@localhost:443/vhostname`
 
 ### Example
 
@@ -77,6 +78,7 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
+      protocol: aqmp
       queueName: testqueue
       queueLength: "20"
     authenticationRef:
@@ -91,7 +93,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  apiHost: <HTTP API endpoint> # base64 encoded value of format https://guest:password@localhost:443/vhostname
+  host: <HTTP API endpoint> # base64 encoded value of format https://guest:password@localhost:443/vhostname
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
@@ -100,9 +102,9 @@ metadata:
   namespace: default
 spec:
   secretTargetRef:
-    - parameter: apiHost
+    - parameter: host
       name: keda-rabbitmq-secret
-      key: apiHost
+      key: host
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
@@ -115,7 +117,7 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
-      includeUnacked: "true"
+      protocol: http
       queueName: testqueue
       queueLength: "20"
     authenticationRef:
