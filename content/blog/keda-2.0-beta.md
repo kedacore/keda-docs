@@ -1,6 +1,6 @@
 +++
 title = "Give KEDA 2.0 (Beta) a test drive"
-date = 2021-12-12
+date = 2020-09-11
 author = "KEDA Maintainers"
 +++
 
