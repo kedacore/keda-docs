@@ -58,7 +58,7 @@ With our official release we will provide [migration scripts](https://github.com
 > 
 > KEDA comes with a metrics server and Kubernetes only allows you to run one of them in a cluster.
 > 
->_Learn more about how KEDA is architected in [our docs](http://keda.sh/docs/latest/concepts/#architecture)._
+>__Learn more about how KEDA is architected in [our docs](http://keda.sh/docs/latest/concepts/#architecture).__
 
 # Conclusion
 
