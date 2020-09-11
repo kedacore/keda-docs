@@ -63,7 +63,6 @@ In order to scale `Jobs` with KEDA v2, you need to do only a few modifications t
 - Change the value of `kind` property from `ScaledObject` to `ScaledJob`
 - Remove property `spec.scaleType`
 - Remove properties `spec.cooldownPeriod` and `spec.minReplicaCount`   
-- Rename property `spec.scaleTargetRef.deploymentName` to `spec.scaleTargetRef.name`
 
 You can configure `successfulJobsHistoryLimit` and `failedJobsHistoryLimit`. They will remove the old job histories automatically.
 
@@ -95,11 +94,11 @@ spec:
 **Example of v2 ScaledJob**
 
 ```yaml
-apiVersion: keda.sh/v1alpha1
-kind: ScaledJob
+apiVersion: keda.sh/v1alpha1              #  <--- Property value was changed
+kind: ScaledJob                           #  <--- Property value was changed
 metadata:
   name: {scaled-job-name}
-spec:
+spec:                                     #  <--- spec.scaleType are not needed
   jobTargetRef:
     parallelism: 1 
     completions: 1 
@@ -107,9 +106,9 @@ spec:
     backoffLimit: 6
     template:
       # {job template}
-  pollingInterval: 30 
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
+  pollingInterval: 30                     #  <--- spec.cooldownPeriod and spec.minReplicaCount are not needed
+  successfulJobsHistoryLimit: 5           #  <--- property is added
+  failedJobsHistoryLimit: 5               #  <--- Property is added
   maxReplicaCount: 100
   triggers:
   # {list of triggers to create jobs}
