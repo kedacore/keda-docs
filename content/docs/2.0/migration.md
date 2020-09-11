@@ -11,7 +11,7 @@ KEDA v2 is using a new API namespace for it's Custom Resources Definitions (CRD)
 Here's an overview of what's changed:
 - [Scaling of Deployments](#scaling-of-deployments)
 - [Scaling of Jobs](#scaling-of-jobs)
-- [Improved flexibility & usability of trigger metadata](#improved-flexibility---usability-of-trigger-metadata)
+- [Improved flexibility & usability of trigger metadata](#improved-flexibility--usability-of-trigger-metadata)
 - [Scalers](#scalers)
 
 ### Scaling of Deployments
