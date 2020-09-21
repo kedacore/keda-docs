@@ -127,7 +127,13 @@ Example result:
 - `clientSecret`: Password from your Azure AD Application/service principal.
 - `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
+**Managed identity based authentication:**
+
+You can use managed identity to request access token for Log Analytics API. The advantage of this approach is that there is no need to store secrets in Kubernetes. Read [more](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity) about managed identities in Azure Kubernetes Service.
+
 ### Example
+
+#### Service Principal based authentication
 
 ```yaml
 apiVersion: v1
@@ -209,11 +215,69 @@ spec:
       name: trigger-auth-kedaloganalytics
 ```
 
-**Managed identity based authentication:**
+#### Managed identity based authentication
 
-You can use managed identity to request access token for Log Analytics API. The advantage of this approach is that there is no need to store secrets in Kubernetes. Read [more](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity) about managed identities in Azure Kubernetes Service.
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-kedaloganalytics
+  namespace: kedaloganalytics
+spec:
+  podIdentity:
+    provider: azure
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kedaloganalytics-consumer-scaled-object
+  namespace: kedaloganalytics
+  labels:
+    deploymentName: kedaloganalytics-consumer
+spec:
+  scaleTargetRef:
+    kind: #Optional: Default: Deployment, Available Options: ReplicaSet, Deployment, DaemonSet, StatefulSet
+    name: kedaloganalytics-consumer
+  pollingInterval: 30
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: azure-log-analytics
+    metadata:
+      workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+      query: |
+        let AppName = "web";
+        let ClusterName = "demo-cluster";
+        let AvgDuration = ago(10m);
+        let ThresholdCoefficient = 0.8;
+        Perf
+        | where InstanceName contains AppName
+        | where InstanceName contains ClusterName
+        | where CounterName == "cpuUsageNanoCores"
+        | where TimeGenerated > AvgDuration
+        | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
+        | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
+        | join (Perf 
+                | where InstanceName contains AppName
+                | where InstanceName contains ClusterName
+                | where CounterName == "cpuLimitNanoCores"
+                | where TimeGenerated > AvgDuration
+                | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
+                | summarize arg_max(TimeGenerated, *) by AppName, CounterName
+                | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
+                on AppName
+        | project MetricValue, Threshold = Limit * ThresholdCoefficient
+      threshold: "1900000000"
+    authenticationRef:
+      name: trigger-auth-kedaloganalytics
+```
 
-Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy Keda:
+### Guides
+
+#### Enabling managed identity authentication for Log Analytics scaler
+
+Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update Keda:
 
 ```sh
 export SUBSCRIPTION_ID="<SubscriptionID>"
@@ -291,69 +355,9 @@ kubectl patch deployment keda-operator -n keda --type json -p='[{"op": "add", "p
 kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
 ```
 
-Now you can setup a scaler with Pod Identity authentication:
-
-### Example
-
-```yaml
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: trigger-auth-kedaloganalytics
-  namespace: kedaloganalytics
-spec:
-  podIdentity:
-    provider: azure
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: kedaloganalytics-consumer-scaled-object
-  namespace: kedaloganalytics
-  labels:
-    deploymentName: kedaloganalytics-consumer
-spec:
-  scaleTargetRef:
-    kind: #Optional: Default: Deployment, Available Options: ReplicaSet, Deployment, DaemonSet, StatefulSet
-    name: kedaloganalytics-consumer
-  pollingInterval: 30
-  cooldownPeriod: 30
-  minReplicaCount: 1
-  maxReplicaCount: 10
-  triggers:
-  - type: azure-log-analytics
-    metadata:
-      workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
-      query: |
-        let AppName = "web";
-        let ClusterName = "demo-cluster";
-        let AvgDuration = ago(10m);
-        let ThresholdCoefficient = 0.8;
-        Perf
-        | where InstanceName contains AppName
-        | where InstanceName contains ClusterName
-        | where CounterName == "cpuUsageNanoCores"
-        | where TimeGenerated > AvgDuration
-        | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
-        | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
-                | where InstanceName contains AppName
-                | where InstanceName contains ClusterName
-                | where CounterName == "cpuLimitNanoCores"
-                | where TimeGenerated > AvgDuration
-                | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
-                | summarize arg_max(TimeGenerated, *) by AppName, CounterName
-                | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
-                on AppName
-        | project MetricValue, Threshold = Limit * ThresholdCoefficient
-      threshold: "1900000000"
-    authenticationRef:
-      name: trigger-auth-kedaloganalytics
-```
-
 ### Links
 
 - [AAD Pod Identity](https://github.com/Azure/aad-pod-identity)
 - [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
-- [Azure Pod Identity on keda.sh](https://keda.sh/docs/1.4/concepts/authentication/#azure-pod-identity)
+- [Azure Pod Identity on keda.sh](https://keda.sh/docs/2.0/concepts/authentication/#azure-pod-identity)
 - [Best practices for authentication and authorization in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-identity)
