@@ -15,14 +15,14 @@ This specification describes the `azure-log-analytics` trigger for Azure Log Ana
 triggers:
   - type: azure-log-analytics
     metadata:
-      tenantId: "72f988bf-86f1-41af-91ab-2d7cd011db47"
-      tenantIdFromEnv: TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter. See details in "Parameter list" section
-      clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
-      clientIdFromEnv: CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter. See details in "Parameter list" section
-      clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
-      clientSecretFromEnv: CLIENT_SECRET_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter. See details in "Parameter list" section
-      workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
-      workspaceIdFromEnv: WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter. See details in "Parameter list" section
+      tenantId: "AZURE_AD_TENANT_ID"
+      tenantIdFromEnv: AZURE_AD_TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter. See details in "Parameter list" section
+      clientId: "SERVICE_PRINCIPAL_CLIENT_ID"
+      clientIdFromEnv: SERVICE_PRINCIPAL_CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter. See details in "Parameter list" section
+      clientSecret: "SERVICE_PRINCIPAL_PASSWORD"
+      clientSecretFromEnv: SERVICE_PRINCIPAL_PASSWORD_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter. See details in "Parameter list" section
+      workspaceId: "LOG_ANALYTICS_WORKSPACE_ID"
+      workspaceIdFromEnv: LOG_ANALYTICS_WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter. See details in "Parameter list" section
       query: |
         let AppName = "web";
         let ClusterName = "demo-cluster";
@@ -127,7 +127,13 @@ Example result:
 - `clientSecret`: Password from your Azure AD Application/service principal.
 - `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
+**Managed identity based authentication:**
+
+You can use managed identity to request access token for Log Analytics API. The advantage of this approach is that there is no need to store secrets in Kubernetes. Read [more](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity) about managed identities in Azure Kubernetes Service.
+
 ### Example
+
+#### Service Principal based authentication
 
 ```yaml
 apiVersion: v1
@@ -139,10 +145,10 @@ metadata:
     app: kedaloganalytics
 type: Opaque
 data:
-  tenantId: "72f988bf-86f1-41af-91ab-2d7cd011db47"
-  clientId: "04b4ca0a-82b1-4c0a-bbbb-7946442e805b"
-  clientSecret: "vU6UtUXls6RNXxv~l6NRi1V8J1fnk5Q-ce"
-  workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+  tenantId: "QVpVUkVfQURfVEVOQU5UX0lE" #Base64 encoded Azure Active Directory tenant id
+  clientId: "U0VSVklDRV9QUklOQ0lQQUxfQ0xJRU5UX0lE" #Base64 encoded Application id from your Azure AD Application/service principal
+  clientSecret: "U0VSVklDRV9QUklOQ0lQQUxfUEFTU1dPUkQ=" #Base64 encoded Password from your Azure AD Application/service principal
+  workspaceId: "TE9HX0FOQUxZVElDU19XT1JLU1BBQ0VfSUQ=" #Base64 encoded Log Analytics workspace id
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -204,5 +210,154 @@ spec:
                 | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
                 on AppName
         | project MetricValue, Threshold = Limit * ThresholdCoefficient
+      threshold: "1900000000"
     authenticationRef:
       name: trigger-auth-kedaloganalytics
+```
+
+#### Managed identity based authentication
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-kedaloganalytics
+  namespace: kedaloganalytics
+spec:
+  podIdentity:
+    provider: azure
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kedaloganalytics-consumer-scaled-object
+  namespace: kedaloganalytics
+  labels:
+    deploymentName: kedaloganalytics-consumer
+spec:
+  scaleTargetRef:
+    kind: #Optional: Default: Deployment, Available Options: ReplicaSet, Deployment, DaemonSet, StatefulSet
+    name: kedaloganalytics-consumer
+  pollingInterval: 30
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: azure-log-analytics
+    metadata:
+      workspaceId: "81963c40-af2e-47cd-8e72-3002e08aa2af"
+      query: |
+        let AppName = "web";
+        let ClusterName = "demo-cluster";
+        let AvgDuration = ago(10m);
+        let ThresholdCoefficient = 0.8;
+        Perf
+        | where InstanceName contains AppName
+        | where InstanceName contains ClusterName
+        | where CounterName == "cpuUsageNanoCores"
+        | where TimeGenerated > AvgDuration
+        | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
+        | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
+        | join (Perf 
+                | where InstanceName contains AppName
+                | where InstanceName contains ClusterName
+                | where CounterName == "cpuLimitNanoCores"
+                | where TimeGenerated > AvgDuration
+                | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
+                | summarize arg_max(TimeGenerated, *) by AppName, CounterName
+                | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
+                on AppName
+        | project MetricValue, Threshold = Limit * ThresholdCoefficient
+      threshold: "1900000000"
+    authenticationRef:
+      name: trigger-auth-kedaloganalytics
+```
+
+### Guides
+
+#### Enabling managed identity authentication for Log Analytics scaler
+
+Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update Keda:
+
+```sh
+export SUBSCRIPTION_ID="<SubscriptionID>"
+export RESOURCE_GROUP="<AKSResourceGroup>"
+export CLUSTER_NAME="<AKSClusterName>"
+export CLUSTER_LOCATION="<AKSClusterLocation>" # "westeurope", "northeurope"...
+export IDENTITY_NAME="<SomeName>" #Any name
+export LOG_ANALYTICS_RESOURCE_ID="<LAResourceID>"
+
+# Login to Azure, set subscription, get AKS credentials
+az login
+az account set -s "${SUBSCRIPTION_ID}"
+az aks get-credentials -n ${CLUSTER_NAME} -g ${RESOURCE_GROUP}
+
+# ------- Cluster preparation. Run this block only once for fresh cluster.
+# Clone repo and run initial role assignment
+git clone https://github.com/Azure/aad-pod-identity.git
+./aad-pod-identity/hack/role-assignment.sh
+
+#Deploy aad-pod-identity using Helm 3
+helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+helm repo update
+helm install aad-pod-identity aad-pod-identity/aad-pod-identity --namespace=kube-system
+# -------------------------------------------------------------------------------------------
+
+#Create identity
+az identity create -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME}
+export IDENTITY_CLIENT_ID="$(az identity show -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME} --query clientId -otsv)"
+export IDENTITY_RESOURCE_ID="$(az identity show -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME} --query id -otsv)"
+
+#Assign reader permissions for your identity to Log Analytics workspace
+#WARNING: It can take some time while identity will be provisioned.
+#If you see an error: "Principal SOME_ID does not exist in the directory SOME_ID", just wait couple of minutes and then retry.
+az role assignment create --role "Log Analytics Reader" --assignee ${IDENTITY_CLIENT_ID} --scope ${LOG_ANALYTICS_RESOURCE_ID}
+
+# Allow cluster to control identity created earlier.
+ID="$(az aks show -g ${RESOURCE_GROUP} -n ${CLUSTER_NAME} --query servicePrincipalProfile.clientId -otsv)"
+if [[ "${ID:-}" == "msi" ]]; then
+  ID="$(az aks show -g ${RESOURCE_GROUP} -n ${CLUSTER_NAME} --query identityProfile.kubeletidentity.clientId -otsv)"
+fi
+az role assignment create --role "Managed Identity Operator" --assignee "${ID}" --scope "${IDENTITY_RESOURCE_ID}"
+
+# Create AzureIdentity and AzureIdentityBinding
+cat <<EOF | kubectl apply -f -
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ${IDENTITY_NAME}
+spec:
+  type: 0
+  resourceID: ${IDENTITY_RESOURCE_ID}
+  clientID: ${IDENTITY_CLIENT_ID}
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ${IDENTITY_NAME}-binding
+spec:
+  azureIdentity: ${IDENTITY_NAME}
+  selector: ${IDENTITY_NAME}
+EOF
+
+# APPLY LABELS: OPTION 1
+#deploy Keda using helm chart and specify aadPodIdentity label.
+#WARNING: You can run this command once keda v.2.0.0 will be released and helm chart for v2 will be available in official repo
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+helm install keda kedacore/keda --namespace keda --create-namespace --set aadPodIdentity=${IDENTITY_NAME}
+
+# APPLY LABELS: OPTION 2
+#Instead of redeploying Keda, you can update existing deployment:
+kubectl patch deployment keda-operator -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
+kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
+```
+
+### Links
+
+- [AAD Pod Identity](https://github.com/Azure/aad-pod-identity)
+- [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
+- [Azure Pod Identity on keda.sh](https://keda.sh/docs/2.0/concepts/authentication/#azure-pod-identity)
+- [Best practices for authentication and authorization in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-identity)
