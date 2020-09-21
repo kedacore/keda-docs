@@ -6,6 +6,8 @@ title = "Migration Guide"
 
 Please note that you **can not** run both KEDA v1 and v2 on the same Kubernetes cluster. You need to [uninstall](../../1.5/deploy) KEDA v1 first, in order to [install](../deploy) and use KEDA v2.
 
+> 💡 **NOTE:** If you are using Helm, you will need to delete the v1 CRDs manually
+
 KEDA v2 is using a new API namespace for it's Custom Resources Definitions (CRD): `keda.sh` instead of `keda.k8s.io` and introduces a new Custom Resource for scaling of Jobs. See full details on KEDA Custom Resources [here](../concepts/#custom-resources-crd).
 
 Here's an overview of what's changed:
