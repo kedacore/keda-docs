@@ -64,7 +64,7 @@ spec:
           policies:
           - type: Percent
             value: 100
-            periodSeconds: 15                                     
+            periodSeconds: 15
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
@@ -80,7 +80,7 @@ spec:
     envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
 ```
 
-The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`. 
+The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`.
 
 To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specfied.
 
@@ -163,7 +163,7 @@ advanced:
 
 **`horizontalPodAutoscalerConfig:`**
 
- This section contains configuration that is the same as some parts of the standard horizontal pod autoscaler (HPA) configuration. KEDA would feed properties from this section into a appropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
+ This section contains configuration that is the same as some parts of the standard Horizontal Pod Autoscaler (HPA) configuration. KEDA would feed properties from this section into a appropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
 
 **`horizontalPodAutoscalerConfig.resourceMetrics:`**
 
