@@ -64,12 +64,12 @@ spec:
           policies:
           - type: Percent
             value: 100
-            periodSeconds: 15                                     
+            periodSeconds: 15
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
 
-You can find all supported triggers [here](/scalers).
+> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
 
 ### Details
 ```yaml
@@ -80,7 +80,7 @@ You can find all supported triggers [here](/scalers).
     envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
 ```
 
-The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`. 
+The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`.
 
 To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specfied.
 
@@ -163,7 +163,7 @@ advanced:
 
 **`horizontalPodAutoscalerConfig:`**
 
- This section contains configuration that is the same as some parts of the standard HorizontalPodAutoscaler configuration. KEDA would feed properties from this section into a apropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
+ This section contains configuration that is the same as some parts of the standard Horizontal Pod Autoscaler (HPA) configuration. KEDA would feed properties from this section into a appropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
 
 **`horizontalPodAutoscalerConfig.resourceMetrics:`**
 
@@ -190,7 +190,7 @@ There are two main ways to handle this scenario.
 
 Kubernetes provides a few [lifecycle hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) that can be leveraged to delay termination.  Imagine a replica is scheduled for termination and is 2.9 hours into processing a 3 hour message.  Kubernetes will send a [`SIGTERM`](https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html) to signal the intent to terminate.  Rather than immediately terminating, a deployment can delay termination until processing the current batch of messages has completed.  Kubernetes will wait for a `SIGTERM` response or the `terminationGracePeriodSeconds` before killing the replica.
 
-> NOTE: There are other ways to delay termination, including the [`preStop` Hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)
+> 💡 **NOTE:**There are other ways to delay termination, including the [`preStop` Hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)
 
 Using this method can preserve a replica and enable long-running executions.  However, one downside of this approach is while delaying termination, the pod phase will remain in the `Terminating` state.  That means a pod that is delaying termination for a very long duration may show `Terminating` during that entire period of delay.
 

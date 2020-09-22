@@ -77,4 +77,4 @@ The above example expects that the API endpoint will return response similar to 
 ```
 Assuming such response, Metrics API trigger will figure out that current metric value is 12.
 
-> NOTE: The value of the metric must be json number type. The value is casted to **integer**.
+> 💡 **NOTE:**The value of the metric must be json number type. The value is casted to **integer**.
