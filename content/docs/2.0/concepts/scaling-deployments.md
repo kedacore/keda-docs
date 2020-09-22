@@ -163,7 +163,7 @@ advanced:
 
 **`horizontalPodAutoscalerConfig:`**
 
- This section contains configuration that is the same as some parts of the standard HorizontalPodAutoscaler configuration. KEDA would feed properties from this section into a apropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
+ This section contains configuration that is the same as some parts of the standard HorizontalPodAutoscaler configuration. KEDA would feed properties from this section into a appropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
 
 **`horizontalPodAutoscalerConfig.resourceMetrics:`**
 
