@@ -73,7 +73,7 @@ kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/
 2. Create namespace `keda`
 3. Create `KedaController` resource named `keda` in namespace `keda`
 ![Operator Hub installation](https://raw.githubusercontent.com/kedacore/keda-olm-operator/master/images/keda-olm-install.gif)
-> Note: Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
+> 💡 **NOTE:**Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
 
 ### Uninstall
 
