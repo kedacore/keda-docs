@@ -40,7 +40,7 @@ Deploying KEDA with Helm is very simple:
 
     ```sh
     kubectl create namespace keda
-    helm install keda kedacore/keda --version 2.0.0-beta1.1 --namespace keda
+    helm install keda kedacore/keda --version 2.0.0-beta1.2 --namespace keda
     ```
 
 ### Uninstall
