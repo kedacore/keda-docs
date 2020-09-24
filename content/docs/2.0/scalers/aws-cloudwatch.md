@@ -68,8 +68,8 @@ kind: Secret
 metadata:
   name: test-secrets
 data:
-  AWS_ACCESS_KEY_ID: <user-id>
-  AWS_SECRET_ACCESS_KEY: <key>
+  AWS_ACCESS_KEY_ID: <encoded-user-id>
+  AWS_SECRET_ACCESS_KEY: <encoded-key>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
