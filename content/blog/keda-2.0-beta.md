@@ -35,7 +35,7 @@ For a full list of changes, we highly recommend going through [our changelog](ht
 
 Get started now, and install our beta with Helm:
 
->$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta
+>$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta1.2
 
 As an alternative, you can use our deployment YAML:
 
