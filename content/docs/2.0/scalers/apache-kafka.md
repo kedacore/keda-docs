@@ -48,6 +48,14 @@ TLS:
 - `cert`: Certificate for client authentication. Optional.If `tls` is enabled, this is required.
 - `key`: Key for client authentication. Optional. If `tls` is enabled, this is required.
 
+### New Consumers and Offset Reset Policy
+ 
+ When a new kafka consumer is created, it must determine its consumer group initial poisition, i.e. the offset it will start to read from. The position is decided in kafka consumers via a parameter `auto.offset.reset` and the possible values to set are `latest` (kafka default), and `earliest`. This parameter in Keda should be set accordingly. In this initial status, no offset has been committed to kafka for the consumer group and any request for offset metadata will return an `INVALID_OFFSET`; so Keda has to manage the consumer pod's autoscaling in relation to the offset reset policy that has been specified in the parameters:
+ - If the policy is set to earliest (a new consumer wants to replay everything in the topic from its beginning) and no offset is committed, the scaler will return a lag value equal to the last offset of the topic (in the case of a new topic 0), so it will scale the eployment to 0 replicas. If a new messages is produced to the topic, Keda will return the new value of the offset (1), and will scale the deployments to consume the message.
+ - If the policy is set to latest (so the new consumer will only consume new messages) and no offset is committed, the scaler will return a negative lag value, and will also tell the hpa to remain active, hence the deployment should have the minimum number of replicas running. This is to allow the consumer to read any new message in the topic, and commit its offset.
+
+
+
 
 ### Example
 
