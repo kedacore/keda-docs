@@ -1,0 +1,66 @@
+[[qna]]
+q = "What is KEDA and why is it useful?"
+a = "KEDA stands for Kubernetes-based Event Driven Auto-Scaler. It is built to be able to activate a Kubernetes deployment (i.e. no pods to a single pod) and subsequently to more pods based on events from various event sources."
+
+[[qna]]
+q = "What are the prerequisites for using KEDA?"
+a = "KEDA is designed to be run on any Kubernetes cluster. It uses a CRD (custom resource definition) and the Kubernetes metric server so you will have to use a Kubernetes version which supports these. Any Kubernetes cluster >= 1.13.0 has been tested and should work."
+
+[[qna]]
+q = "Does KEDA depend on any Azure service?"
+a = "No, KEDA only takes a dependency on standard Kubernetes constructs and can run on any Kubernetes cluster whether in OpenShift, AKS, GKE, EKS or your own infrastructure."
+
+[[qna]]
+q = "Does KEDA only work with Azure Functions?"
+a = "No, KEDA can scale up/down any container that you specify in your deployment. There has been work done in the Azure Functions tooling to make it easy to scale an Azure Function container."
+
+[[qna]]
+q = "Why should we use KEDA if we are already using Azure Functions in Azure?"
+a = """
+There are a few reasons for this:
+
+* Run functions on-premises (potentially in something like an 'intelligent edge' architecture)
+* Run functions alongside other Kubernetes apps (maybe in a restricted network, app mesh, custom environment, etc.)
+* Run functions outside of Azure (no vendor lock-in)
+* Specific need for more control (GPU enabled compute clusters, policies, etc.)
+"""
+
+[[qna]]
+q = "Can I scale my HTTP container or function with KEDA and Kubernetes?"
+a = """
+KEDA will scale a container using metrics from a scaler, but unfortunately there is no scaler today for HTTP workloads.
+
+We recommend using the [Prometheus scaler](/scalers/prometheus/) to create scale rule based on metrics around HTTP events for now. Read [Anirudh Garg's blog post](https://dev.to/anirudhgarg_99/scale-up-and-down-a-http-triggered-function-app-in-kubernetes-using-keda-4m42) to learn more.
+"""
+
+[[qna]]
+q = "Where can I get to the code for the Scalers?"
+a = "All scalers have their code [here](https://github.com/kedacore/keda/tree/master/pkg/scalers)."
+
+[[qna]]
+q = "Is short polling intervals a problem?"
+a = "Polling interval really only impacts the time-to-activation (scaling from 0 to 1) but once scaled to one it's really up to the HPA (horizontal pod autoscaler) which polls KEDA."
+
+[[qna]]
+q = "How can I get involved?"
+a = """
+There are several ways to get involved.
+
+* Pick up an issue to work on. A good place to start might be issues which are marked as [Good First Issue](https://github.com/kedacore/keda/labels/good%20first%20issue) or [Help Wanted](https://github.com/kedacore/keda/labels/help%20wanted)
+* We are always looking to add more scalers.
+* We are always looking for more samples, documentation, etc.
+* Please join us in our [weekly standup](https://github.com/kedacore/keda#community-standup).
+"""
+
+[[qna]]
+q = "Can KEDA be used in production?"
+a = "Yes! KEDA is now 1.0 and suited for production workloads."
+
+[[qna]]
+q = "What does it cost?"
+a = "There is no charge for using KEDA itself."
+
+
+[[qna]]
+q = "How do I access KEDA resources using `client-go`?"
+a = """KEDA client-go is exported as part of the KEDA repository."""
