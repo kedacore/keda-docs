@@ -8,6 +8,8 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 - [Operator Hub](#operatorhub)
 - [YAML declarations](#yaml)
 
+> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.16 and higher
+
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
 ## Deploying with Helm {#helm}
@@ -73,7 +75,7 @@ kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/
 2. Create namespace `keda`
 3. Create `KedaController` resource named `keda` in namespace `keda`
 ![Operator Hub installation](https://raw.githubusercontent.com/kedacore/keda-olm-operator/master/images/keda-olm-install.gif)
-> 💡 **NOTE:**Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
+> 💡 **NOTE:** Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
 
 ### Uninstall
 
