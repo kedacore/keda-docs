@@ -109,7 +109,7 @@ metadata:
   name: redis-streams-password
 type: Opaque
 data:
-  redis_password: YWRtaW4=
+  redis_password: <encoded redis password>
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
