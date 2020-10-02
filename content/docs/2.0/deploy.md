@@ -42,7 +42,7 @@ Deploying KEDA with Helm is very simple:
 
     ```sh
     kubectl create namespace keda
-    helm install keda kedacore/keda --version 2.0.0-beta1.2 --namespace keda
+    helm install keda kedacore/keda --version 2.0.0-rc --namespace keda
     ```
 
 ### Uninstall
@@ -53,18 +53,18 @@ If you want to remove KEDA from a cluster you can run one of the following:
 
 ```sh
 helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledjobs_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_triggerauthentications_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledobjects.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledjobs.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_triggerauthentications.yaml
 ```
 
 **Using Helm 2**
 
 ```sh
 helm delete --purge keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledobjects_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_scaledjobs_crd.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/master/deploy/crds/keda.sh_triggerauthentications_crd.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledobjects.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledjobs.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_triggerauthentications.yaml
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
@@ -91,12 +91,12 @@ If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a differe
 Run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
 
 ```sh
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0-beta.yaml
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-rc/keda-2.0.0-rc.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
-kubectl apply -f keda-2.0.0-beta.yaml
+kubectl apply -f keda-2.0.0-rc.yaml
 ```
 
 - You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
@@ -112,13 +112,13 @@ VERSION=2.0.0 make deploy
 - In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
 
 ```sh
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0-beta.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.0.0-rc/keda-2.0.0-rc.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
-kubectl delete -f keda-2.0.0-beta.yaml
+kubectl delete -f keda-2.0.0-rc.yaml
 ```
 
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
