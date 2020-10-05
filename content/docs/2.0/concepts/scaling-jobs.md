@@ -103,12 +103,11 @@ The max number of pods that is created within a single polling period. If there 
 | 4 | 3 | 5 | 0 | 1 |
 
 * **Queue Length:** The number of the length of the queue.
-* **Target Average Value:** How many pods do they have in a Job.
+* **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
 * **Running Job Count:** How many jobs are running.
 * **Number of the Scale:** The number of the job that is created.
 
 # Sample
-
 
 ```yaml
 apiVersion: v1
