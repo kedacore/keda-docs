@@ -107,6 +107,7 @@ The max number of pods that is created within a single polling period. If there 
 * **Running Job Count:** How many jobs are running.
 * **Number of the Scale:** The number of the job that is created.
 
+
 # Sample
 
 ```yaml
