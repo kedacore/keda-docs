@@ -114,12 +114,13 @@ The max number of pods that is created within a single polling period. If there 
 ---
 
 ```yaml
-strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
+scalingStrategy:
+  strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
 ```
 
 Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
 
-** default **
+**default**
 This logic is the same as Job for V1.  The number of the scale will be calculated as follows. 
 
 _The number of the scale_
@@ -128,7 +129,7 @@ _The number of the scale_
 queueLength - runningJobCount
 ```
 
-** custom **
+**custom**
 You can customize the default scale logic. You need to configure the following parameters. If you don't configure it, then the strategy will be `default.`
 
 ```yaml
@@ -142,7 +143,7 @@ _The number of the scale_
 queueLength - customScalingQueueLengthDeduction - (runningJobCount * customScalingRunningJobPercentage)
 ```
 
-** accurate ** 
+**accurate** 
 If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can you this strategy if you delete a message once your app consumes it.
 
 ```go
