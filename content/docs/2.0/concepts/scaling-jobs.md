@@ -29,20 +29,21 @@ metadata:
   name: {scaled-job-name}
 spec:
   jobTargetRef:
-    parallelism: 1                          # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    completions: 1                          # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    activeDeadlineSeconds: 600              #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-    backoffLimit: 6                         # Specifies the number of retries before marking this job failed. Defaults to 6
+    parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    completions: 1                            # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    activeDeadlineSeconds: 600                #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
+    backoffLimit: 6                           # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
       # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
-  pollingInterval: 30                       # Optional. Default: 30 seconds
-  successfulJobsHistoryLimit: 5             # Optional. Default: 100. How many completed jobs should be kept.
-  failedJobsHistoryLimit: 5                 # Optional. Default: 100. How many failed jobs should be kept.
-  envSourceContainerName: {container-name}  # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
-  maxReplicaCount: 100                      # Optional. Default: 100
-  scalingStrategy: "custom"                 # Optional. Default: default Which ScalingStrategy to use. 
-  customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScaleLogic.
-  customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScaleLogic.
+  pollingInterval: 30                         # Optional. Default: 30 seconds
+  successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
+  envSourceContainerName: {container-name}    # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
+  maxReplicaCount: 100                        # Optional. Default: 100
+  scalingStrategy:
+    strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
+    customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
+    customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScalingStrategy.
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -109,13 +110,16 @@ The max number of pods that is created within a single polling period. If there 
 * **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
 * **Running Job Count:** How many jobs are running.
 * **Number of the Scale:** The number of the job that is created.
+
+---
+
 ```yaml
-  scalingStrategy: "accurate"                 # Optional. Default: default Which ScalingStrategy to use. 
+strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
 ```
 
 Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
 
-### default
+** default **
 This logic is the same as Job for V1.  The number of the scale will be calculated as follows. 
 
 _The number of the scale_
@@ -124,12 +128,12 @@ _The number of the scale_
 queueLength - runningJobCount
 ```
 
-### custom
+** custom **
 You can customize the default scale logic. You need to configure the following parameters. If you don't configure it, then the strategy will be `default.`
 
 ```yaml
-customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScaleLogic.
-customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScaleLogic.
+customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
+customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScalingStrategy.
 ```
 
 _The number of the scale_
@@ -138,7 +142,7 @@ _The number of the scale_
 queueLength - customScalingQueueLengthDeduction - (runningJobCount * customScalingRunningJobPercentage)
 ```
 
-### accurate 
+** accurate ** 
 If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can you this strategy if you delete a message once your app consumes it.
 
 ```go
@@ -182,9 +186,10 @@ spec:
   maxReplicaCount: 30             # Optional. Default: 100
   successfulJobsHistoryLimit: 3   # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 2       # Optional. Default: 100. How many failed jobs should be kept.
-  scalingStrategy: "custom"                 # Optional. Default: default Which ScalingStrategy to use. 
-  customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScaleLogic.
-  customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScaleLogic.
+  scalingStrategy:
+    strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use.
+    customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
+    customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScalingStrategy.
   triggers:
   - type: rabbitmq
     metadata:
