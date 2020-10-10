@@ -15,6 +15,7 @@ Here's an overview of what's changed:
 - [Scaling of Jobs](#scaling-of-jobs)
 - [Improved flexibility & usability of trigger metadata](#improved-flexibility--usability-of-trigger-metadata)
 - [Scalers](#scalers)
+- [TriggerAuthentication](#triggerauthentication)
 
 
 ### Scaling of Deployments
