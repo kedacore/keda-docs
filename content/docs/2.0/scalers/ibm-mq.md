@@ -30,9 +30,9 @@ This specification describes the `ibmmq` trigger for IBM MQ Queue.
 triggers:
     - type: ibmmq
       metadata:
-        queueLength: '5' # Queue length target for HPA. Default: 5 messages
-        host: IBMMQ_HOST # IBM MQ Queue Manager Admin REST Endpoint
-        queueName: QUEUE_NAME
+        queueLength: '5' # OPTIONAL - Queue length target for HPA. Default: 5 messages
+        host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
+        queueName: <queue-name> # REQUIRED - Queue Name
       authenticationRef:
         name: ibmmq-consumer-trigger
 ```
@@ -55,8 +55,8 @@ kind: Secret
 metadata:
   name: keda-ibmmq-secret
 data:
-  ADMIN_USER: <encoded-username>
-  ADMIN_PASSWORD: <encoded-password>
+  ADMIN_USER: <encoded-username> # REQUIRED - Admin Username
+  ADMIN_PASSWORD: <encoded-password> # REQUIRED - Admin Password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -74,9 +74,9 @@ spec:
   triggers:
     - type: ibmmq
       metadata:
-        queueLength: '5'
-        host: IBMMQ_HOST
-        queueName: QUEUE_NAME
+        queueLength: '5' # OPTIONAL - Depth of Queue per Replica Pod 
+        host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
+        queueName: <queue-name> # REQUIRED - Queue Name
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---
