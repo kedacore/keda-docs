@@ -33,25 +33,27 @@ triggers:
 
 ### Authentication Parameters
 
-Metrics Scaler API supported three types of authentication. API Key based authentication, basic authentication and TLS 
-authentication. You can use `TriggerAuthentication` CRD to configure the authentication by providing `authMode` along 
+Metrics Scaler API supported three types of authentication - API Key based authentication, basic authentication and TLS 
+authentication. 
+
+You can use `TriggerAuthentication` CRD to configure the authentication by providing `authMode` along 
 with other necessary parameters as mentioned:
 
 **API Key based authentication:**
-- `authMode`: It must be set to `apiKeyAuth` in case of Basic Authentication.
+- `authMode`: It must be set to `apiKey` in case of API key Authentication.
 - `apiKey`: API Key needed for authentication.
 - `method`: This specifies the possible methods API Key based authentication supports. Possible values are `header` and `query`. `header` is the default method.
 - `keyParamName`: This is either header key or query param used for passing apikey. Default header is `X-API-KEY` and default query param is `api_key`. 
 If your implementation has different key, please specify it here.
 
 **Basic authentication:**
-- `authMode`: It must be set to `basicAuth` in case of Basic Authentication.
+- `authMode`: It must be set to `basic` in case of Basic Authentication.
 - `username`: This is a required field. Provide the username to be used for basic authentication.
 - `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, 
 because many application implements basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
-- `authMode`: It must be set to `tlsAuth` in case of TLS Authentication.
+- `authMode`: It must be set to `tls` in case of TLS Authentication.
 - `ca`: Certificate authority file for TLS client authentication. This is a required field.
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
@@ -103,7 +105,6 @@ Assuming such response, Metrics API trigger will figure out that current metric 
 For metric scaler with API Key based authentication,
 
 ```yaml
-
 apiVersion: v1
 kind: Secret
 metadata:
@@ -160,7 +161,6 @@ spec:
 For metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
-
 apiVersion: v1
 kind: Secret
 metadata:
@@ -194,7 +194,6 @@ spec:
 For metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
-
 apiVersion: v1
 kind: Secret
 metadata:
@@ -225,5 +224,4 @@ spec:
     - parameter: ca
       name: keda-metric-api-secret
       key: ca
-   
 ```
