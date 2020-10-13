@@ -45,5 +45,5 @@ spec:
   - type: memory
     metadata:
       type: Utilization
-      type: "50"
+      value: "50"
 ```

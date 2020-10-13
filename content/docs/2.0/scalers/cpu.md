@@ -47,5 +47,5 @@ spec:
   - type: cpu
     metadata:
       type: Utilization
-      type: "50"
+      value: "50"
 ```
