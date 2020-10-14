@@ -51,13 +51,6 @@ spec:
   advanced:                                          # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false        # Optional. Default: false
     horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
-      resourceMetrics:                               # Optional. If not set, KEDA won't scale based on resource utilization
-      - name: cpu/memory                             # Name of the metric to scale on
-        target:
-          type: value/ utilization/ averagevalue
-          value: 60                                  # Optional
-          averageValue: 40                           # Optional
-          averageUtilization: 50                     # Optional
       behavior:                                      # Optional. Use to modify HPA's scaling behavior
         scaleDown:
           stabilizationWindowSeconds: 300
@@ -145,13 +138,6 @@ For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is 
 ```yaml
 advanced:
   horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
-    resourceMetrics:                               # Optional. If not set, KEDA won't scale based on resource utilization
-    - name: cpu/memory                             # Name of the metric to scale on
-      target:
-        type: value/ utilization/ averagevalue
-        value: 60                                  # Optional
-        averageValue: 40                           # Optional
-        averageUtilization: 50                     # Optional
     behavior:                                      # Optional. Use to modify HPA's scaling behavior
       scaleDown:
         stabilizationWindowSeconds: 300
@@ -162,17 +148,6 @@ advanced:
 ```
 
 **`horizontalPodAutoscalerConfig:`**
-
- This section contains configuration that is the same as some parts of the standard Horizontal Pod Autoscaler (HPA) configuration. KEDA would feed properties from this section into a appropriate places into the HPA configuration. This way one can modify the HPA that is being created and managed by KEDA.
-
-**`horizontalPodAutoscalerConfig.resourceMetrics:`**
-
-This configuration can be used to scale resources based on standard resource metrics like CPU / Memory. KEDA would feed this value as resource metric(s) into the HPA itself. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for details.
-* `name`: This is the name of the resource to be targeted as a metric (cpu, memory etc)
-* `type`: represents whether the metric type is Utilization, Value, or AverageValue.
-* `value`: is the target value of the metric (as a quantity).
-* `averageValue`: is the target value of the average of the metric across all relevant pods (quantity)
-* `averageUtilization`: is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type.
 
 **`horizontalPodAutoscalerConfig.behavior`:**
 

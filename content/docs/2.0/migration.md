@@ -15,6 +15,8 @@ Here's an overview of what's changed:
 - [Scaling of Jobs](#scaling-of-jobs)
 - [Improved flexibility & usability of trigger metadata](#improved-flexibility--usability-of-trigger-metadata)
 - [Scalers](#scalers)
+- [TriggerAuthentication](#triggerauthentication)
+
 
 ### Scaling of Deployments
 In order to scale `Deployments` with KEDA v2, you need to do only a few modifications to existing v1 `ScaledObjects` definitions, so they comply with v2:
@@ -189,3 +191,10 @@ triggers:
     protocol: 'http'
     host: 'https://guest:password@localhost:443/vhostname'
 ``` 
+
+### TriggerAuthentication
+In order to use Authentication via `TriggerAuthentication` with KEDA v2, you need to change:
+- Change the value of `apiVersion` property from `keda.k8s.io/v1alpha1` to `keda.sh/v1alpha1`
+
+For more details please refer to the full
+[v2 TriggerAuthentication Specification](../concepts/authentication/#re-use-credentials-and-delegate-auth-with-triggerauthentication)
