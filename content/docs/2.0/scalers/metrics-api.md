@@ -36,24 +36,26 @@ triggers:
 Metrics Scaler API supported three types of authentication - API Key based authentication, basic authentication and TLS 
 authentication. 
 
-You can use `TriggerAuthentication` CRD to configure the authentication by providing `authMode` along 
-with other necessary parameters as mentioned:
+You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
+ along with secret credentials in `TriggerAuthentication` as mentioned below:
 
 **API Key based authentication:**
-- `authMode`: It must be set to `apiKey` in case of API key Authentication.
-- `apiKey`: API Key needed for authentication.
-- `method`: This specifies the possible methods API Key based authentication supports. Possible values are `header` and `query`. `header` is the default method.
-- `keyParamName`: This is either header key or query param used for passing apikey. Default header is `X-API-KEY` and default query param is `api_key`. 
+- `authMode`: It must be set to `apiKey` in case of API key Authentication. Specify this in trigger configuration.
+- `method`: This specifies the possible methods API Key based authentication supports. 
+Possible values are `header` and `query`. `header` is the default method. Specify this in trigger configuration.
+- `keyParamName`: This is either header key or query param used for passing apikey. 
+Default header is `X-API-KEY` and default query param is `api_key`. Specify this in trigger configuration.
 If your implementation has different key, please specify it here.
+- `apiKey`: API Key needed for authentication.
 
 **Basic authentication:**
-- `authMode`: It must be set to `basic` in case of Basic Authentication.
+- `authMode`: It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
 - `username`: This is a required field. Provide the username to be used for basic authentication.
 - `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, 
 because many application implements basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
-- `authMode`: It must be set to `tls` in case of TLS Authentication.
+- `authMode`: It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
 - `ca`: Certificate authority file for TLS client authentication. This is a required field.
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
@@ -102,7 +104,7 @@ Assuming such response, Metrics API trigger will figure out that current metric 
 
 > 💡 **NOTE:**The value of the metric must be json number type. The value is casted to **integer**.
 
-For metric scaler with API Key based authentication,
+Here is an example of a  metric scaler with API Key based authentication,
 
 ```yaml
 apiVersion: v1
@@ -111,10 +113,7 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  authMode: "apiKeyAuth"
   apiKey: "APIKEY" 
-  method: "query"
-  keyParamName: "QUERY_KEY"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -123,18 +122,9 @@ metadata:
   namespace: default
 spec:
   secretTargetRef:
-    - parameter: authMode
-      name: keda-metric-api-secret
-      key: authMode
     - parameter: apiKey
       name: keda-metric-api-secret
       key: apiKey
-    - parameter: method
-      name: keda-metric-api-secret
-      key: method
-    - parameter: keyParamName
-      name: keda-metric-api-secret
-      key: keyParamName
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -153,12 +143,14 @@ spec:
         targetValue: "7"
         url: "http://api:3232/components/stats"
         valueLocation: 'components.worker.tasks'
+        authMode: "apiKey"
+        method: "query"
+        keyParamName: "QUERY_KEY"
       authenticationRef:
         name: keda-metric-api-creds
-
 ```
 
-For metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a  metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -167,7 +159,6 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  authMode: "basicAuth" 
   username: "username" 
   password: "password"
 ---
@@ -178,20 +169,37 @@ metadata:
   namespace: default
 spec:
   secretTargetRef:
-    - parameter: authMode
-      name: keda-metric-api-secret
-      key: authMode
     - parameter: username
       name: keda-metric-api-secret
       key: username
     - parameter: password
       name: keda-metric-api-secret
       key: password
-   
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: http-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "7"
+        url: "http://api:3232/components/stats"
+        valueLocation: 'components.worker.tasks'
+        authMode: "basic"
+      authenticationRef:
+        name: keda-metric-api-creds
 ```
 
 
-For metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a  metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -200,7 +208,6 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  authMode: "tlsAuth" 
   cert: "cert" 
   key: "key"
   ca: "ca"
@@ -212,9 +219,6 @@ metadata:
   namespace: default
 spec:
   secretTargetRef:
-    - parameter: authMode
-      name: keda-metric-api-secret
-      key: authMode
     - parameter: cert
       name: keda-metric-api-secret
       key: cert
@@ -224,4 +228,25 @@ spec:
     - parameter: ca
       name: keda-metric-api-secret
       key: ca
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: http-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "7"
+        url: "http://api:3232/components/stats"
+        valueLocation: 'components.worker.tasks'
+        authMode: "tls"
+      authenticationRef:
+        name: keda-metric-api-creds
 ```
