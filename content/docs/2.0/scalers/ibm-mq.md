@@ -32,7 +32,9 @@ triggers:
       metadata:
         queueLength: '5' # OPTIONAL - Queue length target for HPA. Default: 5 messages
         host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
+        queueManager: <queue-manager> # REQUIRED - Queue Manager
         queueName: <queue-name> # REQUIRED - Queue Name
+        tlsDisabled: <TLS> # REQUIRED - Set 'true' to disable TLS.
       authenticationRef:
         name: ibmmq-consumer-trigger
 ```
