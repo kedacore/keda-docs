@@ -19,7 +19,7 @@ triggers:
         queueManager: <queue-manager> # REQUIRED - Your queue manager
         queueName: <queue-name> # REQUIRED - Your queue name
         tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
-        queueDepth: <queue-depth> # OPTIONAL - Queue length target for HPA. Default: 5 messages
+        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
       authenticationRef:
         name: ibmmq-consumer-trigger
 ```
@@ -35,7 +35,7 @@ TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
   - `queueManager`: REQUIRED - Name of the queue manager from which messages will be consumed
   - `queueName`: REQUIRED - Name of the Queue within the Queue Manager defined from which messages will be consumed
   - `tlsDisabled`: OPTIONAL - A boolean: Can be set to 'true' to disable TLS. False by default.
-  - `queueLength`: OPTIONAL - Queue Length Target for HPA. Will be set to Default Value of 5 if not Provided.
+  - `queueDepth`: OPTIONAL - Queue depth Target for HPA. Will be set to Default Value of 5 if not Provided.
   
   **Authentication Parameters** 
   - `ADMIN_USER`: REQUIRED - The admin REST endpoint username for your MQ Queue Manager
@@ -71,7 +71,7 @@ spec:
         queueManager: <queue-manager> # REQUIRED - Your queue manager
         queueName: <queue-name> # REQUIRED - Your queue name
         tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
-        queueDepth: <queue-depth> # OPTIONAL - Queue length target for HPA. Default: 5 messages
+        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---
