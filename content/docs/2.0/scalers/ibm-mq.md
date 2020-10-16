@@ -15,27 +15,33 @@ This specification describes the `ibmmq` trigger for IBM MQ Queue.
 triggers:
     - type: ibmmq
       metadata:
-        queueLength: '5' # OPTIONAL - Queue length target for HPA. Default: 5 messages
         host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
-        queueManager: <queue-manager> # REQUIRED - Queue Manager
-        queueName: <queue-name> # REQUIRED - Queue Name
-        tlsDisabled: <TLS> # REQUIRED - Set 'true' to disable TLS.
+        queueManager: <queue-manager> # REQUIRED - Your queue manager
+        queueName: <queue-name> # REQUIRED - Your queue name
+        tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
+        queueDepth: <queue-depth> # OPTIONAL - Queue length target for HPA. Default: 5 messages
       authenticationRef:
         name: ibmmq-consumer-trigger
 ```
 
-**Parameter list:**
 
-- `queueLength`: OPTIONAL - Queue Length Target for HPA. Will be set to Default Value of 5 if not Provided.
-- `host`: REQUIRED - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`
-- `queueName`: REQUIRED - Name of the Queue within the Queue Manager defined from which messages will be consumed
+
 
 ### Authentication Parameters
 
 TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
+  **Parameter list**
+  - `host`: REQUIRED - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`
+  - `queueManager`: REQUIRED - Name of the queue manager from which messages will be consumed
+  - `queueName`: REQUIRED - Name of the Queue within the Queue Manager defined from which messages will be consumed
+  - `tlsDisabled`: OPTIONAL - A boolean: Can be set to 'true' to disable TLS. False by default.
+  - `queueLength`: OPTIONAL - Queue Length Target for HPA. Will be set to Default Value of 5 if not Provided.
+  
+  **Authentication Parameters** 
+  - `ADMIN_USER`: REQUIRED - The admin REST endpoint username for your MQ Queue Manager
+  - `ADMIN_PASSWORD`: REQUIRED - The admin REST endpoint API key for your MQ Queue Manager
 
 ### Example
-
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -61,9 +67,11 @@ spec:
   triggers:
     - type: ibmmq
       metadata:
-        queueLength: '5' # OPTIONAL - Depth of Queue per Replica Pod 
         host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
-        queueName: <queue-name> # REQUIRED - Queue Name
+        queueManager: <queue-manager> # REQUIRED - Your queue manager
+        queueName: <queue-name> # REQUIRED - Your queue name
+        tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
+        queueDepth: <queue-depth> # OPTIONAL - Queue length target for HPA. Default: 5 messages
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---
