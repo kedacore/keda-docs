@@ -26,9 +26,6 @@ triggers:
         name: ibmmq-consumer-trigger
 ```
 
-### Authentication Parameters
-
-TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
   **Parameter list**
   - `host`: REQUIRED - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`
   - `queueManager`: REQUIRED - Name of the queue manager from which messages will be consumed
@@ -37,7 +34,10 @@ TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
   - `queueDepth`: OPTIONAL - Queue depth Target for HPA. Will be set to Default Value of 5 if not Provided.
   - `usernameFromEnv`: OPTIONAL: Provide admin username from env instead of as a secret
   - `passwordFromEnv`: OPTIONAL: Provide admin password from env instead of as a secret        
-    
+
+### Authentication Parameters
+
+TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
   **Authentication Parameters** 
   - `ADMIN_USER`: REQUIRED - The admin REST endpoint username for your MQ Queue Manager
   - `ADMIN_PASSWORD`: REQUIRED - The admin REST endpoint API key for your MQ Queue Manager
