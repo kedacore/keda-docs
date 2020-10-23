@@ -33,7 +33,7 @@ triggers:
 
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enabled` and provide `ca`, `cert` and `key`.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enabled`. If required for your Kafka configuration, you may also provide a `ca`, `cert` and `key`. `cert` and `key` must be specified together.
 
 **Credential based authentication:**
 
@@ -44,9 +44,9 @@ SASL:
 
 TLS:
 - `tls`: Optional. To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used.
-- `ca`: Certificate authority file for TLS client authentication. Optional. If `tls` is enabled, this is required.
-- `cert`: Certificate for client authentication. Optional.If `tls` is enabled, this is required.
-- `key`: Key for client authentication. Optional. If `tls` is enabled, this is required.
+- `ca`: Certificate authority file for TLS client authentication. Optional.
+- `cert`: Certificate for client authentication. Optional. Required if `key` is specified.
+- `key`: Key for client authentication. Optional. Required if `cert` is specified.
 
 ### New Consumers and Offset Reset Policy
  
