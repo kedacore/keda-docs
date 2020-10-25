@@ -73,10 +73,10 @@ metadata:
 spec:
   secretTargetRef:
   - parameter: awsAccessKeyID     # Required.
-    name: keda-aws-secrets        # Required.
+    name: test-secrets            # Required.
     key: AWS_ACCESS_KEY_ID        # Required.
   - parameter: awsSecretAccessKey # Required.
-    name: keda-aws-secrets        # Required.
+    name: test-secrets            # Required.
     key: AWS_SECRET_ACCESS_KEY    # Required.
 ---
 apiVersion: keda.sh/v1alpha1
