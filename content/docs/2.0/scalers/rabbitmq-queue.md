@@ -56,7 +56,7 @@ metadata:
 data:
   host: <AMQP URI connection string> # base64 encoded value of format amqp://guest:password@localhost:5672/vhost
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-rabbitmq-conn
@@ -67,7 +67,7 @@ spec:
       name: keda-rabbitmq-secret
       key: host
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-scaledobject
@@ -95,7 +95,7 @@ metadata:
 data:
   host: <HTTP API endpoint> # base64 encoded value of format https://guest:password@localhost:443/vhostname
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-rabbitmq-conn
@@ -106,7 +106,7 @@ spec:
       name: keda-rabbitmq-secret
       key: host
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-scaledobject
