@@ -76,10 +76,8 @@ spec:
       # or
       topicName: functions-sbtopic
       subscriptionName: sbtopic-sub1
-      # Required: connection OR authenticationRef that defines connection
-      connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
-      # or authenticationRef as defined below
-      #
+      # Required: Define what Azure Service Bus to authenticate to with Managed Identity
+      namespace: service-bus-namespace
       # Optional
       messageCount: "5" # default 5
     authenticationRef:
