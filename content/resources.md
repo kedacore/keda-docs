@@ -7,7 +7,6 @@ description = "Materials for learning more about KEDA"
 
 [KubeCon North America 2019](https://events19.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019) presentation by [Jeff Hollan](https://twitter.com/jeffhollan).
 
-
 {{< youtube "ZK2SS_GXF-g" >}}
 
 ## Application Autoscaling Made Easy with Kubernetes Event-driven Autoscaling (KEDA)
