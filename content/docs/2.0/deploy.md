@@ -53,18 +53,18 @@ If you want to remove KEDA from a cluster you can run one of the following:
 
 ```sh
 helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledobjects.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledjobs.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_triggerauthentications.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledobjects.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledjobs.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_triggerauthentications.yaml
 ```
 
 **Using Helm 2**
 
 ```sh
 helm delete --purge keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledobjects.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_scaledjobs.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2/config/crd/bases/keda.sh_triggerauthentications.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledobjects.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledjobs.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_triggerauthentications.yaml
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
