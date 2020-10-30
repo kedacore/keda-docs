@@ -47,7 +47,7 @@
             {{ end }}
 
             {{ if and $isScaler (not $isSectionRoot) }}
-            {{ $url := printf "https://github.com/kedacore/keda/blob/master/pkg/scalers/%s.go" .Params.go_file }}
+            {{ $url := printf "https://github.com/kedacore/keda/blob/main/pkg/scalers/%s.go" .Params.go_file }}
             <div class="tag is-black">
               <span class="icon">
                 <i class="fab fa-github"></i>
