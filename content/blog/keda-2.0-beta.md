@@ -35,11 +35,15 @@ For a full list of changes, we highly recommend going through [our changelog](ht
 
 Get started now, and install our beta with Helm:
 
->$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta1.2
+>`$ helm repo add kedacore https://kedacore.github.io/charts`
+
+>`$ kubectl create namespace keda`
+
+>`$ helm install keda kedacore/keda --namespace keda --version 2.0.0-beta1.2`
 
 As an alternative, you can use our deployment YAML:
 
->$ kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0-beta.yaml
+>`$ kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0-beta/keda-2.0.0-beta.yaml`
 
 # Migrating to KEDA 2.0
 
