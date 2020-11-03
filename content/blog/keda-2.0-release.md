@@ -27,9 +27,9 @@ There are many ways to get started with KEDA:
 - Install with Helm:
 
 >$ helm repo add kedacore https://kedacore.github.io/charts
-
+>
 >$ kubectl create namespace keda
-
+>
 >$ helm install keda kedacore/keda --namespace keda --version 2.0.0
 
 - Install with deployment YAML:
