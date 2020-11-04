@@ -1,6 +1,6 @@
 +++
 title = "Announcing KEDA 2.0 - Taking app autoscaling to the next level"
-date = 2020-11-14
+date = 2020-11-04
 author = "KEDA Maintainers"
 +++
 
