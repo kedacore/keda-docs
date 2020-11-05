@@ -44,10 +44,10 @@ spec:
     kind:          {kind-of-target-resource}         # Optional. Default: Deployment
     name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
     envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval: 30                                # Optional. Default: 30 seconds
-  cooldownPeriod:  300                               # Optional. Default: 300 seconds
-  minReplicaCount: 0                                 # Optional. Default: 0
-  maxReplicaCount: 100                               # Optional. Default: 100
+  pollingInterval: "30"                                # Optional. Default: 30 seconds
+  cooldownPeriod:  "300"                               # Optional. Default: 300 seconds
+  minReplicaCount: "0"                                 # Optional. Default: 0
+  maxReplicaCount: "100"                               # Optional. Default: 100
   advanced:                                          # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false        # Optional. Default: false
     horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
@@ -84,7 +84,7 @@ To scale Kubernetes Deployments only `name` is needed to be specified, if one wa
 ---
 
 ```yaml
-  pollingInterval: 30  # Optional. Default: 30 seconds
+  pollingInterval: "30"  # Optional. Default: 30 seconds
 ```
 
 This is the interval to check each trigger on. By default KEDA will check each trigger source on every ScaledObject every 30 seconds.
@@ -94,7 +94,7 @@ This is the interval to check each trigger on. By default KEDA will check each t
 ---
 
 ```yaml
-  cooldownPeriod:  300 # Optional. Default: 300 seconds
+  cooldownPeriod:  "300" # Optional. Default: 300 seconds
 ```
 
 The period to wait after the last trigger reported active before scaling the resource back to 0. By default it's 5 minutes (300 seconds).
@@ -106,7 +106,7 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 ---
 
 ```yaml
-  minReplicaCount: 0   # Optional. Default: 0
+  minReplicaCount: "0"   # Optional. Default: 0
 ```
 
 Minimum number of replicas KEDA will scale the resource down to. By default it's scale to zero, but you can use it with some other value as well. KEDA will not enforce that value, meaning you can manually scale the resource to 0 and KEDA will not scale it back up. However, when KEDA itself is scaling the resource it will respect the value set there.
@@ -114,7 +114,7 @@ Minimum number of replicas KEDA will scale the resource down to. By default it's
 ---
 
 ```yaml
-  maxReplicaCount: 100 # Optional. Default: 100
+  maxReplicaCount: "100" # Optional. Default: 100
 ```
 
 This setting is passed to the HPA definition that KEDA will create for a given resource.
@@ -140,11 +140,11 @@ advanced:
   horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
     behavior:                                      # Optional. Use to modify HPA's scaling behavior
       scaleDown:
-        stabilizationWindowSeconds: 300
+        stabilizationWindowSeconds: "300"
         policies:
         - type: Percent
           value: 100
-          periodSeconds: 15
+          periodSeconds: "15"
 ```
 
 **`horizontalPodAutoscalerConfig:`**
