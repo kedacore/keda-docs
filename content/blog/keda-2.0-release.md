@@ -124,7 +124,7 @@ Another user of KEDA is Alibaba Cloud who has adopted KEDA for all their autosca
 
 > “Alibaba's [Enterprise Distributed Application Service (EDAS)](https://www.alibabacloud.com/product/edas) which is built with [KubeVela](https://github.com/oam-dev/kubevela/) project adopts KEDA as the implementation for its auto-scaling trait (see: [trait system of Open Application Model](https://github.com/oam-dev/spec/blob/master/6.traits.md)) from mid of 2020. In Alibaba, EDAS has served more than 1000+ applications from both Alibaba Cloud's customers and internal scenarios. EDAS's KEDA based auto-scaling trait uses Alibaba's ARMS (i.e. Application Real-Time Monitoring Service) as the trigger by default, and it's also under integration with AIOps system of EDAS for advanced scenarios such as capacity diagnose based auto-scaling.”
 >
-> -- *Lei Zhang, Staff Engineer at Alibaba Cloud & SIG App Delivery Chair*
+> -- *Yan Xun, Senior Engineer of Alibaba Cloud*
 
 Are you using KEDA in production as well? Don’t hesitate and [let us know](https://github.com/kedacore/keda#become-a-listed-keda-user)!
 
