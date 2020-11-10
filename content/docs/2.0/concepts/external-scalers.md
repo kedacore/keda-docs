@@ -47,7 +47,7 @@ The `PushScaler` interface adds `Run` method. The `Run` method receives a push c
 
 KEDA comes with 2 external scalers [`external`](../scalers/external.md) and [`external-push`](../scalers/external-push.md).
 
-The configuration in the ScaledObject points to a GRPC service endpoint that implements the following GRPC contract [`externalscaler.proto`](https://github.com/kedacore/keda/blob/v2/pkg/scalers/externalscaler/externalscaler.proto):
+The configuration in the ScaledObject points to a GRPC service endpoint that implements the following GRPC contract [`externalscaler.proto`](https://github.com/kedacore/keda/blob/main/pkg/scalers/externalscaler/externalscaler.proto):
 
 ```proto
 service ExternalScaler {
@@ -105,7 +105,7 @@ For `StreamingIsActive` KEDA establishes the connection to the GRPC server and e
 
 ### Implementing an external scaler:
 
-#### 1. Download [`externalscaler.proto`](https://github.com/kedacore/keda/blob/v2/pkg/scalers/externalscaler/externalscaler.proto)
+#### 1. Download [`externalscaler.proto`](https://github.com/kedacore/keda/blob/main/pkg/scalers/externalscaler/externalscaler.proto)
 
 #### 2. Prepare project:
 
