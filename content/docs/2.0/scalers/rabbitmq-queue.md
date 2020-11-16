@@ -35,7 +35,7 @@ triggers:
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
 - `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value. 
 
-> **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
+> 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
 > **Important:** if you have unacknowledged messages and want to have these counted for the scaling to happen, make sure to utilize the `http` REST API interface which allows for these to be counted.
 
