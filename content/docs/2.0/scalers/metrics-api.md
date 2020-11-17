@@ -13,11 +13,11 @@ This specification describes the `metrics-api` trigger that scales based on a me
 
 This scaler allows users to utilize **any existing APIs** as a metric provider.  
 
-Here is an example of trigger configuration using metric-api scaler:
+Here is an example of trigger configuration using metrics-api scaler:
 
 ```yaml
 triggers:
-- type: metric-api
+- type: metrics-api
   metadata:
     targetValue: "8"
     url: "http://api:3232/api/v1/stats"
