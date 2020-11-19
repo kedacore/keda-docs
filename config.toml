@@ -248,6 +248,11 @@ url = "https://github.com/kedacore/samples"
 name = "Samples"
 weight = 5
 
+[[menu.main]]
+url = "https://store-keda.myshopify.com/"
+name = "Merch"
+weight = 6
+
 # "Features" section on the main page
 [[params.features]]
 title = "Event-driven"
