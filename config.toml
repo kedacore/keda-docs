@@ -249,7 +249,7 @@ name = "Samples"
 weight = 5
 
 [[menu.main]]
-url = "https://store-keda.myshopify.com/"
+url = "https://merch.keda.sh/"
 name = "Merch"
 weight = 6
 
