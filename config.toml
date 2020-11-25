@@ -208,7 +208,7 @@ parent = "project"
 weight = 2
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/GOVERNANCE.md"
+url = "https://github.com/kedacore/governance/blob/main/GOVERNANCE.md"
 name = "Governance"
 parent = "project"
 weight = 3
@@ -226,13 +226,13 @@ parent = "project"
 weight = 5
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/MAINTAINERS.md"
+url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
 name = "Maintainers"
 parent = "project"
 weight = 6
 
 [[menu.main]]
-url = "https://branding.cncf.io/projects/keda"
+url = "https://github.com/kedacore/governance/blob/main/BRANDING.md"
 name = "Colors and Logos"
 parent = "project"
 weight = 7
