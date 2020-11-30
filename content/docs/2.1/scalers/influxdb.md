@@ -24,6 +24,7 @@ triggers:
         |> filter(fn: (r) => r._measurement == "stat")
       authToken: some-auth-token
       authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of `authToken` parameter. See details in "Parameter List" section
+      metricName: influx-metric # Optional: This value will default to a unique value in source if not provided as a parameter
 ```
 
 **Parameter list:**
@@ -35,6 +36,7 @@ triggers:
 - `serverURL` holds the url value of the InfluxDB server.
 - `thresholdValue` is provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query.
 - `query` is the flux query that will yield the value for the scaler to compare the `thresholdValue` against.
+- `metricName` is an optional parameter that a user can give to provide some uniqueness of `ScaledObject` names. It's optional and will default in source code if not provided as a parameter.
 
 ### Authentication Parameters
 
