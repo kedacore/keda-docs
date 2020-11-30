@@ -15,12 +15,14 @@ This specification describes the `external` trigger for an external scaler.
 triggers:
 - type: external
   metadata:
-    scalerAddress: redis-external-scaler-service:8080
-    address: REDIS_HOST # Required host:port format
-    password: REDIS_PASSWORD
-    listName: mylist # Required
-    listLength: "5" # Required
+    scalerAddress: external-scaler-service:8080
+    tlsCertFile : /path/to/tls/cert.pem
 ```
+
+**Parameter list:**
+
+- `scalerAddress` - Address of the external scaler. Format must be `host:port`.
+- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (optional)
 
 > For implementing an external scaler, refer to [External Scalers Concept](../concepts/external-scalers.md)
 

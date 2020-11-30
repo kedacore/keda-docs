@@ -18,11 +18,16 @@ triggers:
     # Required
     serverAddress: http://<prometheus-host>:9090
     metricName: http_requests_total
-    threshold: '100'
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
+    threshold: '100'
 ```
 
-The `serverAddress` indicates where Prometheus is running which contains the configured metric defined in `metricName` or `query`.
+**Parameter list:**
+
+- `serverAddress` - Address of Prometheus
+- `metricName` - Metric name to use
+- `query` - Query to run
+- `threshold` - Value to start scaling for
 
 ### Authentication Parameters
 

@@ -16,20 +16,40 @@ This specification describes the `azure-eventhub` trigger for Azure Event Hubs.
 triggers:
 - type: azure-eventhub
   metadata:
-    connectionFromEnv: EVENTHUB_CONNECTIONSTRING_ENV_NAME # Connection string for Event Hub namespace appended with "EntityPath=<event_hub_name>"
-    storageConnectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME # Connection string for account used to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage.
-    consumerGroup: $Default # Optional. Consumer group of event hub consumer. Default: $Default
-    unprocessedEventThreshold: '64' # Optional. Target number of unprocessed events across all partitions in Event Hub for HPA. Default: 64 events.
-    blobContainer: 'name_of_container' # Optional. Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function.
+    connectionFromEnv: EVENTHUB_CONNECTIONSTRING_ENV_NAME
+    storageConnectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
+    consumerGroup: $Default
+    unprocessedEventThreshold: '64'
+    blobContainer: 'name_of_container'
 ```
 
-The `connectionFromEnv` value is the name of the environment variable your deployment uses to get the Event Hub connection string which is appended with the Event Hub name using Entity Path variable. storageConnectionFromEnv` is the name of the environment variable your deployment uses to get the Storage connection string.
+**Parameter list:**
 
-Environment variables are usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
+- `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string appended with `EntityPath=<event_hub_name>`
+- `storageConnectionFromEnv` - Name of the environment variable that provides connection string for Azure Storage Account to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage.
+- `consumerGroup` - Consumer group of event hub consumer. (default: `$default`)
+- `unprocessedEventThreshold` - : Average target value to trigger scaling actions. (default: 64)
+- `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function
 
 ### Authentication Parameters
 
-Not supported yet.
+The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Pod Identity](https://azure.github.io/aad-pod-identity/docs/demo/standard_walkthrough/) if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
+
+To use Pod Identity, you have to add a [TriggerAuthentication](https://keda.sh/docs/2.0/concepts/authentication/#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
+
+```
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: nameOfTriggerAuth
+  namespace: default
+spec:
+  podIdentity:
+    provider: Azure
+```
+
+When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`.
+
 
 ### Example
 
@@ -46,9 +66,13 @@ spec:
   - type: azure-eventhub
     metadata:
       # Required
-      connectionFromEnv: EventHub
       storageConnectionFromEnv: AzureWebJobsStorage
-      # Optional
+      # Required if not using Pod Identity
+      connectionFromEnv: EventHub
+      # Required if using Pod Identity
+      eventHubNamespace: AzureEventHubNameSpace
+      eventHubName: NameOfTheEventHub
+# Optional
       consumerGroup: $Default # default: $Default
       unprocessedEventThreshold: '64' # default 64 events.
       blobContainer: ehcontainer
