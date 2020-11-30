@@ -15,12 +15,20 @@ This specification describes the `stan` trigger for NATS Streaming.
 triggers:
 - type: stan
   metadata:
-    natsServerMonitoringEndpoint: "stan-nats-ss.stan.svc.cluster.local:8222" # Location of the Nats Streaming monitoring endpoint
-    queueGroup: "grp1" # Queue group name of the subscribers
-    durableName: "ImDurable" # Must identify the durability name used by the subscribers
-    subject: "Test" # Name of channel
-    lagThreshold: "10" # Configures the TargetAverageValue on the Horizontal Pod Autoscaler (HPA)).
+    natsServerMonitoringEndpoint: "stan-nats-ss.stan.svc.cluster.local:8222"
+    queueGroup: "grp1"
+    durableName: "ImDurable"
+    subject: "Test"
+    lagThreshold: "10"
 ```
+
+**Parameter list:**
+
+- `natsServerMonitoringEndpoint` - Location of the Nats Streaming monitoring endpoint.
+- `queueGroup` - Name of queue group of the subscribers
+- `durableName` - Name of durability used by subscribers
+- `subject` - Name of the channel
+- `lagThreshold` - Average target value to trigger scaling actions.
 
 ### Authentication Parameters
 
