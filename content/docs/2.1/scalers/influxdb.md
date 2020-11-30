@@ -16,14 +16,14 @@ triggers:
     metadata:
       serverURL: http://influxdb:8086
       organizationName: influx-org
-      organizationNameFromEnv: INFLUXDB_ORG_NAME
+      organizationNameFromEnv: INFLUXDB_ORG_NAME # Optional: You can use this instead of `organizationName` parameter. See details in "Parameter List" section
       thresholdValue: '4'
       query: |
         from(bucket: "bucket-of-interest")
         |> range(start: -12h)
         |> filter(fn: (r) => r._measurement == "stat")
       authToken: some-auth-token
-      authTokenFromEnv: INFLUXDB_AUTH_TOKEN
+      authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of `authToken` parameter. See details in "Parameter List" section
 ```
 
 **Parameter list:**
