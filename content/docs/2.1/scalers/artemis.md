@@ -27,12 +27,13 @@ triggers:
 
 **Parameter list:**
 
-- `managementEndpoint`: "hostname:port" to connect to ActiveMQ Artemis management endpoint.
-- `queueName`: the name of the queue to check for the number of messages available.
-- `brokerName`: the name of the broker as defined in Artemis.
-- `brokerAddress`: the address name of the broker.
-- `queueLength`: How much messages are in the queue. Default is 10. Optional.
-- `restApiTemplate`: This value will be used as a template to build REST API url to get queue size. Default : `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`. In this example, `<<managementEndpoint>>`, `<<brokerName>>`, `<<brokerAddress>>` and `<<queueName>>` will be replaced automatically during runtime by values from metadata of YAML definition: `managementEndpoint`, `brokerName`, `brokerAddress`, `queueName`.
+- `managementEndpoint` - ActiveMQ Artemis management endpoint to connect to in `<hostname>:<port>` format.
+- `queueName` - Name of the queue to check for the number of messages available.
+- `brokerName` - Name of the broker as defined in Artemis.
+- `brokerAddress` - Address of the broker.
+- `queueLength` - Average target value to trigger scaling actions. (default: 10)
+- `restApiTemplate` - Template to build REST API url to get queue size.
+  - Default - `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`. In this example, `<<managementEndpoint>>`, `<<brokerName>>`, `<<brokerAddress>>` and `<<queueName>>` will be replaced automatically during runtime by values from metadata of YAML definition: `managementEndpoint`, `brokerName`, `brokerAddress`, `queueName`.
   
 ### Authentication Parameters
 

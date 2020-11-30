@@ -17,15 +17,22 @@ The trigger always requires the following information:
 - `queryValue` - a threshold that is used as `targetAverageValue` in HPA.
 
 To provide information about how to connect to MySQL you can provide
+
 - `connectionStringFromEnv` MySQL connection string that should point to environment variable with valid value
 
 Or provide more detailed information:
 
-- `username` used to access MySQL database
-- `passwordFromEnv` used for the given user, this should be blank (no password) or point to an environment
+- `host` - The host of the MySQL server
+- `port` - The port of the MySQL server
+- `dbName` - Name of the database
+- `username` - Username to authenticate with to MySQL database
+- `passwordFromEnv` - Password for the given user, this should be blank (no password) or point to an environment
  variable with the password
-- `host`/`hostFromEnv` and `port`/`portFromEnv` of the database
-- `dbName` as name of the database
+
+Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
+
+- `hostFromEnv` - The host of the MySQL server, similar to `host`, but reads it from an environment variable on the scale target.
+- `portFromEnv` - The port of the MySQL server, similar to `port`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 

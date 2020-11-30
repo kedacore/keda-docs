@@ -15,26 +15,34 @@ This specification describes the `redis` trigger that scales based on the length
 triggers:
 - type: redis
   metadata:
-    address: localhost:6379 # Required host:port format
-    addressFromEnv: REDIS_HOST # Required host:port format
+    address: localhost:6379 # Format must be host:port
     passwordFromEnv: REDIS_PASSWORD
     listName: mylist # Required
     listLength: "5" # Required
     enableTLS: "false" # optional
     databaseIndex: "0" # optional
+    # Alternatively, you can use existing environment variables to read configuration from:
+    # See details in "Parameter list" section
+    addressFromEnv: REDIS_HOST # Optional. You can use this instead of `address` parameter
 ```
 
-The `address`/`addressFromEnv` field in the spec holds the host and port of the Redis server. `addressFromEnv` value should be the name of the environment variable in the deployment/job that contains the actual value for the Redis server address.
+**Parameter list:**
 
-As an alternative to the `address`/`addressFromEnv` field the user can specify `host`/`hostFromEnv` and `port`/`portFromEnv` parameters. TriggerAuthentication object can also be used to specify `address`, or `host` used to define the value.
+- `address` - The host and port of the Redis server.
+- `host` - The host of the Redis server. Alternative to `address` and requires `port` to be configured as well.
+- `port` - The port of the Redis server. Alternative to `address` and requires `host` to be configured as well.
+- `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis server.
+  - Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
+- `listName` - Name of the Redis List that you want to monitor
+- `listLength` - Average target value to trigger scaling actions
+- `enableTLS` - If set to `true` allow a connection to a redis queue using tls, the default value for this parameter is false.
+- `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0
 
-Provide the `passwordFromEnv` field if the Redis server requires a password. Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
+Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-The `listName` parameter in the spec points to the Redis List that you want to monitor. The `listLength` parameter defines the average target value for the Horizontal Pod Autoscaler (HPA).
-
-The `enableTLS` parameter if set to true allow a connection to a redis queue using tls, the default value for this parameter is false.
-
-The `databaseIndex` parameter let the user select the redis database to use. If not specified, the default value is 0
+- `addressFromEnv` - The host and port of the Redis server, similar to `address`, but reads it from an environment variable on the scale target.
+- `hostFromEnv` - The host of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.
+- `portFromEnv` - The port of the Redis server, similar to `port`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 

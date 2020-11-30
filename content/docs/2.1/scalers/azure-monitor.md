@@ -30,18 +30,21 @@ triggers:
 
 **Parameter list:**
 
-- `resourceURI` is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required.
-- `tenantId` is the tenant id for the Azure resource. Used for authentication. Required.
-- `subscriptionId` is the subscription id for the Azure resource. Used for determining the full resource URI. Required.
-- `resourceGroupName` is the resource group for the Azure resource. Required.
-- `metricName` is the name of the metric. Must be an officially supported metric  found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Required.
-- `metricFilter` is used to define a more specific part of the resource. You can filter by supported dimensions of the metric found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Optional.
-- `metricAggregationInterval` is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
-- `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
-- `targetValue` is the target value for the Azure metric to use in the HPA. Required.
-- `activeDirectoryClientId` active directory client id.
-- `activeDirectoryClientIdFromEnv` is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
-- `activeDirectoryClientPasswordFromEnv` is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `resourceURI` - Shortened URI to the Azure resource with format `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`.
+- `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
+- `subscriptionId` - Id of Azure subscription that contains the Azure resource. This is used for determining the full resource URI.
+- `resourceGroupName` - Name of the resource group for the Azure resource.
+- `metricName` - Name of the metric which can be found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
+- `targetValue` - Target value to trigger scaling actions.
+- `metricAggregationType` - Aggregation method of the Azure Monitor metric. Optionsinclude `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
+- `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (optional)
+- `metricAggregationInterval` - Collection time of the metric in format `"mm:hh:ss"` (default: `"0:5:0"` which is 5 minutes)
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the active directory client password.Optional. Required when `TriggerAuthentication` is not provided.
+
+Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
+
+- `activeDirectoryClientIdFromEnv` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions, similar to `activeDirectoryClientId`, but reads it from an environment variable on the scale target. Optional. Required when `TriggerAuthentication` is not provided.
 
 ### Authentication Parameters
 
@@ -49,8 +52,8 @@ You can use `TriggerAuthentication` CRD to configure the authentication by provi
 
 **Credential based authentication:**
 
-- `activeDirectoryClientId` - Active Directory client id.
-- `activeDirectoryClientPassword` - Active Directory client password.
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions
+- `activeDirectoryClientPassword` - Password of the Active Directory application
 
 The user will need access to read data from the Azure resource.
 

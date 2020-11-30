@@ -30,12 +30,12 @@ triggers:
 
 **Parameter list:**
 
-- `queueName` - Name of the Azure Service Bus queue to scale on. *(Optional)*
-- `topicName` - Name of the Azure Service Bus topic to scale on. *(Optional)*
-- `subscriptionName` - Name of the Azure Service Bus queue to scale on. *(Optional, required when `topicName` is specified)*
-- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. *(Optional, required when pod identity is used)*
-- `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. *(Optional, can use TriggerAuthentication as well)*
-- `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on. *(Required)*
+- `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
+- `queueName` - Name of the Azure Service Bus queue to scale on. (optional)
+- `topicName` - Name of the Azure Service Bus topic to scale on. (optional)
+- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (optional, required when `topicName` is specified)
+- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (optional, required when pod identity is used)
+- `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (optional, can use TriggerAuthentication as well)
 
 > 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 

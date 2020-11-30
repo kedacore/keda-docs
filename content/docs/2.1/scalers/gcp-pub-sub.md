@@ -26,7 +26,7 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 
 `subscriptionName` defines the subscription that should be monitored. The `subscriptionSize` determines the target average which the deployment will be scaled on. The default `subscriptionSize` is 5.
 
-Here's an [example](https://github.com/kedacore/sample-go-gcppubsub). 
+Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
