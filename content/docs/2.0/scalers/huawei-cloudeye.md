@@ -25,15 +25,15 @@ triggers:
 
 **Parameter list:**
 
-- `namespace` is the namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32. This is required.
-- `metricName` is the name of the metric. This is required.
-- `dimensionName` is the dimension name of the metric. This is required.
-- `dimensionValue` is the dimension value of the metric. This is required.
-- `targetMetricValue` is the target value for your metric. This is required.
-- `minMetricValue` is the min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active. This is required.
-- `metricCollectionTime` is the collection time of the metric. Equivalent to the earliest start time of the end time. This is not required. The default value is 300, unit is second.
-- `metricFilter` is the aggregation method of the metric. This is not required. The default value is average. Other values ​​include max, min, sum, variance.
-- `metricPeriod` is the granularity of the metric. This is not required. The default value is 300, unit is second.
+- `namespace` - Namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32.
+- `metricName` - Name of the metric.
+- `dimensionName` - Name of the metric dimension
+- `dimensionValue` - Value of the metric dimension.
+- `targetMetricValue` - Target value for your metric.
+- `minMetricValue` - Minimum value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
+- `metricCollectionTime` - Collection time of the metric in seconds. Equivalent to the earliest start time of the end time. (default: 300)
+- `metricFilter` - Aggregation method of the metric. Options are `average`, `max`, `min`, `sum` and `variance`. (default: average)
+- `metricPeriod` - Granularity of the metric in seconds. (default: 300)
 
 ### Authentication Parameters
 

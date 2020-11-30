@@ -16,13 +16,9 @@ triggers:
   - type: azure-log-analytics
     metadata:
       tenantId: "AZURE_AD_TENANT_ID"
-      tenantIdFromEnv: AZURE_AD_TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter. See details in "Parameter list" section
       clientId: "SERVICE_PRINCIPAL_CLIENT_ID"
-      clientIdFromEnv: SERVICE_PRINCIPAL_CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter. See details in "Parameter list" section
       clientSecret: "SERVICE_PRINCIPAL_PASSWORD"
-      clientSecretFromEnv: SERVICE_PRINCIPAL_PASSWORD_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter. See details in "Parameter list" section
       workspaceId: "LOG_ANALYTICS_WORKSPACE_ID"
-      workspaceIdFromEnv: LOG_ANALYTICS_WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter. See details in "Parameter list" section
       query: |
         let AppName = "web";
         let ClusterName = "demo-cluster";
@@ -46,16 +42,22 @@ triggers:
                 on AppName
         | project MetricValue, Threshold = Limit * ThresholdCoefficient
       threshold: "1900000000"
+      # Alternatively, you can use existing environment variables to read configuration from:
+      # See details in "Parameter list" section
+      workspaceIdFromEnv: LOG_ANALYTICS_WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter.
+      clientIdFromEnv: SERVICE_PRINCIPAL_CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter.
+      tenantIdFromEnv: AZURE_AD_TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter.
+      clientSecretFromEnv: SERVICE_PRINCIPAL_PASSWORD_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter.
 ```
 
 **Parameter list:**
 
-- `tenantId`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-- `clientId`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
-- `clientSecret`: Password from your Azure AD Application/service principal.
-- `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
-- `query`: Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
-- `threshold`: An int64 value will be used as a threshold to calculate # of pods for scale target.
+- `tenantId` - Id of the Azure Active Directory tenant. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientId` - Id of the application from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
+- `clientSecret` - Password from your Azure AD Application/service principal.
+- `workspaceId` - Id of Log Analytics workspace. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+- `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
+- `threshold` - Value that is used as a threshold to calculate # of pods for scale target.
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 

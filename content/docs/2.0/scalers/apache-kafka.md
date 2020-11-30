@@ -25,11 +25,11 @@ triggers:
 
 **Parameter list:**
 
-- `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
-- `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
-- `topic`: topic on which processing the offset lag.
-- `lagThreshold` How much the stream is lagging on the current consumer group. Default is 10. Optional.
-- `offsetResetPolicy` the offset reset policy for the consumer. Can be either "latest" or "earliest". Default is "latest" as in Kafka Consumer defaults.
+- `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
+- `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
+- `topic` - Name of the topic on which processing the offset lag.
+- `lagThreshold` - Average target value to trigger scaling actions. (default: 10)
+- `offsetResetPolicy` - The offset reset policy for the consumer. Options are `latest` or `earliest` (default: `latest`)
 
 ### Authentication Parameters
 
@@ -37,25 +37,25 @@ triggers:
 
 **Credential based authentication:**
 
-SASL:
+**SASL:**
+
 - `sasl`: Kafka SASL auth mode. Optional. If not set, SASL for Kafka is not used. If set, it must be one of `plaintext`, `scram_sha256` or `scram_sha512`.
 - `username`: Optional. If `sasl` is set, this is required.
 - `password`: Optional. If `sasl` is set, this is required.
 
-TLS:
+**TLS:**
+
 - `tls`: Optional. To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used.
 - `ca`: Certificate authority file for TLS client authentication. Optional.
 - `cert`: Certificate for client authentication. Optional. Required if `key` is specified.
 - `key`: Key for client authentication. Optional. Required if `cert` is specified.
 
 ### New Consumers and Offset Reset Policy
- 
- When a new Kafka consumer is created, it must determine its consumer group initial position, i.e. the offset it will start to read from. The position is decided in Kafka consumers via a parameter `auto.offset.reset` and the possible values to set are `latest` (Kafka default), and `earliest`. This parameter in Keda should be set accordingly. In this initial status, no offset has been committed to Kafka for the consumer group and any request for offset metadata will return an `INVALID_OFFSET`; so Keda has to manage the consumer pod's autoscaling in relation to the offset reset policy that has been specified in the parameters:
- - If the policy is set to `earliest` (a new consumer wants to replay everything in the topic from its beginning) and no offset is committed, the scaler will return a lag value equal to the last offset in the topic (in the case of a new topic, 0), so it will scale the deployment to 0 replicas. If a new message is produced to the topic, Keda will return the new value of the offset (1), and will scale the deployments to consume the message.
- - If the policy is set to `latest` (so the new consumer will only consume new messages) and no offset is committed, the scaler will return a negative lag value, and will also tell the HPA to remain `active`, hence the deployment should have the minimum number of replicas running. This is to allow the consumer to read any new message on the topic, and commit its offset.
 
+When a new Kafka consumer is created, it must determine its consumer group initial position, i.e. the offset it will start to read from. The position is decided in Kafka consumers via a parameter `auto.offset.reset` and the possible values to set are `latest` (Kafka default), and `earliest`. This parameter in Keda should be set accordingly. In this initial status, no offset has been committed to Kafka for the consumer group and any request for offset metadata will return an `INVALID_OFFSET`; so Keda has to manage the consumer pod's autoscaling in relation to the offset reset policy that has been specified in the parameters:
 
-
+- If the policy is set to `earliest` (a new consumer wants to replay everything in the topic from its beginning) and no offset is committed, the scaler will return a lag value equal to the last offset in the topic (in the case of a new topic, 0), so it will scale the deployment to 0 replicas. If a new message is produced to the topic, Keda will return the new value of the offset (1), and will scale the deployments to consume the message.
+- If the policy is set to `latest` (so the new consumer will only consume new messages) and no offset is committed, the scaler will return a negative lag value, and will also tell the HPA to remain `active`, hence the deployment should have the minimum number of replicas running. This is to allow the consumer to read any new message on the topic, and commit its offset.
 
 ### Example
 

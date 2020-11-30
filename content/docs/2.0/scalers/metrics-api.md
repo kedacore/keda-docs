@@ -25,6 +25,7 @@ triggers:
 ```
 
 **Parameter list:**
+
 - `url`: Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
 - `valueLocation`: [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in 
     the payload containing the metric value

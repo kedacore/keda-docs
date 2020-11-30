@@ -16,24 +16,26 @@ triggers:
 - type: rabbitmq
   metadata:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
-    hostFromEnv: RABBITMQ_HOST # Optional. If not specified, it must be done by using TriggerAuthentication.
     protocol: amqp # Specifies protocol to use, either amqp or http. Default value is amqp.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
-  authenticationRef:
-    name: keda-trigger-auth-rabbitmq-conn
+    # Alternatively, you can use existing environment variables to read configuration from:
+    # See details in "Parameter list" section
+    hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
 ```
 
 **Parameter list:**
 
-- `host`: rabbitmq host in this format `amqp://<host>:<port>/vhost`. If using a username/password consider using `hostFromEnv` or a TriggerAuthentication. 
-- `hostFromEnv`: Value is the name of the environment variable your deployment uses to get the connection string. 
-    This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.  
-    The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
-    `http://guest:password@localhost:15672/vhostname`
+- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
+    `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+
 - `queueName`: Name of the queue to read message from. Required.
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
-- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value. 
+- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
+
+Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
+
+- `hostFromEnv`: The host and port of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.`
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
