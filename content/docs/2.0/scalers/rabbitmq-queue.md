@@ -26,7 +26,7 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
+- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/<vhost>`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
     `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 
 - `queueName`: Name of the queue to read message from. Required.
@@ -35,7 +35,7 @@ triggers:
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `hostFromEnv`: The host and port of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.`
+- `hostFromEnv`: The connection string of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.`
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
