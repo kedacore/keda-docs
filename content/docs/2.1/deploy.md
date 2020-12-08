@@ -123,7 +123,7 @@ microk8s enable keda
 
 ### Uninstall
 
-To uninstall KEDA in MicroK8s, simple disable the addon as shown below.
+To uninstall KEDA in MicroK8s, simply disable the addon as shown below.
 
 ```sh
 microk8s disable keda
