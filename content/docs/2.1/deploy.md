@@ -110,3 +110,21 @@ kubectl delete -f keda-2.0.0.yaml
 ```sh
 VERSION=2.0.0 make undeploy
 ```
+
+## Deploying KEDA on MicroK8s {#microk8s}
+
+### Install
+
+If you want to try KEDA v2 on [MicroK8s](https://microk8s.io/) from `1.20` channel, KEDA is included into MicroK8s addons.
+
+```sh
+microk8s enable keda
+```
+
+### Uninstall
+
+To uninstall KEDA in MicroK8s, simple disable the addon as shown below.
+
+```sh
+microk8s disable keda
+```
