@@ -8,7 +8,7 @@ go_file = "cpu_memory_scaler"
 +++
 
 > **Notice:** 
-> - This scaler will never scale to 0 and even when user define multiple scaler types (eg. Kafka + cpu/memory, or Prometheus + cpu/memory), the deployment will never scale to 0
+> - This scaler will never scale to 0 and even when user defines multiple scaler types (eg. Kafka + cpu/memory, or Prometheus + cpu/memory), the deployment will never scale to 0
 > - This scaler only applies to ScaledObject, not to Scaling Jobs.
 
 ### Trigger Specification

@@ -53,7 +53,7 @@ If your implementation has different key, please specify it here.
 - `authMode`: It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
 - `username`: This is a required field. Provide the username to be used for basic authentication.
 - `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, 
-because many application implements basic auth with a username as apikey and password as empty.
+because many applications implement basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
 - `authMode`: It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
