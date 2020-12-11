@@ -77,7 +77,7 @@ This is the interval to check each trigger on. By default, KEDA will check each 
 
 The `successfulJobsHistoryLimit` and `failedJobsHistoryLimit` fields are optional. These fields specify how many completed and failed jobs should be kept. By default, they are set to 100.
 
-This concept is similar to [Jobs History Limits](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#jobs-history-limits) allowing you to learn what the outcome of your jobs are.
+This concept is similar to [Jobs History Limits](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#jobs-history-limits) allowing you to learn what the outcomes of your jobs are.
 
 The actual number of jobs could exceed the limit in a short time. However, it is going to resolve in the cleanup period. Currently, the cleanup period is the same as the Polling interval.
 
@@ -106,7 +106,7 @@ The max number of pods that is created within a single polling period. If there 
 | 10 | 100 | 1 | 0 | 10 | 
 | 4 | 3 | 5 | 0 | 1 |
 
-* **Queue Length:** The number of the length of the queue.
+* **Queue Length:** The number of items in the queue.
 * **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
 * **Running Job Count:** How many jobs are running.
 * **Number of the Scale:** The number of the job that is created.

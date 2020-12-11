@@ -8,7 +8,7 @@ Please note that you **can not** run both KEDA v1 and v2 on the same Kubernetes 
 
 > 💡 **NOTE:** When uninstalling KEDA v1 make sure v1 CRDs are uninstalled from the cluster as well.
 
-KEDA v2 is using a new API namespace for it's Custom Resources Definitions (CRD): `keda.sh` instead of `keda.k8s.io` and introduces a new Custom Resource for scaling of Jobs. See full details on KEDA Custom Resources [here](../concepts/#custom-resources-crd).
+KEDA v2 is using a new API namespace for its Custom Resources Definitions (CRD): `keda.sh` instead of `keda.k8s.io` and introduces a new Custom Resource for scaling of Jobs. See full details on KEDA Custom Resources [here](../concepts/#custom-resources-crd).
 
 Here's an overview of what's changed:
 - [Scaling of Deployments](#scaling-of-deployments)
