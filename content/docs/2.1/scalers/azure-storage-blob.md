@@ -10,7 +10,7 @@ go_file = "azure_blob_scaler"
 
 ### Trigger Specification
 
-This specification describes the `azure-blob` trigger for Azure Blob Storage. It scales based on the count of blobs in a given blob storage container and assumes the worker is responsible for clearing the container by delete/move the blobs once the blob processing completed.
+This specification describes the `azure-blob` trigger for Azure Blob Storage. It scales based on the count of blobs in a given blob storage container and assumes the worker is responsible for clearing the container by deleting/moving the blobs once the blob processing completed.
 
 ```yaml
 triggers:

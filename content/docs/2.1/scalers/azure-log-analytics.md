@@ -77,7 +77,7 @@ Scaler will take value from:
 
 You can define threshold in trigger metadata, it will be used if your query results only 1 cell, that will be interpreted as metric value. Be aware, even if you have defined threshold in metadata, it can be overwritten by your query.
 
-A data types of your query result should be: real, int or long. Other data types are not supported. Later, during runtime, your data will be converted to int64.
+Data types of your query result should be: real, int or long. Other data types are not supported. Later, during runtime, your data will be converted to int64.
 
 Be careful with setting up "pollingInterval" and long running queries. Test your query before.
 
