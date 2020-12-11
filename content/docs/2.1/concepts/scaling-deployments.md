@@ -77,7 +77,7 @@ The reference to the resource this ScaledObject is configured for. This is the r
 
 To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specfied.
 
-`envSourceContainerName` is an optional property that specifies the name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.  If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.template.spec.containers[0]`.
+`envSourceContainerName` is an optional property that specifies the name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.  If it is not defined, KEDA will try to get environment properties from the first Container, ie. from `.spec.template.spec.containers[0]`.
 
 **Assumptions:** Resource referenced by `name` (and `apiVersion`, `kind`) is in the same namespace as the ScaledObject
 
