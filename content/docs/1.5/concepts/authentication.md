@@ -18,7 +18,7 @@ Some metadata parameters will not allow resolving from a literal value, and will
 
 ### Example
 
-If using the [RabbitMQ scaler](https://keda.sh/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, reference that secret in the deployment, and map it to the `ScaledObject` metadata parameter like below:
+If using the [RabbitMQ scaler](https://keda.sh/docs/1.5/scalers/rabbitmq-queue/), the `host` parameter may include passwords so is required to be a reference.  You can create a secret with the value of the `host` string, reference that secret in the deployment, and map it to the `ScaledObject` metadata parameter like below:
 
 ```yaml
 apiVersion: v1
