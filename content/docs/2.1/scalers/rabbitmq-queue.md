@@ -84,7 +84,7 @@ spec:
   triggers:
   - type: rabbitmq
     metadata:
-      protocol: aqmp
+      protocol: amqp
       queueName: testqueue
       queueLength: "20"
     authenticationRef:
