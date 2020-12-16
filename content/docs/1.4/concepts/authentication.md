@@ -54,7 +54,7 @@ spec:
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
-  name: {deployment-name}
+  name: {scaled-object-name}
   namespace: default
 spec:
   scaleTargetRef:
