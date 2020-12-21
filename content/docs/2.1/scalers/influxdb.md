@@ -24,7 +24,7 @@ triggers:
         |> filter(fn: (r) => r._measurement == "stat")
       authToken: some-auth-token
       authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of `authToken` parameter. See details in "Parameter List" section
-      metricName: influx-metric # Optional: This value will default to a masked version of the url if not set by the user (generated value would be `influxdb-influx-metric-influx-org`)
+      metricName: influx-metric # Optional: This value will default to a masked version of the url if not set by the user (generated value would be `influxdb-influx-metric-influx-org`). If this value isn't set the generated value would be (`influxdb-https---xxx-influx_org`)
 ```
 
 **Parameter list:**
@@ -36,7 +36,7 @@ triggers:
 - `serverURL` holds the url value of the InfluxDB server.
 - `thresholdValue` is provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query.
 - `query` is the flux query that will yield the value for the scaler to compare the `thresholdValue` against.
-- `metricName` is an optional parameter that a user can give to provide uniqueness of `ScaledObject` names. If not set KEDA will generate a value based on a masked version of the server url. It is required that all metric names are unique, if using more than one trigger.
+- `metricName` an optional name to assign to the metric. If not set KEDA will generate a name based on masked version of the server url and organization name. If using more than one trigger it is required that all `metricName`(s) be unique.
 
 ### Authentication Parameters
 
