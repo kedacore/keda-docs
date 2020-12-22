@@ -24,7 +24,7 @@ triggers:
         |> filter(fn: (r) => r._measurement == "stat")
       authToken: some-auth-token
       authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of `authToken` parameter. See details in "Parameter List" section
-      metricName: influx-metric # Optional: This value will default to a masked version of the url if not set by the user (generated value would be `influxdb-influx-metric-influx-org`). If this value isn't set the generated value would be (`influxdb-https---xxx-influx_org`)
+      metricName: influx-metric # Optional: This value will default to a masked version of the url and organization name if not set by the user (metrics name value would be then `influxdb-https---xxx-influx_org`)
 ```
 
 **Parameter list:**
