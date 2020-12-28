@@ -223,3 +223,17 @@ You can tell KEDA to use Kiam via `podIdentity.provider`.
 podIdentity:
   provider: aws-kiam # Optional. Default: false
 ```
+
+## Global authentication with ClusterTriggerAuthentication
+
+For scalers where it makes sense to have global credentials you can use a `ClusterTriggerAuthentication`. All parameters work like with a normal `TriggerAuthentication` however Secrets will be looked up in the namespace KEDA is deployed in (`keda` by default).
+
+When referencing a `ClusterTriggerAuthentication` in a trigger, specify the Kind:
+
+```yaml
+    authenticationRef:
+      name: {trigger-authencation-name}
+      kind: ClusterTriggerAuthentication
+```
+
+The namespace to fetch secrets from can be overridden by setting a `$KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
