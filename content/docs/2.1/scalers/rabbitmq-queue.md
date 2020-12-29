@@ -31,7 +31,7 @@ triggers:
 
 - `queueName`: Name of the queue to read message from. Required.
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
-- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
+- `protocol`: Protocol to be used for communication. Either `auto`, `http`, or `amqp`. It should correspond with the `host` value. Optional, will autodetect based on the `host` URL if possible.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
