@@ -131,6 +131,22 @@ Every parameter you define in `TriggerAuthentication` definition does not need t
       name: {trigger-authencation-name} # this may define other params not defined in metadata
 ```
 
+## Authentication scopes: Namespace vs. Cluster
+
+Each `TriggerAuthentication` is defined in one namespace and can only be used by a `ScaledObject` in that same namespace. For cases where you want to share a single set of credentials between scalers in many namespaces, you can instead create a `ClusterTriggerAuthentication`. As a global object, this can be used from any namespace. To set a trigger to use a `ClusterTriggerAuthentication`, add a `kind` field to the authentication reference:
+
+```yaml
+    authenticationRef:
+      name: {trigger-authencation-name}
+      kind: ClusterTriggerAuthentication
+```
+
+By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `$KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
+
+## Authentication parameters
+
+Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
+
 ### Environment variable(s)
 
 You can pull information via one or more environment variables by providing the `name` of the variable for a given `containerName`.
@@ -223,17 +239,3 @@ You can tell KEDA to use Kiam via `podIdentity.provider`.
 podIdentity:
   provider: aws-kiam # Optional. Default: false
 ```
-
-## Global authentication with ClusterTriggerAuthentication
-
-For scalers where it makes sense to have global credentials you can use a `ClusterTriggerAuthentication`. All parameters work like with a normal `TriggerAuthentication` however Secrets will be looked up in the namespace KEDA is deployed in (`keda` by default).
-
-When referencing a `ClusterTriggerAuthentication` in a trigger, specify the Kind:
-
-```yaml
-    authenticationRef:
-      name: {trigger-authencation-name}
-      kind: ClusterTriggerAuthentication
-```
-
-The namespace to fetch secrets from can be overridden by setting a `$KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
