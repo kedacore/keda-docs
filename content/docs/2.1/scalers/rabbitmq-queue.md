@@ -19,6 +19,7 @@ triggers:
     protocol: amqp # Specifies protocol to use, either amqp or http. Default value is amqp.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
+    vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
     hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
