@@ -13,7 +13,7 @@ The KEDA runtime require the following resources in a production-ready setup:
 
 These are used by default when deploying through YAML.
 
-> 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.*
+> 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.
 
 ## Prometheus Exporter Metrics
 
