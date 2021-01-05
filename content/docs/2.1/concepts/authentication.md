@@ -8,7 +8,8 @@ Often a scaler will require authentication or secrets and config to check for ev
 KEDA provides a few secure patterns to manage authentication flows:
 
 * Configure authentication per `ScaledObject`
-* Re-use credentials or delegate authentication with `TriggerAuthentication`
+* Re-use per-namespace credentials or delegate authentication with `TriggerAuthentication`
+* Re-use global credentials with `ClusterTriggerAuthentication`
 
 ## Defining secrets and config maps on ScaledObject
 
@@ -142,6 +143,17 @@ Each `TriggerAuthentication` is defined in one namespace and can only be used by
 ```
 
 By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `$KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
+
+Defining a `ClusterTriggerAuthentication` works almost identically to a `TriggerAuthentication`, except there is no `metadata.namespace` value:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  name: {cluster-trigger-auth-name}
+spec:
+  # As before ...
+```
 
 ## Authentication parameters
 
