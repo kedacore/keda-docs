@@ -16,7 +16,7 @@ triggers:
 - type: rabbitmq
   metadata:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
-    protocol: amqp # Specifies protocol to use, either amqp or http. Default value is amqp.
+    protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
     # Alternatively, you can use existing environment variables to read configuration from:
@@ -26,7 +26,7 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
+- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or
     `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 
 - `queueName`: Name of the queue to read message from. Required.
