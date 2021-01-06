@@ -8,7 +8,8 @@ Often a scaler will require authentication or secrets and config to check for ev
 KEDA provides a few secure patterns to manage authentication flows:
 
 * Configure authentication per `ScaledObject`
-* Re-use credentials or delegate authentication with `TriggerAuthentication`
+* Re-use per-namespace credentials or delegate authentication with `TriggerAuthentication`
+* Re-use global credentials with `ClusterTriggerAuthentication`
 
 ## Defining secrets and config maps on ScaledObject
 
@@ -130,6 +131,33 @@ Every parameter you define in `TriggerAuthentication` definition does not need t
     authenticationRef:
       name: {trigger-authencation-name} # this may define other params not defined in metadata
 ```
+
+## Authentication scopes: Namespace vs. Cluster
+
+Each `TriggerAuthentication` is defined in one namespace and can only be used by a `ScaledObject` in that same namespace. For cases where you want to share a single set of credentials between scalers in many namespaces, you can instead create a `ClusterTriggerAuthentication`. As a global object, this can be used from any namespace. To set a trigger to use a `ClusterTriggerAuthentication`, add a `kind` field to the authentication reference:
+
+```yaml
+    authenticationRef:
+      name: {trigger-authencation-name}
+      kind: ClusterTriggerAuthentication
+```
+
+By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
+
+Defining a `ClusterTriggerAuthentication` works almost identically to a `TriggerAuthentication`, except there is no `metadata.namespace` value:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  name: {cluster-trigger-auth-name}
+spec:
+  # As before ...
+```
+
+## Authentication parameters
+
+Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
 
 ### Environment variable(s)
 
