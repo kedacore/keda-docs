@@ -16,7 +16,7 @@ triggers:
 - type: rabbitmq
   metadata:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
-    protocol: amqp # Specifies protocol to use, either amqp or http. Default value is amqp.
+    protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
     queueLength: '20' # Optional. Queue length target for HPA. Default: 20 messages
     queueName: testqueue
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
@@ -27,13 +27,14 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
+- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or
     `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 
 - `queueName`: Name of the queue to read message from. Required.
 - `queueLength`: Queue length target for HPA. Default is 20. Optional.
-- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
+- `protocol`: Protocol to be used for communication. Either `auto`, `http`, or `amqp`. It should correspond with the `host` value. Optional, will autodetect based on the `host` URL if possible.
 - `vhostName`: Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`.
+
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
