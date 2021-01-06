@@ -142,7 +142,7 @@ Each `TriggerAuthentication` is defined in one namespace and can only be used by
       kind: ClusterTriggerAuthentication
 ```
 
-By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `$KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
+By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
 
 Defining a `ClusterTriggerAuthentication` works almost identically to a `TriggerAuthentication`, except there is no `metadata.namespace` value:
 
