@@ -79,7 +79,7 @@ This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.
 
 ## Add new Frequently Asked Question (FAQ)
 
-To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at [`data/faq.toml`]. Here's an example question/answer pair:
+To update the KEDA [FAQ page](https://keda.sh/docs/2.0/faq), update the TOML file at [`data/faq20.toml`]. Here's an example question/answer pair:
 
 ```toml
 [[qna]]

@@ -60,7 +60,20 @@ a = "Yes! KEDA is now 1.0 and suited for production workloads."
 q = "What does it cost?"
 a = "There is no charge for using KEDA itself."
 
-
 [[qna]]
 q = "How do I access KEDA resources using `client-go`?"
 a = """KEDA client-go is exported as part of the KEDA repository."""
+
+[[qna]]
+q = "How do I run KEDA with `readOnlyRootFilesystem=true`?"
+a = """
+By default you can't run KEDA with `readOnlyRootFilesystem=true` because Metrics adapter generates self-signed certificates during deployment and stores them on the root file system.
+To overcome this, you can create a secret/configmap with a valid CA, cert and key and then mount it to the Metrics Deployment.
+To use your certificate, you need to reference it in the container `args` section, e.g.:
+```
+args:
+  - '--client-ca-file=/cabundle/service-ca.crt'
+  - '--tls-cert-file=/certs/tls.crt'
+  - '--tls-private-key-file=/certs/tls.key'
+```
+"""
