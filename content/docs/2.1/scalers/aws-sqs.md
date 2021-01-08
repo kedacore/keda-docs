@@ -26,7 +26,7 @@ triggers:
 **Parameter list:**
 
 - `queueURL` - Full URL for the SQS Queue
-- `queueLength` - Target value for `ApproximateNumberOfMessages` in the SQS Queue
+- `queueLength` - Target value for queue length passed to Horizontal Pod Autoscaler (HPA). Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual `ApproximateNumberOfMessages` in the SQS Queue is 30, HPA scales to 3 pods. (default: 5)
 - `awsRegion` - AWS Region for the SQS Queue
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below).
 

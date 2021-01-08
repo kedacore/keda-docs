@@ -31,14 +31,14 @@ triggers:
     `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 
 - `queueName`: Name of the queue to read message from. Required.
-- `queueLength`: Queue length target for HPA. Default is 20. Optional.
+- `queueLength`: Target value for queue length passed to Horizontal Pod Autoscaler (HPA). Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, HPA scales to 3 pods. Default is 20. Optional.
 - `protocol`: Protocol to be used for communication. Either `auto`, `http`, or `amqp`. It should correspond with the `host` value. Optional, will autodetect based on the `host` URL if possible.
 - `vhostName`: Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`.
 
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `hostFromEnv`: The host and port of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.`
+- `hostFromEnv`: The host and port of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 

@@ -23,7 +23,7 @@ triggers:
 **Parameter list:**
 
 - `queueName` - Name of the queue.
-- `queueLength` - Average target value to trigger scaling actions. (default: 5)
+- `queueLength` - Target value for queue length passed to Horizontal Pod Autoscaler (HPA). Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, HPA scales to 3 pods. (default: 5)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
 
 ### Authentication Parameters
