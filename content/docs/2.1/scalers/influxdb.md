@@ -9,7 +9,7 @@ go_file = "influxdb_scaler"
 
 ### Trigger Specification
 
-This specification describes the `InfluxDB` trigger that scales based on the results of a flux query.
+This specification describes the `influxdb` trigger that scales based on the results of a InfluxDB query.
 
 ```yaml
 triggers:
