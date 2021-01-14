@@ -4,6 +4,7 @@ layout = "scaler"
 availability = "v2.1+"
 maintainer = "Community"
 description = "Scale applications based on InfluxDB queries"
+go_file = "influxdb_scaler"
 +++
 
 ### Trigger Specification
