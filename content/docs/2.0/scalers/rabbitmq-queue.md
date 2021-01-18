@@ -30,7 +30,7 @@ triggers:
     `http://guest:password@localhost:15672/vhostname`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 
 - `queueName`: Name of the queue to read message from. Required.
-- `queueLength`: Target value for queue length passed to Horizontal Pod Autoscaler (HPA). Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, HPA scales to 3 pods. Default is 20. Optional.
+- `queueLength`: Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20. Optional.
 - `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
