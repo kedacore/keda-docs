@@ -31,7 +31,7 @@ triggers:
 - `queueName` - Name of the queue to check for the number of messages available.
 - `brokerName` - Name of the broker as defined in Artemis.
 - `brokerAddress` - Address of the broker.
-- `queueLength` - Average target value to trigger scaling actions. (default: 10)
+- `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. (default: 10)
 - `restApiTemplate` - Template to build REST API url to get queue size.
   - Default - `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`. In this example, `<<managementEndpoint>>`, `<<brokerName>>`, `<<brokerAddress>>` and `<<queueName>>` will be replaced automatically during runtime by values from metadata of YAML definition: `managementEndpoint`, `brokerName`, `brokerAddress`, `queueName`.
   
