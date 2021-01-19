@@ -21,7 +21,7 @@ triggers:
   metadata:
     # Required
     type: Value/ Utilization/ AverageValue
-    value: 60
+    value: "60"
 ```
 
 **Parameter list:**
