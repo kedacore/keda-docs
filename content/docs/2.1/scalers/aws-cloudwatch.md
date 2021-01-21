@@ -17,8 +17,9 @@ triggers:
   metadata:
     # Required: namespace
     namespace: AWS/SQS
-    # Required: Dimension Name
+    # Required: Dimension Name - supports multiple dimensionName with ";" i.e. dimensionName: QueueName;QueueName
     dimensionName: QueueName
+    # Required: Dimension Value - supports multiple dimensionValue ";" i.e. dimensionValue: queue1;queue2
     dimensionValue: keda
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2"
@@ -30,6 +31,12 @@ triggers:
     # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
     awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
     identityOwner: pod | operator # Optional. Default: pod
+    # Optional: defaultMetricCollectionTime
+    defaultMetricCollectionTime: 300 # default 300
+    # Optional: defaultMetricStat
+    defaultMetricStat: "Average" # default "Average"
+    # Optional: defaultMetricStatPeriod
+    defaultMetricStatPeriod: 300 # default 300
 ```
 
 **Parameter list:**
