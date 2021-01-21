@@ -49,7 +49,7 @@ triggers:
 
 - `defaultMetricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
 
-- `defaultMetricStatPeriod` -  Which frequency is going to be used by the related query. Used to define **Period** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
+- `defaultMetricStatPeriod` -  Which frequency is going to be used by the related query. Used to define **Period** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
 
 
 ### Authentication Parameters
