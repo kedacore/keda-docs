@@ -19,7 +19,7 @@ triggers:
     namespace: AWS/SQS
     # Required: Dimension Name - Supports specifying multiple dimension names by using ";" as a seperator i.e. dimensionName: QueueName;QueueName
     dimensionName: QueueName
-    # Required: Dimension Value - supports multiple dimensionValue ";" i.e. dimensionValue: queue1;queue2
+    # Required: Dimension Value - Supports specifying multiple dimension values by using ";" as a seperator i.e. dimensionValue: queue1;queue2
     dimensionValue: keda
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2"
