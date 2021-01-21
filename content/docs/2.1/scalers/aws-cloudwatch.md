@@ -45,7 +45,7 @@ triggers:
 
 > When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
-- `defaultMetricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
+- `defaultMetricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
 
 - `defaultMetricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
 
