@@ -35,7 +35,7 @@ We recommend using the [Prometheus scaler](/scalers/prometheus/) to create scale
 
 [[qna]]
 q = "Where can I get to the code for the Scalers?"
-a = "All scalers have their code [here](https://github.com/kedacore/keda/tree/master/pkg/scalers)."
+a = "All scalers have their code [here](https://github.com/kedacore/keda/tree/main/pkg/scalers)."
 
 [[qna]]
 q = "Is short polling intervals a problem?"
