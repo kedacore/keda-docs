@@ -2,6 +2,30 @@
 title = "Operate"
 +++
 
+## High Availability
+
+TBW 
+
+| Deployment     | Support Replicas        | Reasoning                     |
+|----------------|-------------------------|-------------------------------|
+| Operator       | 1                       |                               |
+| Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
+
+> it doesn’t have much sense to add more operators though
+> 18:56
+> the other thing is to tweak MaxConcurrentReconciles , currently set to 1
+> https://sdk.operatorframework.io/docs/building-operators/golang/tutorial/#controller-configurations > (edited)
+> 18:57
+> currently there’s no way how to modify that expect the code (exposing some env should be trivial)
+> 18:57
+> but since we don’t have much metrics and data, I am not sure whether increasing this would have an > impact
+> 18:57
+> so that’s why I haven’t check this area so far
+> 18:58
+> the other point is, that it is untested (its basically introducing concurrency in the code)
+> 18:58
+> but it should give perf boost for larger setups
+
 ## Cluster capacity requirements
 
 The KEDA runtime require the following resources in a production-ready setup:
