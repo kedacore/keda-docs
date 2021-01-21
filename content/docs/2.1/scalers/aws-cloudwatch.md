@@ -17,7 +17,7 @@ triggers:
   metadata:
     # Required: namespace
     namespace: AWS/SQS
-    # Required: Dimension Name - supports multiple dimensionName with ";" i.e. dimensionName: QueueName;QueueName
+    # Required: Dimension Name - Supports specifying multiple dimension names by using ";" as a seperator i.e. dimensionName: QueueName;QueueName
     dimensionName: QueueName
     # Required: Dimension Value - supports multiple dimensionValue ";" i.e. dimensionValue: queue1;queue2
     dimensionValue: keda
@@ -31,11 +31,11 @@ triggers:
     # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
     awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
     identityOwner: pod | operator # Optional. Default: pod
-    # Optional: defaultMetricCollectionTime
+    # Optional: Default Metrict Collection Time
     defaultMetricCollectionTime: 300 # default 300
-    # Optional: defaultMetricStat
+    # Optional: Default Metric Statistic
     defaultMetricStat: "Average" # default "Average"
-    # Optional: defaultMetricStatPeriod
+    # Optional: Default Metric Statistic Period
     defaultMetricStatPeriod: 300 # default 300
 ```
 
@@ -44,6 +44,13 @@ triggers:
 - `identityOwner` - Receive permissions on the CloudWatch via Pod Identity or from the KEDA operator itself (see below).
 
 > When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
+
+- `defaultMetricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
+
+- `defaultMetricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
+
+- `defaultMetricStatPeriod` -  Which frequency is going to be used by the related query. Used to define **Period** [official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)
+
 
 ### Authentication Parameters
 
