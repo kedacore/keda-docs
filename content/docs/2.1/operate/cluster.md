@@ -1,0 +1,29 @@
++++
+title = "Cluster"
+description = "Guidance & requirements for running KEDA in your cluster"
+weight = 100
++++
+
+## Cluster capacity requirements
+
+The KEDA runtime require the following resources in a production-ready setup:
+
+| Deployment     | CPU                     | Memory                        |
+|----------------|-------------------------|-------------------------------|
+| Operator       | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
+| Metrics Server | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
+
+These are used by default when deploying through YAML.
+
+> 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.
+
+## High Availability
+
+KEDA does not provide support for high-availability due to upstream limitations.
+
+Here is an overview of all KEDA deployments and the supported replicas:
+
+| Deployment     | Support Replicas        | Reasoning                     |
+|----------------|-------------------------|-------------------------------|
+| Operator       | 1                       |                               |
+| Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
