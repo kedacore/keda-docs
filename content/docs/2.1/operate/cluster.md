@@ -1,5 +1,7 @@
 +++
-title = "Operate"
+title = "Cluster"
+description = "Guidance & requirements for running KEDA in your cluster"
+weight = 100
 +++
 
 ## High Availability
@@ -26,16 +28,16 @@ These are used by default when deploying through YAML.
 
 > 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.
 
-## Prometheus Exporter Metrics
+## High Availability
 
-The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port `9022` (this can be changed by setting the `metrics-port` argument for the Metrics Adapter) at `/metrics`.  The metrics collected in the Metrics Adapter are only active when the HPA is active (> 0 replicas).
+KEDA does not provide support for high-availability due to upstream limitations.
 
-The following metrics are being gathered:
+Here is an overview of all KEDA deployments and the supported replicas:
 
-- `keda_metrics_adapter_scaler_error_totals` - The total number of errors encountered for all scalers
-- `keda_metrics_adapter_scaled_object_error_totals`- The number of errors that have occurred for each scaled object
-- `keda_metrics_adapter_scaler_errors` - The number of errors that have occurred for each scaler
-- `keda_metrics_adapter_scaler_metrics_value`- The current value for each scaler's metric that would be used by the HPA in computing the target average.
+| Deployment     | Support Replicas        | Reasoning                     |
+|----------------|-------------------------|-------------------------------|
+| Operator       | 1                       |                               |
+| Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
 
 ## HTTP Timeouts
 
