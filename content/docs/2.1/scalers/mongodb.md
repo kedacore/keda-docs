@@ -4,7 +4,7 @@ layout = "scaler"
 maintainer = "Community"
 description = "Scale applications based on MongoDB queries."
 availability = "v2.1+"
-go_file = "mongodb_scaler"
+go_file = "mongo_scaler"
 +++
 
 ### Trigger Specification
@@ -23,7 +23,7 @@ triggers:
       query: '{"region":"eu-1","state":"running","plan":"planA"}'
       # Required: according to the number of query result, to scale job
       queryValue: "1"
-      # Optional: This value will be assign to the metric
+      # Optional: This value will default to a masked version of the host and collection name if not set by the user (metrics name value would be then `mongodb-https---xxx-test_collection`)
       metricName: "global-metric"
 ```
 
@@ -33,7 +33,7 @@ triggers:
 - `collection` - Name of the collection
 - `query` - A MongoDB query that should return single numeric value
 - `queryValue` - A threshold that will define when scaling should occur
-- `metricName` - An optional name to assign to the metric.
+- `metricName` - An optional name to assign to the metric. If not set KEDA will generate a name based on masked version of the server hostname and collection name. If using more than one trigger it is required that all `metricName`(s) be unique.
 
 To provide information about how to connect to MongoDB you can provide
 
