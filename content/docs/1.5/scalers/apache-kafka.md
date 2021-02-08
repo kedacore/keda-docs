@@ -7,6 +7,10 @@ description = "Scale applications based on an Apache Kafka topic or other servic
 go_file = "kafka_scaler"
 +++
 
+> **Notice:** 
+> - No. of replicas will not exceed the number of partitions on a topic. That is, if `maxReplicaCount` is set more than number of partitions, the scaler won't scale up to target maxReplicaCount. 
+> - This is so because if there are more number of consumers than the number of partitions in a topic, then extra consumer will have to sit idle.
+
 ### Trigger Specification
 
 This specification describes the `kafka` trigger for an Apache Kafka topic.
