@@ -61,6 +61,8 @@ because many applications implement basic auth with a username as apikey and pas
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
 
+> 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be usefull if you are using an enterprise CA.
+
 ### Example
 
 Here is a full example of scaled object definition using Metric API trigger:
@@ -104,6 +106,7 @@ The above example expects that the API endpoint will return response similar to 
 Assuming such response, Metrics API trigger will figure out that current metric value is 12.
 
 > 💡 **NOTE:**The value of the metric must be json number type. The value is casted to **integer**.
+
 
 Here is an example of a  metric scaler with API Key based authentication,
 
