@@ -107,7 +107,6 @@ Assuming such response, Metrics API trigger will figure out that current metric 
 
 > 💡 **NOTE:**The value of the metric must be json number type. The value is casted to **integer**.
 
-
 Here is an example of a  metric scaler with API Key based authentication,
 
 ```yaml
