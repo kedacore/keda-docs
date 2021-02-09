@@ -79,7 +79,7 @@ This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.
 
 ## Add new Frequently Asked Question (FAQ)
 
-To update the KEDA [FAQ page](https://keda.sh/docs/2.0/faq), update the TOML file at [`data/faq20.toml`]. Here's an example question/answer pair:
+To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at [`data/faq20.toml`]. Here's an example question/answer pair:
 
 ```toml
 [[qna]]
@@ -102,7 +102,7 @@ To adjust the order in which the troubleshooting tiles appear, use the `weight` 
 The KEDA documentation is versioned. Each version has its own subdirectory under [`content/docs`](./content/docs). To add a new version, copy the directory for the most recent version. Here's an example:
 
 ```sh
-cp -rf content/docs/2.0.0 content/docs/2.1.0
+cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 ```
 
 By default, new documentation versions are not listed as available version so it's safe to make changes to them. After every release, the version will be published as new version.

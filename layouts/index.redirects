@@ -4,6 +4,10 @@
 /docs/latest/*     /docs/{{ $docsLatest }}/:splat
 /scalers     /docs/{{ $docsLatest }}/scalers     301!
 /docs/scalers/*     /docs/{{ $docsLatest }}/scalers/:splat
+/faq     /docs/{{ $docsLatest }}/faq     301!
+/docs/faq/*     /docs/{{ $docsLatest }}/faq/:splat
+/troubleshooting     /docs/{{ $docsLatest }}/troubleshooting     301!
+/docs/troubleshooting/*     /docs/{{ $docsLatest }}/troubleshooting/:splat
 {{- range $scalers -}}
 {{- $path := index (split .RelPermalink "/") 2 }}
 /docs/scalers/{{ $path }}     /scalers/{{ $path }}
