@@ -11,6 +11,32 @@ go_file = "mssql_scaler"
 
 This specification describes the `mssql` trigger that scales based on the results of a [Microsoft SQL Server](https://www.microsoft.com/sql-server/) (MSSQL) query result.
 
+```yaml
+triggers:
+- type: mssql
+  metadata:
+    connectionStringFromEnv: MSSQL_CONNECTION_STRING
+    query: "SELECT CEILING(COUNT(*) / 16.0) FROM task_instance WHERE state='running' OR state='queued'"
+    targetValue: 1
+    metricName: backlog_process_count # optional - the generated value would be `mssql-{sha256hash}`
+```
+
+Alternatively, you configure connection parameters explicitly instead of providing a connection string:
+
+```yaml
+triggers:
+- type: mssql
+  metadata:
+    username: "kedaUser"
+    passwordFromEnv: MSSQL_PASSWORD
+    host: mssql-instance.namespace.cluster.local
+    port: "1433" # optional
+    database: test_db_name
+    query: "SELECT CEILING(COUNT(*) / 16.0) FROM task_instance WHERE state='running' OR state='queued'"
+    targetValue: 1
+    metricName: backlog_process_count # optional - the generated value would be `mssql-test_db_name`
+```
+
 The `mssql` trigger always requires the following information:
 
 - `query` - a [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
@@ -20,7 +46,7 @@ To connect to the MSSQL instance you can provide either:
 
 - `connectionStringFromEnv` - The name of an environment variable containing a valid MSSQL connection string.
 
-Or provide more detailed information:
+Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 
 - `host` - The hostname of the MSSQL instance endpoint.
 - `port` - The port number of the MSSQL instance endpoint.
@@ -28,47 +54,19 @@ Or provide more detailed information:
 - `username` - The username credential for connecting to the MSSQL instance.
 - `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MSSQL instance.
 
-Connection string values can be either in a URL format (note the URL encoding of special characters):
+When configuring with a connection string, you can use either a URL format (note the URL encoding of special characters):
 
 ```
 sqlserver://user1:Password%231@example.database.windows.net:1433?database=AdventureWorks
 ```
 
-Or in a more traditional OLE DB format:
+Or the more traditional OLE DB format:
 
 ```
 Server=example.database.windows.net;port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 ```
 
-Furthermore, you can optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the `database` value (if specified), or the `host` value, or will be in the form `mssql-{sha256hash}` where `{sha256hash}` is a SHA-256 hash of the connection string.
-
-The following is an example that uses a connection string to connect to an Azure SQL instance:
-
-```yaml
-triggers:
-- type: mssql
-  metadata:
-    connectionFromEnv: MSSQL_CONNECTION_STRING
-    query: "SELECT CEILING(COUNT(*) / 16.0) FROM task_instance WHERE state='running' OR state='queued'"
-    targetValue: 1
-    metricName: backlog_process_count # optional - the generated value would be `mssql-{sha256hash}`
-```
-
-Alternatively, the following example explicitly specifies the connection information:
-
-```yaml
-triggers:
-- type: mssql
-  metadata:
-    userName: "kedaUser"
-    passwordFromEnv: MSSQL_PASSWORD
-    host: mssql-instance.namespace.cluster.local
-    port: "1433" # optional
-    database: test_db_name
-    query: "SELECT CEILING(COUNT(*) / 16.0) FROM task_instance WHERE state='running' OR state='queued'"
-    targetValue: 1
-    metricName: backlog_process_count # optional - the generated value would be `mssql-test_db_name`
-```
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the `database` value (if specified), or the `host` value, or will be in the form `mssql-{sha256hash}` where `{sha256hash}` is a SHA-256 hash of the connection string.
 
 ### Authentication parameters
 
