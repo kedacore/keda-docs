@@ -325,6 +325,10 @@ logo = "purefacts.png"
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
+[[params.users]]
+url = "https://www.schrederhyperion.com"
+logo = "schreder-hyperion.png"
+
 # "Community" section on the main page
 [[params.community]]
 url = "https://www.astronomer.io"
