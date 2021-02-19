@@ -144,7 +144,7 @@ queueLength - customScalingQueueLengthDeduction - (runningJobCount * customScali
 ```
 
 **accurate** 
-If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can you this strategy if you delete a message once your app consumes it.
+If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
 
 ```go
 if (maxScale + runningJobCount) > maxReplicaCount {
