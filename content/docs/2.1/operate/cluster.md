@@ -28,17 +28,6 @@ These are used by default when deploying through YAML.
 
 > 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.
 
-## High Availability
-
-KEDA does not provide support for high-availability due to upstream limitations.
-
-Here is an overview of all KEDA deployments and the supported replicas:
-
-| Deployment     | Support Replicas        | Reasoning                     |
-|----------------|-------------------------|-------------------------------|
-| Operator       | 1                       |                               |
-| Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
-
 ## HTTP Timeouts
 
 Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses its own dedicated HTTP client with its own connection pool, and by default each client is set to time out any HTTP request after 3 seconds. 
