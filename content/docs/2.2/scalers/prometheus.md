@@ -33,19 +33,19 @@ triggers:
 
 Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication. 
 
-You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
+You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
 **Bearer authentication:**
-- `authMode`: It must be set to `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
+- `authModes`: It must contain `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
 - `bearerToken`: The token needed for authentication. This is a required field.
 
 **Basic authentication:**
-- `authMode`: It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
+- `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
 - `username`: This is a required field. Provide the username to be used for basic authentication.
 - `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
-- `authMode`: It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
+- `authMode`: It must contain `tls` in case of TLS Authentication. Specify this in trigger configuration.
 - `ca`: Certificate authority file for TLS client authentication. This is a required field.
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
@@ -117,7 +117,7 @@ spec:
         metricName: http_requests_total
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
-        authMode: "bearer"
+        authModes: "bearer"
       authenticationRef:
         name: keda-prom-creds
 ```
@@ -166,7 +166,7 @@ spec:
         metricName: http_requests_total
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
-        authMode: "basic"
+        authModes: "basic"
       authenticationRef:
         name: keda-prom-creds
 ```
@@ -220,7 +220,68 @@ spec:
         metricName: http_requests_total
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
-        authMode: "tls"
+        authModes: "tls"
+      authenticationRef:
+        name: keda-prom-creds
+```
+
+Here is an example of a prometheus scaler with TLS and Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  cert: "cert" 
+  key: "key"
+  ca: "ca"
+  username: "username" 
+  password: "password"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: cert
+      name: keda-prom-secret
+      key: cert
+    - parameter: key
+      name: keda-prom-secret
+      key: key
+    - parameter: ca
+      name: keda-prom-secret
+      key: ca
+    - parameter: username
+      name: keda-prom-secret
+      key: username
+    - parameter: password
+      name: keda-prom-secret
+      key: password
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: metrics-api
+      metadata:
+        serverAddress: http://<prometheus-host>:9090
+        metricName: http_requests_total
+        threshold: '100'
+        query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+        authModes: "tls,basic"
       authenticationRef:
         name: keda-prom-creds
 ```
