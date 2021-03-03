@@ -15,8 +15,8 @@ This specification describes the `openstack-swift` trigger for OpenStack Swift c
 triggers:
 - type: openstack-swift
   metadata:
-    swiftURL: http://localhost:8080/v1/b161dc815cd24bda84d94d9a0e73cf78  # Required
     containerName: my-container # Required
+    swiftURL: http://localhost:8080/v1/b161dc815cd24bda84d94d9a0e73cf78  # Optional
     objectCount: "2"  # Optional
     objectPrefix: "my-prefix" # Optional
     objectDelimiter: "/"  # Optional 
@@ -25,11 +25,11 @@ triggers:
     timeout: "2"  # Optional
 ```
 
-> Please, always provide the protocol (http or https) when specifying URLs. This is needed due to Go URL parsing issues :sweat_smile:
+> Please, always provide the protocol (http or https) when specifying URLs.
 
 **Parameter list:**
 
-- `swiftURL` - The URL to query the Swift API. It must contain the hostname, the Swift port, the API version and the account ID. The pattern is: `http://<host>:<swift_port>/<swift_version>/<account_id>`
+- `swiftURL` - The URL to query the Swift API. If not provided, the scaler will try to find the Swift public URL for a certain region, using the OpenStack catalog, which is returned when requesting an authentication token.
 - `containerName` - Name of Swift container in an OpenStack account
 - `objectCount` - Average target value to trigger scaling actions. If not specified, the default value is `2`
 - `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects, if required. If not specified, the default value is `""`.
@@ -46,16 +46,18 @@ To authenticate, this scaler uses tokens. Tokens are automatically retrieved by 
 
 #### Password
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
+- `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
 - `userID` - The OpenStack project user ID
 - `password` - The password for the provided user
 - `projectID` - The OpenStack project ID
+- `regionName` - The OpenStack region name where the Swift service is available. This parameter is not required and is used only when the `swiftURL` is not provided to the scaler. If the region name is not provided, it will look for the first Swift public URL available in the OpenStack catalog.
 
 #### Application Credentials
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
+- `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
 - `appCredentialID` - The Application Credential ID
 - `appCredentialSecret` - The Application Credential secret
+- `regionName` - The OpenStack region name where the Swift service is available. This parameter is not required and is used only when the `swiftURL` is not provided to the scaler. If the region name is not provided, it will look for the first Swift public URL available in the OpenStack catalog.
 
 ### Example
 
@@ -71,10 +73,11 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  authURL: aHR0cDovL2xvY2FsaG9zdDo1MDAwL3YzLw==
+  authURL: aHR0cDovL2xvY2FsaG9zdDo1MDAwLw==
   userID: MWYwYzI3ODFiNDExNGQxM2E0NGI4ODk4Zjg1MzQwYmU=
   password: YWRtaW4=
   projectID: YjE2MWRjNTE4Y2QyNGJkYTg0ZDk0ZDlhMGU3M2ZjODc=
+  regionName: Y2FsaWZvcm5pYS0x
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -95,6 +98,9 @@ spec:
   - parameter: projectID
     name: openstack-secret-password
     key: projectID
+  - parameter: regionName
+    name: openstack-secret-password
+    key: regionName
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -110,7 +116,6 @@ spec:
   triggers:
   - type: openstack-swift
     metadata:
-      swiftURL: http://localhost:8080/v1/AUTH_b161dc518cd24bda84d94d9a0e73fc87
       containerName: my-container
       objectCount: "1"
       onlyFiles: "true"
@@ -130,7 +135,7 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  authURL: aHR0cDovL2xvY2FsaG9zdDo1MDAwL3YzLw==
+  authURL: aHR0cDovL2xvY2FsaG9zdDo1MDAwLw==
   appCredentialID: OWYyY2UyYWRlYmFkNGQxNzg0NTgwZjE5ZTljMTExZTQ=
   appCredentialSecret: LVdSbFJBZW9sMm91Z3VmZzNEVlBqcll6aU9za1pkZ3c4Y180XzRFU1pZREloT0RmajJkOHg0dU5yb3NudVIzWmxDVTZNLTVDT3R5NDFJX3M5R1N5Wnc=
 ---
