@@ -7,6 +7,7 @@ weight = 100
 ## Kubernetes Events emitted by KEDA
 
 KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#event-v1-core):
+
 | Event                               | Type      | Description                                                                                                                 |
 |-------------------------------------|-----------|-----------------------------------------------------------------------------------------------------------------------------|
 | `ScaledObjectReady`                 | `Normal`  | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False` |
