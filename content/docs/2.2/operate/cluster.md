@@ -23,10 +23,12 @@ KEDA requires to be accessible inside the cluster to be able to autoscale.
 
 Here is an overview of the required ports that need to be accessible for KEDA to work:
 
-| Port   | Why?                                         | Remarks                                              |
-| ------ | -------------------------------------------- | ---------------------------------------------------- |
-| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms, except for Google Cloud. |
-| `6443` | Used by Kubernetes API server to get metrics | Only required for Google Cloud                       |
+<!-- markdownlint-disable no-inline-html -->
+| Port   | Why?                                         | Remarks                                                                                                                                                   |
+| ------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms because it uses Control Plane &#8594; port 443 on the Service IP range communication.<br /><br /> This is not applicable for Google Cloud. |
+| `6443` | Used by Kubernetes API server to get metrics | Only required for Google Cloud because it uses Control Plane &#8594; port 6443 on the Pod IP range for communication                                      |
+<!-- markdownlint-enable no-inline-html -->
 
 ## High Availability
 
