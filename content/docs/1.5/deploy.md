@@ -94,7 +94,7 @@ kubectl apply -f ./
 You can also find the same YAML declarations in our `/deploy` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
 
 ```sh
-git clone https://github.com/kedacore/keda && cd keda
+git clone https://github.com/kedacore/keda && cd keda && git checkout tags/v1.5.0
 
 kubectl apply -f deploy/crds/keda.k8s.io_scaledobjects_crd.yaml
 kubectl apply -f deploy/crds/keda.k8s.io_triggerauthentications_crd.yaml
