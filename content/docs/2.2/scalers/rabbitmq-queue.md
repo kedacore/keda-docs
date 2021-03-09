@@ -44,7 +44,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
-> 💡 **Note:** `mode` MessageRate requires protocol `http`.
+> 💡 **Note:** `mode: MessageRate` requires protocol `http`.
 
 > ⚠ **Important:** if you have unacknowledged messages and want to have these counted for the scaling to happen, make sure to utilize the `http` REST API interface which allows for these to be counted.
 
