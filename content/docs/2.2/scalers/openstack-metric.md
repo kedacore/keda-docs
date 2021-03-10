@@ -3,14 +3,22 @@ title = "Openstack Metric"
 layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
+<<<<<<< HEAD
 description = "Scale applications based on a threshold reached by a specific measure from Openstack Metric API."
+=======
+description = "Scale applications based on the metrics collected from an specific resource."
+>>>>>>> Create Openstack Metric Scaler docs
 go_file = "openstack_metric_scaler"
 +++
 
 ### Trigger Specification
+<<<<<<< HEAD
 This specification describes the `openstack-metric` trigger for OpenStack metrics.
 
 > The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi API is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows its patterns but you don't need to reference anything from gnocchi. It scales based on a specific measure from a given resource metric.
+=======
+This specification describes the `openstack-metric` trigger for OpenStack metrics. The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi api is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows it's patterns but you don't need to reference anything from gnocchi. It scales based on an spcific measeure from a given resource metric.
+>>>>>>> Create Openstack Metric Scaler docs
 It's highly recommended to check [gnocchi](https://gnocchi.xyz/) docs.
 
 ```yaml
@@ -25,7 +33,11 @@ triggers:
     timeout: 30 #optional
 ```
 
+<<<<<<< HEAD
 > Protocol (http or https) should always be provided when specifying URLs
+=======
+> Please, always provide the protocol (http or https) when specifying URLs. This is needed due to Go URL parsing issues :sweat_smile:
+>>>>>>> Create Openstack Metric Scaler docs
 
 **Parameter list:**
 - `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric` 
@@ -169,4 +181,8 @@ spec:
       threshold: 1250
     authenticationRef:
         name: openstack-metric-appcredentials-trigger-authentication
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> Create Openstack Metric Scaler docs
