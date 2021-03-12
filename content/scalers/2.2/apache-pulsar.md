@@ -45,7 +45,7 @@ triggers:
 
 ### Example
 
-Your kafka cluster no SASL/TLS auth:
+Your pulsar cluster no TLS auth:
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -68,7 +68,7 @@ spec:
       msgBacklogThreshold: '5'
 ```
 
-Your kafka cluster turn on SASL/TLS auth:
+Your pulsar cluster turn on TLS auth:
 
 ```yaml
 apiVersion: v1
