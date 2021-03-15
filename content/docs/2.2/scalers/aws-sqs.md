@@ -26,7 +26,10 @@ triggers:
 **Parameter list:**
 
 - `queueURL` - Full URL for the SQS Queue
-- `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual `ApproximateNumberOfMessages` in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
+- `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
+
+> For the purposes of scaling, "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing.
+
 - `awsRegion` - AWS Region for the SQS Queue
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below).
 
@@ -34,7 +37,7 @@ triggers:
 
 ### Authentication Parameters
 
-> These parameters are relevant only when `identityOwner` is set to `pod`. 
+> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
@@ -63,7 +66,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: <encoded-user-id>
   AWS_SECRET_ACCESS_KEY: <encoded-key>
---- 
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
