@@ -27,3 +27,14 @@ Here is an overview of all KEDA deployments and the supported replicas:
 |----------------|-------------------------|-------------------------------|
 | Operator       | 1                       |                               |
 | Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
+
+## Firewall requirements
+
+KEDA requires to be accessible inside the cluster to be able to autoscale.
+
+Here is an overview of the required ports that need to be accessible for KEDA to work:
+
+| Port   | Why?                                         | Remarks                                              |
+| ------ | -------------------------------------------- | ---------------------------------------------------- |
+| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms, except for Google Cloud. |
+| `6443` | Used by Kubernetes API server to get metrics | Only required for Google Cloud                       |
