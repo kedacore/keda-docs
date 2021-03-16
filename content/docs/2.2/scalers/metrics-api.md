@@ -103,7 +103,7 @@ The above example expects that the API endpoint will return response similar to 
 ```
 Assuming such response, Metrics API trigger will figure out that current metric value is 12.
 
-> 💡 **NOTE:**The value of the metric must be json number type. The value is casted to **integer**.
+> 💡 **NOTE:**The value of the metric can either be an integral unquoted json number type (e.g. 123). Or a quantity (e.g. "123", "1.23", "10Mi").
 
 Here is an example of a  metric scaler with API Key based authentication,
 
