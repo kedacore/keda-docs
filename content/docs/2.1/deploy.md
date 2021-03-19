@@ -37,7 +37,7 @@ Deploying KEDA with Helm is very simple:
 
     ```sh
     kubectl create namespace keda
-    helm install keda kedacore/keda --namespace keda
+    helm install keda kedacore/keda --version 2.1.0  --namespace keda
     ```
 
 ### Uninstall
@@ -48,10 +48,10 @@ If you want to remove KEDA from a cluster you can run one of the following:
 
 ```sh
 helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledobjects.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledjobs.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_triggerauthentications.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_clustertriggerauthentications.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2.1.0/config/crd/bases/keda.sh_scaledobjects.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2.1.0/config/crd/bases/keda.sh_scaledjobs.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2.1.0/config/crd/bases/keda.sh_triggerauthentications.yaml
+kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2.1.0/config/crd/bases/keda.sh_clustertriggerauthentications.yaml
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
