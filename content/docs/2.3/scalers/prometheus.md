@@ -46,7 +46,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 **TLS authentication:**
 - `authMode`: It must contain `tls` in case of TLS Authentication. Specify this in trigger configuration.
-- `ca`: Certificate authority file for TLS client authentication. This is a required field.
+- `ca`: Certificate authority file for TLS client authentication.
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
 
