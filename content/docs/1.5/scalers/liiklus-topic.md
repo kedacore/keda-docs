@@ -47,5 +47,6 @@ spec:
       address: localhost:6565
       group: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
-      lagThreshold: "50"
+      # Optional
+      lagThreshold: "50"    # Default value is set to 10
 ```

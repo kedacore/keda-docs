@@ -27,7 +27,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.1", "2.0", "1.5", "1.4"]
+docs = ["2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -320,6 +320,14 @@ logo = "mivation-inc.png"
 [[params.users]]
 url = "https://www.purefacts.com"
 logo = "purefacts.png"
+
+[[params.users]]
+url = "https://roadwork.io"
+logo = "roadwork.png"
+
+[[params.users]]
+url = "https://www.schrederhyperion.com"
+logo = "schreder-hyperion.png"
 
 # "Community" section on the main page
 [[params.community]]

@@ -1,6 +1,70 @@
 {{ $faq20 := site.Data.faq20.qna }}
 
-{{ range $faq20 }}
+<h2>General</h2>
+
+{{ range where $faq20 ".type" "==" "General" }}
+{{ $question := .q | markdownify }}
+{{ $answer   := .a | markdownify }}
+{{ $id       := .q | urlize }}
+<div class="card is-collapsible" x-data="{ open: false }" id="{{ $id }}">
+  <header class="card-header has-mouse-icon" @click="open = !open">
+    <p class="card-header-title title is-size-4 is-size-4-mobile">
+      {{ $question }}
+    </p>
+  </header>
+  <div class="card-content" x-show="open">
+    <div class="content is-medium has-text-grey-dark">
+      {{ $answer }}
+    </div>
+  </div>
+</div>
+{{ end }}
+
+<h2>Features</h2>
+
+{{ range where $faq20 ".type" "==" "Features" }}
+{{ $question := .q | markdownify }}
+{{ $answer   := .a | markdownify }}
+{{ $id       := .q | urlize }}
+<div class="card is-collapsible" x-data="{ open: false }" id="{{ $id }}">
+  <header class="card-header has-mouse-icon" @click="open = !open">
+    <p class="card-header-title title is-size-4 is-size-4-mobile">
+      {{ $question }}
+    </p>
+  </header>
+  <div class="card-content" x-show="open">
+    <div class="content is-medium has-text-grey-dark">
+      {{ $answer }}
+    </div>
+  </div>
+</div>
+{{ end }}
+
+<h2>Community</h2>
+
+{{ range where $faq20 ".type" "==" "Community" }}
+{{ $question := .q | markdownify }}
+{{ $answer   := .a | markdownify }}
+{{ $id       := .q | urlize }}
+<div class="card is-collapsible" x-data="{ open: false }" id="{{ $id }}">
+  <header class="card-header has-mouse-icon" @click="open = !open">
+    <p class="card-header-title title is-size-4 is-size-4-mobile">
+      {{ $question }}
+    </p>
+  </header>
+  <div class="card-content" x-show="open">
+    <div class="content is-medium has-text-grey-dark">
+      {{ $answer }}
+    </div>
+  </div>
+</div>
+{{ end }}
+
+<h2>Integrations</h2>
+
+<h3>Microsoft Azure</h3>
+
+{{ range where $faq20 ".type" "==" "Azure" }}
 {{ $question := .q | markdownify }}
 {{ $answer   := .a | markdownify }}
 {{ $id       := .q | urlize }}
