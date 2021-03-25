@@ -4,10 +4,14 @@ layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
 <<<<<<< HEAD
+<<<<<<< HEAD
 description = "Scale applications based on a threshold reached by a specific measure from Openstack Metric API."
 =======
 description = "Scale applications based on the metrics collected from an specific resource."
 >>>>>>> Create Openstack Metric Scaler docs
+=======
+description = "Scale applications based on a threshold reached by a specific measure from Openstack Metric API."
+>>>>>>> improve openstack metric scaler initial description
 go_file = "openstack_metric_scaler"
 +++
 
