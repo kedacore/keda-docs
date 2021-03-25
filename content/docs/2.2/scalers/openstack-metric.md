@@ -8,7 +8,9 @@ go_file = "openstack_metric_scaler"
 +++
 
 ### Trigger Specification
-This specification describes the `openstack-metric` trigger for OpenStack metrics. The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi api is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows it's patterns but you don't need to reference anything from gnocchi. It scales based on an spcific measeure from a given resource metric.
+This specification describes the `openstack-metric` trigger for OpenStack metrics.
+
+> The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi API is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows its patterns but you don't need to reference anything from gnocchi. It scales based on a specific measure from a given resource metric.
 It's highly recommended to check [gnocchi](https://gnocchi.xyz/) docs.
 
 ```yaml
