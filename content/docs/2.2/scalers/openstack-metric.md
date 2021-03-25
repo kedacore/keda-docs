@@ -25,7 +25,7 @@ triggers:
     timeout: 30 #optional
 ```
 
-> Please, always provide the protocol (http or https) when specifying URLs. This is needed due to Go URL parsing issues :sweat_smile:
+> Protocol (http or https) should always be provided when specifying URLs
 
 **Parameter list:**
 - `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric` 
