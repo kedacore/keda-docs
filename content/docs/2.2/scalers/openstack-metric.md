@@ -13,12 +13,18 @@ go_file = "openstack_metric_scaler"
 
 ### Trigger Specification
 <<<<<<< HEAD
+<<<<<<< HEAD
 This specification describes the `openstack-metric` trigger for OpenStack metrics.
 
 > The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi API is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows its patterns but you don't need to reference anything from gnocchi. It scales based on a specific measure from a given resource metric.
 =======
 This specification describes the `openstack-metric` trigger for OpenStack metrics. The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi api is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows it's patterns but you don't need to reference anything from gnocchi. It scales based on an spcific measeure from a given resource metric.
 >>>>>>> Create Openstack Metric Scaler docs
+=======
+This specification describes the `openstack-metric` trigger for OpenStack metrics.
+
+> The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi API is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows its patterns but you don't need to reference anything from gnocchi. It scales based on a specific measure from a given resource metric.
+>>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
 It's highly recommended to check [gnocchi](https://gnocchi.xyz/) docs.
 
 ```yaml
@@ -182,7 +188,11 @@ spec:
     authenticationRef:
         name: openstack-metric-appcredentials-trigger-authentication
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```
 =======
 ```
 >>>>>>> Create Openstack Metric Scaler docs
+=======
+```
+>>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
