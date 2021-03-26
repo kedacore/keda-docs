@@ -65,7 +65,7 @@ triggers:
 - `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric` 
 - `metricID` - The Id of the intendend metric
 - `aggregationMethod` - The aggregation method that will be used to calculate metrics, it must follows the configured possible metrics derived from gnocchi API like: `mean`, `min`, `max`, `std`, `sum`, `count`, the complete aggregation methods list can be found [here](https://gnocchi.xyz/rest.html#archive-policy).
-- `granularity` - The configured granularity from metric collection in seconds. it must follow the same value configured in openstack, but it must be coutned in seconds. Sample: If you have a 5 minutes time window granularity defined, so you must input a value of 300 seconds (5*60).
+- `granularity` - The configured granularity from metric collection in seconds. it must follow the same value configured in OpenStack, but it must be coutned in seconds. Sample: If you have a 5 minutes time window granularity defined, so you must input a value of 300 seconds (5*60).
 - `threshold` - The target value that, when reached, will scale the application.
 - `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Metric API. If not specified, the default value is `30` seconds. This must be an integer value. If `0` or negative value is provided it defaults to `300` milliseconds.
 
