@@ -5,6 +5,7 @@ availability = "v2.3+"
 maintainer = "Community"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 description = "Scale applications based on a threshold reached by a specific measure from Openstack Metric API."
 =======
 description = "Scale applications based on the metrics collected from an specific resource."
@@ -12,6 +13,9 @@ description = "Scale applications based on the metrics collected from an specifi
 =======
 description = "Scale applications based on a threshold reached by a specific measure from Openstack Metric API."
 >>>>>>> improve openstack metric scaler initial description
+=======
+description = "Scale applications based on a threshold reached by a specific measure from OpenStack Metric API."
+>>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
 go_file = "openstack_metric_scaler"
 +++
 
