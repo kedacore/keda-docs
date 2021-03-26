@@ -27,11 +27,15 @@ This specification describes the `openstack-metric` trigger for OpenStack metric
 =======
 This specification describes the `openstack-metric` trigger for OpenStack metrics.
 
+<<<<<<< HEAD
 > The Openstack metric API follows [gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that gnocchi API is an open-source time series database embedded in openstack system and every parameter on Openstack Metric API follows its patterns but you don't need to reference anything from gnocchi. It scales based on a specific measure from a given resource metric.
 <<<<<<< HEAD
 >>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
 It's highly recommended to check [gnocchi](https://gnocchi.xyz/) docs.
 =======
+=======
+> The OpenStack metric API follows [Gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that Gnocchi API is an open-source time series database embedded in OpenStack system and every parameter on OpenStack Metric API follows its patterns but you don't need to reference anything from Gnocchi. It scales based on a specific measure from a given resource metric.
+>>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
 It's highly recommended to check [Gnocchi](https://gnocchi.xyz/) docs.
 >>>>>>> Update content/docs/2.2/scalers/openstack-metric.md
 
