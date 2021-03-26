@@ -1,5 +1,5 @@
 +++
-title = "Openstack Metric"
+title = "OpenStack Metric"
 layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
