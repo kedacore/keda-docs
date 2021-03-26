@@ -1,6 +1,6 @@
 +++
-title = "Migrating our container images to Github Container Registry"
-date = 2021-03-31
+title = "Migrating our container images to GitHub Container Registry"
+date = 2021-03-26
 author = "KEDA Maintainers"
 +++
 
@@ -64,7 +64,7 @@ If you are using your own deployment mechanism, then you will have to pull the c
 
 ## Join the conversation
 
-Do you have questions or remarks? Feel free to join the conversation on [GitHub Discussions](TODO-Open-Before-Merge).
+Do you have questions or remarks? Feel free to join the conversation on [GitHub Discussions](https://github.com/kedacore/keda/discussions/1700).
 
 Thanks for reading, and happy scaling!
 
