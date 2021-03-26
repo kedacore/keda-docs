@@ -7,8 +7,9 @@ description = "Scale applications based on an Apache Kafka topic or other servic
 go_file = "kafka_scaler"
 +++
 
-> **Notice:** 
-> - No. of replicas will not exceed the number of partitions on a topic. That is, if `maxReplicaCount` is set more than number of partitions, the scaler won't scale up to target maxReplicaCount. 
+> **Notice:**
+> - By default, the number of replicas will not exceed the number of partitions on a topic.
+ That is, if `maxReplicaCount` is set more than number of partitions, the scaler won't scale up to target maxReplicaCount. See `allowIdleConsumers` below to disable this default behavior.
 > - This is so because if there are more number of consumers than the number of partitions in a topic, then extra consumer will have to sit idle.
 
 ### Trigger Specification
@@ -25,6 +26,7 @@ triggers:
     topic: test-topic
     lagThreshold: '5'
     offsetResetPolicy: latest
+    allowIdleConsumers: false
 ```
 
 **Parameter list:**
@@ -34,6 +36,8 @@ triggers:
 - `topic` - Name of the topic on which processing the offset lag.
 - `lagThreshold` - Average target value to trigger scaling actions. (default: 10)
 - `offsetResetPolicy` - The offset reset policy for the consumer. Options are `latest` or `earliest` (default: `latest`)
+- `allowIdleConsumers` - Optional. When set to `true`, the number of replicas can exceed the number of
+partitions on a topic, allowing for idle consumers. (default: `false`)
 
 ### Authentication Parameters
 
