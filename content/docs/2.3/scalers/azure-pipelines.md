@@ -15,10 +15,10 @@ This specification describes the `azure-pipelines` trigger for Azure Pipelines Q
 triggers:
   - type: azure-pipelines
     metadata:
-      # Required: PoolId - Can be retreived by the REST API call https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}
-      poolId: "1"
+      # Required: poolID - Can be retreived by the REST API call https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}
+      poolID: "1"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
-      organizationUrlFromEnv: "AZP_URL"
+      organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
       personalAccessTokenFromEnv: "AZP_TOKEN"
       # Optional: Target queue length
@@ -29,8 +29,8 @@ triggers:
 
 **Parameter list:**
 
-- `poolId` - Id of the queue.
-- `organizationUrlFromEnv` - Name of the environment variable your deployment uses to get the organizationUrl string.
+- `poolID` - Id of the queue.
+- `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the organizationURL string.
 - `personalAccessTokenFromEnv` - Name of the environment variable your deployment uses to get the personalAccessToken string.
 - `targetPipelinesQueueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods. (default: 1)
 
@@ -40,7 +40,7 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 **Personal Access Token Authentication:**
 
-- `organizationUrl` - The Azure DevOps organization
+- `organizationURL` - The Azure DevOps organization
 - `personalAccessToken` - The Azure DevOps Personal Access Token
 
 ### Example
@@ -78,8 +78,8 @@ spec:
   triggers:
   - type: azure-pipelines
     metadata:
-      poolId: "1"
-      organizationUrlFromEnv: "AZP_URL"
+      poolID: "1"
+      organizationURLFromEnv: "AZP_URL"
     authenticationRef:
      name: pipeline-trigger-auth
 ```
