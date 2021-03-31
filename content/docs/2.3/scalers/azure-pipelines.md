@@ -3,13 +3,13 @@ title = "Azure Pipelines"
 layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
-description = "Scale applications based on Azure Pipelines Queues."
+description = "Scale applications based on agent pool queues for Azure Pipelines."
 go_file = "azure_pipelines_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `azure-pipelines` trigger for Azure Pipelines Queue. It scales based on the queue length of Azure DevOps jobs in a given Agent Pool.
+This specification describes the `azure-pipelines` trigger for Azure Pipelines. It scales based on the amount of pipeline runs pending in a given agent pool.
 
 ```yaml
 triggers:
@@ -30,9 +30,10 @@ triggers:
 **Parameter list:**
 
 - `poolID` - Id of the queue.
-- `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the organizationURL string.
+- `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the URL for your Azure DevOps organization.
 - `personalAccessTokenFromEnv` - Name of the environment variable your deployment uses to get the personalAccessToken string.
-- `targetPipelinesQueueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods. (default: 1)
+- `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (default: 1)
+  - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
 
 ### Authentication Parameters
 
@@ -40,8 +41,8 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 **Personal Access Token Authentication:**
 
-- `organizationURL` - The Azure DevOps organization
-- `personalAccessToken` - The Azure DevOps Personal Access Token
+- `organizationURL` - The URL of the Azure DevOps organization
+- `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps
 
 ### Example
 
