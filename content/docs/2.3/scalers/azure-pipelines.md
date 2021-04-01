@@ -31,7 +31,7 @@ triggers:
 
 - `poolID` - Id of the queue.
 - `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the URL for your Azure DevOps organization.
-- `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more how to create on [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
+- `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (default: 1)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
 
