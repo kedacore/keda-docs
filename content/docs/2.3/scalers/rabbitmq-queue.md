@@ -18,7 +18,7 @@ triggers:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
     protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
     mode: QueueLength # QueueLength or MessageRate
-    value: 100 # message backlog or publish/sec. target per instance
+    value: "100" # message backlog or publish/sec. target per instance
     queueName: testqueue
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:
