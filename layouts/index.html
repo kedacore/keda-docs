@@ -9,9 +9,11 @@
 {{ partial "home/video.html" . }}
 {{ partial "home/scalers.html" . }}
 {{ partial "home/samples.html" . }}
-{{ partial "logo-section.html" (dict "title" "Users" "description" "A variety of users are autoscaling applications with Kubernetes Event-driven Autoscaling (KEDA)" "logos" site.Params.users) }}
+{{ partial "logo-section.html" (dict "title" "Users" "description" "A variety of users are autoscaling applications with KEDA:" "logos" site.Params.users) }}
 <hr />
-{{ partial "logo-section.html" (dict "title" "Community" "description" "Kubernetes Event-driven Autoscaling (KEDA) is supported by and built by our community, including the following companies" "logos" site.Params.community) }}
+{{ partial "logo-section.html" (dict "title" "Partners" "description" "KEDA is supported by and built by our community, including the following companies:" "logos" site.Params.partners) }}
+<hr />
+{{ partial "logo-section.html" (dict "title" "Supported by" "description" "KEDA is supported by the following companies that provide their services for free:" "logos" site.Params.supportedby) }}
 
 {{ partial "home/get-involved.html" . }}
 {{ partial "home/cncf.html" . }}

@@ -1,0 +1,11 @@
+{{ $companies := site.Params.partners }}
+<div class="columns is-centered is-multiline is-vcentered is-variable is-8">
+  {{ range $companies }}
+  {{ $logo := printf "img/logos/%s" .logo | relURL }}
+  <div class="column is-one-quarter">
+    <a href="{{ .url }}" target="_blank">
+      <img src="{{ $logo }}">
+    </a>
+  </div>
+  {{ end }}
+</div>

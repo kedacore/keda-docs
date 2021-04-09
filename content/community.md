@@ -7,12 +7,18 @@ description = "How you can get involved with the KEDA ecosystem"
 
 ## Users
 
- A variety of users are autoscaling applications with Kubernetes Event-driven Autoscaling (KEDA):
+ A variety of users are autoscaling applications with KEDA:
 
 {{< user-icons >}}
 
 ## Partners
 
- Kubernetes Event-driven Autoscaling (KEDA) is supported and built by our community, including the following companies:
+ KEDA is supported and built by our community, including the following companies:
 
-{{< community-icons >}}
+{{< partners-icons >}}
+
+## Supported by
+
+KEDA community is supported by the following companies that provide their services for free:
+
+{{< supportedby-icons >}}
