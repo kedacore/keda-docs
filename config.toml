@@ -284,7 +284,7 @@ title = "Azure Functions Support"
 content = "Run and scale your Azure Functions on Kubernetes in production workloads"
 icon = "fab fa-microsoft"
 
-# "Users" section on the main page
+# "Users" section on the Community page
 [[params.users]]
 url = "https://alibabacloud.com/"
 logo = "alibaba-cloud.png"
@@ -329,19 +329,24 @@ logo = "roadwork.png"
 url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
-# "Community" section on the main page
-[[params.community]]
-url = "https://www.astronomer.io"
-logo = "astronomer.svg"
-
-[[params.community]]
+# "Partners" section on the Community page
+[[params.partners]]
 url = "https://codit.eu"
 logo = "codit.jpg"
 
-[[params.community]]
+[[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
-[[params.community]]
+[[params.partners]]
 url = "https://redhat.com"
 logo = "red-hat.png"
+
+# "Supported by" section on the Community page
+[[params.supportedby]]
+url = "https://snyk.io"
+logo = "snyk.png"
+
+[[params.supportedby]]
+url = "https://vexxhost.com"
+logo = "vexxhost.png"
