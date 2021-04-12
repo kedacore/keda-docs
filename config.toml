@@ -344,6 +344,10 @@ logo = "red-hat.png"
 
 # "Supported by" section on the Community page
 [[params.supportedby]]
+url = "https://azure.microsoft.com/en-us/services/devops/"
+logo = "azure-devops.png"
+
+[[params.supportedby]]
 url = "https://snyk.io"
 logo = "snyk.png"
 
