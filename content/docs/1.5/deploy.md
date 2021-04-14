@@ -43,6 +43,9 @@ Deploying KEDA with Helm is very simple:
     helm install keda kedacore/keda --version 1.5.0 --namespace keda
     ```
 
+> 💡 When using Helm 3.x, make sure to manually install the CRDs since Helm does not update nor add new CRDs.
+> Learn more about it on [kedacore/charts #139](https://github.com/kedacore/charts/issues/139).
+
 ### Uninstall
 
 If you want to remove KEDA from a cluster you can run one of the following:
