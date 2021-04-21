@@ -40,6 +40,7 @@ spec:
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
   envSourceContainerName: {container-name}    # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
   maxReplicaCount: 100                        # Optional. Default: 100
+  minReplicaCount: 0                          # Optional. Default: 0
   scalingStrategy:
     strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
     customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
@@ -94,17 +95,20 @@ This optional property specifies the name of container in the Job, from which KE
 
 ```yaml
   maxReplicaCount: 100 # Optional. Default: 100
+  minReplicaCount: 0   # Optional. Default: 0
 ```
 
-The max number of pods that is created within a single polling period. If there are running jobs, the number of running jobs will be deducted. This table is an example of the scaling logic.
+`maxReplicaCount` field specify the max number of jobs that is created within a single polling period. If there are running jobs, the number of running jobs will be deducted. This table is an example of the scaling logic.
+`minReplicaCount` field specify the minimim number job that should be running.
 
-| Queue Length | Max Replica Count | Target Average Value | Running Job Count | Number of the Scale |
-| ------- | ------ | ------- | ------ | ----- |
-| 10 | 3 | 1 | 0 | 3 |
-| 10 | 3 | 2 | 0 | 3 |
-| 10 | 3 | 1 | 1 | 2 |
-| 10 | 100 | 1 | 0 | 10 | 
-| 4 | 3 | 5 | 0 | 1 |
+| Queue Length | Max Replica Count | Min Replica Count | Target Average Value | Running Job Count | Number of the Scale |
+| ------- | ------ | ------ | ------- | ------ | ----- |
+| 10 | 3 | 0 | 1 | 0 | 3 |
+| 10 | 3 | 0 | 2 | 0 | 3 |
+| 0 | 3 | 1 | 1 | 0 | 1 |
+| 10 | 3 | 0 | 1 | 1 | 2 |
+| 10 | 100 | 0 | 1 | 0 | 10 | 
+| 4 | 3 | 0 | 5 | 0 | 1 |
 
 * **Queue Length:** The number of items in the queue.
 * **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
