@@ -310,6 +310,10 @@ url = "https://fission.io/"
 logo = "fission.png"
 
 [[params.users]]
+url = "https://www.intercept.cloud"
+logo = "intercept.png"
+
+[[params.users]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
@@ -328,10 +332,6 @@ logo = "roadwork.png"
 [[params.users]]
 url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
-
-[[params.users]]
-url = "https://www.intercept.cloud"
-logo = "intercept.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
