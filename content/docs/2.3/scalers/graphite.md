@@ -52,4 +52,3 @@ spec:
       query: stats.counters.http.hello-world.request.count.count
       queryTime: '-10minutes'
 ```
-
