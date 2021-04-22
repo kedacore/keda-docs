@@ -1,15 +1,15 @@
 +++
 title = "Graphite"
 layout = "scaler"
-availability = "v1.0+"
+availability = "v2.3+"
 maintainer = "Community"
-description = "Scale applications based on Graphite."
+description = "Scale applications based on metrics in Graphite."
 go_file = "graphite_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `graphite` trigger that scales based on a Graphite.
+This specification describes the `graphite` trigger that scales based on metrics in Graphite.
 
 ```yaml
 triggers:
@@ -22,7 +22,6 @@ triggers:
     threshold: '100'
     queryTime: '-10minutes'
 ```
-
 **Parameter list:**
 
 - `serverAddress` - Address of Graphite
@@ -46,7 +45,7 @@ spec:
   triggers:
   - type: graphite
     metadata:
-      serverAddress: http://<graphite-host>:9090
+      serverAddress: http://<graphite-host>:81
       metricName: request-count
       threshold: '100'
       query: stats.counters.http.hello-world.request.count.count
