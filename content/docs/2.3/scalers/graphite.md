@@ -25,7 +25,7 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - Address of Graphite
-- `metricName` - Metric name to use 
+- `metricName` - Metric name to use
 - `query` - Query to run
 - `threshold` - Value to start scaling for
 - `queryTime` - Query Time to from Seconds/Minutes
