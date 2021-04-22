@@ -17,18 +17,18 @@ triggers:
   metadata:
     # Required
     serverAddress: http://<graphite-host>:81
-    metricName: request-count
+    metricName: request-count # Note: metric sort name in query
     query: stats.counters.http.hello-world.request.count.count # Note: query must return a vector/scalar single element response
     threshold: '100'
-    queryTime: '-10minutes'
+    queryTime: '-10Minutes' # Note: Query time in from argv Seconds/Minutes
 ```
 **Parameter list:**
 
 - `serverAddress` - Address of Graphite
-- `metricName` - Metric name to use
+- `metricName` - Metric name to use 
 - `query` - Query to run
 - `threshold` - Value to start scaling for
-- `queryTime` - Query Time to from 
+- `queryTime` - Query Time to from Seconds/Minutes
 
 
 ### Example
@@ -49,5 +49,5 @@ spec:
       metricName: request-count
       threshold: '100'
       query: stats.counters.http.hello-world.request.count.count
-      queryTime: '-10minutes'
+      queryTime: '-10Minutes'
 ```
