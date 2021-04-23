@@ -46,10 +46,7 @@ If you want to remove KEDA from a cluster you can run one of the following:
 **Using Helm 3**
 
 ```sh
-helm uninstall -n keda keda
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledobjects.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_scaledjobs.yaml
-kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/main/config/crd/bases/keda.sh_triggerauthentications.yaml
+helm uninstall keda -n keda
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
