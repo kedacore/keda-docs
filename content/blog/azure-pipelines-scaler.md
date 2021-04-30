@@ -11,10 +11,12 @@ Self-hosted Azure Pipelines agents are the perfect workload for this scaler. By 
 
 ## Azure Pipelines agents
 
-You can run your Azure Pipelines jobs on different kinds of agents ([docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents)). But if you want full control, you are going to use self-hosted agents. 
+Azure Pipelines jobs can run on different kinds of agents ([docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents)). But if you want full control, you are going to use self-hosted agents. 
 The agents can run on Linux, macOS or Windows machines but also in a container. To scale the agents with KEDA you can run self-hosted agents on Kubernetes.
 
-## Deploy a self-hosted agent on Kubernetes
+You can run the agents as a `Deployment` or a `Job` in Kubernetes and scale them accordingly with a `ScaledObject` or a `ScaledJob`.
+
+## Deploy a self-hosted agent on Kubernetes as a Deployment
 
 ### Create the container image
 
@@ -23,7 +25,7 @@ To create a basic Azure Pipelines agent image you can follow the instructions fr
 ### Deploy on Kubernetes
 
 You can deploy the agent as a Kubernetes deployment and use KEDA to autoscale the deployment.
-The following is an example manifest for the deployment.
+The following is an example manifest for the deployment:
 
 ```yaml
 apiVersion: apps/v1
@@ -221,4 +223,4 @@ azdevops-scaledjob-mmlzc-rw5gm   1/1     Running   0          24s
 ![scaledjobs agents](/img/blog/azure-pipelines-scaler/jobs-agents-autoscaled.png)
 
 Using a `ScaledJob` is the preferred way to autoscale your Azure Pipelines agents if you have long running jobs.
-The other option is using a `deployment` and leveraging the container lifecycle ([docs](https://keda.sh/docs/1.4/concepts/scaling-deployments/#leverage-the-container-lifecycle))
+The other option is using a `deployment` and leveraging the container lifecycle. ([docs](https://keda.sh/docs/1.4/concepts/scaling-deployments/#leverage-the-container-lifecycle))
