@@ -27,9 +27,14 @@ triggers:
 
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string appended with `EntityPath=<event_hub_name>`
 - `storageConnectionFromEnv` - Name of the environment variable that provides connection string for Azure Storage Account to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage.
-- `consumerGroup` - Consumer group of event hub consumer. (default: `$default`)
+- `consumerGroup` - Consumer group of Event Hub consumer. (default: `$default`)
 - `unprocessedEventThreshold` - : Average target value to trigger scaling actions. (default: 64)
-- `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function
+- `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in .net or Java, and not Azure Functions.
+- `checkpointStrategy` - configure the checkpoint behaviour of different Event Hub SDK's. (default: `""`)
+    - `""`: the default behaviour works for C#, older Python and Java eventhub implementations if a `blobContainer` is configured.
+    - `azureFunction`: suitable for Azure Functions. This is the default setting, if `blobcontainer` is empty.
+    - `blobMetadata`: For all implementations which stores checkpoint informations on blob metadata and not as blob content like current Python and Java Event Hub SDK's.
+    - `goSdk` For all implementations which use the Golang SDK checkpointing like Dapr.io
 
 ### Authentication Parameters
 
