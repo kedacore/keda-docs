@@ -25,7 +25,7 @@ triggers:
     # Optional, can use TriggerAuthentication as well
     connection: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
-    queueLength: "5" # Optional. Subscription length target for HPA. Default: 5 messages
+    messageCount: "5" # Optional. Average length target for HPA. Default: 5 messages
 ```
 
 **Parameter list:**
@@ -35,7 +35,7 @@ triggers:
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. *(Optional, required when `topicName` is specified)*
 - `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. *(Optional, required when pod identity is used)*
 - `connection` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. *(Optional, can use TriggerAuthentication as well)*
-- `queueLength` - Amount of active messages in your Azure Service Bus queue or topic to scale on. *(Required)*
+- `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on. *(Optional)*
 
 > 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 
@@ -79,7 +79,7 @@ spec:
       # Required: Define what Azure Service Bus to authenticate to with Managed Identity
       namespace: service-bus-namespace
       # Optional
-      queueLength: "5" # default 5
+      messageCount: "5" # default 5
     authenticationRef:
         name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
