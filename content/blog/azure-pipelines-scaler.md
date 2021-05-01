@@ -4,7 +4,7 @@ date = 2021-04-28
 author = "Troy Denorme"
 +++
 
-With the addition of Azure Piplines support in KEDA, it is now possible to autoscale your Azure Pipelines agents based on an Azure Pipelines agent pool queue.
+With the addition of Azure Piplines support in KEDA, it is now possible to autoscale your Azure Pipelines agents based on the agent pool queue length.
 Self-hosted Azure Pipelines agents are the perfect workload for this scaler. By autoscaling the agents you can create a scalable CI/CD environment.
 
 > The number of concurrent pipelines you can run is limited by your [parallel jobs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents#parallel-jobs). KEDA will autoscale to the maximum defined in the ScaledObject and does not limit itself to the parallel jobs count defined for the Azure DevOps organization.
@@ -74,7 +74,7 @@ spec:
 
 ### Autoscaling with KEDA
 
-After the deployment is created you need to create the ScaledObject in order for KEDA to start scaling the deployment.
+After the deployment is created you need to create the `ScaledObject` in order for KEDA to start scaling the deployment.
 To scale based on the queue length of an Azure Pipelines agent pool, you can use the `azure-pipelines` trigger.
 
 ```yaml
@@ -82,7 +82,6 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: pipeline-trigger-auth
-  namespace: default
 spec:
   secretTargetRef:
     - parameter: personalAccessToken
@@ -93,7 +92,6 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: azure-pipelines-scaledobject
-  namespace: default
 spec:
   scaleTargetRef:
     name: azdevops-deployment
@@ -108,11 +106,11 @@ spec:
      name: pipeline-trigger-auth
 ```
 
-The default `targetPipelinesQueueLength` is `1`, so there is one agent for each job.
+The default `targetPipelinesQueueLength` is `1`, so there will be one agent for each job.
 
 > The Azure Pipelines scaler supports scaling to zero but you need at least one agent registered in the agent pool in order for new jobs to be scheduled on the pool.
 
-### Running jobs
+### Running Azure Pipelines jobs
 
 After deploying the agent and the KEDA ScaledObject. It is time to see the autoscaling in action.
 
@@ -143,7 +141,7 @@ azdevops-deployment-5854bbbf84-tm47k   1/1     Running   0          36s
 
 When running your agents as a deployment you have no control on which pod gets killed when scaling down. ([see KEDA docs](https://keda.sh/docs/1.4/concepts/scaling-deployments/#long-running-executions))
 
-If you run your agents as a `Job`, KEDA will start a job for each job that is in the queue. The agents will accept one job when they are started and terminate afterwards.
+If you run your agents as a `Job`, KEDA will start a Kubernetes job for each job that is in the agent pool queue. The agents will accept one job when they are started and terminate afterwards.
 You also achieve fully isolated build environments when using jobs, since an agent is always created for each job.
 
 The following manifest is an example of a `ScaledJob` combined with the Azure Pipelines agent.
@@ -192,12 +190,12 @@ spec:
 
 ### Placeholder agent
 
-You cannot queue a build on an empty Agent pool because Azure Pipelines cannot validate the pool matches the requirements for the build.
+You cannot queue an Azure Pipelines job on an empty agent pool because Azure Pipelines cannot validate if the pool matches the requirements for the job.
 When you try to do this you will encounter the following error:
 
 > ##[error]No agent found in pool keda-demo which satisfies the specified demands: Agent.Version -gtVersion 2.163.1
 
-You can however use a workaround to register an agent as a placeholder, you are able to queue builds on an agent pool with no online agents.
+You can however use a workaround to register an agent as a placeholder, you are able to queue jobs on an agent pool with no online agents.
 Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registerd in the agent pool.
 
 ### ScaledJobs in action
@@ -210,7 +208,7 @@ Jobs are queued:
 
 ![azure devops builds](/img/blog/azure-pipelines-scaler/jobs-builds.png)
 
-KEDA will create a job for each pending job in the queue for the specified agent pool.
+KEDA will create a Kubernetes job for each pending job in the queue for the specified agent pool.
 
 ```sh
 $ kubectl get pods
