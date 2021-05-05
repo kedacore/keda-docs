@@ -5,27 +5,31 @@ author = "Troy Denorme"
 +++
 
 With the addition of Azure Piplines support in KEDA, it is now possible to autoscale your Azure Pipelines agents based on the agent pool queue length.
+
 Self-hosted Azure Pipelines agents are the perfect workload for this scaler. By autoscaling the agents you can create a scalable CI/CD environment.
 
-> The number of concurrent pipelines you can run is limited by your [parallel jobs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents#parallel-jobs). KEDA will autoscale to the maximum defined in the ScaledObject and does not limit itself to the parallel jobs count defined for the Azure DevOps organization.
+> 💡 The number of concurrent pipelines you can run is limited by your [parallel jobs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents#parallel-jobs).
+> 
+> KEDA will autoscale to the maximum defined in the ScaledObject and does not limit itself to the parallel jobs count defined for the Azure DevOps organization.
 
-## Azure Pipelines agents
+## What are Azure Pipelines self-hosted agents?
 
-Azure Pipelines jobs can run on different kinds of agents ([docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents)). But if you want full control, you are going to use self-hosted agents. 
-The agents can run on Linux, macOS or Windows machines but also in a container. To scale the agents with KEDA you can run self-hosted agents on Kubernetes.
+Azure Pipelines jobs can run on different kinds of agents ([docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents)). But if you want full control, you are going to have to use self-hosted agents.
+Agents are able to run on Linux, macOS or Windows machines and can be packaged in to a container.
+
+When running self-hosted agents on Kubernetes, there is no out-of-the-box support for autoscaling. However, with KEDA v2.3 you can now autoscale your self-hosted agents on Kubernetes based on the amount of pending jobs in your agent pool.
 
 You can run the agents as a `Deployment` or a `Job` in Kubernetes and scale them accordingly with a `ScaledObject` or a `ScaledJob`.
 
-## Deploy a self-hosted agent on Kubernetes as a Deployment
+## Deploying a self-hosted agent on Kubernetes as a Deployment
 
 ### Create the container image
 
-To create a basic Azure Pipelines agent image you can follow the instructions from the offical docs. [Run a self-hosted agent in Docker](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker#linux).
+To create a basic Azure Pipelines agent image you can follow the instructions from [the offical docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker#linux).
 
 ### Deploy on Kubernetes
 
-You can deploy the agent as a Kubernetes deployment and use KEDA to autoscale the deployment.
-The following is an example manifest for the deployment:
+You can easily deploy the agent as a Kubernetes deployment by using this Kubernetes manifest:
 
 ```yaml
 apiVersion: apps/v1
@@ -75,7 +79,8 @@ spec:
 ### Autoscaling with KEDA
 
 After the deployment is created you need to create the `ScaledObject` in order for KEDA to start scaling the deployment.
-To scale based on the queue length of an Azure Pipelines agent pool, you can use the `azure-pipelines` trigger.
+
+To scale based on the queue length of an Azure Pipelines agent pool, you can use the `azure-pipelines` trigger as of KEDA v2.3.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -108,11 +113,11 @@ spec:
 
 The default `targetPipelinesQueueLength` is `1`, so there will be one agent for each job.
 
-> The Azure Pipelines scaler supports scaling to zero but you need at least one agent registered in the agent pool in order for new jobs to be scheduled on the pool.
+> ⚠ The Azure Pipelines scaler supports scaling to zero but you need at least one agent registered in the agent pool in order for new jobs to be scheduled on the pool.
 
 ### Running Azure Pipelines jobs
 
-After deploying the agent and the KEDA ScaledObject. It is time to see the autoscaling in action.
+After deploying the agent and the KEDA `ScaledObject` it is time to see the autoscaling in action.
 
 First, check the current pods running in the deployment:
 ```sh
@@ -127,6 +132,8 @@ Now let's queue some builds.
 
 ![azure devops builds](/img/blog/azure-pipelines-scaler/deployment-builds.png)
 
+As a result, you see that KEDA starts scaling out the pods to meet the pending jobs:
+
 ```sh
 $ kubectl get pods
 NAME                                   READY   STATUS    RESTARTS   AGE
@@ -135,6 +142,8 @@ azdevops-deployment-5854bbbf84-r86qv   1/1     Running   0          12m
 azdevops-deployment-5854bbbf84-tm47k   1/1     Running   0          36s
 ```
 
+And they appear on Azure Pipelines as well:
+
 ![deployment agents](/img/blog/azure-pipelines-scaler/deployment-agents-autoscaled.png)
 
 ## Run the self-hosted agent as a Job
@@ -142,7 +151,7 @@ azdevops-deployment-5854bbbf84-tm47k   1/1     Running   0          36s
 When running your agents as a deployment you have no control on which pod gets killed when scaling down. ([see KEDA docs](https://keda.sh/docs/1.4/concepts/scaling-deployments/#long-running-executions))
 
 If you run your agents as a `Job`, KEDA will start a Kubernetes job for each job that is in the agent pool queue. The agents will accept one job when they are started and terminate afterwards.
-You also achieve fully isolated build environments when using jobs, since an agent is always created for each job.
+Since an agent is always created for every pipeline job, you can achieve fully isolated build environments by using Kubernetes jobs.
 
 The following manifest is an example of a `ScaledJob` combined with the Azure Pipelines agent.
 You have to use a modified image for this where the agent terminates itself after running a job. ([docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux#run-once))
@@ -191,6 +200,7 @@ spec:
 ### Placeholder agent
 
 You cannot queue an Azure Pipelines job on an empty agent pool because Azure Pipelines cannot validate if the pool matches the requirements for the job.
+
 When you try to do this you will encounter the following error:
 
 > ##[error]No agent found in pool keda-demo which satisfies the specified demands: Agent.Version -gtVersion 2.163.1
@@ -198,13 +208,13 @@ When you try to do this you will encounter the following error:
 You can however use a workaround to register an agent as a placeholder, you are able to queue jobs on an agent pool with no online agents.
 Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registerd in the agent pool.
 
-### ScaledJobs in action
+### Seeing `ScaledJobs` in action
 
 To be able to fully create agent on-demand, a template agent was created as a placeholder to be able to queue jobs.
 
 ![placeholder agent](/img/blog/azure-pipelines-scaler/placeholder-agent.png)
 
-Jobs are queued:
+Now, let's queue some pipelines:
 
 ![azure devops builds](/img/blog/azure-pipelines-scaler/jobs-builds.png)
 
