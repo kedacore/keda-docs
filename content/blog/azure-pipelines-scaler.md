@@ -32,6 +32,13 @@ To create a basic Azure Pipelines agent image you can follow the instructions fr
 You can easily deploy the agent as a Kubernetes deployment by using this Kubernetes manifest:
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azdevops
+data:
+  AZP_TOKEN: <base64 encoded PAT>
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -53,20 +60,14 @@ spec:
         image: <azdevops-image>
         env:
           - name: AZP_URL
-            valueFrom:
-              secretKeyRef:
-                name: azdevops
-                key: AZP_URL
+            value: "https://dev.azure.com/<organization>"
+          - name: AZP_POOL
+            value: "<agent pool name>"
           - name: AZP_TOKEN
             valueFrom:
               secretKeyRef:
                 name: azdevops
                 key: AZP_TOKEN
-          - name: AZP_POOL
-            valueFrom:
-              secretKeyRef:
-                name: azdevops
-                key: AZP_POOL
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: docker-volume
@@ -83,6 +84,13 @@ After the deployment is created you need to create the `ScaledObject` in order f
 To scale based on the queue length of an Azure Pipelines agent pool, you can use the `azure-pipelines` trigger as of KEDA v2.3.
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pipeline-auth
+data:
+  personalAccessToken: <base64 encoded PAT>
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
