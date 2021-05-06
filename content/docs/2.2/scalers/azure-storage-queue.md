@@ -26,7 +26,7 @@ triggers:
 - `queueName` - Name of the queue.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. (default: 5)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
-- `accountName` - Name of the storage account where that the queue belongs to.
+- `accountName` - Name of the storage account that the queue belongs to.
 
 ### Authentication Parameters
 
