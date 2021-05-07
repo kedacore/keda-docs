@@ -214,11 +214,12 @@ When you try to do this you will encounter the following error:
 > ##[error]No agent found in pool keda-demo which satisfies the specified demands: Agent.Version -gtVersion 2.163.1
 
 You can however use a workaround to register an agent as a placeholder, you are able to queue jobs on an agent pool with no online agents.
+
 Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registerd in the agent pool.
 
 ### Seeing `ScaledJobs` in action
 
-To be able to fully create agent on-demand, a template agent was created as a placeholder to be able to queue jobs.
+To allow scaling to zero and create agents on-demand, a template agent was created as a placeholder to be able to queue jobs.
 
 ![placeholder agent](/img/blog/azure-pipelines-scaler/placeholder-agent.png)
 
@@ -235,6 +236,8 @@ azdevops-scaledjob-2hshf-mp5jl   1/1     Running   0          24s
 azdevops-scaledjob-5gzr5-p8625   1/1     Running   0          24s
 azdevops-scaledjob-mmlzc-rw5gm   1/1     Running   0          24s
 ```
+
+Once that happens, you will see the agents are starting to process the pending Azure Pipelines jobs:
 
 ![scaledjobs agents](/img/blog/azure-pipelines-scaler/jobs-agents-autoscaled.png)
 
