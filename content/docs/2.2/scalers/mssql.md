@@ -93,7 +93,7 @@ metadata:
   name: mssql-secrets
 type: Opaque
 data:
-  mssql-connection-string: "Server=example.database.windows.net;port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;Encrypt=True;TrustServerCertificate=False;"
+  mssql-connection-string: U2VydmVyPWV4YW1wbGUuZGF0YWJhc2Uud2luZG93cy5uZXQ7cG9ydD0xNDMzO0RhdGFiYXNlPUFkdmVudHVyZVdvcmtzO1BlcnNpc3QgU2VjdXJpdHkgSW5mbz1GYWxzZTtVc2VyIElEPXVzZXIxO1Bhc3N3b3JkPVBhc3N3b3JkIzE7RW5jcnlwdD1UcnVlO1RydXN0U2VydmVyQ2VydGlmaWNhdGU9RmFsc2U7 # base64 encoded value of MSSQL connectionString of format "Server=example.database.windows.net;port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;Encrypt=True;TrustServerCertificate=False;"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
