@@ -333,6 +333,10 @@ logo = "roadwork.png"
 url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
+[[params.users]]
+url = "https://www.teamleader.eu"
+logo = "teamleader.png"
+
 # "Partners" section on the Community page
 [[params.partners]]
 url = "https://codit.eu"
