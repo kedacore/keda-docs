@@ -89,7 +89,7 @@ For these and other reasons, we also provide a `TriggerAuthentication` resource 
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: {trigger-auth-name}
+  name: {trigger-authentication-name}
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
@@ -116,7 +116,7 @@ Every parameter you define in `TriggerAuthentication` definition does not need t
     metadata:
       param1: {some-value}
     authenticationRef:
-      name: {trigger-authencation-name} # this may define other params not defined in metadata
+      name: {trigger-authentication-name} # this may define other params not defined in metadata
 ```
 
 ### Environment variable(s)

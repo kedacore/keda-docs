@@ -90,7 +90,7 @@ For these and other reasons, we also provide a `TriggerAuthentication` resource 
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: {trigger-auth-name}
+  name: {trigger-authentication-name}
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
@@ -129,7 +129,7 @@ Every parameter you define in `TriggerAuthentication` definition does not need t
     metadata:
       param1: {some-value}
     authenticationRef:
-      name: {trigger-authencation-name} # this may define other params not defined in metadata
+      name: {trigger-authentication-name} # this may define other params not defined in metadata
 ```
 
 ## Authentication scopes: Namespace vs. Cluster
@@ -138,7 +138,7 @@ Each `TriggerAuthentication` is defined in one namespace and can only be used by
 
 ```yaml
     authenticationRef:
-      name: {trigger-authencation-name}
+      name: {cluster-trigger-authentication-name}
       kind: ClusterTriggerAuthentication
 ```
 
@@ -150,7 +150,7 @@ Defining a `ClusterTriggerAuthentication` works almost identically to a `Trigger
 apiVersion: keda.sh/v1alpha1
 kind: ClusterTriggerAuthentication
 metadata:
-  name: {cluster-trigger-auth-name}
+  name: {cluster-trigger-authentication-name}
 spec:
   # As before ...
 ```
