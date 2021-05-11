@@ -93,7 +93,7 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | gcp | spiffe | aws-eks | aws-kiam # Optional. Default: none
+      provider: none | azure | aws-eks | aws-kiam # Optional. Default: none
   secretTargetRef: # Optional.
   - parameter: {scaledObject-parameter-name} # Required.
     name: {secret-name} # Required.
@@ -153,7 +153,7 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure | gcp | spiffe | aws-eks | aws-kiam # Optional. Default: none
+  provider: none | azure | aws-eks | aws-kiam # Optional. Default: none
 ```
 
 #### Azure Pod Identity
