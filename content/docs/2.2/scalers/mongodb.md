@@ -15,48 +15,85 @@ This specification describes the `mongodb` trigger that scales based on result o
 triggers:
   - type: mongodb
     metadata:
+      # name of an environment variable containing a valid MongoDB connection string
+      connectionStringFromEnv: MongoDB_CONNECTION_STRING
       # Required: database name
       dbName: "test"
       # Required: collection name
       collection: "test_collection"
       # Required: query expr, used by filter data
       query: '{"region":"eu-1","state":"running","plan":"planA"}'
-      # Required: according to the number of query result, to scale job
+      # Required: according to the number of query result, to scale the TargetRef
       queryValue: "1"
-      # Optional: This value will default to a masked version of the host and collection name if not set by the user (metrics name value would be then `mongodb-https---xxx-test_collection`)
+      # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name
+      metricName: "global-metric"
+```
+
+Alternatively, you can configure connection parameters explicitly instead of providing a connection string:
+
+```yaml
+triggers:
+  - type: mongodb
+    metadata:
+      # host name of the MongoDB server. Example of mongodb service: "mongodb-svc.<namespace>.svc.cluster.local"
+      host: mongodb-svc.default.svc.cluster.local
+      # port number of the MongoDB server with database used.It would be written like this "portnumber/dbname"
+      port: "27017/test"
+      # username credential for connecting to the MongoDB server
+      username: test_user
+      # name of an environment variable containing a valid password for connecting to the MongoDB server
+      passwordFromEnv: MongoDB_Password
+      # Required: database name
+      dbName: "test"
+      # Required: collection name
+      collection: "test_collection"
+      # Required: query expr, used by filter data
+      query: '{"region":"eu-1","state":"running","plan":"planA"}'
+      # Required: according to the number of query result, to scale the TargetRef
+      queryValue: "1"
+      # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name.
       metricName: "global-metric"
 ```
 
 **Parameter list:**
 
-- `dbName`  - Name of the database
-- `collection` - Name of the collection
-- `query` - A MongoDB query that should return single numeric value
-- `queryValue` - A threshold that will define when scaling should occur
-- `metricName` - An optional name to assign to the metric. If not set KEDA will generate a name based on masked version of the server hostname and collection name. If using more than one trigger it is required that all `metricName`(s) be unique.
+The `mongodb` trigger always requires the following information:
 
-To provide information about how to connect to MongoDB you can provide
+- `dbName`  - Name of the database.
+- `collection` - Name of the collection.
+- `query` - A MongoDB query that should return single numeric value.
+- `queryValue` - A threshold that will define when scaling should occur.
 
-- `connectionStringFromEnv` - A MongoDB connection string that should point to environment variable with valid value
+To connect to the MongoDB server, you can provide either:
 
-Or provide more detailed information:
+- `connectionStringFromEnv` - The name of an environment variable containing a valid MongoDB connection string for connectiing to the MongoDB server.
 
-- `host` - The host of the MongoDB server
-- `port` - The port of the MongoDB server
-- `username` - Username to authenticate with to MongoDB database
-- `passwordFromEnv` - Password for the given user
+Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
+
+- `host` - The host name of the MongoDB server.
+- `port` - The port number of the MongoDB server with the `dbName` separated by slash `/` .
+- `username` - Username to authenticate with to MongoDB database.
+- `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MongoDB server.
+
+When configuring with a connection string, you can use this URL format:
+
+```
+mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
+```
+
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on masked version of the server hostname and collection name. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `mongodb-` .
 
 ### Authentication Parameters 
 
-You can authenticate by using connection string or password authentication.
+As an alternative to environment variables, You can authenticate with the MongoDB server by using connection string or password authentication via `TriggerAuthentication` or `ClusterTriggerAuthentication` configuration.
 
 **Connection String Authentication:**
 
-- `connectionString`  - Connection string for MongoDB database
+- `connectionString`  - Connection string for MongoDB server.
 
 **Password Authentication:**
 
-- `password` - Password for the configured user to login to MongoDB database variables.
+- `password` - Password for the configured user to login to MongoDB server.
 
 ### Example
 
