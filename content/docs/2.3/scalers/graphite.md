@@ -63,7 +63,7 @@ spec:
 ```
 
 
-Here is an example of a graphite scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of scaling with the Graphite scaler with basic authentication by defining the `Secret` and `TriggerAuthentication` as follows:
 
 ```yaml
 apiVersion: v1
