@@ -70,10 +70,10 @@ url = "https://github.com/kedacore/sample-hello-world-azure-functions"
 icon = "fas fa-bolt"
 
 [[params.samples]]
-title = "Python Jobs and Queues"
-content = "Run a Python job for each queue message."
-url = "https://github.com/tomconte/sample-keda-queue-jobs"
-icon = "fas fa-clock"
+title = ".NET Core worker and Azure Service Bus"
+content = "Scale a .NET Core worker based on an Azure Service Bus queue."
+url = "https://github.com/kedacore/sample-dotnet-worker-servicebus-queue"
+icon = "fas fa-cloud"
 
 # Social media buttons
 [[params.social]]
