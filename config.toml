@@ -261,22 +261,22 @@ icon = "fas fa-bolt"
 
 [[params.features]]
 title = "Autoscaling Made Simple"
-content = "Bring rich scaling to every container in your [Kubernetes](https://kubernetes.io) cluster"
+content = "Bring rich scaling to every workload in your [Kubernetes](https://kubernetes.io) cluster"
 icon = "fas fa-rocket"
 
 [[params.features]]
 title = "Built-in Scalers"
-content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, and more"
+content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, CI/CD, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
 title = "Multiple Workload Types"
-content = "Support for variety of workload types such as deployments and jobs"
+content = "Support for variety of workload types such as deployments, jobs & custom resources with `/scale` sub-resource"
 icon = "fas fa-shapes"
 
 [[params.features]]
 title = "Vendor-Agnostic"
-content = "Support for triggers across multiple vendors"
+content = "Support for triggers across variety of cloud providers & products"
 icon = "fas fa-cloud"
 
 [[params.features]]
