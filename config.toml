@@ -70,10 +70,10 @@ url = "https://github.com/kedacore/sample-hello-world-azure-functions"
 icon = "fas fa-bolt"
 
 [[params.samples]]
-title = "Python Jobs and Queues"
-content = "Run a Python job for each queue message."
-url = "https://github.com/tomconte/sample-keda-queue-jobs"
-icon = "fas fa-clock"
+title = ".NET Core worker and Azure Service Bus"
+content = "Scale a .NET Core worker based on an Azure Service Bus queue."
+url = "https://github.com/kedacore/sample-dotnet-worker-servicebus-queue"
+icon = "fas fa-cloud"
 
 # Social media buttons
 [[params.social]]
@@ -261,22 +261,22 @@ icon = "fas fa-bolt"
 
 [[params.features]]
 title = "Autoscaling Made Simple"
-content = "Bring rich scaling to every container in your [Kubernetes](https://kubernetes.io) cluster"
+content = "Bring rich scaling to every workload in your [Kubernetes](https://kubernetes.io) cluster"
 icon = "fas fa-rocket"
 
 [[params.features]]
 title = "Built-in Scalers"
-content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, and more"
+content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, CI/CD, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
 title = "Multiple Workload Types"
-content = "Support for variety of workload types such as deployments and jobs"
+content = "Support for variety of workload types such as deployments, jobs & custom resources with `/scale` sub-resource"
 icon = "fas fa-shapes"
 
 [[params.features]]
 title = "Vendor-Agnostic"
-content = "Support for triggers across multiple vendors"
+content = "Support for triggers across variety of cloud providers & products"
 icon = "fas fa-cloud"
 
 [[params.features]]
