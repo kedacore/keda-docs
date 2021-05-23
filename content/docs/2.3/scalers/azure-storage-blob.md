@@ -31,6 +31,8 @@ triggers:
 - `blobPrefix` - Prefix for the Blob. Use this to specifiy sub path for the blobs if required. (default: `""`)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
 
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on of the `blobContainerName`, `blobPrefix` and `blobDelimiter`. For example: **azure-blob-functions-blob-myprefix-example**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `azure-blob-`.
+
 ### Authentication Parameters
 
 You can authenticate by using pod identity or connection string authentication.
