@@ -213,7 +213,8 @@ When you try to do this you will encounter the following error:
 
 > ##[error]No agent found in pool keda-demo which satisfies the specified demands: Agent.Version -gtVersion 2.163.1
 
-You can however use a workaround to register an agent as a placeholder, you are able to queue jobs on an agent pool with no online agents.
+You can, however, use a workaround to register an agent as a placeholder which allows you to queue jobs on an agent pool that has no agents that are online.
+
 
 Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registerd in the agent pool.
 
