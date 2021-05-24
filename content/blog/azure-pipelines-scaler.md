@@ -239,6 +239,8 @@ azdevops-scaledjob-mmlzc-rw5gm   1/1     Running   0          24s
 
 Once that happens, you will see the agents are starting to process the pending Azure Pipelines jobs:
 
+Once that happens, you will see the jobs in the Azure Pipelines' agent pool:
+
 ![scaledjobs agents](/img/blog/azure-pipelines-scaler/jobs-agents-autoscaled.png)
 
 Using a `ScaledJob` is the preferred way to autoscale your Azure Pipelines agents if you have long running jobs.
