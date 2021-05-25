@@ -1,33 +1,33 @@
 +++
 title = "The KEDA HTTP Add-on Beta"
-date = 2021-04-06
+date = 2021-05-25
 author = "Aaron Schlesinger and Tom Kerkhove"
 +++
 
-Over the past few months, we’ve been adding more and more scalers to KEDA making it easier for users to scale on what they need. Today, we leverage more than 30 scalers out-of-the-box supporting all major cloud providers & industry-standard tools such as Prometheus that can scale any Kubernetes resource.
+Over the past few months, we’ve been adding more and more scalers to KEDA making it easier for users to scale on what they need. Today, we leverage more than 30 scalers out-of-the-box, supporting all major cloud providers & industry-standard tools such as Prometheus that can scale any Kubernetes resource.
 
 But, we are missing a major feature that many modern, distributed applications need - the ability to scale based on HTTP traffic.
 
-(Note: you can achieve this today if you are using Prometheus, as per our FAQ, but we do not have first-class support for it.)
-
 It’s time to change this.
+
+>Note: You can build your own custom HTTP autoscaling system using the [Prometheus scaler](https://keda.sh/docs/2.2/scalers/prometheus/) per our FAQ. The new HTTP Addon adds first-class, end-to-end support for HTTP.
 
 ## Introducing our HTTP add-on for KEDA
 
-Autoscaling HTTP is often not as straightforward as other event sources. You do not know how much traffic will be coming and, given its synchronous nature, supporting scale-to-zero HTTP applications requires an intelligent intermediate routing layer to “hold”  the incoming request(s) until new instances are spun up.
+Autoscaling HTTP is often not as straightforward as other event sources. You don't know how much traffic will be coming and, given its synchronous nature, supporting scale-to-zero HTTP applications requires an intelligent intermediate routing layer to “hold” the incoming request(s) until new instances of the backend application are created and running.
 
-We’re happy to announce our experimental HTTP add-on for KEDA which is purely focused on solving this problem. This new project introduces an HTTPScaledObject CRD, which you use to autoscale a Deployment, including scale-to-zero.
+We’re happy to announce our experimental HTTP add-on for KEDA which is purely focused on solving this problem. This new project introduces an `HTTPScaledObject` CRD, which you use to autoscale a Kubernetes `Deployment`, including scale-to-zero.
 
-We’ve taken a “batteries included with reasonable defaults” approach to designing and building the HTTP add-on.  This means that you don’t have to run other tools such as Prometheus. At the same time, the system is made up of well-defined, reusable components that can run independently. You can opt-out of the defaults and customize components as you see fit. In many cases, you can even run most of the components independently.
+We’ve taken a “batteries included with reasonable defaults” approach to designing and building the HTTP add-on. This means that you don’t have to run other tools such as Prometheus. At the same time, the system is made up of well-defined, reusable components that can run independently. You can opt-out of the defaults and customize components as you see fit. In many cases, you can even run most of the components independently.
 
 Scaling based on incoming HTTP traffic is different from core KEDA triggers for two reasons:
 
-- There is no official or built-in API you can call to get a counter or other metric to scale on. For example, we cannot call the Kafka API to get the length of a queue.
+- There is no standard existing API you can call to get a counter or other metric to scale on. For example, we cannot call the Kafka API to get the length of a queue.
 - You need to set up the infrastructure to route HTTP requests to the server you’re autoscaling
 
 You can see the HTTP add-on as just another trigger in your scaling toolbox.
 
-⚠ Given its experimental state, breaking changes can occur and the HTTP add-on is not supported for production workloads yet.
+⚠ Given its experimental state of this project, breaking changes can occur and the HTTP add-on is not supported for production workloads yet.
 
 ### How does it work?
 
@@ -38,7 +38,7 @@ The system is made up of 3 components:
 - **Interceptor**: This component accepts HTTP requests into the system, reports pending HTTP request queue metrics to the external scaler, and forwards requests to the target application.
   - If the application is currently scaled to zero replicas, the interceptor will hold requests until it scales up
 - **External scaler**: This is an [external push scaler](https://keda.sh/docs/2.1/scalers/external-push/) that constantly pings the interceptor to get pending HTTP queue metrics. It transforms these data and sends them directly down to KEDA, which then makes a scaling decision
-- ***Operator**:  The operator is a component that exists just for the convenience of the user. It listens for new [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) resources, HTTPScaledObject, and wire up your workloads to support autoscaling. The operator will create & configure the interceptor and scaler for you such that a target Deployment that you specify will begin autoscaling based on incoming HTTP traffic.
+- ***Operator**:  This is an [Operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) that runs for the convenience of the user. It listens for new [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) resources, called `HTTPScaledObject`s, and creates and configures interceptors and scalers so that your existing [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) will begin autoscaling according to incoming HTTP traffic.
 
 ![architecture diagram](/static/img/blog/http-add-on/arch.png)
 
@@ -75,15 +75,17 @@ helm install --create-namespace -n ${NAMESPACE} keda kedacore/keda
 
 #### Install the Operator
 
-Now that KEDA is installed, you can install the operator. We've packaged it up in [Artifact Hub](https://artifacthub.io/packages/keda-scaler/keda-official-external-scalers/keda-add-ons-http) to make it easy to install without checking out any code.
+Now that KEDA is installed, you can install the operator:
 
-TODO: instructions here for using artifact hub
+```shell
+helm install --create-namespace -n ${NAMESPACE} http-add-on kedacore/keda-add-ons-http
+```
 
 ### Install an `HTTPScaledObject`
 
 The `HTTPScaledObject` CRD instructs the operator to install and configure the interceptor and scaler for a specified `Deployment`. For this to work, you’ll need to have a Deployment running in the same `$NAMESPACE` and a Service configured to route traffic to the pods in that `Deployment`.
 
->We've created a sample application [here](TODO) as a Helm chart for you, if you'd like to install it. It comes complete with a properly configured `HTTPScaledObject`, so when you install the chart, everything will be automatically configured for you and you can skip the rest of this section.
+>We've created a sample application [here](https://github.com/kedacore/http-add-on/tree/main/examples/xkcd) as a Helm chart for you. It comes complete with a properly configured `HTTPScaledObject`, so when you install the chart, everything will be automatically configured for you and you can skip the rest of this section. If you install this chart, you can skip the rest of this section.
 
 After you have your application set up, copy the following YAML into a file called myautoscaledapp.yaml:
 
@@ -105,7 +107,7 @@ And finally, submit it to your Kubernetes cluster:
 kubectl create -f -n $NAMESPACE myautoscaledapp.yaml
 ```
 
-The operator will pick up the CRD and, when it’s done installing and configuring, you’ll see a new `Service` (among other things!) that’s ready to route HTTP traffic to your Deployment. Send all of your HTTP to the Service, and the Deployment will scale!
+The operator will pick up the CRD and, when it’s done installing and configuring, you’ll see a new `Service` (among other things!) that’s ready to route HTTP traffic to your Deployment. Send all of your HTTP to the Service, and the Deployment will begin autoscaling!
 
 ### Cleaning up
 
@@ -136,6 +138,7 @@ Lastly, we’d like to thank the following folks for building the initial protot
 - [Aaron Schlesinger](https://github.com/arschles)
 - [Lucas Santos](https://github.com/khaosdoctor)
 - [Aaron Wislang](https://github.com/asw101)
+- [Tom Kerkhove](https://github.com/tomkerkhove/) and the rest of the [KEDA core Maintainers](https://github.com/orgs/kedacore/teams/keda-maintainers)
 
 Thanks for reading,
 
