@@ -1,6 +1,6 @@
 +++
 title = "Autoscaling Azure Pipelines agents with KEDA"
-date = 2021-04-28
+date = 2021-05-27
 author = "Troy Denorme"
 +++
 

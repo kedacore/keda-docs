@@ -2,6 +2,9 @@
 title = "Why Alibaba Cloud uses KEDA for application autoscaling"
 date = 2021-04-06
 author = "Yan Xun, Andy Shi, and Tom Kerkhove"
+aliases = [
+    "/blog/why-alibaba-cloud-uses-keda-for-app-autoscaling/"
+]
 +++
 
 > This blog post was initially posted on [CNCF blog](https://www.cncf.io/blog/2021/03/30/why-alibaba-cloud-uses-keda-for-application-autoscaling/) and is co-authored by Yan Xun, Senior Engineer from Alibaba Cloud EDAS team & Andy Shi, Developer Advocator from Alibaba Cloud.

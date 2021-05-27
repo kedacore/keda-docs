@@ -2,6 +2,9 @@
 title = "Kubernetes Event-driven Autoscaling (KEDA) is now an official CNCF Sandbox project 🎉"
 date = 2020-03-31
 author = "KEDA Maintainers"
+aliases = [
+    "/blog/keda-cncf-sandbox/"
+]
 +++
 
 Over the past year, We've been contributing to Kubernetes Event-Driven Autoscaling (KEDA), which makes application autoscaling on Kubernetes dead simple. If you have missed it, read about it in our ["Exploring Kubernetes-based event-driven autoscaling (KEDA)"](https://blog.tomkerkhove.be/2019/06/11/a-closer-look-at-kubernetes-based-event-driven-autoscaling-keda/) blog post.

@@ -69,15 +69,15 @@ Locate installed KEDA Operator in `keda` namespace, then remove created `KedaCon
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
 - We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
-Run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
+Run the following command (if needed, replace the version, in this case `2.3.0`, with the one you are using):
 
 ```sh
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.0.0/keda-2.0.0.yaml
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.3.0/keda-2.3.0.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
-kubectl apply -f keda-2.0.0.yaml
+kubectl apply -f keda-2.3.0.yaml
 ```
 
 - You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
@@ -85,27 +85,27 @@ kubectl apply -f keda-2.0.0.yaml
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-VERSION=2.0.0 make deploy
+VERSION=2.3.0 make deploy
 ```
 
 ### Uninstall
 
-- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.0.0`, with the one you are using):
+- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.3.0`, with the one you are using):
 
 ```sh
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.0.0/keda-2.0.0.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.3.0/keda-2.3.0.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
-kubectl delete -f keda-2.0.0.yaml
+kubectl delete -f keda-2.3.0.yaml
 ```
 
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-VERSION=2.0.0 make undeploy
+VERSION=2.3.0 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}
