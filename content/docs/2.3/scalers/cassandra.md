@@ -18,21 +18,19 @@ triggers:
       username: "cassandra"
       clusterIPAddress: "cassandra.default.svc.cluster.local:9042"
       consistency: "Quorum" # Optional: If not set by the user the default value will be `gocql.One`.
-      protoVersion: "4" # Optional: If not set by the user the default value will be `4`.
+      protocolVersion: "4" # Optional: If not set by the user the default value will be `4`.
       keyspace: "testing" # Optional: Used for generating the metricName.
       query: "SELECT COUNT(*) FROM testing.test_table;"
       targetQueryValue: "1"
       metricName: "test_table-count" # Optional: If not set by the user the generated value would be `cassandra-<KEYSPACE>`, or if keyspace is not set either the default value would be just `cassandra`.
-    authenticationRef:
-      name: keda-trigger-auth-cassandra-secret
 ```
 
 **Parameter list:**
 
 - `username` - The username credential for connecting to the Cassandra instance.
 - `clusterIPAddress` - The IP address or the host name of the Cassandra instance, with port number (optional).
-- `consistency` - Configuration for a session or per individual read or write operation.
-- `protoVersion` - CQL Binary Protocol.
+- `consistency` - Configuration for a session or per individual read operation.
+- `protocolVersion` - CQL Binary Protocol.
 - `keyspace` - The name of the keyspace used in Cassandra.
 - `query` - A Cassandra query that should return single numeric value.
 - `targetQueryValue` - The threshold value that is provided by the user and used as `targetAverageValue` in the Horizontal Pod Autoscaler (HPA).
@@ -80,7 +78,7 @@ spec:
       username: "cassandra"
       clusterIPAddress: "cassandra.default.svc.cluster.local:9042"
       consistency: "Quorum"
-      protoVersion: "4"
+      protocolVersion: "4"
       keyspace: "testing"
       query: "SELECT COUNT(*) FROM testing.test_table;"
       targetQueryValue: "1"
