@@ -1,7 +1,7 @@
 +++
 title = "Graphite"
 layout = "scaler"
-availability = "v2.3+"
+availability = "v2.4+"
 maintainer = "Community"
 description = "Scale applications based on metrics in Graphite."
 go_file = "graphite_scaler"
