@@ -2,6 +2,9 @@
 title = "Migrating our container images to GitHub Container Registry"
 date = 2021-03-26
 author = "KEDA Maintainers"
+aliases = [
+    "/blog/migrating-to-github-container-registry/"
+]
 +++
 
 We provide **various ways to [deploy KEDA](https://keda.sh/docs/latest/deploy/) in your cluster** including by using [Helm chart](https://github.com/kedacore/charts), [Operator Hub](https://operatorhub.io/operator/keda) and raw YAML specifications.
