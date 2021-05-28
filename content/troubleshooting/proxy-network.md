@@ -1,11 +1,15 @@
 +++
-title = "How can I use KEDA in a proxy network?"
+title = "Why is Kubernetes unable to get metrics from KEDA?"
 weight = 1
 +++
 
 If while setting up KEDA, you get an error: `(v1beta1.external.metrics.k8s.io) status FailedDiscoveryCheck` with a message: `no response from https://ip:443: Get https://ip:443: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)`.
 
  One of the reason for this can be that you are behind a proxy network.
+
+### Before you start
+
+- Make sure no network policies are blocking traffic
 
 ### Check the status:
 
