@@ -33,8 +33,6 @@ Deploying KEDA with Helm is very simple:
 
 3. Install `keda` Helm chart
 
-    **Helm 3**
-
     ```sh
     kubectl create namespace keda
     helm install keda kedacore/keda --version 2.1.0  --namespace keda
@@ -46,8 +44,6 @@ Deploying KEDA with Helm is very simple:
 ### Uninstall
 
 If you want to remove KEDA from a cluster you can run one of the following:
-
-**Using Helm 3**
 
 ```sh
 helm uninstall -n keda keda
