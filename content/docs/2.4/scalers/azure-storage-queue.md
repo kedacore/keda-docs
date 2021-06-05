@@ -19,7 +19,7 @@ triggers:
     queueLength: '5'
     connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
     accountName: storage-account-name
-    endpointSuffix: queue-endpoint-suffix
+    endpointSuffix: queue.core.usgovcloudapi.net
 ```
 
 **Parameter list:**
@@ -71,7 +71,7 @@ spec:
       # Optional
       queueLength: "5" # default 5
       # Optional, default: "queue.core.windows.net"
-      endpointSuffix: queue-endpoint-suffix
+      endpointSuffix: queue.core.usgovcloudapi.net
     authenticationRef:
         name: azure-queue-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
