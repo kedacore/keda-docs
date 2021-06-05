@@ -27,6 +27,7 @@ triggers:
     lagThreshold: '5'
     offsetResetPolicy: latest
     allowIdleConsumers: false
+    version: 1.0.0
 ```
 
 **Parameter list:**
@@ -38,6 +39,7 @@ triggers:
 - `offsetResetPolicy` - The offset reset policy for the consumer. Options are `latest` or `earliest` (default: `latest`)
 - `allowIdleConsumers` - Optional. When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (default: `false`)
+- `version` - Optional. Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (default: `1.0.0`)
 
 ### Authentication Parameters
 
