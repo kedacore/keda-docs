@@ -32,7 +32,7 @@ triggers:
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
 - `blobPrefix` - Prefix for the Blob. Use this to specifiy sub path for the blobs if required. (default: `""`)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
-- `cloud` - Name of the cloud environment that the blob belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (default: `AzurePublicCloud`)
+- `cloud` - Name of the cloud environment that the blob belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the storage blob endpoint suffix of the cloud environment that the blob belongs to, e.g. `blob.core.cloudapi.de` for `AzureGermanCloud`.
 
