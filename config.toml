@@ -317,6 +317,10 @@ url = "https://www.intercept.cloud"
 logo = "intercept.png"
 
 [[params.users]]
+url = "https://home.kpmg/uk/en/home.html"
+logo = "KPMG.jpeg"
+
+[[params.users]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
