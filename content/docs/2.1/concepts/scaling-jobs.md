@@ -126,7 +126,7 @@ This logic is the same as Job for V1.  The number of the scale will be calculate
 _The number of the scale_
 
 ```go
-queueLength - runningJobCount
+maxScale - runningJobCount
 ```
 
 **custom**
@@ -140,17 +140,22 @@ customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize cu
 _The number of the scale_
 
 ```go
-queueLength - customScalingQueueLengthDeduction - (runningJobCount * customScalingRunningJobPercentage)
+min(maxScale-int64(*s.CustomScalingQueueLengthDeduction)-int64(float64(runningJobCount)*(*s.CustomScalingRunningJobPercentage)), maxReplicaCount)
 ```
 
 **accurate** 
-If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
+If the scaler returns `queueLength` (number of items in the queue) that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
 
 ```go
 if (maxScale + runningJobCount) > maxReplicaCount {
-  return maxReplicaCount - runningJobCount
-}
-return queueLength
+		return maxReplicaCount - runningJobCount
+	}
+  return maxScale - pendingJobCount
+```
+
+**maxScale** is calculated with the maxReplicaCount,Queue Length(queueLength),Target Average Value(targetAverageValue) as shown below:
+```go
+min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
 
