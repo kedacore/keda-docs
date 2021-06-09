@@ -21,6 +21,8 @@ triggers:
     connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
     blobPrefix: myprefix
     blobDelimiter: /example
+    cloud: Private
+    endpointSuffix: blob.core.airgap.example # Required when cloud=Private
 ```
 
 **Parameter list:**
@@ -30,6 +32,9 @@ triggers:
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
 - `blobPrefix` - Prefix for the Blob. Use this to specifiy sub path for the blobs if required. (default: `""`)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
+- `cloud` - Name of the cloud environment that the blob belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
+
+When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the storage blob endpoint suffix of the cloud environment that the blob belongs to, e.g. `blob.core.cloudapi.de` for `AzureGermanCloud`.
 
 You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on of the `blobContainerName`, `blobPrefix` and `blobDelimiter`. For example: **azure-blob-functions-blob-myprefix-example**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `azure-blob-`.
 
@@ -69,6 +74,8 @@ spec:
       blobCount: "5" # default 5
       blobPrefix: blobsubpath # Default : ""
       blobDelimiter: "/" # Default: "/"
+      # Optional, default: AzurePublicCloud
+      cloud: AzureChinaCloud
     authenticationRef:
         name: azure-blob-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
