@@ -34,9 +34,12 @@ triggers:
 - `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
 - `subscriptionId` - Id of Azure subscription that contains the Azure resource. This is used for determining the full resource URI.
 - `resourceGroupName` - Name of the resource group for the Azure resource.
-- `metricName` - Name of the metric which can be found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
+- `metricName` - Name of the metric to query.
+  - Azure metrics are available as a list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
+  - Custom metric name when querying Azure Monitor [custom metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-custom-overview).
+- `metricNamespace` - Name of the metric namespace. Required when `metricName` is a custom metric.
 - `targetValue` - Target value to trigger scaling actions.
-- `metricAggregationType` - Aggregation method of the Azure Monitor metric. Optionsinclude `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
+- `metricAggregationType` - Aggregation method of the Azure Monitor metric. Options include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
 - `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (optional)
 - `metricAggregationInterval` - Collection time of the metric in format `"hh:mm:ss"` (default: `"0:5:0"` which is 5 minutes)
 - `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. Optional. Required when `TriggerAuthentication` is not provided.
@@ -100,7 +103,8 @@ spec:
       tenantId: xxx-xxx-xxx-xxx-xxx
       subscriptionId: yyy-yyy-yyy-yyy-yyy
       resourceGroupName: azureMonitor
-      metricName: kube_pod_status_ready
+      metricName: pod_custom_metric
+      metricNamespace: pod_custom_metrics_namespace # required when monitoring custom metrics
       metricFilter: namespace eq 'default'
       metricAggregationInterval: "0:1:0"
       metricAggregationType: Average
