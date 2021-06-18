@@ -120,6 +120,28 @@ scalingStrategy:
 
 Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
 
+> 💡 **NOTE:**
+>
+>`maxScale` is not the running Job count. It is measured through:
+ >```go
+ >maxValue = min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
+ >```
+ >that means, pure the value queueLength devided by targetAvarageValue unless it is exceed the MaxReplicaCount.
+>
+>`RunningJobCount` means the number of jobs that are in the running state or not finished. It is measured through:
+>```go
+>if !e.isJobFinished(&job) {
+>		runningJobs++
+>}
+>```
+>`PendingJobCount` means the no. of jobs that are in pending state i.e job which is not
+finished **AND** pod with respect to job is either not running or not completed. it is measured through:
+>```go
+>if !e.isJobFinished(&job) && !e.isAnyPodRunningOrCompleted(&job) {
+>			pendingJobs++
+>}
+>```
+
 **default**
 This logic is the same as Job for V1.  The number of the scale will be calculated as follows. 
 
@@ -151,11 +173,6 @@ if (maxScale + runningJobCount) > maxReplicaCount {
 		return maxReplicaCount - runningJobCount
 	}
 	return maxScale - pendingJobCount
-```
-
-**maxScale** is calculated with the maxReplicaCount,Queue Length(queueLength),Target Average Value(targetAverageValue) as shown below:
-```go
-min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
 
