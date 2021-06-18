@@ -23,7 +23,7 @@ q = "Can I scale my HTTP container or function with KEDA and Kubernetes?"
 a = """
 KEDA will scale a container using metrics from a scaler, but unfortunately there is no scaler today for HTTP workloads.
 
-We recommend using the [Prometheus scaler](/scalers/prometheus/) to create scale rule based on metrics around HTTP events for now. Read [Anirudh Garg's blog post](https://dev.to/anirudhgarg_99/scale-up-and-down-a-http-triggered-function-app-in-kubernetes-using-keda-4m42) to learn more.
+We recommend using the [Prometheus scaler](/docs/latest/scalers/prometheus/) to create scale rule based on metrics around HTTP events for now. Read [Anirudh Garg's blog post](https://dev.to/anirudhgarg_99/scale-up-and-down-a-http-triggered-function-app-in-kubernetes-using-keda-4m42) to learn more.
 """
 type = "Features"
 
