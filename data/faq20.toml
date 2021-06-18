@@ -33,6 +33,30 @@ a = "Polling interval really only impacts the time-to-activation (scaling from 0
 type = "Features"
 
 [[qna]]
+q = "Using multiple triggers for the same scale target"
+a = """
+KEDA allows you to use multiple triggers as part of the same `ScaledObject` or `ScaledJob`.
+
+By doing this, your autoscaling becomes better:
+- All your autoscaling rules are in one place
+- You will not have multiple `ScaledObject`'s or `ScaledJob`'s interferring with each other
+
+KEDA will start scaling as soon as when one of the triggers meets the criteria.
+"""
+type = "Best Practices"
+
+[[qna]]
+q = "Don't combine `ScaledObject` with Horizontal Pod Autoscaler (HPA)"
+a = """
+We recommend not to combine using KEDA's `ScaledObject` with a Horizontal Pod Autoscaler (HPA) to scale the same workload.
+
+They will compete with each other resulting given KEDA uses Horizontal Pod Autoscaler (HPA) under the hood and will result in odd scaling behavior.
+
+If you are using a Horizontal Pod Autoscaler (HPA) to scale on CPU and/or memory, we recommend using the [CPU scaler](/docs/latest/scalers/cpu/) & [Memory scaler](/docs/latest/scalers/memory/) scalers instead.
+"""
+type = "Best Practices"
+
+[[qna]]
 q = "What does the target metric value in the Horizontal Pod Autoscaler (HPA) represent?"
 a = """
 The target metric value is used by the Horizontal Pod Autoscaler (HPA) to make scaling decisions.

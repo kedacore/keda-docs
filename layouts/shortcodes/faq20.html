@@ -20,6 +20,26 @@
 </div>
 {{ end }}
 
+<h2>Best Practices</h2>
+
+{{ range where $faq20 ".type" "==" "Best Practices" }}
+{{ $question := .q | markdownify }}
+{{ $answer   := .a | markdownify }}
+{{ $id       := .q | urlize }}
+<div class="card is-collapsible" x-data="{ open: false }" id="{{ $id }}">
+  <header class="card-header has-mouse-icon" @click="open = !open">
+    <p class="card-header-title title is-size-4 is-size-4-mobile">
+      {{ $question }}
+    </p>
+  </header>
+  <div class="card-content" x-show="open">
+    <div class="content is-medium has-text-grey-dark">
+      {{ $answer }}
+    </div>
+  </div>
+</div>
+{{ end }}
+
 <h2>Features</h2>
 
 {{ range where $faq20 ".type" "==" "Features" }}
