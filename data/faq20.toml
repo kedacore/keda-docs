@@ -44,7 +44,7 @@ By doing this, your autoscaling becomes better:
 - All your autoscaling rules are in one place
 - You will not have multiple `ScaledObject`'s or `ScaledJob`'s interferring with each other
 
-KEDA will start scaling as soon as when one of the triggers meets the criteria.
+KEDA will start scaling as soon as when one of the triggers meets the criteria. Horizontal Pod Autoscaler (HPA) will calculate metrics for every scaler and use the highest desired replica count to scale the workload to.
 """
 type = "Best Practices"
 
