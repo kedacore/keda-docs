@@ -122,20 +122,23 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 
 > 💡 **NOTE:**
 >
->`maxScale` is not the running Job count. It is measured through:
+>`maxScale` is not the running Job count. It is measured as follows:
  >```go
  >maxValue = min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
  >```
- >that means, pure the value queueLength devided by targetAvarageValue unless it is exceed the MaxReplicaCount.
+ >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
 >
->`RunningJobCount` means the number of jobs that are in the running state or not finished. It is measured through:
+>`RunningJobCount` represents the number of jobs that are currently running or have not finished yet.
+>
+>It is measured as follows:
 >```go
 >if !e.isJobFinished(&job) {
 >		runningJobs++
 >}
 >```
->`PendingJobCount` means the no. of jobs that are in pending state i.e job which is not
-finished **AND** pod with respect to job is either not running or not completed. it is measured through:
+>`PendingJobCount` provides an indication of the amount of jobs that are in pending state, for example a that has not finished yet **and** the underlying pod is either not running or has not completed yet.
+>
+>It is measured as follows:
 >```go
 >if !e.isJobFinished(&job) && !e.isAnyPodRunningOrCompleted(&job) {
 >			pendingJobs++
