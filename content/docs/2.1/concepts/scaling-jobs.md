@@ -120,13 +120,38 @@ scalingStrategy:
 
 Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
 
+> 💡 **NOTE:**
+>
+>`maxScale` is not the running Job count. It is measured as follows:
+ >```go
+ >maxValue = min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
+ >```
+ >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
+>
+>`RunningJobCount` represents the number of jobs that are currently running or have not finished yet.
+>
+>It is measured as follows:
+>```go
+>if !e.isJobFinished(&job) {
+>		runningJobs++
+>}
+>```
+>`PendingJobCount` provides an indication of the amount of jobs that are in pending state, for example a that has not finished yet **and** the underlying pod is either not running or has not completed yet.
+>
+>It is measured as follows:
+>```go
+>if !e.isJobFinished(&job) && !e.isAnyPodRunningOrCompleted(&job) {
+>			pendingJobs++
+>}
+>```
+
 **default**
 This logic is the same as Job for V1.  The number of the scale will be calculated as follows. 
 
 _The number of the scale_
 
 ```go
-queueLength - runningJobCount
+maxScale - runningJobCount
 ```
 
 **custom**
@@ -140,17 +165,17 @@ customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize cu
 _The number of the scale_
 
 ```go
-queueLength - customScalingQueueLengthDeduction - (runningJobCount * customScalingRunningJobPercentage)
+min(maxScale-int64(*s.CustomScalingQueueLengthDeduction)-int64(float64(runningJobCount)*(*s.CustomScalingRunningJobPercentage)), maxReplicaCount)
 ```
 
 **accurate** 
-If the scaler returns `queueLength` that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
+If the scaler returns `queueLength` (number of items in the queue) that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
 
 ```go
 if (maxScale + runningJobCount) > maxReplicaCount {
-  return maxReplicaCount - runningJobCount
-}
-return queueLength
+		return maxReplicaCount - runningJobCount
+	}
+  return maxScale - pendingJobCount
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
 
