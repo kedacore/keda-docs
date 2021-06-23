@@ -1,5 +1,5 @@
 +++
-title = "The KEDA HTTP Add-on Beta"
+title = "Announcing KEDA HTTP Add-on v0.1.0"
 date = 2021-05-25
 author = "Aaron Schlesinger and Tom Kerkhove"
 +++
