@@ -38,7 +38,7 @@ The system is made up of 3 components:
 - **Interceptor**: This component accepts HTTP requests into the system, reports pending HTTP request queue metrics to the external scaler, and forwards requests to the target application.
   - If the application is currently scaled to zero replicas, the interceptor will hold requests until it scales up
 - **External scaler**: This is an [external push scaler](https://keda.sh/docs/2.1/scalers/external-push/) that constantly pings the interceptor to get pending HTTP queue metrics. It transforms these data and sends them directly down to KEDA, which then makes a scaling decision
-- ***Operator**:  This is an [Operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) that runs for the convenience of the user. It listens for new [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) resources, called `HTTPScaledObject`s, and creates and configures interceptors and scalers so that your existing [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) will begin autoscaling according to incoming HTTP traffic.
+- **Operator**:  This is an [Operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) that runs for the convenience of the user. It listens for new [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) resources, called `HTTPScaledObject`s, and creates and configures interceptors and scalers so that your existing [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) will begin autoscaling according to incoming HTTP traffic.
 
 ![architecture diagram](/static/img/blog/http-add-on/arch.png)
 
