@@ -48,6 +48,9 @@ spec:
   cooldownPeriod:  300                               # Optional. Default: 300 seconds
   minReplicaCount: 0                                 # Optional. Default: 0
   maxReplicaCount: 100                               # Optional. Default: 100
+  fallback:                                          # Optional. Section to specify fallback options
+    failureThreshold: 3                              # Mandatory if fallback section is included
+    replicas: 6                                      # Mandatory if fallback section is included
   advanced:                                          # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false        # Optional. Default: false
     horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
@@ -118,6 +121,28 @@ Minimum number of replicas KEDA will scale the resource down to. By default it's
 ```
 
 This setting is passed to the HPA definition that KEDA will create for a given resource.
+
+---
+
+```yaml
+  fallback:                                          # Optional. Section to specify fallback options
+    failureThreshold: 3                              # Mandatory if fallback section is included
+    replicas: 6                                      # Mandatory if fallback section is included
+```
+
+The `fallback` section is optional. It defines a number of replicas to fallback to if a scaler is in an error state.
+
+KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behaviour), the scaler will, instead, return a normalised metric using the formula:
+```
+target metric value * fallback replicas
+```
+Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the expected number of replicas.
+
+**N.B.** Fallback is only compatible with scalers that present their target as an `AverageValue` metric. For other scalers (CPU/Memory etc), KEDA will assume fallback is disabled.
+
+**N.B.** Fallback is only compatible with `ScaledObjects`. It is **not** compatible with `ScaledJobs`.
+
+**Example:** When my instance of prometheus is unavailable 3 consecutive times, KEDA will change the HPA metric such that the deployment will scale to 6 replicas.
 
 ---
 
