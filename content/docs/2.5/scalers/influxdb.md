@@ -42,7 +42,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using an authorization token.
+You can authenticate by using an authorization token. You can also specify `serverURL`, `organizationName`, and `authToken` via a `TriggerAuthentication` or `ClusterTriggerAuthentication` and then specify this via `authenticationRef`. See [Authentication](https://keda.sh/docs/2.4/concepts/authentication/#re-use-credentials-and-delegate-auth-with-triggerauthentication) for more details.
 
 **Authorization Token Authentication:**
 
@@ -73,3 +73,50 @@ spec:
           |> filter(fn: (r) => r._measurement == "stat")
         authTokenFromEnv: INFLUXDB_AUTH_TOKEN
 ```
+
+Below is an example of using a `ClusterTriggerAuthentication` to centrally specify connection parameters while leaving `query` and `thresholdValue` local to the `ScaledObject`.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  name: influxdb-cta
+spec:
+  secretTargetRef:
+  - key: authToken
+    name: influxdb-auth
+    parameter: authToken
+  - key: serverURL
+    name: influxdb-auth
+    parameter: serverURL
+
+---
+apiVersion: v1
+data:
+  authToken: REDACTED
+  serverURL: REDACTED
+kind: Secret
+  name: influxdb-auth
+  namespace: keda
+type: Opaque
+
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: influxdb-scaledobject
+  namespace: my-project
+spec:
+  scaleTargetRef:
+    name: nginx-worker
+  triggers:
+    - type: influxdb
+      authenticationRef:
+        kind: ClusterTriggerAuthentication
+        name: influxdb-auth
+      metadata:
+        thresholdValue: '4'
+        query: |
+          from(bucket: "bucket-of-interest")
+          |> range(start: -12h)
+          |> filter(fn: (r) => r._measurement == "stat")
