@@ -26,6 +26,8 @@ triggers:
     connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
+    cloud: Private # Optional. Default: AzurePublicCloud
+    endpointSuffix: servicebus.airgap.example # Required when cloud=Private
 ```
 
 **Parameter list:**
@@ -36,6 +38,9 @@ triggers:
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (optional, required when `topicName` is specified)
 - `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (optional, required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (optional, can use TriggerAuthentication as well)
+- `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
+
+When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the service bus endpoint suffix of the cloud environment that the service bus belongs to, e.g. `servicebus.usgovcloudapi.net` for `AzureUSGovernmentCloud`.
 
 > 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 
@@ -80,6 +85,7 @@ spec:
       namespace: service-bus-namespace
       # Optional
       messageCount: "5" # default 5
+      cloud: AzureGermanCloud # Optional. Default: AzurePublicCloud
     authenticationRef:
         name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
