@@ -1,6 +1,6 @@
 [[qna]]
 q = "What is KEDA and why is it useful?"
-a = "KEDA stands for Kubernetes-based Event Driven Auto-Scaler. It is built to be able to activate a Kubernetes deployment (i.e. no pods to a single pod) and subsequently to more pods based on events from various event sources."
+a = "KEDA stands for Kubernetes Event-driven Autoscaler. It is built to be able to activate a Kubernetes deployment (i.e. no pods to a single pod) and subsequently to more pods based on events from various event sources."
 type = "General"
 
 [[qna]]
