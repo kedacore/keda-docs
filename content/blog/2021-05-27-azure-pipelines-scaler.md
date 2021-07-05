@@ -25,7 +25,7 @@ You can run the agents as a `Deployment` or a `Job` in Kubernetes and scale them
 
 ### Create the container image
 
-To create a basic Azure Pipelines agent image you can follow the instructions from [the offical docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker#linux).
+To create a basic Azure Pipelines agent image you can follow the instructions from [the official docs](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker#linux).
 
 ### Deploy on Kubernetes
 
@@ -216,7 +216,7 @@ When you try to do this you will encounter the following error:
 You can, however, use a workaround to register an agent as a placeholder which allows you to queue jobs on an agent pool that has no agents that are online.
 
 
-Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registerd in the agent pool.
+Make sure you don't execute any cleanup code in your container to unregister the agent when removing it to keep the placeholder agent registered in the agent pool.
 
 ### Seeing `ScaledJobs` in action
 
