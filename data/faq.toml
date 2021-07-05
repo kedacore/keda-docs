@@ -69,7 +69,7 @@ client](https://godoc.org/k8s.io/client-go/dynamic) from the `client-go` package
 [GroupVersionResource](https://godoc.org/k8s.io/apimachinery/pkg/runtime/schema#GroupVersionResource)
 describing the type of resource to be accessed and returns a
 [NamespaceableResourceInterface](https://godoc.org/k8s.io/client-go/dynamic#NamespaceableResourceInterface)
-which contains methods to retrieve, create, or maniuplate that resource.  Here's a code sample
+which contains methods to retrieve, create, or manipulate that resource.  Here's a code sample
 containing a function that retrieves a KEDA `ScaledObject` resource by name.
 
 ```go
