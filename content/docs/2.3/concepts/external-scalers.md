@@ -36,7 +36,7 @@ The `Scaler` interface defines 4 methods:
 - `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec)
-- `GetMetrics` returns the value of the metric refered to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
+- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
 
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
 
@@ -503,7 +503,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
 
 #### 6. Implementing `GetMetrics`
 
-`GetMetrics` returns the value of the metric refered to from `GetMetricSpec`, in this example it's `earthquakeThreshold`.
+`GetMetrics` returns the value of the metric referred to from `GetMetricSpec`, in this example it's `earthquakeThreshold`.
 
 {{< collapsible "Golang" >}}
 ```golang

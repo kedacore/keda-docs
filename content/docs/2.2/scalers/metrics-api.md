@@ -61,7 +61,7 @@ because many applications implement basic auth with a username as apikey and pas
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
 
-> 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be usefull if you are using an enterprise CA.
+> 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be useful if you are using an enterprise CA.
 
 ### Example
 
