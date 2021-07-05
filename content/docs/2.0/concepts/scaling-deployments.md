@@ -75,7 +75,7 @@ spec:
 
 The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and setup an HPA for, based on the triggers defined in `triggers:`.
 
-To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convetion, ie. `{api}/{version}`) and `kind` need to be specified.
+To scale Kubernetes Deployments only `name` is needed to be specified, if one wants to scale a different resource such as StatefulSet or  Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convention, ie. `{api}/{version}`) and `kind` need to be specified.
 
 `envSourceContainerName` is an optional property that specifies the name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.  If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.template.spec.containers[0]`.
 

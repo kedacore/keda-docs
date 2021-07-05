@@ -15,7 +15,7 @@ This specification describes the `azure-pipelines` trigger for Azure Pipelines. 
 triggers:
   - type: azure-pipelines
     metadata:
-      # Required: poolID - Can be retreived by the REST API call https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}
+      # Required: poolID - Can be retrieved by the REST API call https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}
       poolID: "1"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
       organizationURLFromEnv: "AZP_URL"

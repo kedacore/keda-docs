@@ -19,7 +19,7 @@ triggers:
     blobContainerName: functions-blob # Required: Name of Azure Blob Storage container
     blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
     connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Optional if TriggerAuthentication defined with pod identity or connection string authentication.
-    blobPrefix:  # Optional. Prefix for the Blob. Use this to specifiy sub path for the blobs if required. Default : ""
+    blobPrefix:  # Optional. Prefix for the Blob. Use this to specify sub path for the blobs if required. Default : ""
     blobDelimiter: # Optional. Delimiter for identifying the blob Prefix. Default: "/"
 ```
 

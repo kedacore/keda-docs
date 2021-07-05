@@ -28,7 +28,7 @@ triggers:
 - `blobContainerName` - Name of container in an Azure Storage account
 - `blobCount` - Average target value to trigger scaling actions. (default: 5)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
-- `blobPrefix` - Prefix for the Blob. Use this to specifiy sub path for the blobs if required. (default: `""`)
+- `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (default: `""`)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
 
 ### Authentication Parameters
