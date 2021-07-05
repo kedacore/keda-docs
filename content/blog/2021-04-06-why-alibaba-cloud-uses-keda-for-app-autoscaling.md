@@ -40,7 +40,7 @@ All of this combined gives you a very good starting point to scale your applicat
 
 ## The limitations of Horizontal Pod Autoscaler (HPA)
 
-While the HPA is a great place to start, it is mainly focussed on metrics of the pods themselves allowing you to scale it based on CPU & memory. That said, you can fully configure how it should be autoscaled which makes it powerful.
+While the HPA is a great place to start, it is mainly focused on metrics of the pods themselves allowing you to scale it based on CPU & memory. That said, you can fully configure how it should be autoscaled which makes it powerful.
 
 While that is ideal for some workloads, you’d typically want to scale on metrics that are available somewhere else such as Prometheus, Kafka, a cloud provider, or other events.
 
