@@ -352,6 +352,10 @@ logo = "schreder-hyperion.png"
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
+[[params.users]]
+url = "https://theproindia.com"
+logo = "assets/images/pro-logo.svg"
+
 # "Partners" section on the Community page
 [[params.partners]]
 url = "https://codit.eu"
