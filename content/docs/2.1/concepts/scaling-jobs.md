@@ -124,7 +124,7 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 >
 >`maxScale` is not the running Job count. It is measured as follows:
  >```go
- >maxValue = min(scaledJob.MaxReplicaCount(), devideWithCeil(queueLength, targetAverageValue))
+ >maxValue = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
  >```
  >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
 >
