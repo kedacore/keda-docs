@@ -136,13 +136,14 @@ KEDA will keep track of the number of consecutive times each scaler has failed t
 ```
 target metric value * fallback replicas
 ```
-Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the expected number of replicas.
-
-**N.B.** Fallback is only compatible with scalers that present their target as an `AverageValue` metric. For other scalers (CPU/Memory etc), KEDA will assume fallback is disabled.
-
-**N.B.** Fallback is only compatible with `ScaledObjects`. It is **not** compatible with `ScaledJobs`.
+Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the defined number of fallback replicas.
 
 **Example:** When my instance of prometheus is unavailable 3 consecutive times, KEDA will change the HPA metric such that the deployment will scale to 6 replicas.
+
+There are a few limitations to using a fallback:
+ - It is **not** supported by the CPU & memory scalers and will assume that fallback is disabled in those cases. This is because it only supports scalers that present their target as an `AverageValue` metric.
+ - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
+
 
 ---
 
