@@ -1,5 +1,5 @@
 +++
-title = "Solace PubSub"
+title = "Solace PubSub+"
 availability = "2.3+"
 maintainer = "Community"
 description = "Scale applications based on Solace PubSub+ Broker Queues"
@@ -8,13 +8,13 @@ go_file = "solace_scaler"
 +++
 
 ### Trigger Specification
-This specification describes the `solace-queue` trigger that scales based on a Solace PubSub queues.
+This specification describes the `solace-queue` trigger that scales based on a Solace PubSub+ queues.
 
 ```yaml
 triggers:
 - type: solace-queue
   metadata:
-    brokerBaseUrl:        http://solace_broker_semp:8080
+    solaceSempBaseURL:    http://solace_broker_semp:8080
     msgVpn:               message-vpn
     queueName:            queue_name
     msgCountTarget:       '100'
@@ -26,7 +26,7 @@ triggers:
 ```
 
 **Parameter list:**
-- `brokerBaseUrl` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`
+- `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`
 - `msgVpn` - Message VPN hosted on the Solace broker
 - `queueName` - Message Queue to be monitored
 - `msgCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue backlog is greater than that value per active replica.
@@ -37,12 +37,12 @@ triggers:
 - `passwordEnv` - Environment variable set with password for the user account
 
 **Parameter Requirements:**
-- Parameters resolving the target queue are all **required:** `brokerBaseUrl`, `msgVpn`, `queueName`
+- Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `msgVpn`, `queueName`
 - **At least** one of `msgCountTarget` or `msgSpoolUsageTarget` is **required.** If both values are present, the metric value resulting in the higher desired replicas will be used. (Standard KEDA/HPA behavior)
 - `username` and `password` are **required** for the `solace-queue` trigger to function. However, these values may be passed using different methods. See [Authentication Parameters](#authentication-parameters) below.
 
 ### Authentication Parameters
-The Solace PubSub Scaler polls the SEMP REST API to monitor target queues. Currently, the scaler only supports basic authentication. Username and Password credentials are both required. Credentials may be passed using one of three different methods:
+The Solace PubSub+ Scaler polls the SEMP REST API to monitor target queues. Currently, the scaler only supports basic authentication. Username and Password credentials are both required. Credentials may be passed using one of three different methods:
 - Using a `TriggerAuthentication` CRD to configure the `username` and `password`. The `TriggerAuthentication` must reference a `Secret` with the credentials defined.
 - Environment Variables - Set fields `usernameEnv` and `passwordEnv` in the trigger configuration to the appropriate environment variables
 - Clear Text - Set fields `username` and `password` in the trigger configuration in clear text
@@ -80,7 +80,7 @@ spec:
   triggers:
   - type: solace-queue
     metadata:
-      brokerBaseUrl:       http://broker-pubsubplus.solace.svc.cluster.local:8080
+      solaceSempBaseURL:   http://broker-pubsubplus.solace.svc.cluster.local:8080
       msgVpn:              test_vpn
       queueName:           SCALED_CONSUMER_QUEUE1
       msgCountTarget:      '50'
