@@ -58,3 +58,14 @@ $env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
 ```
 
 All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
+
+## Kubernetes Client Parameters
+
+The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
+
+| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    | 
+| -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
+| kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
+| kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+
+
