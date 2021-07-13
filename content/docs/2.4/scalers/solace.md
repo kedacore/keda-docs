@@ -1,6 +1,6 @@
 +++
 title = "Solace PubSub+"
-availability = "2.3+"
+availability = "2.4+"
 maintainer = "Community"
 description = "Scale applications based on Solace PubSub+ Broker Queues"
 layout = "scaler"
@@ -18,7 +18,7 @@ triggers:
     msgVpn:               message-vpn
     queueName:            queue_name
     msgCountTarget:       '100'
-    msgSpoolUsageTarget:  '10000'
+    msgSpoolUsageTarget:  '100'       ### Megabytes (MB)
     username:             semp-user
     password:             semp-pwd
     usernameEnv:          ENV_VAR_USER
@@ -29,8 +29,8 @@ triggers:
 - `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`
 - `msgVpn` - Message VPN hosted on the Solace broker
 - `queueName` - Message Queue to be monitored
-- `msgCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue backlog is greater than that value per active replica.
-- `msgSpoolUsageTarget` - The target spool usage manageable by a pod. The scaler will cause the 
+- `msgCountTarget` - The target number of messages manageable by a pod. 
+- `msgSpoolUsageTarget` - Value expressed in Megabytes (MB). The target spool usage manageable by a pod. 
 - `username` - Clear text user account with access to Solace SEMP RESTful endpoint
 - `password` - Clear text password for the user account
 - `usernameEnv` - Environment variable set with SEMP user account
@@ -61,7 +61,7 @@ metadata:
 type: Opaque
 data:
   SEMP_USER:         YWRtaW4=
-  SEMP_PASSWORD:     WW91TWF5QWxyZWFkeUJlQVdpbm5lciE=
+  SEMP_PASSWORD:     S2VkYUxhYkFkbWluUHdkMQ==
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
