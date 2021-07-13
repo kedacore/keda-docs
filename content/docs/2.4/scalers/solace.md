@@ -1,51 +1,52 @@
 +++
-title = "Solace PubSub+"
+title = "Solace PubSub+ Event Broker"
 availability = "2.4+"
 maintainer = "Community"
-description = "Scale applications based on Solace PubSub+ Broker Queues"
+description = "Scale applications based on Solace PubSub+ Event Broker Queues"
 layout = "scaler"
 go_file = "solace_scaler"
 +++
 
 ### Trigger Specification
-This specification describes the `solace-queue` trigger that scales based on a Solace PubSub+ queues.
+This specification describes the `solace-event-queue` trigger that scales based on a Solace PubSub+ Event Broker queues.
 
 ```yaml
 triggers:
-- type: solace-queue
+- type: solace-event-queue
   metadata:
-    solaceSempBaseURL:    http://solace_broker_semp:8080
-    msgVpn:               message-vpn
-    queueName:            queue_name
-    msgCountTarget:       '100'
-    msgSpoolUsageTarget:  '100'       ### Megabytes (MB)
-    username:             semp-user
-    password:             semp-pwd
-    usernameEnv:          ENV_VAR_USER
-    passwordEnv:          ENV_VAR_PWD
+    solaceSempBaseURL:        http://solace_broker:8080
+    messageVpn:               message-vpn
+    queueName:                queue_name
+    messageCountTarget:       '100'
+    messageSpoolUsageTarget:  '100'       ### Megabytes (MB)
+    username:                 semp-user
+    password:                 semp-pwd
+    usernameEnv:              ENV_VAR_USER
+    passwordEnv:              ENV_VAR_PWD
 ```
 
 **Parameter list:**
 - `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`
-- `msgVpn` - Message VPN hosted on the Solace broker
+- `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored
-- `msgCountTarget` - The target number of messages manageable by a pod. 
-- `msgSpoolUsageTarget` - Value expressed in Megabytes (MB). The target spool usage manageable by a pod. 
-- `username` - Clear text user account with access to Solace SEMP RESTful endpoint
-- `password` - Clear text password for the user account
+- `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
+- `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
+- `username` - User account with access to Solace SEMP RESTful endpoint
+- `password` - Password for the user account
 - `usernameEnv` - Environment variable set with SEMP user account
 - `passwordEnv` - Environment variable set with password for the user account
 
 **Parameter Requirements:**
-- Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `msgVpn`, `queueName`
-- **At least** one of `msgCountTarget` or `msgSpoolUsageTarget` is **required.** If both values are present, the metric value resulting in the higher desired replicas will be used. (Standard KEDA/HPA behavior)
-- `username` and `password` are **required** for the `solace-queue` trigger to function. However, these values may be passed using different methods. See [Authentication Parameters](#authentication-parameters) below.
+- Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `messageVpn`, `queueName`
+- **At least** one of `messageCountTarget` or `messageSpoolUsageTarget` is **required.** If both values are present, the metric value resulting in the higher desired replicas will be used. (Standard KEDA/HPA behavior)
+- The Solace PubSub+ Scaler polls the Solace SEMP REST API to monitor target queues. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the `solace-event-queue` trigger to function. These values may be set directly in the trigger metadata or using a TriggerAuthentication record. See [Authentication Parameters](#authentication-parameters) below. Alternatively, credentials may be passed from environment variables identified by `usernameEnv` and `passwordEnv`.
 
 ### Authentication Parameters
-The Solace PubSub+ Scaler polls the SEMP REST API to monitor target queues. Currently, the scaler only supports basic authentication. Username and Password credentials are both required. Credentials may be passed using one of three different methods:
-- Using a `TriggerAuthentication` CRD to configure the `username` and `password`. The `TriggerAuthentication` must reference a `Secret` with the credentials defined.
-- Environment Variables - Set fields `usernameEnv` and `passwordEnv` in the trigger configuration to the appropriate environment variables
-- Clear Text - Set fields `username` and `password` in the trigger configuration in clear text
+You can use TriggerAuthentication CRD to configure the username and password to connect to the management endpoint.
+
+**Username and Password based authentication:**
+- `username` Required. The username to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
+- `password` Required. The password to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
 
 ### Example
 The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be delcared in the same namespace.
@@ -78,13 +79,13 @@ spec:
   minReplicaCount:  0
   maxReplicaCount: 10
   triggers:
-  - type: solace-queue
+  - type: solace-event-queue
     metadata:
-      solaceSempBaseURL:   http://broker-pubsubplus.solace.svc.cluster.local:8080
-      msgVpn:              test_vpn
-      queueName:           SCALED_CONSUMER_QUEUE1
-      msgCountTarget:      '50'
-      msgSpoolUsageTarget: '100000'
+      solaceSempBaseURL:       http://broker-pubsubplus.solace.svc.cluster.local:8080
+      messageVpn:              test_vpn
+      queueName:               SCALED_CONSUMER_QUEUE1
+      messageCountTarget:      '50'
+      messageSpoolUsageTarget: '100000'
     authenticationRef: 
       name: solace-trigger-auth
 ---
