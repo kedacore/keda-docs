@@ -2,6 +2,7 @@ node_modules/
 public/
 .idea
 resources/
+.DS_Store
 
 # Link checker artifacts
 bin/
