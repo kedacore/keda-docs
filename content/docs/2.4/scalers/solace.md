@@ -8,7 +8,7 @@ go_file = "solace_scaler"
 +++
 
 ### Trigger Specification
-This specification describes the `solace-event-queue` trigger that scales based on a Solace PubSub+ Event Broker queues.
+This specification describes the `solace-event-queue` trigger that scales based on a Solace PubSub+ Event Broker queue.
 
 ```yaml
 triggers:
@@ -21,8 +21,8 @@ triggers:
     messageSpoolUsageTarget:  '100'       ### Megabytes (MB)
     username:                 semp-user
     password:                 semp-pwd
-    usernameEnv:              ENV_VAR_USER
-    passwordEnv:              ENV_VAR_PWD
+    usernameFromEnv:          ENV_VAR_USER
+    passwordFromEnv:          ENV_VAR_PWD
 ```
 
 **Parameter list:**
@@ -33,13 +33,13 @@ triggers:
 - `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
 - `username` - User account with access to Solace SEMP RESTful endpoint
 - `password` - Password for the user account
-- `usernameEnv` - Environment variable set with SEMP user account
-- `passwordEnv` - Environment variable set with password for the user account
+- `usernameFromEnv` - Environment variable set with SEMP user account
+- `passwordFromEnv` - Environment variable set with password for the user account
 
 **Parameter Requirements:**
 - Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `messageVpn`, `queueName`
 - **At least** one of `messageCountTarget` or `messageSpoolUsageTarget` is **required.** If both values are present, the metric value resulting in the higher desired replicas will be used. (Standard KEDA/HPA behavior)
-- The Solace PubSub+ Scaler polls the Solace SEMP REST API to monitor target queues. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the `solace-event-queue` trigger to function. These values may be set directly in the trigger metadata or using a TriggerAuthentication record. See [Authentication Parameters](#authentication-parameters) below. Alternatively, credentials may be passed from environment variables identified by `usernameEnv` and `passwordEnv`.
+- The Solace PubSub+ Scaler polls the Solace SEMP REST API to monitor target queues. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the `solace-event-queue` trigger to function. These values may be set directly in the trigger metadata or using a TriggerAuthentication record. See [Authentication Parameters](#authentication-parameters) below. Alternatively, credentials may be passed from environment variables identified by `usernameFromEnv` and `passwordFromEnv`.
 
 ### Authentication Parameters
 You can use TriggerAuthentication CRD to configure the username and password to connect to the management endpoint.
