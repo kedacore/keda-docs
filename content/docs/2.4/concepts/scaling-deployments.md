@@ -44,10 +44,11 @@ spec:
     kind:          {kind-of-target-resource}         # Optional. Default: Deployment
     name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
     envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval: 30                                # Optional. Default: 30 seconds
-  cooldownPeriod:  300                               # Optional. Default: 300 seconds
-  minReplicaCount: 0                                 # Optional. Default: 0
-  maxReplicaCount: 100                               # Optional. Default: 100
+  pollingInterval:  30                               # Optional. Default: 30 seconds
+  cooldownPeriod:   300                              # Optional. Default: 300 seconds
+  idleReplicaCount: 0                                # Optional. Must be less than minReplicaCount
+  minReplicaCount:  1                                # Optional. Default: 0
+  maxReplicaCount:  100                              # Optional. Default: 100
   fallback:                                          # Optional. Section to specify fallback options
     failureThreshold: 3                              # Mandatory if fallback section is included
     replicas: 6                                      # Mandatory if fallback section is included
@@ -109,10 +110,20 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 ---
 
 ```yaml
-  minReplicaCount: 0   # Optional. Default: 0
+  idleReplicaCount: 0   # Optional. Must be less than minReplicaCount
 ```
 
-Minimum number of replicas KEDA will scale the resource down to. By default it's scale to zero, but you can use it with some other value as well. KEDA will not enforce that value, meaning you can manually scale the resource to 0 and KEDA will not scale it back up. However, when KEDA itself is scaling the resource it will respect the value set there.
+If this property is set, KEDA will scale the resource down to this number of replicas. If there's some activity on target triggers KEDA will scale the target resource immediately to `minReplicaCount` and then will be scaling handled by HPA. When there is no activity, the target resource is again scaled down to `idleReplicaCount`. This seting must be less than `minReplicaCount`.
+
+**Example:** If there's no activity on triggers the target resource is scaled down to `idleReplicaCount` (0), once there is an activity the target resource is immediately scaled to `minReplicaCount` (10) and then up to `maxReplicaCount` (100) as needed. If there's no activity on triggers the resource is again scaled down to `idleReplicaCount` (0).
+
+---
+
+```yaml
+  minReplicaCount: 1   # Optional. Default: 0
+```
+
+Minimum number of replicas KEDA will scale the resource down to. By default it's scale to zero, but you can use it with some other value as well.
 
 ---
 
@@ -120,7 +131,7 @@ Minimum number of replicas KEDA will scale the resource down to. By default it's
   maxReplicaCount: 100 # Optional. Default: 100
 ```
 
-This setting is passed to the HPA definition that KEDA will create for a given resource.
+This setting is passed to the HPA definition that KEDA will create for a given resource and holds the maximum number of replicas of the target resouce.
 
 ---
 
