@@ -1,5 +1,3 @@
-# How CAST AI uses KEDA for Kubernetes autoscaling
-
 +++
 title = "How CAST AI uses KEDA for Kubernetes autoscaling"
 date = 2021-07-16
@@ -8,6 +6,8 @@ aliases = [
     "/blog/how-cast-ai-uses-keda-for-kubernetes-autoscaling/"
 ]
 +++
+
+# How CAST AI uses KEDA for Kubernetes autoscaling
 
 Kubernetes comes with several built-in [autoscaling mechanisms](https://cast.ai/blog/guide-to-kubernetes-autoscaling-for-cloud-cost-optimization/) - among them the Horizontal Pod Autoscaler (HPA). Scaling is essential for the producer-consumer workflow, a common use case in the IT world today. It’s especially useful for monthly reports and transactions with a huge load where teams need to spin up many workloads to process things faster and cheaper (for example, by using spot instances). 
 
@@ -33,7 +33,8 @@ These two components configure the HPA and set up custom metric sources, helping
 
 To autoscale with the Horizontal Pod Autoscaler, users need to enable the KEDA add-on on the Policies page available for every cluster in CAST AI. 
 
-:::image type="content" source="../../static/img/blog/cast-ai-ref-case/Picture 1-cast-ai-keda.png" alt-text="CAST AI KEDA policies":::
+![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/Picture1-cast-ai-keda.png)
+
 
 Once enabled, KEDA will start working on a given cluster once users configure the associated scaled object. KEDA automatically changes pod replica counts based on the provided metrics.
 
@@ -226,22 +227,23 @@ Let’s go back to the producer-consumer problem we talked about earlier. Imagin
 
 You switch on the Pod Autoscaler policy and then turn to the KEDA configuration.
 
-:::image type="content" source="../../static/img/blog/cast-ai-ref-case/Picture 1-cast-ai-keda.png" alt-text="":::
+
+![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/Picture1-cast-ai-keda.png)
 
 
 Note: The KEDA-based setup can also be used with CAST AI’s cluster autoscaler and spot instances to scale compute-intensive workloads in a cost-effective way. This is done by enabling the Unschedulable pods and Spot Instances policies. By enabling the node deletion policy, users ensure that idle instances are removed immediately.
 
 The policy settings above will help to achieve cost savings for workloads like batch data processing. By moving data processing jobs to spot instances, teams can reduce their cloud bills and become more cloud-agnostic.
 
-:::image type="content" source="../../static/img/blog/cast-ai-ref-case/Picture 2-cast-ai-keda.png" alt-text="":::
 
+![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/Picture2-cast-ai-keda.png)
 
 
 In the system depicted above, we simulated a real-world scenario of producer-consumer-based work processing. The queue length triggers our built-in KEDA component to create pods used to process jobs stored in the queue. These pods are all scheduled on spot instances. When jobs are done, empty nodes are deleted. 
 
 CAST AI handles potential spot instance interruptions gracefully. If an interruption occurs and a job is in-flight, the job is marked as failed and reschedules on another node. 
 
-:::image type="content" source="../../static/img/blog/cast-ai-ref-case/Picture 3-cast-ai-keda.png" alt-text="":::
+![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/Picture2-cast-ai-keda.png)
 
 ## Looking towards the future with KEDA
 
