@@ -37,7 +37,7 @@ triggers:
 - `protocol`: Protocol to be used for communication. Either `auto`, `http`, or `amqp`. It should correspond with the `host` value. Optional, will autodetect based on the `host` URL if possible.
 - `vhostName`: Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`.
 - `queueLength`: DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
-- `useRegex`: In case of `http` protocol and `QueueLength` mode, this parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. Optional.
+- `useRegex`: In case of `http` protocol and `QueueLength` mode, this parameter allows to use regex (in `queueName` parameter) to select queue instead of full name, the valid values are: `"true"` and `"false"`.  Optional.
 - `operation`: Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. Optional.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
