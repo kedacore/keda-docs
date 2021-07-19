@@ -23,7 +23,7 @@ triggers:
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
-    hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter    
+    hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
 ```
 
 **Parameter list:**
