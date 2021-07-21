@@ -354,7 +354,7 @@ logo = "teamleader.png"
 
 [[params.users]]
 url = "https://www.theproindia.com"
-logo = "assets/images/pro-logo.svg"
+logo = "pro-logo.svg"
 
 # "Partners" section on the Community page
 [[params.partners]]
