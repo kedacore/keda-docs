@@ -361,6 +361,7 @@ logo = "pro-logo.svg"
 url = "https://codit.eu"
 logo = "codit.jpg"
 
+
 [[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
