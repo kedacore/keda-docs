@@ -1,6 +1,6 @@
 +++
 title = "Selenium Grid Scaler"
-availability = "v2.3+"
+availability = "v2.4+"
 maintainer = "Volvo Cars"
 description = "Scales selenium browser nodes based on number of requests waiting in session queue"
 layout = "scaler"
@@ -11,7 +11,7 @@ go_file = "selenium_grid_scaler"
 
 This specification describes the `selenium-grid` trigger that scales browser nodes based on number of requests in session queue.
 
-The scaler creates one browser node per pending request in session queue. You will have to create one trigger per browser capability that you would like to support in your selenium grid.
+The scaler creates one browser node per pending request in session queue. You will have to create one trigger per browser capability that you would like to support in your Selenium Grid.
 
 The below is an example trigger configuration for chrome node.
 
@@ -25,8 +25,8 @@ triggers:
 
 **Parameter list:**
 
-- `url` is graphql url of your selenium grid. Refer to the selenium grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
-- `browserName` is the name of browser that usually gets passed in the browser capability.
+- `url` is graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
+- `browserName` is the name of browser that usually gets passed in the browser capability. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/)
 
 ### Example
 
@@ -51,9 +51,9 @@ spec:
         browserName: 'chrome'
 ```
 
-The above example will create chrome browser nodes equal to the requests pending in session queue for chrome browser.
+The above example will create Chrome browser nodes equal to the requests pending in session queue for Chrome browser.
 
-Similary for firefox
+Similary for Firefox
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
