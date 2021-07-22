@@ -337,6 +337,10 @@ url = "https://www.mivation.com"
 logo = "mivation-inc.png"
 
 [[params.users]]
+url = "https://www.theproindia.com"
+logo = "pro-logo.svg"
+
+[[params.users]]
 url = "https://www.purefacts.com"
 logo = "purefacts.png"
 
@@ -351,10 +355,6 @@ logo = "schreder-hyperion.png"
 [[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
-
-[[params.users]]
-url = "https://www.theproindia.com"
-logo = "pro-logo.svg"
 
 # "Partners" section on the Community page
 [[params.partners]]
