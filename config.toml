@@ -356,6 +356,7 @@ logo = "teamleader.png"
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
+
 # "Partners" section on the Community page
 [[params.partners]]
 url = "https://codit.eu"
