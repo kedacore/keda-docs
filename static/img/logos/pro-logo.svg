@@ -1,0 +1,3818 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 548.1 230.6" style="enable-background:new 0 0 548.1 230.6;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#58595B;}
+	.st1{clip-path:url(#SVGID_2_);fill:#007DC4;}
+	.st2{clip-path:url(#SVGID_4_);fill:#007DC5;}
+	.st3{clip-path:url(#SVGID_6_);fill:#007EC5;}
+	.st4{clip-path:url(#SVGID_8_);fill:#007EC6;}
+	.st5{clip-path:url(#SVGID_10_);fill:#007FC6;}
+	.st6{clip-path:url(#SVGID_12_);fill:#007FC6;}
+	.st7{clip-path:url(#SVGID_14_);fill:#0080C7;}
+	.st8{clip-path:url(#SVGID_16_);fill:#0080C7;}
+	.st9{clip-path:url(#SVGID_18_);fill:#0081C8;}
+	.st10{clip-path:url(#SVGID_20_);fill:#0081C8;}
+	.st11{clip-path:url(#SVGID_22_);fill:#0082C8;}
+	.st12{clip-path:url(#SVGID_24_);fill:#0082C9;}
+	.st13{clip-path:url(#SVGID_26_);fill:#0083C9;}
+	.st14{clip-path:url(#SVGID_28_);fill:#0083CA;}
+	.st15{clip-path:url(#SVGID_30_);fill:#0084CA;}
+	.st16{clip-path:url(#SVGID_32_);fill:#0084CA;}
+	.st17{clip-path:url(#SVGID_34_);fill:#0085CB;}
+	.st18{clip-path:url(#SVGID_36_);fill:#0085CB;}
+	.st19{clip-path:url(#SVGID_38_);fill:#0086CC;}
+	.st20{clip-path:url(#SVGID_40_);fill:#0086CC;}
+	.st21{clip-path:url(#SVGID_42_);fill:#0087CC;}
+	.st22{clip-path:url(#SVGID_44_);fill:#0087CD;}
+	.st23{clip-path:url(#SVGID_46_);fill:#0088CD;}
+	.st24{clip-path:url(#SVGID_48_);fill:#0088CE;}
+	.st25{clip-path:url(#SVGID_50_);fill:#0089CE;}
+	.st26{clip-path:url(#SVGID_52_);fill:#0089CE;}
+	.st27{clip-path:url(#SVGID_54_);fill:#008ACF;}
+	.st28{clip-path:url(#SVGID_56_);fill:#008ACF;}
+	.st29{clip-path:url(#SVGID_58_);fill:#008BD0;}
+	.st30{clip-path:url(#SVGID_60_);fill:#008BD0;}
+	.st31{clip-path:url(#SVGID_62_);fill:#008CD1;}
+	.st32{clip-path:url(#SVGID_64_);fill:#008CD1;}
+	.st33{clip-path:url(#SVGID_66_);fill:#008DD1;}
+	.st34{clip-path:url(#SVGID_68_);fill:#008DD2;}
+	.st35{clip-path:url(#SVGID_70_);fill:#008ED2;}
+	.st36{clip-path:url(#SVGID_72_);fill:#008ED3;}
+	.st37{clip-path:url(#SVGID_74_);fill:#008FD3;}
+	.st38{clip-path:url(#SVGID_76_);fill:#008FD3;}
+	.st39{clip-path:url(#SVGID_78_);fill:#0090D4;}
+	.st40{clip-path:url(#SVGID_80_);fill:#0090D4;}
+	.st41{clip-path:url(#SVGID_82_);fill:#0091D5;}
+	.st42{clip-path:url(#SVGID_84_);fill:#0091D5;}
+	.st43{clip-path:url(#SVGID_86_);fill:#0092D5;}
+	.st44{clip-path:url(#SVGID_88_);fill:#0092D6;}
+	.st45{clip-path:url(#SVGID_90_);fill:#0093D6;}
+	.st46{clip-path:url(#SVGID_92_);fill:#0093D7;}
+	.st47{clip-path:url(#SVGID_94_);fill:#0094D7;}
+	.st48{clip-path:url(#SVGID_96_);fill:#0094D7;}
+	.st49{clip-path:url(#SVGID_98_);fill:#0095D8;}
+	.st50{clip-path:url(#SVGID_100_);fill:#0095D8;}
+	.st51{clip-path:url(#SVGID_102_);fill:#0096D9;}
+	.st52{clip-path:url(#SVGID_104_);fill:#0096D9;}
+	.st53{clip-path:url(#SVGID_106_);fill:#0097DA;}
+	.st54{clip-path:url(#SVGID_108_);fill:#0097DA;}
+	.st55{clip-path:url(#SVGID_110_);fill:#0098DA;}
+	.st56{clip-path:url(#SVGID_112_);fill:#0098DB;}
+	.st57{clip-path:url(#SVGID_114_);fill:#0099DB;}
+	.st58{clip-path:url(#SVGID_116_);fill:#0099DC;}
+	.st59{clip-path:url(#SVGID_118_);fill:#009ADC;}
+	.st60{clip-path:url(#SVGID_120_);fill:#009ADC;}
+	.st61{clip-path:url(#SVGID_122_);fill:#009BDD;}
+	.st62{clip-path:url(#SVGID_124_);fill:#009BDD;}
+	.st63{clip-path:url(#SVGID_126_);fill:#009CDE;}
+	.st64{clip-path:url(#SVGID_128_);fill:#009CDE;}
+	.st65{clip-path:url(#SVGID_130_);fill:#009DDE;}
+	.st66{clip-path:url(#SVGID_132_);fill:#009DDF;}
+	.st67{clip-path:url(#SVGID_134_);fill:#009EDF;}
+	.st68{clip-path:url(#SVGID_136_);fill:#009EE0;}
+	.st69{clip-path:url(#SVGID_138_);fill:#009FE0;}
+	.st70{clip-path:url(#SVGID_140_);fill:#009FE0;}
+	.st71{clip-path:url(#SVGID_142_);fill:#00A0E1;}
+	.st72{clip-path:url(#SVGID_144_);fill:#00A0E1;}
+	.st73{clip-path:url(#SVGID_146_);fill:#00A1E2;}
+	.st74{clip-path:url(#SVGID_148_);fill:#00A1E2;}
+	.st75{clip-path:url(#SVGID_150_);fill:#00A2E3;}
+	.st76{clip-path:url(#SVGID_152_);fill:#00A2E3;}
+	.st77{clip-path:url(#SVGID_154_);fill:#00A3E3;}
+	.st78{clip-path:url(#SVGID_156_);fill:#00A3E4;}
+	.st79{clip-path:url(#SVGID_158_);fill:#00A4E4;}
+	.st80{clip-path:url(#SVGID_160_);fill:#00A5E5;}
+	.st81{clip-path:url(#SVGID_162_);fill:#00A5E5;}
+	.st82{clip-path:url(#SVGID_164_);fill:#00A6E5;}
+	.st83{clip-path:url(#SVGID_166_);fill:#00A6E6;}
+	.st84{clip-path:url(#SVGID_168_);fill:#00A7E6;}
+	.st85{clip-path:url(#SVGID_170_);fill:#00A7E7;}
+	.st86{clip-path:url(#SVGID_172_);fill:#00A8E7;}
+	.st87{clip-path:url(#SVGID_174_);fill:#00A8E7;}
+	.st88{clip-path:url(#SVGID_176_);fill:#00A9E8;}
+	.st89{clip-path:url(#SVGID_178_);fill:#00A9E8;}
+	.st90{clip-path:url(#SVGID_180_);fill:#00AAE9;}
+	.st91{clip-path:url(#SVGID_182_);fill:#00AAE9;}
+	.st92{clip-path:url(#SVGID_184_);fill:#00ABEA;}
+	.st93{clip-path:url(#SVGID_186_);fill:#00ABEA;}
+	.st94{clip-path:url(#SVGID_188_);fill:#00ACEA;}
+	.st95{clip-path:url(#SVGID_190_);fill:#00ACEB;}
+	.st96{clip-path:url(#SVGID_192_);fill:#00ADEB;}
+	.st97{clip-path:url(#SVGID_194_);fill:#00ADEC;}
+	.st98{clip-path:url(#SVGID_196_);fill:#00AEEC;}
+	.st99{clip-path:url(#SVGID_198_);fill:#00AFED;}
+	.st100{clip-path:url(#SVGID_200_);fill:#00AFED;}
+	.st101{clip-path:url(#SVGID_202_);fill:#00B0EE;}
+	.st102{clip-path:url(#SVGID_204_);fill:#00B0EE;}
+	.st103{clip-path:url(#SVGID_206_);fill:#00B1EF;}
+	.st104{clip-path:url(#SVGID_208_);fill:#00B2F0;}
+	.st105{clip-path:url(#SVGID_210_);fill:#00B3F0;}
+	.st106{clip-path:url(#SVGID_212_);fill:#00B3F0;}
+	.st107{clip-path:url(#SVGID_214_);fill:#0072BC;}
+	.st108{clip-path:url(#SVGID_216_);fill:#0072BC;}
+	.st109{clip-path:url(#SVGID_218_);fill:#0072BC;}
+	.st110{clip-path:url(#SVGID_220_);fill:#0073BC;}
+	.st111{clip-path:url(#SVGID_222_);fill:#0073BD;}
+	.st112{clip-path:url(#SVGID_224_);fill:#0074BD;}
+	.st113{clip-path:url(#SVGID_226_);fill:#0074BE;}
+	.st114{clip-path:url(#SVGID_228_);fill:#0074BE;}
+	.st115{clip-path:url(#SVGID_230_);fill:#0075BE;}
+	.st116{clip-path:url(#SVGID_232_);fill:#0075BF;}
+	.st117{clip-path:url(#SVGID_234_);fill:#0076BF;}
+	.st118{clip-path:url(#SVGID_236_);fill:#0076BF;}
+	.st119{clip-path:url(#SVGID_238_);fill:#0077C0;}
+	.st120{clip-path:url(#SVGID_240_);fill:#0077C0;}
+	.st121{clip-path:url(#SVGID_242_);fill:#0078C1;}
+	.st122{clip-path:url(#SVGID_244_);fill:#0078C1;}
+	.st123{clip-path:url(#SVGID_246_);fill:#0079C1;}
+	.st124{clip-path:url(#SVGID_248_);fill:#0079C2;}
+	.st125{clip-path:url(#SVGID_250_);fill:#007AC2;}
+	.st126{clip-path:url(#SVGID_252_);fill:#007AC2;}
+	.st127{clip-path:url(#SVGID_254_);fill:#007BC3;}
+	.st128{clip-path:url(#SVGID_256_);fill:#007BC3;}
+	.st129{clip-path:url(#SVGID_258_);fill:#007CC4;}
+	.st130{clip-path:url(#SVGID_260_);fill:#007CC4;}
+	.st131{clip-path:url(#SVGID_262_);fill:#007DC4;}
+	.st132{clip-path:url(#SVGID_264_);fill:#007DC5;}
+	.st133{clip-path:url(#SVGID_266_);fill:#007EC5;}
+	.st134{clip-path:url(#SVGID_268_);fill:#007EC6;}
+	.st135{clip-path:url(#SVGID_270_);fill:#007FC6;}
+	.st136{clip-path:url(#SVGID_272_);fill:#007FC6;}
+	.st137{clip-path:url(#SVGID_274_);fill:#0080C7;}
+	.st138{clip-path:url(#SVGID_276_);fill:#0080C7;}
+	.st139{clip-path:url(#SVGID_278_);fill:#0081C8;}
+	.st140{clip-path:url(#SVGID_280_);fill:#0081C8;}
+	.st141{clip-path:url(#SVGID_282_);fill:#0082C8;}
+	.st142{clip-path:url(#SVGID_284_);fill:#0082C9;}
+	.st143{clip-path:url(#SVGID_286_);fill:#0083C9;}
+	.st144{clip-path:url(#SVGID_288_);fill:#0083CA;}
+	.st145{clip-path:url(#SVGID_290_);fill:#0084CA;}
+	.st146{clip-path:url(#SVGID_292_);fill:#0084CA;}
+	.st147{clip-path:url(#SVGID_294_);fill:#0085CB;}
+	.st148{clip-path:url(#SVGID_296_);fill:#0085CB;}
+	.st149{clip-path:url(#SVGID_298_);fill:#0086CC;}
+	.st150{clip-path:url(#SVGID_300_);fill:#0086CC;}
+	.st151{clip-path:url(#SVGID_302_);fill:#0087CC;}
+	.st152{clip-path:url(#SVGID_304_);fill:#0087CD;}
+	.st153{clip-path:url(#SVGID_306_);fill:#0088CD;}
+	.st154{clip-path:url(#SVGID_308_);fill:#0088CE;}
+	.st155{clip-path:url(#SVGID_310_);fill:#0089CE;}
+	.st156{clip-path:url(#SVGID_312_);fill:#0089CE;}
+	.st157{clip-path:url(#SVGID_314_);fill:#008ACF;}
+	.st158{clip-path:url(#SVGID_316_);fill:#008ACF;}
+	.st159{clip-path:url(#SVGID_318_);fill:#008BD0;}
+	.st160{clip-path:url(#SVGID_320_);fill:#008BD0;}
+	.st161{clip-path:url(#SVGID_322_);fill:#008CD1;}
+	.st162{clip-path:url(#SVGID_324_);fill:#008CD1;}
+	.st163{clip-path:url(#SVGID_326_);fill:#008DD1;}
+	.st164{clip-path:url(#SVGID_328_);fill:#008DD2;}
+	.st165{clip-path:url(#SVGID_330_);fill:#008ED2;}
+	.st166{clip-path:url(#SVGID_332_);fill:#008ED3;}
+	.st167{clip-path:url(#SVGID_334_);fill:#008FD3;}
+	.st168{clip-path:url(#SVGID_336_);fill:#008FD3;}
+	.st169{clip-path:url(#SVGID_338_);fill:#0090D4;}
+	.st170{clip-path:url(#SVGID_340_);fill:#0090D4;}
+	.st171{clip-path:url(#SVGID_342_);fill:#0091D5;}
+	.st172{clip-path:url(#SVGID_344_);fill:#0091D5;}
+	.st173{clip-path:url(#SVGID_346_);fill:#0092D5;}
+	.st174{clip-path:url(#SVGID_348_);fill:#0092D6;}
+	.st175{clip-path:url(#SVGID_350_);fill:#0093D6;}
+	.st176{clip-path:url(#SVGID_352_);fill:#0093D7;}
+	.st177{clip-path:url(#SVGID_354_);fill:#0094D7;}
+	.st178{clip-path:url(#SVGID_356_);fill:#0094D7;}
+	.st179{clip-path:url(#SVGID_358_);fill:#0095D8;}
+	.st180{clip-path:url(#SVGID_360_);fill:#0095D8;}
+	.st181{clip-path:url(#SVGID_362_);fill:#0096D9;}
+	.st182{clip-path:url(#SVGID_364_);fill:#0096D9;}
+	.st183{clip-path:url(#SVGID_366_);fill:#0097DA;}
+	.st184{clip-path:url(#SVGID_368_);fill:#0097DA;}
+	.st185{clip-path:url(#SVGID_370_);fill:#0098DA;}
+	.st186{clip-path:url(#SVGID_372_);fill:#0098DB;}
+	.st187{clip-path:url(#SVGID_374_);fill:#0099DB;}
+	.st188{clip-path:url(#SVGID_376_);fill:#0099DC;}
+	.st189{clip-path:url(#SVGID_378_);fill:#009ADC;}
+	.st190{clip-path:url(#SVGID_380_);fill:#009ADC;}
+	.st191{clip-path:url(#SVGID_382_);fill:#009BDD;}
+	.st192{clip-path:url(#SVGID_384_);fill:#009BDD;}
+	.st193{clip-path:url(#SVGID_386_);fill:#009CDE;}
+	.st194{clip-path:url(#SVGID_388_);fill:#009CDE;}
+	.st195{clip-path:url(#SVGID_390_);fill:#009DDE;}
+	.st196{clip-path:url(#SVGID_392_);fill:#009DDF;}
+	.st197{clip-path:url(#SVGID_394_);fill:#009EDF;}
+	.st198{clip-path:url(#SVGID_396_);fill:#009EE0;}
+	.st199{clip-path:url(#SVGID_398_);fill:#009FE0;}
+	.st200{clip-path:url(#SVGID_400_);fill:#009FE0;}
+	.st201{clip-path:url(#SVGID_402_);fill:#00A0E1;}
+	.st202{clip-path:url(#SVGID_404_);fill:#00A0E1;}
+	.st203{clip-path:url(#SVGID_406_);fill:#00A1E2;}
+	.st204{clip-path:url(#SVGID_408_);fill:#00A1E2;}
+	.st205{clip-path:url(#SVGID_410_);fill:#00A2E3;}
+	.st206{clip-path:url(#SVGID_412_);fill:#00A2E3;}
+	.st207{clip-path:url(#SVGID_414_);fill:#00A3E3;}
+	.st208{clip-path:url(#SVGID_416_);fill:#00A3E4;}
+	.st209{clip-path:url(#SVGID_418_);fill:#00A4E4;}
+	.st210{clip-path:url(#SVGID_420_);fill:#00A5E5;}
+	.st211{clip-path:url(#SVGID_422_);fill:#00A5E5;}
+	.st212{clip-path:url(#SVGID_424_);fill:#00A6E5;}
+	.st213{clip-path:url(#SVGID_426_);fill:#00A6E6;}
+	.st214{clip-path:url(#SVGID_428_);fill:#00A7E6;}
+	.st215{clip-path:url(#SVGID_430_);fill:#00A7E7;}
+	.st216{clip-path:url(#SVGID_432_);fill:#00A8E7;}
+	.st217{clip-path:url(#SVGID_434_);fill:#00A8E7;}
+	.st218{clip-path:url(#SVGID_436_);fill:#00A9E8;}
+	.st219{clip-path:url(#SVGID_438_);fill:#00A9E8;}
+	.st220{clip-path:url(#SVGID_440_);fill:#00AAE9;}
+	.st221{clip-path:url(#SVGID_442_);fill:#00AAE9;}
+	.st222{clip-path:url(#SVGID_444_);fill:#00ABEA;}
+	.st223{clip-path:url(#SVGID_446_);fill:#00ABEA;}
+	.st224{clip-path:url(#SVGID_448_);fill:#00ACEA;}
+	.st225{clip-path:url(#SVGID_450_);fill:#00ACEB;}
+	.st226{clip-path:url(#SVGID_452_);fill:#00ADEB;}
+	.st227{clip-path:url(#SVGID_454_);fill:#00ADEC;}
+	.st228{clip-path:url(#SVGID_456_);fill:#00AEEC;}
+	.st229{clip-path:url(#SVGID_458_);fill:#0072BC;}
+	.st230{clip-path:url(#SVGID_460_);fill:#0072BC;}
+	.st231{clip-path:url(#SVGID_462_);fill:#0072BC;}
+	.st232{clip-path:url(#SVGID_464_);fill:#0073BC;}
+	.st233{clip-path:url(#SVGID_466_);fill:#0073BD;}
+	.st234{clip-path:url(#SVGID_468_);fill:#0074BD;}
+	.st235{clip-path:url(#SVGID_470_);fill:#0074BE;}
+	.st236{clip-path:url(#SVGID_472_);fill:#0074BE;}
+	.st237{clip-path:url(#SVGID_474_);fill:#0075BE;}
+	.st238{clip-path:url(#SVGID_476_);fill:#0075BF;}
+	.st239{clip-path:url(#SVGID_478_);fill:#0076BF;}
+	.st240{clip-path:url(#SVGID_480_);fill:#0076BF;}
+	.st241{clip-path:url(#SVGID_482_);fill:#0077C0;}
+	.st242{clip-path:url(#SVGID_484_);fill:#0077C0;}
+	.st243{clip-path:url(#SVGID_486_);fill:#0078C1;}
+	.st244{clip-path:url(#SVGID_488_);fill:#0078C1;}
+	.st245{clip-path:url(#SVGID_490_);fill:#0079C1;}
+	.st246{clip-path:url(#SVGID_492_);fill:#0079C2;}
+	.st247{clip-path:url(#SVGID_494_);fill:#007AC2;}
+	.st248{clip-path:url(#SVGID_496_);fill:#007AC2;}
+	.st249{clip-path:url(#SVGID_498_);fill:#007BC3;}
+	.st250{clip-path:url(#SVGID_500_);fill:#007BC3;}
+	.st251{clip-path:url(#SVGID_502_);fill:#007CC4;}
+	.st252{clip-path:url(#SVGID_504_);fill:#007CC4;}
+	.st253{clip-path:url(#SVGID_506_);fill:#007DC4;}
+	.st254{clip-path:url(#SVGID_508_);fill:#007DC5;}
+	.st255{clip-path:url(#SVGID_510_);fill:#007EC5;}
+	.st256{clip-path:url(#SVGID_512_);fill:#007EC6;}
+	.st257{clip-path:url(#SVGID_514_);fill:#007FC6;}
+	.st258{clip-path:url(#SVGID_516_);fill:#007FC6;}
+	.st259{clip-path:url(#SVGID_518_);fill:#0080C7;}
+	.st260{clip-path:url(#SVGID_520_);fill:#0080C7;}
+	.st261{clip-path:url(#SVGID_522_);fill:#0081C8;}
+	.st262{clip-path:url(#SVGID_524_);fill:#0081C8;}
+	.st263{clip-path:url(#SVGID_526_);fill:#0082C8;}
+	.st264{clip-path:url(#SVGID_528_);fill:#0082C9;}
+	.st265{clip-path:url(#SVGID_530_);fill:#0083C9;}
+	.st266{clip-path:url(#SVGID_532_);fill:#0083CA;}
+	.st267{clip-path:url(#SVGID_534_);fill:#0084CA;}
+	.st268{clip-path:url(#SVGID_536_);fill:#0084CA;}
+	.st269{clip-path:url(#SVGID_538_);fill:#0085CB;}
+	.st270{clip-path:url(#SVGID_540_);fill:#0085CB;}
+	.st271{clip-path:url(#SVGID_542_);fill:#0086CC;}
+	.st272{clip-path:url(#SVGID_544_);fill:#0086CC;}
+	.st273{clip-path:url(#SVGID_546_);fill:#0087CC;}
+	.st274{clip-path:url(#SVGID_548_);fill:#0087CD;}
+	.st275{clip-path:url(#SVGID_550_);fill:#0088CD;}
+	.st276{clip-path:url(#SVGID_552_);fill:#0088CE;}
+	.st277{clip-path:url(#SVGID_554_);fill:#0089CE;}
+	.st278{clip-path:url(#SVGID_556_);fill:#0089CE;}
+	.st279{clip-path:url(#SVGID_558_);fill:#008ACF;}
+	.st280{clip-path:url(#SVGID_560_);fill:#008ACF;}
+	.st281{clip-path:url(#SVGID_562_);fill:#008BD0;}
+	.st282{clip-path:url(#SVGID_564_);fill:#008BD0;}
+	.st283{clip-path:url(#SVGID_566_);fill:#008CD1;}
+	.st284{clip-path:url(#SVGID_568_);fill:#008CD1;}
+	.st285{clip-path:url(#SVGID_570_);fill:#008DD1;}
+	.st286{clip-path:url(#SVGID_572_);fill:#008DD2;}
+	.st287{clip-path:url(#SVGID_574_);fill:#008ED2;}
+	.st288{clip-path:url(#SVGID_576_);fill:#008ED3;}
+	.st289{clip-path:url(#SVGID_578_);fill:#008FD3;}
+	.st290{clip-path:url(#SVGID_580_);fill:#008FD3;}
+	.st291{clip-path:url(#SVGID_582_);fill:#0090D4;}
+	.st292{clip-path:url(#SVGID_584_);fill:#0090D4;}
+	.st293{clip-path:url(#SVGID_586_);fill:#0091D5;}
+	.st294{clip-path:url(#SVGID_588_);fill:#0091D5;}
+	.st295{clip-path:url(#SVGID_590_);fill:#0092D5;}
+	.st296{clip-path:url(#SVGID_592_);fill:#0092D6;}
+	.st297{clip-path:url(#SVGID_594_);fill:#0093D6;}
+	.st298{clip-path:url(#SVGID_596_);fill:#0093D7;}
+	.st299{clip-path:url(#SVGID_598_);fill:#F7941D;}
+	.st300{clip-path:url(#SVGID_600_);fill:#F7941D;}
+	.st301{clip-path:url(#SVGID_602_);fill:#F8941D;}
+	.st302{clip-path:url(#SVGID_604_);fill:#F8951D;}
+	.st303{clip-path:url(#SVGID_606_);fill:#F8961D;}
+	.st304{clip-path:url(#SVGID_608_);fill:#F8971D;}
+	.st305{clip-path:url(#SVGID_610_);fill:#F8971D;}
+	.st306{clip-path:url(#SVGID_612_);fill:#F8981D;}
+	.st307{clip-path:url(#SVGID_614_);fill:#F8991D;}
+	.st308{clip-path:url(#SVGID_616_);fill:#F8991D;}
+	.st309{clip-path:url(#SVGID_618_);fill:#F89A1C;}
+	.st310{clip-path:url(#SVGID_620_);fill:#F99B1C;}
+	.st311{clip-path:url(#SVGID_622_);fill:#F99C1C;}
+	.st312{clip-path:url(#SVGID_624_);fill:#F99C1C;}
+	.st313{clip-path:url(#SVGID_626_);fill:#F99D1C;}
+	.st314{clip-path:url(#SVGID_628_);fill:#F99E1C;}
+	.st315{clip-path:url(#SVGID_630_);fill:#F99F1C;}
+	.st316{clip-path:url(#SVGID_632_);fill:#F99F1B;}
+	.st317{clip-path:url(#SVGID_634_);fill:#F9A01B;}
+	.st318{clip-path:url(#SVGID_636_);fill:#F9A11B;}
+	.st319{clip-path:url(#SVGID_638_);fill:#FAA11B;}
+	.st320{clip-path:url(#SVGID_640_);fill:#FAA21B;}
+	.st321{clip-path:url(#SVGID_642_);fill:#FAA31B;}
+	.st322{clip-path:url(#SVGID_644_);fill:#FAA41A;}
+	.st323{clip-path:url(#SVGID_646_);fill:#FAA41A;}
+	.st324{clip-path:url(#SVGID_648_);fill:#FAA51A;}
+	.st325{clip-path:url(#SVGID_650_);fill:#FAA61A;}
+	.st326{clip-path:url(#SVGID_652_);fill:#FAA71A;}
+	.st327{clip-path:url(#SVGID_654_);fill:#FAA719;}
+	.st328{clip-path:url(#SVGID_656_);fill:#FAA819;}
+	.st329{clip-path:url(#SVGID_658_);fill:#FBA919;}
+	.st330{clip-path:url(#SVGID_660_);fill:#FBAA19;}
+	.st331{clip-path:url(#SVGID_662_);fill:#FBAA19;}
+	.st332{clip-path:url(#SVGID_664_);fill:#FBAB19;}
+	.st333{clip-path:url(#SVGID_666_);fill:#FBAC18;}
+	.st334{clip-path:url(#SVGID_668_);fill:#FBAC18;}
+	.st335{clip-path:url(#SVGID_670_);fill:#FBAD18;}
+	.st336{clip-path:url(#SVGID_672_);fill:#FBAE18;}
+	.st337{clip-path:url(#SVGID_674_);fill:#FCAF17;}
+	.st338{clip-path:url(#SVGID_676_);fill:#FCB017;}
+	.st339{clip-path:url(#SVGID_678_);fill:#FCB017;}
+	.st340{clip-path:url(#SVGID_680_);fill:#FCB116;}
+	.st341{clip-path:url(#SVGID_682_);fill:#FCB216;}
+	.st342{clip-path:url(#SVGID_684_);fill:#FCB316;}
+	.st343{clip-path:url(#SVGID_686_);fill:#FCB316;}
+	.st344{clip-path:url(#SVGID_688_);fill:#FCB415;}
+	.st345{clip-path:url(#SVGID_690_);fill:#FDB515;}
+	.st346{clip-path:url(#SVGID_692_);fill:#FDB615;}
+	.st347{clip-path:url(#SVGID_694_);fill:#FDB614;}
+	.st348{clip-path:url(#SVGID_696_);fill:#FDB714;}
+	.st349{clip-path:url(#SVGID_698_);fill:#FDB813;}
+	.st350{clip-path:url(#SVGID_700_);fill:#FDB913;}
+	.st351{clip-path:url(#SVGID_702_);fill:#FDB913;}
+</style>
+<g>
+	<g>
+		<path class="st0" d="M232.8,97.5h14.4c7,0,12.9,4.4,12.9,12.7s-5.9,12.7-12.9,12.7h-6v11h-8.4V97.5z M241.2,105.4v9.6h5.9
+			c2.4,0,4.9-1.5,4.9-4.8c0-3.4-2.5-4.8-4.9-4.8L241.2,105.4L241.2,105.4z"/>
+		<path class="st0" d="M289.3,105.5h-16.1v5.9h13.9v7.5h-13.9v6.9h16.1v8h-24.5V97.5h24.5V105.5z"/>
+		<path class="st0" d="M324.9,133.8h-8.4l-13.8-21.9v21.9h-8.4V97.5h8.4l13.8,21.8V97.5h8.4V133.8z"/>
+		<path class="st0" d="M340.2,97.5v36.3h-8.4V97.5H340.2z"/>
+		<path class="st0" d="M377.6,133.8h-8.4l-13.8-21.9v21.9H347V97.5h8.4l13.8,21.8V97.5h8.4V133.8z"/>
+		<path class="st0" d="M390.6,122.7c0.2,3.1,3.3,4.5,6.4,4.5c2.7,0,5.8-1,5.8-4c0-6.6-19.2-1.6-19.3-15.1c0-8,5.9-11.5,13.3-11.5
+			c6.8,0,13.6,3.1,13.7,11.4h-8c-0.2-3-2.8-4-5.7-4c-2.8,0-5.1,1.1-5.1,3.7c0,5.5,19.7,1.6,19.7,15.4c0,8-7.3,11.4-14.4,11.5
+			c-7.3,0-14.5-3.7-14.5-11.9L390.6,122.7L390.6,122.7z"/>
+		<path class="st0" d="M437.4,97.5h8.4v23.8c0,8.1-6.5,13.4-14.7,13.4s-14.7-5.3-14.7-13.4V97.5h8.4v23.7c0,3.4,2.6,5.7,6.3,5.7
+			c3.8,0,6.3-2.3,6.3-5.7L437.4,97.5L437.4,97.5z"/>
+		<path class="st0" d="M461.1,125.7h14.4v8h-22.8V97.5h8.4L461.1,125.7L461.1,125.7z"/>
+		<path class="st0" d="M499.6,97.5l14.2,36.3h-8.9l-2.3-6.4h-13.7l-2.3,6.4h-8.9l14.2-36.3H499.6z M495.7,107.5l-4.4,12.8h8.8
+			L495.7,107.5z"/>
+		<path class="st0" d="M545.2,133.8h-9.4l-6.3-12.1h-3.8v12.1h-8.4V97.5h14.6c7,0,12.7,4.4,12.7,12.1c0,5.6-3,9.4-7.3,11
+			L545.2,133.8z M525.7,105.1v9h6.3c2.4,0,4.4-1.7,4.4-4.5c0-2.9-1.9-4.5-4.3-4.5H525.7z"/>
+		<path class="st0" d="M260.7,180.8h-9.4l-6.3-12.1h-3.8v12.1h-8.4v-36.3h14.6c7,0,12.7,4.4,12.7,12.1c0,5.6-3,9.4-7.3,11.1
+			L260.7,180.8z M241.2,152.2v9h6.3c2.4,0,4.4-1.7,4.4-4.5c0-2.9-1.9-4.5-4.3-4.5L241.2,152.2L241.2,152.2z"/>
+		<path class="st0" d="M289.6,152.6h-16.1v5.9h13.9v7.5h-13.9v6.9h16.1v8h-24.5v-36.3h24.5V152.6z"/>
+		<path class="st0" d="M300.9,169.8c0.2,3.1,3.3,4.5,6.4,4.5c2.7,0,5.8-1,5.8-4c0-6.6-19.2-1.6-19.2-15.1c-0.1-8,5.9-11.5,13.4-11.5
+			c6.8,0,13.6,3.1,13.7,11.4h-8c-0.2-3-2.7-4-5.6-4c-2.8,0-5.1,1.1-5.1,3.7c0,5.5,19.7,1.6,19.7,15.4c0,8-7.3,11.4-14.4,11.5
+			c-7.3,0-14.5-3.7-14.5-11.9H300.9z"/>
+		<path class="st0" d="M351.1,152.6H335v5.9h13.9v7.5H335v6.9h16.1v8h-24.5v-36.3h24.5V152.6z"/>
+		<path class="st0" d="M375.3,144.5l14.2,36.3h-8.9l-2.3-6.4h-13.7l-2.3,6.4h-8.9l14.2-36.3H375.3z M371.5,154.5l-4.4,12.8h8.8
+			L371.5,154.5z"/>
+		<path class="st0" d="M420.9,180.8h-9.4l-6.3-12.1h-3.8v12.1h-8.4v-36.3h14.6c7.1,0,12.7,4.4,12.7,12.1c0,5.6-2.9,9.4-7.3,11.1
+			L420.9,180.8z M401.5,152.2v9h6.3c2.4,0,4.4-1.7,4.4-4.5c0-2.9-1.9-4.5-4.3-4.5L401.5,152.2L401.5,152.2z"/>
+		<path class="st0" d="M423.1,162.7c0-11.6,8-19,18.5-19c8.7,0,15.6,5.5,17.1,14h-8.8c-1-3.7-4-6-8.3-6c-6.3,0-10.1,4.3-10.1,11
+			c0,6.7,3.8,11.1,10.1,11.1c4.4,0,7.4-2.3,8.3-6h8.8c-1.6,8.5-8.4,13.9-17.1,13.9C431.1,181.6,423.1,174.3,423.1,162.7z"/>
+		<path class="st0" d="M483.5,180.8v-14.6h-12.5v14.6h-8.4v-36.3h8.4v13.6h12.5v-13.6h8.4v36.3H483.5z"/>
+		<path class="st0" d="M267.9,209.7c0,11.6-8,19-18.4,19s-18.5-7.4-18.5-19c0-11.6,8-19,18.5-19
+			C259.9,190.7,267.9,198.1,267.9,209.7z M259.5,209.7c0-6.7-3.7-11.1-10-11.1s-10.1,4.4-10.1,11.1c0,6.7,3.8,11.1,10.1,11.1
+			C255.8,220.8,259.5,216.4,259.5,209.7z"/>
+		<path class="st0" d="M272.7,191.6H287c7,0,12.9,4.4,12.9,12.7c0,8.3-5.9,12.7-12.9,12.7h-6v11h-8.4L272.7,191.6L272.7,191.6z
+			 M281.1,199.4v9.6h5.9c2.4,0,4.9-1.5,4.9-4.8s-2.5-4.8-4.9-4.8H281.1z"/>
+		<path class="st0" d="M329.2,199.6h-16v5.9H327v7.5h-13.9v6.9h16v8h-24.5v-36.3h24.5V199.6z"/>
+		<path class="st0" d="M362.1,227.9h-9.4l-6.3-12.2h-3.8v12.2h-8.4v-36.3h14.5c7.1,0,12.7,4.4,12.7,12.1c0,5.6-3,9.4-7.3,11.1
+			L362.1,227.9z M342.6,199.2v9h6.4c2.5,0,4.4-1.7,4.4-4.5c0-2.8-1.9-4.5-4.3-4.5L342.6,199.2L342.6,199.2z"/>
+		<path class="st0" d="M385.2,191.6l14.2,36.3h-8.9l-2.3-6.5h-13.7l-2.3,6.5h-8.9l14.2-36.3H385.2z M381.3,201.6l-4.4,12.8h8.8
+			L381.3,201.6z"/>
+		<path class="st0" d="M413.8,199.5v28.4h-8.4v-28.4h-9.8v-8h28.1v8H413.8z"/>
+		<path class="st0" d="M436.1,191.6v36.3h-8.4v-36.3H436.1z"/>
+		<path class="st0" d="M478.1,209.7c0,11.6-8,19-18.4,19s-18.5-7.4-18.5-19c0-11.6,8-19,18.5-19
+			C470.1,190.7,478.1,198.1,478.1,209.7z M469.7,209.7c0-6.7-3.7-11.1-10-11.1c-6.3,0-10.1,4.4-10.1,11.1c0,6.7,3.8,11.1,10.1,11.1
+			C465.9,220.8,469.7,216.4,469.7,209.7z"/>
+		<path class="st0" d="M513.4,227.9H505l-13.7-22v22h-8.4v-36.3h8.4l13.7,21.8v-21.8h8.4V227.9z"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<defs>
+						<path id="SVGID_1_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_2_">
+						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st1" points="83.1,182.2 85.1,181 85.1,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_3_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_4_">
+						<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st2" points="80.6,182.2 85.1,179.7 85.1,181 83.1,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_5_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_6_">
+						<use xlink:href="#SVGID_5_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st3" points="78.1,182.2 85.1,178.3 85.1,179.7 80.6,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_7_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_8_">
+						<use xlink:href="#SVGID_7_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st4" points="75.6,182.2 85.1,176.9 85.1,178.3 78.1,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_9_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_10_">
+						<use xlink:href="#SVGID_9_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st5" points="73.1,182.2 85.1,175.5 85.1,176.9 75.6,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_11_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_12_">
+						<use xlink:href="#SVGID_11_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st6" points="70.7,182.2 85.1,174.1 85.1,175.5 73.1,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_13_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_14_">
+						<use xlink:href="#SVGID_13_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st7" points="68.2,182.2 85.1,172.7 85.1,174.1 70.7,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_15_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_16_">
+						<use xlink:href="#SVGID_15_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st8" points="65.7,182.2 85.1,171.3 85.1,172.7 68.2,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_17_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_18_">
+						<use xlink:href="#SVGID_17_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st9" points="63.2,182.2 85.1,169.9 85.1,171.3 65.7,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_19_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_20_">
+						<use xlink:href="#SVGID_19_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st10" points="60.7,182.2 85.1,168.5 85.1,169.9 63.2,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_21_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_22_">
+						<use xlink:href="#SVGID_21_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st11" points="58.2,182.2 85.1,167.1 85.1,168.5 60.7,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_23_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_24_">
+						<use xlink:href="#SVGID_23_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st12" points="55.7,182.2 85.1,165.7 85.1,167.1 58.2,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_25_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_26_">
+						<use xlink:href="#SVGID_25_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st13" points="53.3,182.2 85.1,164.3 85.1,165.7 55.7,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_27_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_28_">
+						<use xlink:href="#SVGID_27_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st14" points="50.8,182.2 85.1,162.9 85.1,164.3 53.3,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_29_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_30_">
+						<use xlink:href="#SVGID_29_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st15" points="48.3,182.2 85.1,161.5 85.1,162.9 50.8,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_31_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_32_">
+						<use xlink:href="#SVGID_31_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st16" points="45.8,182.2 85.1,160.1 85.1,161.5 48.3,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_33_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_34_">
+						<use xlink:href="#SVGID_33_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st17" points="43.3,182.2 85.1,158.7 85.1,160.1 45.8,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_35_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_36_">
+						<use xlink:href="#SVGID_35_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st18" points="40.8,182.2 85.1,157.3 85.1,158.7 43.3,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_37_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_38_">
+						<use xlink:href="#SVGID_37_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st19" points="38.3,182.2 85.1,155.9 85.1,157.3 40.8,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_39_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_40_">
+						<use xlink:href="#SVGID_39_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st20" points="35.9,182.2 85.1,154.5 85.1,155.9 38.3,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_41_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_42_">
+						<use xlink:href="#SVGID_41_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st21" points="33.4,182.2 85.1,153.1 85.1,154.5 35.9,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_43_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_44_">
+						<use xlink:href="#SVGID_43_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st22" points="30.9,182.2 85.1,151.7 85.1,153.1 33.4,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_45_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_46_">
+						<use xlink:href="#SVGID_45_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st23" points="28.4,182.2 85.1,150.4 85.1,151.7 30.9,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_47_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_48_">
+						<use xlink:href="#SVGID_47_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st24" points="25.9,182.2 85.1,149 85.1,150.4 28.4,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_49_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_50_">
+						<use xlink:href="#SVGID_49_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st25" points="23.4,182.2 85.1,147.6 85.1,149 25.9,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_51_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_52_">
+						<use xlink:href="#SVGID_51_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st26" points="22.8,182.2 22.3,181.4 85.1,146.2 85.1,147.6 23.4,182.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_53_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_54_">
+						<use xlink:href="#SVGID_53_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st27" points="22.3,181.4 21.7,180.4 85.1,144.8 85.1,146.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_55_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_56_">
+						<use xlink:href="#SVGID_55_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st28" points="21.7,180.4 21.2,179.3 85.1,143.4 85.1,144.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_57_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_58_">
+						<use xlink:href="#SVGID_57_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st29" points="21.2,179.3 20.6,178.2 85.1,142 85.1,143.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_59_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_60_">
+						<use xlink:href="#SVGID_59_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st30" points="20.6,178.2 20,177.2 85.1,140.6 85.1,142 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_61_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_62_">
+						<use xlink:href="#SVGID_61_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st31" points="20,177.2 19.4,176.1 85.1,139.2 85.1,140.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_63_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_64_">
+						<use xlink:href="#SVGID_63_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st32" points="19.4,176.1 18.8,175.1 85.1,137.8 85.1,139.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_65_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_66_">
+						<use xlink:href="#SVGID_65_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st33" points="18.8,175.1 18.2,174 85.1,136.4 85.1,137.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_67_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_68_">
+						<use xlink:href="#SVGID_67_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st34" points="18.2,174 17.6,172.9 85.1,135 85.1,136.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_69_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_70_">
+						<use xlink:href="#SVGID_69_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st35" points="17.6,172.9 17,171.9 85.1,133.6 85.1,135 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_71_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_72_">
+						<use xlink:href="#SVGID_71_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st36" points="17,171.9 16.4,170.8 85.1,132.3 85.1,133.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_73_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_74_">
+						<use xlink:href="#SVGID_73_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st37" points="16.4,170.8 15.8,169.8 85.1,130.8 85.1,132.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_75_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_76_">
+						<use xlink:href="#SVGID_75_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st38" points="15.8,169.8 15.2,168.7 85.1,129.5 85.1,130.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_77_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_78_">
+						<use xlink:href="#SVGID_77_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st39" points="15.2,168.7 14.6,167.6 85.1,128.1 85.1,129.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_79_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_80_">
+						<use xlink:href="#SVGID_79_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st40" points="14.6,167.6 14,166.6 85.1,126.6 85.1,128.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_81_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_82_">
+						<use xlink:href="#SVGID_81_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st41" points="14,166.6 13.4,165.5 85.1,125.2 85.1,126.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_83_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_84_">
+						<use xlink:href="#SVGID_83_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st42" points="13.4,165.5 12.8,164.5 85.1,123.8 85.1,125.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_85_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_86_">
+						<use xlink:href="#SVGID_85_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st43" points="12.8,164.5 12.2,163.4 85.1,122.5 85.1,123.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_87_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_88_">
+						<use xlink:href="#SVGID_87_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st44" points="12.2,163.4 11.6,162.3 85.1,121.1 85.1,122.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_89_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_90_">
+						<use xlink:href="#SVGID_89_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st45" points="11.6,162.3 11,161.3 85.1,119.7 85.1,121.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_91_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_92_">
+						<use xlink:href="#SVGID_91_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st46" points="11,161.3 10.4,160.2 85.1,118.3 85.1,119.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_93_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_94_">
+						<use xlink:href="#SVGID_93_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st47" points="10.4,160.2 9.8,159.1 85.1,116.9 85.1,118.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_95_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_96_">
+						<use xlink:href="#SVGID_95_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st48" points="9.8,159.1 9.2,158.1 85.1,115.5 85.1,116.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_97_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_98_">
+						<use xlink:href="#SVGID_97_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st49" points="9.2,158.1 8.7,157 85.1,114.1 85.1,115.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_99_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_100_">
+						<use xlink:href="#SVGID_99_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st50" points="8.7,157 8.1,155.9 85.1,112.7 85.1,114.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_101_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_102_">
+						<use xlink:href="#SVGID_101_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st51" points="8.1,155.9 7.5,154.9 85.1,111.3 85.1,112.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_103_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_104_">
+						<use xlink:href="#SVGID_103_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st52" points="7.5,154.9 7.1,154.3 7.1,153.7 85.1,109.9 85.1,111.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_105_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_106_">
+						<use xlink:href="#SVGID_105_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st53" points="7.1,152.3 85.1,108.5 85.1,109.9 7.1,153.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_107_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_108_">
+						<use xlink:href="#SVGID_107_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st54" points="7.1,150.9 85.1,107.1 85.1,108.5 7.1,152.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_109_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_110_">
+						<use xlink:href="#SVGID_109_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st55" points="7.1,149.5 85.1,105.7 85.1,107.1 7.1,150.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_111_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_112_">
+						<use xlink:href="#SVGID_111_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st56" points="7.1,148.1 85.1,104.3 85.1,105.7 7.1,149.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_113_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_114_">
+						<use xlink:href="#SVGID_113_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st57" points="7.1,146.7 85.1,102.9 85.1,104.3 7.1,148.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_115_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_116_">
+						<use xlink:href="#SVGID_115_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st58" points="7.1,145.3 85.1,101.5 85.1,102.9 7.1,146.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_117_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_118_">
+						<use xlink:href="#SVGID_117_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st59" points="7.1,143.9 85.1,100.2 85.1,101.5 7.1,145.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_119_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_120_">
+						<use xlink:href="#SVGID_119_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st60" points="7.1,142.5 85.1,98.8 85.1,100.2 7.1,143.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_121_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_122_">
+						<use xlink:href="#SVGID_121_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st61" points="7.1,141.1 85.1,97.4 85.1,98.8 7.1,142.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_123_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_124_">
+						<use xlink:href="#SVGID_123_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st62" points="7.1,139.8 85.1,96 85.1,97.4 7.1,141.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_125_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_126_">
+						<use xlink:href="#SVGID_125_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st63" points="7.1,138.4 85.1,94.6 85.1,96 7.1,139.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_127_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_128_">
+						<use xlink:href="#SVGID_127_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st64" points="7.1,137 85.1,93.2 85.1,94.6 7.1,138.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_129_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_130_">
+						<use xlink:href="#SVGID_129_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st65" points="7.1,135.6 85.1,91.8 85.1,93.2 7.1,137 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_131_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_132_">
+						<use xlink:href="#SVGID_131_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st66" points="7.1,134.2 85.1,90.4 85.1,91.8 7.1,135.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_133_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_134_">
+						<use xlink:href="#SVGID_133_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st67" points="7.1,132.8 85.1,89 85.1,90.4 7.1,134.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_135_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_136_">
+						<use xlink:href="#SVGID_135_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st68" points="7.1,131.4 85.1,87.6 85.1,89 7.1,132.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_137_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_138_">
+						<use xlink:href="#SVGID_137_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st69" points="7.1,130 85.1,86.2 85.1,87.6 7.1,131.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_139_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_140_">
+						<use xlink:href="#SVGID_139_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st70" points="7.1,128.6 85.1,84.8 85.1,86.2 7.1,130 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_141_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_142_">
+						<use xlink:href="#SVGID_141_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st71" points="7.1,127.2 85.1,83.4 85.1,84.8 7.1,128.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_143_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_144_">
+						<use xlink:href="#SVGID_143_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st72" points="7.1,125.8 85.1,82 85.1,83.4 7.1,127.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_145_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_146_">
+						<use xlink:href="#SVGID_145_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st73" points="7.1,124.4 85.1,80.6 85.1,82 7.1,125.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_147_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_148_">
+						<use xlink:href="#SVGID_147_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st74" points="7.1,123 85.1,79.2 85.1,80.6 7.1,124.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_149_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_150_">
+						<use xlink:href="#SVGID_149_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st75" points="7.1,121.6 85.1,77.8 85.1,79.2 7.1,123 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_151_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_152_">
+						<use xlink:href="#SVGID_151_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st76" points="7.1,120.2 85.1,76.4 85.1,77.8 7.1,121.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_153_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_154_">
+						<use xlink:href="#SVGID_153_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st77" points="7.1,118.8 85.1,75 85.1,76.4 7.1,120.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_155_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_156_">
+						<use xlink:href="#SVGID_155_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st78" points="7.1,117.4 85.1,73.7 85.1,75 7.1,118.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_157_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_158_">
+						<use xlink:href="#SVGID_157_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st79" points="7.1,116 85.1,72.3 85.1,73.7 7.1,117.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_159_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_160_">
+						<use xlink:href="#SVGID_159_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st80" points="7.1,114.6 85.1,70.9 85.1,72.3 7.1,116 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_161_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_162_">
+						<use xlink:href="#SVGID_161_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st81" points="7.1,113.2 85.1,69.5 85.1,70.9 7.1,114.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_163_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_164_">
+						<use xlink:href="#SVGID_163_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st82" points="7.1,111.8 85.1,68.1 85.1,69.5 7.1,113.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_165_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_166_">
+						<use xlink:href="#SVGID_165_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st83" points="7.1,110.5 85.1,66.7 85.1,68.1 7.1,111.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_167_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_168_">
+						<use xlink:href="#SVGID_167_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st84" points="7.1,109.1 85.1,65.3 85.1,66.7 7.1,110.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_169_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_170_">
+						<use xlink:href="#SVGID_169_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st85" points="7.1,107.7 85.1,63.9 85.1,65.3 7.1,109.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_171_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_172_">
+						<use xlink:href="#SVGID_171_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st86" points="7.1,106.3 85.1,62.5 85.1,63.9 7.1,107.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_173_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_174_">
+						<use xlink:href="#SVGID_173_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st87" points="7.1,104.9 85.1,61.1 85.1,62.5 7.1,106.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_175_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_176_">
+						<use xlink:href="#SVGID_175_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st88" points="7.1,103.5 85.1,59.7 85.1,61.1 7.1,104.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_177_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_178_">
+						<use xlink:href="#SVGID_177_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st89" points="7.1,102.1 85.1,58.3 85.1,59.7 7.1,103.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_179_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_180_">
+						<use xlink:href="#SVGID_179_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st90" points="7.1,100.7 85.1,56.9 85.1,58.3 7.1,102.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_181_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_182_">
+						<use xlink:href="#SVGID_181_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st91" points="7.1,99.3 85.1,55.5 85.1,56.9 7.1,100.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_183_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_184_">
+						<use xlink:href="#SVGID_183_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st92" points="7.1,97.9 85.1,54.1 85.1,55.5 7.1,99.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_185_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_186_">
+						<use xlink:href="#SVGID_185_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st93" points="7.1,96.5 85.1,52.7 85.1,54.1 7.1,97.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_187_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_188_">
+						<use xlink:href="#SVGID_187_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st94" points="7.1,95.1 85.1,51.3 85.1,52.7 7.1,96.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_189_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_190_">
+						<use xlink:href="#SVGID_189_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st95" points="7.1,93.7 85.1,49.9 85.1,51.3 7.1,95.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_191_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_192_">
+						<use xlink:href="#SVGID_191_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st96" points="7.1,92.3 85.1,48.5 85.1,49.9 7.1,93.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_193_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_194_">
+						<use xlink:href="#SVGID_193_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st97" points="7.1,90.9 85.1,47.1 85.1,48.5 7.1,92.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_195_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_196_">
+						<use xlink:href="#SVGID_195_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st98" points="7.1,89.5 85.1,45.7 85.1,47.1 7.1,90.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_197_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_198_">
+						<use xlink:href="#SVGID_197_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st99" points="7.1,88.1 85.1,44.4 85.1,45.7 7.1,89.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_199_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_200_">
+						<use xlink:href="#SVGID_199_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st100" points="7.1,86.7 85.1,43 85.1,44.4 7.1,88.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_201_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_202_">
+						<use xlink:href="#SVGID_201_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st101" points="7.1,85.3 85.1,41.6 85.1,43 7.1,86.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_203_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_204_">
+						<use xlink:href="#SVGID_203_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st102" points="7.1,83.9 85.1,40.2 85.1,41.6 7.1,85.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_205_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_206_">
+						<use xlink:href="#SVGID_205_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st103" points="7.1,82.5 85.1,38.8 85.1,40.2 7.1,83.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_207_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_208_">
+						<use xlink:href="#SVGID_207_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st104" points="7.1,81.2 85.1,37.4 85.1,38.8 7.1,82.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_209_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_210_">
+						<use xlink:href="#SVGID_209_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st105" points="7.1,79.8 84.8,36.2 85.1,36.2 85.1,37.4 7.1,81.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_211_" d="M53.4,165.2c-17.6-10.5-29.3-29.8-29.3-51.7c0-32.1,25.2-58.4,56.8-60.2l4.2-17.1c-0.3,0-0.5,0-0.7,0
+							c-42.6,0-77.3,34.7-77.3,77.3c0,29.9,17.1,56,42.1,68.8L53.4,165.2z"/>
+					</defs>
+					<clipPath id="SVGID_212_">
+						<use xlink:href="#SVGID_211_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st106" points="84.8,36.2 7.1,79.8 7.1,36.2 					"/>
+				</g>
+			</g>
+		</g>
+		<g>
+			<g>
+				<g>
+					<defs>
+						<path id="SVGID_213_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_214_">
+						<use xlink:href="#SVGID_213_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st107" points="150.1,178.1 161.7,171.6 161.7,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_215_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_216_">
+						<use xlink:href="#SVGID_215_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st108" points="147.6,178.1 161.7,170.2 161.7,171.6 150.1,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_217_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_218_">
+						<use xlink:href="#SVGID_217_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st109" points="145.1,178.1 161.7,168.8 161.7,170.2 147.6,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_219_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_220_">
+						<use xlink:href="#SVGID_219_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st110" points="142.6,178.1 161.7,167.4 161.7,168.8 145.1,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_221_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_222_">
+						<use xlink:href="#SVGID_221_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st111" points="140.1,178.1 161.7,166 161.7,167.4 142.6,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_223_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_224_">
+						<use xlink:href="#SVGID_223_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st112" points="137.6,178.1 161.7,164.6 161.7,166 140.1,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_225_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_226_">
+						<use xlink:href="#SVGID_225_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st113" points="135.1,178.1 161.7,163.2 161.7,164.6 137.6,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_227_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_228_">
+						<use xlink:href="#SVGID_227_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st114" points="132.6,178.1 161.7,161.8 161.7,163.2 135.1,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_229_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_230_">
+						<use xlink:href="#SVGID_229_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st115" points="130.2,178.1 161.7,160.4 161.7,161.8 132.6,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_231_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_232_">
+						<use xlink:href="#SVGID_231_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st116" points="127.7,178.1 161.7,159 161.7,160.4 130.2,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_233_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_234_">
+						<use xlink:href="#SVGID_233_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st117" points="125.2,178.1 161.7,157.6 161.7,159 127.7,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_235_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_236_">
+						<use xlink:href="#SVGID_235_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st118" points="122.7,178.1 161.7,156.2 161.7,157.6 125.2,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_237_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_238_">
+						<use xlink:href="#SVGID_237_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st119" points="120.5,178.1 120.4,178 161.7,154.8 161.7,156.2 122.7,178.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_239_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_240_">
+						<use xlink:href="#SVGID_239_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st120" points="120.4,178 119.8,176.9 161.7,153.4 161.7,154.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_241_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_242_">
+						<use xlink:href="#SVGID_241_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st121" points="119.8,176.9 119.2,175.9 161.7,152 161.7,153.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_243_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_244_">
+						<use xlink:href="#SVGID_243_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st122" points="119.2,175.9 118.6,174.8 161.7,150.6 161.7,152 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_245_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_246_">
+						<use xlink:href="#SVGID_245_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st123" points="118.6,174.8 118,173.8 161.7,149.3 161.7,150.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_247_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_248_">
+						<use xlink:href="#SVGID_247_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st124" points="118,173.8 117.4,172.7 161.7,147.9 161.7,149.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_249_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_250_">
+						<use xlink:href="#SVGID_249_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st125" points="117.4,172.7 116.8,171.6 161.7,146.5 161.7,147.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_251_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_252_">
+						<use xlink:href="#SVGID_251_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st126" points="116.8,171.6 116.3,170.6 161.7,145.1 161.7,146.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_253_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_254_">
+						<use xlink:href="#SVGID_253_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st127" points="116.3,170.6 115.6,169.5 161.7,143.7 161.7,145.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_255_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_256_">
+						<use xlink:href="#SVGID_255_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st128" points="115.6,169.5 115.1,168.4 161.7,142.3 161.7,143.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_257_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_258_">
+						<use xlink:href="#SVGID_257_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st129" points="115.1,168.4 114.5,167.4 161.7,140.9 161.7,142.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_259_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_260_">
+						<use xlink:href="#SVGID_259_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st130" points="114.5,167.4 113.9,166.3 161.7,139.5 161.7,140.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_261_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_262_">
+						<use xlink:href="#SVGID_261_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st131" points="113.9,166.3 113.3,165.3 161.7,138.1 161.7,139.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_263_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_264_">
+						<use xlink:href="#SVGID_263_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st132" points="113.3,165.3 112.7,164.2 161.7,136.7 161.7,138.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_265_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_266_">
+						<use xlink:href="#SVGID_265_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st133" points="112.7,164.2 112.1,163.1 161.7,135.3 161.7,136.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_267_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_268_">
+						<use xlink:href="#SVGID_267_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st134" points="112.1,163.1 111.5,162.1 161.7,133.9 161.7,135.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_269_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_270_">
+						<use xlink:href="#SVGID_269_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st135" points="111.5,162.1 110.9,161 161.7,132.5 161.7,133.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_271_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_272_">
+						<use xlink:href="#SVGID_271_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st136" points="110.9,161 110.3,160 161.7,131.1 161.7,132.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_273_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_274_">
+						<use xlink:href="#SVGID_273_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st137" points="110.3,160 109.7,158.9 161.7,129.8 161.7,131.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_275_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_276_">
+						<use xlink:href="#SVGID_275_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st138" points="109.7,158.9 109.1,157.9 161.7,128.4 161.7,129.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_277_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_278_">
+						<use xlink:href="#SVGID_277_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st139" points="109.1,157.9 108.5,156.8 161.7,127 161.7,128.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_279_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_280_">
+						<use xlink:href="#SVGID_279_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st140" points="108.5,156.8 107.9,155.7 161.7,125.6 161.7,127 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_281_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_282_">
+						<use xlink:href="#SVGID_281_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st141" points="107.9,155.7 107.3,154.7 161.7,124.1 161.7,125.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_283_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_284_">
+						<use xlink:href="#SVGID_283_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st142" points="107.3,154.7 106.7,153.6 161.7,122.8 161.7,124.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_285_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_286_">
+						<use xlink:href="#SVGID_285_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st143" points="106.7,153.6 106.1,152.5 161.7,121.4 161.7,122.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_287_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_288_">
+						<use xlink:href="#SVGID_287_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st144" points="106.1,152.5 105.5,151.5 161.7,120 161.7,121.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_289_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_290_">
+						<use xlink:href="#SVGID_289_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st145" points="105.5,151.5 104.9,150.4 161.7,118.6 161.7,120 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_291_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_292_">
+						<use xlink:href="#SVGID_291_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st146" points="104.9,150.4 104.3,149.4 161.7,117.2 161.7,118.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_293_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_294_">
+						<use xlink:href="#SVGID_293_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st147" points="104.3,149.4 103.7,148.3 161.7,115.8 161.7,117.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_295_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_296_">
+						<use xlink:href="#SVGID_295_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st148" points="103.7,148.3 103.1,147.3 161.7,114.4 161.7,115.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_297_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_298_">
+						<use xlink:href="#SVGID_297_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st149" points="103.1,147.3 102.6,146.2 161.7,113 161.7,114.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_299_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_300_">
+						<use xlink:href="#SVGID_299_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st150" points="102.6,146.2 102,145.1 161.7,111.6 161.7,113 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_301_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_302_">
+						<use xlink:href="#SVGID_301_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st151" points="102,145.1 101.4,144.1 161.7,110.2 161.7,111.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_303_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_304_">
+						<use xlink:href="#SVGID_303_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st152" points="101.4,144.1 100.8,143 161.7,108.8 161.7,110.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_305_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_306_">
+						<use xlink:href="#SVGID_305_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st153" points="100.8,143 100.3,142.1 100.3,141.9 161.7,107.4 161.7,108.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_307_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_308_">
+						<use xlink:href="#SVGID_307_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st154" points="100.3,140.5 161.7,106 161.7,107.4 100.3,141.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_309_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_310_">
+						<use xlink:href="#SVGID_309_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st155" points="100.3,139.1 161.7,104.6 161.7,106 100.3,140.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_311_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_312_">
+						<use xlink:href="#SVGID_311_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st156" points="100.3,137.7 161.7,103.2 161.7,104.6 100.3,139.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_313_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_314_">
+						<use xlink:href="#SVGID_313_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st157" points="100.3,136.3 161.7,101.8 161.7,103.2 100.3,137.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_315_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_316_">
+						<use xlink:href="#SVGID_315_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st158" points="100.3,134.9 161.7,100.4 161.7,101.8 100.3,136.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_317_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_318_">
+						<use xlink:href="#SVGID_317_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st159" points="100.3,133.5 161.7,99.1 161.7,100.4 100.3,134.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_319_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_320_">
+						<use xlink:href="#SVGID_319_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st160" points="100.3,132.1 161.7,97.7 161.7,99.1 100.3,133.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_321_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_322_">
+						<use xlink:href="#SVGID_321_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st161" points="100.3,130.7 161.7,96.3 161.7,97.7 100.3,132.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_323_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_324_">
+						<use xlink:href="#SVGID_323_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st162" points="100.3,129.3 161.7,94.9 161.7,96.3 100.3,130.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_325_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_326_">
+						<use xlink:href="#SVGID_325_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st163" points="100.3,127.9 161.7,93.5 161.7,94.9 100.3,129.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_327_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_328_">
+						<use xlink:href="#SVGID_327_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st164" points="100.3,126.5 161.7,92.1 161.7,93.5 100.3,127.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_329_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_330_">
+						<use xlink:href="#SVGID_329_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st165" points="100.3,125.1 161.7,90.7 161.7,92.1 100.3,126.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_331_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_332_">
+						<use xlink:href="#SVGID_331_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st166" points="100.3,123.7 161.7,89.3 161.7,90.7 100.3,125.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_333_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_334_">
+						<use xlink:href="#SVGID_333_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st167" points="100.3,122.3 161.7,87.9 161.7,89.3 100.3,123.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_335_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_336_">
+						<use xlink:href="#SVGID_335_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st168" points="100.3,120.9 161.7,86.5 161.7,87.9 100.3,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_337_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_338_">
+						<use xlink:href="#SVGID_337_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st169" points="100.3,119.5 161.7,85.1 161.7,86.5 100.3,120.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_339_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_340_">
+						<use xlink:href="#SVGID_339_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st170" points="100.3,118.2 161.7,83.7 161.7,85.1 100.3,119.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_341_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_342_">
+						<use xlink:href="#SVGID_341_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st171" points="100.3,116.8 161.7,82.3 161.7,83.7 100.3,118.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_343_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_344_">
+						<use xlink:href="#SVGID_343_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st172" points="100.3,115.4 161.7,80.9 161.7,82.3 100.3,116.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_345_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_346_">
+						<use xlink:href="#SVGID_345_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st173" points="100.3,114 161.7,79.5 161.7,80.9 100.3,115.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_347_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_348_">
+						<use xlink:href="#SVGID_347_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st174" points="100.3,112.6 161.7,78.1 161.7,79.5 100.3,114 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_349_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_350_">
+						<use xlink:href="#SVGID_349_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st175" points="100.3,111.2 161.7,76.7 161.7,78.1 100.3,112.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_351_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_352_">
+						<use xlink:href="#SVGID_351_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st176" points="100.3,109.8 161.7,75.3 161.7,76.7 100.3,111.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_353_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_354_">
+						<use xlink:href="#SVGID_353_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st177" points="100.3,108.4 161.7,73.9 161.7,75.3 100.3,109.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_355_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_356_">
+						<use xlink:href="#SVGID_355_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st178" points="100.3,107 161.7,72.5 161.7,73.9 100.3,108.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_357_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_358_">
+						<use xlink:href="#SVGID_357_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st179" points="100.3,105.6 161.7,71.1 161.7,72.5 100.3,107 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_359_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_360_">
+						<use xlink:href="#SVGID_359_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st180" points="100.3,104.2 161.7,69.8 161.7,71.1 100.3,105.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_361_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_362_">
+						<use xlink:href="#SVGID_361_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st181" points="100.3,102.8 161.7,68.4 161.7,69.8 100.3,104.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_363_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_364_">
+						<use xlink:href="#SVGID_363_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st182" points="100.3,101.4 161.7,67 161.7,68.4 100.3,102.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_365_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_366_">
+						<use xlink:href="#SVGID_365_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st183" points="100.3,100 161.7,65.6 161.7,67 100.3,101.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_367_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_368_">
+						<use xlink:href="#SVGID_367_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st184" points="100.3,98.6 161.2,64.5 161.7,65.3 161.7,65.6 100.3,100 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_369_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_370_">
+						<use xlink:href="#SVGID_369_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st185" points="100.3,97.2 160.6,63.4 161.2,64.5 100.3,98.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_371_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_372_">
+						<use xlink:href="#SVGID_371_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st186" points="100.3,95.8 160,62.3 160.6,63.4 100.3,97.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_373_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_374_">
+						<use xlink:href="#SVGID_373_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st187" points="100.3,94.4 159.4,61.3 160,62.3 100.3,95.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_375_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_376_">
+						<use xlink:href="#SVGID_375_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st188" points="100.3,93.1 158.8,60.2 159.4,61.3 100.3,94.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_377_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_378_">
+						<use xlink:href="#SVGID_377_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st189" points="100.3,91.6 158.2,59.1 158.8,60.2 100.3,93.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_379_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_380_">
+						<use xlink:href="#SVGID_379_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st190" points="100.3,90.2 157.6,58.1 158.2,59.1 100.3,91.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_381_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_382_">
+						<use xlink:href="#SVGID_381_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st191" points="100.3,88.9 157,57 157.6,58.1 100.3,90.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_383_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_384_">
+						<use xlink:href="#SVGID_383_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st192" points="100.3,87.5 156.4,56 157,57 100.3,88.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_385_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_386_">
+						<use xlink:href="#SVGID_385_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st193" points="100.3,86.1 155.8,54.9 156.4,56 100.3,87.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_387_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_388_">
+						<use xlink:href="#SVGID_387_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st194" points="100.3,84.7 155.2,53.8 155.8,54.9 100.3,86.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_389_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_390_">
+						<use xlink:href="#SVGID_389_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st195" points="100.3,83.3 154.6,52.8 155.2,53.8 100.3,84.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_391_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_392_">
+						<use xlink:href="#SVGID_391_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st196" points="100.3,81.9 154,51.7 154.6,52.8 100.3,83.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_393_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_394_">
+						<use xlink:href="#SVGID_393_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st197" points="100.3,80.5 153.4,50.7 154,51.7 100.3,81.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_395_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_396_">
+						<use xlink:href="#SVGID_395_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st198" points="100.3,79.1 152.9,49.6 153.4,50.7 100.3,80.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_397_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_398_">
+						<use xlink:href="#SVGID_397_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st199" points="100.3,77.7 152.3,48.6 152.9,49.6 100.3,79.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_399_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_400_">
+						<use xlink:href="#SVGID_399_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st200" points="100.3,76.3 151.7,47.5 152.3,48.6 100.3,77.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_401_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_402_">
+						<use xlink:href="#SVGID_401_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st201" points="100.3,74.9 151.1,46.4 151.7,47.5 100.3,76.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_403_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_404_">
+						<use xlink:href="#SVGID_403_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st202" points="100.3,73.5 150.5,45.4 151.1,46.4 100.3,74.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_405_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_406_">
+						<use xlink:href="#SVGID_405_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st203" points="100.3,72.1 149.9,44.3 150.5,45.4 100.3,73.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_407_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_408_">
+						<use xlink:href="#SVGID_407_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st204" points="100.3,70.7 149.3,43.2 149.9,44.3 100.3,72.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_409_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_410_">
+						<use xlink:href="#SVGID_409_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st205" points="100.3,69.3 148.7,42.2 149.3,43.2 100.3,70.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_411_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_412_">
+						<use xlink:href="#SVGID_411_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st206" points="100.3,67.9 148.1,41.1 148.7,42.2 100.3,69.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_413_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_414_">
+						<use xlink:href="#SVGID_413_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st207" points="100.3,66.5 147.5,40 148.1,41.1 100.3,67.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_415_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_416_">
+						<use xlink:href="#SVGID_415_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st208" points="100.3,65.2 146.9,39 147.5,40 100.3,66.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_417_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_418_">
+						<use xlink:href="#SVGID_417_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st209" points="100.3,63.8 146.3,37.9 146.9,39 100.3,65.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_419_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_420_">
+						<use xlink:href="#SVGID_419_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st210" points="100.3,62.4 144,37.8 146.2,37.8 146.3,37.9 100.3,63.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_421_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_422_">
+						<use xlink:href="#SVGID_421_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st211" points="100.3,61 141.5,37.8 144,37.8 100.3,62.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_423_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_424_">
+						<use xlink:href="#SVGID_423_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st212" points="100.3,59.6 139.1,37.8 141.5,37.8 100.3,61 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_425_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_426_">
+						<use xlink:href="#SVGID_425_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st213" points="100.3,58.2 136.6,37.8 139.1,37.8 100.3,59.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_427_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_428_">
+						<use xlink:href="#SVGID_427_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st214" points="100.3,56.8 134.1,37.8 136.6,37.8 100.3,58.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_429_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_430_">
+						<use xlink:href="#SVGID_429_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st215" points="100.3,55.4 131.6,37.8 134.1,37.8 100.3,56.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_431_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_432_">
+						<use xlink:href="#SVGID_431_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st216" points="100.3,54 129.1,37.8 131.6,37.8 100.3,55.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_433_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_434_">
+						<use xlink:href="#SVGID_433_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st217" points="100.3,52.6 126.6,37.8 129.1,37.8 100.3,54 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_435_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_436_">
+						<use xlink:href="#SVGID_435_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st218" points="100.3,51.2 124.2,37.8 126.6,37.8 100.3,52.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_437_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_438_">
+						<use xlink:href="#SVGID_437_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st219" points="100.3,49.8 121.7,37.8 124.2,37.8 100.3,51.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_439_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_440_">
+						<use xlink:href="#SVGID_439_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st220" points="100.3,48.4 119.2,37.8 121.7,37.8 100.3,49.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_441_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_442_">
+						<use xlink:href="#SVGID_441_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st221" points="100.3,47 116.7,37.8 119.2,37.8 100.3,48.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_443_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_444_">
+						<use xlink:href="#SVGID_443_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st222" points="100.3,45.6 114.2,37.8 116.7,37.8 100.3,47 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_445_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_446_">
+						<use xlink:href="#SVGID_445_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st223" points="100.3,44.2 111.7,37.8 114.2,37.8 100.3,45.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_447_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_448_">
+						<use xlink:href="#SVGID_447_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st224" points="100.3,42.8 109.2,37.8 111.7,37.8 100.3,44.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_449_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_450_">
+						<use xlink:href="#SVGID_449_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st225" points="100.3,41.4 106.8,37.8 109.2,37.8 100.3,42.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_451_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_452_">
+						<use xlink:href="#SVGID_451_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st226" points="100.3,40 104.3,37.8 106.8,37.8 100.3,41.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_453_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_454_">
+						<use xlink:href="#SVGID_453_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st227" points="100.3,38.6 101.8,37.8 104.3,37.8 100.3,40 					"/>
+				</g>
+				<g>
+					<defs>
+						<path id="SVGID_455_" d="M100.3,37.8l3.5,18.5c23.8,8.1,40.9,30.6,40.9,57.1c0,18.5-8.4,35.1-21.6,46.2l3.5,18.5
+							c21.1-13.8,35.1-37.6,35.1-64.7C161.7,76.3,135.3,45.2,100.3,37.8z"/>
+					</defs>
+					<clipPath id="SVGID_456_">
+						<use xlink:href="#SVGID_455_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st228" points="101.8,37.8 100.3,38.6 100.3,37.8 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<defs>
+						<polygon id="SVGID_457_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_458_">
+						<use xlink:href="#SVGID_457_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st229" points="120.6,227.8 106.4,202.6 172.8,165.4 201.7,216.9 201.7,227.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_459_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_460_">
+						<use xlink:href="#SVGID_459_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st230" points="106.4,202.6 105.8,201.5 172.2,164.3 172.8,165.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_461_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_462_">
+						<use xlink:href="#SVGID_461_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st231" points="105.8,201.5 105.2,200.5 171.6,163.2 172.2,164.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_463_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_464_">
+						<use xlink:href="#SVGID_463_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st232" points="105.2,200.5 104.6,199.4 171,162.2 171.6,163.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_465_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_466_">
+						<use xlink:href="#SVGID_465_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st233" points="104.6,199.4 104,198.4 170.4,161.1 171,162.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_467_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_468_">
+						<use xlink:href="#SVGID_467_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st234" points="104,198.4 103.5,197.3 169.8,160.1 170.4,161.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_469_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_470_">
+						<use xlink:href="#SVGID_469_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st235" points="103.5,197.3 102.9,196.2 169.2,159 169.8,160.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_471_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_472_">
+						<use xlink:href="#SVGID_471_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st236" points="102.9,196.2 102.3,195.2 168.6,157.9 169.2,159 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_473_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_474_">
+						<use xlink:href="#SVGID_473_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st237" points="102.3,195.2 101.7,194.1 168,156.9 168.6,157.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_475_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_476_">
+						<use xlink:href="#SVGID_475_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st238" points="101.7,194.1 101.1,193 167.4,155.8 168,156.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_477_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_478_">
+						<use xlink:href="#SVGID_477_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st239" points="101.1,193 100.5,192 166.8,154.8 167.4,155.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_479_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_480_">
+						<use xlink:href="#SVGID_479_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st240" points="100.5,192 99.9,190.9 166.2,153.7 166.8,154.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_481_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_482_">
+						<use xlink:href="#SVGID_481_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st241" points="99.9,190.9 99.3,189.8 165.6,152.6 166.2,153.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_483_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_484_">
+						<use xlink:href="#SVGID_483_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st242" points="99.3,189.8 98.7,188.8 165,151.6 165.6,152.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_485_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_486_">
+						<use xlink:href="#SVGID_485_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st243" points="98.7,188.8 98.1,187.7 164.5,150.5 165,151.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_487_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_488_">
+						<use xlink:href="#SVGID_487_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st244" points="98.1,187.7 97.5,186.7 163.8,149.4 164.5,150.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_489_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_490_">
+						<use xlink:href="#SVGID_489_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st245" points="97.5,186.7 96.9,185.6 163.3,148.4 163.8,149.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_491_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_492_">
+						<use xlink:href="#SVGID_491_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st246" points="96.9,185.6 96.3,184.5 162.7,147.3 163.3,148.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_493_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_494_">
+						<use xlink:href="#SVGID_493_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st247" points="96.3,184.5 95.7,183.5 162.1,146.3 162.7,147.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_495_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_496_">
+						<use xlink:href="#SVGID_495_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st248" points="95.7,183.5 95.1,182.4 161.5,145.2 162.1,146.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_497_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_498_">
+						<use xlink:href="#SVGID_497_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st249" points="95.1,182.4 94.5,181.4 160.9,144.1 161.5,145.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_499_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_500_">
+						<use xlink:href="#SVGID_499_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st250" points="94.5,181.4 93.9,180.3 160.3,143.1 160.9,144.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_501_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_502_">
+						<use xlink:href="#SVGID_501_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st251" points="93.9,180.3 93.3,179.2 159.7,142 160.3,143.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_503_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_504_">
+						<use xlink:href="#SVGID_503_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st252" points="93.3,179.2 92.7,178.2 159.1,140.9 159.7,142 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_505_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_506_">
+						<use xlink:href="#SVGID_505_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st253" points="92.7,178.2 92.1,177.1 158.5,139.9 159.1,140.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_507_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_508_">
+						<use xlink:href="#SVGID_507_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st254" points="92.1,177.1 91.5,176.1 157.9,138.8 158.5,139.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_509_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_510_">
+						<use xlink:href="#SVGID_509_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st255" points="91.5,176.1 91,175 157.3,137.8 157.9,138.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_511_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_512_">
+						<use xlink:href="#SVGID_511_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st256" points="91,175 90.4,173.9 156.7,136.7 157.3,137.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_513_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_514_">
+						<use xlink:href="#SVGID_513_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st257" points="90.4,173.9 89.8,172.9 156.1,135.6 156.7,136.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_515_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_516_">
+						<use xlink:href="#SVGID_515_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st258" points="89.8,172.9 89.2,171.8 155.5,134.6 156.1,135.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_517_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_518_">
+						<use xlink:href="#SVGID_517_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st259" points="89.2,171.8 88.6,170.8 154.9,133.5 155.5,134.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_519_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_520_">
+						<use xlink:href="#SVGID_519_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st260" points="88.6,170.8 88,169.7 154.3,132.5 154.9,133.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_521_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_522_">
+						<use xlink:href="#SVGID_521_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st261" points="88,169.7 87.4,168.7 153.7,131.4 154.3,132.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_523_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_524_">
+						<use xlink:href="#SVGID_523_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st262" points="87.4,168.7 86.8,167.6 153.1,130.3 153.7,131.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_525_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_526_">
+						<use xlink:href="#SVGID_525_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st263" points="86.8,167.6 86.2,166.5 152.5,129.3 153.1,130.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_527_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_528_">
+						<use xlink:href="#SVGID_527_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st264" points="86.2,166.5 85.6,165.5 151.9,128.2 152.5,129.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_529_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_530_">
+						<use xlink:href="#SVGID_529_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st265" points="85.6,165.5 85,164.4 151.3,127.2 151.9,128.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_531_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_532_">
+						<use xlink:href="#SVGID_531_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st266" points="85,164.4 84.4,163.4 150.8,126.1 151.3,127.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_533_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_534_">
+						<use xlink:href="#SVGID_533_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st267" points="84.4,163.4 83.8,162.3 150.2,125.1 150.8,126.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_535_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_536_">
+						<use xlink:href="#SVGID_535_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st268" points="83.8,162.3 83.2,161.2 149.6,124 150.2,125.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_537_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_538_">
+						<use xlink:href="#SVGID_537_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st269" points="83.2,161.2 82.6,160.2 149,122.9 149.6,124 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_539_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_540_">
+						<use xlink:href="#SVGID_539_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st270" points="82.6,160.2 82,159.1 147.7,122.3 148.6,122.3 149,122.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_541_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_542_">
+						<use xlink:href="#SVGID_541_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st271" points="82,159.1 81.4,158 145.2,122.3 147.7,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_543_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_544_">
+						<use xlink:href="#SVGID_543_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st272" points="81.4,158 80.8,157 142.7,122.3 145.2,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_545_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_546_">
+						<use xlink:href="#SVGID_545_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st273" points="80.8,157 80.2,155.9 140.2,122.3 142.7,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_547_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_548_">
+						<use xlink:href="#SVGID_547_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st274" points="80.2,155.9 79.6,154.8 137.7,122.3 140.2,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_549_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_550_">
+						<use xlink:href="#SVGID_549_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st275" points="79.6,154.8 79,153.8 135.2,122.3 137.7,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_551_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_552_">
+						<use xlink:href="#SVGID_551_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st276" points="79,153.8 78.5,152.7 132.7,122.3 135.2,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_553_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_554_">
+						<use xlink:href="#SVGID_553_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st277" points="78.5,152.7 78.4,152.6 78.4,151.4 130.3,122.3 132.7,122.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_555_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_556_">
+						<use xlink:href="#SVGID_555_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st278" points="78.4,150 127.8,122.3 130.3,122.3 78.4,151.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_557_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_558_">
+						<use xlink:href="#SVGID_557_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st279" points="78.4,148.6 125.3,122.3 127.8,122.3 78.4,150 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_559_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_560_">
+						<use xlink:href="#SVGID_559_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st280" points="78.4,147.2 122.8,122.3 125.3,122.3 78.4,148.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_561_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_562_">
+						<use xlink:href="#SVGID_561_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st281" points="78.4,145.8 120.3,122.3 122.8,122.3 78.4,147.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_563_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_564_">
+						<use xlink:href="#SVGID_563_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st282" points="78.4,144.4 117.8,122.3 120.3,122.3 78.4,145.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_565_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_566_">
+						<use xlink:href="#SVGID_565_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st283" points="78.4,143 115.3,122.3 117.8,122.3 78.4,144.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_567_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_568_">
+						<use xlink:href="#SVGID_567_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st284" points="78.4,141.6 112.9,122.3 115.3,122.3 78.4,143 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_569_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_570_">
+						<use xlink:href="#SVGID_569_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st285" points="78.4,140.2 110.4,122.3 112.9,122.3 78.4,141.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_571_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_572_">
+						<use xlink:href="#SVGID_571_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st286" points="78.4,138.8 107.9,122.3 110.4,122.3 78.4,140.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_573_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_574_">
+						<use xlink:href="#SVGID_573_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st287" points="78.4,137.4 105.4,122.3 107.9,122.3 78.4,138.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_575_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_576_">
+						<use xlink:href="#SVGID_575_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st288" points="78.4,136 102.9,122.3 105.4,122.3 78.4,137.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_577_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_578_">
+						<use xlink:href="#SVGID_577_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st289" points="78.4,134.6 100.4,122.3 102.9,122.3 78.4,136 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_579_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_580_">
+						<use xlink:href="#SVGID_579_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st290" points="78.4,133.3 97.9,122.3 100.4,122.3 78.4,134.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_581_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_582_">
+						<use xlink:href="#SVGID_581_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st291" points="78.4,131.9 95.4,122.3 97.9,122.3 78.4,133.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_583_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_584_">
+						<use xlink:href="#SVGID_583_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st292" points="78.4,130.5 93,122.3 95.4,122.3 78.4,131.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_585_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_586_">
+						<use xlink:href="#SVGID_585_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st293" points="78.4,129.1 90.5,122.3 93,122.3 78.4,130.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_587_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_588_">
+						<use xlink:href="#SVGID_587_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st294" points="78.4,127.7 88,122.3 90.5,122.3 78.4,129.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_589_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_590_">
+						<use xlink:href="#SVGID_589_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st295" points="78.4,126.3 85.5,122.3 88,122.3 78.4,127.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_591_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_592_">
+						<use xlink:href="#SVGID_591_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st296" points="78.4,124.9 83,122.3 85.5,122.3 78.4,126.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_593_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_594_">
+						<use xlink:href="#SVGID_593_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st297" points="78.4,123.5 80.5,122.3 83,122.3 78.4,124.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_595_" points="78.4,122.3 126.7,227.8 201.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_596_">
+						<use xlink:href="#SVGID_595_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st298" points="80.5,122.3 78.4,123.5 78.4,122.3 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<defs>
+						<polygon id="SVGID_597_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_598_">
+						<use xlink:href="#SVGID_597_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st299" points="2.9,214.4 31.7,227.8 2.9,227.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_599_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_600_">
+						<use xlink:href="#SVGID_599_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st300" points="2.9,211.8 37.3,227.8 31.7,227.8 2.9,214.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_601_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_602_">
+						<use xlink:href="#SVGID_601_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st301" points="2.9,209.1 42.8,227.8 37.3,227.8 2.9,211.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_603_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_604_">
+						<use xlink:href="#SVGID_603_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st302" points="2.9,206.6 48.4,227.8 42.8,227.8 2.9,209.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_605_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_606_">
+						<use xlink:href="#SVGID_605_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st303" points="2.9,204 53.9,227.8 48.4,227.8 2.9,206.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_607_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_608_">
+						<use xlink:href="#SVGID_607_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st304" points="2.9,201.3 59.5,227.8 53.9,227.8 2.9,204 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_609_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_610_">
+						<use xlink:href="#SVGID_609_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st305" points="2.9,198.8 65.1,227.8 59.5,227.8 2.9,201.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_611_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_612_">
+						<use xlink:href="#SVGID_611_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st306" points="2.9,196.2 70.6,227.8 65.1,227.8 2.9,198.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_613_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_614_">
+						<use xlink:href="#SVGID_613_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st307" points="2.9,193.6 76.2,227.8 70.6,227.8 2.9,196.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_615_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_616_">
+						<use xlink:href="#SVGID_615_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st308" points="2.9,191 81.7,227.8 76.2,227.8 2.9,193.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_617_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_618_">
+						<use xlink:href="#SVGID_617_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st309" points="2.9,188.4 84.3,226.4 83.6,227.8 81.7,227.8 2.9,191 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_619_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_620_">
+						<use xlink:href="#SVGID_619_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st310" points="2.9,185.8 85.3,224.3 84.3,226.4 2.9,188.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_621_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_622_">
+						<use xlink:href="#SVGID_621_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st311" points="2.9,183.2 2.9,183.2 86.3,222.1 85.3,224.3 2.9,185.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_623_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_624_">
+						<use xlink:href="#SVGID_623_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st312" points="2.9,183.2 3.9,181 87.3,220 86.3,222.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_625_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_626_">
+						<use xlink:href="#SVGID_625_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st313" points="3.9,181 4.9,178.9 88.3,217.9 87.3,220 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_627_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_628_">
+						<use xlink:href="#SVGID_627_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st314" points="4.9,178.9 5.9,176.8 89.3,215.7 88.3,217.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_629_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_630_">
+						<use xlink:href="#SVGID_629_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st315" points="5.9,176.8 6.9,174.6 90.3,213.6 89.3,215.7 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_631_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_632_">
+						<use xlink:href="#SVGID_631_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st316" points="6.9,174.6 7.9,172.5 91.3,211.5 90.3,213.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_633_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_634_">
+						<use xlink:href="#SVGID_633_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st317" points="7.9,172.5 8.9,170.4 92.3,209.3 91.3,211.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_635_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_636_">
+						<use xlink:href="#SVGID_635_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st318" points="8.9,170.4 9.9,168.2 93.3,207.2 92.3,209.3 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_637_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_638_">
+						<use xlink:href="#SVGID_637_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st319" points="9.9,168.2 10.9,166.1 93.6,204.8 93.6,206.6 93.3,207.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_639_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_640_">
+						<use xlink:href="#SVGID_639_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st320" points="10.9,166.1 11.9,164 93.6,202.2 93.6,204.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_641_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_642_">
+						<use xlink:href="#SVGID_641_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st321" points="11.9,164 12.9,161.8 93.6,199.5 93.6,202.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_643_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_644_">
+						<use xlink:href="#SVGID_643_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st322" points="12.9,161.8 13.9,159.7 93.6,197 93.6,199.5 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_645_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_646_">
+						<use xlink:href="#SVGID_645_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st323" points="13.9,159.7 14.9,157.6 93.6,194.4 93.6,197 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_647_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_648_">
+						<use xlink:href="#SVGID_647_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st324" points="14.9,157.6 15.9,155.5 93.6,191.8 93.6,194.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_649_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_650_">
+						<use xlink:href="#SVGID_649_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st325" points="15.9,155.5 16.9,153.3 93.6,189.1 93.6,191.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_651_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_652_">
+						<use xlink:href="#SVGID_651_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st326" points="16.9,153.3 17.9,151.2 93.6,186.6 93.6,189.1 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_653_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_654_">
+						<use xlink:href="#SVGID_653_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st327" points="17.9,151.2 18.9,149.1 93.6,184 93.6,186.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_655_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_656_">
+						<use xlink:href="#SVGID_655_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st328" points="18.9,149.1 19.9,146.9 93.6,181.4 93.6,184 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_657_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_658_">
+						<use xlink:href="#SVGID_657_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st329" points="19.9,146.9 20.9,144.8 93.6,178.8 93.6,181.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_659_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_660_">
+						<use xlink:href="#SVGID_659_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st330" points="20.9,144.8 21.9,142.7 93.6,176.2 93.6,178.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_661_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_662_">
+						<use xlink:href="#SVGID_661_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st331" points="21.9,142.7 22.9,140.5 93.6,173.6 93.6,176.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_663_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_664_">
+						<use xlink:href="#SVGID_663_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st332" points="22.9,140.5 23.9,138.4 93.6,170.9 93.6,173.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_665_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_666_">
+						<use xlink:href="#SVGID_665_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st333" points="23.9,138.4 24.9,136.3 93.6,168.4 93.6,170.9 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_667_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_668_">
+						<use xlink:href="#SVGID_667_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st334" points="24.9,136.3 25.9,134.1 93.6,165.8 93.6,168.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_669_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_670_">
+						<use xlink:href="#SVGID_669_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st335" points="25.9,134.1 26.9,132 93.6,163.2 93.6,165.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_671_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_672_">
+						<use xlink:href="#SVGID_671_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st336" points="26.9,132 27.9,129.8 93.6,160.6 93.6,163.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_673_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_674_">
+						<use xlink:href="#SVGID_673_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st337" points="27.9,129.8 28.9,127.7 93.6,158 93.6,160.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_675_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_676_">
+						<use xlink:href="#SVGID_675_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st338" points="28.9,127.7 29.8,125.6 93.6,155.4 93.6,158 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_677_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_678_">
+						<use xlink:href="#SVGID_677_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st339" points="29.8,125.6 30.8,123.4 93.6,152.8 93.6,155.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_679_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_680_">
+						<use xlink:href="#SVGID_679_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st340" points="30.8,123.4 31.8,121.3 93.6,150.2 93.6,152.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_681_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_682_">
+						<use xlink:href="#SVGID_681_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st341" points="31.8,121.3 32.8,119.2 93.6,147.6 93.6,150.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_683_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_684_">
+						<use xlink:href="#SVGID_683_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st342" points="32.8,119.2 33.8,117 93.6,145 93.6,147.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_685_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_686_">
+						<use xlink:href="#SVGID_685_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st343" points="33.8,117 34.8,114.9 93.6,142.4 93.6,145 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_687_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_688_">
+						<use xlink:href="#SVGID_687_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st344" points="34.8,114.9 35.8,112.8 93.6,139.8 93.6,142.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_689_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_690_">
+						<use xlink:href="#SVGID_689_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st345" points="35.8,112.8 36.8,110.7 93.6,137.2 93.6,139.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_691_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_692_">
+						<use xlink:href="#SVGID_691_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st346" points="36.8,110.7 37.8,108.5 93.6,134.6 93.6,137.2 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_693_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_694_">
+						<use xlink:href="#SVGID_693_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st347" points="37.8,108.5 38.8,106.4 93.6,132 93.6,134.6 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_695_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_696_">
+						<use xlink:href="#SVGID_695_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st348" points="38.8,106.4 39.8,104.3 93.6,129.4 93.6,132 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_697_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_698_">
+						<use xlink:href="#SVGID_697_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st349" points="39.8,104.3 40.8,102.1 93.6,126.8 93.6,129.4 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_699_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_700_">
+						<use xlink:href="#SVGID_699_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st350" points="40.8,102.1 41.8,100 93.6,124.2 93.6,126.8 					"/>
+				</g>
+				<g>
+					<defs>
+						<polygon id="SVGID_701_" points="93.6,1.9 2.9,227.8 77.7,227.8 						"/>
+					</defs>
+					<clipPath id="SVGID_702_">
+						<use xlink:href="#SVGID_701_"  style="overflow:visible;"/>
+					</clipPath>
+					<polygon class="st351" points="41.8,100 87.7,1.9 93.6,1.9 93.6,124.2 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
