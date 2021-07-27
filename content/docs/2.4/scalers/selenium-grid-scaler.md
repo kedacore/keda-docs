@@ -19,14 +19,16 @@ The below is an example trigger configuration for chrome node.
 triggers:
   - type: selenium-grid
     metadata:
-      url: 'http://selenium-hub:4444/graphql'
-      browserName: 'chrome'
+      url: 'http://selenium-hub:4444/graphql' # Required
+      browserName: 'chrome'  # Required
+      browserVersion: '91.0' # Optional. Only required when supporting multiple versions of browser in your Selenium Grid.
 ```
 
 **Parameter list:**
 
 - `url` is graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
-- `browserName` is the name of browser that usually gets passed in the browser capability. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/)
+- `browserName` is the name of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
+- `browserVersion` is the version of browser that usually gets passed in the browser capability. This is an optional param and you can ignore it if you are running only one single version of every browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
 
 ### Example
 
@@ -72,4 +74,46 @@ spec:
       metadata:
         url: 'http://selenium-hub:4444/graphql'
         browserName: 'firefox'
+```
+
+If you are supporting multiple versions of browser capability in your Selenium Grid, You should create one scaler for every browser version and pass the `browserVersion` in the metadata.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: selenium-grid-chrome-91-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: selenium-chrome-node-91
+spec:
+  maxReplicaCount: 8
+  scaleTargetRef:
+    name: selenium-chrome-node-91
+  triggers:
+    - type: selenium-grid
+      metadata:
+        url: 'http://selenium-hub:4444/graphql'
+        browserName: 'chrome'
+        browserVersion: '91.0'
+```
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: selenium-grid-chrome-90-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: selenium-chrome-node-90
+spec:
+  maxReplicaCount: 8
+  scaleTargetRef:
+    name: selenium-chrome-node-90
+  triggers:
+    - type: selenium-grid
+      metadata:
+        url: 'http://selenium-hub:4444/graphql'
+        browserName: 'chrome'
+        browserVersion: '90.0'
 ```
