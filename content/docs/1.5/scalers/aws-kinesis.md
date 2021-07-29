@@ -38,7 +38,7 @@ triggers:
 
 > These parameters are relevant only when `identityOwner` is set to `pod`. 
 
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/concepts/authentication).
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/docs/1.5/concepts/authentication/).
 
 #### Delegate auth with TriggerAuthentication
 
