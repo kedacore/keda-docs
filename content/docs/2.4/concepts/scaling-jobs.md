@@ -44,6 +44,10 @@ spec:
     strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
     customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
     customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScalingStrategy.
+    pendingPodConditions:                     # Optional. A parameter to calculate pending job count per the specified pod conditions
+      - "Ready"
+      - "PodScheduled"
+      - "AnyOtherCustomPodCondition"
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -136,12 +140,22 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 >		runningJobs++
 >}
 >```
->`PendingJobCount` provides an indication of the amount of jobs that are in pending state, for example a that has not finished yet **and** the underlying pod is either not running or has not completed yet.
+>`PendingJobCount` provides an indication of the amount of jobs that are in pending state. Pending jobs can be calculated in two ways:
+> - Default behavior - Job that have not finished yet **and** the underlying pod is either not running or has not been completed yet
+> - Setting `pendingPodConditions` - Job that has not finished yet **and** all specified pod conditions of the underlying pod mark as `true` by kubernetes.
 >
 >It is measured as follows:
 >```go
->if !e.isJobFinished(&job) && !e.isAnyPodRunningOrCompleted(&job) {
->			pendingJobs++
+>if !e.isJobFinished(&job) {
+>   if len(scaledJob.Spec.ScalingStrategy.PendingPodConditions) > 0 {
+>       if !e.areAllPendingPodConditionsFulfilled(&job, scaledJob.Spec.ScalingStrategy.PendingPodConditions) {
+>           pendingJobs++
+>       }
+>   } else {
+>       if !e.isAnyPodRunningOrCompleted(&job) {
+>           pendingJobs++
+>       }
+>   }
 >}
 >```
 
