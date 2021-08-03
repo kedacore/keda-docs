@@ -20,29 +20,71 @@ Here's a good example of [Coralogix becoming a listed user](https://github.com/k
 
 ## Running the site locally
 
-Install [Hugo](https://gohugo.io/getting-started/installing/) (the "extended" version with [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) support) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable):
+To run local site previews, you must install [Hugo](https://gohugo.io/getting-started/installing/) (the "extended" version with [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) support) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable).
 
-### Windows
+### Installing Hugo and Yarn on Linux
 
-```sh
-choco install hugo-extended
-choco install yarn
-```
+1. Install [Go](https://golang.org/doc/install), [node and npm](https://docs.npmjs.com/cli/v7/configuring-npm/install)
+1. Install Yarn:
 
-### Mac
+    ```sh
+    npm install --global yarn
+    ```
 
-```sh
-brew install hugo
-brew install yarn
-```
+1. Install Hugo:
 
-Now you can run the docs locally:
+    ```sh
+    cd %HOME/src
+    git clone https://github.com/gohugoio/hugo.git
+    cd hugo
+    go install --tags extended
+    ```
 
-```sh
-yarn
+### Installing Hugo and Yarn on Windows by using `choco`
 
-hugo server -D -F
-```
+1. Install Hugo:
+
+    ```sh
+    choco install hugo-extended
+    ```
+
+1. Install Yarn:
+
+    ```sh
+    choco install yarn
+    ```
+
+### Installing Hugo and Yarn on Mac by using `brew`
+
+1. Install Hugo:
+
+    ```sh
+    brew install hugo
+    ```
+
+1. Install Yarn:
+
+    ```sh
+    brew install yarn
+    ```
+
+### Run the site locally
+
+1. Fork the `keda-docs` repository.
+
+1. Clone the fork.
+
+1. Navigate to your cloned repository and run the commands:
+
+    ```sh
+    yarn
+    ```
+
+    ```sh
+    hugo server -D -F
+    ```
+
+    The Web Server is available at http://localhost:1313/.
 
 ## Publishing the site
 
