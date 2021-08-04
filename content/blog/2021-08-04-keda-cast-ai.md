@@ -1,6 +1,6 @@
 +++
 title = "How CAST AI uses KEDA for Kubernetes autoscaling"
-date = 2021-08-05
+date = 2021-08-04
 author = "Žilvinas Urbonas (CAST AI), Annie Talvasto (CAST AI), and Tom Kerkhove (KEDA)"
 aliases = [
     "/blog/how-cast-ai-uses-keda-for-kubernetes-autoscaling/"
@@ -34,7 +34,7 @@ These two components configure the HPA and set up custom metric sources, helping
 
 To autoscale with the Horizontal Pod Autoscaler, users need to enable the KEDA add-on on the Policies page available for every cluster in CAST AI.
 
-![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/cast-ai-keda-1.png)
+![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/cast-ai-keda-1.png "Tom's title")
 
 Once enabled, KEDA will start working on a given cluster once users configure the associated scaled object. KEDA automatically changes pod replica counts based on the provided metrics.
 
@@ -220,8 +220,6 @@ The policy settings above will help to achieve cost savings for workloads like b
 In the system depicted above, we simulated a real-world scenario of producer-consumer-based work processing. The queue length triggers our built-in KEDA component to create pods used to process jobs stored in the queue. These pods are all scheduled on spot instances. When jobs are done, empty nodes are deleted.
 
 CAST AI handles potential spot instance interruptions gracefully. If an interruption occurs and a job is in-flight, the job is marked as failed and reschedules on another node.
-
-![CAST AI KEDA Policies](/img/blog/cast-ai-ref-case/cast-ai-keda-3.png)
 
 ## Looking towards the future with KEDA
 
