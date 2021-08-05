@@ -26,7 +26,7 @@ triggers:
 
 ### Authentication Parameters
 
-The own KEDA's identity is used to list the pods, so no configuration is needed here.
+The own KEDA's identity is used to list the pods, so no extra configuration is needed here.
 
 ### Example
 
