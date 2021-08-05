@@ -1,7 +1,7 @@
 +++
 title = "Kubernetes Workload"
 layout = "scaler"
-availability = "v2.5+"
+availability = "v2.4+"
 maintainer = "Community"
 description = "Scale applications based on the amount of pods which matches the given selectors."
 go_file = "kubernetes_workload_scaler"
