@@ -22,7 +22,7 @@ triggers:
 
 - `podSelector` - [Label selector](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) that will be used to get the pod count. It supports multiple selectors split by coma (`,`). It also supports [set-based requirements](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#set-based-requirement) and a mix of them.
 - `namespace` - Namespace where the `podSelector` must be applied. If it's empty, all namespaces are eligibles. This parameter is optional and default value is empty.
-- `value` - Target relation between the scaled workload and the amount of pods which matches the selector. It will be calculated following this formula: `relation = (pods witch match selector) / (scaled workload pods)`
+- `value` - Target relation between the scaled workload and the amount of pods which matches the selector. It will be calculated following this formula: `relation = (pods which match selector) / (scaled workload pods)`
 
 ### Example
 
