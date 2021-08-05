@@ -24,6 +24,10 @@ triggers:
 - `namespace` - Namespace where the `podSelector` must be applied. If it's empty, all namespaces are eligibles. This parameter is optional and default value is empty.
 - `value` - Target relation between the scaled workload and the amount of pods which matches the selector. It will be calculated following this formula: `relation = (pods which match selector) / (scaled workload pods)`
 
+### Authentication Parameters
+
+The own KEDA's identity is used to list the pods, so no configuration is needed here.
+
 ### Example
 
 ```yaml
