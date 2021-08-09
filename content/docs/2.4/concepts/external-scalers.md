@@ -60,7 +60,7 @@ service ExternalScaler {
 
 - `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition
 - `IsActive` maps to the `IsActive` method on the `Scaler` interface
-- `StreamingIsActive` maps to the `Run` method on the `PushScaler` interface.
+- `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
 Few things to notice:
 - Lack of `Close` method as the GRPC connection defines the lifetime of the scaler
@@ -99,7 +99,7 @@ KEDA will attempt a connection to `service-address.svc.local:9090` and calls `Is
 }
 ```
 
-For `StreamingIsActive` KEDA establishes the connection to the GRPC server and expects `IsActive` events to be streamed as a response.
+For `StreamIsActive` KEDA establishes the connection to the GRPC server and expects `IsActive` events to be streamed as a response.
 
 ## Implementing KEDA external scaler GRPC interface
 
@@ -346,9 +346,9 @@ server.start()
 
 <br />
 
-#### 4. Implementing `StreamingIsActive`
+#### 4. Implementing `StreamIsActive`
 
-Unlike `IsActive`, `StreamingIsActive` is called once when KEDA reconciles the `ScaledObject`, and expects the external scaler to push `IsActiveResponse` whenever the scaler needs KEDA to activate the deployment.
+Unlike `IsActive`, `StreamIsActive` is called once when KEDA reconciles the `ScaledObject`, and expects the external scaler to push `IsActiveResponse` whenever the scaler needs KEDA to activate the deployment.
 
 This implementation creates a timer and queries USGS APIs on that timer, effectively ignoring `pollingInterval` set in the scaledObject. Alternatively any other asynchronous event can be used instead of a timer, like an HTTP request, or a network connection.
 
