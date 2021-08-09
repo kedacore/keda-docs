@@ -48,6 +48,7 @@ spec:
       - "Ready"
       - "PodScheduled"
       - "AnyOtherCustomPodCondition"
+    MultipleScalersOption: "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -192,6 +193,19 @@ if (maxScale + runningJobCount) > maxReplicaCount {
 	return maxScale - pendingJobCount
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
+
+---
+
+```yaml
+scalingStrategy:
+    MultipleScalersOption: "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
+```
+Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
+
+* **max:** default, pick a scaler that has the max number of `queueLength`.
+* **min:** pick a scaler that has the min number of `queueLength`.
+* **avg:** sum up all the active scalers metrics and devided by the number of the active scalers.
+* **sum:** sum up all the active scalers metrics.
 
 # Sample
 
