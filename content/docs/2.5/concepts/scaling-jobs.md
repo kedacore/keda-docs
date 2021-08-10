@@ -205,7 +205,7 @@ Select a behavior if you have multiple triggers. Possible values are `max`, `min
 * **max:** - Use the scaler that has the max number of `queueLength`. (default)
 * **min:** - Use the scaler that has the min number of `queueLength`.
 * **avg:** - Sum up all the active scalers metrics and divide by the number of active scalers.
-* **sum:** sum up all the active scalers metrics.
+* **sum:** - Sum up all the active scalers metrics.
 
 # Sample
 
