@@ -48,7 +48,7 @@ spec:
       - "Ready"
       - "PodScheduled"
       - "AnyOtherCustomPodCondition"
-    MultipleScalersOption: "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
+    MultipleScalersOption: "max" # Optional. Default: max. Specifies how to calculate the queueLength and maxValue when multiple scaler are used.
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -251,4 +251,3 @@ spec:
       host: RabbitMqHost
       queueLength  : '5'
 ```
-
