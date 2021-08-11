@@ -66,6 +66,13 @@ The authentication parameters could be provided using environmental variables, i
 - `clientSecretFromEnv` optional: An environmental variable name, that stores password from your Azure AD Application/service principal.
 - `workspaceIdFromEnv` optional: An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
+> 💡 **NOTE:** The workspaceID for Log Analytics is called the `customerId`;
+ it's not the full `id`! the example `az` command below can be used.
+
+```sh
+az monitor log-analytics workspace list --query '[]. {ResourceGroup:resourceGroup,WorkspaceName:name,"workspaceID (customerId)":customerId}' -o table
+```
+
 ### Query Guidance
 
 It is important to design your query to return 1 table with 1 row. A good practice is to add "| limit 1" at the end of your query.
