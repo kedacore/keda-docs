@@ -350,10 +350,9 @@ EOF
 
 # APPLY LABELS: OPTION 1
 #deploy Keda using helm chart and specify aadPodIdentity label.
-#WARNING: You can run this command once keda v.2.0.0 will be released and helm chart for v2 will be available in official repo
 helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
-helm install keda kedacore/keda --namespace keda --create-namespace --set aadPodIdentity=${IDENTITY_NAME}
+helm install keda kedacore/keda --namespace keda --create-namespace --set podIdentity.activeDirectory.identity=${IDENTITY_NAME}
 
 # APPLY LABELS: OPTION 2
 #Instead of redeploying Keda, you can update existing deployment:
