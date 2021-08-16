@@ -19,6 +19,7 @@ triggers:
     blobContainerName: functions-blob
     blobCount: '5'
     connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
+    accountName: storage-account-name
     blobPrefix: myprefix
     blobDelimiter: /example
     cloud: Private
@@ -27,9 +28,10 @@ triggers:
 
 **Parameter list:**
 
-- `blobContainerName` - Name of container in an Azure Storage account
+- `blobContainerName` - Name of container in an Azure Storage account.
 - `blobCount` - Average target value to trigger scaling actions. (default: 5)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
+- `accountName` - Name of the storage account that the container belongs to.
 - `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (default: `""`)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
 - `cloud` - Name of the cloud environment that the blob belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
@@ -44,7 +46,11 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Storage Account
+- `connection` - Connection string for Azure Storage Account.
+
+**PodIdentity Authentication**
+
+- `accountName` - Name of the Azure Storage Account.
 
 ### Example
 
@@ -70,6 +76,12 @@ spec:
     metadata:
       # Required
       blobContainerName: functionsblob
+      # Optional, required when pod identity is used
+      accountName: storage-account-name
+      # Optional, connection OR authenticationRef that defines the connection
+      connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME # Reference to a connection string in deployment
+      # or authenticationRef as defined below
+      #
       # Optional
       blobCount: "5" # default 5
       blobPrefix: blobsubpath # Default : ""
