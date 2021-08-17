@@ -41,7 +41,7 @@ You can authenticate by using pod identity or connection string authentication.
 
 - `connection` - Connection string for Azure Storage Account.
 
-**PodIdentity Authentication**
+**Pod Identity Authentication**
 
 - `accountName` - Name of the Azure Storage Account.
 
