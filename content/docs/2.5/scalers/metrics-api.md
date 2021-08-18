@@ -63,7 +63,7 @@ because many applications implement basic auth with a username as apikey and pas
 
 **Bearer authentication:**
 - `authMode`: It must be set to `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
-- `token`: Token that should be placed in the `Authorization` header. It will be `Authorization: Bearer {token}`.
+- `token`: Token that should be placed in the `Authorization` header. The header will be `Authorization: Bearer {token}`.
 
 ### Example
 
