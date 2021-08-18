@@ -29,12 +29,13 @@ triggers:
 - `end` is the cron expression indicating the end of the cron schedule. Required.
 
 > **Notice:**
-> - **start and end should not be same.** For example:
+> **Start and end should not be same.**
+>
+> For example, the following schedule is not valid:
 > ```yaml
 > start: 30 * * * *
-> end: 30 * * * *  # Invalid input
+> end: 30 * * * *
 >```
-> - The above schedule is invalid.
 
 - `desiredReplicas` is the number of replicas to which the resource has to be scaled between the start and end of the cron schedule. Required.
 
