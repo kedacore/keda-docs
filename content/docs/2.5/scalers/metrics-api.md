@@ -109,7 +109,7 @@ Assuming such response, Metrics API trigger will figure out that current metric 
 
 > 💡 **NOTE:**The value of the metric can either be an integral unquoted json number type (e.g. 123). Or a quantity (e.g. "123", "1.23", "10Mi").
 
-Here is an example of a  metric scaler with API Key based authentication,
+Here is an example of a metric scaler with API Key based authentication,
 
 ```yaml
 apiVersion: v1
@@ -155,7 +155,7 @@ spec:
         name: keda-metric-api-creds
 ```
 
-Here is an example of a  metric scaler with Bearer Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a metric scaler with Bearer Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -199,7 +199,7 @@ spec:
         name: keda-metric-api-creds
 ```
 
-Here is an example of a  metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -248,7 +248,7 @@ spec:
 ```
 
 
-Here is an example of a  metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
