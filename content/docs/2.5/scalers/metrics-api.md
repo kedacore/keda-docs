@@ -61,6 +61,10 @@ because many applications implement basic auth with a username as apikey and pas
 - `cert`: Certificate for client authentication. This is a required field.
 - `key`: Key for client authentication. Optional. This is a required field.
 
+**Bearer authentication:**
+- `authMode`: It must be set to `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
+- `token`: Token that should be placed in the `Authorization` header. The header will be `Authorization: Bearer {token}`.
+
 ### Example
 
 Here is a full example of scaled object definition using Metric API trigger:
@@ -105,7 +109,7 @@ Assuming such response, Metrics API trigger will figure out that current metric 
 
 > 💡 **NOTE:**The value of the metric can either be an integral unquoted json number type (e.g. 123). Or a quantity (e.g. "123", "1.23", "10Mi").
 
-Here is an example of a  metric scaler with API Key based authentication,
+Here is an example of a metric scaler with API Key based authentication,
 
 ```yaml
 apiVersion: v1
@@ -151,7 +155,51 @@ spec:
         name: keda-metric-api-creds
 ```
 
-Here is an example of a  metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a metric scaler with Bearer Authentication, define the `Secret` and `TriggerAuthentication` as follows
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-metric-api-secret
+  namespace: default
+data:
+  token: "PlaceYourTokenHere" 
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-metric-api-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: token
+      name: keda-metric-api-secret
+      key: token    
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: http-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "7"
+        url: "http://api:3232/components/stats"
+        valueLocation: 'components.worker.tasks'
+        authMode: "bearer"
+      authenticationRef:
+        name: keda-metric-api-creds
+```
+
+Here is an example of a metric scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -200,7 +248,7 @@ spec:
 ```
 
 
-Here is an example of a  metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
+Here is an example of a metric scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
