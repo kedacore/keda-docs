@@ -19,6 +19,7 @@ This specification describes the `kafka` trigger for an Apache Kafka topic.
 triggers:
 - type: kafka
   metadata:
+    # brokerList: kafka.svc:9092 - deprecated
     bootstrapServers: kafka.svc:9092
     consumerGroup: my-group
     topic: test-topic
