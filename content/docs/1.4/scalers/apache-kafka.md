@@ -53,14 +53,14 @@ triggers:
 Your kafka cluster no sasl auth:
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: kafka-scaledobject
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azure-functions-deployment
+    name: azure-functions-deployment
   pollingInterval: 30
   triggers:
   - type: kafka
@@ -88,7 +88,7 @@ data:
   cert: <your cert>
   key: <your key>
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-kafka-credential
@@ -114,14 +114,14 @@ spec:
     name: keda-kafka-secrets
     key: key
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: kafka-scaledobject
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: azure-functions-deployment
+    name: azure-functions-deployment
   pollingInterval: 30
   triggers:
   - type: kafka
