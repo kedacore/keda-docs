@@ -48,7 +48,7 @@ spec:
       - "Ready"
       - "PodScheduled"
       - "AnyOtherCustomPodCondition"
-    multipleScalersOption: "max" # Optional. Default: max. Specifies how to calculate the queueLength and maxValue when multiple scaler are used.
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the queueLength and maxValue when multiple scaler are used.
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -198,7 +198,7 @@ For more details,  you can refer to [this PR](https://github.com/kedacore/keda/p
 
 ```yaml
 scalingStrategy:
-    multipleScalersOption: "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
+    multipleScalersCalculation : "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
 ```
 Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
 
