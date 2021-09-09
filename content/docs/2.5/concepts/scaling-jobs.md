@@ -198,7 +198,7 @@ For more details,  you can refer to [this PR](https://github.com/kedacore/keda/p
 
 ```yaml
 scalingStrategy:
-    multipleScalersCalculation : "max" # Optional. Default: max. If multiple scaler is exists, how to calculate the queueLength and maxValue
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxValue`) when multiple scalers are defined.
 ```
 Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
 
