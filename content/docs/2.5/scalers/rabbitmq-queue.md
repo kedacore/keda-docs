@@ -40,7 +40,7 @@ triggers:
 - `useRegex`: In case of `http` protocol, this parameter allows to use regex (in `queueName` parameter) to select queue instead of full name, the valid values are: `"true"` and `"false"`.  Optional.
 - `operation`: Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. Optional.
 - `metricName`: an optional name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique.
-- `timeout`: Timeout **for this specific trigger** in case of `http` protocol. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. Optional.
+- `timeout`: Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. Optional. Only apples to hosts that use the `http` protocol.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
