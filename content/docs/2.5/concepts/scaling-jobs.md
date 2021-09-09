@@ -48,7 +48,7 @@ spec:
       - "Ready"
       - "PodScheduled"
       - "AnyOtherCustomPodCondition"
-    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the queueLength and maxValue when multiple scaler are used.
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics when multiple scalers are defined.
   triggers:
   # {list of triggers to create jobs}
 ```
