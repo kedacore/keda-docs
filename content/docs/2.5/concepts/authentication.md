@@ -103,6 +103,7 @@ spec:
     containerName: {container-name}                   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
   hashiCorpVault:                                     # Optional.
     address: {hashicorp-vault-address}                # Required.
+    namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
     authentication: token | kubernetes                # Required.
     role: {hashicorp-vault-role}                      # Optional.
     mount: {hashicorp-vault-mount}                    # Optional.
@@ -188,10 +189,12 @@ secretTargetRef:                          # Optional.
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
 `credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
+`namespace` may be used to target a given Vault Enterprise namespace.
 
 ```yaml
 hashiCorpVault:                                     # Optional.
   address: {hashicorp-vault-address}                # Required.
+  namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
   authentication: token | kubernetes                # Required.
   role: {hashicorp-vault-role}                      # Optional.
   mount: {hashicorp-vault-mount}                    # Optional.
