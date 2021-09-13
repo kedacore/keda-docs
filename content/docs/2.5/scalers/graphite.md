@@ -1,7 +1,7 @@
 +++
 title = "Graphite"
 layout = "scaler"
-availability = "v2.4+"
+availability = "v2.5+"
 maintainer = "Community"
 description = "Scale applications based on metrics in Graphite."
 go_file = "graphite_scaler"
@@ -69,8 +69,8 @@ metadata:
   name: keda-graphite-secret
   namespace: default
 data:
-  username: "username" 
-  password: "password"
+  username: "dXNlcm5hbWUK" # Must be base64
+  password: "cGFzc3dvcmQK"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -92,20 +92,23 @@ metadata:
   name: graphite-scaledobject
   namespace: default
   labels:
-    deploymentName: KafkaConsumerApp
+    deploymentName: php-apache-graphite
 spec:
-  maxReplicaCount: 12
+  cooldownPeriod: 10
+  maxReplicaCount: 5
+  minReplicaCount: 0
+  pollingInterval: 5
   scaleTargetRef:
-    name: KafkaConsumerApp
+    name: php-apache-graphite
   triggers:
-    - type: graphite
-      metadata:
-        serverAddress: http://<graphite-host>:81
-        metricName: KafkaLagMetric
-        threshold: '1000000'
-        query: sumSeries(KafkaConsumerApp*.*.meter.Publisher.kafka-messages-submitted-async.one-minute)
-        queryTime: '-1Hours'
-        authModes: "basic"
-      authenticationRef:
+  - type: graphite
+    metadata:
+      authMode: "basic"
+      metricName: https_metric
+      query: https_metric
+      queryTime: -1Hours
+      serverAddress: http://<graphite server>:81
+      threshold: "100"
+    authenticationRef:
         name: keda-graphite-creds
 ```

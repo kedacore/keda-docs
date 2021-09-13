@@ -131,8 +131,8 @@ metadata:
   name: keda-prom-secret
   namespace: default
 data:
-  username: "username" 
-  password: "password"
+  username: "dXNlcm5hbWUK" # Must be base64
+  password: "cGFzc3dvcmQK"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
