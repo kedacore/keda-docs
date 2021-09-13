@@ -48,6 +48,7 @@ spec:
       - "Ready"
       - "PodScheduled"
       - "AnyOtherCustomPodCondition"
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics when multiple scalers are defined.
   triggers:
   # {list of triggers to create jobs}
 ```
@@ -193,6 +194,19 @@ if (maxScale + runningJobCount) > maxReplicaCount {
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
 
+---
+
+```yaml
+scalingStrategy:
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxValue`) when multiple scalers are defined.
+```
+Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
+
+* **max:** - Use metrics from the scaler that has the max number of `queueLength`. (default)
+* **min:** - Use metrics from the scaler that has the min number of `queueLength`.
+* **avg:** - Sum up all the active scalers metrics and divide by the number of active scalers.
+* **sum:** - Sum up all the active scalers metrics.
+
 # Sample
 
 ```yaml
@@ -237,4 +251,3 @@ spec:
       host: RabbitMqHost
       queueLength  : '5'
 ```
-
