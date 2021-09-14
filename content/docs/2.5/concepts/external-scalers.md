@@ -3,19 +3,19 @@ title = "External Scalers"
 weight = 500
 +++
 
-While KEDA ships with a set of [built-in scalers](../scalers), users can also extend KEDA through a GRPC service that implements the same interface as the built-in scalers.
+While KEDA ships with a set of [built-in scalers](../scalers), users can also extend KEDA through a [GRPC](https://grpc.io) service that implements the same interface as the built-in scalers.
 
 Built-in scalers run in the KEDA process/pod, while external scalers require an externally managed GRPC server that's accessible from KEDA with optional [TLS authentication](https://grpc.io/docs/guides/auth/). KEDA itself acts as a GRPC client and it exposes similar service interface for the built-in scalers, so external scalers can fully replace built-in ones.
 
 This document describes the external scaler interfaces and how to implement them in Go, Node, and .NET; however for more details on GRPC refer to [the official GRPC documentation](https://grpc.io/docs/)
 
-Want to learn about existing external scalers? Explore our [external scaler community](https://github.com/kedacore/external-scalers).
+>Want to learn about existing external scalers? Explore our [external scaler community](https://github.com/kedacore/external-scalers).
 
 ## Overview
 
 ### Built-in scalers interface
 
-Built-in scalers implement one of the following go interfaces:
+Since external scalers mirror the interface of built-in scalers, it's worth becoming familiar with the Go `interface` that the built-in scalers implement:
 
 ```go
 type Scaler interface {
@@ -33,21 +33,21 @@ type PushScaler interface {
 ```
 
 The `Scaler` interface defines 4 methods:
-- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true
+
+- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs. KEDA will scale to 1 if this method returns `true`.
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec)
 - `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
 
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
 
-The `PushScaler` interface adds `Run` method. The `Run` method receives a push channel (`active`), that the scaler can push `true` to any time to force scaling action independently from `pollingInterval`.
-
+The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
 
 ### External Scaler GRPC interface
 
 KEDA comes with 2 external scalers [`external`](../scalers/external.md) and [`external-push`](../scalers/external-push.md).
 
-The configuration in the ScaledObject points to a GRPC service endpoint that implements the following GRPC contract [`externalscaler.proto`](https://github.com/kedacore/keda/blob/main/pkg/scalers/externalscaler/externalscaler.proto):
+The configuration in the ScaledObject points to a GRPC service endpoint that implements the [`externalscaler.proto`](https://github.com/kedacore/keda/blob/main/pkg/scalers/externalscaler/externalscaler.proto) GRPC contract:
 
 ```proto
 service ExternalScaler {
@@ -58,15 +58,20 @@ service ExternalScaler {
 }
 ```
 
+Much of this contract is similar to the built-in scalers:
+
 - `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition
 - `IsActive` maps to the `IsActive` method on the `Scaler` interface
 - `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
-Few things to notice:
-- Lack of `Close` method as the GRPC connection defines the lifetime of the scaler
+There are, however, some notable differences:
+
+- There is no `Close` method. The scaler is expected to be functional throughout its lifetime.
 - `IsActive`, `StreamIsActive`, and `GetMetricsSpec` are called with a `ScaledObjectRef` that contains the scaledObject name/namespace as well as the content of `metadata` defined in the trigger.
 
-For example the following `ScaledObject`
+### Example
+
+Given the following `ScaledObject`:
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -78,14 +83,19 @@ spec:
   scaleTargetRef:
     name: deployment-name
   triggers:
-    - type: external
+    - type: external-push
       metadata:
         scalerAddress: service-address.svc.local:9090
         key1: value1
         key2: value2
 ```
 
-KEDA will attempt a connection to `service-address.svc.local:9090` and calls `IsActive`, `StreamIsActive`, and `GetMetricsSpec` with the following `ScaledObjectRef`
+KEDA will attempt a GRPC connection to `service-address.svc.local:9090` immediately after reconciling the `ScaledObject`. It will then make the following RPC calls:
+
+- `IsActive` - KEDA does an initial call to `IsActive` followed by one call on each `pollingInterval`
+- `StreamIsActive` - KEDA does an initial call and the scaler is expected to maintain a long-lived connection (called a `stream` in GRPC terminology). The external push scaler can then send an `IsActive` event back to KEDA at any time. KEDA will only attempt another call to `StreamIsActive` if it needs to re-connect
+- `GetMetricsSpec` - KEDA will do an initial call with the following data in the incoming `ScaledObjectRef` parameter:
+- `GetMetrics` - KEDA will call this method every `pollingInterval` to get the point-in-time metric values for the names returned by `GetMetricsSpec`.
 
 ```json
 {
@@ -99,15 +109,15 @@ KEDA will attempt a connection to `service-address.svc.local:9090` and calls `Is
 }
 ```
 
-For `StreamIsActive` KEDA establishes the connection to the GRPC server and expects `IsActive` events to be streamed as a response.
+>**Note**: KEDA will issue all of the above RPC calls except `StreamIsActive` if `spec.triggers.type` is `external`. It _must_ be `external-push` for `StreamIsActive` to be called.
 
 ## Implementing KEDA external scaler GRPC interface
 
-### Implementing an external scaler:
+### Implementing an external scaler
 
 #### 1. Download [`externalscaler.proto`](https://github.com/kedacore/keda/blob/main/pkg/scalers/externalscaler/externalscaler.proto)
 
-#### 2. Prepare project:
+#### 2. Prepare project
 
 {{< collapsible "Golang" >}}
 
@@ -126,6 +136,7 @@ go mod init example.com/external-scaler/sample
 mkdir externalscaler
 protoc externalscaler.proto --go_out=plugins=grpc:externalscaler
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
@@ -162,15 +173,18 @@ mkdir Services
 ```bash
 npm install --save grpc request
 ```
+
 {{< /collapsible >}}
 
 <br />
 
 #### 3. Implementing `IsActive`
 
-Just like `IsActive(ctx context.Context) (bool, error)` in the go interface, `IsActive` method in the GRPC interface is called every `pollingInterval` with a `ScaledObjectRef` object that contains the scaledObject name, namespace, and scaler metadata. This section implements an external scaler that queries earthquakes from https://earthquake.usgs.gov/ and scales the deployment if there has been more than 2 earthquakes with `magnitude > 1.0` around a particular longitude/latitude in the previous day
+Just like `IsActive(ctx context.Context) (bool, error)` in the go interface, the `IsActive` method in the GRPC interface is called every `pollingInterval` with a `ScaledObjectRef` object that contains the scaledObject name, namespace, and scaler metadata.
 
-`ScaledObject`
+This section implements an external scaler that queries earthquakes from [earthquake.usgs.gov](https://earthquake.usgs.gov/) and scales the deployment if there has been more than 2 earthquakes with `magnitude > 1.0` around a particular longitude/latitude in the previous day.
+
+Submit the following `ScaledObject` to tell KEDA to start making RPC calls to your external scaler (modifying appropriate fields as necessary):
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -191,9 +205,10 @@ spec:
 
 {{< collapsible "Golang" >}}
 
-Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
+The full implementation can be found at [github.com/kedacore/external-scaler-samples](https://github.com/kedacore/external-scaler-samples).
 
-`main.go`
+Put the following code into your `main.go` file:
+
 ```golang
 func (e *ExternalScaler) IsActive(ctx context.Context, scaledObject *pb.ScaledObjectRef) (*pb.IsActiveResponse, error) {
 	// request.Scalermetadata contains the `metadata` defined in the ScaledObject
@@ -240,12 +255,15 @@ func (e *ExternalScaler) IsActive(ctx context.Context, scaledObject *pb.ScaledOb
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
-Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
 
-`Services/ExternalScalerService.cs`
+Full implementation can be found at [github.com/kedacore/external-scaler-samples](https://github.com/kedacore/external-scaler-samples).
+
+Put the following code into your `Services/ExternalScalerService.cs` file:
+
 ```csharp
 public class ExternalScalerService : ExternalScaler.ExternalScalerBase
 {
@@ -278,10 +296,13 @@ public class ExternalScalerService : ExternalScaler.ExternalScalerBase
   }
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
-`index.js`
+
+Put the following code into your `index.js` file:
+
 ```js
 const grpc = require('grpc')
 const request = require('request')
@@ -342,18 +363,19 @@ console.log('Server listening on 127.0.0.1:9090')
 
 server.start()
 ```
+
 {{< /collapsible >}}
 
 <br />
 
 #### 4. Implementing `StreamIsActive`
 
-Unlike `IsActive`, `StreamIsActive` is called once when KEDA reconciles the `ScaledObject`, and expects the external scaler to push `IsActiveResponse` whenever the scaler needs KEDA to activate the deployment.
+Unlike `IsActive`, `StreamIsActive` is called once when KEDA reconciles the `ScaledObject`, and expects the external scaler to maintain a long-lived connection and push `IsActiveResponse` objects whenever the scaler needs KEDA to activate the deployment.
 
 This implementation creates a timer and queries USGS APIs on that timer, effectively ignoring `pollingInterval` set in the scaledObject. Alternatively any other asynchronous event can be used instead of a timer, like an HTTP request, or a network connection.
 
-
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) StreamIsActive(scaledObject *pb.ScaledObjectRef, epsServer pb.ExternalScaler_StreamIsActiveServer) error {
 	longitude := scaledObject.ScalerMetadata["longitude"]
@@ -381,9 +403,11 @@ func (e *ExternalScaler) StreamIsActive(scaledObject *pb.ScaledObjectRef, epsSer
 	}
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override Task StreamIsActive(ScaledObjectRef request, IServerStreamWriter<IsActiveResponse> responseStream, ServerCallContext context)
 {
@@ -411,9 +435,11 @@ public override Task StreamIsActive(ScaledObjectRef request, IServerStreamWriter
   }
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
@@ -445,6 +471,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   }
 })
 ```
+
 {{< /collapsible >}}
 
 <br />
@@ -454,6 +481,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
 `GetMetricSpec` returns the `target` value for [the HPA definition for the scaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/). This scaler will define a static target of 10, but the threshold value is often specified in the metadata for other scalers.
 
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*pb.GetMetricSpecResponse, error) {
 	return &pb.GetMetricSpecResponse{
@@ -464,9 +492,11 @@ func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*p
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
 {
@@ -481,9 +511,11 @@ public override Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef reques
   return Task.FromResult(resp);
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
@@ -497,6 +529,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   }
 })
 ```
+
 {{< /collapsible >}}
 
 <br />
@@ -506,6 +539,7 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
 `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`, in this example it's `earthquakeThreshold`.
 
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) GetMetrics(_ context.Context, metricRequest *pb.GetMetricsRequest) (*pb.GetMetricsResponse, error) {
 	longitude := metricRequest.ScaledObjectRef.ScalerMetadata["longitude"]
@@ -528,9 +562,11 @@ func (e *ExternalScaler) GetMetrics(_ context.Context, metricRequest *pb.GetMetr
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override async Task<GetMetricsResponse> GetMetrics(GetMetricsRequest request, ServerCallContext context)
 {
@@ -555,9 +591,11 @@ public override async Task<GetMetricsResponse> GetMetrics(GetMetricsRequest requ
   return resp;
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
@@ -589,4 +627,5 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   }
 })
 ```
+
 {{< /collapsible >}}
