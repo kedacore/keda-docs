@@ -31,6 +31,8 @@ triggers:
 - `unprocessedEventThreshold` - : Average target value to trigger scaling actions. (default: 64)
 - `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function
 
+> 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature
+
 ### Authentication Parameters
 
 The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Pod Identity](https://azure.github.io/aad-pod-identity/docs/demo/standard_walkthrough/) if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.

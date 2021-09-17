@@ -39,6 +39,7 @@ triggers:
 > 
 > C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
 
+> 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature
 ### Authentication Parameters
 
 The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Pod Identity](https://azure.github.io/aad-pod-identity/docs/demo/standard_walkthrough/) if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
