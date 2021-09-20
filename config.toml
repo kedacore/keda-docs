@@ -290,6 +290,10 @@ url = "https://alibabacloud.com/"
 logo = "alibaba-cloud.png"
 
 [[params.users]]
+url = "https://ampify.io/"
+logo = "ampify.png"
+
+[[params.users]]
 url = "https://airflow.apache.org/"
 logo = "apache-airflow.png"
 
