@@ -15,17 +15,17 @@ This specification describes the `prometheus` trigger that scales based on a Pro
 triggers:
 - type: prometheus
   metadata:
-    # Required
+    # Required fields:
     serverAddress: http://<prometheus-host>:9090
-    metricName: http_requests_total
+    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
     threshold: '100'
 ```
 
 **Parameter list:**
 
-- `serverAddress` - Address of Prometheus
-- `metricName` - Metric name to use
+- `serverAddress` - Address of Prometheus server
+- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - Query to run
 - `threshold` - Value to start scaling for
 
