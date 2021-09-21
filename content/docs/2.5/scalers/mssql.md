@@ -80,6 +80,10 @@ As an alternative to using environment variables, you can authenticate with the 
 
 **Password authentication:**
 
+- `host` - The hostname of the MSSQL instance endpoint.
+- `port` - The port number of the MSSQL instance endpoint. The default for MSSQL is 1433.
+- `database` - The name of the database to query.
+- `username` - The username credential for connecting to the MSSQL instance.
 - `password` - The password credential for connecting to the MSSQL instance.
 
 ### Example
