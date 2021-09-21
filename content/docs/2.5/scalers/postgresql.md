@@ -67,7 +67,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using a password or store the password within the connectionString.
+You can authenticate by using a username and password or store the password within the connectionString.
 
 **Connection String Authentication:**
 
@@ -75,8 +75,12 @@ You can authenticate by using a password or store the password within the connec
 
 **Password Authentication:**
 
-- `password` - Password for configured user to login to postgreSQL database
-variables.
+- `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
+- `userName:` Username for postgresql user
+- `password` Password for configured user to login to postgreSQL database variables.
+- `port:` Postgresql port
+- `dbName:` Postgresql Database name
+- `sslmode:` SSL policy for communicating with database
 
 ### Example
 
