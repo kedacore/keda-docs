@@ -22,7 +22,7 @@ Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string
 internally.
 
-- `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
+- `host:` Service URL to postgresql. Note that you should use a fully qualified URL -- including the namespace -- as KEDA will need to contact postgresql from a different namespace.
 - `userName:` Username for postgresql user
 - `passwordFromEnv` Password for postgresql user
 - `port:` Postgresql port
@@ -75,7 +75,7 @@ You can authenticate by using a password or store the password within the connec
 
 **Password Authentication:**
 
-- `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
+- `host:` Service URL to postgresql. Note that you should use a fully qualified URL -- including the namespace -- as KEDA will need to contact postgresql from a different namespace.
 - `userName:` Username for postgresql user
 - `password` Password for configured user to login to postgreSQL database variables.
 - `port:` Postgresql port
