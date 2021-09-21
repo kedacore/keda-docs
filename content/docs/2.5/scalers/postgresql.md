@@ -67,7 +67,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using a username and password or store the password within the connectionString.
+You can authenticate by using a password or store the password within the connectionString.
 
 **Connection String Authentication:**
 
