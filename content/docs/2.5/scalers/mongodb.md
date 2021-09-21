@@ -87,7 +87,7 @@ You can also optionally assign a name to the metric using the `metricName` value
 
 ### Authentication Parameters 
 
-As an alternative to environment variables, You can authenticate with the MongoDB server by using connection string or password authentication via `TriggerAuthentication` or `ClusterTriggerAuthentication` configuration.
+As an alternative to environment variables, You can authenticate with the MongoDB server by using connection string or username and password authentication via `TriggerAuthentication` or `ClusterTriggerAuthentication` configuration.
 
 **Connection String Authentication:**
 
@@ -95,7 +95,11 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **Password Authentication:**
 
+- `host` - The host name of the MongoDB server.
+- `port` - The port number of the MongoDB server.
+- `username` - Username to authenticate with to MongoDB database.
 - `password` - Password for the configured user to login to MongoDB server.
+- `dbName`  - Name of the database.
 
 ### Example
 
