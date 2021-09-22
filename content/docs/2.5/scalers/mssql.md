@@ -51,7 +51,7 @@ To connect to the MSSQL instance, you can provide either:
 Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 
 - `host` - The hostname of the MSSQL instance endpoint.
-- `port` - The port number of the MSSQL instance endpoint. The default for MSSQL is 1433.
+- `port` - The port number of the MSSQL instance endpoint. (default 1433)
 - `database` - The name of the database to query.
 - `username` - The username credential for connecting to the MSSQL instance.
 - `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MSSQL instance.
@@ -81,7 +81,7 @@ As an alternative to using environment variables, you can authenticate with the 
 **Password authentication:**
 
 - `host` - The hostname of the MSSQL instance endpoint.
-- `port` - The port number of the MSSQL instance endpoint. The default for MSSQL is 1433.
+- `port` - The port number of the MSSQL instance endpoint. (default 1433)
 - `database` - The name of the database to query.
 - `username` - The username credential for connecting to the MSSQL instance.
 - `password` - The password credential for connecting to the MSSQL instance.
