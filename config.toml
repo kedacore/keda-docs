@@ -291,7 +291,7 @@ logo = "alibaba-cloud.png"
 
 [[params.users]]
 url = "https://ampify.io/"
-logo = "ampify.png"
+logo = "ampify-io.png"
 
 [[params.users]]
 url = "https://airflow.apache.org/"
