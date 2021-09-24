@@ -357,6 +357,10 @@ url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
 [[params.users]]
+url = "https://seldon.io/"
+logo = "seldon.png"
+
+[[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
