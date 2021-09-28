@@ -33,8 +33,8 @@ triggers:
 - `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag.
-- `lagThreshold` - Average target value to trigger scaling actions. (default: 10)
-- `offsetResetPolicy` - The offset reset policy for the consumer. Options are `latest` or `earliest` (default: `latest`)
+- `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+- `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - Optional. When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (default: `false`)
 
@@ -46,16 +46,16 @@ partitions on a topic, allowing for idle consumers. (default: `false`)
 
 **SASL:**
 
-- `sasl` - Kafka SASL auth mode. Optional. If not set, SASL for Kafka is not used. If set, it must be one of `plaintext`, `scram_sha256` or `scram_sha512`.
-- `username` - Optional. If `sasl` is set, this is required.
-- `password` - Optional. If `sasl` is set, this is required.
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256` or `scram_sha512`, `none`, Default: `none`, Optional)
+- `username` - Username used for sasl authentication. (Optional)
+- `password` - Password used for sasl authentication. (Optional)
 
 **TLS:**
 
-- `tls` - Optional. To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used.
-- `ca` - Certificate authority file for TLS client authentication. Optional.
-- `cert` - Certificate for client authentication. Optional. Required if `key` is specified.
-- `key` - Key for client authentication. Optional. Required if `cert` is specified.
+- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `true`, `false`, Default: `false`, Optional)
+- `ca` - Certificate authority file for TLS client authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
 
 ### New Consumers and Offset Reset Policy
 
