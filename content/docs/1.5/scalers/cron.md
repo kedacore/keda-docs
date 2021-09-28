@@ -24,10 +24,10 @@ triggers:
 
 **Parameter list:**
 
-- `timezone` is one of the acceptable values from the IANA Time Zone Database. The list of timezones can be found in: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Required.
-- `start` is the cron expression indicating the start of the cron schedule. Required.
-- `end` is the cron expression indicating the end of the cron schedule. Required.
-- `desiredReplicas` is the number of replicas to which the resource has to be scaled between the start and end of the cron schedule. Required.
+- `timezone` - Is one of the acceptable values from the IANA Time Zone Database. The list of timezones can be found in: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Required.
+- `start` - Is the cron expression indicating the start of the cron schedule. Required.
+- `end` - Is the cron expression indicating the end of the cron schedule. Required.
+- `desiredReplicas` - Is the number of replicas to which the resource has to be scaled between the start and end of the cron schedule. Required.
 
 > **Notice:**
 > **Start and end should not be same.**

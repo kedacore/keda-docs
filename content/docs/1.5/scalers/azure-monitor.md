@@ -29,17 +29,17 @@ triggers:
 
 **Parameter list:**
 
-- `resourceURI` is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required. 
-- `tenantId` is the tenant id for the Azure resource. Used for authentication. Required.
-- `subscriptionId` is the subscription id for the Azure resource. Used for determining the full resource URI. Required.
-- `resourceGroupName` is the resource group for the Azure resource. Required.
-- `metricName` is the name of the metric. Must be an officially supported metric  found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Required.
-- `metricFilter` is used to define a more specific part of the resource. You can filter by supported dimensions of the metric found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Optional.
-- `metricAggregationInterval` is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
-- `metricAggregationType` is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
-- `targetValue` is the target value for the Azure metric to use in the HPA. Required.
-- `activeDirectoryClientId` is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
-- `activeDirectoryClientPassword` is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `resourceURI` - Is the shortened URI to the Azure resource. The format is `"<resourceProviderNamespace>/<resourceType>/<resourceName>"`. Required. 
+- `tenantId` - Is the tenant id for the Azure resource. Used for authentication. Required.
+- `subscriptionId` - Is the subscription id for the Azure resource. Used for determining the full resource URI. Required.
+- `resourceGroupName` - Is the resource group for the Azure resource. Required.
+- `metricName` - Is the name of the metric. Must be an officially supported metric  found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Required.
+- `metricFilter` - Is used to define a more specific part of the resource. You can filter by supported dimensions of the metric found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). Optional.
+- `metricAggregationInterval` - Is the collection time of the metric. Reported in the format `"mm:hh:ss"`. The default value is `"0:5:0"` (5 minutes). Optional.
+- `metricAggregationType` - Is the aggregation method of the Azure monitor metric. Some possible values include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). No default. Required.
+- `targetValue` - Is the target value for the Azure metric to use in the HPA. Required.
+- `activeDirectoryClientId` - Is the name of the environment variable that contains the active directory client id. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientPassword` - Is the name of the environment variable that contains the active directory client password. Should have the RBAC role of `Monitoring Reader`. Optional. Required when `TriggerAuthentication` is not provided.
 
 ### Authentication Parameters
 
