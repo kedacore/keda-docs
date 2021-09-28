@@ -30,7 +30,7 @@ triggers:
 - `queueName` - The name of the queue to check for the number of messages available.
 - `brokerName` - The name of the broker as defined in Artemis.
 - `brokerAddress` - The address name of the broker.
-- `queueLength` - How much messages are in the queue. Default is 10. Optional.
+- `queueLength` - How much messages are in the queue. (Default: `10`, Optional.)
   
 ### Authentication Parameters
 
@@ -38,8 +38,8 @@ triggers:
 
 **Username and Password based authentication:**
 
-- `username` - Required. The username to use to connect to the broker's management endpoint.
-- `password` - Required. The password to use to connect to the broker's management endpoint.
+- `username` - The username to use to connect to the broker's management endpoint.
+- `password` - The password to use to connect to the broker's management endpoint.
 
 ### Example
 

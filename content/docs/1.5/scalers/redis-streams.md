@@ -48,7 +48,7 @@ triggers:
 
 > It is only to be used along with the `host` attribute and not required if `address` has been provided.
 
-- `password` (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `password` - Name of the environment variable your deployment uses to get the Redis password. (Optional)
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 - `stream` - Name of the Redis Stream.

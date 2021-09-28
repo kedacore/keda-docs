@@ -25,15 +25,15 @@ triggers:
 
 **Parameter list:**
 
-- `namespace` - Is the namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32. This is required.
-- `metricName` - Is the name of the metric. This is required.
-- `dimensionName` - Is the dimension name of the metric. This is required.
-- `dimensionValue` - Is the dimension value of the metric. This is required.
-- `targetMetricValue` - Is the target value for your metric. This is required.
-- `minMetricValue` - Is the min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active. This is required.
-- `metricCollectionTime` - Is the collection time of the metric. Equivalent to the earliest start time of the end time. This is not required. The default value is 300, unit is second.
-- `metricFilter` - Is the aggregation method of the metric. This is not required. The default value is average. Other values ​​include max, min, sum, variance.
-- `metricPeriod` - Is the granularity of the metric. This is not required. The default value is 300, unit is second.
+- `namespace` - Is the namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32.
+- `metricName` - Is the name of the metric.
+- `dimensionName` - Is the dimension name of the metric.
+- `dimensionValue` - Is the dimension value of the metric.
+- `targetMetricValue` - Is the target value for your metric.
+- `minMetricValue` - Is the min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
+- `metricCollectionTime` - Is the collection time of the metric. Equivalent to the earliest start time of the end time. (Default: `300`, Optional)
+- `metricFilter` - Is the aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
+- `metricPeriod` - Is the granularity of the metric. (Default: `300`, Optional)
 
 ### Authentication Parameters
 
