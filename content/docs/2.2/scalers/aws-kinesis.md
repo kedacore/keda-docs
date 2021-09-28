@@ -27,9 +27,9 @@ triggers:
 **Parameter list:**
 
 - `streamName` - Name of AWS Kinesis Stream.
-- `shardCount` - The target value that a Kinesis data streams consumer can handle.
+- `shardCount` - The target value that a Kinesis data streams consumer can handle. (Default: `2`, Optional)
 - `awsRegion` - AWS Region for the Kinesis Stream.
-- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below).
+- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
 

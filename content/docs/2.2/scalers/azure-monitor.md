@@ -37,14 +37,14 @@ triggers:
 - `metricName` - Name of the metric which can be found in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
 - `targetValue` - Target value to trigger scaling actions.
 - `metricAggregationType` - Aggregation method of the Azure Monitor metric. Optionsinclude `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
-- `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (optional)
-- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm:ss"` (default: `"0:5:0"` which is 5 minutes)
-- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. Optional. Required when `TriggerAuthentication` is not provided.
-- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the active directory client password.Optional. Required when `TriggerAuthentication` is not provided.
+- `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (Optional)
+- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm:ss"` (Default: `"0:5:0"`, Optional)
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. (Optional)
+- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the active directory client password. (Optional)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `activeDirectoryClientIdFromEnv` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions, similar to `activeDirectoryClientId`, but reads it from an environment variable on the scale target. Optional. Required when `TriggerAuthentication` is not provided.
+- `activeDirectoryClientIdFromEnv` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions, similar to `activeDirectoryClientId`, but reads it from an environment variable on the scale target. (Optional)
 
 ### Authentication Parameters
 

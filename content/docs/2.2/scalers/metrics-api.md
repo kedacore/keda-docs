@@ -46,15 +46,14 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 
 **Basic authentication:**
 - `authMode` - It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
-- `username` - This is a required field. Provide the username to be used for basic authentication.
-- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, 
-because many applications implement basic auth with a username as apikey and password as empty.
+- `username` - Provide the username to be used for basic authentication.
+- `password` - Provide the password to be used for authentication. (Optional)
 
 **TLS authentication:**
 - `authMode` - It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
-- `ca` - Certificate authority file for TLS client authentication. This is a required field.
-- `cert` - Certificate for client authentication. This is a required field.
-- `key` - Key for client authentication. Optional. This is a required field.
+- `ca` - Certificate authority file for TLS client authentication.
+- `cert` - Certificate for client authentication.
+- `key` - Key for client authentication. (Optional)
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be useful if you are using an enterprise CA.
 

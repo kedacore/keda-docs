@@ -33,7 +33,7 @@ Finally, a user inserts a query that returns the desired value.
 
 - `query` - What query to poll postgresql with. Query must return an integer.
 - `targetQueryValue` - A threshold that is used as `targetAverageValue` in HPA.
-- `metricName` - an optional name to assign to the metric. If not set KEDA will generate a name based on either the connection string if set or the db name. If using more than one trigger it is required that all metricNames be unique.
+- `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on either the connection string if set or the db name. If using more than one trigger it is required that all metricNames be unique. (Optional)
 
 This is an example of using a full connection string with `AIRFLOW_CONN_AIRFLOW_DB` set as `postgresql://test@localhost`:
 
