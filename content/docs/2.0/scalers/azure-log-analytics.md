@@ -283,7 +283,7 @@ spec:
 
 #### Enabling managed identity authentication for Log Analytics scaler
 
-Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update Keda:
+Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update KEDA:
 
 ```sh
 export SUBSCRIPTION_ID="<SubscriptionID>"
@@ -349,13 +349,13 @@ spec:
 EOF
 
 # APPLY LABELS: OPTION 1
-#deploy Keda using helm chart and specify aadPodIdentity label.
+#deploy KEDA using helm chart and specify aadPodIdentity label.
 helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
 helm install keda kedacore/keda --namespace keda --create-namespace --set podIdentity.activeDirectory.identity=${IDENTITY_NAME}
 
 # APPLY LABELS: OPTION 2
-#Instead of redeploying Keda, you can update existing deployment:
+#Instead of redeploying KEDA, you can update existing deployment:
 kubectl patch deployment keda-operator -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
 kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
 ```

@@ -32,7 +32,7 @@ triggers:
 - `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below).
 
 
-> When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
+> When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
 
 ### Authentication Parameters
 
