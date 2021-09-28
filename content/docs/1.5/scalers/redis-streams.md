@@ -41,7 +41,7 @@ triggers:
 - `host` - Name of the environment variable your deployment uses to get the Redis server host. 
     - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> It is not required if `address` has been provided.
+> It is not required if `address` has been provided..
 
 - `port` - Name of the environment variable your deployment uses to get the Redis server port. 
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.

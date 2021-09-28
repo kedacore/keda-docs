@@ -19,7 +19,7 @@ triggers:
 
 **Parameter list:**
 
-- `namespace` is the namespace of the metric. The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32. (required)
+- `namespace` - Is the namespace of the metric. The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32. (required).
 
 ### Authentication Parameters
 
@@ -27,7 +27,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Credential based authentication:**
 
-- `IdentityEndpoint` - Endpoint to verify the identity against
+- `IdentityEndpoint` - Endpoint to verify the identity against.
 
 The user will need access to read data from Huawei Cloudeye.
 

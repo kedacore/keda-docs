@@ -16,7 +16,7 @@ The trigger always requires the following information:
 - `query` - A MySQL query that should return single numeric value.
 - `queryValue` - A threshold that is used as `targetAverageValue` in HPA.
 
-To provide information about how to connect to MySQL you can provide 
+To provide information about how to connect to MySQL you can provide: 
 - `connectionString` - MySQL connection string that should point to environment variable with valid value.
 
 Or provide more detailed information:

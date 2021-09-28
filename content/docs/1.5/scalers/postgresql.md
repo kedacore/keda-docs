@@ -25,13 +25,13 @@ internally.
 - `host:` - Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace.
 - `userName:` - Username for postgresql user.
 - `password:` - Password for postgresql user.
-- `port:` - Postgresql port.
-- `dbName:` - Postgresql Database name.
-- `sslmode:` - SSL policy for communicating with database.
+- `port` - Postgresql port.
+- `dbName` - Postgresql Database name.
+- `sslmode` - SSL policy for communicating with database.
 
-Finally, a user inserts a query that returns the desired value
+Finally, a user inserts a query that returns the desired value.
 
-- `query:` - What query to poll postgresql with. Query must return an integer.
+- `query` - What query to poll postgresql with. Query must return an integer.
 - `targetQueryValue` - A threshold that is used as `targetAverageValue` in HPA.
 
 This is an example of using a full connection string:
