@@ -40,12 +40,12 @@ triggers:
 
 **Credential based authentication:**
 
-- `authMode` - Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_ssl_plain, sasl_scram_sha256, sasl_scram_sha512.
-- `username` - Optional. If authmode is not none, this is required.
-- `password` - Optional. If authmode is not none, this is required.
-- `ca` - Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `cert` - Certificate for client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `key` - Key for client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `authMode` - Kafka sasl auth mode. (Values: `none`, `sasl_plaintext`, `sasl_ssl`, `sasl_ssl_plain`, `sasl_scram_sha256`, `sasl_scram_sha512`. Default: `none`, Optional)
+- `username` - (Optional)
+- `password` - (Optional)
+- `ca` - Certificate authority file for TLS client authentication (`sasl_ssl`). (Optional)
+- `cert` - Certificate for client authentication (`sasl_ssl`). (Optional)
+- `key` - Key for client authentication (`sasl_ssl`). (Optional)
 
 
 ### Example
