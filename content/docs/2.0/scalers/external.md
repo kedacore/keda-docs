@@ -22,7 +22,7 @@ triggers:
 **Parameter list:**
 
 - `scalerAddress` - Address of the external scaler. Format must be `host:port`.
-- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (optional)
+- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (Optional)
 
 > For implementing an external scaler, refer to [External Scalers Concept](../concepts/external-scalers.md).
 

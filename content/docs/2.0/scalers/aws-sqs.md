@@ -28,7 +28,7 @@ triggers:
 - `queueURL` - Full URL for the SQS Queue.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual `ApproximateNumberOfMessages` in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 - `awsRegion` - AWS Region for the SQS Queue.
-- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below).
+- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.
 

@@ -27,8 +27,8 @@ triggers:
 
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string appended with `EntityPath=<event_hub_name>`.
 - `storageConnectionFromEnv` - Name of the environment variable that provides connection string for Azure Storage Account to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage.
-- `consumerGroup` - Consumer group of event hub consumer. (default: `$default`).
-- `unprocessedEventThreshold` - Average target value to trigger scaling actions. (default: 64).
+- `consumerGroup` - Consumer group of event hub consumer. (Default: `$default`, Optional)
+- `unprocessedEventThreshold` - Average target value to trigger scaling actions. (Default: `64`, Optional)
 - `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function.
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.

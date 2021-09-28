@@ -61,10 +61,10 @@ triggers:
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `tenantIdFromEnv` - Optional. An environmental variable name, that stores Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-- `clientIdFromEnv` - Optional. An environmental variable name, that stores Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
-- `clientSecretFromEnv` - Optional. An environmental variable name, that stores password from your Azure AD Application/service principal.
-- `workspaceIdFromEnv` - Optional. An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+- `tenantIdFromEnv` - An environmental variable name, that stores Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id. (Optional)
+- `clientIdFromEnv` - An environmental variable name, that stores Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal. (Optional)
+- `clientSecretFromEnv` - An environmental variable name, that stores password from your Azure AD Application/service principal. (Optional)
+- `workspaceIdFromEnv` - An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id. (Optional)
 
 > 💡 **NOTE:** The workspaceID for Log Analytics is called the `customerId`;
  it's not the full `id`! the example `az` command below can be used.
