@@ -25,9 +25,9 @@ triggers:
 **Parameter list:**
 
 - `natsServerMonitoringEndpoint` - Location of the Nats Streaming monitoring endpoint.
-- `queueGroup` - Name of queue group of the subscribers
-- `durableName` - Name of durability used by subscribers
-- `subject` - Name of the channel
+- `queueGroup` - Name of queue group of the subscribers.
+- `durableName` - Name of durability used by subscribers.
+- `subject` - Name of the channel.
 - `lagThreshold` - Average target value to trigger scaling actions.
 
 ### Authentication Parameters

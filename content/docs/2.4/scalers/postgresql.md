@@ -16,23 +16,23 @@ The Postgresql scaler allows for two connection options:
 A user can offer a full connection string
 (often in the form of an environment variable secret)
 
-- `connectionFromEnv` postgreSQL connection string that should point to environment variable with valid value
+- `connectionFromEnv` - PostgreSQL connection string that should point to environment variable with valid value.
 
 Alternatively, a user can specify individual
 arguments (host, userName, password, etc.), and the scaler will form a connection string
 internally.
 
-- `host:` Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace
-- `userName:` Username for postgresql user
-- `passwordFromEnv` Password for postgresql user
-- `port:` Postgresql port
-- `dbName:` Postgresql Database name
-- `sslmode:` SSL policy for communicating with database
+- `host:` - Service URL to postgresql. Note that you should use a full svc URL as KEDA will need to contact postgresql from a different namespace.
+- `userName:` - Username for postgresql user.
+- `passwordFromEnv` Password for postgresql user.
+- `port` - Postgresql port.
+- `dbName` - Postgresql Database name.
+- `sslmode` - SSL policy for communicating with database.
 
-Finally, a user inserts a query that returns the desired value
+Finally, a user inserts a query that returns the desired value.
 
-- `query:` What query to poll postgresql with. Query must return an integer.
-- `targetQueryValue` - a threshold that is used as `targetAverageValue` in HPA.
+- `query` - What query to poll postgresql with. Query must return an integer.
+- `targetQueryValue` - A threshold that is used as `targetAverageValue` in HPA.
 - `metricName` - an optional name to assign to the metric. If not set KEDA will generate a name based on either the connection string if set or the db name. If using more than one trigger it is required that all metricNames be unique.
 
 This is an example of using a full connection string with `AIRFLOW_CONN_AIRFLOW_DB` set as `postgresql://test@localhost`:
@@ -71,12 +71,11 @@ You can authenticate by using a password or store the password within the connec
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for postgreSQL database
+- `connection` - Connection string for postgreSQL database.
 
 **Password Authentication:**
 
-- `password` - Password for configured user to login to postgreSQL database
-variables.
+- `password` - Password for configured user to login to postgreSQL database variables.
 
 ### Example
 

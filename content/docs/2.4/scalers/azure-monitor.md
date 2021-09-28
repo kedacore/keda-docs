@@ -55,8 +55,8 @@ You can use `TriggerAuthentication` CRD to configure the authentication by provi
 
 **Credential based authentication:**
 
-- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions
-- `activeDirectoryClientPassword` - Password of the Active Directory application
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions.
+- `activeDirectoryClientPassword` - Password of the Active Directory application.
 
 The user will need access to read data from the Azure resource.
 
