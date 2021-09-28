@@ -41,7 +41,7 @@ triggers:
 
 **Parameter list:**
 
-- `identityOwner` - Receive permissions on the CloudWatch via Pod Identity or from the KEDA operator itself (see below).
+- `identityOwner` - Receive permissions on the CloudWatch via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 

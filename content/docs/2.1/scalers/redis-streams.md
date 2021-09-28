@@ -50,13 +50,13 @@ triggers:
 
 > It is only to be used along with the `host`/`hostFromEnv` attribute and not required if `address` has been provided.
 
-- `passwordFromEnv` - (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `passwordFromEnv` - Name of the environment variable your deployment uses to get the Redis password. (Optional)
 
 - `stream` - Name of the Redis Stream.
 - `consumerGroup` - Name of the Consumer group associated with Redis Stream.
-- `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5`.
+- `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
-- `enableTLS` - Set this to `true` if TLS connection to Redis is required. Defaults to `false`.
+- `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 

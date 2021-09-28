@@ -31,12 +31,12 @@ triggers:
 
 - `swiftURL` - The URL to query the Swift API. It must contain the hostname, the Swift port, the API version and the account ID. The pattern is: `http://<host>:<swift_port>/<swift_version>/<account_id>`.
 - `containerName` - Name of Swift container in an OpenStack account.
-- `objectCount` - Average target value to trigger scaling actions. If not specified, the default value is `2`.
-- `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects, if required. If not specified, the default value is `""`.
-- `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. The default value is `""`.
-- `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. The default value is `""`, which will use the Swift API standard limit. Negative values default to the Swift API standard limit.
-- `onlyFiles` - Boolean value that specifies if the scaler should be triggered only by the number of files, without considering folders. Inside a container, one can have files and folders. Folders (empty or not) are counted as objects, just as files are. If one wants to scale based on only files, this parameter must be set to `true`. The default value is `false`.
-- `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Swift API. If not specified, the default value is `30` seconds. This must be an integer value. If `0` or negative value is provided it defaults to `300` milliseconds.
+- `objectCount` - Average target value to trigger scaling actions. (Default: `2`, Optional)
+- `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects. (Default: `""`, Optional)
+- `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. (Default: `""`, Optional)
+- `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. (Default: `""`, Optional)
+- `onlyFiles` - Specifies if the scaler should be triggered only by the number of files, without considering folders. Inside a container, one can have files and folders. Folders (empty or not) are counted as objects, just as files are. If one wants to scale based on only files, this parameter must be set to `true`. (Values: `true`, `false`, Default: `false`, Optional)
+- `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Swift API. (Default: `300`, Optional)
 
 For more information about `prefix`, `delimiter`, and `limit`, please, refer to the [Object Store API](https://docs.openstack.org/api-ref/object-store/).
 
