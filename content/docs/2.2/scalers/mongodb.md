@@ -61,7 +61,7 @@ triggers:
 
 The `mongodb` trigger always requires the following information:
 
-- `dbName`  - Name of the database.
+- `dbName` - Name of the database.
 - `collection` - Name of the collection.
 - `query` - A MongoDB query that should return single numeric value.
 - `queryValue` - A threshold that will define when scaling should occur.
@@ -73,7 +73,7 @@ To connect to the MongoDB server, you can provide either:
 Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 
 - `host` - The host name of the MongoDB server.
-- `port` - The port number of the MongoDB server with the `dbName` separated by slash `/` .
+- `port` - The port number of the MongoDB server with the `dbName` separated by slash `/`.
 - `username` - Username to authenticate with to MongoDB database.
 - `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MongoDB server.
 
@@ -91,7 +91,7 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **Connection String Authentication:**
 
-- `connectionString`  - Connection string for MongoDB server.
+- `connectionString` - Connection string for MongoDB server.
 
 **Password Authentication:**
 

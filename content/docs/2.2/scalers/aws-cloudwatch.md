@@ -45,11 +45,9 @@ triggers:
 
 > When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
-- `defaultMetricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
-
-- `defaultMetricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
-
-- `defaultMetricStatPeriod` -  Which frequency is going to be used by the related query. Used to define **Period** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html))
+- `defaultMetricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)).
+`defaultMetricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)).
+- `defaultMetricStatPeriod` - Which frequency is going to be used by the related query. Used to define **Period** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)).
 
 
 ### Authentication Parameters
@@ -60,16 +58,16 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Pod identity based authentication:**
 
-- `podIdentity.provider` needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
+- `podIdentity.provider` - Needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
 
 **Credential based authentication:**
 
-- `awsAccessKeyID` - Id of the user
-- `awsSecretAccessKey` - Access key for the user to authenticate with
+- `awsAccessKeyID` - Id of the user.
+- `awsSecretAccessKey` - Access key for the user to authenticate with.
 
 The user will need access to read data from AWS CloudWatch.
 

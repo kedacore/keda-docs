@@ -25,12 +25,12 @@ triggers:
 
 **Parameter list:**
 
-- `queueURL` - Full URL for the SQS Queue
+- `queueURL` - Full URL for the SQS Queue.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 
 > For the purposes of scaling, "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing.
 
-- `awsRegion` - AWS Region for the SQS Queue
+- `awsRegion` - AWS Region for the SQS Queue.
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below).
 
 > When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.
@@ -43,16 +43,16 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Pod identity based authentication:**
 
-- `podIdentity.provider` needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
+- `podIdentity.provider` - Needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
 
 **Credential based authentication:**
 
-- `awsAccessKeyID` - Id of the user
-- `awsSecretAccessKey` - Access key for the user to authenticate with
+- `awsAccessKeyID` - Id of the user.
+- `awsSecretAccessKey` - Access key for the user to authenticate with.
 
 The user will need access to read properties from the specified AWS SQS queue.
 
