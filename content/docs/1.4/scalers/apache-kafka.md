@@ -28,11 +28,11 @@ triggers:
 
 **Parameter list:**
 
-- `brokerList`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap (DEPRECATED).
-- `bootstrapServers`: comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
-- `consumerGroup`: consumer group used for checking the offset on the topic and processing the related lag.
-- `topic`: topic on which processing the offset lag.
-- `lagThreshold` How much the stream is lagging on the current consumer group. Default is 10. Optional.
+- `brokerList` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap (DEPRECATED).
+- `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
+- `consumerGroup` - Consumer group used for checking the offset on the topic and processing the related lag.
+- `topic` - Topic on which processing the offset lag.
+- `lagThreshold` - How much the stream is lagging on the current consumer group. Default is 10. Optional.
 
 ### Authentication Parameters
 
@@ -40,12 +40,12 @@ triggers:
 
 **Credential based authentication:**
 
-- `authMode` Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_ssl_plain, sasl_scram_sha256, sasl_scram_sha512.
-- `username` Optional. If authmode is not none, this is required.
-- `password` Optional.If authmode is not none, this is required.
-- `ca` Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `cert` Certificate for client authentication. Optional. If authmode is sasl_ssl, this is required.
-- `key` Key for client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `authMode` - Kafka sasl auth mode. Optional. The default value is none. For now, it must be one of none, sasl_plaintext, sasl_ssl, sasl_ssl_plain, sasl_scram_sha256, sasl_scram_sha512.
+- `username` - Optional. If authmode is not none, this is required.
+- `password` - Optional. If authmode is not none, this is required.
+- `ca` - Certificate authority file for TLS client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `cert` - Certificate for client authentication. Optional. If authmode is sasl_ssl, this is required.
+- `key` - Key for client authentication. Optional. If authmode is sasl_ssl, this is required.
 
 
 ### Example
