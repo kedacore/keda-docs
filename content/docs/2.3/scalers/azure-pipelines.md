@@ -41,8 +41,8 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 **Personal Access Token Authentication:**
 
-- `organizationURL` - The URL of the Azure DevOps organization
-- `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps
+- `organizationURL` - The URL of the Azure DevOps organization.
+- `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
 
 ### Example
 

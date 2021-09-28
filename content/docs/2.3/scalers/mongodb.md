@@ -61,7 +61,7 @@ triggers:
 
 The `mongodb` trigger always requires the following information:
 
-- `dbName`  - Name of the database.
+- `dbName` - Name of the database.
 - `collection` - Name of the collection.
 - `query` - A MongoDB query that should return single numeric value.
 - `queryValue` - A threshold that will define when scaling should occur.
@@ -91,7 +91,7 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **Connection String Authentication:**
 
-- `connectionString`  - Connection string for MongoDB server.
+- `connectionString` - Connection string for MongoDB server.
 
 **Password Authentication:**
 

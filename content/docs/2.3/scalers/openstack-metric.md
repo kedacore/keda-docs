@@ -41,16 +41,16 @@ To authenticate, this scaler uses tokens. Tokens are automatically retrieved by 
 
 #### Password
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
-- `userID` - The OpenStack project user ID
-- `password` - The password for the provided user
-- `projectID` - The OpenStack project ID
+- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
+- `userID` - The OpenStack project user ID.
+- `password` - The password for the provided user.
+- `projectID` - The OpenStack project ID.
 
 #### Application Credentials
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
-- `appCredentialID` - The Application Credential ID
-- `appCredentialSecret` - The Application Credential secret
+- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
+- `appCredentialID` - The Application Credential ID.
+- `appCredentialSecret` - The Application Credential secret.
 
 ### Example
 
