@@ -22,7 +22,7 @@ triggers:
 **Parameter list:**
 
 - `scalerAddress` - Address of the external push scaler implementing `ExternalScaler.StreamIsActive` in externalscaler.proto. Format must be `host:port`.
-- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (optional)
+- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (Optional)
 
 The entire metadata object is passed to the external scaler in `ScaledObjectRef.scalerMetadata`.
 

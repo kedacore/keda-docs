@@ -35,7 +35,7 @@ triggers:
   - Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
 - `listName` - Name of the Redis List that you want to monitor.
 - `listLength` - Average target value to trigger scaling actions.
-- `enableTLS` - If set to `true` allow a connection to a redis queue using tls, the default value for this parameter is false.
+- `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
