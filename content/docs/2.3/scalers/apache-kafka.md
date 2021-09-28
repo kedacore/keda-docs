@@ -35,8 +35,8 @@ triggers:
 - `topic` - Name of the topic on which processing the offset lag.
 - `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
-- `allowIdleConsumers` - Optional. When set to `true`, the number of replicas can exceed the number of
-partitions on a topic, allowing for idle consumers. (default: `false`)
+- `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
+partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
 
 ### Authentication Parameters
 

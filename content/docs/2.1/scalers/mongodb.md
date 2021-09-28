@@ -68,7 +68,7 @@ The `mongodb` trigger always requires the following information:
 
 To connect to the MongoDB server, you can provide either:
 
-- `connectionStringFromEnv` - The name of an environment variable containing a valid MongoDB connection string for connectiing to the MongoDB server.
+- `connectionStringFromEnv` - The name of an environment variable containing a valid MongoDB connection string for connecting to the MongoDB server.
 
 Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 

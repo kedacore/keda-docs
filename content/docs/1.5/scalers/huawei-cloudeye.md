@@ -46,7 +46,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 - `DomainID` - Id of domain.
 - `Domain` - Domain.
 - `Region` - Region.
-- `Cloud` - Cloud name. The fefault value is myhuaweicloud.com.
+- `Cloud` - Cloud name. (Default: `myhuaweicloud.com`, Optional)
 - `AccessKey` - Id of the user.
 - `SecretKey` - Access key for the user to authenticate with.
 
