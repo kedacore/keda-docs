@@ -29,9 +29,9 @@ triggers:
 
 **Parameter list:**
 
-- `swiftURL` - The URL to query the Swift API. It must contain the hostname, the Swift port, the API version and the account ID. The pattern is: `http://<host>:<swift_port>/<swift_version>/<account_id>`
-- `containerName` - Name of Swift container in an OpenStack account
-- `objectCount` - Average target value to trigger scaling actions. If not specified, the default value is `2`
+- `swiftURL` - The URL to query the Swift API. It must contain the hostname, the Swift port, the API version and the account ID. The pattern is: `http://<host>:<swift_port>/<swift_version>/<account_id>`.
+- `containerName` - Name of Swift container in an OpenStack account.
+- `objectCount` - Average target value to trigger scaling actions. If not specified, the default value is `2`.
 - `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects, if required. If not specified, the default value is `""`.
 - `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. The default value is `""`.
 - `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. The default value is `""`, which will use the Swift API standard limit. Negative values default to the Swift API standard limit.
@@ -46,16 +46,16 @@ To authenticate, this scaler uses tokens. Tokens are automatically retrieved by 
 
 #### Password
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
-- `userID` - The OpenStack project user ID
-- `password` - The password for the provided user
-- `projectID` - The OpenStack project ID
+- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
+- `userID` - The OpenStack project user ID.
+- `password` - The password for the provided user.
+- `projectID` - The OpenStack project ID.
 
 #### Application Credentials
 
-- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`
-- `appCredentialID` - The Application Credential ID
-- `appCredentialSecret` - The Application Credential secret
+- `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
+- `appCredentialID` - The Application Credential ID.
+- `appCredentialSecret` - The Application Credential secret.
 
 ### Example
 

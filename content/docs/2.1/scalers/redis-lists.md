@@ -33,10 +33,10 @@ triggers:
 - `port` - The port of the Redis server. Alternative to `address` and requires `host` to be configured as well.
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis server.
   - Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
-- `listName` - Name of the Redis List that you want to monitor
-- `listLength` - Average target value to trigger scaling actions
+- `listName` - Name of the Redis List that you want to monitor.
+- `listLength` - Average target value to trigger scaling actions.
 - `enableTLS` - If set to `true` allow a connection to a redis queue using tls, the default value for this parameter is false.
-- `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0
+- `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -51,12 +51,12 @@ You can authenticate by using a password.
 **Connection Authentication:**
 
 - `address` - The hostname and port for the Redis server (host:port format).
-- `host` - The hostname of the Redis server. If specified, the `port` should also be specified
-- `port` - The port of the Redis server. If specified, the `host` should also be specified
+- `host` - The hostname of the Redis server. If specified, the `port` should also be specified.
+- `port` - The port of the Redis server. If specified, the `host` should also be specified.
 
 **Password Authentication:**
 
-- `password` - Redis password to authenticate with
+- `password` - Redis password to authenticate with.
 
 ### Example
 

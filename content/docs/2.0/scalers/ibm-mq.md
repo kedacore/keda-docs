@@ -40,8 +40,8 @@ TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
 
 **Authentication Parameters**
 
-- `ADMIN_USER`: REQUIRED - The admin REST endpoint username for your MQ Queue Manager`.
-- `ADMIN_PASSWORD`: REQUIRED - The admin REST endpoint API key for your MQ Queue Manager.
+- `ADMIN_USER` - REQUIRED - The admin REST endpoint username for your MQ Queue Manager`.
+- `ADMIN_PASSWORD` - REQUIRED - The admin REST endpoint API key for your MQ Queue Manager.
 - `usernameFromEnv` - OPTIONAL: Provide admin username from env instead of as a secret.
 - `passwordFromEnv` - OPTIONAL: Provide admin password from env instead of as a secret.
 

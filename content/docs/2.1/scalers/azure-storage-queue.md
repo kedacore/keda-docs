@@ -34,7 +34,7 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Storage Account
+- `connection` - Connection string for Azure Storage Account.
 
 ### Example
 

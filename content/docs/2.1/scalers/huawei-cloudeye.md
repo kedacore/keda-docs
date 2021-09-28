@@ -27,7 +27,7 @@ triggers:
 
 - `namespace` - Namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32.
 - `metricName` - Name of the metric.
-- `dimensionName` - Name of the metric dimension
+- `dimensionName` - Name of the metric dimension.
 - `dimensionValue` - Value of the metric dimension.
 - `targetMetricValue` - Target value for your metric.
 - `minMetricValue` - Minimum value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
@@ -41,14 +41,14 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Credential based authentication:**
 
-- `IdentityEndpoint` - Identity Endpoint
-- `ProjectID` - Project ID
-- `DomainID` - Id of domain
-- `Domain` - Domain
-- `Region` - Region
-- `Cloud` - Cloud name. The fefault value is myhuaweicloud.com
-- `AccessKey` - Id of the user
-- `SecretKey` - Access key for the user to authenticate with
+- `IdentityEndpoint` - Identity Endpoint.
+- `ProjectID` - Project ID.
+- `DomainID` - Id of domain.
+- `Domain` - Domain.
+- `Region` - Region.
+- `Cloud` - Cloud name. The fefault value is myhuaweicloud.com.
+- `AccessKey` - Id of the user.
+- `SecretKey` - Access key for the user to authenticate with.
 
 The user will need access to read data from Huawei Cloudeye.
 

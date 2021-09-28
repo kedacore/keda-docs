@@ -31,7 +31,7 @@ triggers:
 - `unprocessedEventThreshold` - Average target value to trigger scaling actions. (default: 64).
 - `blobContainer` - Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function.
 
-> 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature
+> 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 
 ### Authentication Parameters
 

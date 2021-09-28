@@ -41,9 +41,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 **API Key based authentication:**
 - `authMode`: It must be set to `apiKey` in case of API key Authentication. Specify this in trigger configuration.
 - `method` - This specifies the possible methods API Key based authentication supports. Possible values are `header` and `query`. `header` is the default method. Specify this in trigger configuration.
-- `keyParamName`: This is either header key or query param used for passing apikey. 
-Default header is `X-API-KEY` and default query param is `api_key`. Specify this in trigger configuration.
-If your implementation has different key, please specify it here.
+- `keyParamName` - This is either header key or query param used for passing apikey. Default header is `X-API-KEY` and default query param is `api_key`. Specify this in trigger configuration. If your implementation has different key, please specify it here.
 - `apiKey` - API Key needed for authentication.
 
 **Basic authentication:**
