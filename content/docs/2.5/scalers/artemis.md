@@ -41,8 +41,8 @@ triggers:
 
 **Username and Password based authentication:**
 
-- `username` Required. The username to use to connect to the broker's management endpoint.
-- `password` Required. The password to use to connect to the broker's management endpoint.
+- `username` - Required. The username to use to connect to the broker's management endpoint.
+- `password` - Required. The password to use to connect to the broker's management endpoint.
 
 ### Example
 

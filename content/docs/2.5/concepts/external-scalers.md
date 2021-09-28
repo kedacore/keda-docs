@@ -36,9 +36,8 @@ The `Scaler` interface defines 4 methods:
 
 - `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs. KEDA will scale to 1 if this method returns `true`.
 - `Close` is called to allow the scaler to clean up connections or other resources.
-- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec)
-- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
-
+- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
+- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
 
 The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
@@ -60,8 +59,8 @@ service ExternalScaler {
 
 Much of this contract is similar to the built-in scalers:
 
-- `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition
-- `IsActive` maps to the `IsActive` method on the `Scaler` interface
+- `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition.
+- `IsActive` maps to the `IsActive` method on the `Scaler` interface.
 - `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
 There are, however, some notable differences:

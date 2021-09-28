@@ -26,15 +26,15 @@ triggers:
 ```
 
 **Parameter list:**
-- `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`
+- `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`.
 - `messageVpn` - Message VPN hosted on the Solace broker.
-- `queueName` - Message Queue to be monitored
+- `queueName` - Message Queue to be monitored.
 - `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
 - `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
-- `username` - User account with access to Solace SEMP RESTful endpoint
-- `password` - Password for the user account
-- `usernameFromEnv` - Environment variable set with SEMP user account
-- `passwordFromEnv` - Environment variable set with password for the user account
+- `username` - User account with access to Solace SEMP RESTful endpoint.
+- `password` - Password for the user account.
+- `usernameFromEnv` - Environment variable set with SEMP user account.
+- `passwordFromEnv` - Environment variable set with password for the user account.
 
 **Parameter Requirements:**
 - Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `messageVpn`, `queueName`
@@ -45,8 +45,8 @@ triggers:
 You can use TriggerAuthentication CRD to configure the username and password to connect to the management endpoint.
 
 **Username and Password based authentication:**
-- `username` Required. The username to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
-- `password` Required. The password to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
+- `username` - Required. The username to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
+- `password` - Required. The password to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
 
 ### Example
 The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be delcared in the same namespace.
