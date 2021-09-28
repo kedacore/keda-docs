@@ -38,32 +38,31 @@ triggers:
 
 **Parameter list:**
 
-- `address`:  The host and port of the Redis server in the format `host:port`, for example `my-redis:6379`
+- `address` -  The host and port of the Redis server in the format `host:port`, for example `my-redis:6379`.
 
 > As an alternative to the `address` field, the user can specify `host` and `port` parameters.
 
-- `host`: The host of the Redis server
+- `host` - The host of the Redis server.
 
-> It is not required if `address` has been provided
+> It is not required if `address` has been provided.
 
-- `port`: The port of the Redis server
+- `port` - The port of the Redis server.
 
-> It is only to be used along with the `host`/`hostFromEnv` attribute and not required if `address` has been provided
+> It is only to be used along with the `host`/`hostFromEnv` attribute and not required if `address` has been provided.
 
-- `passwordFromEnv` (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `passwordFromEnv` - (optional): Name of the environment variable your deployment uses to get the Redis password.
 
-- `stream`: Name of the Redis Stream
-- `consumerGroup`: Name of the Consumer group associated with Redis Stream
-- `pendingEntriesCount`: Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5`
-- `databaseIndex`: The Redis database index. Defaults to `0` if not specified
-- `enableTLS`: Set this to `true` if TLS connection to Redis is required. Defaults to `false`
+- `stream` - Name of the Redis Stream.
+- `consumerGroup` - Name of the Consumer group associated with Redis Stream.
+- `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5`.
+- `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
+- `enableTLS` - Set this to `true` if TLS connection to Redis is required. Defaults to `false`.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `addressFromEnv`: The host and port of the Redis server, similar to `address`, but reads it from an environment variable on the scale target.
-Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
-- `hostFromEnv`: The host of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.
-- `portFromEnv`: The port of the Redis server, similar to `port`, but reads it from an environment variable on the scale target.
+- `addressFromEnv` - The host and port of the Redis server, similar to `address`, but reads it from an environment variable on the scale target. Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
+- `hostFromEnv` - The host of the Redis server, similar to `host`, but reads it from an environment variable on the scale target.
+- `portFromEnv` - The port of the Redis server, similar to `port`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 
