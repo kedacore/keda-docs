@@ -35,8 +35,8 @@ triggers:
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
-- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional)
-- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional)
+- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
+- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
 - `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 

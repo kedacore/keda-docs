@@ -33,8 +33,8 @@ triggers:
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
-- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional)
-- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional)
+- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
+- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
 
 > 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
