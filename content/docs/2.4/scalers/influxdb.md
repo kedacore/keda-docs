@@ -30,7 +30,7 @@ triggers:
 
 **Parameter list:**
 
-- `authToken` - Field holds the authentication token needed for the InfluxDB client to communicate with an associated server. 
+- `authToken` - Authentication token needed for the InfluxDB client to communicate with an associated server. 
 - `authTokenFromEnv` - Defines the authorization token, similar to `authToken`, but reads it from an environment variable on the scale target.
 - `organizationName` - Is the organization name needed for the client to locate all information contained in that [organization](https://docs.influxdata.com/influxdb/v2.0/organizations/) such as buckets, tasks, etc.
 - `organizationNameFromEnv` - Defines the organization name, similar to `organizationName`, but reads it from an environment variable on the scale target.

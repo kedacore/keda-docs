@@ -43,9 +43,9 @@ triggers:
 - `authMode` - Kafka sasl auth mode. (Values: `none`, `sasl_plaintext`, `sasl_ssl`, `sasl_ssl_plain`, `sasl_scram_sha256`, `sasl_scram_sha512`. Default: `none`, Optional)
 - `username` - (Optional)
 - `password` - (Optional)
-- `ca` - Certificate authority file for TLS client authentication (`sasl_ssl`). (Optional)
-- `cert` - Certificate for client authentication (`sasl_ssl`). (Optional)
-- `key` - Key for client authentication (`sasl_ssl`). (Optional)
+- `ca` - Certificate authority file for TLS client authentication `sasl_ssl`. (Optional)
+- `cert` - Certificate for client authentication `sasl_ssl`. (Optional)
+- `key` - Key for client authentication with `sasl_ssl`. Optional)
 
 
 ### Example

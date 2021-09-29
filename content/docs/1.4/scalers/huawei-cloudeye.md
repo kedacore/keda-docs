@@ -25,15 +25,15 @@ triggers:
 
 **Parameter list:**
 
-- `namespace` - Is the namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32.
-- `metricName` - Is the name of the metric.
-- `dimensionName` - Is the dimension name of the metric.
-- `dimensionValue` - Is the dimension value of the metric.
-- `targetMetricValue` - Is the target value for your metric.
-- `minMetricValue` - Is the min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
-- `metricCollectionTime` - Is the collection time of the metric. Equivalent to the earliest start time of the end time. (Default: `300`, Optional)
-- `metricFilter` - Is the aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
-- `metricPeriod` - Is the granularity of the metric. (Default: `300`, Optional)
+- `namespace` - Namespace of the metric.The format is service.item; service and item must be strings, must start with a letter, can only contain 0-9/a-z/A-Z/_, the total length of service.item is 3, the maximum is 32.
+- `metricName` - Name of the metric.
+- `dimensionName` - Dimension name of the metric.
+- `dimensionValue` - Dimension value of the metric.
+- `targetMetricValue` - Target value for your metric.
+- `minMetricValue` - Min value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
+- `metricCollectionTime` - Collection time of the metric. Equivalent to the earliest start time of the end time. (Default: `300`, Optional)
+- `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
+- `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
 
 ### Authentication Parameters
 
