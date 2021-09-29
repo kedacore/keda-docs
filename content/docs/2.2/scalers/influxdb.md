@@ -32,11 +32,11 @@ triggers:
 
 - `authToken` - Authentication token needed for the InfluxDB client to communicate with an associated server. 
 - `authTokenFromEnv` - Defines the authorization token, similar to `authToken`, but reads it from an environment variable on the scale target.
-- `organizationName` - Is the organization name needed for the client to locate all information contained in that [organization](https://docs.influxdata.com/influxdb/v2.0/organizations/) such as buckets, tasks, etc.
+- `organizationName` - Organization name needed for the client to locate all information contained in that [organization](https://docs.influxdata.com/influxdb/v2.0/organizations/) such as buckets, tasks, etc.
 - `organizationNameFromEnv` - Defines the organization name, similar to `organizationName`, but reads it from an environment variable on the scale target.
 - `serverURL` - Holds the url value of the InfluxDB server.
-- `thresholdValue` - Is provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query.
-- `query` - Is the flux query that will yield the value for the scaler to compare the `thresholdValue` against.
+- `thresholdValue` - Provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query.
+- `query` - Flux query that will yield the value for the scaler to compare the `thresholdValue` against.
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on masked version of the server url and organization name. If using more than one trigger it is required that all `metricName`(s) be unique. (Optional)
 
 ### Authentication Parameters
