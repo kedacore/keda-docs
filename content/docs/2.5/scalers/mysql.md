@@ -44,6 +44,10 @@ You can authenticate by using connection string or password authentication.
 
 **Password Authentication:**
 
+- `host` - The host of the MySQL server
+- `port` - The port of the MySQL server
+- `dbName` - Name of the database
+- `username` - Username to authenticate with to MySQL database
 - `password` - Password for configured user to login to MySQL database
 variables.
 
