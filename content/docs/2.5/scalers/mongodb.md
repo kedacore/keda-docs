@@ -95,7 +95,11 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **Password Authentication:**
 
+- `host` - The host name of the MongoDB server.
+- `port` - The port number of the MongoDB server.
+- `username` - Username to authenticate with to MongoDB database.
 - `password` - Password for the configured user to login to MongoDB server.
+- `dbName`  - Name of the database.
 
 ### Example
 
