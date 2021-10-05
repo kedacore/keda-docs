@@ -9,9 +9,9 @@ go_file = "postgresql_scaler"
 
 ### Trigger Specification
 
-This specification describes the `postgresql` trigger that scales based on a postgresql query
+This specification describes the `postgresql` trigger that scales based on a PostgreSQL query
 
-The Postgresql scaler allows for two connection options:
+The PostgreSQL scaler allows for two connection options:
 
 A user can offer a full connection string
 (often in the form of an environment variable secret)
@@ -71,11 +71,16 @@ You can authenticate by using a password or store the password within the connec
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for postgreSQL database.
+- `connection` - Connection string for PostgreSQL database.
 
 **Password Authentication:**
 
-- `password` - Password for configured user to login to postgreSQL database variables.
+- `host` - Service URL to PostgreSQL. Note that you should use a fully qualified URL (including the namespace) as KEDA will need to contact PostgreSQL from a different namespace.
+- `userName` - Username for PostgreSQL user.
+- `password` Password for configured user to login to PostgreSQL database variables.
+- `port` - PostgreSQL port.
+- `dbName` - PostgreSQL Database name.
+- `sslmode` - SSL policy for communicating with database.
 
 ### Example
 

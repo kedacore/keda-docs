@@ -18,7 +18,7 @@ The trigger always requires the following information:
 
 To provide information about how to connect to MySQL you can provide:
 
-- `connectionStringFromEnv` MySQL connection string that should point to environment variable with valid value
+- `connectionStringFromEnv` - MySQL connection string that should point to environment variable with valid value.
 
 Or provide more detailed information:
 
@@ -26,8 +26,7 @@ Or provide more detailed information:
 - `port` - The port of the MySQL server.
 - `dbName` - Name of the database.
 - `username` - Username to authenticate with to MySQL database.
-- `passwordFromEnv` - Password for the given user, this should be blank (no password) or point to an environment
- variable with the password.
+- `passwordFromEnv` - Password for the given user, this should be blank (no password) or point to an environment variable with the password.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -44,7 +43,12 @@ You can authenticate by using connection string or password authentication.
 
 **Password Authentication:**
 
-- `password` - Password for configured user to login to MySQL database variables.
+- `host` - The host of the MySQL server.
+- `port` - The port of the MySQL server.
+- `dbName` - Name of the database.
+- `username` - Username to authenticate with to MySQL database.
+- `password` - Password for configured user to login to MySQL database.
+variables.
 
 ### Example
 
