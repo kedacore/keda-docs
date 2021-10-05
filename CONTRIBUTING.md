@@ -16,6 +16,7 @@ We provide easy ways to introduce new content:
 
 - [Adding new blog post](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
 - [Adding new scaler documentation](https://github.com/kedacore/keda-docs#adding-scaler-documentation)
+- [Writing documentation for a scaler](https://github.com/kedacore/keda-docs#writing-documentation-for-a-scaler)
 - [Add new Frequently Asked Question (FAQ)](https://github.com/kedacore/keda-docs#add-new-frequently-asked-question-faq)
 - [Add new troubleshooting guidance](https://github.com/kedacore/keda-docs#add-new-troubleshooting-guidance)
 

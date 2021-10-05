@@ -119,6 +119,22 @@ This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.
 * `maintainer`
 * `description`
 
+## Writing documentation for a scaler
+
+In order to maintain the style consistency across different scalers, all the parameters which are listed have to be written using this convention:
+
+- name - Description. (Values: x, y, z, Default: y, Optional, Extra Info)
+
+If a parameter is required or doesn't have defined/default values, the missing info should be removed from the pattern.
+
+Some examples of this convention could be:
+
+- `targetMetricValue` - Target value for your metric.
+- `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
+- `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
+- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
+
+
 ## Add new Frequently Asked Question (FAQ)
 
 To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at [`data/faq20.toml`]. Here's an example question/answer pair:
