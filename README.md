@@ -127,12 +127,11 @@ In order to maintain the style consistency across different scalers, all the par
 
 If a parameter is required or doesn't have defined/default values, the missing info should be removed from the pattern.
 
-Some examples of this convention could be:
-
-- `targetMetricValue` - Target value for your metric.
-- `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
-- `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
-- `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
+Here are a few examples:
+> - `targetMetricValue` - Target value for your metric.
+> - `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
+> - `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
+> - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
 
 
 ## Add new Frequently Asked Question (FAQ)
