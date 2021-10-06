@@ -35,10 +35,11 @@ triggers:
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional)
 - `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
-- `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only apples to hosts that use the `http` protocol)
+- `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
+- `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
 - `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (Optional)
-- `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only apples to hosts that use the `http` protocol)
+- `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
