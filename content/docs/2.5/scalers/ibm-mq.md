@@ -26,13 +26,13 @@ triggers:
 
 **Parameter list:**
 
-- `host`: REQUIRED - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`
-- `queueManager`: REQUIRED - Name of the queue manager from which messages will be consumed
-- `queueName`: REQUIRED - Name of the Queue within the Queue Manager defined from which messages will be consumed
-- `tlsDisabled`: OPTIONAL - A boolean: Can be set to 'true' to disable TLS. False by default.
-- `queueDepth`: OPTIONAL - Queue depth Target for HPA. Will be set to Default Value of 5 if not Provided.
-- `usernameFromEnv`: OPTIONAL: Provide admin username from env instead of as a secret
-- `passwordFromEnv`: OPTIONAL: Provide admin password from env instead of as a secret
+- `host` - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`.
+- `queueManager` - Name of the queue manager from which messages will be consumed.
+- `queueName` - Name of the Queue within the Queue Manager defined from which messages will be consumed.
+- `tlsDisabled` - Can be set to 'true' to disable TLS. (Values: `true`, `false` , Default: `false`, Optional)
+- `queueDepth` - Queue depth Target for HPA. (Default: `5`, Optional)
+- `usernameFromEnv` - Provide admin username from env instead of as a secret. (Optional)
+- `passwordFromEnv` - Provide admin password from env instead of as a secret. (Optional)
 
 ### Authentication Parameters
 
@@ -40,10 +40,10 @@ TriggerAuthentication CRD is used to connect and authenticate to IBM MQ:
 
 **Authentication Parameters**
 
-- `ADMIN_USER`: REQUIRED - The admin REST endpoint username for your MQ Queue Manager
-- `ADMIN_PASSWORD`: REQUIRED - The admin REST endpoint API key for your MQ Queue Manager
-- `usernameFromEnv`: OPTIONAL: Provide admin username from env instead of as a secret
-- `passwordFromEnv`: OPTIONAL: Provide admin password from env instead of as a secret
+- `ADMIN_USER` - REQUIRED - The admin REST endpoint username for your MQ Queue Manager`.
+- `ADMIN_PASSWORD` - REQUIRED - The admin REST endpoint API key for your MQ Queue Manager.
+- `usernameFromEnv` - Provide admin username from env instead of as a secret. (Optional)
+- `passwordFromEnv` - Provide admin password from env instead of as a secret. (Optional)
 
 ### Example
 

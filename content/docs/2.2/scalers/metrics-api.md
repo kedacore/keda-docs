@@ -26,11 +26,9 @@ triggers:
 
 **Parameter list:**
 
-- `url`: Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
-- `valueLocation`: [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in 
-    the payload containing the metric value
-- `targetValue`: Target value to scale on. When the metric provided by the API is equal or higher to this value, 
-    KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
+- `url` - Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
+- `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
+- `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
 
 ### Authentication Parameters
 
@@ -42,24 +40,20 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 
 **API Key based authentication:**
 - `authMode`: It must be set to `apiKey` in case of API key Authentication. Specify this in trigger configuration.
-- `method`: This specifies the possible methods API Key based authentication supports. 
-Possible values are `header` and `query`. `header` is the default method. Specify this in trigger configuration.
-- `keyParamName`: This is either header key or query param used for passing apikey. 
-Default header is `X-API-KEY` and default query param is `api_key`. Specify this in trigger configuration.
-If your implementation has different key, please specify it here.
-- `apiKey`: API Key needed for authentication.
+- `method` - This specifies the possible methods API Key based authentication supports. Possible values are `header` and `query`. `header` is the default method. Specify this in trigger configuration.
+- `keyParamName` - This is either header key or query param used for passing apikey. Default header is `X-API-KEY` and default query param is `api_key`. Specify this in trigger configuration. If your implementation has different key, please specify it here.
+- `apiKey` - API Key needed for authentication.
 
 **Basic authentication:**
-- `authMode`: It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
-- `username`: This is a required field. Provide the username to be used for basic authentication.
-- `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, 
-because many applications implement basic auth with a username as apikey and password as empty.
+- `authMode` - It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
+- `username` - Provide the username to be used for basic authentication.
+- `password` - Provide the password to be used for authentication. (Optional)
 
 **TLS authentication:**
-- `authMode`: It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
-- `ca`: Certificate authority file for TLS client authentication. This is a required field.
-- `cert`: Certificate for client authentication. This is a required field.
-- `key`: Key for client authentication. Optional. This is a required field.
+- `authMode` - It must be set to `tls` in case of TLS Authentication. Specify this in trigger configuration.
+- `ca` - Certificate authority file for TLS client authentication.
+- `cert` - Certificate for client authentication.
+- `key` - Key for client authentication. (Optional)
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be useful if you are using an enterprise CA.
 

@@ -41,8 +41,8 @@ triggers:
 
 The `mssql` trigger always requires the following information:
 
-- `query` - a [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
-- `targetValue` - a threshold that is used as `targetAverageValue` in the Horizontal Pod Autoscaler (HPA).
+- `query` - A [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
+- `targetValue` - A threshold that is used as `targetAverageValue` in the Horizontal Pod Autoscaler (HPA).
 
 To connect to the MSSQL instance, you can provide either:
 
@@ -51,7 +51,7 @@ To connect to the MSSQL instance, you can provide either:
 Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 
 - `host` - The hostname of the MSSQL instance endpoint.
-- `port` - The port number of the MSSQL instance endpoint. (default 1433)
+- `port` - The port number of the MSSQL instance endpoint. (Default: 1433, Optional)
 - `database` - The name of the database to query.
 - `username` - The username credential for connecting to the MSSQL instance.
 - `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MSSQL instance.

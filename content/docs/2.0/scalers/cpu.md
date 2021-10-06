@@ -26,9 +26,9 @@ triggers:
 
 **Parameter list:**
 
-- `type` - Type of metric to use. Options are `Utilization`, `Value`, or `AverageValue`
-- `value` - Value to trigger scaling actions for
-	- When using `Value`, the target value is the value of the metric itself (as a quantity)
+- `type` - Type of metric to use. Options are `Utilization`, `Value`, or `AverageValue`.
+- `value` - Value to trigger scaling actions for:
+	- When using `Value`, the target value is the value of the metric itself (as a quantity).
 	- When using `Utilization`, the target value is the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 	- When using `AverageValue`, the target value is the target value of the average of the metric across all relevant pods (quantity).
 

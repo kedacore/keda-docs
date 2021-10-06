@@ -13,19 +13,19 @@ This specification describes the `mysql` trigger that scales based on result of 
 
 The trigger always requires the following information:
 
-- `query` - a MySQL query that should return single numeric value
-- `queryValue` - a threshold that is used as `targetAverageValue` in HPA.
+- `query` - A MySQL query that should return single numeric value.
+- `queryValue` - A threshold that is used as `targetAverageValue` in HPA.
 
-To provide information about how to connect to MySQL you can provide 
-- `connectionString` MySQL connection string that should point to environment variable with valid value
+To provide information about how to connect to MySQL you can provide: 
+- `connectionString` - MySQL connection string that should point to environment variable with valid value.
 
 Or provide more detailed information:
 
-- `username` used to access MySQL database
-- `password` used for the given user, this should be blank (no password) or point to an environment
- variable with the password
-- `host` and `port` of the database
-- `dbName` as name of the database
+- `username` - Used to access MySQL database.
+- `password` - Used for the given user, this should be blank (no password) or point to an environment variable with the password.
+- `host` - Host of the database.
+- `port` - Port of the database.
+- `dbName` - As name of the database.
 
 ### Authentication Parameters
 
@@ -33,12 +33,11 @@ You can authenticate by using connection string or password authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for MySQL database
+- `connection` - Connection string for MySQL database.
 
 **Password Authentication:**
 
-- `connection` - Password for configured user to login to MySQL database
-variables.
+- `connection` - Password for configured user to login to MySQL database variables.
 
 ### Example
 

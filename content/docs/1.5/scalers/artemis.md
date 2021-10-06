@@ -26,11 +26,11 @@ triggers:
 
 **Parameter list:**
 
-- `managementEndpoint`: "hostname:port" to connect to ActiveMQ Artemis management endpoint.
-- `queueName`: the name of the queue to check for the number of messages available.
-- `brokerName`: the name of the broker as defined in Artemis.
-- `brokerAddress`: the address name of the broker.
-- `queueLength` How much messages are in the queue. Default is 10. Optional.
+- `managementEndpoint` - "hostname:port" to connect to ActiveMQ Artemis management endpoint.
+- `queueName` - Name of the queue to check for the number of messages available.
+- `brokerName` - Name of the broker as defined in Artemis.
+- `brokerAddress` - Address name of the broker.
+- `queueLength` - How much messages are in the queue. (Default: `10`, Optional.)
   
 ### Authentication Parameters
 
@@ -38,8 +38,8 @@ triggers:
 
 **Username and Password based authentication:**
 
-- `username` Required. The username to use to connect to the broker's management endpoint.
-- `password` Required. The password to use to connect to the broker's management endpoint.
+- `username` - The username to use to connect to the broker's management endpoint.
+- `password` - The password to use to connect to the broker's management endpoint.
 
 ### Example
 

@@ -58,14 +58,14 @@ triggers:
 - `workspaceId` - Id of Log Analytics workspace. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 - `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold` - Value that is used as a threshold to calculate # of pods for scale target.
-- `metricName`: An optional name to assign to the metric. If not set, KEDA will generate a name based on the workspaceId.
+- `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId)
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `tenantIdFromEnv` optional: An environmental variable name, that stores Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-- `clientIdFromEnv` optional: An environmental variable name, that stores Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
-- `clientSecretFromEnv` optional: An environmental variable name, that stores password from your Azure AD Application/service principal.
-- `workspaceIdFromEnv` optional: An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+- `tenantIdFromEnv` - An environmental variable name, that stores Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id. (Optional)
+- `clientIdFromEnv` - An environmental variable name, that stores Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal. (Optional)
+- `clientSecretFromEnv` - An environmental variable name, that stores password from your Azure AD Application/service principal. (Optional)
+- `workspaceIdFromEnv` - An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id. (Optional)
 
 > 💡 **NOTE:** The workspaceID for Log Analytics is called the `customerId`;
  it's not the full `id`! the example `az` command below can be used.
@@ -129,10 +129,10 @@ Example result:
 
 **Service Principal based authentication:**
 
-- `tenantId`: Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
-- `clientId`: Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
-- `clientSecret`: Password from your Azure AD Application/service principal.
-- `workspaceId`: Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
+- `tenantId` - Azure Active Directory tenant id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) link to retrieve your tenant id.
+- `clientId` - Application id from your Azure AD Application/service principal. Follow [this](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest) link to create your service principal.
+- `clientSecret` - Password from your Azure AD Application/service principal.
+- `workspaceId` - Your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 
 **Managed identity based authentication:**
 
@@ -284,7 +284,7 @@ spec:
 
 #### Enabling managed identity authentication for Log Analytics scaler
 
-Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update Keda:
+Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update KEDA:
 
 ```sh
 export SUBSCRIPTION_ID="<SubscriptionID>"
@@ -350,13 +350,13 @@ spec:
 EOF
 
 # APPLY LABELS: OPTION 1
-#deploy Keda using helm chart and specify aadPodIdentity label.
+#deploy KEDA using helm chart and specify aadPodIdentity label.
 helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
 helm install keda kedacore/keda --namespace keda --create-namespace --set podIdentity.activeDirectory.identity=${IDENTITY_NAME}
 
 # APPLY LABELS: OPTION 2
-#Instead of redeploying Keda, you can update existing deployment:
+#Instead of redeploying KEDA, you can update existing deployment:
 kubectl patch deployment keda-operator -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
 kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
 ```

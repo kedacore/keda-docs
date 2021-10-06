@@ -26,12 +26,12 @@ triggers:
 
 **Parameter list:**
 
-- `streamName` - Name of AWS Kinesis Stream
-- `shardCount` - The target value that a Kinesis data streams consumer can handle.
-- `awsRegion` - AWS Region for the Kinesis Stream
-- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below).
+- `streamName` - Name of AWS Kinesis Stream.
+- `shardCount` - The target value that a Kinesis data streams consumer can handle. (Default: `2`, Optional)
+- `awsRegion` - AWS Region for the Kinesis Stream.
+- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
-> When `identityOwner` set to `operator` - the only requirement is that the Keda operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
+> When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
 
 ### Authentication Parameters
 
@@ -43,12 +43,12 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
 
 **Credential based authentication:**
 
-- `awsAccessKeyID` - Id of the user
-- `awsSecretAccessKey` - Access key for the user to authenticate with
+- `awsAccessKeyID` - Id of the user.
+- `awsSecretAccessKey` - Access key for the user to authenticate with.
 
 The user will need `DescribeStreamSummary` IAM permission policy to read data from AWS Kinesis Streams.
 

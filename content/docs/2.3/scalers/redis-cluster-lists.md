@@ -32,9 +32,9 @@ triggers:
 - `ports` - Comma separated list of corresponding ports for the hosts of the Redis Cluster nodes. Alternative to `addresses` and requires `hosts` to be configured as well.
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis server.
   - Both the hostname and password fields need to be set to the names of the environment variables in the target deployment that contain the host name and password respectively.
-- `listName` - Name of the Redis List that you want to monitor
-- `listLength` - Average target value to trigger scaling actions
-- `enableTLS` - If set to `true` allow a connection to a redis queue using tls, the default value for this parameter is false.
+- `listName` - Name of the Redis List that you want to monitor.
+- `listLength` - Average target value to trigger scaling actions.
+- `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -49,12 +49,12 @@ You can authenticate by using a password.
 **Connection Authentication:**
 
 - `addresses` - Comma separated list of host:port format.
-- `hosts` - Comma separated list of hostname of the Redis Cluster nodes. If specified, the `ports` should also be specified
-- `ports` - Comma separated list of ports of the Redis Cluster nodes. If specified, the `hosts` should also be specified
+- `hosts` - Comma separated list of hostname of the Redis Cluster nodes. If specified, the `ports` should also be specified.
+- `ports` - Comma separated list of ports of the Redis Cluster nodes. If specified, the `hosts` should also be specified.
 
 **Password Authentication:**
 
-- `password` - Redis password to authenticate with
+- `password` - Redis password to authenticate with.
 
 ### Example
 

@@ -41,7 +41,7 @@ You can authenticate by using a password.
 
 **Password Authentication:**
 
-- `password` - Redis password to authenticate with
+- `password` - Redis password to authenticate with.
 
 ### Example
 

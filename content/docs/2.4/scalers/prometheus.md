@@ -24,10 +24,10 @@ triggers:
 
 **Parameter list:**
 
-- `serverAddress` - Address of Prometheus
-- `metricName` - Metric name to use
-- `query` - Query to run
-- `threshold` - Value to start scaling for
+- `serverAddress` - Address of Prometheus.
+- `metricName` - Metric name to use.
+- `query` - Query to run.
+- `threshold` - Value to start scaling for.
 
 ### Authentication Parameters
 
@@ -41,14 +41,14 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 **Basic authentication:**
 - `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
-- `username`: This is a required field. Provide the username to be used for basic authentication.
-- `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
+- `username` - This is a required field. Provide the username to be used for basic authentication.
+- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
 - `authMode`: It must contain `tls` in case of TLS Authentication. Specify this in trigger configuration.
-- `ca`: Certificate authority file for TLS client authentication.
-- `cert`: Certificate for client authentication. This is a required field.
-- `key`: Key for client authentication. Optional. This is a required field.
+- `ca` - Certificate authority file for TLS client authentication.
+- `cert` - Certificate for client authentication. This is a required field.
+- `key` - Key for client authentication. Optional. This is a required field.
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authMode` (also without any authentication). This might be useful if you are using an enterprise CA.
 

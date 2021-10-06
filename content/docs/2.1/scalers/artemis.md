@@ -32,17 +32,16 @@ triggers:
 - `brokerName` - Name of the broker as defined in Artemis.
 - `brokerAddress` - Address of the broker.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. (default: 10)
-- `restApiTemplate` - Template to build REST API url to get queue size.
-  - Default - `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`. In this example, `<<managementEndpoint>>`, `<<brokerName>>`, `<<brokerAddress>>` and `<<queueName>>` will be replaced automatically during runtime by values from metadata of YAML definition: `managementEndpoint`, `brokerName`, `brokerAddress`, `queueName`.
-  
+- `restApiTemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`, Optional)
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the `username` and `password` to connect to the management endpoint.
 
 **Username and Password based authentication:**
 
-- `username` Required. The username to use to connect to the broker's management endpoint.
-- `password` Required. The password to use to connect to the broker's management endpoint.
+- `username` - The username to use to connect to the broker's management endpoint.
+- `password` - The password to use to connect to the broker's management endpoint.
 
 ### Example
 

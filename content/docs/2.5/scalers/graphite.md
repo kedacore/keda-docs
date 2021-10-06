@@ -26,8 +26,8 @@ triggers:
 
 - `serverAddress` - Address of Graphite
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique
-- `query` - Query to run
-- `threshold` - Value to start scaling for
+- `query` - Query to run.
+- `threshold` - Value to start scaling for.
 - `queryTime` - Relative time range to execute query against. Please see the [graphite API docs](https://graphite-api.readthedocs.io/en/latest/api.html#from-until) for more information.
 
 ### Authentication Parameters
@@ -36,8 +36,8 @@ Graphite Scaler supports one type of authentication - basic authentication
 
 **Basic authentication:**
 - `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
-- `username`: This is a required field. Provide the username to be used for basic authentication.
-- `password`: Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
+- `username` - This is a required field. Provide the username to be used for basic authentication.
+- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
 
 ### Examples
 

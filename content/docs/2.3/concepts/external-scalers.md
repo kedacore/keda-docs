@@ -33,11 +33,10 @@ type PushScaler interface {
 ```
 
 The `Scaler` interface defines 4 methods:
-- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true
+- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true.
 - `Close` is called to allow the scaler to clean up connections or other resources.
-- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec)
-- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics)
-
+- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
+- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
 
 The `PushScaler` interface adds `Run` method. The `Run` method receives a push channel (`active`), that the scaler can push `true` to any time to force scaling action independently from `pollingInterval`.
@@ -58,15 +57,15 @@ service ExternalScaler {
 }
 ```
 
-- `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition
-- `IsActive` maps to the `IsActive` method on the `Scaler` interface
+- `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition.
+- `IsActive` maps to the `IsActive` method on the `Scaler` interface.
 - `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
 Few things to notice:
 - Lack of `Close` method as the GRPC connection defines the lifetime of the scaler
 - `IsActive`, `StreamIsActive`, and `GetMetricsSpec` are called with a `ScaledObjectRef` that contains the scaledObject name/namespace as well as the content of `metadata` defined in the trigger.
 
-For example the following `ScaledObject`
+For example the following `ScaledObject`:
 
 ```yaml
 apiVersion: keda.sh/v1alpha1

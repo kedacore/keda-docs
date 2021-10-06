@@ -26,16 +26,14 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Host of RabbitMQ with format `amqp://<host>:<port>/<vhost>`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or 
-    `http://guest:password@localhost:15672/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
-
-- `queueName`: Name of the queue to read message from. Required.
-- `queueLength`: Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20. Optional.
-- `protocol`: Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
+- `host` - Host of RabbitMQ with format `amqp://<host>:<port>/<vhost>`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+- `queueName` - Name of the queue to read message from.
+- `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20. Optional.
+- `protocol` - Protocol to be used for communication. Either `http` or `amqp`. It should correspond with the `host` value.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `hostFromEnv`: The connection string of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
+- `hostFromEnv` - The connection string of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
@@ -45,8 +43,8 @@ Some parameters could be provided using environmental variables, instead of sett
 
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
-- For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/vhost`
-- For HTTP, the URI should look similar to `http://guest:password@localhost:15672/vhost`
+- For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/vhost`.
+- For HTTP, the URI should look similar to `http://guest:password@localhost:15672/vhost`.
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
 

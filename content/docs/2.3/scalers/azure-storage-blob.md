@@ -27,11 +27,11 @@ triggers:
 **Parameter list:**
 
 - `blobContainerName` - Name of container in an Azure Storage account.
-- `blobCount` - Average target value to trigger scaling actions. (default: 5)
+- `blobCount` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
 - `accountName` - Name of the storage account that the container belongs to.
-- `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (default: `""`)
-- `blobDelimiter` - Delimiter for identifying the blob prefix. (default: `/`)
+- `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (Default: `""`, Optional)
+- `blobDelimiter` - Delimiter for identifying the blob prefix. (Default: `/`, Optional)
 
 You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on of the `blobContainerName`, `blobPrefix` and `blobDelimiter`. For example: **azure-blob-functions-blob-myprefix-example**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `azure-blob-`.
 

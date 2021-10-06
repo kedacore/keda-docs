@@ -24,10 +24,10 @@ triggers:
 
 **Parameter list:**
 
-- `serverAddress` - Address of Prometheus
-- `metricName` - Metric name to use
-- `query` - Query to run
-- `threshold` - Value to start scaling for
+- `serverAddress` - Address of Prometheus.
+- `metricName` - Metric name to use.
+- `query` - Query to run.
+- `threshold` - Value to start scaling for.
 
 ### Authentication Parameters
 

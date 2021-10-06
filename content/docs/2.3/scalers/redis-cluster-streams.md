@@ -37,31 +37,30 @@ triggers:
 
 **Parameter list:**
 
-- `addresses`:  Comma separated list of hosts and ports of Redis Cluster nodes in the format `host:port` for example `node1:6379, node2:6379, node3:6379`
+- `addresses` - Comma separated list of hosts and ports of Redis Cluster nodes in the format `host:port` for example `node1:6379, node2:6379, node3:6379`.
 
 > As an alternative to the `addresses` field, the user can specify `hosts` and `ports` parameters.
 
-- `hosts`: Comma separated list of hosts of Redis Cluster nodes.
+- `hosts` - Comma separated list of hosts of Redis Cluster nodes.
 
-> It is not required if `addresses` has been provided
+> It is not required if `addresses` has been provided.
 
 - `ports`: Comma separated list of ports for corresponding hosts of Redis Cluster nodes.
 
-> It is only to be used along with the `hosts`/`hostsFromEnv` attribute and not required if `addresses` has been provided
+> It is only to be used along with the `hosts`/`hostsFromEnv` attribute and not required if `addresses` has been provided.
 
-- `passwordFromEnv` (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `passwordFromEnv` - Name of the environment variable your deployment uses to get the Redis password. (Optional)
 
-- `stream`: Name of the Redis Stream
-- `consumerGroup`: Name of the Consumer group associated with Redis Stream
-- `pendingEntriesCount`: Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5`
-- `enableTLS`: Set this to `true` if TLS connection to Redis is required. Defaults to `false`
+- `stream` - Name of the Redis Stream.
+- `consumerGroup` - Name of the Consumer group associated with Redis Stream.
+- `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
+- `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `addressesFromEnv`: The hosts and corresponding ports of Redis Cluster nodes, similar to `addresses`, but reads it from an environment variable on the scale target.
-Name of the environment variable your deployment uses to get the URLs of Redis Cluster nodes. The resolved hosts should follow a format like `node1:6379, node2:6379, node3:6379 ...`.
-- `hostsFromEnv`: The hosts of the Redis Cluster nodes, similar to `hosts`, but reads it from an environment variable on the scale target.
-- `portsFromEnv`: The corresponding ports for the hosts of Redis Cluster nodes, similar to `ports`, but reads it from an environment variable on the scale target.
+- `addressesFromEnv` - The hosts and corresponding ports of Redis Cluster nodes, similar to `addresses`, but reads it from an environment variable on the scale target. Name of the environment variable your deployment uses to get the URLs of Redis Cluster nodes. The resolved hosts should follow a format like `node1:6379, node2:6379, node3:6379 ...`.
+- `hostsFromEnv` - The hosts of the Redis Cluster nodes, similar to `hosts`, but reads it from an environment variable on the scale target.
+- `portsFromEnv` - The corresponding ports for the hosts of Redis Cluster nodes, similar to `ports`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 

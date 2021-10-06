@@ -34,7 +34,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Credential based authentication:**
 
-- `GoogleApplicationCredentials` - Service account credentials in JSON
+- `GoogleApplicationCredentials` - Service account credentials in JSON.
 
 ### Example 
 

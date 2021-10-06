@@ -29,14 +29,14 @@ triggers:
 
 **Parameter list:**
 
-- `swiftURL` - The URL to query the Swift API. If not provided, the scaler will try to find the Swift public URL for a certain region, using the OpenStack catalog, which is returned when requesting an authentication token.
-- `containerName` - Name of Swift container in an OpenStack account
-- `objectCount` - Average target value to trigger scaling actions. If not specified, the default value is `2`
-- `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects, if required. If not specified, the default value is `""`.
-- `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. The default value is `""`.
-- `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. The default value is `""`, which will use the Swift API standard limit. Negative values default to the Swift API standard limit.
-- `onlyFiles` - Boolean value that specifies if the scaler should be triggered only by the number of files, without considering folders. Inside a container, one can have files and folders. Folders (empty or not) are counted as objects, just as files are. If one wants to scale based on only files, this parameter must be set to `true`. The default value is `false`.
-- `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Swift API. If not specified, the default value is `30` seconds. This must be an integer value. If `0` or negative value is provided it defaults to `300` milliseconds.
+- `swiftURL` - The URL to query the Swift API. If not provided, the scaler will try to find the Swift public URL for a certain region, using the OpenStack catalog, which is returned when requesting an authentication token. (Optional)
+- `containerName` - Name of Swift container in an OpenStack account.
+- `objectCount` - Average target value to trigger scaling actions. (Default: `2`, Optional)
+- `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects. (Default: `""`, Optional)
+- `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. (Default: `""`, Optional)
+- `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. (Default: `""`, Optional)
+- `onlyFiles` - Specifies if the scaler should be triggered only by the number of files, without considering folders. Inside a container, one can have files and folders. Folders (empty or not) are counted as objects, just as files are. If one wants to scale based on only files, this parameter must be set to `true`. (Values: `true`, `false`, Default: `false`, Optional)
+- `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Swift API. (Default: `30`, Optional)
 
 For more information about `prefix`, `delimiter`, and `limit`, please, refer to the [Object Store API](https://docs.openstack.org/api-ref/object-store/).
 
@@ -47,16 +47,16 @@ To authenticate, this scaler uses tokens. Tokens are automatically retrieved by 
 #### Password
 
 - `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
-- `userID` - The OpenStack project user ID
-- `password` - The password for the provided user
-- `projectID` - The OpenStack project ID
+- `userID` - The OpenStack project user ID.
+- `password` - The password for the provided user.
+- `projectID` - The OpenStack project ID.
 - `regionName` - The OpenStack region name where the Swift service is available. This parameter is not required and is used only when the `swiftURL` is not provided to the scaler. If the region name is not provided, it will look for the first Swift public URL available in the OpenStack catalog.
 
 #### Application Credentials
 
 - `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
-- `appCredentialID` - The Application Credential ID
-- `appCredentialSecret` - The Application Credential secret
+- `appCredentialID` - The Application Credential ID.
+- `appCredentialSecret` - The Application Credential secret.
 - `regionName` - The OpenStack region name where the Swift service is available. This parameter is not required and is used only when the `swiftURL` is not provided to the scaler. If the region name is not provided, it will look for the first Swift public URL available in the OpenStack catalog.
 
 ### Example

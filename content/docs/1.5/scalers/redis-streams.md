@@ -33,33 +33,33 @@ triggers:
 
 **Parameter list:**
 
-- `address`: Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
+- `address` - Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 > As an alternative to the `address` field, the user can specify `host` and `port` parameters. 
 
-- `host`: Name of the environment variable your deployment uses to get the Redis server host. 
+- `host` - Name of the environment variable your deployment uses to get the Redis server host. 
     - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> It is not required if `address` has been provided
+> It is not required if `address` has been provided..
 
-- `port`: Name of the environment variable your deployment uses to get the Redis server port. 
+- `port` - Name of the environment variable your deployment uses to get the Redis server port. 
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> It is only to be used along with the `host` attribute and not required if `address` has been provided
+> It is only to be used along with the `host` attribute and not required if `address` has been provided.
 
-- `password` (optional): Name of the environment variable your deployment uses to get the Redis password.
+- `password` - Name of the environment variable your deployment uses to get the Redis password. (Optional)
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-- `stream`: Name of the Redis Stream
+- `stream` - Name of the Redis Stream.
 
-- `consumerGroup`: Name of the Consumer group associated with Redis Stream
+- `consumerGroup` - Name of the Consumer group associated with Redis Stream.
 
-- `pendingEntriesCount`: Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. Defaults to `5` 
+- `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 
-- `databaseIndex`: The Redis database index. Defaults to `0` if not specified
+- `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 
-- `enableTLS`: Set this to `true` if TLS connection to Redis is required. Defaults to `false`
+- `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
