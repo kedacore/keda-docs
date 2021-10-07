@@ -36,7 +36,7 @@ triggers:
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `hostFromEnv`: The host and port of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
+- `hostFromEnv` - The host and port of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 

@@ -28,20 +28,20 @@ triggers:
 
 **Parameter list:**
 
-- `host`: Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 - `queueName` - Name of the queue to read message from.
-- `mode`: QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the publish rate into the queue. (Values: `QueueLength`, `MessageRate`)
-- `value`: Message backlog or Publish/sec. rate to trigger on
+- `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the publish rate into the queue. (Values: `QueueLength`, `MessageRate`)
+- `value` - Message backlog or Publish/sec. rate to trigger on.
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional)
-- `queueLength`: DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
-- `useRegex`: In case of `http` protocol, this parameter allows to use regex (in `queueName` parameter) to select queue instead of full name, the valid values are: `"true"` and `"false"`.  Optional.
-- `operation`: Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. Optional.
-- `metricName` - an optional name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique.
+- `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
+- `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
+- `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
+- `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (Optional)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `hostFromEnv`: The host and port of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
+- `hostFromEnv` - The host and port of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
