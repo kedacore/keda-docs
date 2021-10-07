@@ -38,6 +38,7 @@ triggers:
 - `thresholdValue` - Provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query.
 - `query` - Flux query that will yield the value for the scaler to compare the `thresholdValue` against.
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on masked version of the server url and organization name. If using more than one trigger it is required that all `metricName`(s) be unique. (Optional)
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
