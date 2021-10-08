@@ -333,6 +333,10 @@ url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
 [[params.users]]
+url = "https://metamaze.eu/"
+logo = "metamaze.png"
+
+[[params.users]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
