@@ -38,7 +38,7 @@ triggers:
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the storage blob endpoint suffix of the cloud environment that the blob belongs to, e.g. `blob.core.cloudapi.de` for `AzureGermanCloud`.
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on of the `blobContainerName`, `blobPrefix` and `blobDelimiter`. For example: **azure-blob-functions-blob-myprefix-example**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `azure-blob-`.
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the trigger index, `blobContainerName`, `blobPrefix` and `blobDelimiter`. For example: **s0-azure-blob-functions-blob-myprefix-example**. The value will be prefixed with `s{triggerIndex}-azure-blob-`.
 
 ### Authentication Parameters
 

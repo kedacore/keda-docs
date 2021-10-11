@@ -55,7 +55,7 @@ triggers:
       metricName: "global-metric"
 ```
 
->**NOTE:** If **metricName** is not set, then one is generated based on the values in trigger spec, for example: **mongodb-mongodb---test_user-test_password@xxx-27017-test-test_collection**
+>**NOTE:** If **metricName** is not set, then one is generated based on trigger index and the values in trigger spec, for example: **s0-mongodb-mongodb---test_user-test_password@xxx-27017-test-test_collection**
 
 **Parameter list:**
 
@@ -83,7 +83,7 @@ When configuring with a connection string, you can use this URL format:
 mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
 ```
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on masked version of the server hostname and collection name. For example: **mongodb-mongodb---test_user-test_password@xxx-27017-test-test_collection**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `mongodb-` .
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and masked version of the server hostname and collection name. For example: **s1-mongodb-mongodb---test_user-test_password@xxx-27017-test-test_collection**. The value will be prefixed with `s{triggerIndex}-mongodb-` .
 
 ### Authentication Parameters 
 
