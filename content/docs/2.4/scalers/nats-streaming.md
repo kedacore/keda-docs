@@ -34,7 +34,7 @@ triggers:
 
 **Connection Authentication:**
 
-- `natsServerMonitoringEndpoint` - Location of the Nats Streaming monitoring endpoint. This is a required field. It can be provided directly or using `TriggerAuthentication`.
+Not supported yet.
 
 ### Example
 
@@ -59,50 +59,4 @@ spec:
       durableName: "ImDurable"
       subject: "Test"
       lagThreshold: "10"
-```
-Example to provide `natsServerMonitoringEndpoint` using `TriggerAuthentication` :
-
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: stan-secret
-  namespace: gonuts
-type: Opaque
-data:
-  stan_endpoint: c3Rhbi1uYXRzLXNzLnN0YW4uc3ZjLmNsdXN0ZXIubG9jYWw6ODIyMgo=
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-stan-secret
-  namespace: my-project
-spec:
-  secretTargetRef:
-  - parameter: natsServerMonitoringEndpoint
-    name: stan-secret
-    key: stan_endpoint
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: stan-scaledobject
-  namespace: gonuts
-spec:
-  pollingInterval: 10   # Optional. Default: 30 seconds
-  cooldownPeriod: 30   # Optional. Default: 300 seconds
-  minReplicaCount: 0   # Optional. Default: 0
-  maxReplicaCount: 30  # Optional. Default: 100
-  scaleTargetRef:
-    name: gonuts-sub
-  triggers:
-  - type: stan
-    metadata:
-      queueGroup: "grp1"
-      durableName: "ImDurable"
-      subject: "Test"
-      lagThreshold: "10"
-    authenticationRef:
-      name: keda-trigger-auth-stan-secret
 ```
