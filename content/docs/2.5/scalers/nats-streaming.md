@@ -32,11 +32,9 @@ triggers:
 
 ### Authentication Parameters
 
- You can authenticate with the nats streaming server by using connection string authentication via `TriggerAuthentication` configuration.
+You can authenticate with the NATS streaming server by using connection string authentication via `TriggerAuthentication` configuration.
 
-**Connection Authentication:**
-
-- `natsServerMonitoringEndpoint` - Location of the Nats Streaming monitoring endpoint.
+- `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
 
 ### Example
 
@@ -45,7 +43,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: stan-scaledobject
-  namespace: gonuts
+  namespace: example
 spec:
   pollingInterval: 10   # Optional. Default: 30 seconds
   cooldownPeriod: 30   # Optional. Default: 300 seconds
@@ -62,23 +60,23 @@ spec:
       subject: "Test"
       lagThreshold: "10"
 ```
-#### Here is an example of how to deploy a scaled Object with the `Nats-Streaming ` scale trigger which uses `TriggerAuthentication`:
+#### Example with TriggerAuthentication:
 
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
   name: stan-secret
-  namespace: gonuts
+  namespace: example
 type: Opaque
 data:
-  stan_endpoint: c3Rhbi1uYXRzLXNzLnN0YW4uc3ZjLmNsdXN0ZXIubG9jYWw6ODIyMgo=
+  stan_endpoint: <base-64-encoded-endpoint>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-stan-secret
-  namespace: my-project
+  namespace: example
 spec:
   secretTargetRef:
   - parameter: natsServerMonitoringEndpoint
@@ -89,7 +87,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: stan-scaledobject
-  namespace: gonuts
+  namespace: example
 spec:
   pollingInterval: 10   # Optional. Default: 30 seconds
   cooldownPeriod: 30   # Optional. Default: 300 seconds
