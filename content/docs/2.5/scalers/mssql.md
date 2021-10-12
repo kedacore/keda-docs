@@ -68,7 +68,7 @@ Or the more traditional ADO format:
 Server=example.database.windows.net;Port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 ```
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the `database` value (if specified), or the `host` value, or will be in the form `mssql-{sha256hash}` where `{sha256hash}` is a SHA-256 hash of the connection string.
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and the `database` value (if specified), or the `host` value, or will be in the form `s{triggerIndex}-mssql-{sha256hash}` where `{sha256hash}` is a SHA-256 hash of the connection string.
 
 ### Authentication parameters
 
