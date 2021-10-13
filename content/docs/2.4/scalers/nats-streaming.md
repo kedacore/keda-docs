@@ -32,6 +32,8 @@ triggers:
 
 ### Authentication Parameters
 
+**Connection Authentication:**
+
 Not supported yet.
 
 ### Example
