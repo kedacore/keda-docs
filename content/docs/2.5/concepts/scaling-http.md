@@ -1,6 +1,6 @@
 +++
-title = "Scaling HTTP Workloads"
-weight = 200
+title = "Scaling HTTP Applications"
+weight = 300
 +++
 
 ## Overview
