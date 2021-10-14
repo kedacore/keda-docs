@@ -325,6 +325,10 @@ url = "https://www.intercept.cloud"
 logo = "intercept.png"
 
 [[params.users]]
+url = "https://kendaxa.com"
+logo = "kendaxa.png"
+
+[[params.users]]
 url = "https://home.kpmg/uk/en/home.html"
 logo = "KPMG.jpeg"
 
