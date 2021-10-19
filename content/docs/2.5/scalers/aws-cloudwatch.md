@@ -31,12 +31,12 @@ triggers:
     # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
     awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
     identityOwner: pod | operator # Optional. Default: pod
-    # Optional: Default Metrict Collection Time
-    defaultMetricCollectionTime: 300 # default 300
-    # Optional: Default Metric Statistic
-    defaultMetricStat: "Average" # default "Average"
-    # Optional: Default Metric Statistic Period
-    defaultMetricStatPeriod: 300 # default 300
+    # Optional: Metrict Collection Time
+    metricCollectionTime: 300 # default 300
+    # Optional: Metric Statistic
+    metricStat: "Average" # default "Average"
+    # Optional: Metric Statistic Period
+    metricStatPeriod: 300 # default 300
 ```
 
 **Parameter list:**
