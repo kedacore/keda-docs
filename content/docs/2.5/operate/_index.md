@@ -9,4 +9,4 @@ We provide guidance & requirements around various areas to operate KEDA:
 - Cluster ([link](./cluster))
 - Integrate with Prometheus ([link](./prometheus))
 - Kubernetes Events ([link](./events))
-- Querying metrics ([link](./querying))
+- Querying KEDA metrics ([link](./querying))
