@@ -1,5 +1,5 @@
 +++
-title = "Querying KEDA metrics"
+title = "KEDA Metrics Server"
 description = "Guidance for querying KEDA metrics"
 weight = 100
 +++
@@ -41,11 +41,14 @@ kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/YOUR_NAMESPA
 ```
 
 At this point, you should take in consideration that KEDA metrics are namespaced, this means that you have to specify the namespace where the `ScaledObject` is placed inside.
+
 For example, if you want to get the value of the metric named `s1-rabbitmq--mymetric2` in namespace `sample-ns`, the query will be like this:
 ```bash
 kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq--mymetric2"
 ```
+
 And it will show a json like this:
+
 ```json
 {
   "kind": "ExternalMetricValueList",
