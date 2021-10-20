@@ -4,7 +4,7 @@ description = "Details on KEDA Metrics Server"
 weight = 100
 +++
 
-## Querying KEDA metrics
+## Querying metrics exposed by KEDA Metrics Server
 
 The metrics exposed by KEDA Metrics Server can be queried directly using `kubectl`:
 ```bash
@@ -66,3 +66,12 @@ And it will show a json like this:
 ```
 
 > **Note:** There are 2 exceptions to this document and those are `cpu` and `memory`. When KEDA is creating the HPA object, it uses the normal `cpu` and `memory` metrics from the cluster metric-server. If you want to query these 2 specifyc values, you should do it using `/apis/metrics.k8s.io/v1beta1` instead `/apis/external.metrics.k8s.io/v1beta1`.
+
+## How to get metric names from ScaledObject
+
+During its work, KEDA updates each ScaledObject with some relevant information which it needs to work. Part of that information is metric names generated from the triggers inside the own ScaledObject.
+
+You can recover the metric names from a ScaledObject using `kubectl`:
+```bash
+ kubectl get scaledobject SCALEDOBJECT_NAME -n NAMESPACE -o jsonpath={.status.externalMetricNames}
+```
