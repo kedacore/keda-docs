@@ -1,5 +1,5 @@
 +++
-title = "Querying metrics"
+title = "Querying KEDA metrics"
 description = "Guidance for querying KEDA metrics"
 weight = 100
 +++
