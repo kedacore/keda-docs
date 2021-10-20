@@ -65,7 +65,7 @@ And it will show a json like this:
 }
 ```
 
-> **Note:** There are 2 exceptions to this document and those are `cpu` and `memory`. When KEDA is creating the HPA object, it uses the normal `cpu` and `memory` metrics from the cluster metric-server. If you want to query these 2 specifyc values, you should do it using `/apis/metrics.k8s.io/v1beta1` instead `/apis/external.metrics.k8s.io/v1beta1`.
+> **Note:** There are 2 exceptions in querying metrics and those are `cpu` and `memory` scalers. When KEDA creates the HPA object, it uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server. If you want to query these 2 specific values, you should do it using `/apis/metrics.k8s.io/v1beta1` instead of `/apis/external.metrics.k8s.io/v1beta1`.
 
 ## How to get metric names from ScaledObject
 
