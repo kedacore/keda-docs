@@ -1,12 +1,12 @@
 +++
 title = "KEDA Metrics Server"
-description = "Guidance for querying KEDA metrics"
+description = "Details on KEDA Metrics Server"
 weight = 100
 +++
 
 ## Querying KEDA metrics
 
-The metrics exposed by KEDA Metrics Adapter can be queried directly using `kubectl`:
+The metrics exposed by KEDA Metrics Server can be queried directly using `kubectl`:
 ```bash
 kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1"
 ```
