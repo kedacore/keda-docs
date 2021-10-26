@@ -29,14 +29,14 @@ triggers:
 **Parameter list:**
 
 - `username` - The username credential for connecting to the Cassandra instance.
-- `port` - The port number of the Cassandra instance. (Optional, Can be set either here or in clusterIPAddress)
+- `port` - The port number of the Cassandra instance. (Optional, Can be set either here or in `clusterIPAddress`)
 - `clusterIPAddress` - The IP address or the host name of the Cassandra instance.
 - `consistency` - Configuration for a session or per individual read operation. (Values: `LOCAL_ONE`, `LOCAL_QUORUM`, `EACH_QUORUM`, `LOCAL_SERIAL`, `ONE`, `TWO`, `THREE`, `QUORUM`, `SERIAL`, `ALL`, Default: `ONE`)
 - `protocolVersion` - CQL Binary Protocol. (Default: `4`)
-- `keyspace` - The name of the keyspace used in Cassandra. (Also in case of metricName is not written, keyspace is used for generating the metricName)
+- `keyspace` - The name of the keyspace used in Cassandra. (Also in case of `metricName` is not specified, `keyspace` is used for generating it.)
 - `query` - A Cassandra query that should return single numeric value.
 - `targetQueryValue` - The threshold value that is provided by the user and used as `targetAverageValue` in the Horizontal Pod Autoscaler (HPA).
-- `metricName` - An optional name to assign to the metric. (Default: `cassandra-<METRICNAME>`, Optional, In case of metricName is not written, keyspace will be used to generate the metricName like this: `cassandra-<KEYSPACE>` If using more than one trigger; it is required that all metricNames be unique.)
+- `metricName` - An optional name to assign to the metric. (Default: `s<X>-cassandra-<METRICNAME>`, Optional, In case of `metricName` is not specified, keyspace will be used to generate the `metricName` like this: `s<X>-cassandra-<KEYSPACE>`, where `<X>` is the index of the trigger in a ScaledObject. If using more than one trigger; it is required that all metricNames be unique.)
 
 ### Authentication Parameters
 
