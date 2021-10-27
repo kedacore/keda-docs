@@ -109,10 +109,10 @@ This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose 
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
 
 ```sh
-hugo new --kind scaler scalers/<VERSION>/my-new-scaler.md
+hugo new --kind scaler docs/<VERSION>/scalers/my-new-scaler.md
 ```
 
-This creates a boilerplate Markdown file in `content/docs/scalers/my-new-scaler.md` whose contents you can modify. Make sure to update the following metadata fields:
+This creates a boilerplate Markdown file in `content/docs/<VERSION>/scalers/my-new-scaler.md` whose contents you can modify. Make sure to update the following metadata fields:
 
 * `title`
 * `availability`
