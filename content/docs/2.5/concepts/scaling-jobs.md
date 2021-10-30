@@ -98,6 +98,18 @@ This optional property specifies the name of container in the Job, from which KE
 ---
 
 ```yaml
+  rolloutStrategy: default # Optional. Default: default. Which Rollout Strategy KEDA will use. 
+```
+
+This optional property specifies the rollout strategy KEDA will use while updating an existing scaledJob.
+Possible values are `default` or `gradual`. \
+When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a scaledJob is being updated. Then, it will recreate those Jobs with the latest specs. \
+On the `gradual` rolloutStartegy, whenever a scaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
+
+
+---
+
+```yaml
   maxReplicaCount: 100 # Optional. Default: 100
 ```
 
