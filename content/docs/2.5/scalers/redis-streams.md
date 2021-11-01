@@ -23,6 +23,7 @@ triggers:
     address: localhost:6379 # Required if host and port are not provided. Format - host:port
     host: localhost # Required if address is not provided
     port: "6379" # Required if address is not provided and host has been provided.
+    usernameFromEnv: REDIS_USERNAME # optional (can also use authenticationRef)
     passwordFromEnv: REDIS_PASSWORD # optional (can also use authenticationRef)
     stream: my-stream # Required - name of the Redis Stream
     consumerGroup: my-consumer-group # Required - name of consumer group associated with Redis Stream
@@ -50,6 +51,7 @@ triggers:
 
 > It is only to be used along with the `host`/`hostFromEnv` attribute and not required if `address` has been provided.
 
+- `usernameFromEnv` - Name of the environment variable your deployment uses to get the Redis username. (Optional)
 - `passwordFromEnv` - Name of the environment variable your deployment uses to get the Redis password. (Optional)
 
 - `stream` - Name of the Redis Stream.
@@ -68,9 +70,9 @@ Some parameters could be provided using environmental variables, instead of sett
 
 The scaler supports two modes of authentication:
 
-#### Using password authentication
+#### Using username/password authentication
 
-Use the `password` field in the `metadata` to specify the name of an environment variable that your deployment uses to get the Redis password.
+Use the `username` and `password` field in the `metadata` to specify the name of an environment variable that your deployment uses to get the Redis username/password.
 
 This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
@@ -93,6 +95,7 @@ spec:
     - type: redis-streams
       metadata:
         addressFromEnv: REDIS_HOST
+        usernameFromEnv: REDIS_USERNAME # name of the environment variable in the Deployment
         passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
         stream: my-stream
         consumerGroup: consumer-group-1
@@ -107,9 +110,10 @@ You can use `TriggerAuthentication` CRD to configure the authentication. For exa
 apiVersion: v1
 kind: Secret
 metadata:
-  name: redis-streams-password
+  name: redis-streams-auth
 type: Opaque
 data:
+  redis_username: <encoded redis username>
   redis_password: <encoded redis password>
 ---
 apiVersion: keda.sh/v1alpha1
@@ -118,8 +122,11 @@ metadata:
   name: keda-redis-stream-triggerauth
 spec:
   secretTargetRef:
+    - parameter: username
+      name: redis-streams-auth # name of the Secret
+      key: redis_username # name of the key in the Secret
     - parameter: password
-      name: redis-streams-password # name of the Secret
+      name: redis-streams-auth # name of the Secret
       key: redis_password # name of the key in the Secret
 ---
 apiVersion: keda.sh/v1alpha1
