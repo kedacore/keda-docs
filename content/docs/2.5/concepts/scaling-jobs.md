@@ -40,6 +40,7 @@ spec:
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
   envSourceContainerName: {container-name}    # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
   maxReplicaCount: 100                        # Optional. Default: 100
+  rolloutStrategy: gradual                    # Optional. Default: default. Which Rollout Strategy KEDA will use.
   scalingStrategy:
     strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
     customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
@@ -95,17 +96,6 @@ The actual number of jobs could exceed the limit in a short time. However, it is
 
 This optional property specifies the name of container in the Job, from which KEDA should try to get environment properties holding secrets etc. If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.JobTargetRef.template.spec.containers[0]`.
 
----
-
-```yaml
-  rolloutStrategy: default # Optional. Default: default. Which Rollout Strategy KEDA will use. 
-```
-
-This optional property specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
-Possible values are `default` or `gradual`. \
-When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. \
-On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
-
 
 ---
 
@@ -127,6 +117,18 @@ The max number of pods that is created within a single polling period. If there 
 * **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
 * **Running Job Count:** How many jobs are running.
 * **Number of the Scale:** The number of the job that is created.
+
+---
+
+```yaml
+  rolloutStrategy: default # Optional. Default: default. Which Rollout Strategy KEDA will use. 
+```
+
+This optional property specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
+Possible values are `default` or `gradual`. \
+When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. \
+On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
+
 
 ---
 
