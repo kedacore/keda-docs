@@ -374,10 +374,6 @@ logo = "teamleader.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
-url = "https://codit.eu"
-logo = "codit.jpg"
-
-[[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
