@@ -37,6 +37,10 @@ triggers:
     metricStat: "Average" # default "Average"
     # Optional: Metric Statistic Period
     metricStatPeriod: "300" # default 300
+    # Optional: Metric Unit
+    metricUnit: "Count" # default ""
+    # Optional: Metric EndTime Offset
+    metricEndTimeOffset: "60" # default 0    
 ```
 
 **Parameter list:**
@@ -45,9 +49,11 @@ triggers:
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
-- `metricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)). (Default: `300`, Optional)
-- `metricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)). (Default: `Average`, Optional)
-- `metricStatPeriod` - Which frequency is going to be used by the related query. Used to define **Period** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricStatistics.html)). (Default: `300`, Optional)
+- `metricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). The value of `metricCollectionTime` must be greater than the `metricStatPeriod`, providing a value which is a multiply of the `metricStatPeriod` can improve performance on fetching data from Cloudwatch. In pratice setting `metricCollectionTime` 2-to-3 times more than the `metricStatPeriod` value can make sure the scaler is able to get data points back from Cloudwatch, the scaler will always use the most up-to-date datapoint if more datapoints are returned. (Default: `300`, Optional)
+- `metricStat` - Which statistics metric is going to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Statistic)). (Default: `Average`, Optional)
+- `metricStatPeriod` - Which frequency is going to be used by the related query. Used to define **Period**. The value cannot be an arbitrary number, that it must be supported by Cloudwatch. More details can be found from ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#CloudWatchPeriods)). (Default: `300`, Optional)
+- `metricUnit` - Which unit is going to be used by the query. Used to define **Unit** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit)). (Default: `Average`, Optional)
+- `metricEndTimeOffset` - How long in seconds to offset the **EndTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). Due to the eventual consistency model which is used by Cloudwatch, the latest datapoint one can get from Cloudwatch might not be accurate. The `metricEndTimeOffset` config provides a way to skip the most recent datapoint if needed. (Default: `0`, Optional)
 
 
 ### Authentication Parameters
