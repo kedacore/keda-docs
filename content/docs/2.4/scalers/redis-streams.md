@@ -15,7 +15,6 @@ One of its features includes [`Consumer Groups`](https://redis.io/topics/streams
 
 This specification describes the `redis-streams` trigger that scales based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream.
 
-
 ```yaml
 triggers:
 - type: redis-streams
@@ -70,7 +69,7 @@ The scaler supports two modes of authentication:
 
 **Password Authentication:**
 
-- `password` - Redis password to authenticate with
+- `password` - Redis password to authenticate with.
 
 #### Using password authentication
 
