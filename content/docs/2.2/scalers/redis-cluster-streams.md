@@ -66,6 +66,10 @@ Some parameters could be provided using environmental variables, instead of sett
 
 The scaler supports two modes of authentication:
 
+**Password Authentication:**
+
+- `password` - Redis password to authenticate with
+
 #### Using password authentication
 
 Use the `password` field in the `metadata` to specify the name of an environment variable that your deployment uses to get the Redis password.

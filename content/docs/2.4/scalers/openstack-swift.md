@@ -44,7 +44,7 @@ For more information about `prefix`, `delimiter`, and `limit`, please, refer to 
 
 To authenticate, this scaler uses tokens. Tokens are automatically retrieved by the scaler from [Keystone](https://docs.openstack.org/keystone/latest/), the official OpenStack Identity Provider. You can provide your credentials using Secrets either by using the "password" method or the "application credentials" method. Both cases use `TriggerAuthentication`.
 
-#### Password
+**Password Authentication:**
 
 - `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
 - `userID` - The OpenStack project user ID.
@@ -52,7 +52,7 @@ To authenticate, this scaler uses tokens. Tokens are automatically retrieved by 
 - `projectID` - The OpenStack project ID.
 - `regionName` - The OpenStack region name where the Swift service is available. This parameter is not required and is used only when the `swiftURL` is not provided to the scaler. If the region name is not provided, it will look for the first Swift public URL available in the OpenStack catalog.
 
-#### Application Credentials
+**Application Credentials Authentication:**
 
 - `authURL` - The Keystone authentication URL. The scaler supports only Keystone v3. You shouldn't include the `/v3` parameter in your URL path. This is done automatically by the scaler.
 - `appCredentialID` - The Application Credential ID.
