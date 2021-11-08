@@ -249,7 +249,7 @@ name = "Samples"
 weight = 5
 
 [[menu.main]]
-url = "https://merch.keda.sh/"
+url = "https://store.cncf.io/collections/keda"
 name = "Merch"
 weight = 6
 
