@@ -357,6 +357,10 @@ url = "https://www.purefacts.com"
 logo = "purefacts.png"
 
 [[params.users]]
+url = "https://qonto.com"
+logo = "qonto.png"
+
+[[params.users]]
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
