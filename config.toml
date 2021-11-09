@@ -314,6 +314,10 @@ url = "https://coralogix.com/"
 logo = "coralogix.gif"
 
 [[params.users]]
+url = "https://docplanner.tech"
+logo = "docplanner-tech.png"
+
+[[params.users]]
 url = "https://fission.io/"
 logo = "fission.png"
 [[params.users]]
