@@ -19,7 +19,7 @@ This will return a json with the list of metrics exposed by KEDA:
   "groupVersion": "external.metrics.k8s.io/v1beta1",
   "resources": [
     {
-      "name": "s0-rabbitmq--mymetric",
+      "name": "s0-rabbitmq-queueName",
       "singularName": "",
       "namespaced": true,
       "kind": "ExternalMetricValueList",
@@ -28,7 +28,7 @@ This will return a json with the list of metrics exposed by KEDA:
       ]
     },
     {
-      "name": "s1-rabbitmq--mymetric2",
+      "name": "s1-rabbitmq-queueName2",
       ....
     }
   ]
@@ -42,9 +42,9 @@ kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/YOUR_NAMESPA
 
 At this point, you should take in consideration that KEDA metrics are namespaced, this means that you have to specify the namespace where the `ScaledObject` is placed inside.
 
-For example, if you want to get the value of the metric named `s1-rabbitmq--mymetric2` in namespace `sample-ns`, the query will be like this:
+For example, if you want to get the value of the metric named `s1-rabbitmq-queueName2` in namespace `sample-ns`, the query will be like this:
 ```bash
-kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq--mymetric2"
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq-queueName2"
 ```
 
 And it will show a json like this:
@@ -56,7 +56,7 @@ And it will show a json like this:
   "metadata": {},
   "items": [
     {
-      "metricName": "s1-rabbitmq--mymetric2",
+      "metricName": "s1-rabbitmq-queueName2",
       "metricLabels": null,
       "timestamp": "2021-10-20T10:48:17Z",
       "value": "0"
