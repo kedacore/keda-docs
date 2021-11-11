@@ -29,14 +29,15 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+There are three options to configure authentication:
 
+1. directly in the ScaledObject using `credentialsFromEnv`
+2. using `authenticationRef` to a `TriggerAuthentication` CRD
 
-**Credential based authentication:**
+  a. with a ServiceAccount key stored as JSON inside a secret with `GoogleApplicationCredentials`
+  b. `podIdentity` to use the Service Account from the GCP metadata, of either the machine or [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity)
 
-- `GoogleApplicationCredentials` - Service account credentials in JSON.
-
-### Example 
+### Example 1
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -55,7 +56,7 @@ spec:
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-### Example using TriggerAuthentication
+### Example 2a
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -83,11 +84,8 @@ spec:
       subscriptionName: "input" # Required  
 ```
 
-**Identity based authentication:**
-
-You can also use `TriggerAuthentication` CRD to configure the authentication using the associated service account of the running machine in Google Cloud. You only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`. `ClusterTriggerAuthentication` can also be used if you pretend to use it globally in your cluster.
-
-### Example using TriggerAuthentication with GCP Identity
+### Example 2b
+To use the GCP default authentication, you only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
