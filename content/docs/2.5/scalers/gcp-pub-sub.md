@@ -15,16 +15,17 @@ This specification describes the `gcp-pubsub` trigger for Google Cloud Platform�
 triggers:
 - type: gcp-pubsub
   metadata:
-    subscriptionSize: "5" # Optional - Default is 5
+    mode: "SubscriptionSize" # Optional - Default is SubscriptionSize - SubscriptionSize or OldestUnackedMessageAge
+    value: "5" # Optional - Default is 5 for SubscriptionSize | Default is 10 for OldestUnackedMessageAge
     subscriptionName: "mysubscription" # Required
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages in your Pub/Sub subscription.
+The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription. 
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
-`subscriptionName` defines the subscription that should be monitored. The `subscriptionSize` determines the target average which the deployment will be scaled on. The default `subscriptionSize` is 5.
+`subscriptionName` defines the subscription that should be monitored. The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
@@ -50,7 +51,8 @@ spec:
   triggers:
   - type: gcp-pubsub
     metadata:
-      subscriptionSize: "5"
+      mode: "SubscriptionSize"
+      value: "5"
       subscriptionName: "mysubscription" # Required
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
