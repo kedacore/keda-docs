@@ -31,8 +31,8 @@ Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 ### Authentication Parameters
 There are three options to configure authentication:
 
-1. directly in the ScaledObject using `credentialsFromEnv`
-2. using `authenticationRef` to a `TriggerAuthentication` CRD
+1. Directly in the `ScaledObject` using `credentialsFromEnv`
+2. Using `authenticationRef` to a `TriggerAuthentication` CRD
 
   a. with a ServiceAccount key stored as JSON inside a secret with `GoogleApplicationCredentials`
   b. `podIdentity` to use the Service Account from the GCP metadata, of either the machine or [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity)
