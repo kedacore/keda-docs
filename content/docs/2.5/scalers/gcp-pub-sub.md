@@ -26,7 +26,7 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 
 `subscriptionName` defines the subscription that should be monitored. You can use different formulas:
 
-- Just subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used
+- Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.
 - Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`. 
 
 The `subscriptionSize` determines the target average which the deployment will be scaled on. The default `subscriptionSize` is 5.
