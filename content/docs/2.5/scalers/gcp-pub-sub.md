@@ -24,7 +24,7 @@ The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on 
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
-`subscriptionName` defines the subscription that should be monitored. The `subscriptionSize` determines the target average which the deployment will be scaled on. The default `subscriptionSize` is 5.
+`subscriptionName` defines the subscription that should be monitored. You can use the just subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used, or you can use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`. The `subscriptionSize` determines the target average which the deployment will be scaled on. The default `subscriptionSize` is 5.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
