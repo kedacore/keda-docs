@@ -15,6 +15,7 @@ This specification describes the `gcp-pubsub` trigger for Google Cloud Platformâ
 triggers:
 - type: gcp-pubsub
   metadata:
+    subscriptionSize: "5" # Deprecated, use mode and value fields instead
     mode: "SubscriptionSize" # Optional - Default is SubscriptionSize - SubscriptionSize or OldestUnackedMessageAge
     value: "5" # Optional - Default is 5 for SubscriptionSize | Default is 10 for OldestUnackedMessageAge
     subscriptionName: "mysubscription" # Required
@@ -25,7 +26,10 @@ The Google Cloud Platformâ€Ž (GCP) Pub/Sub trigger allows you to scale based on 
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
-`subscriptionName` defines the subscription that should be monitored. The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
+`subscriptionName` defines the subscription that should be monitored. You can use either `subscriptionSize` to define the target average which the deployment will be scaled on or `mode` and `value` fields. `subscriptionSize` field is deprecated, it is recommended to use `mode` and `value` fields instead. Scaler will not work if you define both `subscriptionSize` and at least one of `mode` or `value`.
+The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. 
+The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
+
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
