@@ -8,7 +8,7 @@ layout = "scaler"
 
 ### Trigger Specification
 
-This specification describes the `elasticsearch` trigger that scales based on result of an [elasticsearch search template](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) query. This lets you run searches without exposing Elasticsearch’s query syntax to the keda scaler.
+This specification describes the `elasticsearch` trigger that scales based on result of an [elasticsearch search template](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html) query.
 
 The trigger always requires the following information:
 
@@ -24,20 +24,19 @@ triggers:
       params: "param1:value1;param2:value2"
       valueLocation: "hits.total.value"
       targetValue: "1"
-
 ```
 
 **Parameter list:**
 
 - `addresses` - Comma separated list of hosts and ports of the Elasticsearch cluster client nodes.
-- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional).
 - `username` - Username to authenticate with to Elasticsearch cluster.
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Elasticsearch cluster.
 - `index` - Comma separated list of indexes to run the search template query on.
 - `searchTemplateName` - The search template name to run.
+- `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
 - `params` - Parameters that will be used by the search template. It supports multiples params separated by a semicolon character ( `;` )
 - `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
-- `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional).
 
 ### Authentication Parameters
 
