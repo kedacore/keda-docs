@@ -386,6 +386,10 @@ logo = "zapier.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
+url = "https://docplanner.tech"
+logo = "docplanner-tech.png"
+
+[[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
