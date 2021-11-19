@@ -76,7 +76,7 @@ metadata:
   name: elasticsearch-scaledobject
 spec:
   scaleTargetRef:
-    name: {{DEPLOYMENT_NAME}}
+    name: "deployment-name"
   triggers:
     - type: elasticsearch
       metadata:
