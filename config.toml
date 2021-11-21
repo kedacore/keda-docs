@@ -320,9 +320,14 @@ logo = "docplanner-tech.png"
 [[params.users]]
 url = "https://fission.io/"
 logo = "fission.png"
+
 [[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
+
+[[params.users]]
+url = "https://www.gittigidiyor.com/"
+logo = "gittigidiyor.png"
 
 [[params.users]]
 url = "https://www.intercept.cloud"
