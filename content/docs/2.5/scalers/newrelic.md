@@ -33,7 +33,7 @@ triggers:
 
 **Parameter list:**
 
-- `nrAccount` - The account within Newrelic that the request should be targeted against
+- `nrAccount` - The account within Newrelic that the request should be targeted against.
 - `nrQueryKey` - The API key that will be leveraged to connect to Newrelic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 - `nrRegion` - The region to connect to for the Newrelic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`)
 - `metricName` - The metric to pull from the query result.
