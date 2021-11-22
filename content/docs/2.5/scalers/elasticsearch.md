@@ -34,9 +34,9 @@ triggers:
 - `index` - Comma separated list of indexes to run the search template query on.
 - `searchTemplateName` - The search template name to run.
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
-- `parameters` - Parameters that will be used by the search template. It supports multiples params separated by a semicolon character ( `;` )
+- `parameters` - Parameters that will be used by the search template. It supports multiples params separated by a semicolon character ( `;` ).
 - `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
-- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional).
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
