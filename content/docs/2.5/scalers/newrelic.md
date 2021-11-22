@@ -35,11 +35,11 @@ triggers:
 
 - `nrAccount` - The account within Newrelic that the request should be targeted against
 - `nrQueryKey` - The API key that will be leveraged to connect to Newrelic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
-- `nrRegion` - The region to connect to for the Newrelic apis. (Values: "LOCAL", "EU", "STAGING", "US")
+- `nrRegion` - The region to connect to for the Newrelic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`)
 - `metricName` - The metric to pull from the query result.
 - `nrql` - The Newrelic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
-- `nrLogLevel` - The logging level of the underlying Newrelic class to aid in debugging. (Values: "debug", "error", "fatal", "info", "trace", "warn")
+- `nrLogLevel` - The logging level of the underlying Newrelic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Optional)
 
 ### Authentication Parameters
 
