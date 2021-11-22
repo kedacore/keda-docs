@@ -1,5 +1,5 @@
 +++
-title = "Newrelic"
+title = "New Relic"
 availability = "2.5+"
 maintainer = "Community"
 description = "Scale applications based on NewRelic NRQL"
@@ -9,7 +9,7 @@ go_file = "newrelic_scaler"
 
 ### Trigger Specification
 
-This specification describes the `Newrelic` trigger that scales based on a Newrelic metric.
+This specification describes the `New Relic` trigger that scales based on a New Relic metric.
 
 ```yaml
 triggers:
@@ -33,13 +33,13 @@ triggers:
 
 **Parameter list:**
 
-- `nrAccount` - The account within Newrelic that the request should be targeted against.
-- `nrQueryKey` - The API key that will be leveraged to connect to Newrelic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
-- `nrRegion` - The region to connect to for the Newrelic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`)
+- `nrAccount` - The account within New Relic that the request should be targeted against.
+- `nrQueryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
+- `nrRegion` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`)
 - `metricName` - The metric to pull from the query result.
-- `nrql` - The Newrelic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
+- `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
-- `nrLogLevel` - The logging level of the underlying Newrelic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Optional, Default: `info`)
+- `nrLogLevel` - The logging level of the underlying New Relic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Optional, Default: `info`)
 
 ### Authentication Parameters
 
