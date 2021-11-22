@@ -13,7 +13,7 @@ This specification describes the `Newrelic` trigger that scales based on a Newre
 
 ```yaml
 triggers:
-  - type: *newrelic*
+  - type: newrelic
     metadata:
       # Required: nrAccount - Subaccount to run the query on
       nrAccount: 1234567
