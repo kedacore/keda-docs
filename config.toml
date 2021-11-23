@@ -249,7 +249,7 @@ name = "Samples"
 weight = 5
 
 [[menu.main]]
-url = "https://merch.keda.sh/"
+url = "https://store.cncf.io/collections/keda"
 name = "Merch"
 weight = 6
 
@@ -314,8 +314,17 @@ url = "https://coralogix.com/"
 logo = "coralogix.gif"
 
 [[params.users]]
+url = "https://docplanner.tech"
+logo = "docplanner-tech.png"
+
+[[params.users]]
 url = "https://fission.io/"
 logo = "fission.png"
+
+[[params.users]]
+url = "https://www.gittigidiyor.com/"
+logo = "gittigidiyor.png"
+
 [[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
@@ -357,6 +366,10 @@ url = "https://www.purefacts.com"
 logo = "purefacts.png"
 
 [[params.users]]
+url = "https://qonto.com"
+logo = "qonto.png"
+
+[[params.users]]
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
@@ -372,10 +385,14 @@ logo = "seldon.png"
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
+[[params.users]]
+url = "https://zapier.com"
+logo = "zapier.png"
+
 # "Partners" section on the Community page
 [[params.partners]]
-url = "https://codit.eu"
-logo = "codit.jpg"
+url = "https://docplanner.tech"
+logo = "docplanner-tech.png"
 
 [[params.partners]]
 url = "https://microsoft.com"

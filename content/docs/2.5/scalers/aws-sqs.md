@@ -58,6 +58,80 @@ The user will need access to read properties from the specified AWS SQS queue.
 
 ### Example
 
+#### Scaling a deployment using podIdentity providers
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+  namespace: keda-test
+spec:
+  podIdentity:
+    provider: aws-kiam # or aws-eks when using IRSA
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: aws-sqs-queue-scaledobject
+  namespace: keda-test
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      queueURL: myQueue
+      queueLength: "5"
+      awsRegion: "eu-west-1"
+```
+
+#### Scaling a deployment using IAM Role
+
+When you need to specify the IAM Role used to access the sqs queue.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secrets
+data:
+  AWS_ROLE_ARN: <encoded-iam-role-arn>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+  namespace: keda-test
+spec:
+  secretTargetRef:
+  - parameter: awsRoleArn    # The property in KEDA.
+    name: test-secrets       # The name of the kubernetes secret.
+    key: AWS_ROLE_ARN        # The key from the kubernetes secret.
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: aws-sqs-queue-scaledobject
+  namespace: keda-test
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      queueURL: myQueue
+      queueLength: "5"
+      awsRegion: "eu-west-1"
+```
+
+
+#### Scaling a deployment using IAM Users
+
 ```yaml
 apiVersion: v1
 kind: Secret

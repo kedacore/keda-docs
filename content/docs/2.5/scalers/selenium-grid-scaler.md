@@ -22,6 +22,7 @@ triggers:
       url: 'http://selenium-hub:4444/graphql' # Required
       browserName: 'chrome'  # Required
       browserVersion: '91.0' # Optional. Only required when supporting multiple versions of browser in your Selenium Grid.
+      unsafeSsl : 'true' # Optional
 ```
 
 **Parameter list:**
@@ -29,6 +30,7 @@ triggers:
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
 - `browserName` - Name of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
 - `browserVersion` - Version of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Optional)
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 ### Example
 

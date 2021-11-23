@@ -39,14 +39,14 @@ triggers:
 
 To authenticate, this scaler uses tokens. Tokens are automatically retrieved by the scaler from [Keystone](https://docs.openstack.org/keystone/latest/), the official OpenStack Identity Provider. You can provide your credentials using Secrets either by using the "password" method or the "application credentials" method. Both cases use `TriggerAuthentication`.
 
-#### Password
+**Password Authentication:**
 
 - `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
 - `userID` - The OpenStack project user ID.
 - `password` - The password for the provided user.
 - `projectID` - The OpenStack project ID.
 
-#### Application Credentials
+**Application Credentials Authentication:**
 
 - `authURL` - The Keystone authentication URL. The pattern is: `http://<host>:<keystone_port>/<keystone_version>/`.
 - `appCredentialID` - The Application Credential ID.
