@@ -47,6 +47,8 @@ Some parameters could be provided using environmental variables, instead of sett
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
+> 💡 **Note:** When using `host`/`hostFromEnv` or TriggerAuthentication, the supplied password cannot contain special characters.
+
 > 💡 **Note:** `mode: MessageRate` requires protocol `http`.
 
 > 💡 **Note:** `useRegex: "true"` requires protocol `http` and ignores unacknowledged messages.
