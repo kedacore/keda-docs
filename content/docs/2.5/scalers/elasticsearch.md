@@ -4,6 +4,7 @@ availability = "v2.5+"
 maintainer = "Community"
 description = "Scale applications based on elasticsearch search template query result."
 layout = "scaler"
+go_file = "elasticsearch_scaler"
 +++
 
 ### Trigger Specification
