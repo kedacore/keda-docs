@@ -19,7 +19,7 @@ triggers:
       nrAccount: 1234567
       # Required: nrQueryKey - Api key to connect to New Relic
       nrQueryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      # Required: nrRegion - Region to query data for
+      # Optional: nrRegion - Region to query data for
       nrRegion: "US"
       # Required: metricName
       metricName: "duration"
@@ -35,11 +35,11 @@ triggers:
 
 - `nrAccount` - The account within New Relic that the request should be targeted against.
 - `nrQueryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
-- `nrRegion` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`)
+- `nrRegion` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
 - `metricName` - The metric to pull from the query result.
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
-- `nrLogLevel` - The logging level of the underlying New Relic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Optional, Default: `info`)
+- `nrLogLevel` - The logging level of the underlying New Relic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Default: `info`, Optional)
 
 ### Authentication Parameters
 
