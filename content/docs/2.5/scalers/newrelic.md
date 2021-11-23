@@ -13,7 +13,7 @@ This specification describes the `New Relic` trigger that scales based on a New 
 
 ```yaml
 triggers:
-  - type: newrelic
+  - type: new-relic
     metadata:
       # Required: Account - Subaccount to run the query on
       Account: 1234567
@@ -59,7 +59,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: newrelic
+    - type: new-relic
       metadata:
         Account: 1234567
         QueryKey: "NRAK-12345678901234567"
