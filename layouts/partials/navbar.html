@@ -35,25 +35,7 @@
         </div>
 
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/scalers">
-            <span>
-              Scalers
-            </span>
-            <span class="icon has-text-secondary">
-              <i class="fas fa-md fa-caret-down"></i>
-            </span>
-          </a>
-
-          <div class="navbar-dropdown is-radiusless">
-            {{ range $scalers }}
-            {{ $version := index (split .File.Path "/") 1 }}
-            {{ if eq $version $latest }}
-            <a class="navbar-item" href="{{ .RelPermalink }}">
-              {{ .Title }}
-            </a>
-            {{ end }}
-            {{ end }}
-          </div>
+          <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/scalers">Scalers</a>
         </div>
 
         {{ range $docs }}
