@@ -68,4 +68,20 @@ The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by
 | kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
 | kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
 
+## Configure `MaxConcurrentReconciles` for Controllers
 
+To implement internal controllers KEDA uses [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime), that enables configuration of [MaxConcurrentReconciles property](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/controller#Options), ie. the maximum number of concurrent reconciles which can be run for a controller.
+
+KEDA Operator exposes properties for specifying `MaxConcurrentReconciles` for following controllers/reconcilers:
+- `ScaledObjectReconciler` - responsible for watching and managing `ScaledObjects`, ie. validates input trigger specification, starts scaling logic and manages dependent HPA.
+- `ScaledJobReconciler` - responsible for watching and managing `ScaledJobs` and dependent Kubernetes Jobs
+
+KEDA Metrics Server exposes property for specifying `MaxConcurrentReconciles` for `MetricsScaledObjectReconciler`, that manages Metrics Names exposes by KEDA and which are being consumed by Kubernetes server and HPA controller.
+
+To modify this properties you can set environment variables on both KEDA Operator and Metrics Server Deployments:
+
+| Environment variable name             | Deployment     | Default Value | Affected reconciler                                            | 
+| ------------------------------------- | -------------- | ------------- | -------------------------------------------------------------- |
+| KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
+| KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
+| KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
