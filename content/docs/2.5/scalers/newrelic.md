@@ -40,11 +40,31 @@ triggers:
 
 ### Authentication Parameters
 
-As of today, using `TriggerAuthentication` is not supported.
+- `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 
 ### Example
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: new-relic-secret
+  namespace: my-project
+type: Opaque
+data:
+  apiKey: TlJBSy0xMjM0NTY3ODkwMTIzNDU2Nwo= # base64 encoding of the new relic api key NRAK-12345678901234567
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-new-relic
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: queryKey
+    name: new-relic-secret
+    key: apiKey
+
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -59,9 +79,10 @@ spec:
     - type: new-relic
       metadata:
         account: 1234567
-        queryKey: "NRAK-12345678901234567"
         region: "US"
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
         metricName: "Avg Duration"
         threshold: 1000
+        authenticationRef:
+          name: keda-trigger-auth-new-relic
 ```
