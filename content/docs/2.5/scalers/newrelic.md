@@ -2,7 +2,7 @@
 title = "New Relic"
 availability = "2.5+"
 maintainer = "Community"
-description = "Scale applications based on NewRelic NRQL"
+description = "Scale applications based on New Relic NRQL"
 layout = "scaler"
 go_file = "newrelic_scaler"
 +++
