@@ -16,32 +16,31 @@ triggers:
   - type: new-relic
     metadata:
       # Required: Account - Subaccount to run the query on
-      Account: 1234567
+      account: 1234567
       # Required: QueryKey - Api key to connect to New Relic
-      QueryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      queryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
       # Optional: nrRegion - Region to query data for
-      Region: "US"
+      region: "US"
       # Required: metricName
       metricName: "duration"
       # Required: nrql
       nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
       # Required: threshold
       threshold: 100
-      # Optional: nrLogLevel
-      LogLevel: "info"
 ```
 
 **Parameter list:**
 
-- `Account` - The account within New Relic that the request should be targeted against.
-- `QueryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
-- `Region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
+- `account` - The account within New Relic that the request should be targeted against.
+- `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
+- `region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
 - `metricName` - The metric to pull from the query result.
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
-- `LogLevel` - The logging level of the underlying New Relic class to aid in debugging. (Values: `debug`, `error`, `fatal`, `info`, `trace`, `warn`, Default: `info`, Optional)
 
 ### Authentication Parameters
+
+As of today, using `TriggerAuthentication` is not supported.
 
 ### Example
 
@@ -52,8 +51,6 @@ kind: ScaledObject
 metadata:
   name: newrelic-scaledobject
   namespace: keda
-  labels:
-    deploymentName: dummy
 spec:
   maxReplicaCount: 12
   scaleTargetRef:
@@ -61,9 +58,9 @@ spec:
   triggers:
     - type: new-relic
       metadata:
-        Account: 1234567
-        QueryKey: "NRAK-12345678901234567"
-        Region: "US"
+        account: 1234567
+        queryKey: "NRAK-12345678901234567"
+        region: "US"
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
         metricName: "Avg Duration"
         threshold: 1000
