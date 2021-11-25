@@ -169,3 +169,5 @@ By default, new documentation versions are not listed as available version so it
 Once a version is ready to be published, we must add the version to the `params.versions.docs` list in [`config.toml`](./config.toml).
 
 More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
+
+> Note: Remember to create the folder for next version with already existing docs in current version.
