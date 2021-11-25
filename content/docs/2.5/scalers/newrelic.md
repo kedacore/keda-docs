@@ -9,7 +9,7 @@ go_file = "newrelic_scaler"
 
 ### Trigger Specification
 
-This specification describes the `New Relic` trigger that scales based on a New Relic metric.
+This specification describes the `new-relic` trigger that scales based on a New Relic metric.
 
 ```yaml
 triggers:
