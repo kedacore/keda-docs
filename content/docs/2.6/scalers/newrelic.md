@@ -1,6 +1,6 @@
 +++
 title = "New Relic"
-availability = "2.5+"
+availability = "2.6+"
 maintainer = "Community"
 description = "Scale applications based on New Relic NRQL"
 layout = "scaler"
