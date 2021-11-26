@@ -40,7 +40,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can use `TriggerAuthentication` CRD to configure the authentication with a `queryKey` along with other properties.
+You can use `TriggerAuthentication` CRD to configure the authentication with a `queryKey`.
 
 **Authentication:**
 
