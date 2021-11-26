@@ -40,6 +40,10 @@ triggers:
 
 ### Authentication Parameters
 
+You can use `TriggerAuthentication` CRD to configure the authentication with a `queryKey` along with other properties.
+
+**Authentication:**
+
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 
 ### Example
