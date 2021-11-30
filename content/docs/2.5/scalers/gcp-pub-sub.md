@@ -123,7 +123,7 @@ spec:
       subscriptionName: "input" # Required
 ```
 
-`ClusterTriggerAuthentication` can also be used if you pretend to use it globally in your cluster, here is an example
+`ClusterTriggerAuthentication` can also be used if you pretend to use it globally in your cluster, here is an example.
 
 
 ### Example using ClusterTriggerAuthentication with GCP Identity
