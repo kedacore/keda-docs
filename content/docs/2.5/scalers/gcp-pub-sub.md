@@ -95,7 +95,7 @@ spec:
 
 **Identity based authentication:**
 
-You can also use `TriggerAuthentication` CRD to configure the authentication using the associated service account of the running machine in Google Cloud. You only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`.
+You can also use `TriggerAuthentication` CRD to configure the authentication using the associated service account of the running machine in Google Cloud. You only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`. `ClusterTriggerAuthentication` can also be used if you pretend to use it globally in your cluster, here is an example.
 
 ### Example using TriggerAuthentication with GCP Identity
 
@@ -123,10 +123,7 @@ spec:
       subscriptionName: "input" # Required
 ```
 
-`ClusterTriggerAuthentication` can also be used if you pretend to use it globally in your cluster, here is an example.
-
-
-### Example using ClusterTriggerAuthentication with GCP Identity
+## Example using ClusterTriggerAuthentication with GCP Identity
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
