@@ -16,7 +16,7 @@ triggers:
   - type: azure-pipelines
     metadata:
       # Required
-      poolID: "{agentPoolName}"
+      poolID: "{agentPoolId}"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
       organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
@@ -44,7 +44,7 @@ As an alternative to using environment variables, you can authenticate with Azur
 - `organizationURL` - The URL of the Azure DevOps organization.
 - `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
 
-### How to get poolID
+### How to determine your pool ID
 
 There are several ways to get the `poolID`. The easiest could be using `az cli` to get it using the command `az pipelines pool list --pool-name {agentPoolName} --organization {organizationURL} --query [0].id`. 
 
