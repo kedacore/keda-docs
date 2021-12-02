@@ -15,8 +15,8 @@ This specification describes the `azure-pipelines` trigger for Azure Pipelines. 
 triggers:
   - type: azure-pipelines
     metadata:
-      # Required: poolID - Can be retrieved by the REST API call https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}
-      poolID: "1"
+      # Required
+      poolID: "{agentPoolId}"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
       organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
@@ -43,6 +43,17 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 - `organizationURL` - The URL of the Azure DevOps organization.
 - `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
+
+### How to determine your pool ID
+
+There are several ways to get the `poolID`. The easiest could be using `az cli` to get it using the command `az pipelines pool list --pool-name {agentPoolName} --organization {organizationURL} --query [0].id`. 
+
+It's also possible get the poolID using the UI, browsing to the agent pool from the organization (Organization settings -> Agent pools -> `{agentPoolName}`) and getting it from the url. The url should be like this:
+`https://dev.azure.com/{organization}/_settings/agentpools?poolId={poolID}&view=jobs`
+
+>Note: You should do it at organization level and not inside the project, otherwise you will get incorrect id.
+
+Finally, it's also possible get the poolID from the response of a HTTP request to this endpoint `https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}` in the key `value[0].id`
 
 ### Example
 
