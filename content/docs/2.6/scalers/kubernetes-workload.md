@@ -3,7 +3,7 @@ title = "Kubernetes Workload"
 layout = "scaler"
 availability = "v2.4+"
 maintainer = "Community"
-description = "Scale applications based on the amount of pods which matches the given selectors."
+description = "Scale applications based on the count of running pods that match the given selectors."
 go_file = "kubernetes_workload_scaler"
 +++
 
@@ -23,6 +23,8 @@ triggers:
 - `value` - Target relation between the scaled workload and the amount of pods which matches the selector. It will be calculated following this formula: `relation = (pods which match selector) / (scaled workload pods)`.
 
 > 💡 **Note:** The search scope is limited to the namespace where the `ScaledObject` is deployed.
+
+The count excludes terminated pods, i.e. [pod status](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podstatus-v1-core) `phase` equals `Succeeded` or `Failed`.
 
 ### Authentication Parameters
 
