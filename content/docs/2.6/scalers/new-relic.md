@@ -19,11 +19,11 @@ triggers:
       account: 1234567
       # Required: QueryKey - Api key to connect to New Relic
       queryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      # Optional: nrRegion - Region to query data for. Default value is US
+      # Optional: nrRegion - Region to query data for. Default value is US.
       region: "US"
       # Required: metricName
       metricName: "duration"
-      # Optional: noDataError - If the query returns no data should this be treated as an error. Default value is false
+      # Optional: noDataError - If the query returns no data should this be treated as an error. Default value is false.
       noDataError: "true"
       # Required: nrql
       nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
