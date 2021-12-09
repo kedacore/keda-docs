@@ -5,6 +5,12 @@ enableGitInfo = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 googleAnalytics = 'G-W43Z7RYFEW'
 
+[privacy]
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    disable = false
+    respectDoNotTrack = true
+
 # See other available styles here: https://xyproto.github.io/splash/docs/
 [markup.highlight]
 style = "dracula"
