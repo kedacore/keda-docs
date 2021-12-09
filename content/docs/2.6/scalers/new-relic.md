@@ -21,8 +21,6 @@ triggers:
       queryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
       # Optional: nrRegion - Region to query data for. Default value is US.
       region: "US"
-      # Required: metricName
-      metricName: "duration"
       # Optional: noDataError - If the query returns no data should this be treated as an error. Default value is false.
       noDataError: "true"
       # Required: nrql
@@ -36,7 +34,6 @@ triggers:
 - `account` - The account within New Relic that the request should be targeted against.
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 - `region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
-- `metricName` - The metric to pull from the query result.
 - `noDataError` - Should queries that return nodata be treated as an error (Values: `true`, `false`, Default: `false`, Optional)
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
@@ -88,7 +85,6 @@ spec:
         account: 1234567
         region: "US"
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
-        metricName: "Avg Duration"
         noDataError: "true"
         threshold: 1000
         authenticationRef:
