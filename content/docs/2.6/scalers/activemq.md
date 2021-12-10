@@ -61,12 +61,12 @@ metadata:
   name: trigger-auth-activemq
 spec:
   secretTargetRef:
-    - parameter: username
-      name: activemq-secret
-      key: activemq-username
-    - parameter: password
-      name: activemq-secret
-      key: activemq-password
+  - parameter: username
+    name: activemq-secret
+    key: activemq-username
+  - parameter: password
+    name: activemq-secret
+    key: activemq-password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -76,12 +76,12 @@ spec:
   scaleTargetRef:
     name: nginx-deployment
   triggers:
-    - type: activemq
-      metadata:
-        managementEndpoint: "activemq.activemq-test:8161"
-        destinationName: "testQ"
-        brokerName: "localhost"
-	targetQueueSize: "50"
-      authenticationRef:
-        name: trigger-auth-activemq
+  - type: activemq
+    metadata:
+      managementEndpoint: "activemq.activemq-test:8161"
+      destinationName: "testQ"
+      brokerName: "localhost"
+      targetQueueSize: "50"
+    authenticationRef:
+      name: trigger-auth-activemq
 ```
