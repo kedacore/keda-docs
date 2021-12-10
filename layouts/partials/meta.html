@@ -36,5 +36,5 @@
 <meta property="og:image:alt" content="{{ $imgAlt }}">
 <meta property="og:locale" content="{{ $locale }}">
 
-{{/* OpenGraph metadata */}}
-{{ template "_internal/google_analytics.html" . }}
+{{/* Google Analytics */}}
+{{- template "partials/templates/cookie-consent.html" . }}
