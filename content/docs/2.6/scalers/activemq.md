@@ -13,26 +13,26 @@ This specification describes the `activemq` trigger that scales based on a Activ
 
 ```yaml
 triggers:
-  - type: activemq
-    metadata:
-      managementEndpoint: "activemq.activemq-test:8161"
-      destinationName: "testQueue"
-      brokerName: "activemq_broker"
-      targetQueueSize: "100"
+- type: activemq
+  metadata:
+    managementEndpoint: "activemq.activemq-test:8161"
+    destinationName: "testQueue"
+    brokerName: "activemq_broker"
+    targetQueueSize: "100"
 ```
 
 **Parameter list:**
 
-- `managementEndpoint` - ActiveMQ management endpoint in format: <hostname>:<port>.
+- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`.
 - `destinationName` - Name of the queue to check for the message count.
 - `brokerName` - Name of the broker as defined in ActiveMQ.
-- `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default `10`, Optional).
+- `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `10`, Optional)
 - `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/api/jolokia/read/org.apache.activemq:type=Broker,brokerName=<<brokerName>>,destinationType=Queue,destinationName=<<destinationName>>/QueueSize"`, Optional) 
 
 **Parameter Requirements:**
 
-- In case of restAPITemplate parameter is not used, parameters resolving the Rest API Template are all **required**: `managementEndpoint`, `destinationName`, `brokerName`.
-- ActiveMQ Scaler polls the ActiveMQ Rest API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below. 
+- In case of `restAPITemplate` parameter is not used, parameters resolving the REST API Template are all **required**: `managementEndpoint`, `destinationName`, `brokerName`.
+- ActiveMQ Scaler polls the ActiveMQ REST API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below. 
 
 ### Authentication Parameters
 
