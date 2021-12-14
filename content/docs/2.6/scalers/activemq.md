@@ -27,7 +27,7 @@ triggers:
 - `destinationName` - Name of the queue to check for the message count.
 - `brokerName` - Name of the broker as defined in ActiveMQ.
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `10`, Optional)
-- `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/api/jolokia/read/org.apache.activemq:type=Broker,brokerName=<<brokerName>>,destinationType=Queue,destinationName=<<destinationName>>/QueueSize"`, Optional) 
+- `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize"`, Optional) 
 
 **Parameter Requirements:**
 
@@ -36,12 +36,12 @@ triggers:
 
 ### Authentication Parameters
 
-You can use TriggerAuthentication CRD to configure the username and password to connect to the management endpoint.
+You can authenticate by using username and password via `TriggerAuthentication` configuration.
 
-**Username and Password based authentication:**
+**Username and Password based Authentication:**
 
-- `username` - Required. The username to use to connect to the management endpoint of ActiveMQ.
-- `password` - Required. The password to use to connect to the management endpoint of ActiveMQ.
+- `username` - Username for connect to the management endpoint of ActiveMQ.
+- `password` - Password for connect to the management endpoint of ActiveMQ.
 
 ### Example
 
