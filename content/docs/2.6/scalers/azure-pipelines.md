@@ -15,8 +15,10 @@ This specification describes the `azure-pipelines` trigger for Azure Pipelines. 
 triggers:
   - type: azure-pipelines
     metadata:
-      # Required - Learn more in 'How to determine your pool ID'
+      # Optional: Learn more in 'How to determine your pool ID'
       poolID: "{agentPoolId}"
+      # Optional
+      poolName: "{agentPoolName}"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
       organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
@@ -29,7 +31,8 @@ triggers:
 
 **Parameter list:**
 
-- `poolID` - Id of the queue.
+- `poolID` - Id of the pool. (Optional, It's possible to use `poolID` or `poolName` but not both at the same time, it in that case `poolName` will be used. One of them has to be set)
+- `poolName` - Name of the pool. (Optional, It's possible to use `poolID` or `poolName` but not both at the same time, it in that case `poolName` will be used. One of them has to be set)
 - `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the URL for your Azure DevOps organization.
 - `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
