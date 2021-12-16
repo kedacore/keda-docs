@@ -15,10 +15,10 @@ This specification describes the `azure-pipelines` trigger for Azure Pipelines. 
 triggers:
   - type: azure-pipelines
     metadata:
-      # Optional: Learn more in 'How to determine your pool ID'
-      poolID: "{agentPoolId}"
       # Optional: Name of the pool in Azure DevOps
       poolName: "{agentPoolName}"
+      # Optional: Learn more in 'How to determine your pool ID'
+      poolID: "{agentPoolId}"
       # Optional: Azure DevOps organization URL, can use TriggerAuthentication as well
       organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
@@ -31,14 +31,14 @@ triggers:
 
 **Parameter list:**
 
-- `poolID` - Id of the pool. (Optional, either `poolID` or `poolName` must be configured)
 - `poolName` - Name of the pool. (Optional, either `poolID` or `poolName` must be configured)
+- `poolID` - Id of the pool. (Optional, either `poolID` or `poolName` must be configured)
 - `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the URL for your Azure DevOps organization.
 - `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
 
-> 💡 **NOTE:** It's possible to use `poolID` or `poolName` but not both at the same time, it in that case `poolName` will be used.
+> 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
 ### Authentication Parameters
 
