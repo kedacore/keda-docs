@@ -128,3 +128,30 @@ spec:
       subscriptionName: "mysubscription" # Required
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
+
+## Example using ClusterTriggerAuthentication with GCP Identity
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  name: keda-clustertrigger-auth-gcp-credentials
+spec:
+  podIdentity:
+    provider: gcp
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: pubsub-scaledobject
+spec:
+  scaleTargetRef:
+    name: keda-pubsub-go
+  triggers:
+  - type: gcp-pubsub
+    authenticationRef:
+      name: keda-clustertrigger-auth-gcp-credentials
+      kind: ClusterTriggerAuthentication
+    metadata:
+      subscriptionName: "input" # Required
+```
