@@ -1,15 +1,15 @@
 +++
-title = "Google Cloud Platform‎ Pub/Sub"
+title = "Google Cloud Platform Pub/Sub"
 layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
-description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
+description = "Scale applications based on Google Cloud Platform Pub/Sub."
 go_file = "gcp_pub_sub_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `gcp-pubsub` trigger for Google Cloud Platform‎ Pub/Sub.
+This specification describes the `gcp-pubsub` trigger for Google Cloud Platform Pub/Sub.
 
 ```yaml
 triggers:
@@ -22,14 +22,14 @@ triggers:
     subscriptionName: "mysubscription" # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription. 
+The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription.
 
 `authenticationRef` defines how KEDA connect to Google Cloud Platform, to collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
 `subscriptionName` defines the subscription that should be monitored. You can use different formulas:
 
 - Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.
-- Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`. 
+- Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`.
 
 You can use either `subscriptionSize` to define the target average which the deployment will be scaled on or `mode` and `value` fields. `subscriptionSize` field is deprecated, it is recommended to use `mode` and `value` fields instead. Scaler will not work if you define both `subscriptionSize` and at least one of `mode` or `value`.
 The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. 
@@ -48,7 +48,6 @@ You can configure authorization for a `ScaledObject` either directly using crede
 
 **Credential based authentication via ScaledObject:**
 - `credentialsFromEnv` - Needs to be set on the `ScaledObject`.
-
 
 ### Examples
 To use the GCP default authentication, you need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`.
@@ -71,12 +70,11 @@ spec:
     name: keda-pubsub-go
   triggers:
   - type: gcp-pubsub
-    authenticationRef:
-      name: gcp-pubsub-credentials
     metadata:
       subscriptionName: "input" # Required
+    authenticationRef:
+      name: gcp-pubsub-credentials
 ```
-
 
 Alternatively, you can configure the credentials in a secet, via the `TriggerAuthentication`:
 ```yaml
@@ -106,10 +104,10 @@ spec:
     name: keda-pubsub-go
   triggers:
   - type: gcp-pubsub
-    authenticationRef:
-      name: gcp-pubsub-credentials # Required
     metadata:
       subscriptionName: "input" # Required
+    authenticationRef:
+      name: gcp-pubsub-credentials # Required
 ```
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON).

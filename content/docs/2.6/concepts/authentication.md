@@ -92,28 +92,28 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
-  secretTargetRef:                                    # Optional.
-  - parameter: {scaledObject-parameter-name}          # Required.
-    name: {secret-name}                               # Required.
-    key: {secret-key-name}                            # Required.
-  env:                                                # Optional.
-  - parameter: {scaledObject-parameter-name}          # Required.
-    name: {env-name}                                  # Required.
-    containerName: {container-name}                   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-  hashiCorpVault:                                     # Optional.
-    address: {hashicorp-vault-address}                # Required.
-    namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
-    authentication: token | kubernetes                # Required.
-    role: {hashicorp-vault-role}                      # Optional.
-    mount: {hashicorp-vault-mount}                    # Optional.
-    credential:                                       # Optional.
-      token: {hashicorp-vault-token}                  # Optional.
-      serviceAccount: {path-to-service-account-file}  # Optional.
-    secrets:                                          # Required.
-    - parameter: {scaledObject-parameter-name}        # Required.
-      key: {hasicorp-vault-secret-key-name}           # Required.
-      path: {hasicorp-vault-secret-path}              # Required.
+      provider: none | azure | gcp | aws-eks | aws-kiam  # Optional. Default: none
+  secretTargetRef:                                       # Optional.
+  - parameter: {scaledObject-parameter-name}             # Required.
+    name: {secret-name}                                  # Required.
+    key: {secret-key-name}                               # Required.
+  env:                                                   # Optional.
+  - parameter: {scaledObject-parameter-name}             # Required.
+    name: {env-name}                                     # Required.
+    containerName: {container-name}                      # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  hashiCorpVault:                                        # Optional.
+    address: {hashicorp-vault-address}                   # Required.
+    namespace: {hashicorp-vault-namespace}               # Optional. Default is root namespace. Useful for Vault Enterprise
+    authentication: token | kubernetes                   # Required.
+    role: {hashicorp-vault-role}                         # Optional.
+    mount: {hashicorp-vault-mount}                       # Optional.
+    credential:                                          # Optional.
+      token: {hashicorp-vault-token}                     # Optional.
+      serviceAccount: {path-to-service-account-file}     # Optional.
+    secrets:                                             # Required.
+    - parameter: {scaledObject-parameter-name}           # Required.
+      key: {hasicorp-vault-secret-key-name}              # Required.
+      path: {hasicorp-vault-secret-path}                 # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
