@@ -1,6 +1,6 @@
 {{ $title         := .Title }}
 {{ $desc          := .Description }}
-{{ $src           := printf "https://github.com/kedacore/keda-docs/blob/master/content/%s" .File.Path }}
+{{ $src           := printf "https://github.com/kedacore/keda-docs/blob/main/content/%s" .File.Path }}
 {{ $availability  := .Params.availability }}
 {{ $maintainer    := .Params.maintainer }}
 {{ $isScaler      := eq .CurrentSection.Title "Scalers" }}

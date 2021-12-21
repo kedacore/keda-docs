@@ -59,7 +59,7 @@ kubectl delete -f https://raw.githubusercontent.com/kedacore/keda/v2.1.0/config/
 
 1. On Operator Hub Marketplace locate and install KEDA operator to namespace `keda`
 2. Create `KedaController` resource named `keda` in namespace `keda`
-![Operator Hub installation](https://raw.githubusercontent.com/kedacore/keda-olm-operator/master/images/keda-olm-install.gif)
+![Operator Hub installation](https://raw.githubusercontent.com/kedacore/keda-olm-operator/main/images/keda-olm-install.gif)
 > 💡 **NOTE:** Further information on Operator Hub installation method can be found in the following [repository](https://github.com/kedacore/keda-olm-operator).
 
 ### Uninstall
