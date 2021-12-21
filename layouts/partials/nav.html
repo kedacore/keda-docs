@@ -49,19 +49,20 @@
   {{ with .Sections }}
   {{ range . }}
   {{ $isThisSection := eq .CurrentSection.Title $currentSection.Title }}
+  {{ $regularPages := cond (eq .CurrentSection.Title "Scalers") "" .RegularPages -}}
   <div class="nav-subsection" x-data="{ open: {{ $isThisSection }} }">
     <div class="nav-section-title is-size-5 is-size-6-mobile{{ if $isHere }} is-active{{ end }}" href="{{ .RelPermalink }}">
       <a href="{{ .RelPermalink }}">
         {{ .Title }}
       </a>
-      {{ if .RegularPages }}
+      {{ if $regularPages }}
       <span @click="open = !open">
         <i class="fas fa-md has-text-secondary" :class="{ 'fa-caret-down': !open, 'fa-caret-up': open }"></i>
       </span>
       {{ end }}
     </div>
 
-    {{ with .RegularPages }}
+    {{ with $regularPages }}
     <ul class="nav-section-links" x-show="open">
       {{ range . }}
       {{ $isHere := eq $here .RelPermalink }}

@@ -128,11 +128,11 @@ In order to maintain the style consistency across different scalers, all the par
 If a parameter is required or doesn't have defined/default values, the missing info should be removed from the pattern.
 
 Here are a few examples:
+
 > - `targetMetricValue` - Target value for your metric.
 > - `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
 > - `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
 > - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
-
 
 ## Add new Frequently Asked Question (FAQ)
 
@@ -164,8 +164,16 @@ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 
 By default, new documentation versions are not listed as available version so it's safe to make changes to them. After every release, the version will be published as new version.
 
+### Preparing a new version
+
+Remember to create the folder for next version with already existing docs in current version.
+
+Make sure that the version on `content/docs/{next-version}/deploy.md` is updated and uses the next version, instead of the current one.
+
 ### Publishing a new version
 
 Once a version is ready to be published, we must add the version to the `params.versions.docs` list in [`config.toml`](./config.toml).
 
 More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
+
+> Note: Remember to [prepare the next version](#preparing-a-new-version).
