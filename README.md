@@ -88,7 +88,7 @@ To run local site previews, you must install [Hugo](https://gohugo.io/getting-st
 
 ## Publishing the site
 
-The KEDA website is published automatically by [Netlify](https://netlify.com). Any time changes to this repo are pushed to `master`, the site is re-built and re-published in roughly two minutes.
+The KEDA website is published automatically by [Netlify](https://netlify.com). Any time changes to this repo are pushed to `main`, the site is re-built and re-published in roughly two minutes.
 
 ## Adding blog posts
 
