@@ -39,7 +39,7 @@ Here is an overview of all KEDA deployments and the supported replicas:
 | Deployment     | Support Replicas | Reasoning                                                                                                        |
 | -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Metrics Server | 1                | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
-| Operator       | 1                |                                                                                                                  |
+| Operator       | 2                | While you can run more replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it might only reduce downtime during a failover.|
 
 ## HTTP Timeouts
 
