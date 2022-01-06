@@ -20,6 +20,9 @@ triggers:
     mode: QueueLength # QueueLength or MessageRate
     value: "100" # message backlog or publish/sec. target per instance
     queueName: testqueue
+    createQueue: "true" # Optional. If set, the scaler will try to crete the queue.
+    createBindingsRoutingKeys: "*.sample.# *.sample2.#" # Optional. A list, space separated, of routing topics to bind to the QueueName
+    bindingsRoutingExchange: "anExchange" # Optional. To be used with createBindingsRoutingKeys. Specified the exchange where the bindings should be created.
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
@@ -32,6 +35,9 @@ triggers:
 - `queueName` - Name of the queue to read message from.
 - `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the publish rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on.
+- `createQueue` - Ask the scaler to create the queue on the host (Values: `true`, `false`, Default: `false`). (Optional)
+- `createBindingsRoutingKeys` - A list (space separated) of routings keys to binds at the queue. If set, don't forget to also provide an Exchange (`bindingsRoutingExchange`). (Optional)
+- `bindingsRoutingExchange` - The name of the RabbitMQ exchange to use with the bindings. Set this, only if you are using `createBindingsRoutingKeys` (Optional)
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional)
 - `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
