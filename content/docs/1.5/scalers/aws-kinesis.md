@@ -92,7 +92,7 @@ spec:
   triggers:
     - type: aws-kinesis-stream
       authenticationRef:
-        name: keda-trigger-auth-aws-credential
+        name: keda-trigger-auth-aws-credentials
       metadata:
         # Required
         streamName: myKinesisStream
