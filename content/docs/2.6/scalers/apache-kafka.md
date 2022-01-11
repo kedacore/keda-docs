@@ -36,7 +36,27 @@ triggers:
 
 - `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
-- `topic` - Name of the topic on which processing the offset lag. When unspecified, offset lag will be calculated using all topics within the consumer group. (Optional)
+- `topic` - Name of the topic on which processing the offset lag. (Optional)
+
+  > **Note:**
+  >
+  > When `topic` is unspecified, total offset lag will be calculated with all topics within the consumer group.
+  > - When there are **active** consumer instances, _all topics_ includes:
+  >   - Topics the consumer is *currently* subscribing to;
+  >   - Topics that the consumer group *had prior commit history* (up to retention period for `__consumer_offset`, default to 7 days, see [KIP-186](https://cwiki.apache.org/confluence/display/KAFKA/KIP-186%3A+Increase+offsets+retention+default+to+7+days));
+  > - When there are **no active** consumer instances, _all topics_ only includes topics that the consumer group *had prior commit history*;
+  > ---
+  > An edge case exists where scaling could be **effectively disabled**:
+  >    - Consumer never makes a commit (no record in `__consumer_offset`);
+  >    - and `ScaledObject` had `minReplicaCount` as 0;
+  >
+  >   In such case, Keda could scale the consumer down to 0 when there is no lag and won't be able scale up due to the topic could not be auto discovered.
+  >
+  > Fix for such case:
+  >  - Set `minReplicaCount` > 0;
+  >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
+
+
 - `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
