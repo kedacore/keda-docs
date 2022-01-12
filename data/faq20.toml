@@ -133,4 +133,4 @@ Currently KEDA only supports `average` metrics for HPA.
 This means that the original value from the upstream will be exposed by KEDA metric server as it is, but the value displayed in the HPA is the average of that raw value between all the instances covered by the HPA
 
 """
-type = "Metric Server"
+type = "Metrics Server"

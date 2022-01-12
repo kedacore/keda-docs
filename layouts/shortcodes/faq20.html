@@ -40,7 +40,7 @@
 </div>
 {{ end }}
 
-{{ range where $faq20 ".type" "==" "Metric Server" }}
+{{ range where $faq20 ".type" "==" "Metrics Server" }}
 {{ $question := .q | markdownify }}
 {{ $answer   := .a | markdownify }}
 {{ $id       := .q | urlize }}
