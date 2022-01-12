@@ -75,3 +75,23 @@ You can recover the metric names from a ScaledObject using `kubectl`:
 ```bash
  kubectl get scaledobject SCALEDOBJECT_NAME -n NAMESPACE -o jsonpath={.status.externalMetricNames}
 ```
+
+## How to get metric if there are more than 1 ScaledObject with same metric name
+
+KEDA will try to select the proper `ScaledObject` for your metric and it should be only one. In case of having more than 1 `ScaledObject` in the same namespace with the same metric name, an error like this will be thrown:
+
+```
+Error from server: exactly one ScaledObject should match label
+```
+
+In this case, you should add in the query string the labelSelector to match the proper `ScaledObject` (in url format). The needed selector is `scaledobject.keda.sh/name: {ScaledObjectName}`. You also could get it doing:
+
+```bash
+ kubectl get scaledobject SCALEDOBJECT_NAME -n NAMESPACE -o jsonpath={.metadata.labels}
+```
+
+Having the selector, you only need to add it in the query string:
+
+```bash
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq-queueName2?labelSelector=scaledobject.keda.sh%2Fname%3D{ScaledObjectName}"
+```
