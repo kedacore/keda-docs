@@ -65,6 +65,8 @@ a = """
 The target metric value is used by the Horizontal Pod Autoscaler (HPA) to make scaling decisions.
 
 The current target value on the Horizontal Pod Autoscaler (HPA) often does not match with the metrics on the system you are scaling on. This is because of how the Horizontal Pod Autoscaler's (HPA) [scaling algorithm](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details) works.
+
+KEDA currently only supports average metrics. This means that the HPA will use the average value of the metric between the total amount of pods.
 """
 type = "Kubernetes"
 
