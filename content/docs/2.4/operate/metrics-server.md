@@ -19,7 +19,7 @@ This will return a json with the list of metrics exposed by KEDA:
   "groupVersion": "external.metrics.k8s.io/v1beta1",
   "resources": [
     {
-      "name": "s0-rabbitmq--mymetric",
+      "name": "s0-rabbitmq-queueName",
       "singularName": "",
       "namespaced": true,
       "kind": "ExternalMetricValueList",
@@ -28,7 +28,7 @@ This will return a json with the list of metrics exposed by KEDA:
       ]
     },
     {
-      "name": "s1-rabbitmq--mymetric2",
+      "name": "s1-rabbitmq-queueName2",
       ....
     }
   ]
@@ -42,9 +42,9 @@ kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/YOUR_NAMESPA
 
 At this point, you should take in consideration that KEDA metrics are namespaced, this means that you have to specify the namespace where the `ScaledObject` is placed inside.
 
-For example, if you want to get the value of the metric named `s1-rabbitmq--mymetric2` in namespace `sample-ns`, the query will be like this:
+For example, if you want to get the value of the metric named `s1-rabbitmq-queueName2` in namespace `sample-ns`, the query will be like this:
 ```bash
-kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq--mymetric2"
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq-queueName2"
 ```
 
 And it will show a json like this:
@@ -56,7 +56,7 @@ And it will show a json like this:
   "metadata": {},
   "items": [
     {
-      "metricName": "s1-rabbitmq--mymetric2",
+      "metricName": "s1-rabbitmq-queueName2",
       "metricLabels": null,
       "timestamp": "2021-10-20T10:48:17Z",
       "value": "0"
@@ -74,4 +74,24 @@ During its work, KEDA updates each ScaledObject with some relevant information w
 You can recover the metric names from a ScaledObject using `kubectl`:
 ```bash
  kubectl get scaledobject SCALEDOBJECT_NAME -n NAMESPACE -o jsonpath={.status.externalMetricNames}
+```
+
+## How to get metric when multiple ScaledObjects have the same metric name
+
+KEDA will try to select the proper `ScaledObject` for your metric and there should only be one. In case of having multiple `ScaledObject`s in the same namespace with the same metric name, an error like this will be thrown:
+
+```
+Error from server: exactly one ScaledObject should match label
+```
+
+In this case, you should add in the query string the `labelSelector` to match the proper `ScaledObject` (in url format). The needed selector is `scaledobject.keda.sh/name: {ScaledObjectName}`. You can achieve this as following:
+
+```bash
+ kubectl get scaledobject SCALEDOBJECT_NAME -n NAMESPACE -o jsonpath={.metadata.labels}
+```
+
+Once you have the selector, you have to add it to your query string as following:
+
+```bash
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/sample-ns/s1-rabbitmq-queueName2?labelSelector=scaledobject.keda.sh%2Fname%3D{ScaledObjectName}"
 ```
