@@ -11,6 +11,8 @@ go_file = "azure_servicebus_scaler"
 
 This specification describes the `azure-servicebus` trigger for Azure Service Bus Queue or Topic.
 
+> ⚠️ **WARNING:** KEDA is not in charge of managing entities. If the queue, topic or subscription does not exist, it will not create them automatically.
+
 ```yaml
 triggers:
 - type: azure-servicebus
