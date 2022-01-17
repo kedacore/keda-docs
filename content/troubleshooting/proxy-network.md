@@ -22,7 +22,7 @@ kubectl get apiservice --all-namespaces
 Check for the status of the api service found in previous step:
 
 ```sh
-kubectl get apiservice <apiservicename' -o yaml
+kubectl get apiservice <apiservicename> -o yaml
 ```
 
 Example:
