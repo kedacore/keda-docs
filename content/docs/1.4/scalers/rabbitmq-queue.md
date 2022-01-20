@@ -41,11 +41,11 @@ AMQP protocol:
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
-  name: rabbitmq-scaledobject
+  name: rabbitmq-deployment
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: rabbitmq-deployment
+    deploymentName: rabbitmq-deployment # This needs to be the same name as metadata.name above
   triggers:
   - type: rabbitmq
     metadata:
@@ -61,11 +61,11 @@ HTTP protocol:
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
-  name: rabbitmq-scaledobject
+  name: rabbitmq-deployment
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: rabbitmq-deployment
+    deploymentName: rabbitmq-deployment # This needs to be the same name as metadata.name above
   triggers:
   - type: rabbitmq
     metadata:
