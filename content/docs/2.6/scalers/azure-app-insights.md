@@ -1,0 +1,120 @@
++++
+title = "Azure Application Insights"
+layout = "scaler"
+availability = "v1.3+"
+maintainer = "Community"
+description = "Scale applications based on Azure Application Insights metrics."
+go_file = "azure_app_insights_scaler"
++++
+
+### Trigger Specification
+
+This specification describes the `azure-app-insights` trigger that scales based on an Azure Application Insights metric.
+
+```yaml
+triggers:
+- type: azure-app-insights
+  metadata:
+    metricAggregationTimespan: "0:1"
+    metricAggregationType: avg
+    metricFilter: cloud/roleName eq 'role_name'
+    metricName: "metric_name"
+    metricNamespace: "customMetrics"
+    targetValue: "1"
+    activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
+    activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
+    appIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well
+    tenantIdFromEnv: TENANT_ID` # Optional, can use TriggerAuthentication as well
+```
+
+This scaler is backed by the Azure Application Instance REST API. Please see [this](https://dev.applicationinsights.io/reference) page
+for further details.
+
+**Parameter list:**
+
+- `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
+- `metricName` - Name of the Application Insights metric to query.
+- `metricNamespace` - Name of the metric's namespace.
+- `targetValue` - Target value to trigger scaling actions.
+- `metricAggregationType` - Aggregation method of the Azure Application Insights metric. Options include `avg`, `sum`, `min`, and `max`.
+- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`
+- `appId` - Id of the application. This can be retrieved from the Application Insight's `API Access` blade in Azure Portal.
+- `tenantId` - Id of the tenant containing the Application Insights instance.
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions.
+- `activeDirectoryClientPassword` - Password of the Active Directory client password.
+- `metricFilter` - Further specify the metrics query using a filter. For example `cloud/roleName eq 'example`. (Optional)
+
+Some parameters can be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
+
+- `activeDirectoryClientIdFromEnv` - Name of the environment variable that contains the Id of the Active Directory application.
+- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the Active Directory client password.
+- `appIdFromEnv` - Name of the environment variable that contains the Application Insights Id.
+- `tenantIdFromEnv` - Name of the environment variable that contains the Id of the tenant that contains the Application Insights instance.
+
+### Authentication Parameters
+
+You can use the `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials or by using pod identity.
+
+**Credential based authentication:**
+
+- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions.
+- `activeDirectoryClientPassword` - Password of the Active Directory application.
+
+The user will need access to read data from the Azure resource.
+
+### Example
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-app-insights-secrets
+data:
+  activeDirectoryClientId: <clientId>
+  activeDirectoryClientPassword: <clientPassword>
+  appId: <appInsightsAppId>
+  tenantId: <tenantId>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-app-insights-trigger-auth
+spec:
+  secretTargetRef:
+    - parameter: activeDirectoryClientId
+      name: azure-app-insights-secrets
+      key: activeDirectoryClientId
+    - parameter: activeDirectoryClientPassword
+      name: azure-app-insights-secrets
+      key: activeDirectoryClientPassword
+    - parameter: appId
+      name: azure-app-insights-secrets
+      key: appId
+    - parameter: tenantId
+      name: azure-app-insights-secrets
+      key: tenantId
+  # or Pod Identity, kind: Secret is not required in case of pod Identity
+  podIdentity:
+      provider: azure
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-app-insights-scaler
+spec:
+  scaleTargetRef:
+    name: azure-app-insights-example
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: azure-app-insights
+    metadata:
+      metricName: "example-metric"
+      metricNamespace: "customMetrics"
+      metricAggregationTimespan: "0:5"
+      metricAggregationType: avg
+      metricFilter: cloud/roleName eq 'example'
+      targetValue: "1"
+    authenticationRef:
+      name: azure-app-insights-trigger-auth
+```
