@@ -1,7 +1,7 @@
 +++
 title = "Azure Application Insights"
 layout = "scaler"
-availability = "v1.3+"
+availability = "v2.6+"
 maintainer = "Community"
 description = "Scale applications based on Azure Application Insights metrics."
 go_file = "azure_app_insights_scaler"
@@ -18,8 +18,7 @@ triggers:
     metricAggregationTimespan: "0:1"
     metricAggregationType: avg
     metricFilter: cloud/roleName eq 'role_name'
-    metricName: "metric_name"
-    metricNamespace: "customMetrics"
+    metricName: "customMetrics/example-metric"
     targetValue: "1"
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
@@ -33,23 +32,22 @@ for further details.
 **Parameter list:**
 
 - `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
-- `metricName` - Name of the Application Insights metric to query.
-- `metricNamespace` - Name of the metric's namespace.
+- `metricName` - The name of the Application Insights metric to query. Use the `az monitor app-insights metrics get-metadata` to see a list of available metrics.
 - `targetValue` - Target value to trigger scaling actions.
-- `metricAggregationType` - Aggregation method of the Azure Application Insights metric. Options include `avg`, `sum`, `min`, and `max`.
-- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`
-- `appId` - Id of the application. This can be retrieved from the Application Insight's `API Access` blade in Azure Portal.
+- `metricAggregationType` - Aggregation method of the Azure Application Insights metric. The aggregation methods vary from metric to metric. The `az monitor app-insights metrics get-metadata` command can be used to determine which methods apply to a given metric. (Some common aggregation methods are `avg`, `count`, `sum`, `min`, and `max`)
+- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`.
+- `appId` - Id of the application. This is a GUID that can be retrieved from the Application Insight's `API Access` blade in the Azure Portal.
 - `tenantId` - Id of the tenant containing the Application Insights instance.
-- `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions.
+- `activeDirectoryClientId` - Id of the Active Directory client. The client must have `Monitoring Reader` permissions for the Application Insights instance.
 - `activeDirectoryClientPassword` - Password of the Active Directory client password.
 - `metricFilter` - Further specify the metrics query using a filter. For example `cloud/roleName eq 'example`. (Optional)
 
 Some parameters can be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
-- `activeDirectoryClientIdFromEnv` - Name of the environment variable that contains the Id of the Active Directory application.
-- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the Active Directory client password.
-- `appIdFromEnv` - Name of the environment variable that contains the Application Insights Id.
-- `tenantIdFromEnv` - Name of the environment variable that contains the Id of the tenant that contains the Application Insights instance.
+- `activeDirectoryClientIdFromEnv` - Name of the environment variable that contains the Id of the Active Directory application. (Optional)
+- `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the Active Directory client password. (Optional)
+- `appIdFromEnv` - Name of the environment variable that contains the Application Insights Id. (Optional)
+- `tenantIdFromEnv` - Name of the environment variable that contains the Id of the tenant that contains the Application Insights instance. (Optional)
 
 ### Authentication Parameters
 
@@ -109,8 +107,7 @@ spec:
   triggers:
   - type: azure-app-insights
     metadata:
-      metricName: "example-metric"
-      metricNamespace: "customMetrics"
+      metricName: "customMetrics/example-metric"
       metricAggregationTimespan: "0:5"
       metricAggregationType: avg
       metricFilter: cloud/roleName eq 'example'
