@@ -22,7 +22,7 @@ triggers:
     targetValue: "1"
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
-    appIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well
+    applicationInsightsIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well
     tenantIdFromEnv: TENANT_ID` # Optional, can use TriggerAuthentication as well
 ```
 
