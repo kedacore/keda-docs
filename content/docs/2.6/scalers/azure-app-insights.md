@@ -18,7 +18,7 @@ triggers:
     metricAggregationTimespan: "0:1"
     metricAggregationType: avg
     metricFilter: cloud/roleName eq 'role_name'
-    metricName: "customMetrics/example-metric"
+    metricId: "customMetrics/example-metric"
     targetValue: "1"
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
@@ -32,11 +32,11 @@ for further details.
 **Parameter list:**
 
 - `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
-- `metricName` - The name of the Application Insights metric to query. Use the `az monitor app-insights metrics get-metadata` to see a list of available metrics.
+- `metricId` - The name of the Application Insights metric to query. Run `az monitor app-insights metrics get-metadata` to see a list of available metrics.
 - `targetValue` - Target value to trigger scaling actions.
 - `metricAggregationType` - Aggregation method of the Azure Application Insights metric. The aggregation methods vary from metric to metric. The `az monitor app-insights metrics get-metadata` command can be used to determine which methods apply to a given metric. (Some common aggregation methods are `avg`, `count`, `sum`, `min`, and `max`)
 - `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`.
-- `appId` - Id of the application. This is a GUID that can be retrieved from the Application Insight's `API Access` blade in the Azure Portal.
+- `applicationInsightsId` - Id of the Application Insights instance to query. This is a GUID that can be retrieved from the Application Insight's `API Access` blade in the Azure Portal.
 - `tenantId` - Id of the tenant containing the Application Insights instance.
 - `activeDirectoryClientId` - Id of the Active Directory client. The client must have `Monitoring Reader` permissions for the Application Insights instance.
 - `activeDirectoryClientPassword` - Password of the Active Directory client password.
@@ -46,7 +46,7 @@ Some parameters can be provided using environmental variables, instead of settin
 
 - `activeDirectoryClientIdFromEnv` - Name of the environment variable that contains the Id of the Active Directory application. (Optional)
 - `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the Active Directory client password. (Optional)
-- `appIdFromEnv` - Name of the environment variable that contains the Application Insights Id. (Optional)
+- `applicationInsightsIdFromEnv` - Name of the environment variable that contains the Application Insights Id. (Optional)
 - `tenantIdFromEnv` - Name of the environment variable that contains the Id of the tenant that contains the Application Insights instance. (Optional)
 
 ### Authentication Parameters
@@ -70,7 +70,7 @@ metadata:
 data:
   activeDirectoryClientId: <clientId>
   activeDirectoryClientPassword: <clientPassword>
-  appId: <appInsightsAppId>
+  applicationInsightsId: <appInsightsAppId>
   tenantId: <tenantId>
 ---
 apiVersion: keda.sh/v1alpha1
@@ -85,9 +85,9 @@ spec:
     - parameter: activeDirectoryClientPassword
       name: azure-app-insights-secrets
       key: activeDirectoryClientPassword
-    - parameter: appId
+    - parameter: applicationInsightsId
       name: azure-app-insights-secrets
-      key: appId
+      key: applicationInsightsId
     - parameter: tenantId
       name: azure-app-insights-secrets
       key: tenantId
@@ -107,7 +107,7 @@ spec:
   triggers:
   - type: azure-app-insights
     metadata:
-      metricName: "customMetrics/example-metric"
+      metricId: "customMetrics/example-metric"
       metricAggregationTimespan: "0:5"
       metricAggregationType: avg
       metricFilter: cloud/roleName eq 'example'
