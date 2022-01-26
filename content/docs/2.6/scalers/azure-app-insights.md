@@ -26,7 +26,7 @@ triggers:
     tenantIdFromEnv: TENANT_ID` # Optional, can use TriggerAuthentication as well
 ```
 
-This scaler is backed by the Azure Application Instance REST API. Please see [this](https://dev.applicationinsights.io/reference) page
+This scaler is backed by the Azure Application Instance REST API. Please see [this](https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get) page
 for further details.
 
 **Parameter list:**
