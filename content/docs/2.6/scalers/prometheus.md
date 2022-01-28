@@ -20,6 +20,8 @@ triggers:
     metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
     threshold: '100'
+    # Optional fields:
+    namespace: example-namespace  # for namespaced queries, eg. Thanos
 ```
 
 **Parameter list:**
@@ -28,6 +30,7 @@ triggers:
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - Query to run.
 - `threshold` - Value to start scaling for.
+- `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 
 ### Authentication Parameters
 
