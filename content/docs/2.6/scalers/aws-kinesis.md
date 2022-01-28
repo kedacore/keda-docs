@@ -49,6 +49,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 - `awsAccessKeyID` - Id of the user.
 - `awsSecretAccessKey` - Access key for the user to authenticate with.
+- `awsSessionToken` - Session token, only required when using [temporary credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html).
 
 The user will need `DescribeStreamSummary` IAM permission policy to read data from AWS Kinesis Streams.
 
@@ -61,8 +62,9 @@ metadata:
   name: test-secrets
   namespace: keda-test
 data:
-  AWS_ACCESS_KEY_ID: <encoded-user-id>
-  AWS_SECRET_ACCESS_KEY: <encoded-key>
+  AWS_ACCESS_KEY_ID: <encoded-user-id> # Required.
+  AWS_SECRET_ACCESS_KEY: <encoded-key> # Required.
+  AWS_SESSION_TOKEN: <encoded-session-token> # Required when using temporary credentials.
 --- 
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -72,11 +74,14 @@ metadata:
 spec:
   secretTargetRef:
   - parameter: awsAccessKeyID     # Required.
-    name: test-secrets       # Required.
+    name: test-secrets            # Required.
     key: AWS_ACCESS_KEY_ID        # Required.
   - parameter: awsSecretAccessKey # Required.
-    name: test-secrets        # Required.
+    name: test-secrets            # Required.
     key: AWS_SECRET_ACCESS_KEY    # Required.
+  - parameter: awsSessionToken    # Required when using temporary credentials.
+    name: test-secrets            # Required when using temporary credentials.
+    key: AWS_SESSION_TOKEN        # Required when using temporary credentials.
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
