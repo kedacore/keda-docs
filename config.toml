@@ -302,6 +302,10 @@ url = "https://www.astronomer.io"
 logo = "astronomer.svg"
 
 [[params.users]]
+url = "https://baseten.co/"
+logo = "baseten.png"
+
+[[params.users]]
 url = "https://chattermill.com"
 logo = "chattermill.png"
 
