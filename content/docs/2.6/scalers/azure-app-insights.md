@@ -154,16 +154,16 @@ spec:
       - name: example
         image: nginx:1.16.1
         env:
+        - name: ACTIVE_DIRECTORY_ID
+          valueFrom:
+            secretKeyRef:
+              name: azure-app-insights-secrets
+              key: activeDirectoryClientId
         - name: ACTIVE_DIRECTORY_PASSWORD
           valueFrom:
             secretKeyRef:
               name: azure-app-insights-secrets
               key: activeDirectoryClientPassword
-        - name: ACTIVE_DIRECTORY_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: azure-app-insights-secrets
-              key: activeDirectoryClientId
         - name: APP_INSIGHTS_APP_ID
           valueFrom:
             secretKeyRef:
@@ -194,8 +194,8 @@ spec:
         metricAggregationType: avg
         metricFilter: cloud/roleName eq 'example'
         targetValue: "1"
+        activeDirectoryClientIdFromEnv: ACTIVE_DIRECTORY_ID
         activeDirectoryClientPasswordFromEnv: ACTIVE_DIRECTORY_PASSWORD
-        activeDirectoryClientIdFromEnv: ACTIVE_DIRECTORY_USERNAME
         applicationInsightsIdFromEnv: APP_INSIGHTS_APP_ID
         tenantIdFromEnv: TENANT_ID
 ```
