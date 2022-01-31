@@ -37,7 +37,6 @@ for further details.
 - `metricAggregationType` - Aggregation method of the Azure Application Insights metric. The aggregation methods vary from metric to metric. The `az monitor app-insights metrics get-metadata` command can be used to determine which methods apply to a given metric. (Some common aggregation methods are `avg`, `count`, `sum`, `min`, and `max`)
 - `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`.
 - `applicationInsightsId` - Id of the Application Insights instance to query. This is a GUID that can be retrieved from the Application Insight's `API Access` blade in the Azure Portal.
-- `tenantId` - Id of the tenant containing the Application Insights instance.
 - `activeDirectoryClientId` - Id of the Active Directory client. The client must have `Monitoring Reader` permissions for the Application Insights instance.
 - `activeDirectoryClientPassword` - Password of the Active Directory client password.
 - `metricFilter` - Further specify the metrics query using a filter. For example `cloud/roleName eq 'example`. (Optional)
@@ -60,7 +59,12 @@ You can use the `TriggerAuthentication` CRD to configure the authentication by p
 - `applicationInsightsId` - Id of the Application Insights instance to query.
 - `tenantId` - Id of the tenant that contains the Azure resource.
 
-The user will need access to read data from the Azure resource.
+The principal will need `Monitoring Reader` access to query metrics from the Application Insights instance.
+
+**Pod identity based authentication:**
+
+[Azure Active Directory pod-managed identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) can be used
+in place of credential based authentication. The following section contains an example of a `TriggerAuthentication` using pod identity.
 
 ### Example
 
