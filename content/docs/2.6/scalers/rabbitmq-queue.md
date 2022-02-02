@@ -51,7 +51,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 > 💡 **Note:** `mode: MessageRate` requires protocol `http`.
 
-> 💡 **Note:** `useRegex: "true"` requires protocol `http` and ignores unacknowledged messages.
+> 💡 **Note:** `useRegex: "true"` requires protocol `http`.
 
 > ⚠ **Important:** if you have unacknowledged messages and want to have these counted for the scaling to happen, make sure to utilize the `http` REST API interface which allows for these to be counted.
 
