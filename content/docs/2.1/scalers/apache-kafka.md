@@ -48,7 +48,7 @@ triggers:
 
 **TLS:**
 
-- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `true`, `false`, Default: `false`, Optional)
+- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
