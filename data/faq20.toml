@@ -6,7 +6,9 @@ type = "General"
 [[qna]]
 q = "What are the prerequisites for using KEDA?"
 a = """
-KEDA is designed to be run on any Kubernetes cluster. It uses a CRD (custom resource definition) and the Kubernetes metric server so you will have to use a Kubernetes version which supports these. Any Kubernetes cluster >= 1.17.0 has been tested and is supported."
+KEDA is designed, tested and is supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above.
+
+It uses a CRD (custom resource definition) and the Kubernetes metric server so you will have to use a Kubernetes version which supports these.
 
 > 💡 Kubernetes v1.16 is supported with KEDA v2.4.0 or below
 """
