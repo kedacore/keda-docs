@@ -35,7 +35,7 @@ triggers:
 - `protocolVersion` - CQL Binary Protocol. (Default: `4`, Optional)
 - `keyspace` - The name of the keyspace used in Cassandra.
 - `query` - A Cassandra query that should return single numeric value.
-- `targetQueryValue` - The threshold value that is provided by the user and used as `targetAverageValue` in the Horizontal Pod Autoscaler (HPA).
+- `targetQueryValue` - The threshold value that is provided by the user and used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA).
 - `metricName` - Name to assign to the metric. (Default: `s<X>-cassandra-<KEYSPACE>`, Optional, In case of `metricName` is specified, it will be used to generate the `metricName` like this: `s<X>-cassandra-<METRICNAME>`, where `<X>` is the index of the trigger in a ScaledObject)
 
 ### Authentication Parameters

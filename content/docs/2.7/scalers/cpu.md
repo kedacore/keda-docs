@@ -18,9 +18,9 @@ This specification describes the `cpu` trigger that scales based on cpu metrics.
 ```yaml
 triggers:
 - type: cpu
+  metricType: Utilization/ AverageValue
   metadata:
-    # Required
-    type: Utilization/ AverageValue
+    type: Utilization/ AverageValue # Deprecated in favor of trigger.metricType
     value: "60"
 ```
 
@@ -30,6 +30,8 @@ triggers:
 - `value` - Value to trigger scaling actions for:
 	- When using `Utilization`, the target value is the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 	- When using `AverageValue`, the target value is the target value of the average of the metric across all relevant pods (quantity).
+
+> 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
 ### Example
 
@@ -44,7 +46,7 @@ spec:
     name: my-deployment
   triggers:
   - type: cpu
+    metricType: Utilization
     metadata:
-      type: Utilization
       value: "50"
 ```
