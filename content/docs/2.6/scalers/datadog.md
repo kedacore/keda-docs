@@ -81,6 +81,15 @@ metadata:
 spec:
   scaleTargetRef:
     name: worker
+  minReplicaCount: 1
+  maxReplicaCount: 3
+  pollingInterval: 5
+  cooldownPeriod: 10
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 10
   triggers:
   - type: datadog
     metadata:
