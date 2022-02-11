@@ -1,6 +1,6 @@
 +++
 title = "Introducing PredictKube - an AI-based predictive autoscaler for KEDA made by Dysnix"
-date = 2022-02-09
+date = 2022-02-14
 author = "Daniel Yavorovych (Dysnix), Yuriy Khoma (Dysnix), Zbynek Roubalik (KEDA), Tom Kerkhove (KEDA)"
 aliases = [
 "/blog/introducing-predictkube-for-keda-by-dysnix"
