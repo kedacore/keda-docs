@@ -7,5 +7,8 @@ When KEDA has upstream errors to get scaler source information it will keep the 
 
 This behavior might feel like the autoscaling is not happening, but in reality, it is because of problems related to the scaler source.
 
-You can check if this is your case by reviewing the logs from the KEDA pods where you should see errors in both our operator and metrics server.
+You can check if this is your case by reviewing the logs from the KEDA pods where you should see errors in both our Operator and Metrics server. You can also check a status of the ScaledObject (`READY` and `ACTIVE` condition) by running following command:
 
+```bash
+$ kubectl get scaledobject MY-SCALED_OBJECT
+```
