@@ -81,10 +81,11 @@ metadata:
 spec:
   scaleTargetRef:
     name: worker
-  minReplicaCount: 1
-  maxReplicaCount: 3
-  pollingInterval: 5
-  cooldownPeriod: 10
+  pollingInterval:  30                               # Optional. Default: 30 seconds
+  cooldownPeriod:   300                              # Optional. Default: 300 seconds
+  idleReplicaCount: 0                                # Optional. Default: ignored, must be less than minReplicaCount 
+  minReplicaCount:  1                                # Optional. Default: 0
+  maxReplicaCount:  100                              # Optional. Default: 100
   advanced:
     horizontalPodAutoscalerConfig:
       behavior:
