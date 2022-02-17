@@ -17,7 +17,7 @@ production-build: clean
 		--minify
 
 preview-build: clean
-	hugo \
+	hugo -e development \
 		--baseURL "$(DEPLOY_PRIME_URL)" \
 		--buildDrafts \
 		--buildFuture \
