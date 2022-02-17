@@ -1,5 +1,8 @@
+build: clean
+	hugo -e development -DFE
+
 clean:
-	rm -rf public resources
+	rm -rf public/* resources
 
 yarn:
 	yarn
@@ -15,7 +18,7 @@ production-build: clean
 
 preview-build: clean
 	hugo \
-		--baseURL $(DEPLOY_PRIME_URL) \
+		--baseURL "$(DEPLOY_PRIME_URL)" \
 		--buildDrafts \
 		--buildFuture \
 		--minify
