@@ -18,6 +18,8 @@ triggers:
     bucketName: test-bucket
     targetObjectCount: '100'
     maxBucketItemsToScan: '1000'
+    credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
+    credentialsFromEnvFile: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
 ```
 
 **Parameter list:**
@@ -40,7 +42,11 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 - `GoogleApplicationCredentials` - Service account credentials in JSON.
 
-### Example
+**Identity based authentication:**
+
+You can also use `TriggerAuthentication` CRD to configure the authentication using the associated service account of the running machine in Google Cloud. You only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`. `ClusterTriggerAuthentication` can also be used if you intend to use it globally in your cluster.
+
+### Examples
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -59,7 +65,7 @@ spec:
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
 
-### Example using TriggerAuthentication
+### Using TriggerAuthentication
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -87,10 +93,6 @@ spec:
       bucketName: "Transactions"
       targetObjectCount: "5"
 ```
-
-**Identity based authentication:**
-
-You can also use `TriggerAuthentication` CRD to configure the authentication using the associated service account of the running machine in Google Cloud. You only need to create a `TriggerAuthentication` as this example, and reference it in the `ScaledObject`. `ClusterTriggerAuthentication` can also be used if you intend to use it globally in your cluster.
 
 ### Example using TriggerAuthentication with GCP Identity
 
