@@ -65,7 +65,7 @@ spec:
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
 
-### Using TriggerAuthentication
+#### Use TriggerAuthentication with Kubernetes secret
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -94,7 +94,7 @@ spec:
       targetObjectCount: "5"
 ```
 
-### Example using TriggerAuthentication with GCP Identity
+#### Use TriggerAuthentication with GCP Identity
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -116,34 +116,6 @@ spec:
   - type: gcp-storage
     authenticationRef:
       name: keda-trigger-auth-gcp-credentials
-    metadata:
-      bucketName: "Transactions"
-      targetObjectCount: "5"
-```
-
-## Example using ClusterTriggerAuthentication with GCP Identity
-
-```yaml
-apiVersion: keda.sh/v1alpha1
-kind: ClusterTriggerAuthentication
-metadata:
-  name: keda-clustertrigger-auth-gcp-credentials
-spec:
-  podIdentity:
-    provider: gcp
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: gcp-storage-scaledobject
-spec:
-  scaleTargetRef:
-    name: keda-gcp-storage-go
-  triggers:
-  - type: gcp-storage
-    authenticationRef:
-      name: keda-clustertrigger-auth-gcp-credentials
-      kind: ClusterTriggerAuthentication
     metadata:
       bucketName: "Transactions"
       targetObjectCount: "5"
