@@ -4,7 +4,7 @@ title = "KEDA"
 enableGitInfo = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
-googleAnalytics =  "G-YSWMV22VTQ"
+googleAnalytics = 'G-YSWMV22VTQ'
 
 # See other available styles here: https://xyproto.github.io/splash/docs/
 [markup.highlight]
