@@ -124,7 +124,7 @@ spec:
       endpoint: https://keda.eastus.kusto.windows.net
       query: |
         StormEvents
-        | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
+        | summarize StormCount = count() by State
         | top 1 by StormCount desc
     threshold: "1000"
     authenticationRef:
@@ -160,7 +160,7 @@ spec:
       endpoint: https://keda.eastus.kusto.windows.net
       query: |
         StormEvents
-        | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
+        | summarize StormCount = count() by State
         | top 1 by StormCount desc
     threshold: "1000"
     authenticationRef:
@@ -234,7 +234,7 @@ spec:
         endpoint: https://keda.eastus.kusto.windows.net
         query: |
           StormEvents
-          | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
+          | summarize StormCount = count() by State
           | top 1 by StormCount desc
         threshold: "1000"
 ```
