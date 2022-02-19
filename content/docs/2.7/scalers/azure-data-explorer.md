@@ -15,16 +15,16 @@ This specification describes the `azure-data-explorer` trigger that scales based
 triggers:
 - type: azure-data-explorer
   metadata:
-    endpoint: "DATA_EXPLORER_ENDPOINT"
-    databaseName: "DATA_EXPLORER_DATABASE_NAME"
+    endpoint: https://keda.eastus.kusto.windows.net
+    databaseName: kedadb
     query: |
       StormEvents
-      | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
+      | summarize StormCount = count() by State
       | top 1 by StormCount desc
     threshold: "1000"
-    tenantId: AAD_APP_TENANT_ID # Can use TriggerAuthentication as well
-    clientId: AAD_APP_CLIENT_ID # Can use TriggerAuthentication as well
-    clientSecret: AAD_APP_SECRET # Can use TriggerAuthentication as well
+    tenantId: 045ef409-6dee-4893-a824-5612eac467b1 # Can use TriggerAuthentication as well
+    clientId: 4ba039f1-d69c-434e-9268-4a2bb7bba90d # Can use TriggerAuthentication as well
+    clientSecret: t0p-s3cret  # Can use TriggerAuthentication as well
     # Alternatively, you can use existing environment variables to read aad app creds from:
     clientIdFromEnv: AAD_APP_CLIENT_ID_ENV_VAR_NAME # Optional. You can use this instead of `clientId` parameter.
     clientSecretFromEnv: AAD_APP_SECRET_ENV_VAR_NAME # Optional. You can use this instead of `clientSecret` parameter.
@@ -121,7 +121,7 @@ spec:
   - type: azure-data-explorer
     metadata:
       databaseName: Weather
-      endpoint: DATA_EXPLORER_ENDPOINT
+      endpoint: https://keda.eastus.kusto.windows.net
       query: |
         StormEvents
         | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
@@ -157,7 +157,7 @@ spec:
   - type: azure-data-explorer
     metadata:
       databaseName: Weather
-      endpoint: DATA_EXPLORER_ENDPOINT
+      endpoint: https://keda.eastus.kusto.windows.net
       query: |
         StormEvents
         | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
@@ -231,7 +231,7 @@ spec:
         clientSecretFromEnv: AAD_APP_SECRET
         tenantIdFromEnv: AAD_APP_TENANT_ID
         databaseName: Weather
-        endpoint: DATA_EXPLORER_ENDPOINT
+        endpoint: https://keda.eastus.kusto.windows.net
         query: |
           StormEvents
           | summarize StormCount = count(), TypeOfStorms = dcount(EventType) by State
