@@ -4,6 +4,7 @@ package-lock.json
 .idea
 resources/
 .DS_Store
+.hugo_build.lock
 
 # Link checker artifacts
 bin/
