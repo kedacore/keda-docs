@@ -4,10 +4,7 @@ build: clean
 clean:
 	rm -rf public/* resources
 
-yarn:
-	yarn
-
-serve: yarn
+serve:
 	hugo server \
 		--buildDrafts \
 		--buildFuture
