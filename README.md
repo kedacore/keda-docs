@@ -1,6 +1,6 @@
 # KEDA - Docs
 
-Documentation and landing page for the KEDA project at https://keda.sh.
+Documentation and landing page for the KEDA project at [keda.sh][].
 
 ## Become a listed KEDA user!
 
@@ -18,87 +18,51 @@ logo = "coralogix.gif"
 
 Here's a good example of [Coralogix becoming a listed user](https://github.com/kedacore/keda-docs/pull/182)!
 
-## Running the site locally
+## Building or serving the site locally
 
-To run local site previews, you must install [Hugo](https://gohugo.io/getting-started/installing/) (the "extended" version with [Hugo Pipes](https://gohugo.io/hugo-pipes/introduction/) support) and [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable).
+To build or serve the site locally, follow these steps:
 
-### Installing Hugo and Yarn on Linux
+- Fork and clone this repository (for local development only).
+- Install the latest [LTS release][] of **Node**, using **[nvm][]** for example:
+  ```console
+  $ nvm install --lts
+  ```
+  **Note:** on Windows, the argument to install is `lts`.
+- Get npm packages and other prerequisites:
+  ```console
+  $ npm install
+  ```
+- To build the site, run:
+  ```console
+  $ npm run build
+  ```
+  You'll find the generated site files under `public`.
+- Serve the site locally at [localhost:8888][] using:
+  ```console
+  $ npm run serve
+  ```
 
-1. Install [Go](https://golang.org/doc/install), [node and npm](https://docs.npmjs.com/cli/v7/configuring-npm/install)
-1. Install Yarn:
+## Contributing
 
-    ```sh
-    npm install --global yarn
-    ```
+We welcome issues and PRs! For details, see [Contributing to KEDA][].
 
-1. Install Hugo:
+If you submit a PR, Netlify will automatically create a [deploy preview][] so
+that you can view your changes. Once merged, Netlify automatically deploys to
+the production site [keda.sh][].
 
-    ```sh
-    cd %HOME/src
-    git clone https://github.com/gohugoio/hugo.git
-    cd hugo
-    go install --tags extended
-    ```
+To see deploy logs and more, visit project's [dashboard][] -- Netlify login
+required.
 
-### Installing Hugo and Yarn on Windows by using `choco`
-
-1. Install Hugo:
-
-    ```sh
-    choco install hugo-extended
-    ```
-
-1. Install Yarn:
-
-    ```sh
-    choco install yarn
-    ```
-
-### Installing Hugo and Yarn on Mac by using `brew`
-
-1. Install Hugo:
-
-    ```sh
-    brew install hugo
-    ```
-
-1. Install Yarn:
-
-    ```sh
-    brew install yarn
-    ```
-
-### Run the site locally
-
-1. Fork the `keda-docs` repository.
-
-1. Clone the fork.
-
-1. Navigate to your cloned repository and run the commands:
-
-    ```sh
-    yarn
-    ```
-
-    ```sh
-    hugo server -D -F
-    ```
-
-    The Web Server is available at http://localhost:1313/.
-
-## Publishing the site
-
-The KEDA website is published automatically by [Netlify](https://netlify.com). Any time changes to this repo are pushed to `main`, the site is re-built and re-published in roughly two minutes.
-
-## Adding blog posts
+### Adding blog posts
 
 To add a new post to the [KEDA blog](https://keda.sh/blog):
 
-```sh
-hugo new blog/my-new-post.md
+```console
+$ hugo new blog/my-new-post.md
 ```
 
-This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose contents you can modify. The following fields are required:
+This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose
+contents you can modify. The following fields are required:
 
 * `title`
 * `date` (in `YYYY-MM-DD` format)
@@ -108,11 +72,13 @@ This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose 
 
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
 
-```sh
-hugo new --kind scaler docs/<VERSION>/scalers/my-new-scaler.md
+```console
+$ hugo new --kind scaler docs/<VERSION>/scalers/my-new-scaler.md
 ```
 
-This creates a boilerplate Markdown file in `content/docs/<VERSION>/scalers/my-new-scaler.md` whose contents you can modify. Make sure to update the following metadata fields:
+This creates a boilerplate Markdown file in
+`content/docs/<VERSION>/scalers/my-new-scaler.md` whose contents you can modify.
+Make sure to update the following metadata fields:
 
 * `title`
 * `availability`
@@ -121,11 +87,13 @@ This creates a boilerplate Markdown file in `content/docs/<VERSION>/scalers/my-n
 
 ## Writing documentation for a scaler
 
-In order to maintain the style consistency across different scalers, all the parameters which are listed have to be written using this convention:
+In order to maintain the style consistency across different scalers, all the
+parameters which are listed have to be written using this convention:
 
 - name - Description. (Values: x, y, z, Default: y, Optional, Extra Info)
 
-If a parameter is required or doesn't have defined/default values, the missing info should be removed from the pattern.
+If a parameter is required or doesn't have defined/default values, the missing
+info should be removed from the pattern.
 
 Here are a few examples:
 
@@ -136,7 +104,8 @@ Here are a few examples:
 
 ## Add new Frequently Asked Question (FAQ)
 
-To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at [`data/faq20.toml`]. Here's an example question/answer pair:
+To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at
+`data/faq20.toml`. Here's an example question/answer pair:
 
 ```toml
 [[qna]]
@@ -148,32 +117,50 @@ a = "You're looking at it! 😀"
 
 To add a new section to the [troubleshooting page](https://keda.sh/docs/troubleshooting):
 
-```sh
-hugo new troubleshooting/<VERSION>/my-new-issue.md
+```console
+$ hugo new troubleshooting/<VERSION>/my-new-issue.md
 ```
 
-To adjust the order in which the troubleshooting tiles appear, use the `weight` parameter in each page's metadata.
+To adjust the order in which the troubleshooting tiles appear, use the `weight`
+parameter in each page's metadata.
 
 ## Working with documentation versions
 
-The KEDA documentation is versioned. Each version has its own subdirectory under [`content/docs`](./content/docs). To add a new version, copy the directory for the most recent version. Here's an example:
+The KEDA documentation is versioned. Each version has its own subdirectory under
+[content/docs](content/docs). To add a new version, copy the directory for
+the most recent version. Here's an example:
 
-```sh
-cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
+```console
+$ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 ```
 
-By default, new documentation versions are not listed as available version so it's safe to make changes to them. After every release, the version will be published as new version.
+By default, new documentation versions are not listed as available version so
+it's safe to make changes to them. After every release, the version will be
+published as new version.
 
 ### Preparing a new version
 
-Remember to create the folder for next version with already existing docs in current version.
+Remember to create the folder for next version with already existing docs in
+current version.
 
-Make sure that the version on `content/docs/{next-version}/deploy.md` is updated and uses the next version, instead of the current one.
+Make sure that the version on `content/docs/{next-version}/deploy.md` is updated
+and uses the next version, instead of the current one.
 
 ### Publishing a new version
 
-Once a version is ready to be published, we must add the version to the `params.versions.docs` list in [`config.toml`](./config.toml).
+Once a version is ready to be published, we must add the version to the
+`params.versions.docs` list in [config.toml](config.toml).
 
-More recent versions should be placed first in the list (ordering *does* matter because the first element in that list is considered the latest version).
+More recent versions should be placed first in the list (ordering *does* matter
+because the first element in that list is considered the latest version).
 
 > Note: Remember to [prepare the next version](#preparing-a-new-version).
+
+[Contributing to KEDA]: CONTRIBUTING.md
+[dashboard]: https://app.netlify.com/sites/keda
+[deploy preview]: https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/
+[keda.sh]: https://keda.sh
+[localhost:8888]: http://localhost:8888
+[LTS release]: https://nodejs.org/en/about/releases/
+[Netlify]: https://netlify.com
+[nvm]: https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating
