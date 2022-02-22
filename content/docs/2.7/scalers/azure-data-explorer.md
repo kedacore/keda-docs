@@ -69,16 +69,14 @@ The AD identity that will be used requires `DatabaseViewer` role to query metric
 - `clientSecret` - Password of the Azure AD application.
 - `tenantId` - Id of the Azure AD tenant. Use [this](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-show) guide to retrieve your tenant id.
 
-
 **Pod identity based authentication:**
 
 [Azure Active Directory pod-managed identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) can be used.
 
-in place of credential based authentication. The following section contains an example of a `TriggerAuthentication` using pod identity.
+### Examples
 
-### Example
+### Use TriggerAuthentication with Azure AD Application.
 
-Azure AD Application based authentication.
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -96,8 +94,8 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: clientId
-      name: azure-data-explorer-secret
-      key: clientId
+      name: azure-data-explorer-secret # Required. Refers to the name of the secret
+      key: clientId 
     - parameter: clientSecret
       name: azure-data-explorer-secret
       key: clientSecret
@@ -131,7 +129,8 @@ spec:
       name: azure-data-explorer-trigger-auth
 ```
 
-Pod Identity based authentication.
+### Use TriggerAuthentication with Azure Pod Identity.
+
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -167,7 +166,8 @@ spec:
       name: azure-data-explorer-trigger-auth
 ```
 
-Azure AD Application based authentication through environment variables.
+### Use TriggerAuthentication with Azure AD Application through environment variables.
+
 ```yaml
 apiVersion: v1
 kind: Secret
