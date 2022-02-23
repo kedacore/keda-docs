@@ -75,7 +75,7 @@ The AD identity that will be used requires `DatabaseViewer` role to query metric
 
 ### Examples
 
-### Use TriggerAuthentication with Azure AD Application.
+### Use TriggerAuthentication with Azure AD Application
 
 ```yaml
 apiVersion: v1
