@@ -166,7 +166,7 @@ spec:
       name: azure-data-explorer-trigger-auth
 ```
 
-### Use TriggerAuthentication with Azure AD Application through environment variables.
+### Use TriggerAuthentication with Azure AD Application through environment variables
 
 ```yaml
 apiVersion: v1
