@@ -129,7 +129,7 @@ spec:
       name: azure-data-explorer-trigger-auth
 ```
 
-### Use TriggerAuthentication with Azure Pod Identity.
+### Use TriggerAuthentication with Azure Pod Identity
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
