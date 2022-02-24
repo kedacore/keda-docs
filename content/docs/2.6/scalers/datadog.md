@@ -18,7 +18,7 @@ triggers:
     query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
     queryValue: "7"
     type: "global"
-    age: "60"
+    age: "120"
 ```
 
 **Parameter list:**
@@ -93,7 +93,7 @@ spec:
       # Optional: (Global or Average). Whether the target value is global or average per pod. Default: Average
       type: "Global"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
-      age: "60"
+      age: "120"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
