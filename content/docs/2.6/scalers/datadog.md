@@ -41,6 +41,8 @@ You should use `TriggerAuthentication` CRD to configure the authentication:
 
 ### Example
 
+The example below uses the default KEDA polling interval (30 seconds). Take into account that [API Datadog endpoints are rate limited](https://docs.datadoghq.com/api/latest/rate-limits/) and reducing the polling interval can accelerate reaching it. If your account has reached its rate limit, a relevant error will be logged in KEDA.
+
 ```yaml
 apiVersion: v1
 kind: Secret
