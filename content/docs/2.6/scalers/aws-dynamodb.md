@@ -8,7 +8,7 @@ layout = "aws_dynamodb_scaler"
 
 ### Trigger Specification
 
-This specification describes the `*Scaler Type*` trigger that scales based on an AWS DynamoDB Query.
+This specification describes the AWS DynamoDB scaler. This scaler uses a specified DynamoDB query to determine if and when to scale a given workload.
 
 ```yaml
 triggers:
