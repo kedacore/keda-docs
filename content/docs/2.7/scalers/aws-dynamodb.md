@@ -1,6 +1,6 @@
 +++
 title = "AWS DynamoDB"
-availability = "v2.6+"
+availability = "v2.7+"
 maintainer = "Community"
 description = "Scale applications based on the records count in AWS DynamoDB"
 layout = "aws_dynamodb_scaler"
