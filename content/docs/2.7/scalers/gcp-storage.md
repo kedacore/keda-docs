@@ -9,7 +9,7 @@ go_file = "gcp_storage_scaler"
 
 ### Trigger Specification
 
-This specification describes the `gcp-storage` trigger for GCP Storage. It scales based on the count of objects in a given GCS bucket and assumes the worker is responsible for clearing the bucket by deleting/moving the objects once their processing is complete.
+This specification describes the `gcp-storage` scaler, which scales Kubernetes workloads based on the count of objects in a given Google Cloud Storage (GCS) bucket. This scaler assumes the worker, when run, will process and clear the bucket by deleting/moving objects therein.
 
 ```yaml
 triggers:
