@@ -29,7 +29,7 @@ triggers:
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
 As counting the number of objects involves iterating over their metadata it is advised to set this number to the value of `targetObjectCount` * `maxReplicaCount`.
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the trigger index and `bucketName`. For example: **s0-gcp-storage-bucketName**. The value will be prefixed with `s{triggerIndex}-gcp-storage-`.
+The metric name will be generated automatically based on the trigger index and `bucketName`, for example: **s0-gcp-storage-bucketName**. 
 
 You can provide in the metadata either `credentialsFromEnv` or `credentialsFromEnvFile`.
 - `credentialsFromEnv` - Set to the name of the environment variable that holds the credential information.
