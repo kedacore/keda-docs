@@ -2,7 +2,7 @@
 title = "Google Cloud Platform Storage"
 availability = "2.7+"
 maintainer = "Community"
-description = "Scale applications based on the count of objects in a given GCP Storage bucket."
+description = "Scale applications based on the count of objects in a given Google Cloud Storage (GCS) bucket."
 layout = "scaler"
 go_file = "gcp_storage_scaler"
 +++
@@ -24,7 +24,7 @@ triggers:
 
 **Parameter list:**
 
-- `bucketName` - Name of the bucket in GCP Storage.
+- `bucketName` - Name of the bucket in GCS.
 - `targetObjectCount` - Average target value to trigger scaling actions. (Default: `100`, Optional)
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
 As counting the number of objects involves iterating over their metadata it is advised to set this number to the value of `targetObjectCount` * `maxReplicaCount`.
