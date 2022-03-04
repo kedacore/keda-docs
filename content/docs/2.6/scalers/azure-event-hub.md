@@ -39,6 +39,8 @@ triggers:
 > 
 > C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
 
+> 💡 **Azure Functions:** Functions in C# using `Microsoft.Azure.WebJobs.Extensions.EventHubs` >= `5.0.0`, and functions in other languages that use `Microsoft.Azure.Functions.ExtensionBundle` >= `3.x` have to set `checkpointStrategy` to `blobMetadata` and `blobContainer` to `azure-webjobs-eventhub`.
+
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 ### Authentication Parameters
 
