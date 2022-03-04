@@ -7,6 +7,8 @@ description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"
 +++
 
+> 💡 **NOTE:** Take into account [API Datadog endpoints rate limits](https://docs.datadoghq.com/api/latest/rate-limits/) when defining polling interval
+
 ### Trigger Specification
 
 This specification describes the `datadog` trigger that scales based on a Datadog metric.
