@@ -38,6 +38,8 @@ triggers:
 > 💡 **Legacy Checkpointing:** C# applications, which use the `Microsoft.Azure.EventHubs` package, Java applications which use the `azure-eventhubs-eph` package or Python applications which use the `azure-eventhub` below `v5` are supported if no `checkpointStrategy` is specified. These legacy implementations are based on the `EventProcessorHost` client, which stores checkpoint information as blob container content
 > 
 > C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
+>
+> 💡 **Azure Functions:** Functions in C# using `Microsoft.Azure.WebJobs.Extensions.EventHubs` >= `5.0.0`, and functions in other languages that use `Microsoft.Azure.Functions.ExtensionBundle` >= `3.x` have to set `checkpointStrategy` to `blobMetadata` and `blobContainer` to `azure-webjobs-eventhub`.
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 ### Authentication Parameters
