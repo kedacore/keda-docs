@@ -7,6 +7,8 @@ description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"
 +++
 
+> 💡 **NOTE:** Take into account [API Datadog endpoints rate limits](https://docs.datadoghq.com/api/latest/rate-limits/) when defining polling interval
+
 ### Trigger Specification
 
 This specification describes the `datadog` trigger that scales based on a Datadog metric.
@@ -18,7 +20,7 @@ triggers:
     query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
     queryValue: "7"
     type: "global"
-    age: "60"
+    age: "120"
 ```
 
 **Parameter list:**
@@ -40,6 +42,8 @@ You should use `TriggerAuthentication` CRD to configure the authentication:
 - `datadogSite` - Datadog site where to get the metrics from. This is commonly referred as DD_SITE in Datadog documentation. (Default: `datadoghq.com`, Optional)
 
 ### Example
+
+The example below uses the default KEDA polling interval (30 seconds). Take into account that [API Datadog endpoints are rate limited](https://docs.datadoghq.com/api/latest/rate-limits/) and reducing the polling interval can accelerate reaching it. If your account has reached its rate limit, a relevant error will be logged in KEDA.
 
 ```yaml
 apiVersion: v1
@@ -91,7 +95,7 @@ spec:
       # Optional: (Global or Average). Whether the target value is global or average per pod. Default: Average
       type: "Global"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
-      age: "60"
+      age: "120"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
