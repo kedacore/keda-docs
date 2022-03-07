@@ -46,7 +46,7 @@ The CRON scaler allows you to define a time range in which you want to scale you
 
 When the time window starts, it will scale from the minimum number of replicas to the desired number of replicas based on your configuration.
 
-![](../../../../static/img/scalers/cron/how-it-works.png)
+![](/img/scalers/cron/how-it-works.png)
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
