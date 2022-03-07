@@ -9,7 +9,7 @@ go_file = "cron_scaler"
 
 ### Trigger Specification
 
-This specification describes the `cron` trigger that scales based on a Cron Schedule.
+This specification describes the `cron` trigger that scales workloads in/out based on a cron Schedule.
 
 ```yaml
 triggers:
@@ -37,6 +37,16 @@ triggers:
 > start: 30 * * * *
 > end: 30 * * * *
 >```
+
+### How does it work?
+
+The CRON scaler allows you to define a time range in which you want to scale your workloads out/in.
+
+When the time window starts, it will scale from the minimum number of replicas to the desired number of replicas based on your configuration.
+
+![](../../../../static/img/scalers/cron/how-it-works.png)
+
+What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
 ### Example
 
