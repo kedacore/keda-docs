@@ -2,7 +2,6 @@
   "scripts": {
     "_build": "hugo --cleanDestinationDir -e dev -DFE",
     "_check-links": "make check-links",
-    "_prebuild": "echo placeholder for now > /dev/null",
     "_serve:hugo": "hugo serve -DFE --minify",
     "_serve": "netlify dev -c \"npm run _serve:hugo\" --framework hugo",
     "build:preview": "set -x && npm run _build -- --minify --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
@@ -13,13 +12,8 @@
     "clean": "make clean",
     "postbuild:preview": "npm run _check-links",
     "postbuild:production": "npm run _check-links",
-    "prebuild:preview": "npm run _prebuild",
-    "prebuild:production": "npm run _prebuild",
-    "prebuild": "npm run _prebuild",
     "precheck-links:all": "npm run build",
     "precheck-links": "npm run build",
-    "preserve:hugo": "npm run _prebuild",
-    "preserve": "npm run _prebuild",
     "serve:hugo": "npm run _serve:hugo",
     "serve": "npm run _serve",
     "test": "npm run check-links"
