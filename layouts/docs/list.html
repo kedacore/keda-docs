@@ -1,7 +1,3 @@
-{{ define "title" }}
-{{ site.Title }} | {{ .Title }}
-{{ end }}
-
-{{ define "main" }}
-{{ partial "article.html" . }}
-{{ end }}
+{{ define "main" -}}
+  {{ partial "article.html" . }}
+{{ end -}}
