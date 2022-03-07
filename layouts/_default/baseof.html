@@ -4,8 +4,8 @@
   <head>
     {{ partial "meta.html" . }}
     <title>
-      {{ block "title" . }}
-      {{ site.Title }}
+      {{ block "title" . -}}
+        {{ site.Title }} | {{ .Title -}}
       {{ end }}
     </title>
     {{ partial "css.html" . }}
