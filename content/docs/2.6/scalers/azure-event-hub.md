@@ -35,11 +35,7 @@ triggers:
     - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing, for example Dapr.
     - When no checkpoint strategy is specified, the Event Hub scaler will use backwards compatibility and able to scale older implementations of C#, Python or Java Event Hub SDKs. (see "Legacy checkpointing"). If this behaviour should be used, `blobContainer` is also required.
 
-> 💡 **Legacy Checkpointing:** C# applications, which use the `Microsoft.Azure.EventHubs` package, Java applications which use the `azure-eventhubs-eph` package or Python applications which use the `azure-eventhub` below `v5` are supported if no `checkpointStrategy` is specified. These legacy implementations are based on the `EventProcessorHost` client, which stores checkpoint information as blob container content
-> 
-> C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
->
-> 💡 **Azure Functions:** Functions in C# using `Microsoft.Azure.WebJobs.Extensions.EventHubs` >= `5.0.0`, and functions in other languages that use `Microsoft.Azure.Functions.ExtensionBundle` >= `3.x` have to set `checkpointStrategy` to `blobMetadata` and `blobContainer` to `azure-webjobs-eventhub`.
+> 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 ### Authentication Parameters
@@ -61,6 +57,11 @@ spec:
 
 When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`.
 
+### Checkpointing Behaviour {#checkpointing-behaviour}
+
+* **Legacy behaviour:** C# applications, which use the `Microsoft.Azure.EventHubs` package, Java applications which use the `azure-eventhubs-eph` package or Python applications which use the `azure-eventhub` below `v5` are supported if no `checkpointStrategy` is specified. These legacy implementations are based on the `EventProcessorHost` client, which stores checkpoint information as blob container content.  
+* **Current behaviour:** C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
+  * **Azure Functions:** Functions in C# using `Microsoft.Azure.WebJobs.Extensions.EventHubs` >= `5.0.0`, and functions in other languages that use `Microsoft.Azure.Functions.ExtensionBundle` >= `3.x` follow the current behaviour. Users have to set the `checkpointStrategy` to `blobMetadata` and `blobContainer` to `azure-webjobs-eventhub`, for the scaling to work as intended.
 
 ### Example
 
