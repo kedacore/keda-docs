@@ -1,24 +1,20 @@
-{{ $lang := site.LanguageCode }}
 <!DOCTYPE html>
-<html{{ with $lang }} lang="{{ . }}"{{ end }}>
+<html{{ with site.LanguageCode }} lang="{{ . }}"{{ end }}>
   <head>
     {{ partial "meta.html" . }}
     <title>
-      {{ block "title" . -}}
-        {{ site.Title }} | {{ .Title -}}
-      {{ end }}
+      {{- block "title" . -}}
+        {{ .Title }} | {{ site.Title -}}
+      {{ end -}}
     </title>
     {{ partial "css.html" . }}
     {{ partial "favicon.html" . }}
   </head>
-
   <body class="is-page has-navbar-fixed-top">
     <main class="is-main">
       {{ partial "navbar.html" . }}
-      {{ block "main" . }}
-      {{ end }}
+      {{ block "main" . }}{{ end }}
     </main>
-
     {{ partial "footer.html" . }}
     {{ partial "javascript.html" . }}
   </body>
