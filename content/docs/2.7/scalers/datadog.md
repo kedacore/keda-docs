@@ -121,8 +121,9 @@ definition](../concepts/scaling-deployments.md#pollinginterval). For example, if
 this parameter is set to `60`, KEDA will poll Datadog for a metric value every
 60 seconds while the number of replicas is 0.
 
-While scaling from 1 to N, the polling interval is controlled by the HPA, not
-KEDA, using [the `--horizontal-pod-autoscaler-sync-period` parameter to the
+While scaling from 1 to N, on top of KEDA, the HPA will also poll regularly
+Datadog for metrics, based on [the `--horizontal-pod-autoscaler-sync-period`
+parameter to the
 `kube-controller-manager`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/#options),
 which by default is 15 seconds. For example, if the `kube-controller-manager`
 was started with `--horizontal-pod-autoscaler-sync-period=30`, the HPA will poll
