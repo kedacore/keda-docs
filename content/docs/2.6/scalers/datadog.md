@@ -104,6 +104,6 @@ spec:
 
 [API Datadog endpoints are rate limited](https://docs.datadoghq.com/api/latest/rate-limits/). Depending on the state of the `ScaledObject` there are two different parameters to control how often (per `ScaledObject`) we query Datadog for a metric.
 
-When scaling from 0 to 1, the polling interval is controlled by KEDA, using [the `spec.pollingInterval` parameter in the `ScaledObject` definition](https://keda.sh/docs/2.6/concepts/scaling-deployments/#pollinginterval). For example, if this parameter is set to `60`, KEDA will poll Datadog for a metric value every 60 seconds while the number of replicas is 0.
+When scaling from 0 to 1, the polling interval is controlled by KEDA, using [the `spec.pollingInterval` parameter in the `ScaledObject` definition](../concepts/scaling-deployments.md#pollinginterval). For example, if this parameter is set to `60`, KEDA will poll Datadog for a metric value every 60 seconds while the number of replicas is 0.
 
 While scaling from 1 to N, the polling interval is controlled by the HPA, not KEDA, using [the `--horizontal-pod-autoscaler-sync-period` parameter to the `kube-controller-manager`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/#options), which by default is 15 seconds. For example, if the `kube-controller-manager` was started with `--horizontal-pod-autoscaler-sync-period=30`, the HPA will pod Datadog for a metric value every 30 seconds while the number of replicas is between 1 and N.
