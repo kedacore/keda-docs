@@ -65,14 +65,14 @@ has changed with updates to the EventHub SDKs.
 
 * **Legacy behaviour:** The older implementations are based on the `EventProcessorHost` client, which stores the checkpoint information as contents of
 the storage blob. This is the default behaviour when no `checkpointStrategy` is specified.
-The following applications will showcase this -
+This is applicable for the following scenarios:
   - .NET applications using `Microsoft.Azure.EventHubs` NuGet package.
   - Java applications using `azure-eventhubs-eph` package.
   - Python applications using `azure-eventhub` package below v5.
 
 * **Current behaviour:** The newer implementations are based on the `EventProcessorClient`, which stores the checkpoint information as metadata on
 the storage blob. This is the behaviour when `checkpointStrategy` is set to `blobMetadata`.
-The following applications will showcase this -
+This is applicable for the following scenarios:
   - .NET applications using `Azure.Messaging.EventHubs` NuGet package.
   - Python applications using `azure-eventhub` v5.
   - .NET Azure Functions using `Microsoft.Azure.WebJobs.Extensions.EventHubs` v5.
