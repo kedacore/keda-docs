@@ -8,6 +8,7 @@ go_file = "solace_scaler"
 +++
 
 ### Trigger Specification
+
 This specification describes the `solace-event-queue` trigger that scales based on a Solace PubSub+ Event Broker queue.
 
 ```yaml
@@ -26,6 +27,7 @@ triggers:
 ```
 
 **Parameter list:**
+
 - `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`.
 - `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored.
@@ -37,11 +39,13 @@ triggers:
 - `passwordFromEnv` - Environment variable set with password for the user account.
 
 **Parameter Requirements:**
+
 - Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `messageVpn`, `queueName`
 - **At least** one of `messageCountTarget` or `messageSpoolUsageTarget` is **required.** If both values are present, the metric value resulting in the higher desired replicas will be used. (Standard KEDA/HPA behavior)
 - The Solace PubSub+ Scaler polls the Solace SEMP REST API to monitor target queues. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the `solace-event-queue` trigger to function. These values may be set directly in the trigger metadata or using a TriggerAuthentication record. See [Authentication Parameters](#authentication-parameters) below. Alternatively, credentials may be passed from environment variables identified by `usernameFromEnv` and `passwordFromEnv`.
 
 ### Authentication Parameters
+
 You can use TriggerAuthentication CRD to configure the username and password to connect to the management endpoint.
 
 **Username and Password based authentication:**
@@ -49,6 +53,7 @@ You can use TriggerAuthentication CRD to configure the username and password to 
 - `password` - Required. The password to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
 
 ### Example
+
 The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be delcared in the same namespace.
 
 ```yaml
@@ -86,7 +91,7 @@ spec:
       queueName:               SCALED_CONSUMER_QUEUE1
       messageCountTarget:      '50'
       messageSpoolUsageTarget: '100000'
-    authenticationRef: 
+    authenticationRef:
       name: solace-trigger-auth
 ---
 apiVersion: keda.sh/v1alpha1
