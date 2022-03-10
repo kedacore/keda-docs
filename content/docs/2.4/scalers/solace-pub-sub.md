@@ -92,7 +92,7 @@ spec:
       queueName:               SCALED_CONSUMER_QUEUE1
       messageCountTarget:      '50'
       messageSpoolUsageTarget: '100000'
-    authenticationRef: 
+    authenticationRef:
       name: solace-trigger-auth
 ---
 apiVersion: keda.sh/v1alpha1
