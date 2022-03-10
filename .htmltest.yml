@@ -3,6 +3,3 @@ IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
-IgnoreInternalURLs:
-  - /docs/2.6/scalers/solace-pub-sub/ # Due to https://github.com/kedacore/keda-docs/issues/693
-  - /docs/latest/scalers/solace-pub-sub/ # Due to https://github.com/kedacore/keda-docs/issues/693
