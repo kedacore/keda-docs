@@ -114,6 +114,20 @@ spec:
     - parameter: {scaledObject-parameter-name}        # Required.
       key: {hasicorp-vault-secret-key-name}           # Required.
       path: {hasicorp-vault-secret-path}              # Required.
+  azureKeyVault:                                      # Optional
+    vaultURI: {key-vault-address}                     # Required
+    credentials:                                      # Required
+      clientId: {azure-ad-client-id}                  # Required
+      clientSecret:                                   # Required
+        valueFrom:                                    # Required
+          secretKeyRef:                               # Required
+            name: {k8s-secret-with-azure-ad-secret}   # Required
+            key: {key-within-the-secret}              # Required
+      tenantId: {azure-ad-tenant-id}                  # Required
+    secrets:                                          # Required
+    - parameter: {param-name-used-for-auth}           # Required
+      name: {key-vault-secret-name}                   # Required
+      version: {key-vault-secret-version}             # Optional
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -205,6 +219,30 @@ hashiCorpVault:                                     # Optional.
   - parameter: {scaledObject-parameter-name}        # Required.
     key: {hasicorp-vault-secret-key-name}           # Required.
     path: {hasicorp-vault-secret-path}              # Required.
+```
+
+### Azure Key Vault secret(s)
+
+You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key. Users need to register an application
+with Azure Active Directory, and give permissions to it for accessing the key vault. The `clientId` and `tenantId` for the application
+are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a secret on the cluster.
+The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
+
+```yaml
+azureKeyVault:                                      # Optional
+  vaultURI: {key-vault-address}                     # Required
+  credentials:                                      # Required
+    clientId: {azure-ad-client-id}                  # Required
+    clientSecret:                                   # Required
+      valueFrom:                                    # Required
+        secretKeyRef:                               # Required
+          name: {k8s-secret-with-azure-ad-secret}   # Required
+          key: {key-within-the-secret}              # Required
+    tenantId: {azure-ad-tenant-id}                  # Required
+  secrets:                                          # Required
+  - parameter: {param-name-used-for-auth}           # Required
+    name: {key-vault-secret-name}                   # Required
+    version: {key-vault-secret-version}             # Optional
 ```
 
 ### Pod Authentication Providers
