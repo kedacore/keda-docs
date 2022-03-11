@@ -227,7 +227,10 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
-Users need to register an application with Azure Active Directory, and give permissions to it for accessing the key vault. The `clientId` and `tenantId` for the application
+Users need to register an application with Azure Active Directory, and grand "read secret" permissions on the Azure Key Vault. Learn more in the Azure
+Key Vault [documentation](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal).
+
+The `clientId` and `tenantId` for the application
 are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a secret on the cluster.
 
 ```yaml
