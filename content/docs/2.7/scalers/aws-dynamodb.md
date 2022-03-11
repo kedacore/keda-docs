@@ -17,15 +17,15 @@ triggers:
     # Required: awsRegion
     awsRegion: "eu-west-1"
     # Required: tableName
-    tableName: tableName
+    tableName: myTableName
     # Required: targetValue
     targetValue: "1"
     # Required: expressionAttributeNames
-    expressionAttributeNames: '{ "#k" : "event_type"}'
+    expressionAttributeNames: '{ "#k" : "partition_key_name"}'
     # Required: keyConditionExpression
     keyConditionExpression: "#k = :key"
     # Required: expressionAttributeValues
-    expressionAttributeValues: '{ ":key" : {"S":"scaling_event"}}'
+    expressionAttributeValues: '{ ":key" : {"S":"partition_key_target_value"}}'
     # Optional. Default: pod
     identityOwner: pod | operator 
 ```
@@ -102,7 +102,7 @@ spec:
       name: keda-trigger-auth-aws-credentials
     metadata:
       awsRegion: eu-west-2
-      tableName: keda-events-sort
+      tableName: keda-events
       expressionAttributeNames: '{ "#k" : "event_type"}'
       keyConditionExpression: "#k = :key"
       expressionAttributeValues: '{ ":key" : {"S":"scaling_event"}}'
@@ -153,7 +153,7 @@ spec:
       name: keda-trigger-auth-aws-credentials
     metadata:
       awsRegion: eu-west-2
-      tableName: keda-events-sort
+      tableName: keda-events
       expressionAttributeNames: '{ "#k" : "event_type"}'
       keyConditionExpression: "#k = :key"
       expressionAttributeValues: '{ ":key" : {"S":"scaling_event"}}'
