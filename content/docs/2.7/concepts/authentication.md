@@ -223,10 +223,12 @@ hashiCorpVault:                                     # Optional.
 
 ### Azure Key Vault secret(s)
 
-You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key. Users need to register an application
-with Azure Active Directory, and give permissions to it for accessing the key vault. The `clientId` and `tenantId` for the application
-are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a secret on the cluster.
+You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key. 
+
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
+
+Users need to register an application with Azure Active Directory, and give permissions to it for accessing the key vault. The `clientId` and `tenantId` for the application
+are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a secret on the cluster.
 
 ```yaml
 azureKeyVault:                                      # Optional
