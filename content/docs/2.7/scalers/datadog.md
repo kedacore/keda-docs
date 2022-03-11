@@ -21,6 +21,7 @@ triggers:
     queryValue: "7"
     type: "global"
     age: "120"
+    metricUnavailableValue: "0"
 ```
 
 **Parameter list:**
@@ -29,6 +30,7 @@ triggers:
 - `queryValue` - Value to reach to start scaling.
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional) 
+- `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional)
 
 ### Authentication
 
@@ -96,6 +98,8 @@ spec:
       type: "Global"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
       age: "120"
+      # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
+      metricUnavailableValue: "0"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
