@@ -17,7 +17,6 @@ triggers:
   metadata:
     projectId: my-project-id
     filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
-    metricName: my-gcp-bucket
     targetValue: '100'
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
@@ -26,8 +25,9 @@ triggers:
 
 - `projectId` - GCP project Id that contains the metric.
 - `filter` - The stackdriver query filter for obtaining the metric. The metric is for the last minute and if multiple values are returned, the first one is used.
-- `metricName` - Metric name for reporting the value to HPA, prefixed with `s{triggerIndex}-gcp-stackdriver-`.
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+
+The metric name will be generated automatically based on the trigger index and `projectId`, for example: **s0-gcp-stackdriver-myProject**.
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
@@ -59,7 +59,6 @@ spec:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
       targetValue: "5"
-      metricName: gcp-stackdriver
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
 
@@ -90,7 +89,6 @@ spec:
     metadata:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
-      metricName: gcp-stackdriver
 ```
 
 #### Use TriggerAuthentication with GCP Identity
@@ -118,5 +116,4 @@ spec:
     metadata:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
-      metricName: gcp-stackdriver
 ```
