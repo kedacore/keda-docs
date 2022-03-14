@@ -62,6 +62,7 @@ spec:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
       targetValue: "5"
+      metricName: gcp-stackdriver
       credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
 
@@ -92,6 +93,7 @@ spec:
     metadata:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
+      metricName: gcp-stackdriver
 ```
 
 #### Use TriggerAuthentication with GCP Identity
@@ -119,4 +121,5 @@ spec:
     metadata:
       projectId: my-project-id
       filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
+      metricName: gcp-stackdriver
 ```
