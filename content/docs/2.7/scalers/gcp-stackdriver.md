@@ -19,8 +19,7 @@ triggers:
     filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
     metricName: my-gcp-bucket
     targetValue: '100'
-    credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
-    credentialsFromEnvFile: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
+    credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
 ```
 
 **Parameter list:**
@@ -30,9 +29,7 @@ triggers:
 - `metricName` - Metric name for reporting the value to HPA, prefixed with `s{triggerIndex}-gcp-stackdriver-`.
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 
-You can provide in the metadata either `credentialsFromEnv` or `credentialsFromEnvFile`.
-- `credentialsFromEnv` - Set to the name of the environment variable that holds the credential information.
-- `credentialsFromEnvFile` - Set to the name of a json file that holds the credential information.
+The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
