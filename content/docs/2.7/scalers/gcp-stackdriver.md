@@ -27,8 +27,6 @@ triggers:
 - `filter` - The stackdriver query filter for obtaining the metric. The metric is for the last minute and if multiple values are returned, the first one is used.
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 
-The metric name will be generated automatically based on the trigger index and `projectId`, for example: **s0-gcp-stackdriver-myProject**.
-
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
 ### Authentication Parameters
