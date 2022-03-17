@@ -3,7 +3,8 @@ title = "AWS DynamoDB"
 availability = "v2.7+"
 maintainer = "Community"
 description = "Scale applications based on the records count in AWS DynamoDB"
-layout = "aws_dynamodb_scaler"
+layout = "scaler"
+go_file = "aws_dynamodb_scaler"
 +++
 
 ### Trigger Specification
