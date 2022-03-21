@@ -40,6 +40,7 @@ triggers:
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
 - `clientSecret` - Password of the Azure AD application.
+- `msiClientId` - Client id of the user assigned managed identity. (Optional, Required when authenticating throgh pod identity)
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -72,6 +73,7 @@ The AD identity that will be used requires `DatabaseViewer` role to query metric
 **Pod identity based authentication:**
 
 [Azure Active Directory pod-managed identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) can be used.
+- `msiClientId` - Client id of the user assigned managed identity. Use [this](https://docs.microsoft.com/en-us/cli/azure/identity?view=azure-cli-latest#az-identity-show) guide to retrieve the client id.
 
 ### Examples
 
@@ -157,6 +159,7 @@ spec:
     metadata:
       databaseName: Weather
       endpoint: https://keda.eastus.kusto.windows.net
+      msiClientId: <msiClientId>
       query: |
         StormEvents
         | summarize StormCount = count() by State
