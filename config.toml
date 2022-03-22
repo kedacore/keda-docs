@@ -392,6 +392,10 @@ url = "https://stilingue.com.br"
 logo = "stilingue.png"
 
 [[params.users]]
+url = "https://www.swisslife.ch/"
+logo = "swisslife.jpg"
+
+[[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
