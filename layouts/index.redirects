@@ -1,6 +1,6 @@
 {{ $docsLatest := index site.Params.versions.docs 0 -}}
 
-/docs     /docs/2.6     301!
+/docs     /docs/{{ $docsLatest }}     301!
 /docs/latest/*     /docs/{{ $docsLatest }}/:splat
 
 {{ $topLevel := slice "scalers" "faq" "troubleshooting" "operate" "concepts" "deploy" -}}
