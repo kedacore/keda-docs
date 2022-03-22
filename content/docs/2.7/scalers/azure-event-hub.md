@@ -20,6 +20,12 @@ triggers:
     consumerGroup: $Default
     unprocessedEventThreshold: '64'
     blobContainer: 'name_of_container'
+    # Optional (Default: AzurePublicCloud)
+    cloud: private
+    # Required when cloud = Private
+    endpointSuffix: servicebus.airgap.example             
+    # Required when cloud = Private.
+    activeDirectoryEndpoint: https://login.airgap.example/ 
 ```
 
 **Parameter list:**
@@ -34,6 +40,9 @@ triggers:
     - `blobMetadata` - For all implementations that store checkpoint information on blob metadata such as current C#, Python, Java and JavaScript Event Hub SDKs.
     - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing, for example Dapr.
     - When no checkpoint strategy is specified, the Event Hub scaler will use backwards compatibility and able to scale older implementations of C#, Python or Java Event Hub SDKs. (see "Legacy checkpointing"). If this behaviour should be used, `blobContainer` is also required.
+- `cloud` - Name of the cloud environment that the Event Hub belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
+- `endpointSuffix` - Service Bus endpoint suffix of the cloud environment the eventhub belongs to, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`. Required when `cloud` is set to `private`.
+- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment the eventhub belongs to, e.g. `https://login.microsoftonline.de/` for `AzureGermanCloud`. Required when `cloud` is set to `private`.
 
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
