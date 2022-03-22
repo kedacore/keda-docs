@@ -9,9 +9,9 @@ go_file = "selenium_grid_scaler"
 
 ### Trigger Specification
 
-This specification describes the `selenium-grid` trigger that scales browser nodes based on number of requests in session queue.
+This specification describes the `selenium-grid` trigger that scales browser nodes based on number of requests in session queue and the max sessions per grid.
 
-The scaler creates one browser node per pending request in session queue. You will have to create one trigger per browser capability that you would like to support in your Selenium Grid.
+The scaler creates one browser node per pending request in session queue, divided by the max amount of sessions that can run in parallel. You will have to create one trigger per browser capability that you would like to support in your Selenium Grid.
 
 The below is an example trigger configuration for chrome node.
 
