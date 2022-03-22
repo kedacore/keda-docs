@@ -3,3 +3,7 @@ IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
+IgnoreInternalURLs:
+  - /docs/2.6/scalers/aws-dynamodb/
+  - /docs/2.6/scalers/azure-data-explorer/
+  - /docs/2.6/scalers/gcp-storage/
