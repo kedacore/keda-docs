@@ -41,8 +41,8 @@ triggers:
     - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing, for example Dapr.
     - When no checkpoint strategy is specified, the Event Hub scaler will use backwards compatibility and able to scale older implementations of C#, Python or Java Event Hub SDKs. (see "Legacy checkpointing"). If this behaviour should be used, `blobContainer` is also required.
 - `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`)
-- `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `private`). E.g. `servicebus.cloudapi.de` for `AzureGermanCloud`.
-- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `private`). E.g. `https://login.microsoftonline.de/` for `AzureGermanCloud`.
+- `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `private`, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`).
+- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `private`, e.g. `https://login.microsoftonline.de/` for `AzureGermanCloud`).
 
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
