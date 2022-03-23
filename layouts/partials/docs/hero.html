@@ -8,6 +8,7 @@
 {{ $version       := index (split .File.Path "/") 1 }}
 {{ $latest        := index (index site.Params.versions .Section) 0 }}
 {{ $isLatest      := eq $version $latest }}
+{{ $isNextVersion := not (in (index site.Params.versions .Section) $version) -}}
 <section class="hero">
   <div class="hero-body">
     <div class="container">
@@ -16,7 +17,7 @@
         <sup>
           {{ if $isLatest }}
           <span class="tag is-success">Latest</span>
-          {{ else }}
+          {{ else if not $isNextVersion }}
           {{ $url := replaceRE $version $latest .RelPermalink }}
           <a href="{{ $url }}">
             <span class="tag is-warning">Click here for latest</span>
