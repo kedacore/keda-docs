@@ -24,6 +24,12 @@ triggers:
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
     applicationInsightsIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well
     tenantIdFromEnv: TENANT_ID` # Optional, can use TriggerAuthentication as well
+    # Optional (Default: AzurePublicCloud)
+    cloud: private
+    # Required when cloud = Private
+    appInsightsResourceURL: https://api.applicationinsights.airgap.io/
+    # Required when cloud = Private.
+    activeDirectoryEndpoint: https://login.airgap.example/
 ```
 
 This scaler is backed by the Azure Application Instance REST API. Please see [this](https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get) page
@@ -40,6 +46,9 @@ for further details.
 - `activeDirectoryClientId` - Id of the Active Directory client. The client must have `Monitoring Reader` permissions for the Application Insights instance.
 - `activeDirectoryClientPassword` - Password of the Active Directory client password.
 - `metricFilter` - Further specify the metrics query using a filter. For example `cloud/roleName eq 'example`. (Optional)
+- `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`)
+- `appInsightsResourceURL` - Application Insights REST API url of the cloud environment. (Required when `cloud` is set to `private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
+- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 Some parameters can be provided using environment variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
