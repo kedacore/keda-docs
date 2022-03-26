@@ -67,7 +67,7 @@ All applicable scalers will use this timeout. Setting a per-scaler timeout is cu
 
 ## HTTP Proxies
 
-Some scalers issue HTTP requests to external servers (i.e. cloud services). As certain companies require external servers to be accessed by proxy servers, adding the relevant environment variables to your deployment (HTTP_PROXY, HTTPS_PROXY, NO_PROXY, etc.) would allow the scaler to connect via the desired proxy.
+Some scalers issue HTTP requests to external servers (i.e. cloud services). As certain companies require external servers to be accessed by proxy servers, adding the relevant environment variables to the KEDA Operator deployment (HTTP_PROXY, HTTPS_PROXY, NO_PROXY, etc.) would allow the scaler to connect via the desired proxy.
 
 ```yaml
 - env:
