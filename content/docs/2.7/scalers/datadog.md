@@ -7,6 +7,12 @@ description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"
 +++
 
+> 💡 **NOTE:** Take into account [API Datadog endpoints rate
+limits](https://docs.datadoghq.com/api/latest/rate-limits/) when defining
+polling interval. For more detailed information about polling intervals check
+[the Polling intervals and Datadog rate limiting
+section](#polling-intervals-and-datadog-rate-limiting).
+
 ### Trigger Specification
 
 This specification describes the `datadog` trigger that scales based on a Datadog metric.
@@ -19,7 +25,8 @@ triggers:
     query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
     queryValue: "7"
     type: "global" # Deprecated in favor of trigger.metricType
-    age: "60"
+    age: "120"
+    metricUnavailableValue: "0"
 ```
 
 **Parameter list:**
@@ -28,6 +35,7 @@ triggers:
 - `queryValue` - Value to reach to start scaling.
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional) 
+- `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
@@ -43,6 +51,12 @@ You should use `TriggerAuthentication` CRD to configure the authentication:
 - `datadogSite` - Datadog site where to get the metrics from. This is commonly referred as DD_SITE in Datadog documentation. (Default: `datadoghq.com`, Optional)
 
 ### Example
+
+The example below uses the default KEDA polling interval (30 seconds). Take into
+account that [API Datadog endpoints are rate
+limited](https://docs.datadoghq.com/api/latest/rate-limits/) and reducing the
+polling interval can accelerate reaching it. If your account has reached its
+rate limit, a relevant error will be logged in KEDA.
 
 ```yaml
 apiVersion: v1
@@ -94,7 +108,31 @@ spec:
       # Required: according to the number of query result, to scale the TargetRef
       queryValue: "7"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
-      age: "60"
+      age: "120"
+      # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
+      metricUnavailableValue: "0"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
+
+## Polling intervals and Datadog rate limiting
+
+[API Datadog endpoints are rate
+limited](https://docs.datadoghq.com/api/latest/rate-limits/). Depending on the
+state of the `ScaledObject` there are two different parameters to control how
+often (per `ScaledObject`) we query Datadog for a metric.
+
+When scaling from 0 to 1, the polling interval is controlled by KEDA, using [the
+`spec.pollingInterval` parameter in the `ScaledObject`
+definition](../concepts/scaling-deployments/#pollinginterval). For example, if
+this parameter is set to `60`, KEDA will poll Datadog for a metric value every
+60 seconds while the number of replicas is 0.
+
+While scaling from 1 to N, on top of KEDA, the HPA will also poll regularly
+Datadog for metrics, based on [the `--horizontal-pod-autoscaler-sync-period`
+parameter to the
+`kube-controller-manager`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/#options),
+which by default is 15 seconds. For example, if the `kube-controller-manager`
+was started with `--horizontal-pod-autoscaler-sync-period=30`, the HPA will poll
+Datadog for a metric value every 30 seconds while the number of replicas is
+between 1 and N.

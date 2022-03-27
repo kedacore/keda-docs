@@ -4,7 +4,13 @@ description = "Guidance & requirements for running KEDA in your cluster"
 weight = 100
 +++
 
-## Cluster capacity requirements
+## Requirements
+
+### Kubernetes
+
+KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above.
+
+### Cluster Capacity
 
 The KEDA runtime require the following resources in a production-ready setup:
 
@@ -17,7 +23,7 @@ These are used by default when deploying through YAML.
 
 > 💡 For more info on CPU and Memory resource units and their meaning, see [this](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes) link.
 
-## Firewall requirements
+### Firewall
 
 KEDA requires to be accessible inside the cluster to be able to autoscale.
 

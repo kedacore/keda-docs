@@ -35,9 +35,7 @@ triggers:
     - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing, for example Dapr.
     - When no checkpoint strategy is specified, the Event Hub scaler will use backwards compatibility and able to scale older implementations of C#, Python or Java Event Hub SDKs. (see "Legacy checkpointing"). If this behaviour should be used, `blobContainer` is also required.
 
-> 💡 **Legacy Checkpointing:** C# applications, which use the `Microsoft.Azure.EventHubs` package, Java applications which use the `azure-eventhubs-eph` package or Python applications which use the `azure-eventhub` below `v5` are supported if no `checkpointStrategy` is specified. These legacy implementations are based on the `EventProcessorHost` client, which stores checkpoint information as blob container content
-> 
-> C# Applications that use the current `Azure.Messaging.EventHubs` package, Java applications which use the current `azure-messaging-eventhubs` package or Python applications since `azure-eventhub v5`, have to set the `checkpointStrategy`to `blobMetadata`. All these implementations based on the `EventProcessorClient` which stores checkpoint information as blob metadata.
+> 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 ### Authentication Parameters
@@ -59,6 +57,29 @@ spec:
 
 When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`.
 
+### Checkpointing Behaviour
+
+The list of available checkpointing strategies can be found in the trigger specification [section](#trigger-specification). The way checkpoints are stored
+has changed with updates to the EventHub SDKs.
+
+* **Legacy behaviour:** The older implementations are based on the `EventProcessorHost` client, which stores the checkpoint information as contents of
+the storage blob. This is the default behaviour when no `checkpointStrategy` is specified.
+This is applicable for the following scenarios:
+  - .NET applications using `Microsoft.Azure.EventHubs` NuGet package.
+  - Java applications using `azure-eventhubs-eph` package.
+  - Python applications using `azure-eventhub` package below v5.
+
+* **Current behaviour:** The newer implementations are based on the `EventProcessorClient`, which stores the checkpoint information as metadata on
+the storage blob. This is the behaviour when `checkpointStrategy` is set to `blobMetadata`.
+This is applicable for the following scenarios:
+  - .NET applications using `Azure.Messaging.EventHubs` NuGet package.
+  - Python applications using `azure-eventhub` v5.
+  - .NET Azure Functions using `Microsoft.Azure.WebJobs.Extensions.EventHubs` v5.
+  - Azure Functions in other languages using `Microsoft.Azure.Functions.ExtensionBundle` v3.
+
+> 💡 `blobContainer` name is required for applications following legacy behaviour.
+
+> 💡 Users should set `blobContainer` to `azure-webjobs-eventhub` for Azure Functions using `blobMetadata` as `checkpointStrategy`.
 
 ### Example
 

@@ -36,4 +36,6 @@
 <meta property="og:image:alt" content="{{ $imgAlt }}">
 <meta property="og:locale" content="{{ $locale }}">
 
-{{ template "_internal/google_analytics_async.html" . -}}
+{{ if hugo.IsProduction -}}
+  {{ template "_internal/google_analytics.html" . -}}
+{{ end -}}

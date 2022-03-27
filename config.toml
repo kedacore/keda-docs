@@ -4,7 +4,7 @@ title = "KEDA"
 enableGitInfo = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
-googleAnalytics =  "G-YSWMV22VTQ"
+googleAnalytics = 'G-YSWMV22VTQ'
 
 # See other available styles here: https://xyproto.github.io/splash/docs/
 [markup.highlight]
@@ -386,6 +386,14 @@ logo = "schreder-hyperion.png"
 [[params.users]]
 url = "https://seldon.io/"
 logo = "seldon.png"
+
+[[params.users]]
+url = "https://stilingue.com.br"
+logo = "stilingue.png"
+
+[[params.users]]
+url = "https://www.swisslife.ch/"
+logo = "swisslife.jpg"
 
 [[params.users]]
 url = "https://www.teamleader.eu"
