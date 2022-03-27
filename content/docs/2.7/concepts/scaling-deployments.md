@@ -205,7 +205,7 @@ Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
-  - More details can be found [here](/concepts/authentication). (Optional)
+  - More details can be found [here](./authentication). (Optional)
 - **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
   - Learn more about how the [Horizontal Pod Autoscaler (HPA) calculates `replicaCount`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) based on metric type and value.
   - To show the differences between the metric types, let's assume we want to scale a deployment with 3 running replicas based on a queue of messages:
