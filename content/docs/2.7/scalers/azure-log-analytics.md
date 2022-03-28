@@ -48,6 +48,12 @@ triggers:
       clientIdFromEnv: SERVICE_PRINCIPAL_CLIENT_ID_ENV_NAME # Optional. You can use this instead of `clientId` parameter.
       tenantIdFromEnv: AZURE_AD_TENANT_ID_ENV_NAME # Optional. You can use this instead of `tenantId` parameter.
       clientSecretFromEnv: SERVICE_PRINCIPAL_PASSWORD_ENV_NAME # Optional. You can use this instead of `clientSecret` parameter.
+      # Optional (Default: AzurePublicCloud)
+      cloud: Private
+      # Required when cloud = Private
+      logAnalyticsResourceURL: https://api.loganalytics.airgap.io/
+      # Required when cloud = Private.
+      activeDirectoryEndpoint: https://login.airgap.example/
 ```
 
 **Parameter list:**
@@ -59,6 +65,9 @@ triggers:
 - `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold` - Value that is used as a threshold to calculate # of pods for scale target.
 - `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId)
+- `cloud` - Name of the cloud environment that the Log Analytics workspace belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
+- `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).
+- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
