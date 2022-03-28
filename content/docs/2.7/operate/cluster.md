@@ -65,6 +65,17 @@ $env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
 
 All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
 
+## HTTP Proxies
+
+Some scalers issue HTTP requests to external servers (i.e. cloud services). As certain companies require external servers to be accessed by proxy servers, adding the relevant environment variables to both the KEDA Operator, and KEDA Metrics Server deployments (HTTP_PROXY, HTTPS_PROXY, NO_PROXY, etc.) would allow the scaler to connect via the desired proxy.
+
+```yaml
+- env:
+    HTTP_PROXY: http://proxy.server:port
+    HTTPS_PROXY: http://proxy.server:port
+    NO_PROXY: 10.0.0.0/8
+```
+
 ## Kubernetes Client Parameters
 
 The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
