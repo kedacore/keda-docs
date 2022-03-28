@@ -126,8 +126,8 @@ spec:
       tenantId: {azure-ad-tenant-id}                    # Required.
     cloud:                                              # Optional.
       type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-      keyVaultResourceURL: {kv-resource-url-for-cloud}  # Required when type = Private.
-      activeDirectoryEndpoint: {ad-endpoint-for-cloud}  # Required when type = Private.
+      keyVaultResourceURL: {key-vault-resource-url-for-cloud}         # Required when type = Private.
+      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}  # Required when type = Private.
   secrets:                                              # Required.
   - parameter: {param-name-used-for-auth}               # Required.
     name: {key-vault-secret-name}                       # Required.
@@ -253,8 +253,8 @@ azureKeyVault:                                          # Optional.
     tenantId: {azure-ad-tenant-id}                      # Required.
   cloud:                                                # Optional.
     type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-    keyVaultResourceURL: {kv-resource-url-for-cloud}    # Required when type = Private.
-    activeDirectoryEndpoint: {ad-endpoint-for-cloud}    # Required when type = Private.
+    keyVaultResourceURL: {key-vault-resource-url-for-cloud}           # Required when type = Private.
+    activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}    # Required when type = Private.
   secrets:                                              # Required.
   - parameter: {param-name-used-for-auth}               # Required.
     name: {key-vault-secret-name}                       # Required.
