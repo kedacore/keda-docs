@@ -29,7 +29,7 @@ triggers:
     # Optional (Default: AzurePublicCloud)
     cloud: Private
     # Required when cloud = Private
-    resourceManagerEndpoint: https://management.azure.airgap.com/
+    azureResourceManagerEndpoint: https://management.azure.airgap.com/
     # Required when cloud = Private.
     activeDirectoryEndpoint: https://login.airgap.example/
 ```
@@ -51,7 +51,7 @@ triggers:
 - `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. (Optional)
 - `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the active directory client password. (Optional)
 - `cloud` - Name of the cloud environment that the Azure resource belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureGermanCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
-- `resourceManagerEndpoint` - Resource manager endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://management.chinacloudapi.cn/` for `AzureChinaCloud`).
+- `azureResourceManagerEndpoint` - Azure Resource Manager endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://management.chinacloudapi.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
