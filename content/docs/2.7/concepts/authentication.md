@@ -92,42 +92,46 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
-  secretTargetRef:                                    # Optional.
-  - parameter: {scaledObject-parameter-name}          # Required.
-    name: {secret-name}                               # Required.
-    key: {secret-key-name}                            # Required.
-  env:                                                # Optional.
-  - parameter: {scaledObject-parameter-name}          # Required.
-    name: {env-name}                                  # Required.
-    containerName: {container-name}                   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-  hashiCorpVault:                                     # Optional.
-    address: {hashicorp-vault-address}                # Required.
-    namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
-    authentication: token | kubernetes                # Required.
-    role: {hashicorp-vault-role}                      # Optional.
-    mount: {hashicorp-vault-mount}                    # Optional.
-    credential:                                       # Optional.
-      token: {hashicorp-vault-token}                  # Optional.
-      serviceAccount: {path-to-service-account-file}  # Optional.
-    secrets:                                          # Required.
-    - parameter: {scaledObject-parameter-name}        # Required.
-      key: {hasicorp-vault-secret-key-name}           # Required.
-      path: {hasicorp-vault-secret-path}              # Required.
-  azureKeyVault:                                      # Optional
-    vaultURI: {key-vault-address}                     # Required
-    credentials:                                      # Required
-      clientId: {azure-ad-client-id}                  # Required
-      clientSecret:                                   # Required
-        valueFrom:                                    # Required
-          secretKeyRef:                               # Required
-            name: {k8s-secret-with-azure-ad-secret}   # Required
-            key: {key-within-the-secret}              # Required
-      tenantId: {azure-ad-tenant-id}                  # Required
-    secrets:                                          # Required
-    - parameter: {param-name-used-for-auth}           # Required
-      name: {key-vault-secret-name}                   # Required
-      version: {key-vault-secret-version}             # Optional
+      provider: none | azure | aws-eks | aws-kiam       # Optional. Default: none
+  secretTargetRef:                                      # Optional.
+  - parameter: {scaledObject-parameter-name}            # Required.
+    name: {secret-name}                                 # Required.
+    key: {secret-key-name}                              # Required.
+  env:                                                  # Optional.
+  - parameter: {scaledObject-parameter-name}            # Required.
+    name: {env-name}                                    # Required.
+    containerName: {container-name}                     # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  hashiCorpVault:                                       # Optional.
+    address: {hashicorp-vault-address}                  # Required.
+    namespace: {hashicorp-vault-namespace}              # Optional. Default is root namespace. Useful for Vault Enterprise
+    authentication: token | kubernetes                  # Required.
+    role: {hashicorp-vault-role}                        # Optional.
+    mount: {hashicorp-vault-mount}                      # Optional.
+    credential:                                         # Optional.
+      token: {hashicorp-vault-token}                    # Optional.
+      serviceAccount: {path-to-service-account-file}    # Optional.
+    secrets:                                            # Required.
+    - parameter: {scaledObject-parameter-name}          # Required.
+      key: {hasicorp-vault-secret-key-name}             # Required.
+      path: {hasicorp-vault-secret-path}                # Required.
+  azureKeyVault:                                        # Optional.
+    vaultURI: {key-vault-address}                       # Required.
+    credentials:                                        # Required.
+      clientId: {azure-ad-client-id}                    # Required.
+      clientSecret:                                     # Required.
+        valueFrom:                                      # Required.
+          secretKeyRef:                                 # Required.
+            name: {k8s-secret-with-azure-ad-secret}     # Required.
+            key: {key-within-the-secret}                # Required.
+      tenantId: {azure-ad-tenant-id}                    # Required.
+    cloud:                                              # Optional.
+      type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
+      keyVaultResourceURL: {key-vault-resource-url-for-cloud}         # Required when type = Private.
+      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}  # Required when type = Private.
+  secrets:                                              # Required.
+  - parameter: {param-name-used-for-auth}               # Required.
+    name: {key-vault-secret-name}                       # Required.
+    version: {key-vault-secret-version}                 # Optional.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -223,7 +227,7 @@ hashiCorpVault:                                     # Optional.
 
 ### Azure Key Vault secret(s)
 
-You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key. 
+You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key.
 
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
@@ -233,21 +237,28 @@ Key Vault [documentation](https://docs.microsoft.com/en-us/azure/key-vault/gener
 The `clientId` and `tenantId` for the application
 are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a secret on the cluster.
 
+The `cloud` parameter can be used to specify cloud environments besides `Azure Public Cloud`, such as known Azure clouds like
+`Azure China Cloud`, etc. and even Azure Stack Hub or Air Gapped clouds.
+
 ```yaml
-azureKeyVault:                                      # Optional
-  vaultURI: {key-vault-address}                     # Required
-  credentials:                                      # Required
-    clientId: {azure-ad-client-id}                  # Required
-    clientSecret:                                   # Required
-      valueFrom:                                    # Required
-        secretKeyRef:                               # Required
-          name: {k8s-secret-with-azure-ad-secret}   # Required
-          key: {key-within-the-secret}              # Required
-    tenantId: {azure-ad-tenant-id}                  # Required
-  secrets:                                          # Required
-  - parameter: {param-name-used-for-auth}           # Required
-    name: {key-vault-secret-name}                   # Required
-    version: {key-vault-secret-version}             # Optional
+azureKeyVault:                                          # Optional.
+  vaultURI: {key-vault-address}                         # Required.
+  credentials:                                          # Required.
+    clientId: {azure-ad-client-id}                      # Required.
+    clientSecret:                                       # Required.
+      valueFrom:                                        # Required.
+        secretKeyRef:                                   # Required.
+          name: {k8s-secret-with-azure-ad-secret}       # Required.
+          key: {key-within-the-secret}                  # Required.
+    tenantId: {azure-ad-tenant-id}                      # Required.
+  cloud:                                                # Optional.
+    type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
+    keyVaultResourceURL: {key-vault-resource-url-for-cloud}           # Required when type = Private.
+    activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}    # Required when type = Private.
+  secrets:                                              # Required.
+  - parameter: {param-name-used-for-auth}               # Required.
+    name: {key-vault-secret-name}                       # Required.
+    version: {key-vault-secret-version}                 # Optional.
 ```
 
 ### Pod Authentication Providers
