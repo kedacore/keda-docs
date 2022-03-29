@@ -46,8 +46,8 @@ for further details.
 - `activeDirectoryClientId` - Id of the Active Directory client. The client must have `Monitoring Reader` permissions for the Application Insights instance.
 - `activeDirectoryClientPassword` - Password of the Active Directory client password.
 - `metricFilter` - Further specify the metrics query using a filter. For example `cloud/roleName eq 'example`. (Optional)
-- `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
-- `appInsightsResourceURL` - Application Insights REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
+- `cloud` - Name of the cloud environment that the Azure Application Insights instance belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
+- `appInsightsResourceURL` - Application Insights REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.applicationinsights.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 Some parameters can be provided using environment variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
