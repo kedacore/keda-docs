@@ -44,6 +44,7 @@ triggers:
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
 - `clientSecret` - Password of the Azure AD application.
+- `cloud` - Name of the cloud environment that the Azure Data Explorer cluster belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
