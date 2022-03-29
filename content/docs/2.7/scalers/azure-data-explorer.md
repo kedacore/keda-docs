@@ -29,6 +29,10 @@ triggers:
     clientIdFromEnv: AAD_APP_CLIENT_ID_ENV_VAR_NAME # Optional. You can use this instead of `clientId` parameter.
     clientSecretFromEnv: AAD_APP_SECRET_ENV_VAR_NAME # Optional. You can use this instead of `clientSecret` parameter.
     tenantIdFromEnv: AAD_APP_TENANT_ID_ENV_VAR_NAME # Optional. You can use this instead of `tenantId` parameter.
+    # Optional (Default: AzurePublicCloud)
+    cloud: Private
+    # Required when cloud = Private.
+    activeDirectoryEndpoint: https://login.airgap.example/
 ```
 
 **Parameter list:**
@@ -40,6 +44,8 @@ triggers:
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
 - `clientSecret` - Password of the Azure AD application.
+- `cloud` - Name of the cloud environment that the Azure Data Explorer cluster belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
+- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -83,9 +89,9 @@ kind: Secret
 metadata:
   name: azure-data-explorer-secret
 data:
-  clientId: <clientId> # Base64 encoded 
-  clientSecret: <clientSecret> # Base64 encoded 
-  tenantId: <tenantId> # Base64 encoded 
+  clientId: <clientId> # Base64 encoded
+  clientSecret: <clientSecret> # Base64 encoded
+  tenantId: <tenantId> # Base64 encoded
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -95,7 +101,7 @@ spec:
   secretTargetRef:
     - parameter: clientId
       name: azure-data-explorer-secret # Required. Refers to the name of the secret
-      key: clientId 
+      key: clientId
     - parameter: clientSecret
       name: azure-data-explorer-secret
       key: clientSecret
@@ -175,9 +181,9 @@ metadata:
   name: azure-data-explorer-secrets
 type: Opaque
 data:
-  clientId: <clientId> # Base64 encoded 
-  clientSecret: <clientSecret> # Base64 encoded 
-  tenantId: <tenantId> # Base64 encoded 
+  clientId: <clientId> # Base64 encoded
+  clientSecret: <clientSecret> # Base64 encoded
+  tenantId: <tenantId> # Base64 encoded
 ---
 apiVersion: apps/v1
 kind: Deployment
