@@ -14,7 +14,7 @@ This specification describes the `mysql` trigger that scales based on result of 
 The trigger always requires the following information:
 
 - `query` - A MySQL query that should return single numeric value.
-- `queryValue` - A threshold that is used as `targetAverageValue` in HPA.
+- `queryValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in HPA.
 
 To provide information about how to connect to MySQL you can provide:
 
