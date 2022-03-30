@@ -34,7 +34,7 @@ type PushScaler interface {
 
 The `Scaler` interface defines 4 methods:
 
-- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs. KEDA will scale to 1 if this method returns `true`.
+- `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs. KEDA will scale to the `minReplicaCount`, defined in the ScaledObject/ScaledJob CRDs, if this method returns `true`.
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
 - `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
