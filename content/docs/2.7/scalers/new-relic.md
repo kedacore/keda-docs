@@ -36,7 +36,7 @@ triggers:
 - `region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
 - `noDataError` - Should queries that return nodata be treated as an error (Values: `true`, `false`, Default: `false`, Optional)
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
-- `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
+- `threshold` - A threshold that is used as the `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the HPA configuration.
 
 ### Authentication Parameters
 
