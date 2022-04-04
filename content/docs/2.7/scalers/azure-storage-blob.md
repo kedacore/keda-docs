@@ -24,6 +24,8 @@ triggers:
     blobDelimiter: /example
     cloud: Private
     endpointSuffix: blob.core.airgap.example # Required when cloud=Private
+    recursive: false
+    globPattern: glob-pattern
 ```
 
 **Parameter list:**
@@ -35,6 +37,9 @@ triggers:
 - `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (Default: `""`, Optional)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (Default: `/`, Optional)
 - `cloud` - Name of the cloud environment that the blob belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
+- `recursive` - Indicates whether or not blobs should be counted recursively. (Values: `true`, `false`, Default: `false`, Optional, Equivalent to setting `blobDelimiter` as `""`)
+- `globPattern` - Glob pattern for blob names. The scaler will count all blobs whose names match the pattern
+as metric value. (Default: `""`, Optional, The `blobPrefix`, `blobDelimiter` and `recursive` parameters are ignored when this is specified.)
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the storage blob endpoint suffix of the cloud environment that the blob belongs to, e.g. `blob.core.cloudapi.de` for `AzureGermanCloud`.
 

@@ -38,7 +38,7 @@ The `Scaler` interface defines 4 methods:
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
 - `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
-> Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
+> Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA supports both `AverageValue` and `Value` metric target types for external metrics. When `AverageValue` (the default metric type) is used, the metric value returned by the external scaler will be divided by the number of replicas.
 
 The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
 

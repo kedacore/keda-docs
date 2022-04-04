@@ -31,7 +31,7 @@ The only constraint is that the target `Custom Resource` must define `/scale` [s
 
 This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
 
-[`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/api/v1alpha1/scaledobject_types.go)
+[`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledobject_types.go)
 
 ```yaml
 apiVersion: keda.sh/v1alpha1

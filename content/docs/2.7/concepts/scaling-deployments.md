@@ -31,7 +31,7 @@ The only constraint is that the target `Custom Resource` must define `/scale` [s
 
 This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
 
-[`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/api/v1alpha1/scaledobject_types.go)
+[`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledobject_types.go)
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -65,8 +65,6 @@ spec:
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
-
-> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
 
 ### Details
 ```yaml
@@ -116,7 +114,7 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
 
-If this property is set, KEDA will scale the resource down to this number of replicas. If there's some activity on target triggers KEDA will scale the target resource immediately to `minReplicaCount` and then will be scaling handled by HPA. When there is no activity, the target resource is again scaled down to `idleReplicaCount`. This seting must be less than `minReplicaCount`.
+If this property is set, KEDA will scale the resource down to this number of replicas. If there's some activity on target triggers KEDA will scale the target resource immediately to `minReplicaCount` and then will be scaling handled by HPA. When there is no activity, the target resource is again scaled down to `idleReplicaCount`. This setting must be less than `minReplicaCount`.
 
 **Example:** If there's no activity on triggers the target resource is scaled down to `idleReplicaCount` (0), once there is an activity the target resource is immediately scaled to `minReplicaCount` (10) and then up to `maxReplicaCount` (100) as needed. If there's no activity on triggers the resource is again scaled down to `idleReplicaCount` (0).
 
@@ -155,9 +153,8 @@ Due to the HPA metric being of type `AverageValue` (see below), this will have t
 **Example:** When my instance of prometheus is unavailable 3 consecutive times, KEDA will change the HPA metric such that the deployment will scale to 6 replicas.
 
 There are a few limitations to using a fallback:
- - It is **not** supported by the CPU & memory scalers and will assume that fallback is disabled in those cases. This is because it only supports scalers that present their target as an `AverageValue` metric.
+ - It only supports scalers whose target is an `AverageValue` metric. Thus, it is **not** supported by the CPU & memory scalers, or by scalers whose metric target type is `Value`. In these cases, it will assume that fallback is disabled.
  - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
-
 
 ---
 #### advanced
@@ -194,6 +191,28 @@ advanced:
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
 **Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
+
+---
+#### triggers
+```yaml
+  triggers:
+  # {list of triggers to activate scaling of the target resource}
+```
+
+> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
+
+Trigger fields:
+- **type**: The type of trigger to use. (Mandatory)
+- **metadata**: The configuration parameters that the trigger requires. (Mandatory)
+- **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
+  - More details can be found [here](./authentication). (Optional)
+- **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
+  - Learn more about how the [Horizontal Pod Autoscaler (HPA) calculates `replicaCount`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) based on metric type and value.
+  - To show the differences between the metric types, let's assume we want to scale a deployment with 3 running replicas based on a queue of messages:
+    - With `AverageValue` metric type, we can control how many messages, on average, each replica will handle. If our metric is the queue size, the threshold is 5 messages, and the current message count in the queue is 20, HPA will scale the deployment to 20 / 5 = 4 replicas, regardless of the current replica count.
+    - The `Value` metric type, on the other hand, can be used when we don't want to take the average of the given metric across all replicas. For example, with the `Value` type, we can control the average time of messages in the queue. If our metric is average time in the queue, the threshold is 5 milliseconds, and the current average time is 20 milliseconds, HPA will scale the deployment to 3 * 20 / 5 = 12.
+
+> ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
 
 ## Long-running executions
 
