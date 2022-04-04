@@ -20,10 +20,11 @@ This specification describes the `datadog` trigger that scales based on a Datado
 ```yaml
 triggers:
 - type: datadog
+  metricType: Value
   metadata:
     query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
     queryValue: "7"
-    type: "global"
+    type: "global" # Deprecated in favor of trigger.metricType
     age: "120"
     metricUnavailableValue: "0"
 ```
@@ -35,6 +36,8 @@ triggers:
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional) 
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional)
+
+> 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
 ### Authentication
 
@@ -97,13 +100,13 @@ spec:
     name: worker
   triggers:
   - type: datadog
+    # Optional: (Value or AverageValue). Whether the target value is global or average per pod. Default: AverageValue
+    metricType: "Value"
     metadata:
       # Required: datadog metric query
       query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
       # Required: according to the number of query result, to scale the TargetRef
       queryValue: "7"
-      # Optional: (Global or Average). Whether the target value is global or average per pod. Default: Average
-      type: "Global"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
       age: "120"
       # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
