@@ -29,6 +29,7 @@ triggers:
     lagThreshold: '5'
     offsetResetPolicy: latest
     allowIdleConsumers: false
+    scaleToZeroOnInvalidOffset: false
     version: 1.0.0
 ```
 
@@ -41,6 +42,9 @@ triggers:
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
+- `scaleToZeroOnInvalidOffset` - This parameter controls what the scaler does when a partition doesn't have a valid offset.
+If 'false' (the default), the scaler will keep a single consumer for that partition. Otherwise ('true'), the consumers for that
+partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 
 > **Note:**
