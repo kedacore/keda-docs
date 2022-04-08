@@ -11,7 +11,7 @@ go_file = "kafka_scaler"
 > - By default, the number of replicas will not exceed:
 >   - The number of partitions on a topic when a topic is specified;
 >   - The number of partitions of *all topics* in the consumer group when no topic is specified;
->   - maxReplicaCount, the default value of the ScaledObject;
+>   - `maxReplicaCount` specified in `ScaledObject`/`ScaledJob`. If not specifed, then the default value of `maxReplicaCount` is taken into account;
 >
 >   That is, if `maxReplicaCount` is set more than number of partitions, the scaler won't scale up to target maxReplicaCount. See `allowIdleConsumers` below to disable this default behavior.
 > - This is so because if there are more number of consumers than the number of partitions in a topic, then extra consumer will have to sit idle.
