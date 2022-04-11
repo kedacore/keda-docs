@@ -46,9 +46,9 @@ You can use `TriggerAuthentication` CRD to configure the authentication with a `
 
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 
-- `account` - The account within New Relic that the request should be targeted against. This can be used to replace the value that would be provider in the trigger.
+- `account` - The account within New Relic that the request should be targeted against. This can be used to replace the value that would be provided in the trigger.
 
-- `region` - The region to connect to for the New Relic apis. This can be used to replace the value that would be provider in the trigger.
+- `region` - The region to connect to for the New Relic apis. This can be used to replace the value that would be provided in the trigger.
 
 ### Example
 
