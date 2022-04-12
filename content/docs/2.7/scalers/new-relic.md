@@ -46,6 +46,10 @@ You can use `TriggerAuthentication` CRD to configure the authentication with a `
 
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 
+- `account` - The account within New Relic that the request should be targeted against. This can be used to replace the value that would be provided in the trigger.
+
+- `region` - The region to connect to for the New Relic apis. This can be used to replace the value that would be provided in the trigger.
+
 ### Example
 
 ```yaml
@@ -57,6 +61,8 @@ metadata:
 type: Opaque
 data:
   apiKey: TlJBSy0xMjM0NTY3ODkwMTIzNDU2Nwo= # base64 encoding of the new relic api key NRAK-12345678901234567
+  account: MTIzNDU2 # base64 encoding of the new relic account number 123456
+  region: VVM= # base64 encoding of the new relic region US
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -68,6 +74,12 @@ spec:
   - parameter: queryKey
     name: new-relic-secret
     key: apiKey
+  - parameter: account
+    name: new-relic-secret
+    key: account
+  - parameter: region
+    name: new-relic-secret
+    key: region
 
 ---
 apiVersion: keda.sh/v1alpha1
@@ -82,8 +94,6 @@ spec:
   triggers:
     - type: new-relic
       metadata:
-        account: 1234567
-        region: "US"
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
         noDataError: "true"
         threshold: 1000
