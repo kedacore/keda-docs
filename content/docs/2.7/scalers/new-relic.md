@@ -74,11 +74,9 @@ spec:
   - parameter: queryKey
     name: new-relic-secret
     key: apiKey
-  secretTargetRef:
   - parameter: account
     name: new-relic-secret
     key: account
-  secretTargetRef:
   - parameter: region
     name: new-relic-secret
     key: region
