@@ -214,6 +214,18 @@ Trigger fields:
 
 > ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
 
+### Pause autoscaling
+
+It can be useful to instruct KEDA to pause autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. You can enable this by adding the below annotation to your `ScaledObject` definition:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused-replicas: "0"
+```
+
+The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject`definition.
+
 ## Long-running executions
 
 One important consideration to make is how this pattern can work with long running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
