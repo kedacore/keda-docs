@@ -85,7 +85,7 @@ Kubernetes allows you to autoscale based on custom & external metrics which are 
 
 Because KEDA primarily serves metrics for metric sources outside of the Kubernetes cluster, it uses external metrics and not custom metrics.
 
-This is why KEDA registers the `v1beta1.external.metrics.k8s.io` namespace in the API service.
+This is why KEDA registers the `v1beta1.external.metrics.k8s.io` namespace in the API service. However, this is just an implementation detail as both offer the same functionality.
 
 Read [this article](https://cloud.google.com/kubernetes-engine/docs/concepts/custom-and-external-metrics) by Google Cloud to learn more.
 """
