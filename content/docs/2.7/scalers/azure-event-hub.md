@@ -26,6 +26,8 @@ triggers:
     endpointSuffix: servicebus.airgap.example
     # Required when cloud = Private.
     activeDirectoryEndpoint: https://login.airgap.example/
+    # Required when cloud = Private.
+    eventHubResourceURL: https://eventhubs.airgap.example/
 ```
 
 **Parameter list:**
@@ -43,6 +45,7 @@ triggers:
 - `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.microsoftonline.de/` for `AzureGermanCloud`).
+- `eventHubResourceURL` - Event Hub resource URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://eventhubs.azure.net/` for known Azure Clouds).
 
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
