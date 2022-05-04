@@ -17,10 +17,12 @@ triggers:
   metadata:
     # Required: namespace
     namespace: AWS/SQS
-    # Required: Dimension Name - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName
+    # Required if not querying with expression: Dimension Name - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName
     dimensionName: QueueName
-    # Required: Dimension Value - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2
+    # Required if not querying with expression: Dimension Value - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2
     dimensionValue: keda
+    # Required if querying with expression: Expression query - https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html
+    expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2"
     minMetricValue: "0"
