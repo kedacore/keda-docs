@@ -43,18 +43,22 @@ Deploying KEDA with Helm is very simple:
 
 ### Uninstall
 
-If you want to remove KEDA from a cluster, you first need to remove any ScaledObjects that you have created. Once that is done, the Helm chart can be uninstalled:
+If you want to remove KEDA from a cluster, you first need to remove any ScaledObjects and ScaledJobs that you have created. Once that is done, the Helm chart can be uninstalled:
 
 ```sh
-kubectl delete $(kubectl get scaledobject -oname)
+kubectl delete $(kubectl get scaledobjects,scaledjobs -oname)
 helm uninstall keda -n keda
 ```
 
-Note: if you uninstall the Helm chart without first deleting the ScaledObjects, they will become orphaned. In this situation, you will need to patch the ScaledObjects to remove their finalizers. Once this is done, they should automatically be removed:
+Note: if you uninstall the Helm chart without first deleting any ScaledObject or ScaledJob resources you have created, they will become orphaned. In this situation, you will need to patch the resources to remove their finalizers. Once this is done, they should automatically be removed:
 
 ```sh
-for i in $(kubectl get scaledobject | awk '{ print $1 }' | awk 'NR!=1 {print}');
-do kubectl patch scaledobject $i -p '{"metadata":{"finalizers":null}}' --type=merge
+for i in $(kubectl get scaledobjects -oname);
+do kubectl patch $i -p '{"metadata":{"finalizers":null}}' --type=merge
+done
+
+for i in $(kubectl get scaledjobs -oname);
+do kubectl patch $i -p '{"metadata":{"finalizers":null}}' --type=merge
 done
 ```
 
