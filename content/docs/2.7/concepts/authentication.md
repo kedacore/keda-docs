@@ -92,7 +92,7 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
+      provider: none | azure | aws-eks | aws-kiam       # Optional. Default: none
   secretTargetRef:                                      # Optional.
   - parameter: {scaledObject-parameter-name}            # Required.
     name: {secret-name}                                 # Required.
@@ -231,7 +231,7 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
-You can use pod identity providers `azure` or `azure-workload` to authenticate to the key vault by specifying it in the
+You can use pod identity provider `azure` to authenticate to the key vault by specifying it in the
 `TriggerAuthentication` / `ClusterTriggerAuthentication` definition.
 
 If you do not wish to use a pod identity provider, you need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
@@ -270,7 +270,7 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
+  provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
 ```
 
 #### Azure Pod Identity
@@ -285,27 +285,6 @@ podIdentity:
 ```
 
 Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
-
-#### Azure Workload Identity
-
-[**Azure AD Workload Identity**](https://github.com/Azure/azure-workload-identity) is the newer version of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity). It lets your Kubernetes workloads access Azure resources using an
-[**Azure AD Application**](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
-without having to specify secrets, using [federated identity credentials](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html) - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Workload Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure-workload # Optional. Default: none
-```
-
-Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
-to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/service-account-labels-and-annotations.html) for more information. You can set these labels and annotations on the KEDA Operator service account. This can be done for you during deployment with Helm with the
-following flags -
-
-1. `--set podIdentity.azureWorkload.enabled=true`
-2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
-3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
 
 #### EKS Pod Identity Webhook for AWS
 
