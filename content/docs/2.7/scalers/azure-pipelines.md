@@ -92,6 +92,11 @@ spec:
     name: azdevops-deployment
   minReplicaCount: 1
   maxReplicaCount: 5 
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 1800 # Pool scale down after 30 minutes of idle time, range 0 - 3600 seconds
   triggers:
   - type: azure-pipelines
     metadata:
