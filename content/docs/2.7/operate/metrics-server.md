@@ -35,7 +35,7 @@ This will return a json with the list of metrics exposed by KEDA:
 }
 ```
 
-You can also query for the value of a specifyc metric using `kubectl`:
+You can also query for the value of a specifc metric using `kubectl`:
 ```bash
 kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/YOUR_NAMESPACE/YOUR_METRIC_NAME"
 ```
