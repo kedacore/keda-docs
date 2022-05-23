@@ -28,7 +28,7 @@
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
       {{ range $allVersions }}
-      {{ $isLatest := eq . $version }}
+      {{ $isLatest := eq . $latest }}
       <a class="dropdown-item" href="/docs/{{ . }}">
         <span>
           {{ . }}
