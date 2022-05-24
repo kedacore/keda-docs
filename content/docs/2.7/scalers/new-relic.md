@@ -97,6 +97,6 @@ spec:
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
         noDataError: "true"
         threshold: 1000
-        authenticationRef:
-          name: keda-trigger-auth-new-relic
+      authenticationRef:
+        name: keda-trigger-auth-new-relic
 ```
