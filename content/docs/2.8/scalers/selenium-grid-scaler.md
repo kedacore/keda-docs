@@ -29,6 +29,7 @@ triggers:
 
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
 - `browserName` - Name of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
+- `sessionBrowserName` -  Name of the browser when it is an active session, only set if `BrowserName` changes between the queue and the active session. See the Edge example below for further detail. (Optional)
 - `browserVersion` - Version of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
@@ -57,7 +58,7 @@ spec:
 
 The above example will create Chrome browser nodes equal to the requests pending in session queue for Chrome browser.
 
-Similary for Firefox
+Similarly for Firefox
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -76,6 +77,28 @@ spec:
       metadata:
         url: 'http://selenium-hub:4444/graphql'
         browserName: 'firefox'
+```
+
+Similarly for Edge. Note that for Edge you must set the `sessionBrowserName` to `msedge` inorder for scaling to work properly.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: selenium-grid-edge-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: selenium-edge-node
+spec:
+  maxReplicaCount: 8
+  scaleTargetRef:
+    name: selenium-edge-node
+  triggers:
+    - type: selenium-grid
+      metadata:
+        url: 'http://selenium-hub:4444/graphql'
+        browserName: 'MicrosoftEdge'
+        sessionBrowserName: 'msedge'
 ```
 
 If you are supporting multiple versions of browser capability in your Selenium Grid, You should create one scaler for every browser version and pass the `browserVersion` in the metadata.
