@@ -62,6 +62,7 @@ spec:
           - type: Percent
             value: 100
             periodSeconds: 15
+      name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
@@ -182,6 +183,7 @@ advanced:
         - type: Percent
           value: 100
           periodSeconds: 15
+    name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
 ```
 
 **`horizontalPodAutoscalerConfig:`**
@@ -191,6 +193,10 @@ advanced:
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
 **Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
+
+**`horizontalPodAutoscalerConfig.name`:**
+
+The name of the HPA resource KEDA will create. By default it's `keda-hpa-{scaled-object-name}`  
 
 ---
 #### triggers
