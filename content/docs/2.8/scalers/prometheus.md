@@ -34,7 +34,7 @@ triggers:
 - `threshold` - Value to start scaling for.
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 - `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
-- `ignoreNullValues` - Default is `enable`, set to `disable` to reporting error when prometheus target is lost. (Optional)
+- `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `enable`,`disable`, Default: `enable`, Optional)
 
 ### Authentication Parameters
 
