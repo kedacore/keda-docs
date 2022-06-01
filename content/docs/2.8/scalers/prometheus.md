@@ -23,6 +23,7 @@ triggers:
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
+    ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost 
 ```
 
 **Parameter list:**
@@ -33,6 +34,7 @@ triggers:
 - `threshold` - Value to start scaling for.
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 - `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
+- `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 
 ### Authentication Parameters
 
