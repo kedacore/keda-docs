@@ -4,16 +4,16 @@ availability = "v2.8+"
 maintainer = "Community"
 description = "Scale applications based on AWS DynamoDB Streams"
 layout = "scaler"
-go_file = "aws_dynamodb_stream_scaler"
+go_file = "aws_dynamodb_streams_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `aws-dynamodb-stream` trigger that scales based on the shard count of AWS DynamoDB Streams.
+This specification describes the `aws-dynamodb-streams` trigger that scales based on the shard count of AWS DynamoDB Streams.
 
 ```yaml
 triggers:
-- type: aws-dynamodb-stream
+- type: aws-dynamodb-streams
   metadata:
     # Required: awsRegion
     awsRegion: "ap-northeast-1"
@@ -84,13 +84,13 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name:  aws-dynamodb-stream-scaledobject
+  name:  aws-dynamodb-streams-scaledobject
   namespace: keda-test
 spec:
   scaleTargetRef:
     name: nginx-deployment
   triggers:
-  - type: aws-dynamodb-stream
+  - type: aws-dynamodb-streams
     authenticationRef:
       name: keda-trigger-auth-aws-credentials
     metadata:
@@ -133,13 +133,13 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name:  aws-dynamodb-stream-scaledobject
+  name:  aws-dynamodb-streams-scaledobject
   namespace: keda-test
 spec:
   scaleTargetRef:
     name: nginx-deployment
   triggers:
-  - type: aws-dynamodb-stream
+  - type: aws-dynamodb-streams
     authenticationRef:
       name: keda-trigger-auth-aws-credentials
     metadata:
