@@ -32,6 +32,8 @@ triggers:
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
+The `alignmentPeriodSeconds`, `alignmentAligner` and `alignmentReducer` properties controls time series aggregation before the metrics are returned. See below for more details.
+
 ### Timeseries alignment properties
 It is much better to aggregate the time series values before they are returned from stackdriver instead of getting the raw values.
 For that, you must specify a value of 60 or more for the `alignmentPeriodSeconds` property as well as an alignment operation in the `alignmentAligner` property and/or a reducer in the `alignmentReducer` property.
