@@ -19,6 +19,9 @@ triggers:
     filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
     targetValue: '100'
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
+    alignmentPeriodSeconds: 60
+    alignmentAligner: mean
+    alignmentReducer: none
 ```
 
 **Parameter list:**
@@ -28,6 +31,15 @@ triggers:
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional)
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
+
+### Timeseries alignment properties
+It is much better to aggregate the time series values before they are returned from stackdriver instead of getting the raw values.
+For that, you must specify a value of 60 or more for the `alignmentPeriodSeconds` property as well as an alignment operation in the `alignmentAligner` property and/or a reducer in the `alignmentReducer` property.
+
+Valid values for the `alignmentAligner` property are: none, delta, interpolate, next_older, min, max, mean, count, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50, percentile_05 and percent_change.
+Valid values for the `alignmentReducer` property are: none, mean, min, max, sum, stddev, true, false, fraction_true, percentile_99, percentile_95, percentile_50 and percentile_05.
+
+For more information on aggregation, see [here](https://cloud.google.com/monitoring/api/v3/aggregation#aggr-intro).
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
