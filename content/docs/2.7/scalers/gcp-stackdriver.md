@@ -39,7 +39,7 @@ It is much better to aggregate the time series values before they are returned f
 For that, you must specify a value of 60 or more for the `alignmentPeriodSeconds` property as well as an alignment operation in the `alignmentAligner` property and/or a reducer in the `alignmentReducer` property.
 
 Valid values for the `alignmentAligner` property are: none, delta, interpolate, next_older, min, max, mean, count, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50, percentile_05 and percent_change.
-Valid values for the `alignmentReducer` property are: none, mean, min, max, sum, stddev, true, false, fraction_true, percentile_99, percentile_95, percentile_50 and percentile_05.
+Valid values for the `alignmentReducer` property are: none, mean, min, max, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50 and percentile_05.
 
 For more information on aggregation, see [here](https://cloud.google.com/monitoring/api/v3/aggregation#aggr-intro).
 
