@@ -242,7 +242,6 @@ There are some important topics to take into account:
 - Opposite to Scaling value, the Activation value is always optional and the default value is 0.
 - The Activation value has more priority than the Scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
-
 ## Long-running executions
 
 One important consideration to make is how this pattern can work with long running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
