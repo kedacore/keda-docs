@@ -228,7 +228,7 @@ The presensce of this annotation will pause autoscaling no matter what number of
 
 ### Activating and Scaling thresholds
 
-There are user cases where the activating value (0-1 and 1-0) is totally different than the scaling value (1-N and N-1). KEDA brings support to specify different values for each case:
+There are user cases where the activating value (0-1 and 1-0) is totally different than 0, ie: workloads scaled with prometheus scaler where the values go from -X to X. KEDA brings support to specify different values for each case:
 
 - Activation: This value will be used to consider the scaler active or not and scale from/to 0 based on it.
 - Scaling: This value will be passed to the HPA as the target value and the HPA controller will try to reach it.
