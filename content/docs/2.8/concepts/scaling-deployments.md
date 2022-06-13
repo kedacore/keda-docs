@@ -224,7 +224,22 @@ metadata:
     autoscaling.keda.sh/paused-replicas: "0"
 ```
 
-The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject`definition.
+### Activating and Scaling thresholds
+
+There are user cases where the activating value (0-1 and 1-0) is totally different than the scaling value (1-N and N-1). KEDA brings support to specify different values for each case:
+
+- Activation: This value will be used to consider the scaler active or not and scale from/to 0 based on it.
+- Scaling: This value will be passed to the HPA as the target value and the HPA controller will try to reach it.
+
+> ⚠️ **NOTE:** If the minimum replicas is >= 1, the scaler is always active and the Activation value will be ignored.
+
+Each scaler defines in its own docs the proper parameters for each case, but the key for specifying the activation value will be always the same as the scaling value, appending the prefix `activation` (ie: `threshold` for scaling and `activationThreshold` for activation).
+
+There are some important topics to take into account:
+
+- Opposite to Scaling value, the Activation value is always optional and the default value is 0.
+- The Activation value has more priority than the Scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
+
 
 ## Long-running executions
 
