@@ -228,14 +228,14 @@ The presensce of this annotation will pause autoscaling no matter what number of
 
 ### Activating and Scaling thresholds
 
-There are user cases where the activating value (0-1 and 1-0) is totally different than 0, ie: workloads scaled with prometheus scaler where the values go from -X to X. KEDA brings support to specify different values for each case:
+There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X. KEDA allows you to specify different values for each scenario:
 
-- Activation: This value will be used to consider the scaler active or not and scale from/to 0 based on it.
-- Scaling: This value will be passed to the HPA as the target value and the HPA controller will try to reach it.
+- **Activation:** Defines when the scaler is active or not and scales from/to 0 based on it.
+- **Scaling:** Defines the target value to scale the workload from 1 to _n_ instances and vice versa. To achieve this, KEDA passes the target value to the Horizontal Pod Autoscaler (HPA) and the built-in HPA controller will handle all the autoscaling.
 
 > ⚠️ **NOTE:** If the minimum replicas is >= 1, the scaler is always active and the Activation value will be ignored.
 
-Each scaler defines in its own docs the proper parameters for each case, but the key for specifying the activation value will be always the same as the scaling value, appending the prefix `activation` (ie: `threshold` for scaling and `activationThreshold` for activation).
+Each scaler defines parameters for their use-cases, but the activation can always be the same as the scaling value, appended by the prefix `activation` (ie: `threshold` for scaling and `activationThreshold` for activation).
 
 There are some important topics to take into account:
 
