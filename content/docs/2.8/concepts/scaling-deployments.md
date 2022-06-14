@@ -226,7 +226,7 @@ metadata:
 
 The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject`definition.
 
-### Activating and Scaling thresholds
+### `Activating` and `Scaling` thresholds
 
 There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X. KEDA allows you to specify different values for each scenario:
 
