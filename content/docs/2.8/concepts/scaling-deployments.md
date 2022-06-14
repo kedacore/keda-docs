@@ -233,14 +233,14 @@ There are use-cases where the activating value (0-1 and 1-0) is totally differen
 - **Activation:** Defines when the scaler is active or not and scales from/to 0 based on it.
 - **Scaling:** Defines the target value to scale the workload from 1 to _n_ instances and vice versa. To achieve this, KEDA passes the target value to the Horizontal Pod Autoscaler (HPA) and the built-in HPA controller will handle all the autoscaling.
 
-> ⚠️ **NOTE:** If the minimum replicas is >= 1, the scaler is always active and the Activation value will be ignored.
+> ⚠️ **NOTE:** If the minimum replicas is >= 1, the scaler is always active and the activation value will be ignored.
 
 Each scaler defines parameters for their use-cases, but the activation can always be the same as the scaling value, appended by the prefix `activation` (ie: `threshold` for scaling and `activationThreshold` for activation).
 
 There are some important topics to take into account:
 
-- Opposite to Scaling value, the Activation value is always optional and the default value is 0.
-- The Activation value has more priority than the Scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
+- Opposite to scaling value, the activation value is always optional and the default value is 0.
+- The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
 ## Long-running executions
 
