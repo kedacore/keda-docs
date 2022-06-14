@@ -341,6 +341,10 @@ url = "https://docplanner.tech"
 logo = "docplanner-tech.png"
 
 [[params.users]]
+url = "https://www.fedex.com/en-us/home.html/"
+logo = "fedex.png"
+
+[[params.users]]
 url = "https://fission.io/"
 logo = "fission.png"
 
