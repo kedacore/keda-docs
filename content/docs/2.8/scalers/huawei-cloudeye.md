@@ -19,8 +19,8 @@ triggers:
     metricName: mb_l7_qps
     dimensionName: lbaas_instance_id
     dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
-    targetMetricValue: "100"
-    minMetricValue: "1"
+    targetMetricValue: "5.5"
+    minMetricValue: "1.1"
 ```
 
 **Parameter list:**
@@ -29,8 +29,8 @@ triggers:
 - `metricName` - Name of the metric.
 - `dimensionName` - Name of the metric dimension.
 - `dimensionValue` - Value of the metric dimension.
-- `targetMetricValue` - Target value for your metric.
-- `minMetricValue` - Minimum value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active.
+- `targetMetricValue` - Target value for your metric. (This value can be a float)
+- `minMetricValue` - Minimum value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active. (This value can be a float)
 - `metricCollectionTime` - Collection time of the metric in seconds. Equivalent to the earliest start time of the end time. (default: 300)
 - `metricFilter` - Aggregation method of the metric. (Values: `average`, `max`, `min`, `sum`, Default: `average`, Optional)
 - `metricPeriod` - Granularity of the metric in seconds. (Default: 300, Optional)
