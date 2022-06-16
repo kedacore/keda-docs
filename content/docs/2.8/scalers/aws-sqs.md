@@ -30,7 +30,8 @@ triggers:
 
 > For the purposes of scaling, the default formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing. If you wish to only scale on `ApproximateNumberOfMessages` set `scaleOnInFlight` to `false`.
 
-- `scaleOnInFlight` - Bool flag to set the metrics to scale on. When set to `false` "actual messages" is equal to `ApproximateNumberOfMessages`. When set to `true` "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing. (default: true)
+- `scaleOnInFlight` - Indication whether or not to scale on queued messages or to include in-flight messages as well.
+  - When set to `false` "actual messages" is equal to `ApproximateNumberOfMessages`. When set to `true` "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing. (default: true)
 - `awsRegion` - AWS Region for the SQS Queue.
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
