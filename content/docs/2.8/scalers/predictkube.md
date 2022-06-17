@@ -28,6 +28,8 @@ triggers:
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
     queryStep: "2m"
     threshold: '100'
+    # Optional fields:
+    metricName: http_requests_total
 ```
 
 **Parameter list:**
@@ -38,6 +40,7 @@ triggers:
 - `query` - Predict the query that will yield the value for the scaler to compare against the `threshold`. The query must return a vector/scalar single element response.
 - `queryStep` - The maximum time between two slices within the boundaries for QML range query, used in the query.
 - `threshold` - Value to start scaling for.
+- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. (Optional, Default: `predictkube_metric`)
 
 ### Authentication Parameters
 
