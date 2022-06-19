@@ -230,18 +230,10 @@ The presensce of this annotation will pause autoscaling no matter what number of
 
 There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X. To give a consisten solution to this problem, KEDA has 2 different phases during the autoscaling process.
 
-- **Activation phase**
-- **Scaling phase**
+- **Activation phase:**: The activating (or deactivating) phase is the moment when KEDA (operator) has to decide if the workload should be scaled from/to zero. KEDA is the responsible for this action based on the result of the scaler `IsActive` function and only applies in from/to 0 scaling.
+- **Scaling phase:** The scaling phase is the moment when KEDA has decided to scale out to 1 instance and now is the HPA controller who takes the scaling decisions based on the configuration defined in the generated HPA (from ScaledObject data) and the metrics exposed by KEDA (metrics server). This phase applies the scaling from 1-N and N-1.
 
-#### **Activating pahse**
-
-The activating (or deactivating) phase is the moment when KEDA (operator) has to decide if the workload should be scaled from/to zero. KEDA is the responsible for this action based on the result of the scaler `IsActive` function and only applies in from/to 0 scaling.
-
-#### **Scaling pahse**
-
-The scaling phase is the moment when KEDA has decided to scale out to 1 instance and now is the HPA controller who takes the scaling decisions based on the configuration defined in the generated HPA (from ScaledObject data) and the metrics exposed by KEDA (metrics server). This phase applies the scaling from 1-N and N-1.
-
-#### **Thresholds**
+#### Managing Activation & Scaling Thresholds
 
 KEDA allows you to specify different values for each scenario:
 
