@@ -19,7 +19,7 @@ triggers:
     serverAddress: http://<prometheus-host>:9090
     metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
-    threshold: '100'
+    threshold: '100.50'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
@@ -31,7 +31,7 @@ triggers:
 - `serverAddress` - Address of Prometheus. server
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - Query to run.
-- `threshold` - Value to start scaling for.
+- `threshold` - Value to start scaling for. (This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 - `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
