@@ -55,6 +55,7 @@ spec:
   advanced:                                          # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false        # Optional. Default: false
     horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+      name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
       behavior:                                      # Optional. Use to modify HPA's scaling behavior
         scaleDown:
           stabilizationWindowSeconds: 300
@@ -175,6 +176,7 @@ For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is 
 ```yaml
 advanced:
   horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+    name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
     behavior:                                      # Optional. Use to modify HPA's scaling behavior
       scaleDown:
         stabilizationWindowSeconds: 300
@@ -185,6 +187,10 @@ advanced:
 ```
 
 **`horizontalPodAutoscalerConfig:`**
+
+**`horizontalPodAutoscalerConfig.name`:**
+
+The name of the HPA resource KEDA will create. By default it's `keda-hpa-{scaled-object-name}`
 
 **`horizontalPodAutoscalerConfig.behavior`:**
 

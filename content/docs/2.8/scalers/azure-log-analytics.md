@@ -41,7 +41,7 @@ triggers:
                 | project Limit = CounterValue, TimeGenerated, CounterPath, AppName)
                 on AppName
         | project MetricValue, Threshold = Limit * ThresholdCoefficient
-      threshold: "1900000000"
+      threshold: "10.7"
       # Alternatively, you can use existing environment variables to read configuration from:
       # See details in "Parameter list" section
       workspaceIdFromEnv: LOG_ANALYTICS_WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter.
@@ -63,7 +63,7 @@ triggers:
 - `clientSecret` - Password from your Azure AD Application/service principal.
 - `workspaceId` - Id of Log Analytics workspace. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id.
 - `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
-- `threshold` - Value that is used as a threshold to calculate # of pods for scale target.
+- `threshold` - Value that is used as a threshold to calculate # of pods for scale target. (This value can be a float)
 - `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId)
 - `cloud` - Name of the cloud environment that the Azure Log Analytics workspace belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).

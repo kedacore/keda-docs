@@ -27,7 +27,7 @@ triggers:
     prometheusAddress: http://<prometheus-host>:9090
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
     queryStep: "2m"
-    threshold: '100'
+    threshold: '100.50'
 ```
 
 **Parameter list:**
@@ -37,7 +37,7 @@ triggers:
 - `prometheusAddress` - Address of Prometheus server.
 - `query` - Predict the query that will yield the value for the scaler to compare against the `threshold`. The query must return a vector/scalar single element response.
 - `queryStep` - The maximum time between two slices within the boundaries for QML range query, used in the query.
-- `threshold` - Value to start scaling for.
+- `threshold` - Value to start scaling for. (This value can be a float)
 
 ### Authentication Parameters
 

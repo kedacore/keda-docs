@@ -24,8 +24,8 @@ triggers:
     # Optional: Expression query
     expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
     metricName: ApproximateNumberOfMessagesVisible
-    targetMetricValue: "2"
-    minMetricValue: "0"
+    targetMetricValue: "2.1"
+    minMetricValue: "1.5"
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS Access Key ID, can use TriggerAuthentication as well
@@ -60,7 +60,8 @@ triggers:
 - `metricStatPeriod` - Which frequency is going to be used by the related query. Used to define **Period**. The value cannot be an arbitrary number, that it must be supported by Cloudwatch. More details can be found from ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#CloudWatchPeriods)). (Default: `300`, Optional)
 - `metricUnit` - Which unit is going to be used by the query. Used to define **Unit** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit)). (Default: `Average`, Optional)
 - `metricEndTimeOffset` - How long in seconds to offset the **EndTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). Due to the eventual consistency model which is used by Cloudwatch, the latest datapoint one can get from Cloudwatch might not be accurate. The `metricEndTimeOffset` config provides a way to skip the most recent datapoint if needed. (Default: `0`, Optional)
-
+- `minMetricValue`- Returned value in case of empty response from cloudwatch. (Default: 0, This value can be a float)
+- `targetMetricValue`- Target value for the metric. (Default: 0, This value can be a float)
 
 ### Authentication Parameters
 
@@ -128,7 +129,7 @@ spec:
       dimensionName: QueueName
       dimensionValue: keda
       metricName: ApproximateNumberOfMessagesVisible
-      targetMetricValue: "2"
+      targetMetricValue: "2.1"
       minMetricValue: "0"
       awsRegion: "eu-west-1"
     authenticationRef:
