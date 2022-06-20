@@ -21,7 +21,7 @@ triggers:
       StormEvents
       | summarize StormCount = count() by State
       | top 1 by StormCount desc
-    threshold: "1000"
+    threshold: "10.5"
     tenantId: 045ef409-6dee-4893-a824-5612eac467b1 # Can use TriggerAuthentication as well
     clientId: 4ba039f1-d69c-434e-9268-4a2bb7bba90d # Can use TriggerAuthentication as well
     clientSecret: t0p-s3cret  # Can use TriggerAuthentication as well
@@ -40,7 +40,7 @@ triggers:
 - `endpoint` - The endpoint to query your Data Explorer Cluster.
 - `databaseName` - The name of the Data Explorer Database to query.
 - `query` - Data Explorer query.
-- `threshold` - Value that is used as a threshold to calculate # of pods for scale target.
+- `threshold` - Value that is used as a threshold to calculate # of pods for scale target. (This value can be a float)
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
 - `clientSecret` - Password of the Azure AD application.
