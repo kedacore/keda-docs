@@ -20,13 +20,13 @@
     {{ if or $availability $maintainer }}
     <footer class="card-footer">
       {{ with $availability }}
-      <div class="card-footer-item is-spaced">
+      <div class="card-footer-item is-spaced card-is-wrapped">
         Availability&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
       </div>
       {{ end }}
 
       {{ with $maintainer }}
-      <div class="card-footer-item">
+      <div class="card-footer-item card-is-wrapped">
         Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
       </div>
       {{ end }}
