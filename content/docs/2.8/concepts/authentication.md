@@ -289,8 +289,7 @@ podIdentity:
 
 Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
 
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under
-the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
 
 #### Azure Workload Identity
 
@@ -314,8 +313,7 @@ following flags -
 2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
 3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
 
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under
-the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
 
 #### EKS Pod Identity Webhook for AWS
 
