@@ -3,7 +3,7 @@
 {{ $btns   := site.Menus.buttons }}
 {{ $sect   := .Section }}
 {{ $docsL  := index site.Params.versions.docs 0 }}
-<section class="hero is-dark is-medium has-background-pattern">
+<section class="hero is-medium has-background-pattern">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-vcentered is-variable is-8">
@@ -47,3 +47,12 @@
     </div>
   </div>
 </section>
+
+<script>
+        $(function () {
+            $(document).scroll(function () {
+                var $nav = $("#mainnav");
+                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+            });
+        });
+    </script>
