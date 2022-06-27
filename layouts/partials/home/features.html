@@ -1,20 +1,20 @@
 {{ $features := site.Params.features }}
 <section class="section">
-  <div class="container">
-    <p class="title is-size-2 is-size-3-mobile" id="features">
+  <div class="container has-text-centered">
+    <p style="padding:10px" class="title is-inline-block underline--magical is-size-1 is-size-3-mobile" id="features">
       Features
     </p>
 
     <br />
 
-    <div class="columns is-multiline is-variable is-4">
+    <div style="margin-top: 20px;" class="columns is-multiline is-variable is-4">
       {{ range $features }}
       <div class="column is-one-third">
-        <div class="card is-borderless has-extra-bottom-margin">
+        <div class="card has-no-shadow is-borderless has-extra-bottom-margin">
           <div class="card-content is-paddingless">
             <p class="title has-text-secondary is-spaced">
               <span class="icon">
-                <i class="fa-lg {{ .icon }}"></i>
+                <i class="fa-lg {{ .icon }} fa-2x"></i>
               </span>
             </p>
 
