@@ -93,6 +93,7 @@ metadata:
 spec:
   podIdentity:
       provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
+      identityId: <identity-id>                         # Optional. Only used by azure & azure-workload providers.
   secretTargetRef:                                      # Optional.
   - parameter: {scaledObject-parameter-name}            # Required.
     name: {secret-name}                                 # Required.
@@ -271,6 +272,7 @@ Currently we support the following:
 ```yaml
 podIdentity:
   provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
+  identityId: <identity-id>                                     # Optional. Only used by azure & azure-workload providers.
 ```
 
 #### Azure Pod Identity
@@ -281,10 +283,13 @@ You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
 
 ```yaml
 podIdentity:
-  provider: azure # Optional. Default: none
+  provider: azure           # Optional. Default: none
+  identityId: <identity-id> # Optional. Default: Identity linked with the label set when installing KEDA.
 ```
 
 Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
+
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
 
 #### Azure Workload Identity
 
@@ -296,7 +301,8 @@ You can tell KEDA to use Azure AD Workload Identity via `podIdentity.provider`.
 
 ```yaml
 podIdentity:
-  provider: azure-workload # Optional. Default: none
+  provider: azure-workload  # Optional. Default: none
+  identityId: <identity-id> # Optional. Default: ClientId From annotation on service-account.
 ```
 
 Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
@@ -306,6 +312,8 @@ following flags -
 1. `--set podIdentity.azureWorkload.enabled=true`
 2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
 3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
+
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
 
 #### EKS Pod Identity Webhook for AWS
 
