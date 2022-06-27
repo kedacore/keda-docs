@@ -2,17 +2,20 @@
 {{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
 <section class="section">
   <div class="container">
-    <p class="title is-size-2 is-size-3-mobile is-spaced" id="scalers">
+	  <div class="has-text-centered">
+		<p style="padding:10px"  
+		   class="title is-inline-block is-size-1 is-size-3-mobile is-spaced underline--magical-2 " id="scalers">
       Scalers
-    </p>
+    	</p>
 
-    <p class="subtitle has-text-dark is-size-4 is-size-5-mobile">
-      Scalers represent event sources that KEDA can scale based on
-    </p>
+    	<p class="subtitle has-text-dark is-size-4 is-size-5-mobile has-text-centered">
+     		Scalers represent event sources that KEDA can scale based on
+    	</p>	  
+	  </div>
 
     <br />
 
-    <div class="columns is-multiline">
+    <div style="margin-top:20px" class="columns is-multiline">
       {{ range $scalers }}
       {{ $version := index (split .File.Path "/") 1 }}
       {{ if eq $version $latest }}
