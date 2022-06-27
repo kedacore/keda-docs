@@ -3,7 +3,7 @@
 {{ $year  := now.Year }}
 {{ $menu  := site.Menus.main }}
 {{ $btns  := dict "btns" site.Params.social "color" "white" "outlined" true }}
-<footer class="footer">
+<footer class="footer has-background-pattern">
 
   <div class="container">
     <div class="columns is-vcentered is-variable is-8">
@@ -14,8 +14,8 @@
       <div class="column">
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
-        <p class="is-size-5">
-          <a href="{{ .URL }}">
+        <p class="is-size-4">
+          <a href="{{ .URL }}" class="has-text-white has-text-weight-semibold">
             <span>
               {{ .Name }}
             </span>
@@ -30,13 +30,11 @@
       </div>
 
       <div class="column">     
-        <div class="buttons are-small">
+        <div class="buttons are-normal">
           {{ partial "social-buttons.html" $btns }}
         </div>
       </div>
     </div>
-
-    <hr class="has-background-primary is-thick" />
 
     <div class="has-text-weight-medium">
       <p>
