@@ -127,6 +127,9 @@ $hero-body-padding: 4rem 1.5rem
 @import "content"
 @import "nav"
 
+*, *::before, *::after 
+  max-width: 100%
+
 .has-extra-top-margin
   margin-top: 1.5rem
 
@@ -163,6 +166,7 @@ $hero-body-padding: 4rem 1.5rem
 
   .is-main
     flex: 1
+    overflow-x: hidden
 
 =logo($desk, $tab, $touch)
   +desktop
