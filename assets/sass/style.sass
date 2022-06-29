@@ -127,6 +127,9 @@ $hero-body-padding: 4rem 1.5rem
 @import "content"
 @import "nav"
 
+*, *::before, *::after 
+  max-width: 100vw
+
 .has-extra-top-margin
   margin-top: 1.5rem
 
@@ -163,6 +166,7 @@ $hero-body-padding: 4rem 1.5rem
 
   .is-main
     flex: 1
+    overflow: hidden
 
 =logo($desk, $tab, $touch)
   +desktop
@@ -256,6 +260,10 @@ hr
 	
 .section 
 	padding: 4rem 1.5rem
+
+@media screen and (max-width: 1024px)
+  .section
+    width: 100vw
 	
 .underline--magical
   background-image: linear-gradient(to right, rgb(250, 112, 154) 0%, rgb(254, 225, 64) 100%)
