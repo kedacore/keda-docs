@@ -20,7 +20,7 @@ triggers:
 - type: cpu
   metadata:
     # Required
-    type: Utilization/ AverageValue
+    type: Utilization # or AverageValue
     value: "60"
 ```
 
