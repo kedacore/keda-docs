@@ -9,7 +9,7 @@
 {{ $latest   := index $versions 0 }}
 <nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
   <div class="container">
-    <div class="navbar-brand" style="align-items: end;">
+    <div class="navbar-brand is-left-padded" style="align-items: end;">
       <a class="navbar-item" href="{{ $home }}">
         {{ $url := printf "img/logos/%s" $logo | relURL }}
         <img src="{{ $url }}" style="transform: scale(2);">
