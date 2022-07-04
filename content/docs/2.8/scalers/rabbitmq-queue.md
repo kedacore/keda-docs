@@ -40,7 +40,7 @@ triggers:
 - `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (Optional)
 - `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
-- `excludeUnacknowledged` - Set to `true` to specify that the QueueLength value should exclude Unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
+- `excludeUnacknowledged` - Set to `true` to specify that the `QueueLength` value should exclude unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
