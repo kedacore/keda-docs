@@ -22,3 +22,27 @@
     debug: false
   });
 </script>
+
+{{/* Scalers filter */}}
+<script type="text/javascript">
+  const builtInScalers = document.getElementById("built-in-scalers"); 
+  const externalScalers = document.getElementById("external-scalers");
+  const btnFocusOnMount = document.getElementById("btn-focus-on-mount");   
+
+  let btns = document.getElementsByClassName("filterBtn");
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+        let filterValue = btns[i].value.toLowerCase();
+        if (filterValue === "built-in-scalers"){
+          builtInScalers.style.display = "flex"; 
+          externalScalers.style.display = "none";
+        } else if (filterValue === "external-scalers") {
+          // remove focus when changed
+          btnFocusOnMount.classList.remove("is-focused");
+          builtInScalers.style.display = "none"; 
+          externalScalers.style.display = "inline";
+        }
+    });
+  }
+
+</script>
