@@ -28,6 +28,7 @@ triggers:
 
 - `streamName` - Name of AWS Kinesis Stream.
 - `shardCount` - The target value that a Kinesis data streams consumer can handle. (Default: `2`, Optional)
+- `activationShardCount` - Target value for activating the scaler. (Default: `0`, Optional, [More info about activation](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds))
 - `awsRegion` - AWS Region for the Kinesis Stream.
 - `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
