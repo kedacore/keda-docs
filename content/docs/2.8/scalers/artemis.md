@@ -33,7 +33,7 @@ triggers:
 - `brokerName` - Name of the broker as defined in Artemis.
 - `brokerAddress` - Address of the broker.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. (default: 10)
-- `activationQueueLength` - Target value for activating the scaler. (Default: `0`, Optional, [More info about activation](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds))
+- `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `restApiTemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`, Optional)
 - `corsHeader` - Value to populate the Origin header field for CORS filtering. (Default: `"http://<<managmentEndpoint>>"`, Optional)
   
