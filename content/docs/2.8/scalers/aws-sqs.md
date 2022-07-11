@@ -27,7 +27,7 @@ triggers:
 
 - `queueURL` - Full URL for the SQS Queue. The simple name of the queue can be used in case there's no ambiguity.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
-- `activationQueueLength` - Target value for activating the scaler. (Default: `0`, Optional, [More info about activation](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds))
+- `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
 > For the purposes of scaling, the default formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing. If you wish to only scale on `ApproximateNumberOfMessages` set `scaleOnInFlight` to `false`.
 
