@@ -28,7 +28,7 @@ triggers:
 - `queueURL` - Full URL for the SQS Queue.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 
-> For the purposes of scaling, "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVislble`, since `NotVisible` in SQS terms means the message is still in-flight/processing.
+> For the purposes of scaling, "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing.
 
 - `awsRegion` - AWS Region for the SQS Queue.
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
