@@ -325,6 +325,10 @@ url = "https://chattermill.com"
 logo = "chattermill.png"
 
 [[params.users]]
+url = "https://cisco.com"
+logo = "cisco.svg"
+
+[[params.users]]
 url = "https://www.cloud-trade.com"
 logo = "cloud-trade.png"
 
