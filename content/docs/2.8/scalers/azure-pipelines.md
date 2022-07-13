@@ -66,7 +66,7 @@ The URL should be similar to `https://dev.azure.com/{organization}/_settings/age
 
 Finally, it is also possible get the pool ID from the response of a HTTP request by calling the `https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}` endpoint in the key `value[0].id`.
 
-### Supporting Demands in Agents ###
+### Supporting demands in agents
 
 Parent Template: Azure Devops is able to determine which agents can match any job its is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfil the job. If the parent is able to complete the job it scales up the ScaledJob to fulfil it. The parent template is generally offline must stays in the Pool's Agent list.
 
