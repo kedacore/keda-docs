@@ -79,7 +79,7 @@ Evaluation order is:
 
 > Note: If more than one ScaledJob is able to fulfil the demands of the job then they will both spin up an agent; this is as each ScaledJob is independent of each other.
 
-#### How it works under the hood.
+#### How it works under the hood
 
 Azure Devops has a Job Request API with returns a list of all agents which can potentially match up to the Queued Job. KEDA will scan this request to find any matching template from the defined parent in the ScaledJob definition. Once it finds it, it will spin up a ScaledJob that matched the definition and Azure DevOps will assign to that agent.
 
