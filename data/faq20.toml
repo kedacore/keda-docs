@@ -72,7 +72,22 @@ The target metric value is used by the Horizontal Pod Autoscaler (HPA) to make s
 
 The current target value on the Horizontal Pod Autoscaler (HPA) often does not match with the metrics on the system you are scaling on. This is because of how the Horizontal Pod Autoscaler's (HPA) [scaling algorithm](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details) works.
 
-KEDA currently only supports average metrics. This means that the HPA will use the average value of the metric between the total amount of pods.
+By default, KEDA scalers use average metrics (the `AverageValue` metric type). This means that the HPA will use the average value of the metric between the total amount of pods. As of KEDA v2.7, ScaledObjects also support the `Value` metric type. You can learn more about it [here](https://keda.sh/docs/latest/concepts/scaling-deployments/#triggers).
+"""
+type = "Kubernetes"
+
+[[qna]]
+q = "Why does KEDA use external metrics and not custom metrics instead?"
+a = """
+Kubernetes allows you to autoscale based on custom & external metrics which are fundamentally different:
+- **Custom metrics** are metrics that come from applications solely running on the Kubernetes cluster (Prometheus)
+- **External metrics** are metrics that represent the state of an application/service that is running outside of the Kubernetes cluster (AWS, Azure, GCP, Datadog, etc.)
+
+Because KEDA primarily serves metrics for metric sources outside of the Kubernetes cluster, it uses external metrics and not custom metrics.
+
+This is why KEDA registers the `v1beta1.external.metrics.k8s.io` namespace in the API service. However, this is just an implementation detail as both offer the same functionality.
+
+Read [this article](https://cloud.google.com/kubernetes-engine/docs/concepts/custom-and-external-metrics) by Google Cloud to learn more.
 """
 type = "Kubernetes"
 

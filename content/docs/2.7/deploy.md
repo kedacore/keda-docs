@@ -43,10 +43,23 @@ Deploying KEDA with Helm is very simple:
 
 ### Uninstall
 
-If you want to remove KEDA from a cluster you can run one of the following:
+If you want to remove KEDA from a cluster, you first need to remove any ScaledObjects and ScaledJobs that you have created. Once that is done, the Helm chart can be uninstalled:
 
 ```sh
+kubectl delete $(kubectl get scaledobjects,scaledjobs -oname)
 helm uninstall keda -n keda
+```
+
+Note: if you uninstall the Helm chart without first deleting any ScaledObject or ScaledJob resources you have created, they will become orphaned. In this situation, you will need to patch the resources to remove their finalizers. Once this is done, they should automatically be removed:
+
+```sh
+for i in $(kubectl get scaledobjects -oname);
+do kubectl patch $i -p '{"metadata":{"finalizers":null}}' --type=merge
+done
+
+for i in $(kubectl get scaledjobs -oname);
+do kubectl patch $i -p '{"metadata":{"finalizers":null}}' --type=merge
+done
 ```
 
 ## Deploying with Operator Hub {#operatorhub}
@@ -69,15 +82,15 @@ Locate installed KEDA Operator in `keda` namespace, then remove created `KedaCon
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
 - We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
-Run the following command (if needed, replace the version, in this case `2.7.0`, with the one you are using):
+Run the following command (if needed, replace the version, in this case `2.7.1`, with the one you are using):
 
 ```sh
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.7.0/keda-2.7.0.yaml
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.7.1/keda-2.7.1.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
-kubectl apply -f keda-2..0.yaml
+kubectl apply -f keda-2.7.1.yaml
 ```
 
 - You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
@@ -85,27 +98,27 @@ kubectl apply -f keda-2..0.yaml
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-VERSION=2.7.0 make deploy
+VERSION=2.7.1 make deploy
 ```
 
 ### Uninstall
 
-- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.7.0`, with the one you are using):
+- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.7.1`, with the one you are using):
 
 ```sh
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.7.0/keda-2.7.0.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.7.1/keda-2.7.1.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
-kubectl delete -f keda-2.7.0.yaml
+kubectl delete -f keda-2.7.1.yaml
 ```
 
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-VERSION=2.7.0 make undeploy
+VERSION=2.7.1 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}

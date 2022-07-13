@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -188,9 +188,21 @@ name = "Blog"
 weight = 2
 
 [[menu.main]]
-url = "/community/"
 name = "Community"
+identifier = "community"
 weight = 3
+
+[[menu.main]]
+url = "/community/"
+name = "Overview"
+parent = "community"
+weight = 1
+
+[[menu.main]]
+url = "https://github.com/kedacore/samples"
+name = "Samples"
+parent = "community"
+weight = 2
 
 [[menu.main]]
 name = "Project"
@@ -216,44 +228,45 @@ parent = "project"
 weight = 3
 
 [[menu.main]]
+url = "https://github.com/kedacore/governance/blob/main/ROADMAP.md"
+name = "Roadmap"
+parent = "project"
+weight = 4
+
+[[menu.main]]
 url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
 name = "Contributing"
 parent = "project"
-weight = 4
+weight = 5
 
 [[menu.main]]
 url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
 name = "Changelog"
 parent = "project"
-weight = 5
+weight = 6
 
 [[menu.main]]
 url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
 name = "Maintainers"
 parent = "project"
-weight = 6
+weight = 7
 
 [[menu.main]]
 url = "https://github.com/kedacore/governance/blob/main/BRANDING.md"
 name = "Colors and Logos"
 parent = "project"
-weight = 7
+weight = 8
 
 [[menu.main]]
 url = "https://github.com/kedacore/keda/blob/main/LICENSE"
 name = "License"
 parent = "project"
-weight = 7
-
-[[menu.main]]
-url = "https://github.com/kedacore/samples"
-name = "Samples"
-weight = 5
+weight = 9
 
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
 name = "Merch"
-weight = 6
+weight = 5
 
 # "Features" section on the main page
 [[params.features]]
@@ -326,6 +339,10 @@ logo = "coralogix.gif"
 [[params.users]]
 url = "https://docplanner.tech"
 logo = "docplanner-tech.png"
+
+[[params.users]]
+url = "https://www.fedex.com/en-us/home.html/"
+logo = "fedex.png"
 
 [[params.users]]
 url = "https://fission.io/"

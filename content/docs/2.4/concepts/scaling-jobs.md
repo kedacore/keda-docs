@@ -20,7 +20,7 @@ For example, if you wanted to use KEDA to run a job for each message that lands 
 
 This specification describes the `ScaledJob` custom resource definition which is used to define how KEDA should scale your application and what the triggers are.
 
-[`scaledjob_types.go`](https://github.com/kedacore/keda/blob/main/api/v1alpha1/scaledjob_types.go)
+[`scaledjob_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go)
 
 ```yaml
 apiVersion: keda.sh/v1alpha1

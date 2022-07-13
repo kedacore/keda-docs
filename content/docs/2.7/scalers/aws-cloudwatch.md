@@ -17,10 +17,12 @@ triggers:
   metadata:
     # Required: namespace
     namespace: AWS/SQS
-    # Required: Dimension Name - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName
+    # Optional: Dimension Name
     dimensionName: QueueName
-    # Required: Dimension Value - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2
+    # Optional: Dimension Value
     dimensionValue: keda
+    # Optional: Expression query
+    expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2"
     minMetricValue: "0"
@@ -44,6 +46,10 @@ triggers:
 ```
 
 **Parameter list:**
+
+- `dimensionName` - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName (Optional, Required when `expression` is not specified)
+- `dimensionValue` - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2 (Optional, Required when `expression` is not specified)
+- `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
 
 - `identityOwner` - Receive permissions on the CloudWatch via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
