@@ -1,12 +1,17 @@
 {{ $docsLatest := index site.Params.versions.docs 0 -}}
 
-/docs     /docs/{{ $docsLatest }}     301!
-/docs/latest/*     /docs/{{ $docsLatest }}/:splat
+/docs                  /docs/{{ $docsLatest }}
+/docs/latest/*         /docs/{{ $docsLatest }}/:splat
 
-{{ $topLevel := slice "scalers" "faq" "troubleshooting" "operate" "concepts" "deploy" -}}
+/concepts/*            /docs/concepts/:splat
+/concepts/overview     /docs/concepts
+/deploy/*              /docs/deploy/:splat
+/faq/*                 /docs/faq/
+
+{{ $topLevel := slice "scalers" "troubleshooting" "operate" "deploy" -}}
 {{ range $name := $topLevel -}}
 {{ $docp := printf "docs/%s/*" $name -}}
-{{ $name | printf "/%-29s" }}  /docs/{{ $docsLatest }}/{{ $name }}     301!
+{{ $name | printf "/%-29s" }}  /docs/{{ $docsLatest }}/{{ $name }}
 {{ $docp | printf "/%-29s" }}  /docs/{{ $docsLatest }}/{{ $name }}/:splat
 {{ end -}}
 

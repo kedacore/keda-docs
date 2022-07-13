@@ -16,11 +16,12 @@
     "precheck-links": "npm run build",
     "serve:hugo": "npm run _serve:hugo",
     "serve": "npm run _serve",
+    "netlify-serve": "netlify dev -c \"hugo serve --minify -DFE -w\"",
     "test": "npm run check-links"
   },
   "devDependencies": {
     "bulma": "^0.8.2",
     "hugo-extended": "0.93.2",
-    "netlify-cli": "^9.6.5"
+    "netlify-cli": "^9.16.7"
   }
 }
