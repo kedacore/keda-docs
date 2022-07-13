@@ -81,7 +81,11 @@ KEDA will use the following evaluation order is:
 
 #### How it works under the hood
 
-Azure Devops has a Job Request API with returns a list of all agents which can potentially match up to the Queued Job. KEDA will scan this request to find any matching template from the defined parent in the ScaledJob definition. Once it finds it, it will spin up a ScaledJob that matched the definition and Azure DevOps will assign to that agent.
+Azure DevOps has a Job Request API with returns a list of all agents which can potentially match up to the Queued Job.
+
+KEDA will interpret this request to find any matching template from the defined parent in the scaling definition.
+
+Once it finds it, it will scale the workload that matched the definition and Azure DevOps will assign it to that agent.
 
 ### Example for ScaledJob
 
