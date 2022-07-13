@@ -25,8 +25,6 @@ triggers:
       personalAccessTokenFromEnv: "AZP_TOKEN"
       # Optional: Target queue length
       targetPipelinesQueueLength: "1" # Default 1
-      # Optional: Parent template to read demands from
-      parent: "{parent ADO agent name}"
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -39,7 +37,6 @@ triggers:
 - `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
-- `parent` - Put the name of the ADO agent that matched the ScaledJob. e.g. mavenagent-scaledjob may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
@@ -63,17 +60,7 @@ The URL should be similar to `https://dev.azure.com/{organization}/_settings/age
 
 Finally, it is also possible get the pool ID from the response of a HTTP request by calling the `https://dev.azure.com/{organizationName}/_apis/distributedtask/pools?poolname={agentPoolName}` endpoint in the key `value[0].id`.
 
-### Supporting Demands in Agents ###
-
-Azure Devops is able to determine which agents can match any job its is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfil the job. If the parent is able to complete the job it scales up the ScaledJob to fulfil it.
-
-> Note: If more than one ScaledJob is able to fulfil the demands of the job then they will both spin up an agent; this is as each ScaledJob is independent of each other.
-
-#### How it works under the hood.
-
-Azure Devops has a Job Request API with returns a list of all agents which can potentially match up to the Queued Job. KEDA will scan this request to find any matching template from the defined parent in the ScaledJob definition. Once it finds it, it will spin up a ScaledJob that matched the definition and Azure DevOps will assign to that agent.
-
-### Example for ScaledJob
+### Example
 
 ```yaml
 apiVersion: v1
@@ -110,31 +97,6 @@ spec:
     metadata:
       poolID: "1"
       organizationURLFromEnv: "AZP_URL"
-      parent: "example-keda-template"
     authenticationRef:
      name: pipeline-trigger-auth
-```
-###Example for Parent Deployment or StatefulSet
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: agent
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: agent
-  spec:
-    containers:
-      - name: agent
-        image: [SAME AS SCALED JOB]
-        envFrom:
-          - secretRef:
-              name: ado-pat-tokens
-        env:
-          - name: AZP_AGENT_NAME
-            value: example-keda-template # Matches Scaled Job Parent
-          
 ```
