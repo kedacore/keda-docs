@@ -68,11 +68,16 @@ Finally, it is also possible get the pool ID from the response of a HTTP request
 
 ### Supporting demands in agents
 
+
 By default, if you do not wish to use demands in your agent scaler then it will scale based simply on the pool's queue length.
 
 Demands (Capabilities) are useful when you have multiple agents with different capabilities existing within the same pool, 
 for instance in a kube cluster you may have an agent supporting dotnet5, dotnet6, java or maven;
 particularly these would be exclusive agents where jobs would fail if run on the wrong agent. This is Microsoft's demands feature.
+
+- **Using Parent:** Azure DevOps is able to determine which agents can match any job it is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfill the job. If the parent is able to complete the job it scales the workload fulfill the request. The parent template that is generally offline must stay in the Pool's Agent list.
+
+- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `someexamplehere`. Note: `Agent.Version` is ignored)
 
 Microsoft's documentation: [https://docs.microsoft.com/en-us/azure/devops/pipelines/agent/agent-pool-demands](https://docs.microsoft.com/en-us/azure/devops/pipelines/agent/agent-pool-demands)
 
