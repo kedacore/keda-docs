@@ -72,12 +72,12 @@ Parent Template: Azure Devops is able to determine which agents can match any jo
 
 Demand List: KEDA will determine which agents can fulfil the job based on the demands provided. The demands are provided as a comma separated list and must be a subset of the actual capabilities of the agent. (Note: Agent.Version is ignored)
 
-Evaluation order is: 
-1) If neither parent nor demands is set in the ScaledJob is will scale up the ScaledJob to fulfil the job. 
-2) If parent is set in the ScaledJob then KEDA will interrogate the job request to determine if the parent is able to fulfil the job. If the parent is able to complete the job it scales up the ScaledJob to fulfil it. 
-3) Finally, if the demands are set in the ScaledJob then KEDA will determine which agents can fulfil the job based on the demands provided.
+KEDA will use the following evaluation order is: 
+1) If neither parent nor demands are defined in the scaling definition, it will scale the workload to fulfill the job. 
+2) If `parent` is set,  KEDA will interrogate the job request to determine if the parent is able to fulfill the job. If the parent is able to complete the job it scales the workload to fulfill the request. 
+3) Finally, if the demands are set in the scaling definition then KEDA will determine which agents can fulfill the job based on the demands provided.
 
-> Note: If more than one ScaledJob is able to fulfil the demands of the job then they will both spin up an agent; this is as each ScaledJob is independent of each other.
+> Note: If more than one scaling definition is able to fulfill the demands of the job then they will both spin up an agent.
 
 #### How it works under the hood
 
