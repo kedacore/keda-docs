@@ -27,7 +27,7 @@ triggers:
       targetPipelinesQueueLength: "1" # Default 1
       # Optional: Parent template to read demands from
       parent: "{parent ADO agent name}"
-      # Optional: Demands string to read demands from ScaledJob
+      # Optional: Demands string to read demands from ScaledObject
       demands: "{demands}"
     authenticationRef:
       name: pipeline-trigger-auth
@@ -41,8 +41,8 @@ triggers:
 - `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
-- `parent` - Put the name of the ADO agent that matched the ScaledJob. e.g. mavenagent-scaledjob may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
-- `demands` - Put the demands string that was provided to the ScaledJob. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
+- `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
+- `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
@@ -114,7 +114,7 @@ KEDA will interpret this request to find any matching template from the defined 
 
 Once it finds it, it will scale the workload that matched the definition and Azure DevOps will assign it to that agent.
 
-### Example for ScaledJob
+### Example for ScaledObject
 
 ```yaml
 apiVersion: v1
