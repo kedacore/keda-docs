@@ -28,10 +28,43 @@
         Currently available scalers for KEDA
       </h2>
       <div class="buttons" style="display: flex; justify-content: flex-end">
+        <form id="search" role="search">
+          <input type="search" id="search-input">
+        </form>        
         <button id="btn-focus-on-mount" class="button filterBtn is-focused" value="built-in-scalers">Built-in</button>
         <button class="button filterBtn" value="external-scalers">External</button>
       </div>
-      <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline">
+      <div class="results"></div>
+      
+      <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline services-search">
+        <template id="is-search-template">
+            <div id="" class="column is-one-third">
+              <div class="card">
+                <div class="card-content">
+                  <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold scaler-title" href="{{ .RelPermalink }}">
+                  </a>
+            
+                  <br /><br />
+            
+                  <div class="content is-medium description">
+                  </div>
+                </div>
+            
+                <footer class="card-footer">
+                  <div class="card-footer-item is-spaced card-is-wrapped">
+                    Availability&nbsp;<span class="has-text-weight-bold availability"></span>
+                  </div>
+            
+            
+                  <div class="card-footer-item card-is-wrapped">
+                    Maintainer:&nbsp;<span class="has-text-weight-bold maintainer"></span>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </template>
+        </div>
+      <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline is-search-result">
         {{ range $scalers }}
         {{ $thisVersion := index (split .File.Path "/") 1 }}
         {{ if eq $version $thisVersion }}
@@ -45,3 +78,4 @@
     </div>
   </div>
 </section>
+

@@ -1,0 +1,5 @@
+{{- $index := slice -}}
+{{- range $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" -}}
+    {{- $index = $index | append (dict "title" $scalers.Title "availability" $scalers.Params.availability "description" ($scalers.Description | markdownify) "maintainer" $scalers.Params.maintainer ) -}}
+{{- end -}}
+{{- $index | jsonify -}}
