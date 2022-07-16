@@ -41,6 +41,7 @@ triggers:
 - `databaseName` - The name of the Data Explorer Database to query.
 - `query` - Data Explorer query.
 - `threshold` - Value that is used as a threshold to calculate # of pods for scale target. (This value can be a float)
+- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
 - `clientSecret` - Password of the Azure AD application.

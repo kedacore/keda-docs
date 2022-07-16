@@ -35,6 +35,7 @@ triggers:
 **Parameter list:**
 
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
+- `activationMessageCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
