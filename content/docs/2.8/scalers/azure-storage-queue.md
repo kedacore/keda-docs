@@ -17,6 +17,7 @@ triggers:
   metadata:
     queueName: orders
     queueLength: '5'
+    activationQueueLength: '50'
     connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
     accountName: storage-account-name
     cloud: AzureUSGovernmentCloud

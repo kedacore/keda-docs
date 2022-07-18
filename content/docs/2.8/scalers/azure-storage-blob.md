@@ -18,6 +18,7 @@ triggers:
   metadata:
     blobContainerName: functions-blob
     blobCount: '5'
+    activationBlobCount: '50'
     connectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
     accountName: storage-account-name
     blobPrefix: myprefix

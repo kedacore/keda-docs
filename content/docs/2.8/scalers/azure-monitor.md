@@ -23,6 +23,7 @@ triggers:
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
     targetValue: "0.5"
+    activationTargetValue: "3.5"
     activeDirectoryClientId: <client id value> # Optional, can use TriggerAuthentication as well
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well

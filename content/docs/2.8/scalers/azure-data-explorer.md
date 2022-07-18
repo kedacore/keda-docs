@@ -22,6 +22,7 @@ triggers:
       | summarize StormCount = count() by State
       | top 1 by StormCount desc
     threshold: "10.5"
+    activationThreshold: "10.5"
     tenantId: 045ef409-6dee-4893-a824-5612eac467b1 # Can use TriggerAuthentication as well
     clientId: 4ba039f1-d69c-434e-9268-4a2bb7bba90d # Can use TriggerAuthentication as well
     clientSecret: t0p-s3cret  # Can use TriggerAuthentication as well

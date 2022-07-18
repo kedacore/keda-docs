@@ -42,6 +42,7 @@ triggers:
                 on AppName
         | project MetricValue, Threshold = Limit * ThresholdCoefficient
       threshold: "10.7"
+      activationThreshold: "1.7"
       # Alternatively, you can use existing environment variables to read configuration from:
       # See details in "Parameter list" section
       workspaceIdFromEnv: LOG_ANALYTICS_WORKSPACE_ID_ENV_NAME # Optional. You can use this instead of `workspaceId` parameter.

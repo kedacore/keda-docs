@@ -20,6 +20,7 @@ triggers:
     metricFilter: cloud/roleName eq 'role_name'
     metricId: "customMetrics/example-metric"
     targetValue: "1.5"
+    activationTargetValue: "5.5"
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
     applicationInsightsIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well

@@ -28,6 +28,7 @@ triggers:
     connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
+    activationMessageCount: "2"
     cloud: Private # Optional. Default: AzurePublicCloud
     endpointSuffix: servicebus.airgap.example # Required when cloud=Private
 ```

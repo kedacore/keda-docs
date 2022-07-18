@@ -25,6 +25,7 @@ triggers:
       personalAccessTokenFromEnv: "AZP_TOKEN"
       # Optional: Target queue length
       targetPipelinesQueueLength: "1" # Default 1
+      activationTargetPipelinesQueueLength: "5" # Default 0
     authenticationRef:
      name: pipeline-trigger-auth
 ```

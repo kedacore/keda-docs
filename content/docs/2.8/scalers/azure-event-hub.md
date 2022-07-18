@@ -19,6 +19,7 @@ triggers:
     storageConnectionFromEnv: STORAGE_CONNECTIONSTRING_ENV_NAME
     consumerGroup: $Default
     unprocessedEventThreshold: '64'
+    activationUnprocessedEventThreshold: '10'
     blobContainer: 'name_of_container'
     # Optional (Default: AzurePublicCloud)
     cloud: Private
