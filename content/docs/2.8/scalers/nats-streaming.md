@@ -20,6 +20,7 @@ triggers:
     durableName: "ImDurable"
     subject: "Test"
     lagThreshold: "10"
+    activationLagThreshold: "5"
 ```
 
 **Parameter list:**
@@ -29,6 +30,7 @@ triggers:
 - `durableName` - Name of durability used by subscribers.
 - `subject` - Name of the channel.
 - `lagThreshold` - Average target value to trigger scaling actions.
+- `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
 ### Authentication Parameters
 
