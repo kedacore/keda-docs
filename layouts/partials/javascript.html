@@ -65,7 +65,8 @@
     () => {
       "use strict";
       let index, parse, query;
-
+      const currentUrl = window.location.pathname;
+      const currentLocation = String(currentUrl).split('/');
       const form = document.getElementById("search");
       const input = document.getElementById("search-input");
       const target = document.querySelector(".is-search-result");
@@ -74,6 +75,7 @@
       const servicesSearch = document.querySelector(".services-search");
       let template = document.getElementById("is-search-template");
 
+      console.log(currentLocation[2]);
       form.addEventListener(
         "submit",
         function (event) {
@@ -131,6 +133,9 @@
               this.field("maintainer", {
                 boost: 15,
               });
+              this.field("href", {
+                boost: 15,
+              });
               this.field("description", {
                 boost: 10,
               });
@@ -140,11 +145,14 @@
 
               documents.forEach(function (doc) {
                 this.add(doc);
-                parse[doc.title] = {
-                  title: doc.title,
-                  maintainer: doc.maintainer,
-                  description: doc.description,
-                  availability: doc.availability,
+                if (doc.version === currentLocation[2]) {
+                  parse[doc.title] = {
+                    href: doc.href,
+                    title: doc.title,
+                    maintainer: doc.maintainer,
+                    description: doc.description,
+                    availability: doc.availability,
+                }
                 };
               }, this);
             });
@@ -184,14 +192,14 @@
 
           results.forEach(function (result) {
             const doc = parse[result.ref];
-
             const element = template.content.cloneNode(true);
-
+            console.log(doc);
             element.querySelector(".description").textContent = doc.description;
             element.querySelector(".maintainer").textContent = doc.maintainer;
             element.querySelector(".availability").textContent =
               doc.availability;
             element.querySelector(".scaler-title").textContent = doc.title;
+            element.querySelector(".scaler-title").setAttribute('href', doc.href);
             servicesSearch.style.display = "flex";
             servicesSearch.appendChild(element);
           }, this);
