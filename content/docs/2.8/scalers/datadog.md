@@ -24,6 +24,7 @@ triggers:
   metadata:
     query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
     queryValue: "7.75"
+    activationQueryValue: "1.1"
     type: "global" # Deprecated in favor of trigger.metricType
     age: "120"
     metricUnavailableValue: "1.5"
@@ -33,6 +34,7 @@ triggers:
 
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional) 
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
