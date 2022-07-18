@@ -33,6 +33,7 @@ Finally, a user inserts a query that returns the desired value.
 
 - `query` - What query to poll postgresql with. Query must return an integer.
 - `targetQueryValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in HPA. (This value can be a float)
+- `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on either the connection string if set or the db name. If using more than one trigger it is required that all metricNames be unique. (Optional)
 
 This is an example of using a full connection string with `AIRFLOW_CONN_AIRFLOW_DB` set as `postgresql://test@localhost`:
@@ -44,6 +45,7 @@ triggers:
     connectionFromEnv: AIRFLOW_CONN_AIRFLOW_DB
     query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
     targetQueryValue: "1.1"
+    activationTargetQueryValue: "5"
     metricName: backlog_process_count #optional. Generated value would be `postgresql-postgresql---test@localhost`
 ```
 
