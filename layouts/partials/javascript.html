@@ -39,6 +39,8 @@
   const builtInScalers = document.querySelectorAll("#built-in-scalers");
   const externalScalers = document.getElementById("external-scalers");
   const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
+  const totalCount = document.getElementById("total-count");
+  const searchResults = document.getElementById("search-results");
 
   let btns = document.getElementsByClassName("filterBtn");
   for (let i = 0; i < btns.length; i++) {
@@ -47,11 +49,13 @@
       if (filterValue === "built-in-scalers") {
         builtInScalers.forEach((node) => (node.style.display = "flex"));
         externalScalers.style.display = "none";
+        totalCount.style.display = "block";
       } else if (filterValue === "external-scalers") {
         // remove focus when changed
         btnFocusOnMount.classList.remove("is-focused");
         builtInScalers.forEach((node) => (node.style.display = "none"));
         externalScalers.style.display = "inline";
+        totalCount.style.display = "none";
       }
     });
   }
@@ -78,8 +82,6 @@
       const servicesSearch = document.querySelector(".services-search");
       let template = document.getElementById("is-search-template");
 
-      console.log(currentLocation[2]);
-
       headerNode.textContent = `${childTargetNodes.length} scalers available`;
 
       input.addEventListener(
@@ -88,10 +90,18 @@
           event.preventDefault();
           const keywords = input.value.trim();
 
+           // disable all buttons during search
+           const filterBtns = document.querySelectorAll(".filterBtn");
+          filterBtns.forEach(btn => btn.disabled = true);
+
           if (!keywords) {
+            // enable all buttons when input search is empty
+          const filterBtns = document.querySelectorAll(".filterBtn");
+          filterBtns.forEach(btn => btn.disabled = false);
             servicesSearch.style.display = "none";
             target.style.display = "flex";
           }
+
           while (servicesSearch.firstChild.nextSibling) {
             query = keywords;
             initSearchIndex();
