@@ -180,7 +180,6 @@
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
           resultCount.replaceChildren(title);
-          document.title = title.textContent;
 
           let template = document.getElementById("is-search-template");
           console.log(results);
