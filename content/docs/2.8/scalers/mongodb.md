@@ -25,6 +25,8 @@ triggers:
       query: '{"region":"eu-1","state":"running","plan":"planA"}'
       # Required: according to the number of query result, to scale the TargetRef
       queryValue: "1"
+      # Optional: according to the number of query result, the scaler is active
+      activationQueryValue: "1"
       # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name
       metricName: "global-metric"
 ```
@@ -51,6 +53,8 @@ triggers:
       query: '{"region":"eu-1","state":"running","plan":"planA"}'
       # Required: according to the number of query result, to scale the TargetRef
       queryValue: "1"
+      # Optional: according to the number of query result, the scaler is active
+      activationQueryValue: "1"
       # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name.
       metricName: "global-metric"
 ```
@@ -65,6 +69,7 @@ The `mongodb` trigger always requires the following information:
 - `collection` - Name of the collection.
 - `query` - A MongoDB query that should return single numeric value.
 - `queryValue` - A threshold that will define when scaling should occur.
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
 To connect to the MongoDB server, you can provide either:
 
