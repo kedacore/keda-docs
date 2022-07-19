@@ -20,6 +20,7 @@ triggers:
     metricFilter: cloud/roleName eq 'role_name'
     metricId: "customMetrics/example-metric"
     targetValue: "1.5"
+    activationTargetValue: "5.5"
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
     applicationInsightsIdFromEnv: APP_ID # Optional, can use TriggerAuthentication as well
@@ -40,6 +41,7 @@ for further details.
 - `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
 - `metricId` - The name of the Application Insights metric to query. Use the [Azure Command Line Interface](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) to run `az monitor app-insights metrics get-metadata` to see a list of available metrics.
 - `targetValue` - Target value to trigger scaling actions. (This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `metricAggregationType` - Aggregation method of the Azure Application Insights metric. The aggregation methods vary from metric to metric. The `az monitor app-insights metrics get-metadata` command can be used to determine which methods apply to a given metric. (Some common aggregation methods are `avg`, `count`, `sum`, `min`, and `max`)
 - `metricAggregationInterval` - Collection time of the metric in format `"hh:mm"`.
 - `applicationInsightsId` - Id of the Application Insights instance to query. This is a GUID that can be retrieved from the Application Insight's `API Access` blade in the Azure Portal.
