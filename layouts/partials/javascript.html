@@ -73,23 +73,14 @@
       const target = document.querySelector(".is-search-result");
       const resultCount = document.querySelector(".results");
       const node = document.getElementsByTagName("h3");
+      const headerNode = document.getElementById("total-count");
+      const childTargetNodes = document.querySelectorAll('.initial-load-view')
       const servicesSearch = document.querySelector(".services-search");
       let template = document.getElementById("is-search-template");
 
       console.log(currentLocation[2]);
-      form.addEventListener(
-        "submit",
-        function (event) {
-          event.preventDefault();
 
-          const keywords = input.value.trim();
-          if (!keywords) return;
-
-          query = keywords;
-          initSearchIndex();
-        },
-        false
-      );
+      headerNode.textContent = `${childTargetNodes.length} scalers available`;
 
       input.addEventListener(
         "input",
@@ -98,12 +89,13 @@
           const keywords = input.value.trim();
 
           if (!keywords) {
-            resultCount.firstChild.textContent = "";
             servicesSearch.style.display = "none";
             target.style.display = "flex";
           }
           while (servicesSearch.firstChild.nextSibling) {
-            resultCount.firstChild.textContent = "";
+            query = keywords;
+            initSearchIndex();
+            headerNode.textContent = "";
             servicesSearch.removeChild(template.nextSibling.nextElementSibling);
           }
         },
@@ -183,6 +175,8 @@
             title.textContent = `No results found for "${keywords}"`;
           else if (results.length == 1)
             title.textContent = `Found one result for "${keywords}"`;
+          else if (results.length > 1 && keywords === '')
+            title.textContent = `${results.length} scalers available`
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
           resultCount.replaceChildren(title);

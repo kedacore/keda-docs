@@ -67,6 +67,7 @@
             </div>
           </template>
         </div>
+        <h3 id="total-count" class="subtitle is-size-3"></h3>
       <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline is-search-result">
         {{ range $scalers }}
         {{ $thisVersion := index (split .File.Path "/") 1 }}
