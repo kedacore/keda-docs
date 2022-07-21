@@ -1,10 +1,36 @@
-{{ $desc         := .Description | markdownify }}
+<div id="" class="column is-one-third">
+  <div class="card">
+    <div class="card-content">
+      <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold scaler-title">
+      </a>
+
+      <br /><br />
+
+      <div class="content is-medium description">
+      </div>
+    </div>
+
+    <footer class="card-footer">
+      <div class="card-footer-item is-spaced card-is-wrapped">
+        Availability&nbsp;<span class="has-text-weight-bold availability"></span>
+      </div>
+
+
+      <div class="card-footer-item card-is-wrapped">
+        Maintainer:&nbsp;<span class="has-text-weight-bold maintainer"></span>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<!-- {{ $desc         := .Description | markdownify }}
 {{ $availability := .Params.availability }}
 {{ $maintainer   := .Params.maintainer }}
 <div class="column is-one-third">
   <div class="card">
     <div class="card-content initial-load-view">
-      <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold" href="{{ .RelPermalink }}">
+      <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold scaler-title" href="{{ .RelPermalink }}">
         {{ .Title }}
       </a>
 
@@ -33,4 +59,4 @@
     </footer>
     {{ end }}
   </div>
-</div>
+</div> -->

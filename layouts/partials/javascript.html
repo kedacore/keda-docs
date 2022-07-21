@@ -39,8 +39,7 @@
   const builtInScalers = document.querySelectorAll("#built-in-scalers");
   const externalScalers = document.getElementById("external-scalers");
   const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
-  const totalCount = document.getElementById("total-count");
-  const searchResults = document.getElementById("search-results");
+  const searchResultCount = document.querySelector(".results");
 
   let btns = document.getElementsByClassName("filterBtn");
   for (let i = 0; i < btns.length; i++) {
@@ -49,40 +48,40 @@
       if (filterValue === "built-in-scalers") {
         builtInScalers.forEach((node) => (node.style.display = "flex"));
         externalScalers.style.display = "none";
-        totalCount.style.display = "block";
+        searchResultCount.style.display = "block";
       } else if (filterValue === "external-scalers") {
         // remove focus when changed
         btnFocusOnMount.classList.remove("is-focused");
         builtInScalers.forEach((node) => (node.style.display = "none"));
         externalScalers.style.display = "inline";
-        totalCount.style.display = "none";
+        searchResultCount.style.display = "none";
       }
     });
   }
 </script>
 
+{{/* In-built Scalers Search */}}
 <script src="https://unpkg.com/lunr/lunr.js"></script>
-
 <script>
   window.addEventListener(
     "DOMContentLoaded",
     () => {
       "use strict";
-      let index, parse, query;
+      let index, parse;
       const currentUrl = window.location.pathname;
       const currentLocation = String(currentUrl).split('/');
       const currentVersion = currentLocation[2];
       const form = document.getElementById("search");
       const input = document.getElementById("search-input");
       const target = document.querySelector(".is-search-result");
-      const resultCount = document.querySelector(".results");
-      const node = document.getElementsByTagName("h3");
-      const headerNode = document.getElementById("total-count");
-      const childTargetNodes = document.querySelectorAll('.initial-load-view')
-      const servicesSearch = document.querySelector(".services-search");
-      let template = document.getElementById("is-search-template");
+      const searchResultCount = document.querySelector(".results");
+      const template = document.getElementById("is-search-template");
+      let query =  input.value.trim();
 
-      headerNode.textContent = `${childTargetNodes.length} scalers available`;
+      // fetch all scalers on inital load
+      if (!query) {
+        initSearchIndex();
+      };
 
       input.addEventListener(
         "input",
@@ -90,24 +89,25 @@
           event.preventDefault();
           const keywords = input.value.trim();
 
-           // disable all buttons during search
-           const filterBtns = document.querySelectorAll(".filterBtn");
+          // disable all buttons during search by default
+          const filterBtns = document.querySelectorAll(".filterBtn");
           filterBtns.forEach(btn => btn.disabled = true);
 
+          
           if (!keywords) {
             // enable all buttons when input search is empty
-          const filterBtns = document.querySelectorAll(".filterBtn");
-          filterBtns.forEach(btn => btn.disabled = false);
-            servicesSearch.style.display = "none";
-            target.style.display = "flex";
-          }
+            const filterBtns = document.querySelectorAll(".filterBtn");
+            filterBtns.forEach(btn => btn.disabled = false);
+          };
+          
+          query = keywords;
+          initSearchIndex();
 
-          while (servicesSearch.firstChild.nextSibling) {
-            query = keywords;
-            initSearchIndex();
-            headerNode.textContent = "";
-            servicesSearch.removeChild(template.nextSibling.nextElementSibling);
-          }
+          // clear out all the scaler item card when in-built scalers are being searched
+          while (target.firstChild.nextSibling) {
+            target.removeChild(template.nextSibling.nextElementSibling);
+          };
+          
         },
         false
       );
@@ -171,12 +171,8 @@
         const results = index.search(keywords);
         console.log('results', results);
 
-        if ("content" in document.createElement("template")) {
-          const target = document.querySelector(".is-search-result");
-          const servicesSearch = document.querySelector(".services-search");
-          const resultCount = document.querySelector(".results");
-
-          target.style.display = "none";
+        if ("content" in template) {
+          // show result count
           const title = document.createElement("h3");
           title.id = "search-results";
           title.className = "subtitle is-size-3";
@@ -189,24 +185,19 @@
             title.textContent = `${results.length} scalers available`
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
-          resultCount.replaceChildren(title);
+          searchResultCount.replaceChildren(title);
 
-          let template = document.getElementById("is-search-template");
-          console.log(results);
-          console.log(template);
-
+          // show the matched result
           results.forEach(function (result) {
             const doc = parse[result.ref];
             const element = template.content.cloneNode(true);
-            console.log(doc);
-            element.querySelector(".description").textContent = doc.description;
-            element.querySelector(".maintainer").textContent = doc.maintainer;
-            element.querySelector(".availability").textContent =
-              doc.availability;
             element.querySelector(".scaler-title").textContent = doc.title;
             element.querySelector(".scaler-title").setAttribute('href', doc.href);
-            servicesSearch.style.display = "flex";
-            servicesSearch.appendChild(element);
+            doc.description && (element.querySelector(".description").textContent = doc.description);
+            doc.maintainer && (element.querySelector(".maintainer").textContent = doc.maintainer);
+            doc.availability && (element.querySelector(".availability").textContent =
+              doc.availability);
+            target.appendChild(element);
           }, this);
         }
       }

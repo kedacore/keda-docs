@@ -1,7 +1,5 @@
 {{ $notice   := .Params.notice }}
 {{ $isScaler := eq .CurrentSection.Title "Scalers" }}
-{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-{{ $version := index (split $.Page.File.Path "/") 1 }}
 <section class="section">
   <div class="container">
     <div class="content is-medium is-constrained has-bottom-margin">
@@ -29,7 +27,7 @@
       </h2>      
       <div class="buttons" style="display: flex; justify-content: flex-end">
         <form class="control has-icons-left has-extra-sm-right-margin" id="search" role="search">
-          <input class="input is-rounded" type="search" placeholder="search for scalers" id="search-input">
+          <input class="input is-rounded" type="search" placeholder="Search for scalers" id="search-input">
           <span class="icon is-small is-left">
             <i class="fas fa-search"></i>
           </span>
@@ -38,43 +36,10 @@
         <button class="button filterBtn" value="external-scalers">External</button>
       </div>
       <div class="results"></div>
-      
-      <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline services-search">
-        <template id="is-search-template">
-            <div id="" class="column is-one-third">
-              <div class="card">
-                <div class="card-content">
-                  <a class="title is-size-4 is-size-5-mobile has-text-primary has-text-weight-bold scaler-title" href="{{ .RelPermalink }}">
-                  </a>
-            
-                  <br /><br />
-            
-                  <div class="content is-medium description">
-                  </div>
-                </div>
-            
-                <footer class="card-footer">
-                  <div class="card-footer-item is-spaced card-is-wrapped">
-                    Availability&nbsp;<span class="has-text-weight-bold availability"></span>
-                  </div>
-            
-            
-                  <div class="card-footer-item card-is-wrapped">
-                    Maintainer:&nbsp;<span class="has-text-weight-bold maintainer"></span>
-                  </div>
-                </footer>
-              </div>
-            </div>
-          </template>
-        </div>
-        <h3 id="total-count" class="subtitle is-size-3"></h3>
       <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline is-search-result">
-        {{ range $scalers }}
-        {{ $thisVersion := index (split .File.Path "/") 1 }}
-        {{ if eq $version $thisVersion }}
+        <template id="is-search-template">
         {{ .Render "scaler-info" }}
-        {{ end }}
-        {{ end }}
+        </template>
       </div>
       <div id="external-scalers" class="artifacthub-widget-group" style="display: none;" data-url="https://artifacthub.io/packages/search?kind=8&sort=relevance&page=1" data-theme="light" data-header="false" data-stars="true" data-color="#405273" data-responsive="true"  data-loading="true"></div>
       <script async src="https://artifacthub.io/artifacthub-widget.js"></script>
