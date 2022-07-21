@@ -124,6 +124,15 @@ args:
   - '--tls-cert-file=/certs/tls.crt'
   - '--tls-private-key-file=/certs/tls.key'
 ```
+It is also possible to run KEDA with `readOnlyRootFilesystem=true` by creating an emptyDir volume and mounting it to the path where,
+by default, metrics server writes its generated cert. The corresponding helm command is:
+```
+helm install keda kedacore/keda --namespace keda \
+  --set 'volumes.metricsApiServer.extraVolumes[0].name=keda-volume' \
+  --set 'volumes.metricsApiServer.extraVolumeMounts[0].name=keda-volume' \
+  --set 'volumes.metricsApiServer.extraVolumeMounts[0].mountPath=/apiserver.local.config/certificates/' \
+  --set 'securityContext.metricServer.readOnlyRootFilesystem=true'
+```
 """
 type = "Features"
 
