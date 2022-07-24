@@ -17,6 +17,7 @@ triggers:
   metadata:
     bucketName: test-bucket
     targetObjectCount: '100'
+    activationTargetObjectCount: '10' # Optional
     maxBucketItemsToScan: '1000'
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
     credentialsFromEnvFile: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
@@ -26,6 +27,7 @@ triggers:
 
 - `bucketName` - Name of the bucket in GCS.
 - `targetObjectCount` - Average target value to trigger scaling actions. (Default: `100`, Optional)
+- `activationTargetObjectCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
 As counting the number of objects involves iterating over their metadata it is advised to set this number to the value of `targetObjectCount` * `maxReplicaCount`.
 
