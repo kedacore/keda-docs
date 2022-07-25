@@ -151,5 +151,5 @@ type = "Azure"
 
 [[qna]]
 q = "Does scaler search support wildcard search?"
-a = "Yes. The search actually supports wildcard search. All you need to do is append asterisks (e.g active*) at the end of the search query and it returns all the appropriate matches."
+a = "Yes. The search actually supports wildcard search. We've made our search to automatically perform wildcard filtering on the fly so you don't have to append special symbols within your search query."
 type = "Website"
