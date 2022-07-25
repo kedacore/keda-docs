@@ -67,21 +67,22 @@
     "DOMContentLoaded",
     () => {
       "use strict";
-      let index, parse;
+      let index;
       const currentUrl = window.location.pathname;
-      const currentLocation = String(currentUrl).split('/');
+      const currentLocation = String(currentUrl).split("/");
       const currentVersion = currentLocation[2];
       const form = document.getElementById("search");
       const input = document.getElementById("search-input");
       const target = document.querySelector(".is-search-result");
       const searchResultCount = document.querySelector(".results");
       const template = document.getElementById("is-search-template");
-      let query =  input.value.trim();
+      let query = input.value.trim();
+      let parse = {};
 
       // fetch all scalers on inital load
       if (!query) {
         initSearchIndex();
-      };
+      }
 
       input.addEventListener(
         "input",
@@ -91,81 +92,71 @@
 
           // disable all buttons during search by default
           const filterBtns = document.querySelectorAll(".filterBtn");
-          filterBtns.forEach(btn => btn.disabled = true);
+          filterBtns.forEach((btn) => (btn.disabled = true));
 
-          
           if (!keywords) {
             // enable all buttons when input search is empty
             const filterBtns = document.querySelectorAll(".filterBtn");
-            filterBtns.forEach(btn => btn.disabled = false);
-          };
-          
+            filterBtns.forEach((btn) => (btn.disabled = false));
+          }
+
           // automatically perform wildcard search when the input receives a value
-          query = keywords.length > 0 ? `${keywords}*` : '';
+          query = keywords.length > 0 ? `${keywords}*` : "";
           initSearchIndex();
 
           // clear out all the scaler item card when in-built scalers are being searched
           while (target.firstChild.nextSibling) {
             target.removeChild(template.nextSibling.nextElementSibling);
-          };
-          
+          }
         },
         false
       );
 
-      function handleEvent(e) {
-        console.log(e.type);
-      }
-
       async function initSearchIndex() {
-        const request = new XMLHttpRequest();
-        request.open("GET", "/index.json");
-        request.responseType = "json";
-        request.addEventListener(
-          "load",
-          function () {
-            parse = {};
-            index = lunr(function () {
-              const documents = request.response;
-              this.ref("title");
-              this.field("title", {
-                boost: 20,
-                usePipeline: true,
-                wildcard: lunr.Query.wildcard.TRAILING,
-                presence: lunr.Query.presence.REQUIRED,
-              });
-              this.field("maintainer", {
-                boost: 15,
-              });
-              this.field("href", {
-                boost: 15,
-              });
-              this.field("description", {
-                boost: 10,
-              });
-              this.field("availability", {
-                boost: 5,
-              });
+        const scalers = await fetch("/index.json", { method: "GET" })
+          .then((response) => response.json())
+          .then((data) => {
+            return data;
+          })
+          .catch((err) => console.error("error:", err));
+        index = lunr(function () {
+          const documents = scalers;
 
-              documents.forEach(function (doc) {
-                if (doc.version === currentVersion) {
-                  this.add(doc);
-                  parse[doc.title] = {
-                    href: doc.href,
-                    title: doc.title,
-                    maintainer: doc.maintainer,
-                    description: doc.description,
-                    availability: doc.availability,
-                }
-                };
-              }, this);
-            });
-            search(query);
-          },
-          false
-        );
-        request.addEventListener("error", handleEvent);
-        request.send(null);
+          this.ref("title");
+          this.field("title", {
+            boost: 20,
+            usePipeline: true,
+            wildcard: lunr.Query.wildcard.TRAILING,
+            presence: lunr.Query.presence.REQUIRED,
+          });
+          this.field("maintainer", {
+            boost: 15,
+          });
+          this.field("href", {
+            boost: 15,
+          });
+          this.field("description", {
+            boost: 10,
+          });
+          this.field("availability", {
+            boost: 5,
+          });
+
+          documents.forEach(function (doc) {
+            if (doc.version === currentVersion) {
+              this.add(doc);
+              parse[doc.title] = {
+                href: doc.href,
+                title: doc.title,
+                maintainer: doc.maintainer,
+                description: doc.description,
+                availability: doc.availability,
+              };
+            }
+          }, this);
+        });
+
+        search(query);
       }
 
       function search(keywords) {
@@ -181,8 +172,8 @@
             title.textContent = `No results found for "${keywords}"`;
           else if (results.length == 1)
             title.textContent = `Found one result for "${keywords}"`;
-          else if (results.length > 1 && keywords === '')
-            title.textContent = `${results.length} scalers available`
+          else if (results.length > 1 && keywords === "")
+            title.textContent = `${results.length} scalers available`;
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
           searchResultCount.replaceChildren(title);
@@ -192,11 +183,18 @@
             const doc = parse[result.ref];
             const element = template.content.cloneNode(true);
             element.querySelector(".scaler-title").textContent = doc.title;
-            element.querySelector(".scaler-title").setAttribute('href', doc.href);
-            doc.description && (element.querySelector(".description").textContent = doc.description);
-            doc.maintainer && (element.querySelector(".maintainer").textContent = doc.maintainer);
-            doc.availability && (element.querySelector(".availability").textContent =
-              doc.availability);
+            element
+              .querySelector(".scaler-title")
+              .setAttribute("href", doc.href);
+            doc.description &&
+              (element.querySelector(".description").textContent =
+                doc.description);
+            doc.maintainer &&
+              (element.querySelector(".maintainer").textContent =
+                doc.maintainer);
+            doc.availability &&
+              (element.querySelector(".availability").textContent =
+                doc.availability);
             target.appendChild(element);
           }, this);
         }
