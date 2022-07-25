@@ -100,7 +100,8 @@
             filterBtns.forEach(btn => btn.disabled = false);
           };
           
-          query = keywords;
+          // automatically perform wildcard search when the input receives a value
+          query = keywords.length > 0 ? `${keywords}*` : '';
           initSearchIndex();
 
           // clear out all the scaler item card when in-built scalers are being searched
