@@ -15,15 +15,17 @@ This specification describes the `solace-event-queue` trigger that scales based 
 triggers:
 - type: solace-event-queue
   metadata:
-    solaceSempBaseURL:        http://solace_broker:8080
-    messageVpn:               message-vpn
-    queueName:                queue_name
-    messageCountTarget:       '100'
-    messageSpoolUsageTarget:  '100'       ### Megabytes (MB)
-    username:                 semp-user
-    password:                 semp-pwd
-    usernameFromEnv:          ENV_VAR_USER
-    passwordFromEnv:          ENV_VAR_PWD
+    solaceSempBaseURL:                  http://solace_broker:8080
+    messageVpn:                         message-vpn
+    queueName:                          queue_name
+    messageCountTarget:                 '100'
+    messageSpoolUsageTarget:            '100'       ### Megabytes (MB)
+    activationMessageCountTarget:       '100'
+    activationMessageSpoolUsageTarget:  '100'       ### Megabytes (MB)
+    username:                           semp-user
+    password:                           semp-pwd
+    usernameFromEnv:                    ENV_VAR_USER
+    passwordFromEnv:                    ENV_VAR_PWD
 ```
 
 **Parameter list:**
@@ -32,7 +34,9 @@ triggers:
 - `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored.
 - `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
+- `activationMessageCountTarget` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
+- `activationMessageSpoolUsageTarget` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `username` - User account with access to Solace SEMP RESTful endpoint.
 - `password` - Password for the user account.
 - `usernameFromEnv` - Environment variable set with SEMP user account.
