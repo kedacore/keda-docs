@@ -15,6 +15,7 @@ The trigger always requires the following information:
 
 - `query` - A MySQL query that should return single numeric value.
 - `queryValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in HPA. (This value can be a float)
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
 To provide information about how to connect to MySQL you can provide:
 
@@ -87,6 +88,7 @@ spec:
   - type: mysql
     metadata:
       queryValue: "4.4"
+      activationQueryValue: "5.4"
       query: "SELECT CEIL(COUNT(*) / 6) FROM task_instance WHERE state='running' OR state='queued'"
     authenticationRef:
       name: keda-trigger-auth-mysql-secret
