@@ -28,6 +28,7 @@ triggers:
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
     queryStep: "2m"
     threshold: '100.50'
+    activationThreshold: '50.1'
 ```
 
 **Parameter list:**
@@ -38,6 +39,7 @@ triggers:
 - `query` - Predict the query that will yield the value for the scaler to compare against the `threshold`. The query must return a vector/scalar single element response.
 - `queryStep` - The maximum time between two slices within the boundaries for QML range query, used in the query.
 - `threshold` - Value to start scaling for. (This value can be a float)
+- `activationThreshold`- Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
 ### Authentication Parameters
 
