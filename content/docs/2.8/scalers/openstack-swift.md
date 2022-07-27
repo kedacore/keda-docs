@@ -18,6 +18,7 @@ triggers:
     containerName: my-container # Required
     swiftURL: http://localhost:8080/v1/b161dc815cd24bda84d94d9a0e73cf78  # Optional
     objectCount: "2"  # Optional
+    activationObjectCount: "5" # Optional
     objectPrefix: "my-prefix" # Optional
     objectDelimiter: "/"  # Optional 
     objectLimit: "10" # Optional
@@ -32,6 +33,7 @@ triggers:
 - `swiftURL` - The URL to query the Swift API. If not provided, the scaler will try to find the Swift public URL for a certain region, using the OpenStack catalog, which is returned when requesting an authentication token. (Optional)
 - `containerName` - Name of Swift container in an OpenStack account.
 - `objectCount` - Average target value to trigger scaling actions. (Default: `2`, Optional)
+- `activationObjectCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `objectPrefix` - Prefix for the object. Only objects with this prefix will be returned. Use this prefix to specify sub-paths for the objects. (Default: `""`, Optional)
 - `objectDelimiter` - Delimiter for identifying the object prefix. It is the character used to split object names. (Default: `""`, Optional)
 - `objectLimit` - The maximum number of objects returned by the API. By default, the Swift API only returns up to 10000 names. (Default: `""`, Optional)
