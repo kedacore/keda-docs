@@ -174,3 +174,8 @@ There are a few reasons for this:
 * Specific need for more control (GPU enabled compute clusters, policies, etc.)
 """
 type = "Azure"
+
+[[qna]]
+q = "Does scaler search support wildcard search?"
+a = "Yes. The search actually supports wildcard search. We've made our search to automatically perform wildcard filtering on the fly so you don't have to append special symbols within your search query."
+type = "Website"
