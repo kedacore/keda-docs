@@ -67,7 +67,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert` and `key`. `cert` and `key` must be specified together.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
 
 **Credential based authentication:**
 
@@ -83,6 +83,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)  
 
 ### New Consumers and Offset Reset Policy
 
