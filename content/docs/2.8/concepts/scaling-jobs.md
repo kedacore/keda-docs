@@ -39,6 +39,7 @@ spec:
   successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
   envSourceContainerName: {container-name}    # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
+  minReplicaCount: 10                         # Optional. Default: 0
   maxReplicaCount: 100                        # Optional. Default: 100
   rolloutStrategy: gradual                    # Deprecated: Use rollout.strategy instead (see below).
   rollout:
@@ -99,6 +100,13 @@ The actual number of jobs could exceed the limit in a short time. However, it is
 
 This optional property specifies the name of container in the Job, from which KEDA should try to get environment properties holding secrets etc. If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.JobTargetRef.template.spec.containers[0]`.
 
+___
+```yaml
+  minReplicaCount: 10 # Optional. Default: 0
+```
+
+The min number of jobs that is created by default. This can be useful to avoid bootstrapping time of new jobs. If minReplicaCount is greater than maxReplicaCount, minReplicaCount will be set to maxReplicaCount. 
+___
 
 ---
 
