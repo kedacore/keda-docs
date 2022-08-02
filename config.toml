@@ -349,6 +349,9 @@ url = "https://fission.io/"
 logo = "fission.png"
 
 [[params.users]]
+url = "https://www.freepikcompany.com/"
+logo = "freepik-company.png"
+[[params.users]]
 url = "https://www.gittigidiyor.com/"
 logo = "gittigidiyor.png"
 
