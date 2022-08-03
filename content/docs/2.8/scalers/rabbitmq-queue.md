@@ -19,6 +19,7 @@ triggers:
     protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
     mode: QueueLength # QueueLength or MessageRate
     value: "100.50" # message backlog or publish/sec. target per instance
+    activationValue: "10.5" # Optional. Activation threshold 
     queueName: testqueue
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:
@@ -32,6 +33,7 @@ triggers:
 - `queueName` - Name of the queue to read message from.
 - `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the publish rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
+- `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional)
 - `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
