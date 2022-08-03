@@ -100,8 +100,7 @@
             filterBtns.forEach((btn) => (btn.disabled = false));
           }
 
-          // automatically perform wildcard search when the input receives a value
-          query = keywords.length > 0 ? `${keywords}*` : "";
+          query = keywords;
           initSearchIndex();
 
           // clear out all the scaler item card when in-built scalers are being searched
@@ -160,7 +159,8 @@
       }
 
       function search(keywords) {
-        const results = index.search(keywords);
+        // automatically perform wildcard search when the input receives a value
+        const results = index.search(keywords.length > 0 ? `${keywords}*` : "");
 
         if ("content" in template) {
           // show result count
