@@ -20,6 +20,7 @@ triggers:
     passwordFromEnv: REDIS_PASSWORD
     listName: mylist # Required
     listLength: "5" # Required
+    activationListLength: "5" # optional
     enableTLS: "false" # optional
     databaseIndex: "0" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
@@ -37,6 +38,7 @@ triggers:
   - Both the hostname, username and password fields need to be set to the names of the environment variables in the target deployment that contain the host name, username and password respectively.
 - `listName` - Name of the Redis List that you want to monitor.
 - `listLength` - Average target value to trigger scaling actions.
+- `activationListLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
 
