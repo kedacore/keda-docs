@@ -281,24 +281,34 @@ weight = 5
 
 # "Features" section on the main page
 [[params.features]]
-title = "Event-driven"
-content = "Intelligently scale your event-driven application"
-icon = "fas fa-bolt"
-
-[[params.features]]
 title = "Autoscaling Made Simple"
 content = "Bring rich scaling to every workload in your [Kubernetes](https://kubernetes.io) cluster"
 icon = "fas fa-rocket"
 
 [[params.features]]
+title = "Event-driven"
+content = "Intelligently scale your event-driven application"
+icon = "fas fa-bolt"
+
+[[params.features]]
 title = "Built-in Scalers"
-content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, CI/CD, and more"
+content = "Catalog of 50+ built-in scalers for various cloud platforms, databases, messaging systems, telemetry systems, CI/CD, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
 title = "Multiple Workload Types"
 content = "Support for variety of workload types such as deployments, jobs & custom resources with `/scale` sub-resource"
 icon = "fas fa-shapes"
+
+[[params.features]]
+title = "Reduce environmental impact"
+content = "Build sustainable platforms by optimizing workload scheduling and scale-to-zero"
+icon = "fas fa-seedling"
+
+[[params.features]]
+title = "Extensible"
+content = "Bring-your-own or use community-maintained scalers"
+icon = "fas fa-project-diagram"
 
 [[params.features]]
 title = "Vendor-Agnostic"
