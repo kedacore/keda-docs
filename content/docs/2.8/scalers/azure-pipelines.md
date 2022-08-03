@@ -105,9 +105,7 @@ KEDA will use the following evaluation order:
 
 #### How it works under the hood
 
-Azure DevOps has a Job Request API with returns a list of all jobs, and the agent that they are assigned to, or could potentially be assigned to. This is an undocumented Microsoft API.
-
-This is the API: https://dev.azure.com/<organisation>/_apis/distributedtask/pools/<poolid>/jobrequests
+Azure DevOps has a Job Request API with returns a list of all jobs, and the agent that they are assigned to, or could potentially be assigned to. This is an undocumented Microsoft API which is available on `https://dev.azure.com/<organisation>/_apis/distributedtask/pools/<poolid>/jobrequests`.
 
 KEDA will interpret this request to find any matching template from the defined parent in the scaling definition, or any agent that can satisfy the demands specified in the scaling definition.
 
