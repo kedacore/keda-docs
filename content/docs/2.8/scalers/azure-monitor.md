@@ -23,6 +23,7 @@ triggers:
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
     targetValue: "0.5"
+    activationTargetValue: "3.5"
     activeDirectoryClientId: <client id value> # Optional, can use TriggerAuthentication as well
     activeDirectoryClientIdFromEnv: CLIENT_ID_ENV_NAME # Optional, can use TriggerAuthentication as well
     activeDirectoryClientPasswordFromEnv: CLIENT_PASSWORD_ENV_NAME # Optional, can use TriggerAuthentication as well
@@ -45,6 +46,7 @@ triggers:
   - Custom metric name when querying Azure Monitor [custom metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-custom-overview).
 - `metricNamespace` - Name of the metric namespace. Required when `metricName` is a custom metric.
 - `targetValue` - Target value to trigger scaling actions. (This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `metricAggregationType` - Aggregation method of the Azure Monitor metric. Options include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
 - `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (Optional)
 - `metricAggregationInterval` - Collection time of the metric in format `"hh:mm:ss"` (Default: `"0:5:0"`, Optional)

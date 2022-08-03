@@ -39,8 +39,12 @@ spec:
   successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
   envSourceContainerName: {container-name}    # Optional. Default: .spec.JobTargetRef.template.spec.containers[0]
+  minReplicaCount: 10                         # Optional. Default: 0
   maxReplicaCount: 100                        # Optional. Default: 100
-  rolloutStrategy: gradual                    # Optional. Default: default. Which Rollout Strategy KEDA will use.
+  rolloutStrategy: gradual                    # Deprecated: Use rollout.strategy instead (see below).
+  rollout:
+    strategy: gradual                         # Optional. Default: default. Which Rollout Strategy KEDA will use.
+    propagationPolicy: foreground             # Optional. Default: background. Kubernetes propagation policy for cleaning up existing jobs during rollout.
   scalingStrategy:
     strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
     customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
@@ -96,6 +100,13 @@ The actual number of jobs could exceed the limit in a short time. However, it is
 
 This optional property specifies the name of container in the Job, from which KEDA should try to get environment properties holding secrets etc. If it is not defined it, KEDA will try to get environment properties from the first Container, ie. from `.spec.JobTargetRef.template.spec.containers[0]`.
 
+___
+```yaml
+  minReplicaCount: 10 # Optional. Default: 0
+```
+
+The min number of jobs that is created by default. This can be useful to avoid bootstrapping time of new jobs. If minReplicaCount is greater than maxReplicaCount, minReplicaCount will be set to maxReplicaCount. 
+___
 
 ---
 
@@ -121,12 +132,14 @@ The max number of pods that is created within a single polling period. If there 
 ---
 
 ```yaml
-  rolloutStrategy: default # Optional. Default: default. Which Rollout Strategy KEDA will use. 
+  rollout:
+    strategy: gradual                         # Optional. Default: default. Which Rollout Strategy KEDA will use.
+    propagationPolicy: foreground             # Optional. Default: background. Kubernetes propagation policy for cleaning up existing jobs during 
 ```
 
-This optional property specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
+The optional property rollout.strategy specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
 Possible values are `default` or `gradual`. \
-When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. \
+When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
 On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 

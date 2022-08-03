@@ -49,7 +49,7 @@ Here is an overview of all KEDA deployments and the supported replicas:
 
 ## HTTP Timeouts
 
-Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses its own dedicated HTTP client with its own connection pool, and by default each client is set to time out any HTTP request after 3 seconds. 
+Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses its own dedicated HTTP client with its own connection pool, and by default each client is set to time out any HTTP request after 3 seconds.
 
 You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable to your desired timeout in milliseconds. For example, on Linux/Mac/Windows WSL2 operating systems, you'd use this command to set to 1 second:
 
@@ -80,14 +80,14 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
-| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    | 
+| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
 | -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
 | kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
 | kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
-To implement internal controllers KEDA uses [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime), that enables configuration of [MaxConcurrentReconciles property](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/controller#Options), ie. the maximum number of concurrent reconciles which can be run for a controller.
+To implement internal controllers KEDA uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime), that enables configuration of [MaxConcurrentReconciles property](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/controller#Options), ie. the maximum number of concurrent reconciles which can be run for a controller.
 
 KEDA Operator exposes properties for specifying `MaxConcurrentReconciles` for following controllers/reconcilers:
 - `ScaledObjectReconciler` - responsible for watching and managing `ScaledObjects`, ie. validates input trigger specification, starts scaling logic and manages dependent HPA.
@@ -97,8 +97,26 @@ KEDA Metrics Server exposes property for specifying `MaxConcurrentReconciles` fo
 
 To modify this properties you can set environment variables on both KEDA Operator and Metrics Server Deployments:
 
-| Environment variable name             | Deployment     | Default Value | Affected reconciler                                            | 
+| Environment variable name             | Deployment     | Default Value | Affected reconciler                                            |
 | ------------------------------------- | -------------- | ------------- | -------------------------------------------------------------- |
 | KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
 | KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
 | KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
+
+## Configure Leader Election
+
+Like reconciliation, KEDA also uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime) for electing the leader replica. The following properties can be configured for either the Operator and Metrics Server Deployment:
+- [`LeaseDuration`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.LeaseDuration)
+- [`RenewDeadline`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.RenewDeadline)
+- [`RetryPeriod`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.RetryPeriod)
+
+To specify values other than their defaults, you can set the following environment variables:
+
+| Environment variable name                    | Deployment     | Manager Property |
+| -------------------------------------------- | -------------- | ---------------- |
+| KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator       | LeaseDuration    |
+| KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator       | RenewDeadline    |
+| KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator       | RetryPeriod      |
+| KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | LeaseDuration    |
+| KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | RenewDeadline    |
+| KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | RetryPeriod      |

@@ -28,6 +28,7 @@ triggers:
     connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
+    activationMessageCount: "2"
     cloud: Private # Optional. Default: AzurePublicCloud
     endpointSuffix: servicebus.airgap.example # Required when cloud=Private
 ```
@@ -35,6 +36,7 @@ triggers:
 **Parameter list:**
 
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
+- `activationMessageCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)

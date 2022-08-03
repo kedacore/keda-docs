@@ -18,6 +18,7 @@ triggers:
     connectionStringFromEnv: MSSQL_CONNECTION_STRING
     query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
     targetValue: "5.5"
+    activationTargetValue: '5'
     metricName: backlog_process_count # optional - the generated value would be `mssql-{sha256hash}`
 ```
 
@@ -43,6 +44,7 @@ The `mssql` trigger always requires the following information:
 
 - `query` - A [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
 - `targetValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA). (This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
 To connect to the MSSQL instance, you can provide either:
 

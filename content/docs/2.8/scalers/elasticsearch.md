@@ -24,7 +24,8 @@ triggers:
       searchTemplateName: "my-search-template-name"
       params: "param1:value1;param2:value2"
       valueLocation: "hits.total.value"
-      targetValue: "1"
+      targetValue: "1.1"
+      activationTargetValue: "5.5"
 ```
 
 **Parameter list:**
@@ -34,7 +35,8 @@ triggers:
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Elasticsearch cluster.
 - `index` - Comma separated list of indexes to run the search template query on.
 - `searchTemplateName` - The search template name to run.
-- `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0.
+- `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `parameters` - Parameters that will be used by the search template. It supports multiples params separated by a semicolon character ( `;` ).
 - `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)

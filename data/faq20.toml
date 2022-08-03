@@ -124,6 +124,32 @@ args:
   - '--tls-cert-file=/certs/tls.crt'
   - '--tls-private-key-file=/certs/tls.key'
 ```
+It is also possible to run KEDA with `readOnlyRootFilesystem=true` by creating an emptyDir volume and mounting it to the path where,
+by default, metrics server writes its generated cert. The corresponding helm command is:
+```
+helm install keda kedacore/keda --namespace keda \
+  --set 'volumes.metricsApiServer.extraVolumes[0].name=keda-volume' \
+  --set 'volumes.metricsApiServer.extraVolumeMounts[0].name=keda-volume' \
+  --set 'volumes.metricsApiServer.extraVolumeMounts[0].mountPath=/apiserver.local.config/certificates/' \
+  --set 'securityContext.metricServer.readOnlyRootFilesystem=true'
+```
+"""
+type = "Features"
+
+[[qna]]
+q = "How do I run KEDA with TLS v1.3 only?"
+a = """
+By default Keda listens on TLS v1.1 and TLSv1.2, with the default Golang ciphersuites.
+In some environments, these ciphers may be considered less secure, for example CBC ciphers.
+
+As an alternative, you can configure the minimum TLS version to be v1.3 to increase security.
+Since all modern clients support this version, there should be no impact in most scenarios.
+
+You can set this with args - e.g.:
+```
+args:
+  - '--tls-min-version=VersionTLS13'
+```
 """
 type = "Features"
 
@@ -148,3 +174,8 @@ There are a few reasons for this:
 * Specific need for more control (GPU enabled compute clusters, policies, etc.)
 """
 type = "Azure"
+
+[[qna]]
+q = "Does scaler search support wildcard search?"
+a = "Yes. The search actually supports wildcard search. We've made our search to automatically perform wildcard filtering on the fly so you don't have to append special symbols within your search query."
+type = "Website"
