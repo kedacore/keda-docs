@@ -255,7 +255,7 @@ There are some important topics to take into account:
 - Opposite to scaling value, the activation value is always optional and the default value is 0.
 - The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
-> ⚠️ **NOTE:** If scaler's page doesn't define the specific parameter is because that specific scaler doesn't support activation value.
+> ⚠️ **NOTE:** If scaler's page doesn't define the specific parameter is because that specific scaler doesn't support activation value and is always 0.
 
 ## Long-running executions
 
