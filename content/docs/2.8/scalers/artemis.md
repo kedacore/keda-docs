@@ -1,6 +1,5 @@
 +++
 title = "ActiveMQ Artemis"
-layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
 description = "Scale applications based on ActiveMQ Artemis queues"
@@ -15,7 +14,7 @@ This specification describes the `artemis-queue` trigger for ActiveMQ Artemis qu
 triggers:
 - type: artemis-queue
   metadata:
-    managementEndpoint: "artemis-activemq.artemis:8161" 
+    managementEndpoint: "artemis-activemq.artemis:8161"
     queueName: "test"
     brokerName: "artemis-activemq"
     brokerAddress: "test"
@@ -36,7 +35,7 @@ triggers:
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `restApiTemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`, Optional)
 - `corsHeader` - Value to populate the Origin header field for CORS filtering. (Default: `"http://<<managmentEndpoint>>"`, Optional)
-  
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the `username` and `password` to connect to the management endpoint.

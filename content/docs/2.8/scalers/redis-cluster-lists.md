@@ -1,6 +1,5 @@
 +++
 title = "Redis Lists (supports Redis Cluster)"
-layout = "scaler"
 availability = "v2.1+"
 maintainer = "Community"
 description = "Redis Lists scaler with support for Redis Cluster topology"

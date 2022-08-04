@@ -1,6 +1,5 @@
 +++
 title = "MongoDB"
-layout = "scaler"
 maintainer = "Community"
 description = "Scale applications based on MongoDB queries."
 availability = "v2.1+"

@@ -1,6 +1,5 @@
 +++
 title = "ActiveMQ Artemis"
-layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
 description = "Scale applications based on ActiveMQ Artemis queues"
@@ -15,11 +14,11 @@ This specification describes the `artemis-queue` trigger for ActiveMQ Artemis qu
 triggers:
 - type: artemis-queue
   metadata:
-    managementEndpoint: "artemis-activemq.artemis:8161" 
+    managementEndpoint: "artemis-activemq.artemis:8161"
     queueName: "test"
     brokerName: "artemis-activemq"
     brokerAddress: "test"
-    queueLength: '10' 
+    queueLength: '10'
     username: 'ARTEMIS_USERNAME'
     password: 'ARTEMIS_PASSWORD'
 ```
@@ -31,7 +30,7 @@ triggers:
 - `brokerName` - Name of the broker as defined in Artemis.
 - `brokerAddress` - Address name of the broker.
 - `queueLength` - How much messages are in the queue. (Default: `10`, Optional.)
-  
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the `username` and `password` to connect to the management endpoint.

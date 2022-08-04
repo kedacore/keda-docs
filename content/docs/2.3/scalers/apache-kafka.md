@@ -1,6 +1,5 @@
 +++
 title = "Apache Kafka"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."

@@ -3,7 +3,6 @@ title = "Elasticsearch"
 availability = "v2.5+"
 maintainer = "Community"
 description = "Scale applications based on elasticsearch search template query result."
-layout = "scaler"
 go_file = "elasticsearch_scaler"
 +++
 
@@ -90,4 +89,4 @@ spec:
         params: "dummy_value:1"
       authenticationRef:
         name: keda-trigger-auth-elasticsearch-secret
-``` 
+```

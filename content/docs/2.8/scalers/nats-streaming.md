@@ -1,6 +1,5 @@
 +++
 title = "NATS Streaming"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on NATS Streaming."
@@ -94,7 +93,7 @@ spec:
   pollingInterval: 10   # Optional. Default: 30 seconds
   cooldownPeriod: 30   # Optional. Default: 300 seconds
   minReplicaCount: 0   # Optional. Default: 0
-  maxReplicaCount: 30  # Optional. Default: 100  
+  maxReplicaCount: 30  # Optional. Default: 100
   scaleTargetRef:
     name: gonuts-sub
   triggers:

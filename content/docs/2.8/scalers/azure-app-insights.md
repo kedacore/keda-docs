@@ -1,6 +1,5 @@
 +++
 title = "Azure Application Insights"
-layout = "scaler"
 availability = "v2.6+"
 maintainer = "Community"
 description = "Scale applications based on Azure Application Insights metrics."

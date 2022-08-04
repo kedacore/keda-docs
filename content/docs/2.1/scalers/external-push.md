@@ -1,6 +1,5 @@
 +++
 title = "External Push"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on an external push scaler."

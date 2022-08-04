@@ -1,6 +1,5 @@
 +++
 title = "Huawei Cloudeye"
-layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on a Huawei Cloudeye."
@@ -58,7 +57,7 @@ The user will need access to read data from Huawei Cloudeye.
 apiVersion: v1
 kind: Secret
 metadata:
-  name: keda-huawei-secrets 
+  name: keda-huawei-secrets
   namespace: keda-test
 data:
   IdentityEndpoint: <IdentityEndpoint>
@@ -68,7 +67,7 @@ data:
   Domain: <Domain>
   AccessKey: <AccessKey>
   SecretKey: <SecretKey>
---- 
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:

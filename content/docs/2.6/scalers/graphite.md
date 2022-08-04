@@ -1,6 +1,5 @@
 +++
 title = "Graphite"
-layout = "scaler"
 availability = "v2.5+"
 maintainer = "Community"
 description = "Scale applications based on metrics in Graphite."
