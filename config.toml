@@ -342,6 +342,10 @@ url = "https://baseten.co/"
 logo = "baseten.png"
 
 [[params.users]]
+url = "https://www.bolddesk.com/"
+logo = "bolddesk.svg"
+
+[[params.users]]
 url = "https://chattermill.com"
 logo = "chattermill.png"
 
@@ -445,9 +449,6 @@ logo = "teamleader.png"
 url = "https://zapier.com"
 logo = "zapier.png"
 
-[[params.users]]
-url = "https://www.bolddesk.com"
-logo = "bolddesk.svg"
 
 # "Partners" section on the Community page
 [[params.partners]]
