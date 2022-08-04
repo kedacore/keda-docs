@@ -27,6 +27,8 @@ triggers:
       nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
       # Required: threshold
       threshold: "50.50"
+      # Optional: activationThreshold - Target value for activating the scaler.
+      activationThreshold: "20.1"
 ```
 
 **Parameter list:**
@@ -37,6 +39,7 @@ triggers:
 - `noDataError` - Should queries that return nodata be treated as an error (Values: `true`, `false`, Default: `false`, Optional)
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the HPA configuration. (This value can be a float)
+- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
 ### Authentication Parameters
 
