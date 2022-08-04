@@ -111,6 +111,51 @@ KEDA will interpret this request to find any matching template from the defined 
 
 Once it finds it, it will scale the workload that matched the definition and Azure DevOps will assign it to that agent.
 
+### Configuring the agent container
+
+Microsoft self-hosted docker agent documentation: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops#linux
+
+Please use the script in Step 5 as the entrypoint for your agent container.
+
+You will need to change this section of the shell script so that the agent will terminate and cleanup itself when the job is complete by using the `--once` switch.
+The if statement for cleanup is only required if you are using the auto-deployment parent template method.
+
+```
+print_header "4. Running Azure Pipelines agent..."
+
+trap 'cleanup; exit 0' EXIT
+trap 'cleanup; exit 130' INT
+trap 'cleanup; exit 143' TERM
+
+chmod +x ./run-docker.sh
+
+# To be aware of TERM and INT signals call run.sh
+# Running it with the --once flag at the end will shut down the agent after the build is executed
+./run-docker.sh "$@" & wait $!
+```
+
+to
+
+
+```
+print_header "4. Running Azure Pipelines agent..."
+
+if ! grep -q "template" <<< "$AZP_AGENT_NAME"; then
+  echo "Cleanup Traps Enabled"
+
+  trap 'cleanup; exit 0' EXIT
+  trap 'cleanup; exit 130' INT
+  trap 'cleanup; exit 143' TERM
+
+fi
+
+chmod +x ./run-docker.sh
+
+# To be aware of TERM and INT signals call run.sh
+# Running it with the --once flag at the end will shut down the agent after the build is executed
+./run-docker.sh "$@" --once & wait $!
+```
+
 ### Example for ScaledObject
 
 ```yaml
