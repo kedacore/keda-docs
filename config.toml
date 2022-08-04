@@ -342,7 +342,7 @@ url = "https://baseten.co/"
 logo = "baseten.png"
 
 [[params.users]]
-url = "https://www.bolddesk.com"
+url = "https://www.bolddesk.com/"
 logo = "bolddesk.svg"
 
 [[params.users]]
