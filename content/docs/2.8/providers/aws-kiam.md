@@ -1,7 +1,5 @@
 +++
 title = "Kiam Pod Identity for AWS"
-layout = "provider"
-weight = 4
 +++
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.

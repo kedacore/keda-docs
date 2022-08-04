@@ -35,12 +35,10 @@
       </li>
 
       {{ if $isHere }}
-      {{ if ne .TableOfContents "<nav id=\"TableOfContents\"></nav>" }} <!-- not render ToC when is empty -->
       {{ if gt (len .TableOfContents) 32 }}
       <div class="nav-section-toc">
         {{ .TableOfContents }}
       </div>
-      {{ end }}
       {{ end }}
       {{ end }}
       {{ end }}

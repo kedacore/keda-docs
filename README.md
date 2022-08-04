@@ -85,6 +85,20 @@ Make sure to update the following metadata fields:
 * `maintainer`
 * `description`
 
+## Adding provider documentation
+
+To add documentation for a new [provider](https://keda.sh/docs/concept/authentication):
+
+```console
+$ hugo new --kind provider docs/<VERSION>/providers/my-new-provider.md
+```
+
+This creates a boilerplate Markdown file in
+`content/docs/<VERSION>/providers/my-new-provider.md` whose contents you can modify.
+Make sure to update the following metadata fields:
+
+* `title`
+
 ## Writing documentation for a scaler
 
 In order to maintain the style consistency across different scalers, all the

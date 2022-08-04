@@ -3,11 +3,10 @@
 {{ $version := index (split $.Page.File.Path "/") 1 }}
 <div class="buttons has-extra-top-margin">
   {{ range $providers }}
-  {{ $isHere      := eq .RelPermalink $here }}
   {{ $thisVersion := index (split .File.Path "/") 1 }}
   {{ $sameVersion := eq $version $thisVersion }}
   {{ if $sameVersion }}
-  <a class="button is-primary{{ if not $isHere }} is-outlined{{ end }}" href="{{ .RelPermalink }}">
+  <a class="button is-primary" href="{{ .RelPermalink }}">
     {{ .Title }}
   </a>
   {{ end }}

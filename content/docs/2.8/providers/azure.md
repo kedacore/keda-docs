@@ -1,7 +1,5 @@
 +++
 title = "Azure Pod Identity"
-layout = "provider"
-weight = 1
 +++
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.

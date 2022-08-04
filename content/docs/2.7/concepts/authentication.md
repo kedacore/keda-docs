@@ -1,7 +1,6 @@
 +++
 title = "Authentication"
 weight = 500
-providersListVisible = true
 +++
 
 Often a scaler will require authentication or secrets and config to check for events.
@@ -177,91 +176,6 @@ spec:
 
 Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
 
-### Environment variable(s)
-
-You can pull information via one or more environment variables by providing the `name` of the variable for a given `containerName`.
-
-```yaml
-env:                              # Optional.
-  - parameter: region             # Required - Defined by the scale trigger
-    name: my-env-var              # Required.
-    containerName: my-container   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-```
-
-**Assumptions:** `containerName` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
-
-### Secret(s)
-
-You can pull one or more secrets into the trigger by defining the `name` of the Kubernetes Secret and the `key` to use.
-
-```yaml
-secretTargetRef:                          # Optional.
-  - parameter: connectionString           # Required - Defined by the scale trigger
-    name: my-keda-secret-entity           # Required.
-    key: azure-storage-connectionstring   # Required.
-```
-
-**Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
-
-### Hashicorp Vault secret(s)
-
-You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
-`secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
-`namespace` may be used to target a given Vault Enterprise namespace.
-
-```yaml
-hashiCorpVault:                                     # Optional.
-  address: {hashicorp-vault-address}                # Required.
-  namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
-  authentication: token | kubernetes                # Required.
-  role: {hashicorp-vault-role}                      # Optional.
-  mount: {hashicorp-vault-mount}                    # Optional.
-  credential:                                       # Optional.
-    token: {hashicorp-vault-token}                  # Optional.
-    serviceAccount: {path-to-service-account-file}  # Optional.
-  secrets:                                          # Required.
-  - parameter: {scaledObject-parameter-name}        # Required.
-    key: {hasicorp-vault-secret-key-name}           # Required.
-    path: {hasicorp-vault-secret-path}              # Required.
-```
-
-### Azure Key Vault secret(s)
-
-You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key.
-
-The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
-
-Currently pod identity providers are not supported for key vault.
-
-You need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
-
-Ensure that "read secret" permissions have been granted to the Azure AD application on the Azure Key Vault. Learn more in the Azure Key Vault [documentation](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal).
-
-The `cloud` parameter can be used to specify cloud environments besides `Azure Public Cloud`, such as known Azure clouds like
-`Azure China Cloud`, etc. and even Azure Stack Hub or Air Gapped clouds.
-
-```yaml
-azureKeyVault:                                          # Optional.
-  vaultURI: {key-vault-address}                         # Required.
-  credentials:                                          # Required.
-    clientId: {azure-ad-client-id}                      # Required.
-    clientSecret:                                       # Required.
-      valueFrom:                                        # Required.
-        secretKeyRef:                                   # Required.
-          name: {k8s-secret-with-azure-ad-secret}       # Required.
-          key: {key-within-the-secret}                  # Required.
-    tenantId: {azure-ad-tenant-id}                      # Required.
-  cloud:                                                # Optional.
-    type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-    keyVaultResourceURL: {key-vault-resource-url-for-cloud}           # Required when type = Private.
-    activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}    # Required when type = Private.
-  secrets:                                              # Required.
-  - parameter: {param-name-used-for-auth}               # Required.
-    name: {key-vault-secret-name}                       # Required.
-    version: {key-vault-secret-version}                 # Optional.
-```
-
 ### Pod Authentication Providers
 
 Several service providers allow you to assign an identity to a pod. By using that identity, you can defer authentication to the pod & the service provider, rather than configuring secrets.
@@ -273,4 +187,6 @@ podIdentity:
   provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
 ```
 
-Available authentication providers for KEDA:
+### Available authentication providers for KEDA
+
+{{< providers >}}
