@@ -77,9 +77,19 @@
 .navbar-dropdown .navbar-item
 	color: #4a4a4a
 
+.providers-link
+  display: none
+
 @media screen and (max-width: 1024px)
   .is-fixed-top
     overflow: hidden
 
   .is-left-padded
     padding-left: 40px
+
+@media screen and (max-width: 1023px)
+  .providers-link
+    display: inline
+
+  .navbar-link, .navbar-item
+    color: $dark

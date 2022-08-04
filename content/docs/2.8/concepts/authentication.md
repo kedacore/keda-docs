@@ -1,6 +1,7 @@
 +++
 title = "Authentication"
 weight = 500
+providersListVisible = true
 +++
 
 Often a scaler will require authentication or secrets and config to check for events.
@@ -275,64 +276,4 @@ podIdentity:
   identityId: <identity-id>                                     # Optional. Only used by azure & azure-workload providers.
 ```
 
-#### Azure Pod Identity
-
-Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure           # Optional. Default: none
-  identityId: <identity-id> # Optional. Default: Identity linked with the label set when installing KEDA.
-```
-
-Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
-
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
-
-#### Azure Workload Identity
-
-[**Azure AD Workload Identity**](https://github.com/Azure/azure-workload-identity) is the newer version of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity). It lets your Kubernetes workloads access Azure resources using an
-[**Azure AD Application**](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
-without having to specify secrets, using [federated identity credentials](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html) - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Workload Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure-workload  # Optional. Default: none
-  identityId: <identity-id> # Optional. Default: ClientId From annotation on service-account.
-```
-
-Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
-to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/service-account-labels-and-annotations.html) for more information. You can set these labels and annotations on the KEDA Operator service account. This can be done for you during deployment with Helm with the
-following flags -
-
-1. `--set podIdentity.azureWorkload.enabled=true`
-2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
-3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
-
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
-
-#### EKS Pod Identity Webhook for AWS
-
-[**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
-
-You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-eks # Optional. Default: none
-```
-
-#### Kiam Pod Identity for AWS
-
-[**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
-
-You can tell KEDA to use Kiam via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-kiam # Optional. Default: none
-```
+Available authentication providers for KEDA:

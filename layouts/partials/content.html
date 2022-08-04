@@ -1,5 +1,6 @@
 {{ $notice   := .Params.notice }}
 {{ $isScaler := eq .CurrentSection.Title "Scalers" }}
+{{ $providersListVisible := .Params.providersListVisible }}
 <section class="section">
   <div class="container">
     <div class="content is-medium is-constrained has-bottom-margin">
@@ -46,6 +47,10 @@
         <div class="artifacthub-widget-group" data-url="https://artifacthub.io/packages/search?kind=8&sort=relevance&page=1" data-theme="light" data-header="false" data-stars="true" data-color="#405273" data-responsive="true"  data-loading="true"></div>
         <script async src="https://artifacthub.io/artifacthub-widget.js"></script>
       </div>
+      {{ end }}
+
+      {{ if $providersListVisible }}
+      {{ partial "providers.html" . }}
       {{ end }}
     </div>
   </div>

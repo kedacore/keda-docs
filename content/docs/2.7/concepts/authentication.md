@@ -1,6 +1,7 @@
 +++
 title = "Authentication"
 weight = 500
+providersListVisible = true
 +++
 
 Often a scaler will require authentication or secrets and config to check for events.
@@ -272,37 +273,4 @@ podIdentity:
   provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
 ```
 
-#### Azure Pod Identity
-
-Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure # Optional. Default: none
-```
-
-Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
-
-#### EKS Pod Identity Webhook for AWS
-
-[**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
-
-You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-eks # Optional. Default: none
-```
-
-#### Kiam Pod Identity for AWS
-
-[**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
-
-You can tell KEDA to use Kiam via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-kiam # Optional. Default: none
-```
+Available authentication providers for KEDA:
