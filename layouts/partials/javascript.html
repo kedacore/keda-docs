@@ -163,7 +163,7 @@
         let queryString = index.search("");
 
         /* By default, Lunr can only match words stored in the records/index. We want to be able to match both words and characters. 
-        To be able to perform character matching, we perform wildcard search. */
+        To be able to perform character matching, we do wildcard search. */
         if (keywords.length > 0) {
           queryString = index.search(keywords);
           queryString =
