@@ -19,6 +19,7 @@ triggers:
       organizationName: influx-org
       organizationNameFromEnv: INFLUXDB_ORG_NAME # Optional: You can use this instead of `organizationName` parameter. See details in "Parameter List" section
       thresholdValue: '4.4'
+      activationThresholdValue: '6.2'
       query: |
         from(bucket: "bucket-of-interest")
         |> range(start: -12h)
@@ -36,6 +37,7 @@ triggers:
 - `organizationNameFromEnv` - Defines the organization name, similar to `organizationName`, but reads it from an environment variable on the scale target.
 - `serverURL` - Holds the url value of the InfluxDB server.
 - `thresholdValue` - Provided by the user. This value can vary from use case to use case depending on the data of interest, and is needed to trigger the scaling in/out depending on what value comes back from the query. (This value can be a float)
+- `activationThresholdValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `query` - Flux query that will yield the value for the scaler to compare the `thresholdValue` against.
 - `metricName` - Name to assign to the metric. If not set KEDA will generate a name based organization name. If using more than one trigger it is required that all `metricName`(s) be unique. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
@@ -67,6 +69,7 @@ spec:
         serverURL: http://influxdb:8086
         organizationNameFromEnv: INFLUXDB_ORG_NAME
         thresholdValue: '4'
+        activationThresholdValue: '6'
         query: |
           from(bucket: "bucket-of-interest")
           |> range(start: -12h)
