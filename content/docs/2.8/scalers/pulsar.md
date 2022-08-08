@@ -18,6 +18,7 @@ triggers:
     topic: persistent://public/default/my-topic
     subscription: sub1
     msgBacklogThreshold: '5'
+    activationMsgBacklogThreshold: '2'
 ```
 
 **Parameter list:**
