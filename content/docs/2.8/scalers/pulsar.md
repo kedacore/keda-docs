@@ -27,6 +27,7 @@ triggers:
 - `topic` - Pulsar topic. format of `persistent://{tenant}/{namespace}/{topicName}`
 - `subscription` - Name of the topic subscription
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
+- `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
 ### Authentication Parameters
 
