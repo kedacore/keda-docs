@@ -31,7 +31,7 @@ triggers:
 - `value` - Value to trigger scaling actions for:
 	- When using `Utilization`, the target value is the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 	- When using `AverageValue`, the target value is the target value of the average of the metric across all relevant pods (quantity).
-- `containerName` - Set this to target the specific container rather than the entire pod. Defaults to empty if not specified.
+- `containerName` - Name of the specific container to scale based on its CPU, rather than the entire pod. Defaults to empty if not specified.
 
 > 💡 **NOTE:** `containerName` parameter requires Kubernetes cluster version 1.20 or higher with `HPAContainerMetrics` feature enabled. Please see [container resource metrics](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#container-resource-metrics) for more information.
 
