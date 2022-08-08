@@ -422,6 +422,10 @@ url = "https://qonto.com"
 logo = "qonto.png"
 
 [[params.users]]
+url = "https://www.reddit.com/"
+logo = "reddit.svg"
+
+[[params.users]]
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
