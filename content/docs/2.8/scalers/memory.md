@@ -73,5 +73,5 @@ spec:
     metricType: Utilization
     metadata:
       value: "50"
-    containerName: "foo"
+    containerName: "api"
 ```
