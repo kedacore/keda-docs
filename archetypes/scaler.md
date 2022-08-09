@@ -3,7 +3,6 @@ title = "{{ replace .Name "-" " " | title }}"
 availability = ""
 maintainer = ""
 description = "Insert description here"
-layout = "scaler"
 +++
 
 ### Trigger Specification
@@ -33,4 +32,4 @@ The user will need access to read data from Huawei Cloudeye.
 
 ### Example
 
-*Provide an example of how to configure the trigger, preferably using TriggerAuthentication* 
+*Provide an example of how to configure the trigger, preferably using TriggerAuthentication*

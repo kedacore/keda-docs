@@ -1,6 +1,5 @@
 +++
 title = "Azure Data Explorer"
-layout = "scaler"
 availability = "v2.7+"
 maintainer = "Community"
 description = "Scale applications based on Azure Data Explorer query result."

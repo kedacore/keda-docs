@@ -3,7 +3,6 @@ title = "ActiveMQ"
 availability = "v2.6+"
 maintainer = "Community"
 description = "Scale applications based on ActiveMQ Queue."
-layout = "scaler"
 go_file = "activemq_scaler"
 +++
 
@@ -33,7 +32,7 @@ triggers:
 **Parameter Requirements:**
 
 - In case of `restAPITemplate` parameter is not used, parameters resolving the REST API Template are all **required**: `managementEndpoint`, `destinationName`, `brokerName`.
-- ActiveMQ Scaler polls the ActiveMQ REST API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below. 
+- ActiveMQ Scaler polls the ActiveMQ REST API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below.
 
 ### Authentication Parameters
 

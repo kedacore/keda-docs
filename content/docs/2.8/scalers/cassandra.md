@@ -3,7 +3,6 @@ title = "Cassandra"
 availability = "v2.5+"
 maintainer = "Community"
 description = "Scale applications based on Cassandra query results."
-layout = "scaler"
 go_file = "cassandra_scaler"
 +++
 
@@ -88,5 +87,5 @@ spec:
       targetQueryValue: "1"
       metricName: "test_keyspace"
     authenticationRef:
-      name: keda-trigger-auth-cassandra-secret      
+      name: keda-trigger-auth-cassandra-secret
 ```

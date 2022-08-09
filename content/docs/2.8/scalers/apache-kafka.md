@@ -1,6 +1,5 @@
 +++
 title = "Apache Kafka"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
@@ -85,7 +84,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
-- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)  
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
 
 ### New Consumers and Offset Reset Policy
 

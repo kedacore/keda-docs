@@ -3,7 +3,6 @@ title = "Google Cloud Platform Stackdriver"
 availability = "2.7+"
 maintainer = "Community"
 description = "Scale applications based on a metric obtained from Stackdriver."
-layout = "scaler"
 go_file = "gcp_stackdriver_scaler"
 +++
 
@@ -44,7 +43,7 @@ Valid values for the `alignmentReducer` property are: none, mean, min, max, sum,
 For more information on aggregation, see [here](https://cloud.google.com/monitoring/api/v3/aggregation#aggr-intro).
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
 **Credential based authentication:**
 
@@ -83,7 +82,7 @@ metadata:
   name: keda-trigger-auth-gcp-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: gcp-stackdriver-secret        # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
 ---

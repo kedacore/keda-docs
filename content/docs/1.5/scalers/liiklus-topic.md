@@ -1,6 +1,5 @@
 +++
 title = "Liiklus Topic"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Liiklus Topic."

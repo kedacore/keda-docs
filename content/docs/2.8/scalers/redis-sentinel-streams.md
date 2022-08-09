@@ -1,6 +1,5 @@
 +++
 title = "Redis Streams (supports Redis Sentinel)"
-layout = "scaler"
 availability = "v2.5+"
 maintainer = "Community"
 description = "Redis Streams scaler with support for Redis Sentinel topology"

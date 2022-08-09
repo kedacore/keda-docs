@@ -1,6 +1,5 @@
 +++
 title = "OpenStack Swift"
-layout = "scaler"
 availability = "v2.1+"
 maintainer = "Community"
 description = "Scale applications based on the count of objects in a given OpenStack Swift container."
@@ -19,7 +18,7 @@ triggers:
     containerName: my-container # Required
     objectCount: "2"  # Optional
     objectPrefix: "my-prefix" # Optional
-    objectDelimiter: "/"  # Optional 
+    objectDelimiter: "/"  # Optional
     objectLimit: "10" # Optional
     onlyFiles: "true" # Optional
     timeout: "2"  # Optional
@@ -120,7 +119,7 @@ spec:
 
 #### Application Credentials method
 
-You can also use the Application Credentials method. 
+You can also use the Application Credentials method.
 
 ```yaml
 apiVersion: v1

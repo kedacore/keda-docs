@@ -1,6 +1,5 @@
 +++
 title = "AWS Kinesis Stream"
-layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on AWS Kinesis Stream."
@@ -35,7 +34,7 @@ triggers:
 
 ### Authentication Parameters
 
-> These parameters are relevant only when `identityOwner` is set to `pod`. 
+> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/concepts/authentication).
 
@@ -63,7 +62,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: <encoded-user-id>
   AWS_SECRET_ACCESS_KEY: <encoded-key>
---- 
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:

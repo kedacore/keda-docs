@@ -3,7 +3,6 @@ title = "Google Cloud Platform Storage"
 availability = "2.7+"
 maintainer = "Community"
 description = "Scale applications based on the count of objects in a given Google Cloud Storage (GCS) bucket."
-layout = "scaler"
 go_file = "gcp_storage_scaler"
 +++
 
@@ -31,14 +30,14 @@ triggers:
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
 As counting the number of objects involves iterating over their metadata it is advised to set this number to the value of `targetObjectCount` * `maxReplicaCount`.
 
-The metric name will be generated automatically based on the trigger index and `bucketName`, for example: **s0-gcp-storage-bucketName**. 
+The metric name will be generated automatically based on the trigger index and `bucketName`, for example: **s0-gcp-storage-bucketName**.
 
 You can provide in the metadata either `credentialsFromEnv` or `credentialsFromEnvFile`.
 - `credentialsFromEnv` - Set to the name of the environment variable that holds the credential information.
 - `credentialsFromEnvFile` - Set to the name of a json file that holds the credential information.
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
 **Credential based authentication:**
 
@@ -76,7 +75,7 @@ metadata:
   name: keda-trigger-auth-gcp-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: gcp-storage-secret        # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
 ---

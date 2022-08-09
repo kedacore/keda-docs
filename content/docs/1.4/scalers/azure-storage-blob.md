@@ -1,6 +1,5 @@
 +++
 title = "Azure Blob Storage"
-layout = "scaler"
 availability = "v1.1+"
 maintainer = "Community"
 description = "Scale applications based on the count of blobs in a given Azure Blob Storage container."
@@ -17,7 +16,7 @@ triggers:
 - type: azure-blob
   metadata:
     blobContainerName: functions-blob # Required: Name of Azure Blob Storage container
-    blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs 
+    blobCount: '5' # Optional. Amount of blobs to scale out on. Default: 5 blobs
     connection: STORAGE_CONNECTIONSTRING_ENV_NAME # Optional if TriggerAuthentication defined with pod identity or connection string authentication.
     blobPrefix:  # Optional. Prefix for the Blob. Use this to specify sub path for the blobs if required. Default : ""
     blobDelimiter: # Optional. Delimiter for identifying the blob Prefix. Default: "/"

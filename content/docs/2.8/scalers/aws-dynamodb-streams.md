@@ -3,7 +3,6 @@ title = "AWS DynamoDB Streams"
 availability = "v2.8+"
 maintainer = "Community"
 description = "Scale applications based on AWS DynamoDB Streams"
-layout = "scaler"
 go_file = "aws_dynamodb_streams_scaler"
 +++
 
@@ -22,7 +21,7 @@ triggers:
     # Optional targetValue
     shardCount: "2"
     # Optional. Default: pod
-    identityOwner: pod | operator 
+    identityOwner: pod | operator
 ```
 
 **Parameter list:**

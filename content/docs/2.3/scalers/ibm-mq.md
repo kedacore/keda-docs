@@ -1,6 +1,5 @@
 +++
 title = "IBM MQ"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Community"
 description = "Scale applications based on IBM MQ Queue"
@@ -78,7 +77,7 @@ spec:
         tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
         queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
         usernameFromEnv: <admin-user> # Optional: Provide admin username from env instead of as a secret
-        passwordFromEnv: <admin-password> # Optional: Provide admin password from env instead of as a secret 
+        passwordFromEnv: <admin-password> # Optional: Provide admin password from env instead of as a secret
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---

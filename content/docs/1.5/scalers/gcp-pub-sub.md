@@ -1,6 +1,5 @@
 +++
 title = "Google Cloud Platform‎ Pub/Sub"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
@@ -16,7 +15,7 @@ triggers:
 - type: gcp-pubsub
   metadata:
     subscriptionSize: "5" # Optional - Default is 5
-    subscriptionName: "mysubscription" # Required 
+    subscriptionName: "mysubscription" # Required
     credentials: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
@@ -45,6 +44,6 @@ spec:
   - type: gcp-pubsub
     metadata:
       subscriptionSize: "5"
-      subscriptionName: "mysubscription" # Required 
+      subscriptionName: "mysubscription" # Required
       credentials: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```

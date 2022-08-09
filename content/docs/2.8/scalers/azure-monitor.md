@@ -1,6 +1,5 @@
 +++
 title = "Azure Monitor"
-layout = "scaler"
 availability = "v1.3+"
 maintainer = "Community"
 description = "Scale applications based on Azure Monitor metrics."

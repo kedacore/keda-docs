@@ -1,6 +1,5 @@
 +++
 title = "Kubernetes Workload"
-layout = "scaler"
 availability = "v2.4+"
 maintainer = "Community"
 description = "Scale applications based on the count of running pods that match the given selectors."

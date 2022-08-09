@@ -1,13 +1,12 @@
 +++
 title = "CPU"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Community"
 description = "Scale applications based on cpu metrics."
 go_file = "cpu_memory_scaler"
 +++
 
-> **Notice:** 
+> **Notice:**
 > - This scaler will never scale to 0 and even when user defines multiple scaler types (eg. Kafka + cpu/memory, or Prometheus + cpu/memory), the deployment will never scale to 0.
 > - This scaler only applies to ScaledObject, not to Scaling Jobs.
 

@@ -1,6 +1,5 @@
 +++
 title = "AWS SQS Queue"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on AWS SQS Queue."
@@ -19,7 +18,7 @@ triggers:
     queueURL: https://sqs.eu-west-1.amazonaws.com/account_id/QueueName
     queueLength: "5"  # Default: "5"
     # Required: awsRegion
-    awsRegion: "eu-west-1" 
+    awsRegion: "eu-west-1"
     identityOwner: pod | operator # Optional. Default: pod
 ```
 **Parameter list:**
@@ -35,7 +34,7 @@ triggers:
 
 ### Authentication Parameters
 
-> These parameters are relevant only when `identityOwner` is set to `pod`. 
+> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
@@ -64,7 +63,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: <encoded-user-id>
   AWS_SECRET_ACCESS_KEY: <encoded-key>
---- 
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:
@@ -96,5 +95,5 @@ spec:
     metadata:
       queueURL: myQueue
       queueLength: "5"
-      awsRegion: "eu-west-1" 
+      awsRegion: "eu-west-1"
 ```

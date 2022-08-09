@@ -1,6 +1,5 @@
 +++
 title = "Azure Storage Queue"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on Azure Storage Queues."

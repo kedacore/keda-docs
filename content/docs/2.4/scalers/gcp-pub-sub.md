@@ -1,6 +1,5 @@
 +++
 title = "Google Cloud Platform‎ Pub/Sub"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
@@ -29,13 +28,13 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
 **Credential based authentication:**
 
 - `GoogleApplicationCredentials` - Service account credentials in JSON.
 
-### Example 
+### Example
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -63,7 +62,7 @@ metadata:
   name: keda-trigger-auth-gcp-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: pubsub-secret        # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
 ---
@@ -79,5 +78,5 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-gcp-credentials
     metadata:
-      subscriptionName: "input" # Required  
+      subscriptionName: "input" # Required
 ```

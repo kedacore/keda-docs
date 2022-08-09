@@ -1,6 +1,5 @@
 +++
 title = "Redis Streams"
-layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
 description = "Scale applications based on Redis Streams."
@@ -36,14 +35,14 @@ triggers:
 - `address` - Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
-> As an alternative to the `address` field, the user can specify `host` and `port` parameters. 
+> As an alternative to the `address` field, the user can specify `host` and `port` parameters.
 
-- `host` - Name of the environment variable your deployment uses to get the Redis server host. 
+- `host` - Name of the environment variable your deployment uses to get the Redis server host.
     - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 > It is not required if `address` has been provided..
 
-- `port` - Name of the environment variable your deployment uses to get the Redis server port. 
+- `port` - Name of the environment variable your deployment uses to get the Redis server port.
    - This is usually resolved from a `Secret V1` or a `ConfigMap V1` collections. `env` and `envFrom` are both supported.
 
 > It is only to be used along with the `host` attribute and not required if `address` has been provided.

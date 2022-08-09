@@ -1,6 +1,5 @@
 +++
 title = "Azure Pipelines"
-layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
 description = "Scale applications based on agent pool queues for Azure Pipelines."
@@ -59,7 +58,7 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 ### How to determine your pool ID
 
-There are several ways to get the `poolID`. The easiest could be using `az cli` to get it using the command `az pipelines pool list --pool-name {agentPoolName} --organization {organizationURL} --query [0].id`. 
+There are several ways to get the `poolID`. The easiest could be using `az cli` to get it using the command `az pipelines pool list --pool-name {agentPoolName} --organization {organizationURL} --query [0].id`.
 
 It is also possible to get the pool ID using the UI by browsing to the agent pool from the organization (Organization settings -> Agent pools -> `{agentPoolName}`) and getting it from the URL.
 The URL should be similar to `https://dev.azure.com/{organization}/_settings/agentpools?poolId={poolID}&view=jobs`
@@ -187,7 +186,7 @@ spec:
   scaleTargetRef:
     name: azdevops-deployment
   minReplicaCount: 1
-  maxReplicaCount: 5 
+  maxReplicaCount: 5
   triggers:
   - type: azure-pipelines
     metadata:

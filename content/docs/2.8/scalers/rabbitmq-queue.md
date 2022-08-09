@@ -1,6 +1,5 @@
 +++
 title = "RabbitMQ Queue"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on RabbitMQ Queue."
@@ -19,7 +18,7 @@ triggers:
     protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
     mode: QueueLength # QueueLength or MessageRate
     value: "100.50" # message backlog or publish/sec. target per instance
-    activationValue: "10.5" # Optional. Activation threshold 
+    activationValue: "10.5" # Optional. Activation threshold
     queueName: testqueue
     vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
     # Alternatively, you can use existing environment variables to read configuration from:

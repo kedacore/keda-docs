@@ -1,6 +1,5 @@
 +++
 title = "Azure Event Hubs"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Azure Event Hubs."

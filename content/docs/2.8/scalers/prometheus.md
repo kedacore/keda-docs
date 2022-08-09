@@ -1,6 +1,5 @@
 +++
 title = "Prometheus"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Prometheus."
@@ -24,7 +23,7 @@ triggers:
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
-    ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost 
+    ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
 ```
 
 **Parameter list:**
@@ -40,7 +39,7 @@ triggers:
 
 ### Authentication Parameters
 
-Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication. 
+Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
@@ -91,7 +90,7 @@ metadata:
   namespace: default
 data:
   bearerToken: "BEARER_TOKEN"
-  ca: "CUSTOM_CA_CERT" 
+  ca: "CUSTOM_CA_CERT"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -190,7 +189,7 @@ metadata:
   name: keda-prom-secret
   namespace: default
 data:
-  cert: "cert" 
+  cert: "cert"
   key: "key"
   ca: "ca"
 ---
@@ -243,10 +242,10 @@ metadata:
   name: keda-prom-secret
   namespace: default
 data:
-  cert: "cert" 
+  cert: "cert"
   key: "key"
   ca: "ca"
-  username: "username" 
+  username: "username"
   password: "password"
 ---
 apiVersion: keda.sh/v1alpha1

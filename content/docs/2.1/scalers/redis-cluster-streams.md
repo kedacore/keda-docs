@@ -1,6 +1,5 @@
 +++
 title = "Redis Streams (supports Redis Cluster)"
-layout = "scaler"
 availability = "v2.1+"
 maintainer = "Community"
 description = "Redis Streams scaler with support for Redis Cluster topology"
