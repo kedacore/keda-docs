@@ -1,6 +1,5 @@
 +++
 title = "OpenStack Metric"
-layout = "scaler"
 availability = "v2.3+"
 maintainer = "Community"
 description = "Scale applications based on a threshold reached by a specific measure from OpenStack Metric API."
@@ -28,7 +27,7 @@ triggers:
 > Protocol (http or https) should always be provided when specifying URLs
 
 **Parameter list:**
-- `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric`. 
+- `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric`.
 - `metricID` - The Id of the intendend metric.
 - `aggregationMethod` - The aggregation method that will be used to calculate metrics, it must follows the configured possible metrics derived from gnocchi API like: `mean`, `min`, `max`, `std`, `sum`, `count`, the complete aggregation methods list can be found [here](https://gnocchi.xyz/rest.html#archive-policy).
 - `granularity` - The configured granularity from metric collection in seconds. it must follow the same value configured in OpenStack, but it must be coutned in seconds. Sample: If you have a 5 minutes time window granularity defined, so you must input a value of 300 seconds (5*60).
@@ -105,19 +104,19 @@ spec:
   triggers:
   - type: openstack-metric
     metadata:
-      metricsURL: http://localhost:8041/v1/metric 
+      metricsURL: http://localhost:8041/v1/metric
       metricID: faf01aa5-da88-4929-905d-b83fbab46771
       aggregationMethod: "mean"
-      granularity: 300 
-      threshold: 1250 
-      timeout: 30 
+      granularity: 300
+      threshold: 1250
+      timeout: 30
     authenticationRef:
         name: openstack-metric-password-trigger-authentication
 ```
 
 #### Application Credentials method
 
-You can also use the Application Credentials method. 
+You can also use the Application Credentials method.
 
 ```yaml
 apiVersion: v1
@@ -162,10 +161,10 @@ spec:
   triggers:
   - type: openstack-metric
     metadata:
-       metricsURL: http://localhost:8041/v1/metric 
+       metricsURL: http://localhost:8041/v1/metric
       metricID: faf01aa5-da88-4929-905d-b83fbab46771
       aggregationMethod: "mean"
-      granularity: 300 
+      granularity: 300
       threshold: 1250
     authenticationRef:
         name: openstack-metric-appcredentials-trigger-authentication

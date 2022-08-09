@@ -1,6 +1,5 @@
 +++
 title = "Datadog"
-layout = "scaler"
 availability = "v2.6+"
 maintainer = "Datadog"
 description = "Scale applications based on Datadog."
@@ -32,7 +31,7 @@ triggers:
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling.
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
-- `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional) 
+- `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 
 ### Authentication
 

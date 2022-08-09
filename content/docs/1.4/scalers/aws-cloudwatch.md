@@ -1,6 +1,5 @@
 +++
 title = "AWS CloudWatch"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on AWS CloudWatch."
@@ -41,7 +40,7 @@ triggers:
 
 ### Authentication Parameters
 
-> These parameters are relevant only when `identityOwner` is set to `pod`. 
+> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
@@ -70,7 +69,7 @@ metadata:
 data:
   AWS_ACCESS_KEY_ID: <encoded-user-id>
   AWS_SECRET_ACCESS_KEY: <encoded-key>
---- 
+---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
 metadata:

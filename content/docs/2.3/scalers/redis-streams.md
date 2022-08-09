@@ -1,6 +1,5 @@
 +++
 title = "Redis Streams"
-layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
 description = "Scale applications based on Redis Streams."

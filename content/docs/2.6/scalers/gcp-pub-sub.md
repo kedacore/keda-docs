@@ -1,6 +1,5 @@
 +++
 title = "Google Cloud Platform Pub/Sub"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform Pub/Sub."
@@ -32,7 +31,7 @@ The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on the
 - Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`.
 
 You can use either `subscriptionSize` to define the target average which the deployment will be scaled on or `mode` and `value` fields. `subscriptionSize` field is deprecated, it is recommended to use `mode` and `value` fields instead. Scaler will not work if you define both `subscriptionSize` and at least one of `mode` or `value`.
-The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. 
+The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`.
 The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
@@ -91,7 +90,7 @@ metadata:
   name: gcp-pubsub-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: pubsub-secret  # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ---

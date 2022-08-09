@@ -1,6 +1,5 @@
 +++
 title = "PostgreSQL"
-layout = "scaler"
 availability = "v1.2+"
 maintainer = "Community"
 description = "Scale applications based on a PostgreSQL query."

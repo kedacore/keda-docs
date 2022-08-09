@@ -3,7 +3,6 @@ title = "AWS DynamoDB"
 availability = "v2.7+"
 maintainer = "Community"
 description = "Scale applications based on the records count in AWS DynamoDB"
-layout = "scaler"
 go_file = "aws_dynamodb_scaler"
 +++
 
@@ -28,7 +27,7 @@ triggers:
     # Required: expressionAttributeValues
     expressionAttributeValues: '{ ":key" : {"S":"partition_key_target_value"}}'
     # Optional. Default: pod
-    identityOwner: pod | operator 
+    identityOwner: pod | operator
 ```
 
 **Parameter list:**

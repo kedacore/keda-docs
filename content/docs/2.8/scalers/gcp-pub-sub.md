@@ -1,6 +1,5 @@
 +++
 title = "Google Cloud Platform‎ Pub/Sub"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
@@ -23,7 +22,7 @@ triggers:
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription. 
+The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription.
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
@@ -32,23 +31,23 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 `subscriptionName` defines the subscription that should be monitored. You can use different formulas:
 
 - Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.
-- Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`. 
+- Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`.
 
 You can use either `subscriptionSize` to define the target average which the deployment will be scaled on or `mode` and `value` fields. `subscriptionSize` field is deprecated, it is recommended to use `mode` and `value` fields instead. Scaler will not work if you define both `subscriptionSize` and at least one of `mode` or `value`.
-The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`. 
+The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`.
 The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
 
 **Credential based authentication:**
 
 - `GoogleApplicationCredentials` - Service account credentials in JSON.
 
-### Example 
+### Example
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -77,7 +76,7 @@ metadata:
   name: keda-trigger-auth-gcp-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: pubsub-secret        # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
 ---
@@ -93,7 +92,7 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-gcp-credentials
     metadata:
-      subscriptionName: "input" # Required  
+      subscriptionName: "input" # Required
 ```
 
 **Identity based authentication:**

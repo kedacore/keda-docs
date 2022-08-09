@@ -3,7 +3,6 @@ title = "ActiveMQ"
 availability = "v2.6+"
 maintainer = "Community"
 description = "Scale applications based on ActiveMQ Queue."
-layout = "scaler"
 go_file = "activemq_scaler"
 +++
 
@@ -27,12 +26,12 @@ triggers:
 - `destinationName` - Name of the queue to check for the message count.
 - `brokerName` - Name of the broker as defined in ActiveMQ.
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `10`, Optional)
-- `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize"`, Optional) 
+- `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize"`, Optional)
 
 **Parameter Requirements:**
 
 - In case of `restAPITemplate` parameter is not used, parameters resolving the REST API Template are all **required**: `managementEndpoint`, `destinationName`, `brokerName`.
-- ActiveMQ Scaler polls the ActiveMQ REST API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below. 
+- ActiveMQ Scaler polls the ActiveMQ REST API to monitor message count of target queue. Currently, the scaler supports basic authentication. `username` and `password` are **required**. See [Authentication Parameters](#authentication-parameters) below.
 
 ### Authentication Parameters
 

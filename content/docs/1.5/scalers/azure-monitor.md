@@ -1,6 +1,5 @@
 +++
 title = "Azure Monitor"
-layout = "scaler"
 availability = "v1.3+"
 maintainer = "Community"
 description = "Scale applications based on Azure Monitor metrics."
@@ -65,7 +64,7 @@ data:
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: TriggerAuthentication
-metadata: 
+metadata:
   name: azure-monitor-trigger-auth
 spec:
   secretTargetRef:
@@ -90,7 +89,7 @@ spec:
   triggers:
   - type: azure-monitor
     metadata:
-      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster 
+      resourceURI: Microsoft.ContainerService/managedClusters/azureMonitorCluster
       tenantId: xxx-xxx-xxx-xxx-xxx
       subscriptionId: yyy-yyy-yyy-yyy-yyy
       resourceGroupName: azureMonitor

@@ -1,6 +1,5 @@
 +++
 title = "Azure Log Analytics"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Community"
 description = "Scale applications based on Azure Log Analytics query result"
@@ -31,7 +30,7 @@ triggers:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"
@@ -114,7 +113,7 @@ Perf
 | where TimeGenerated > AvgDuration
 | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
 | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-| join (Perf 
+| join (Perf
         | where InstanceName contains AppName
         | where InstanceName contains ClusterName
         | where CounterName == "cpuLimitNanoCores"
@@ -133,7 +132,7 @@ Example result:
 ### Scaler Limitations
 
 - As it was mentioned before, you can define a threshold using query (2d cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to Horizontal Pod Autoscaler target.
-  
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials and resource identifiers.
@@ -218,7 +217,7 @@ spec:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"
@@ -276,7 +275,7 @@ spec:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"

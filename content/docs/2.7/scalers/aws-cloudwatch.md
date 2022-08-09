@@ -1,6 +1,5 @@
 +++
 title = "AWS CloudWatch"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on AWS CloudWatch."
@@ -42,7 +41,7 @@ triggers:
     # Optional: Metric Unit
     metricUnit: "Count" # default ""
     # Optional: Metric EndTime Offset
-    metricEndTimeOffset: "60" # default 0    
+    metricEndTimeOffset: "60" # default 0
 ```
 
 **Parameter list:**

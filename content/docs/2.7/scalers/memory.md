@@ -1,6 +1,5 @@
 +++
 title = "Memory"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Community"
 description = "Scale applications based on memory metrics."

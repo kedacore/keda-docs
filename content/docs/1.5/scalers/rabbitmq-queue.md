@@ -1,6 +1,5 @@
 +++
 title = "RabbitMQ Queue"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on RabbitMQ Queue."
@@ -30,16 +29,16 @@ triggers:
 - `queueName` - Name of the queue to read message from.
 - `queueLength` - Queue length target for HPA. (Default: `20`, Optional)
 - `includeUnacked` - By default `includeUnacked` is `false` in this case scaler uses AMQP protocol, requires `host` and only counts messages in the queue and ignores unacked messages. If `includeUnacked` is `true` then `host` is not required but `apiHost` is required in this case scaler uses HTTP management API and counts messages in the queue + unacked messages count. `host` or `apiHost` value comes from authentication trigger. (Optional)
-- `apiHost` - It has similar format as of `host` but for HTTP API endpoint, like https://guest:password@localhost:443/vhostname. 
+- `apiHost` - It has similar format as of `host` but for HTTP API endpoint, like https://guest:password@localhost:443/vhostname.
 
-Note `host` and `apiHost` both have an optional vhost name after the host slash which will be used to scope API request. 
+Note `host` and `apiHost` both have an optional vhost name after the host slash which will be used to scope API request.
 
 ### Authentication Parameters
 
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 - `host` - AMQP URI connection string, like `amqp://guest:password@localhost:5672/vhost`.
-- `apiHost` - HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`. 
+- `apiHost` - HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`.
 
 ### Example
 

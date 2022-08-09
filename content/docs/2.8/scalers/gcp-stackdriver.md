@@ -3,7 +3,6 @@ title = "Google Cloud Platform Stackdriver"
 availability = "2.7+"
 maintainer = "Community"
 description = "Scale applications based on a metric obtained from Stackdriver."
-layout = "scaler"
 go_file = "gcp_stackdriver_scaler"
 +++
 
@@ -32,7 +31,7 @@ triggers:
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
 ### Authentication Parameters
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON. 
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
 **Credential based authentication:**
 
@@ -71,7 +70,7 @@ metadata:
   name: keda-trigger-auth-gcp-credentials
 spec:
   secretTargetRef:
-  - parameter: GoogleApplicationCredentials 
+  - parameter: GoogleApplicationCredentials
     name: gcp-stackdriver-secret        # Required. Refers to the name of the secret
     key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
 ---
