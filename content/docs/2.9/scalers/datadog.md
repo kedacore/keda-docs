@@ -35,6 +35,7 @@ triggers:
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+- `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Default: `max`, Optional)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
@@ -143,7 +144,7 @@ between 1 and N.
 
 ## Multi-Query Support
 
-To reduce issues with API Rate Limiting from Datadog, it is possible to send a single query, which contains multiple queries, comma-seperated.
+To reduce issues with API rate limiting from Datadog, it is possible to send a single query, which contains multiple queries, comma-seperated.
 When doing this, the results from each query are aggregated based on the `queryAggregator` value (eg: `max` or `average`).
 
 This works well, when wanting to scale on more than one metric with similar return values (or with arthimetics in the query that make them similar)
