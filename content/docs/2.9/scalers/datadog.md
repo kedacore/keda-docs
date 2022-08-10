@@ -163,7 +163,7 @@ spec:
     metricType: "AverageValue"
     metadata:
       # Comma-seperated querys count as a single API call:
-      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300),per_second(sum:http.requests{service:myservice2}).rollup(max, 300)"
+      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300)),per_second(sum:http.requests{service:myservice2}).rollup(max, 300)"
       # According to aggregated results, how to scale the TargetRef
       queryValue: "100"
       # How to aggregate results from multi-query queries. Default: 'max'
@@ -194,7 +194,7 @@ spec:
       # Comma-seperated queries count as a single API call:
       ## This example returns "http.requests" @ 180 requests-per-second per-pod,
       ## and "http.backlog" size of 30 per-pod
-      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300)/180,per_second(sum:http.backlog{service:myservice1}).rollup(max, 300)/30"
+      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300))/180,per_second(sum:http.backlog{service:myservice1}).rollup(max, 300)/30"
       # Setting query value to 1 and metricType to "AverageValue" allows the metric to dictate the number of pods from it's own arthimetic.
       queryValue: "1"
       # How to aggregate results from multi-query queries. Default: 'max'
