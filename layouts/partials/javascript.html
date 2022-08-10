@@ -159,8 +159,20 @@
       }
 
       function search(keywords) {
-        // automatically perform wildcard search when the input receives a value
-        const results = index.search(keywords.length > 0 ? `${keywords}*` : "");
+        // show all scalers by default
+        let queryString = index.search("");
+
+        /* By default, Lunr can only match words stored in the records/index. We want to be able to match both words and characters. 
+        To be able to perform character matching, we do wildcard search. */
+        if (keywords.length > 0) {
+          queryString = index.search(keywords);
+          queryString =
+            queryString.length <= 0
+              ? index.search(`${keywords}*`)
+              : queryString;
+        }
+
+        const results = queryString;
 
         if ("content" in template) {
           // show result count
