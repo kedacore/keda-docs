@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
