@@ -35,7 +35,7 @@ triggers:
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Default: `max`, Optional)
+- `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
@@ -110,8 +110,6 @@ spec:
       query: "sum:trace.redis.command.hits{env:none,service:redis}.as_count()"
       # Required: according to the number of query result, to scale the TargetRef
       queryValue: "7"
-      # Optional: How to aggregate results for multi-query queries. Default: 'max'
-      queryAggregator: "max"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
       age: "120"
       # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
