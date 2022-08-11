@@ -145,9 +145,12 @@ between 1 and N.
 To reduce issues with API rate limiting from Datadog, it is possible to send a single query, which contains multiple queries, comma-seperated.
 When doing this, the results from each query are aggregated based on the `queryAggregator` value (eg: `max` or `average`).
 
-This works well, when wanting to scale on more than one metric with similar return values (or with arthimetics in the query that make them similar)
+> 💡 **NOTE:** Because the average/max aggregation operation happens at the scaler level, there won't be any validation or errors if the queries don't make sense to aggregate. Be sure to read and understand the two patterns below before using Multi-Query.
 
-Example:
+### Example 1 - Aggregating Similar Metrics
+
+Simple aggregation works well, when wanting to scale on more than one metric with similar return values/scale (ie. where multiple metrics can use a single `queryValue` and still make sense).
+
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -162,20 +165,31 @@ spec:
     metricType: "AverageValue"
     metadata:
       # Comma-seperated querys count as a single API call:
-      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300)),per_second(sum:http.requests{service:myservice2}).rollup(max, 300)"
+      query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300)),per_second(sum:http.requests{service:myservice1}).rollup(avg, 600)"
       # According to aggregated results, how to scale the TargetRef
       queryValue: "100"
       # How to aggregate results from multi-query queries. Default: 'max'
       queryAggregator: "average"
       # Optional: The time window (in seconds) to retrieve metrics from Datadog. Default: 90
-      age: "120"
+      age: "600"
       # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
       metricUnavailableValue: "0"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
 
-A slightly different pattern to this, is to make each query return the desired number of pods, and then `max` or `average` the results to get the desired scale required. Setting `queryValue: 1` and `metricType: AverageValue` then results in the desired number of pods being spawned:
+The example above looks at the `http.requests` value for a service; taking two views of the same metric (max vs avg, and different time windows), and then uses a scale value which is the average of them both.
+
+This works particularly well when scaling against the same metric, but with slightly different parameters, or methods like ```week_before()``` for example.
+
+### Example 2 - Driving scale directly
+
+When wanting to scale on non-similar metrics, whilst still benefiting from reduced API calls with multi-query support, the easiest way to do this is to make each query directly return the desired scale (eg: number of pods), and then `max` or `average` the results to get the desired target scale.
+
+This can be done by adding arthmetic to the queries, which makes them directly return the number of pods that should be running.
+
+Following this pattern, and then setting `queryValue: 1` and `metricType: AverageValue` results in the desired number of pods being spawned directly from the results of the metric queries.
+
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -201,3 +215,5 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
+
+Using the example above, if we assume that `http.requests` is currently returning `360`, dividing that by `180` in the query, results in a value of `2`; if `http.backlog` returns `90`, dividing that by `30` in the query, results in a value of `3`. With the `max` Aggregator set, the scaler will set the target scale to `3` as that is the higher value from all returned queries.
