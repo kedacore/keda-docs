@@ -9,6 +9,9 @@
 {{ $locale      := site.Params.locale }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta
+  name="description"
+  content="KEDA is a Kubernetes-based Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed.">
 
 {{ with .OutputFormats.Get "rss" -}}
 {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
