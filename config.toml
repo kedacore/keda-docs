@@ -450,6 +450,10 @@ url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
 [[params.users]]
+url = "https://www.workiva.com"
+logo = "workiva.png"
+
+[[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
