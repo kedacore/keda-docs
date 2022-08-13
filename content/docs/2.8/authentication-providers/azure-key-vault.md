@@ -1,5 +1,5 @@
 +++
-title = "Azure Key Vault secret(s)"
+title = "Azure Key Vault secret"
 +++
 
 

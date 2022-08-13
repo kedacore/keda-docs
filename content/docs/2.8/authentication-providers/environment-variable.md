@@ -1,5 +1,5 @@
 +++
-title = "Environment variable(s)"
+title = "Environment variable"
 +++
 
 You can pull information via one or more environment variables by providing the `name` of the variable for a given `containerName`.

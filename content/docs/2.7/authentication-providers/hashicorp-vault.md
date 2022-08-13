@@ -1,5 +1,5 @@
 +++
-title = "Hashicorp Vault secret(s)"
+title = "Hashicorp Vault secret"
 +++
 
 

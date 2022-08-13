@@ -1,5 +1,5 @@
 +++
-title = "Secret(s)"
+title = "Secret"
 +++
 
 You can pull one or more secrets into the trigger by defining the `name` of the Kubernetes Secret and the `key` to use.

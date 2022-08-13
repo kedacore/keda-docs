@@ -172,21 +172,8 @@ spec:
   # As before ...
 ```
 
-## Authentication parameters
+## Available authentication providers for KEDA
 
-Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
+Authentication parameters can be retrieved from a variety of authentication providers in KEDA:
 
-### Pod Authentication Providers
-
-Several service providers allow you to assign an identity to a pod. By using that identity, you can defer authentication to the pod & the service provider, rather than configuring secrets.
-
-Currently we support the following:
-
-```yaml
-podIdentity:
-  provider: none | azure | aws-eks | aws-kiam  # Optional. Default: none
-```
-
-### Available authentication providers for KEDA
-
-{{< providers >}}
+{{< authentication-providers >}}

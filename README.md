@@ -85,8 +85,7 @@ Make sure to update the following metadata fields:
 * `maintainer`
 * `description`
 
-## Adding provider documentation
-
+## Writing documentation for a new authentication provider
 To add documentation for a new [provider](https://keda.sh/docs/concept/authentication):
 
 ```console
