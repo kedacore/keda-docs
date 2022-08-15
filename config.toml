@@ -139,10 +139,16 @@ pre = "fas fa-ruler-vertical"
 weight = 4
 
 [[menu.buttons]]
+url = "/docs/authentication-providers"
+name = "Auth providers"
+pre = "fa fa-lock"
+weight = 5
+
+[[menu.buttons]]
 url = "/blog"
 name = "Blog"
 pre = "fa fa-rss"
-weight = 5
+weight = 6
 
 # Navbar and footer menu
 [[menu.docs]]
@@ -164,34 +170,40 @@ parent = "docs"
 weight = 2
 
 [[menu.docs]]
+url = "/docs/authentication-providers/"
+name = "Authentication providers"
+parent = "docs"
+weight = 3
+
+[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 3
+weight = 4
 
 [[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
-weight = 4
+weight = 5
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 5
+weight = 6
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 6
+weight = 7
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 7
+weight = 8
 
 [[menu.main]]
 url = "/blog"
@@ -448,6 +460,10 @@ logo = "swisslife.jpg"
 [[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
+
+[[params.users]]
+url = "https://www.workiva.com"
+logo = "workiva.png"
 
 [[params.users]]
 url = "https://zapier.com"
