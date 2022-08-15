@@ -1,0 +1,14 @@
+{{ $here    := $.Page.RelPermalink }}
+{{ $providers := where site.RegularPages ".CurrentSection.Title" "Authentication Providers" }}
+{{ $version := index (split $.Page.File.Path "/") 1 }}
+<div class="buttons has-extra-top-margin">
+  {{ range $providers }}
+  {{ $thisVersion := index (split .File.Path "/") 1 }}
+  {{ $sameVersion := eq $version $thisVersion }}
+  {{ if $sameVersion }}
+  <a class="button is-primary is-outlined" href="{{ .RelPermalink }}">
+    {{ .Title }}
+  </a>
+  {{ end }}
+  {{ end }}
+</div>
