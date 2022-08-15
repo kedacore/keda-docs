@@ -139,10 +139,16 @@ pre = "fas fa-ruler-vertical"
 weight = 4
 
 [[menu.buttons]]
+url = "/docs/authentication-providers"
+name = "Auth providers"
+pre = "fa fa-lock"
+weight = 5
+
+[[menu.buttons]]
 url = "/blog"
 name = "Blog"
 pre = "fa fa-rss"
-weight = 5
+weight = 6
 
 # Navbar and footer menu
 [[menu.docs]]
