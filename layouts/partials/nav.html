@@ -3,7 +3,7 @@
 {{ $currentSection := .CurrentSection }}
 {{ $root           := .FirstSection }}
 {{ $thisVersion    := index (split .File.Path "/") 1 }}
-<div class="nav is-sticky">
+<div class="nav">
   {{ range $docs }}
   {{ range .Sections }}
   {{ $version := index (split .File.Path "/") 1 }}
@@ -49,7 +49,7 @@
   {{ with .Sections }}
   {{ range . }}
   {{ $isThisSection := eq .CurrentSection.Title $currentSection.Title }}
-  {{ $regularPages := cond (eq .CurrentSection.Title "Scalers") "" .RegularPages -}}
+  {{ $regularPages := .RegularPages -}}
   <div class="nav-subsection" x-data="{ open: {{ $isThisSection }} }">
     <div class="nav-section-title is-size-5 is-size-6-mobile{{ if $isHere }} is-active{{ end }}" href="{{ .RelPermalink }}">
       <a href="{{ .RelPermalink }}">
