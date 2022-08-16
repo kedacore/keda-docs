@@ -36,10 +36,8 @@
         <button class="button filterBtn" value="external-scalers">External</button>
       </div>
       <div class="results"></div>
-      <div id="built-in-scalers" style="margin-top:20px;" class="columns is-multiline is-search-result">
-        <template id="is-search-template">
-        {{ .Render "scaler-template" }}
-        </template>
+      <div id="built-in-scalers" style="margin-top: 20px" class="columns is-multiline is-search-result">
+        {{ partial "scaler-template" . }}
       </div>
       <div id="external-scalers" style="display: none;">
         <p>External scaler information is pulled from Artifact Hub. External scaler maintainers can learn more on <a href="https://artifacthub.io/docs/topics/repositories/#keda-scalers-repositories">Artifact Hub docs</a></p>
