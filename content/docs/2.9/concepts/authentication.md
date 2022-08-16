@@ -92,47 +92,47 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
-      identityId: <identity-id>                         # Optional. Only used by azure & azure-workload providers.
-  secretTargetRef:                                      # Optional.
-  - parameter: {scaledObject-parameter-name}            # Required.
-    name: {secret-name}                                 # Required.
-    key: {secret-key-name}                              # Required.
-  env:                                                  # Optional.
-  - parameter: {scaledObject-parameter-name}            # Required.
-    name: {env-name}                                    # Required.
-    containerName: {container-name}                     # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-  hashiCorpVault:                                       # Optional.
-    address: {hashicorp-vault-address}                  # Required.
-    namespace: {hashicorp-vault-namespace}              # Optional. Default is root namespace. Useful for Vault Enterprise
-    authentication: token | kubernetes                  # Required.
-    role: {hashicorp-vault-role}                        # Optional.
-    mount: {hashicorp-vault-mount}                      # Optional.
-    credential:                                         # Optional.
-      token: {hashicorp-vault-token}                    # Optional.
-      serviceAccount: {path-to-service-account-file}    # Optional.
-    secrets:                                            # Required.
-    - parameter: {scaledObject-parameter-name}          # Required.
-      key: {hasicorp-vault-secret-key-name}             # Required.
-      path: {hasicorp-vault-secret-path}                # Required.
-  azureKeyVault:                                        # Optional.
-    vaultURI: {key-vault-address}                       # Required.
-    credentials:                                        # Optional. Required when not using pod identity.
-      clientId: {azure-ad-client-id}                    # Required.
-      clientSecret:                                     # Required.
-        valueFrom:                                      # Required.
-          secretKeyRef:                                 # Required.
-            name: {k8s-secret-with-azure-ad-secret}     # Required.
-            key: {key-within-the-secret}                # Required.
-      tenantId: {azure-ad-tenant-id}                    # Required.
-    cloud:                                              # Optional.
+      provider: none | azure | azure-workload | aws-eks | aws-kiam | gcp  # Optional. Default: none
+      identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+  secretTargetRef:                                                        # Optional.
+  - parameter: {scaledObject-parameter-name}                              # Required.
+    name: {secret-name}                                                   # Required.
+    key: {secret-key-name}                                                # Required.
+  env:                                                                    # Optional.
+  - parameter: {scaledObject-parameter-name}                              # Required.
+    name: {env-name}                                                      # Required.
+    containerName: {container-name}                                       # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  hashiCorpVault:                                                         # Optional.
+    address: {hashicorp-vault-address}                                    # Required.
+    namespace: {hashicorp-vault-namespace}                                # Optional. Default is root namespace. Useful for Vault Enterprise
+    authentication: token | kubernetes                                    # Required.
+    role: {hashicorp-vault-role}                                          # Optional.
+    mount: {hashicorp-vault-mount}                                        # Optional.
+    credential:                                                           # Optional.
+      token: {hashicorp-vault-token}                                      # Optional.
+      serviceAccount: {path-to-service-account-file}                      # Optional.
+    secrets:                                                              # Required.
+    - parameter: {scaledObject-parameter-name}                            # Required.
+      key: {hasicorp-vault-secret-key-name}                               # Required.
+      path: {hasicorp-vault-secret-path}                                  # Required.
+  azureKeyVault:                                                          # Optional.
+    vaultURI: {key-vault-address}                                         # Required.
+    credentials:                                                          # Optional. Required when not using pod identity.
+      clientId: {azure-ad-client-id}                                      # Required.
+      clientSecret:                                                       # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-azure-ad-secret}                       # Required.
+            key: {key-within-the-secret}                                  # Required.
+      tenantId: {azure-ad-tenant-id}                                      # Required.
+    cloud:                                                                # Optional.
       type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-      keyVaultResourceURL: {key-vault-resource-url-for-cloud}         # Required when type = Private.
-      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}  # Required when type = Private.
-    secrets:                                            # Required.
-    - parameter: {param-name-used-for-auth}             # Required.
-      name: {key-vault-secret-name}                     # Required.
-      version: {key-vault-secret-version}               # Optional.
+      keyVaultResourceURL: {key-vault-resource-url-for-cloud}             # Required when type = Private.
+      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}      # Required when type = Private.
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      name: {key-vault-secret-name}                                       # Required.
+      version: {key-vault-secret-version}                                 # Optional.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
