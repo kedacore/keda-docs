@@ -1,5 +1,5 @@
 +++
-title = "Azure Workload Identity"
+title = "Azure AD Workload Identity"
 +++
 
 [**Azure AD Workload Identity**](https://github.com/Azure/azure-workload-identity) is the newer version of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity). It lets your Kubernetes workloads access Azure resources using an
