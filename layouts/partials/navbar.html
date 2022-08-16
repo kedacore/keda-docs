@@ -12,7 +12,7 @@
     <div class="navbar-brand is-left-padded" style="align-items: end;">
       <a class="navbar-item" href="{{ $home }}">
         {{ $url := printf "img/logos/%s" $logo | relURL }}
-        <img src="{{ $url }}" style="transform: scale(2);" height="28" width="67" alt="Logo">
+        <img src="{{ $url }}" style="transform: scale(2);" height="28" width="66" alt="Keda logo">
       </a>
 
       <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
