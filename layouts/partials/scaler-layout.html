@@ -1,0 +1,58 @@
+<br />
+<br />
+
+<h2 id="available-scalers">Currently available scalers for KEDA</h2>
+<div class="buttons" style="display: flex; justify-content: flex-end">
+  <form
+    class="control has-icons-left has-extra-sm-right-margin"
+    id="search"
+    role="search"
+  >
+    <input
+      class="input is-rounded"
+      type="search"
+      placeholder="Search for scalers"
+      id="search-input"
+    />
+    <span class="icon is-small is-left">
+      <i class="fas fa-search"></i>
+    </span>
+  </form>
+  <button
+    id="btn-focus-on-mount"
+    class="button filterBtn is-focused"
+    value="built-in-scalers"
+  >
+    Built-in
+  </button>
+  <button class="button filterBtn" value="external-scalers">External</button>
+</div>
+<div class="results"></div>
+<div
+  id="built-in-scalers"
+  style="margin-top: 20px"
+  class="columns is-multiline is-search-result"
+>
+  {{ partial "scaler-template" . }}
+</div>
+<div id="external-scalers" style="display: none">
+  <p>
+    External scaler information is pulled from Artifact Hub. External scaler
+    maintainers can learn more on
+    <a
+      href="https://artifacthub.io/docs/topics/repositories/#keda-scalers-repositories"
+      >Artifact Hub docs</a
+    >
+  </p>
+  <div
+    class="artifacthub-widget-group"
+    data-url="https://artifacthub.io/packages/search?kind=8&sort=relevance&page=1"
+    data-theme="light"
+    data-header="false"
+    data-stars="true"
+    data-color="#405273"
+    data-responsive="true"
+    data-loading="true"
+  ></div>
+  <script async src="https://artifacthub.io/artifacthub-widget.js"></script>
+</div>
