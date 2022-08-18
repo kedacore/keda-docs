@@ -14,17 +14,20 @@ This specification describes the `aws-sqs-queue` trigger that scales based on an
 triggers:
 - type: aws-sqs-queue
   metadata:
-    # Required: queueURL
+    # Required: queueURL or queueURLFromEnv. If both provided, uses queueURL
     queueURL: https://sqs.eu-west-1.amazonaws.com/account_id/QueueName
+    queueURLFromEnv: QUEUE_URL # Optional. You can use this instead of `queueURL` parameter
     queueLength: "5"  # Default: "5"
     # Required: awsRegion
     awsRegion: "eu-west-1"
     identityOwner: pod | operator # Optional. Default: pod
+    
 ```
 
 **Parameter list:**
 
 - `queueURL` - Full URL for the SQS Queue. The simple name of the queue can be used in case there's no ambiguity.
+- `queueURLFromEnv` - the name of the environment variable on the scale target to read the queue URL. You can use this instead of `queueURL` parameter
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
