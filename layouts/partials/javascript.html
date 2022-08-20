@@ -68,6 +68,7 @@
     () => {
       "use strict";
       let index;
+      let debounceTimer;  
       const currentUrl = window.location.pathname;
       const currentLocation = String(currentUrl).split("/");
       const currentVersion = currentLocation[2];
@@ -76,8 +77,9 @@
       const target = document.querySelector(".is-search-result");
       const searchResultCount = document.querySelector(".results");
       const template = document.getElementById("is-search-template");
+      const interval = 300; 
       let query = input.value.trim();
-      let parse = {};
+      let parse = {};      
 
       // fetch all scalers on inital load
       if (!query) {
@@ -88,6 +90,7 @@
         "input",
         function (event) {
           event.preventDefault();
+          clearTimeout(debounceTimer);
           const keywords = input.value.trim();
 
           // disable all buttons during search by default
@@ -101,7 +104,7 @@
           }
 
           query = keywords;
-          initSearchIndex();
+          debounceTimer = setTimeout(initSearchIndex, interval);
 
           // clear out all the scaler item card when in-built scalers are being searched
           while (target.firstChild.nextSibling) {
