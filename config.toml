@@ -2,7 +2,6 @@ baseURL = "https://keda.sh"
 languageCode = "en-us"
 title = "KEDA"
 enableGitInfo = true
-enableRobotsTXT = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
 googleAnalytics = 'G-YSWMV22VTQ'
