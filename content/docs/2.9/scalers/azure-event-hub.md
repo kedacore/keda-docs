@@ -74,7 +74,7 @@ spec:
     provider: Azure
 ```
 
-When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName` as well as `storageAccountName` if you wish for the Blob Storage client to use the Pod Identity instead of a connection string. 
+When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod Identity to authenticate to Azure Blob Storage instead of a connection string. 
 
 ### Checkpointing Behaviour
 
