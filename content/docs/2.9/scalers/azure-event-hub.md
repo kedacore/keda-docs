@@ -37,7 +37,7 @@ triggers:
 **Parameter list:**
 
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string appended with `EntityPath=<event_hub_name>`.
-- `storageConnectionFromEnv` - Name of the environment variable that provides connection string for Azure Storage Account to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage. Do not specify when using with pod identity.
+- `storageConnectionFromEnv` - Name of the environment variable that provides connection string for Azure Storage Account to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage. (Only required when not using pod identity)
 - `consumerGroup` - Consumer group of Azure Event Hub consumer. (default: `$default`, Optional)
 - `unprocessedEventThreshold` - Average target value to trigger scaling actions. (Default: `64`, Optional)
 - `activationUnprocessedEventThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
