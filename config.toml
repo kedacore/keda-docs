@@ -205,6 +205,12 @@ name = "Troubleshooting"
 parent = "docs"
 weight = 8
 
+[[menu.docs]]
+url = "/support/"
+name = "Support"
+parent = "docs"
+weight = 9
+
 [[menu.main]]
 url = "/blog"
 name = "Blog"
