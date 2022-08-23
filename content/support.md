@@ -20,4 +20,4 @@ You can learn more about the currently supported Kubernetes version in our FAQ.
 ## Commercial support
 Here's an overview of all vendors that provide KEDA as part of their offering/product and provide support for it: 
 
-
+{{< support >}}
