@@ -59,9 +59,9 @@ triggers:
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
 ### Authentication Parameters
 
-The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Pod Identity](https://azure.github.io/aad-pod-identity/docs/demo/standard_walkthrough/) if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
+The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
 
-To use Pod Identity, you have to add a [TriggerAuthentication](https://keda.sh/docs/2.0/concepts/authentication/#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
+To use Pod Identity, you have to add a [TriggerAuthentication](../concepts/authentication.md#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
 
 ```
 apiVersion: keda.sh/v1alpha1
@@ -71,7 +71,7 @@ metadata:
   namespace: default
 spec:
   podIdentity:
-    provider: Azure
+    provider: Azure | azure-workload
 ```
 
 When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod Identity to authenticate to Azure Blob Storage instead of a connection string. 
