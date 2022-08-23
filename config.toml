@@ -478,6 +478,10 @@ logo = "microsoft.png"
 url = "https://redhat.com"
 logo = "red-hat.png"
 
+[[params.partners]]
+url = "https://www.snowflake.com"
+logo = "snowflake.png"
+
 # "Supported by" section on the Community page
 [[params.supportedby]]
 url = "https://azure.microsoft.com/en-us/services/devops/"
