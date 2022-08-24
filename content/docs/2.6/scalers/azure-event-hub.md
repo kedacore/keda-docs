@@ -1,7 +1,7 @@
 +++
 title = "Azure Event Hubs"
 availability = "v1.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Event Hubs."
 go_file = "azure_eventhub_scaler"
 +++
