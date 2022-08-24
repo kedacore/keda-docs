@@ -74,7 +74,7 @@ spec:
     provider: Azure | azure-workload
 ```
 
-When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod Identity to authenticate to Azure Blob Storage instead of a connection string. 
+When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod / Workload Identity to authenticate to Azure Blob Storage instead of a connection string. 
 
 > 💡 When using Azure AD Pod Identity to authenticate the identity must have appropriate [RBAC role-assignments](https://docs.microsoft.com/azure/role-based-access-control/role-assignments-steps) for both Event Hub and Storage Account. Permissions covered by `Azure Event Hubs Data Receiver` and `Storage Blob Data Reader` are required.
 
