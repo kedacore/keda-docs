@@ -1,7 +1,7 @@
 +++
 title = "Azure Log Analytics"
 availability = "v2.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Log Analytics query result"
 go_file = "azure_log_analytics_scaler"
 +++
@@ -148,6 +148,8 @@ Example result:
 
 You can use managed identity to request access token for Log Analytics API. The advantage of this approach is that there is no need to store secrets in Kubernetes. Read [more](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity) about managed identities in Azure Kubernetes Service.
 
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
 ### Example
 
 #### Service Principal based authentication
@@ -242,7 +244,7 @@ metadata:
   namespace: kedaloganalytics
 spec:
   podIdentity:
-    provider: azure
+    provider: azure | azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

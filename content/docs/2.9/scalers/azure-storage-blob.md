@@ -1,7 +1,7 @@
 +++
 title = "Azure Blob Storage"
 availability = "v1.1+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on the count of blobs in a given Azure Blob Storage container."
 notice = "As of now, this Azure Blob Storage scaler scales based on the count of the blobs in a container as opposed to the Azure Functions behavior where code is only triggered on new blobs."
 go_file = "azure_blob_scaler"
@@ -56,6 +56,8 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Pod Identity Authentication**
 
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
 - `accountName` - Name of the Azure Storage Account.
 
 ### Example
@@ -67,7 +69,7 @@ metadata:
   name: azure-blob-auth
 spec:
   podIdentity:
-    provider: azure
+    provider: azure | azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
