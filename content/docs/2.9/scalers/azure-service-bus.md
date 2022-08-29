@@ -42,7 +42,7 @@ triggers:
 - `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
 - `useRegex` - This parameter allows the usage of regex (in the `queueName` or `subscriptionName` parameters). (Values: `boolean`, Default: `false`, Optional)
-- `operation` - Operation that will be used to compute the number of messages when `useRegex` is set to `true`. Required when `useRegex` is `true`. (Values: `sum`, `max`, or `avg`, Default: `sum`, Optional).
+- `operation` - Operation that will be used to compute the number of messages when `useRegex` is set to `true`. (Values: `sum`, `max`, or `avg`, Default: `sum`, Optional).
 - `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the service bus endpoint suffix of the cloud environment that the service bus belongs to, e.g. `servicebus.usgovcloudapi.net` for `AzureUSGovernmentCloud`.
