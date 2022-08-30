@@ -205,6 +205,12 @@ name = "Troubleshooting"
 parent = "docs"
 weight = 8
 
+[[menu.docs]]
+url = "/support/"
+name = "Support"
+parent = "docs"
+weight = 9
+
 [[menu.main]]
 url = "/blog"
 name = "Blog"
@@ -490,3 +496,12 @@ logo = "snyk.png"
 [[params.supportedby]]
 url = "https://vexxhost.com"
 logo = "vexxhost.png"
+
+# "Commercial support" section on the support page
+[[params.vendors]]
+url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
+logo = "microsoft.png"
+
+[[params.vendors]]
+url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
+logo = "red-hat.png"
