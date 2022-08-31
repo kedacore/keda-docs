@@ -205,12 +205,6 @@ name = "Troubleshooting"
 parent = "docs"
 weight = 8
 
-[[menu.docs]]
-url = "/support/"
-name = "Support"
-parent = "docs"
-weight = 9
-
 [[menu.main]]
 url = "/blog"
 name = "Blog"
@@ -291,6 +285,12 @@ url = "https://github.com/kedacore/keda/blob/main/LICENSE"
 name = "License"
 parent = "project"
 weight = 9
+
+[[menu.main]]
+url = "/support/"
+name = "Support"
+parent = "project"
+weight = 10
 
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
