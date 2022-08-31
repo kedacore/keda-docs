@@ -10,7 +10,7 @@ Want to contribute a feature or fix? We are more than happy to review requests a
 
 Learn more in our [support policy](https://github.com/kedacore/governance/blob/main/SUPPORT.md).
 
-Kubernetes compatibility is described in the [documentation](https://keda.sh/docs/2.8/operate/cluster/#kubernetes-compatibility).
+Kubernetes compatibility is described in the [documentation](https://keda.sh/docs/latest/operate/cluster/#kubernetes-compatibility).
 
 ## Commercial support
 Here's an overview of all vendors that provide KEDA as part of their offering/product and provide support for it: 
