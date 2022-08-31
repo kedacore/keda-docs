@@ -251,7 +251,7 @@ parent = "project"
 weight = 3
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/ROADMAP.md"
+url = "https://github.com/kedacore/keda/blob/main/ROADMAP.md"
 name = "Roadmap"
 parent = "project"
 weight = 4
