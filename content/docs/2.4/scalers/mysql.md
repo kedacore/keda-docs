@@ -57,7 +57,7 @@ metadata:
   namespace: my-project
 type: Opaque
 data:
-  mysql_conn_str: dXNlckB0Y3AobXlzcWw6MzMwNikvc3RhdHNfZGI= # base64 encoded value of mysql connectionString of format user@tcp(mysql:3306)/stats_db
+  mysql_conn_str: dXNlckB0Y3AobXlzcWw6MzMwNikvc3RhdHNfZGI= # base64 encoded value of mysql connectionString of format user:password@tcp(mysql:3306)/stats_db
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
