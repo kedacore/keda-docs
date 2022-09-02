@@ -41,7 +41,7 @@ triggers:
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
 - `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
-- `useRegex` - This parameter allows the usage of regex (in the `queueName` or `subscriptionName` parameters). (Values: `boolean`, Default: `false`, Optional)
+- `useRegex` - This parameter allows the usage of regex (in the `queueName` or `subscriptionName` parameters). (Values: `true`, `false`, Default: `false`, Optional)
 - `operation` - Operation that will be used to compute the number of messages when `useRegex` is set to `true`. (Values: `sum`, `max`, or `avg`, Default: `sum`, Optional).
 - `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 
