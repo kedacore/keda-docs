@@ -257,20 +257,20 @@ parent = "project"
 weight = 4
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
-name = "Contributing"
+url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
+name = "Changelog"
 parent = "project"
 weight = 5
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
-name = "Changelog"
+url = "/support/"
+name = "Support"
 parent = "project"
 weight = 6
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
-name = "Maintainers"
+url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
+name = "Contributing"
 parent = "project"
 weight = 7
 
@@ -287,8 +287,8 @@ parent = "project"
 weight = 9
 
 [[menu.main]]
-url = "/support/"
-name = "Support"
+url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+name = "Maintainers"
 parent = "project"
 weight = 10
 
