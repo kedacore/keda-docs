@@ -42,14 +42,9 @@
     >
   </p>
   <div
-    class="artifacthub-widget-group"
+    class="artifacthub-widget-group columns is-multiline is-search-result"
     data-url="https://artifacthub.io/packages/search?kind=8&sort=relevance&page=1"
-    data-theme="light"
-    data-header="false"
-    data-stars="true"
-    data-color="#405273"
-    data-responsive="true"
-    data-loading="true"
-  ></div>
-  <script async src="https://artifacthub.io/artifacthub-widget.js"></script>
+  >
+  {{ partial "scaler-template" . }}
+</div>
 </div>

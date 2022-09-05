@@ -89,6 +89,7 @@
       // fetch all scalers on inital load
       if (!query) {
         initSearchIndex();
+        externalScalersIndex();
       }
 
       input.addEventListener(
@@ -135,6 +136,53 @@
         },
         false
       );
+
+      async function externalScalersIndex() {
+        const results = await fetch("https://artifacthub.io/api/v1/packages/search?offset=0&limit=20&facets=false&kind=8&deprecated=false&sort=relevance")
+          .then((response) => response.json())
+          .then((data) => {
+            return data.packages;
+          })
+          .catch((err) => console.error("error:", err));
+
+          if ("content" in template) {
+          // show result count
+          const title = document.createElement("h3");
+          title.id = "search-results";
+          title.className = "subtitle is-size-3";
+
+          if (results.length == 0)
+            title.textContent = `No results found for "${query}"`;
+          else if (results.length == 1)
+            title.textContent = `Found one result for "${query}"`;
+          else if (results.length > 1 && query === "")
+            title.textContent = `${results.length} scalers available`;
+          else
+            title.textContent = `Found ${results.length} results for "${query}"`;
+          searchResultCount.replaceChildren(title);
+
+          // show the matched result
+          results.forEach(function (result) {
+            const element = template.content.cloneNode(true);
+            element.querySelector(".scaler-title").textContent = result.display_name;
+            element
+              .querySelector(".scaler-title")
+              .setAttribute("href", result.repository.url);
+              result.description &&
+              (element.querySelector(".description").textContent =
+                result.description);
+                result.repository.organization_name &&
+              (element.querySelector(".maintainer").textContent =
+              result.repository.organization_name || result.repository.user_alias);
+            result.version &&
+              (element.querySelector(".availability").textContent =
+                `v${result.version}`);
+            target.appendChild(element);
+          }, this);
+        }
+        };
+
+      
 
       async function initSearchIndex() {
         const scalers = await fetch("/index.json", { method: "GET" })
