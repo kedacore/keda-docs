@@ -1,7 +1,7 @@
 +++
 title = "Azure Data Explorer"
 availability = "v2.7+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Data Explorer query result."
 go_file = "azure_data_explorer_scaler"
 +++
@@ -78,7 +78,7 @@ The AD identity that will be used requires `DatabaseViewer` role to query metric
 
 **Pod identity based authentication:**
 
-[Azure Active Directory pod-managed identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) can be used.
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
 
 ### Examples
 
@@ -145,7 +145,7 @@ metadata:
   name: azure-data-explorer-trigger-auth
 spec:
   podIdentity:
-      provider: azure
+      provider: azure | azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

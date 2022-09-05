@@ -18,7 +18,7 @@ The `cloud` parameter can be used to specify cloud environments besides `Azure P
 
 ```yaml
 azureKeyVault:                                          # Optional.
-  vaultURI: {key-vault-address}                         # Required.
+  vaultUri: {key-vault-address}                         # Required.
   credentials:                                          # Required.
     clientId: {azure-ad-client-id}                      # Required.
     clientSecret:                                       # Required.

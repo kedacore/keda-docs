@@ -68,6 +68,7 @@
     () => {
       "use strict";
       let index;
+      let debounceTimer;
       const currentUrl = window.location.pathname;
       const currentLocation = String(currentUrl).split("/");
       const currentVersion = currentLocation[2];
@@ -76,6 +77,12 @@
       const target = document.querySelector(".is-search-result");
       const searchResultCount = document.querySelector(".results");
       const template = document.getElementById("is-search-template");
+      const isExternalScalers = document.getElementById("external-scalers");
+      const isBuiltInScalers = document.getElementById("built-in-scalers");
+      const groups = document.getElementsByClassName(
+        "artifacthub-widget-group"
+      );
+      const interval = 300;
       let query = input.value.trim();
       let parse = {};
 
@@ -88,6 +95,7 @@
         "input",
         function (event) {
           event.preventDefault();
+          clearTimeout(debounceTimer);
           const keywords = input.value.trim();
 
           // disable all buttons during search by default
@@ -101,7 +109,24 @@
           }
 
           query = keywords;
-          initSearchIndex();
+
+          if (isExternalScalers) {
+            let externalSearchUrl = new URL(
+              "https://artifacthub.io/packages/search"
+            );
+            externalSearchUrl.search = new URLSearchParams({
+              kind: "8",
+              sort: "relevance",
+              ts_query_web: query !== "" ? query : "",
+            });
+            debounceTimer = setTimeout(() => {
+              groups[0].dataset.url = externalSearchUrl;
+            }, interval);
+          }
+
+          if (isBuiltInScalers) {
+            debounceTimer = setTimeout(initSearchIndex, interval);
+          }
 
           // clear out all the scaler item card when in-built scalers are being searched
           while (target.firstChild.nextSibling) {

@@ -1,7 +1,7 @@
 +++
 title = "Azure Log Analytics"
 availability = "v2.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Log Analytics query result"
 go_file = "azure_log_analytics_scaler"
 +++

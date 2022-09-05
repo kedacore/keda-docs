@@ -55,6 +55,10 @@ You can authenticate by using pod identity or connection string authentication.
 
 - `connection` - Connection string for Azure Service Bus Namespace.
 
+**Pod identity based authentication:**
+
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
 ### Example
 
 Here is an example of how to use managed identity:
@@ -66,7 +70,7 @@ metadata:
   name: azure-servicebus-auth
 spec:
   podIdentity:
-    provider: azure
+    provider: azure | azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

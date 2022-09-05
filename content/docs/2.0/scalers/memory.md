@@ -7,20 +7,27 @@ go_file = "cpu_memory_scaler"
 +++
 
 > **Notice:**
-> - This scaler will never scale to 0 and even when user define multiple scaler types (eg. Kafka + cpu/memory, or Prometheus + cpu/memory), the deployment will never scale to 0
+> - This scaler **requires prerequisites**. See the 'Prerequisites' section.
+> - This scaler will never scale to 0 and even when user defines multiple scaler types (eg. Kafka + cpu/memory, or Prometheus + cpu/memory), the deployment will never scale to 0.
 > - This scaler only applies to ScaledObject, not to Scaling Jobs.
 
-### Trigger Specification
+### Prerequisites
 
-This specification describes the `memory` trigger that scales based on memory metrics.
+KEDA uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server, which is not installed by default on certain Kubernetes deployments such as EKS on AWS. Additionally, the `resources` section of the relevant Kubernetes Pods must include `limits` (at a minimum).
 
-```yaml
-triggers:
-- type: memory
-  metadata:
-    # Required
-    type: Utilization/ AverageValue
-    value: "60"
+- The Kubernetes Metrics Server must be installed. Installation instructions vary based on your Kubernetes provider.
+- The configuration for your Kubernetes Pods must include a `resources` section with specified `limits`. See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar) the error `missing request for {cpu/memory}` occurs.
+
+```
+# a working example of resources with specified limits
+spec:
+  containers:
+  - name: app
+    image: images.my-company.example/app:v4
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
 ```
 
 **Parameter list:**
@@ -44,6 +51,6 @@ spec:
   triggers:
   - type: memory
     metadata:
-      type: Utilization
+      type: Utilization # Allowed types are 'Utilization' or 'AverageValue'
       value: "50"
 ```
