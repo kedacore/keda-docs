@@ -40,24 +40,29 @@
   const externalScalers = document.getElementById("external-scalers");
   const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
   const searchResultCount = document.querySelector(".results");
-
   let btns = document.getElementsByClassName("filterBtn");
+
   for (let i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", function () {
+      let externalSearchResultCount = document.getElementById("external-search-results");
+      let builtInSearchResultCount = document.getElementById("search-results");
       let filterValue = btns[i].value.toLowerCase();
       if (filterValue === "built-in-scalers") {
         builtInScalers.forEach((node) => (node.style.display = "flex"));
         externalScalers.style.display = "none";
-        searchResultCount.style.display = "block";
+        builtInSearchResultCount.style.display = "block";
+        externalSearchResultCount.style.display = "none";
       } else if (filterValue === "external-scalers") {
         // remove focus when changed
         btnFocusOnMount.classList.remove("is-focused");
         builtInScalers.forEach((node) => (node.style.display = "none"));
         externalScalers.style.display = "inline";
-        searchResultCount.style.display = "none";
+        builtInSearchResultCount.style.display = "none";
+        externalSearchResultCount.style.display = "block";  
       }
     });
   }
+
 </script>
 
 {{/* In-built Scalers Search */}}
@@ -75,6 +80,7 @@
       const form = document.getElementById("search");
       const input = document.getElementById("search-input");
       const target = document.querySelector(".is-search-result");
+      const externalTarget = document.querySelector(".is-external-search-result");
       const searchResultCount = document.querySelector(".results");
       const template = document.getElementById("is-search-template");
       const isExternalScalers = document.getElementById("external-scalers");
@@ -148,8 +154,9 @@
           if ("content" in template) {
           // show result count
           const title = document.createElement("h3");
-          title.id = "search-results";
-          title.className = "subtitle is-size-3";
+          title.id = "external-search-results";
+          title.style.display = 'none';
+          title.className = "subtitle is-size-3 external-search-results";
 
           if (results.length == 0)
             title.textContent = `No results found for "${query}"`;
@@ -159,7 +166,7 @@
             title.textContent = `${results.length} scalers available`;
           else
             title.textContent = `Found ${results.length} results for "${query}"`;
-          searchResultCount.replaceChildren(title);
+          searchResultCount.appendChild(title);
 
           // show the matched result
           results.forEach(function (result) {
@@ -177,7 +184,7 @@
             result.version &&
               (element.querySelector(".availability").textContent =
                 `v${result.version}`);
-            target.appendChild(element);
+            externalTarget.appendChild(element);
           }, this);
         }
         };
@@ -261,7 +268,7 @@
             title.textContent = `${results.length} scalers available`;
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
-          searchResultCount.replaceChildren(title);
+            searchResultCount.appendChild(title);
 
           // show the matched result
           results.forEach(function (result) {
