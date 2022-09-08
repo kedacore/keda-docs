@@ -119,7 +119,7 @@
 
           if (isExternalScalers) {
             let externalSearchUrl = new URL(
-              "https://artifacthub.io/packages/search"
+              "https://artifacthub.io/api/v1/packages/search"
             );
             externalSearchUrl.search = new URLSearchParams({
               kind: "8",
@@ -128,6 +128,7 @@
             });
             debounceTimer = setTimeout(() => {
               groups[0].dataset.url = externalSearchUrl;
+              externalScalersIndex();
             }, interval);
           }
 
@@ -136,15 +137,23 @@
           }
 
           // clear out all the scaler item card when in-built scalers are being searched
-          while (target.firstChild.nextSibling) {
+          while (isBuiltInScalers.style.display === "flex" && target.firstChild.nextSibling) {
             target.removeChild(template.nextSibling.nextElementSibling);
+          }
+
+          
+          // clear out all the scaler item card when in-built scalers are being searched
+          while (externalTarget.firstChild.nextSibling) {
+            externalTarget.removeChild(externalTarget.firstChild.nextSibling.nextSibling.nextElementSibling);
           }
         },
         false
       );
 
       async function externalScalersIndex() {
-        const results = await fetch("https://artifacthub.io/api/v1/packages/search?offset=0&limit=20&facets=false&kind=8&deprecated=false&sort=relevance")
+        const externalScalerUrl = groups[0].dataset.url;
+        console.log(externalScalerUrl);
+        const results = await fetch(externalScalerUrl)
           .then((response) => response.json())
           .then((data) => {
             return data.packages;
