@@ -39,13 +39,12 @@
   const builtInScalers = document.querySelectorAll("#built-in-scalers");
   const externalScalers = document.getElementById("external-scalers");
   const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
-  const searchResultCount = document.querySelector(".results");
+  const builtInSearchResultCount = document.querySelector(".results");
+  const externalSearchResultCount = document.querySelector(".external-results");
   let btns = document.getElementsByClassName("filterBtn");
-
+  
   for (let i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", function () {
-      let externalSearchResultCount = document.getElementById("external-search-results");
-      let builtInSearchResultCount = document.getElementById("search-results");
       let filterValue = btns[i].value.toLowerCase();
       if (filterValue === "built-in-scalers") {
         builtInScalers.forEach((node) => (node.style.display = "flex"));
@@ -82,6 +81,7 @@
       const target = document.querySelector(".is-search-result");
       const externalTarget = document.querySelector(".is-external-search-result");
       const searchResultCount = document.querySelector(".results");
+      const externalSearchResultCount = document.querySelector(".external-results");
       const template = document.getElementById("is-search-template");
       const isExternalScalers = document.getElementById("external-scalers");
       const isBuiltInScalers = document.getElementById("built-in-scalers");
@@ -155,7 +155,6 @@
           // show result count
           const title = document.createElement("h3");
           title.id = "external-search-results";
-          title.style.display = 'none';
           title.className = "subtitle is-size-3 external-search-results";
 
           if (results.length == 0)
@@ -166,7 +165,7 @@
             title.textContent = `${results.length} scalers available`;
           else
             title.textContent = `Found ${results.length} results for "${query}"`;
-          searchResultCount.appendChild(title);
+            externalSearchResultCount.replaceChildren(title);
 
           // show the matched result
           results.forEach(function (result) {
@@ -184,7 +183,7 @@
             result.version &&
               (element.querySelector(".availability").textContent =
                 `v${result.version}`);
-            externalTarget.appendChild(element);
+                externalTarget.appendChild(element);
           }, this);
         }
         };
@@ -268,7 +267,7 @@
             title.textContent = `${results.length} scalers available`;
           else
             title.textContent = `Found ${results.length} results for "${keywords}"`;
-            searchResultCount.appendChild(title);
+            searchResultCount.replaceChildren(title);
 
           // show the matched result
           results.forEach(function (result) {
