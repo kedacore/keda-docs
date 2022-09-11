@@ -22,13 +22,17 @@ triggers:
     topicName: functions-sbtopic
     subscriptionName: sbtopic-sub1
     # Optional, required when pod identity is used
+    fullyQualifiedNamespace: demo-namespace.servicebus.windows.net
+    # DEPRECATED in favour of fullyQualifiedNamespace: Optional, required when pod identity is used
     namespace: service-bus-namespace
     # Optional, can use TriggerAuthentication as well
     connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
     activationMessageCount: "2"
+    # DEPRECATED in favour of fullyQualifiedNamespace
     cloud: Private # Optional. Default: AzurePublicCloud
+    # DEPRECATED in favour of fullyQualifiedNamespace
     endpointSuffix: servicebus.airgap.example # Required when cloud=Private
 ```
 
@@ -39,11 +43,12 @@ triggers:
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
-- `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
+- `fullyQualifiedNamespace` - Full qualified name of the Azure Service Bus namespace (containing the namespace name and the endpoint suffix) that contains your queue or topic. (Value: `{yournamespace}.{endpointSuffix}` Optional*, Required when pod identity is used)
+- `namespace` - (**DEPRECATED in favour of `fullyQualifiedNamespace`**) Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
-- `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
+- `cloud` - (**DEPRECATED in favour of `fullyQualifiedNamespace`**) Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 
-When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the service bus endpoint suffix of the cloud environment that the service bus belongs to, e.g. `servicebus.usgovcloudapi.net` for `AzureUSGovernmentCloud`.
+If you are using `namespace` instead of `fullyQualifiedNamespace`, when `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the service bus endpoint suffix of the cloud environment that the service bus belongs to, e.g. `servicebus.usgovcloudapi.net` for `AzureUSGovernmentCloud`.
 
 > 💡 **NOTE:** Service Bus Shared Access Policy needs to be of type `Manage`. Manage access is required for KEDA to be able to get metrics from Service Bus.
 
