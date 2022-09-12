@@ -234,6 +234,18 @@ Select a behavior if you have multiple triggers. Possible values are `max`, `min
 * **avg:** - Sum up all the active scalers metrics and divide by the number of active scalers.
 * **sum:** - Sum up all the active scalers metrics.
 
+### Pause autoscaling
+
+It can be useful to instruct KEDA to pause autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. This is a great alternative to deleting the resource, because we do not want to touch the applications themselves but simply remove the instances it is running from an operational perspective. Once everything is good to go, we can enable it to scale again.You can enable this by adding the below annotation to your `ScaledJob` definition:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused: true
+```
+
+The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition.
+
 # Sample
 
 ```yaml
