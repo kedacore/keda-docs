@@ -1,6 +1,6 @@
 baseURL = "https://keda.sh"
 languageCode = "en-us"
-title = "KEDA"
+title = "KEDA (CNCF Incubation)"
 enableGitInfo = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
