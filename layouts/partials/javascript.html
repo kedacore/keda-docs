@@ -118,7 +118,7 @@
 
           query = keywords;
 
-          if (isExternalScalers) {
+          if (isExternalScalers.style.display === "flex") {
             // hide banner during scaler search
             externalBanner.style.display = "none";
             if (query === '') {
@@ -143,7 +143,7 @@
           }
 
           // clear out all the scaler item card when in-built scalers are being searched
-          while (isBuiltInScalers.style.display === "flex" && target.firstChild.nextSibling) {
+          while (target.firstChild.nextSibling) {
             target.removeChild(template.nextSibling.nextElementSibling);
           }
 
@@ -158,7 +158,6 @@
 
       async function externalScalersIndex() {
         const externalScalerUrl = groups[0].dataset.url;
-        console.log(externalScalerUrl);
         const results = await fetch(externalScalerUrl)
           .then((response) => response.json())
           .then((data) => {
@@ -194,7 +193,7 @@
                 result.description);
                 result.repository.organization_name &&
               (element.querySelector(".maintainer").textContent =
-              result.repository.organization_name || result.repository.user_alias);
+              result.repository.organization_name);
             result.version &&
               (element.querySelector(".availability").textContent =
                 `v${result.version}`);
