@@ -85,6 +85,7 @@
       const template = document.getElementById("is-search-template");
       const isExternalScalers = document.getElementById("external-scalers");
       const isBuiltInScalers = document.getElementById("built-in-scalers");
+      const externalBanner = document.getElementById("external-banner");
       const groups = document.getElementsByClassName(
         "artifacthub-widget-group"
       );
@@ -118,6 +119,11 @@
           query = keywords;
 
           if (isExternalScalers) {
+            // hide banner during scaler search
+            externalBanner.style.display = "none";
+            if (query === '') {
+              externalBanner.style.display = "block";
+            }
             let externalSearchUrl = new URL(
               "https://artifacthub.io/api/v1/packages/search"
             );
