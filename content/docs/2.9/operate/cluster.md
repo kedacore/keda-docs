@@ -15,6 +15,14 @@ However, maintainers can decide to extend this by supporting more minor versions
 > Example - At time of writing, Kubernetes 1.25 is the latest minor version so KEDA can only use new features that were introduced in 1.23
 You can learn more about the currently supported Kubernetes version in our [FAQ](https://keda.sh/docs/latest/faq/).
 
+As a reference, this compatibility matrix shows supported k8s versions per KEDA version:
+
+|   KEDA    |   Kubernetes  |
+|-----------|---------------|
+|   v2.9.x  |   v1.23-v1.25 |
+|   v2.8.x  |   v1.17-v1.24 |
+|   v2.7.x  |   v1.17-v1.24 |
+
 ### Cluster Capacity
 
 The KEDA runtime require the following resources in a production-ready setup:

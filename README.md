@@ -173,6 +173,8 @@ current version.
 Make sure that the version on `content/docs/{next-version}/deploy.md` is updated
 and uses the next version, instead of the current one.
 
+Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster.md` is updated with the compatibilities for the incoming version.
+
 ### Publishing a new version
 
 Once a version is ready to be published, we must add the version to the
