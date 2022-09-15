@@ -236,7 +236,11 @@ Select a behavior if you have multiple triggers. Possible values are `max`, `min
 
 ### Pause autoscaling
 
-It can be useful to instruct KEDA to pause autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. This is a great alternative to deleting the resource, because we do not want to touch the applications themselves but simply remove the instances it is running from an operational perspective. Once everything is good to go, we can enable it to scale again.You can enable this by adding the below annotation to your `ScaledJob` definition:
+It can be useful to instruct KEDA to pause the autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. 
+
+This is a great alternative to deleting the resource, because we do not want to touch the applications themselves but simply remove the instances it is running from an operational perspective. Once everything is good to go, we can enable it to scale again.
+
+You can enable this by adding the below annotation to your `ScaledJob` definition:
 
 ```yaml
 metadata:
