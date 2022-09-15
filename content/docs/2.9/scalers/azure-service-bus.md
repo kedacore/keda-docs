@@ -53,7 +53,16 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Service Bus Namespace.
+- `connection` - Connection string for the Azure Service Bus Namespace. 
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - 
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
+  - With **SharedAccessSignature** -  
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessSignature=SharedAccessSignature sig=<signature-string>&se=<expiry>&skn=<keyName>&sr=<URL-encoded-resourceURI>`  
+    Refer to this [page](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-sas) for more information
+    on using Shared Access Signatures.
 
 **Pod identity based authentication:**
 
