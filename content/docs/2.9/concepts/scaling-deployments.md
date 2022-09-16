@@ -230,13 +230,13 @@ metadata:
     autoscaling.keda.sh/paused-replicas: "0"
 ```
 
-The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject`definition.
+The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
 
 ### Activating and Scaling thresholds
 
-To give a consisten solution to this problem, KEDA has 2 different phases during the autoscaling process.
+To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.
 
-- **Activation phase:** The activating (or deactivating) phase is the moment when KEDA (operator) has to decide if the workload should be scaled from/to zero. KEDA is the responsible for this action based on the result of the scaler`IsActive` function and only applies to 0<->1 scaling. There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X.
+- **Activation phase:** The activating (or deactivating) phase is the moment when KEDA (operator) has to decide if the workload should be scaled from/to zero. KEDA is the responsible for this action based on the result of the scaler `IsActive` function and only applies to 0<->1 scaling. There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X.
 - **Scaling phase:** The scaling phase is the moment when KEDA has decided to scale out to 1 instance and now is the HPA controller who takes the scaling decisions based on the configuration defined in the generated HPA (from ScaledObject data) and the metrics exposed by KEDA (metrics server). This phase applies the to 1<->N scaling.
 
 #### Managing Activation & Scaling Thresholds
