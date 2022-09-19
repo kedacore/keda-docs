@@ -12,16 +12,13 @@ The supported window of Kubernetes versions with KEDA is known as "N-2" which me
 
 However, maintainers can decide to extend this by supporting more minor versions based on the required CRDs being used; but there is no guarantee.
 
-> Example - At time of writing, Kubernetes 1.25 is the latest minor version so KEDA can only use new features that were introduced in 1.23
-You can learn more about the currently supported Kubernetes version in our [FAQ](https://keda.sh/docs/latest/faq/).
-
 As a reference, this compatibility matrix shows supported k8s versions per KEDA version:
 
 |   KEDA    |   Kubernetes  |
 |-----------|---------------|
-|   v2.9.x  |   v1.23-v1.25 |
-|   v2.8.x  |   v1.17-v1.24 |
-|   v2.7.x  |   v1.17-v1.24 |
+|   v2.9    | v1.23 - v1.25 |
+|   v2.8    | v1.17 - v1.24 |
+|   v2.7    | v1.17 - v1.24 |
 
 ### Cluster Capacity
 
