@@ -44,7 +44,12 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Service Bus Namespace.
+- `connection` - Connection string for the Azure Service Bus Namespace. 
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - 
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
 
 ### Example
 
