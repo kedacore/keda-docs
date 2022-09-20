@@ -251,26 +251,26 @@ parent = "project"
 weight = 3
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/ROADMAP.md"
+url = "https://github.com/kedacore/keda/blob/main/ROADMAP.md"
 name = "Roadmap"
 parent = "project"
 weight = 4
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
-name = "Contributing"
+url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
+name = "Changelog"
 parent = "project"
 weight = 5
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
-name = "Changelog"
+url = "/support/"
+name = "Support"
 parent = "project"
 weight = 6
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
-name = "Maintainers"
+url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
+name = "Contributing"
 parent = "project"
 weight = 7
 
@@ -285,6 +285,12 @@ url = "https://github.com/kedacore/keda/blob/main/LICENSE"
 name = "License"
 parent = "project"
 weight = 9
+
+[[menu.main]]
+url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+name = "Maintainers"
+parent = "project"
+weight = 10
 
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
@@ -490,3 +496,12 @@ logo = "snyk.png"
 [[params.supportedby]]
 url = "https://vexxhost.com"
 logo = "vexxhost.png"
+
+# "Commercial support" section on the support page
+[[params.vendors]]
+url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
+logo = "microsoft.png"
+
+[[params.vendors]]
+url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
+logo = "red-hat.png"

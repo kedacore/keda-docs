@@ -1,7 +1,7 @@
 +++
 title = "Azure Application Insights"
 availability = "v2.6+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Application Insights metrics."
 go_file = "azure_app_insights_scaler"
 +++
@@ -73,8 +73,7 @@ The principal will need `Monitoring Reader` access to query metrics from the App
 
 **Pod identity based authentication:**
 
-[Azure Active Directory pod-managed identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) can be used
-in place of credential based authentication. The following section contains an example of a `TriggerAuthentication` using pod identity.
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in place of credential based authentication. The following section contains an example of a `TriggerAuthentication` using pod identity.
 
 ### Example
 
@@ -110,7 +109,7 @@ spec:
       key: tenantId
   # or Pod Identity, kind: Secret is not required in case of pod Identity
   podIdentity:
-      provider: azure
+      provider: azure | azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

@@ -6,9 +6,19 @@ weight = 100
 
 ## Requirements
 
-### Kubernetes
+### Kubernetes Compatibility
 
-KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above.
+The supported window of Kubernetes versions with KEDA is known as "N-2" which means that KEDA will provide support for running on N-2 at least.
+
+However, maintainers can decide to extend this by supporting more minor versions based on the required CRDs being used; but there is no guarantee.
+
+As a reference, this compatibility matrix shows supported k8s versions per KEDA version:
+
+|   KEDA    |   Kubernetes  |
+|-----------|---------------|
+|   v2.9    | v1.23 - v1.25 |
+|   v2.8    | v1.17 - v1.24 |
+|   v2.7    | v1.17 - v1.24 |
 
 ### Cluster Capacity
 
