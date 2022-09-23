@@ -187,3 +187,79 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
 ```
+
+Your kafka cluster turn on SASL OAuthbearer/TLS auth:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-kafka-secrets
+  namespace: default
+data:
+  sasl: "oauthbearer"
+  username: "admin"
+  password: "admin"
+  oauthTokenEndpointUri: "https://tokenendpoint.com/token"
+  scopes: "default"
+  tls: "enable"
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secrets
+    key: sasl
+  - parameter: username
+    name: keda-kafka-secrets
+    key: username
+  - parameter: password
+    name: keda-kafka-secrets
+    key: password
+  - parameter: oauthTokenEndpointUri
+    name: keda-kafka-secrets
+    key: oauthTokenEndpointUri
+  - parameter: scopes
+    name: keda-kafka-secrets
+    key: scopes
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
+  - parameter: ca
+    name: keda-kafka-secrets
+    key: ca
+  - parameter: cert
+    name: keda-kafka-secrets
+    key: cert
+  - parameter: key
+    name: keda-kafka-secrets
+    key: key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-functions-deployment
+  pollingInterval: 30
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: localhost:9092
+      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: test-topic
+      # Optional
+      lagThreshold: "50"
+      offsetResetPolicy: latest
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+```
