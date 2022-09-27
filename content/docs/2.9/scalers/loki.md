@@ -69,6 +69,49 @@ spec:
         query: sum(rate({filename="/var/log/syslog"}[1m])) by (level)
 ```
 
+Here is an example of a loki scaler with Bearer Authentication, where the `Secret` and `TriggerAuthentication` are defined as follows:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-loki-secret
+  namespace: default
+data:
+  bearerToken: "BEARER_TOKEN"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-loki-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: bearerToken
+      name: keda-loki-secret
+      key: bearerToken
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: loki-scaledobject
+  namespace: default
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: nginx
+  triggers:
+    - type: loki
+      metadata:
+        serverAddress: http://<loki-host>:3100
+        metricName: syslog_write_total
+        threshold: '0.7'
+        query: sum(rate({filename="/var/log/syslog"}[1m])) by (level)
+        authModes: "bearer"
+      authenticationRef:
+        name: keda-loki-creds
+```
+
 Here is an example of a loki scaler with Basic Authentication, where the `Secret` and `TriggerAuthentication` are defined as follows:
 
 ```yaml
