@@ -20,3 +20,5 @@ Unfortunately we have seen very few contributions to the project and [@arschles]
 **If we do not have at least 3 contributors take charge we will have to see what alternatives we have.**
 
 We'd also want to take the time to say a big thank you to [@arschles](https://github.com/arschles) for his hard work on this and hopefully we can continue taking it forward!
+
+Join our discussion on [GitHub](https://github.com/kedacore/http-add-on/discussions/523) if you want to stay up-to-date or want to get involved.
