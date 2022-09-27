@@ -36,11 +36,11 @@ Here is an overview of the required ports that need to be accessible for KEDA to
 
 ## High Availability
 
-KEDA does not provide support for high-availability due to upstream limitations.
+KEDA does not provide full support for high-availability due to upstream limitations.
 
-Here is an overview of all KEDA deployments and the supported replicas:
+Here is an overview of all KEDA deployments and the HA notes:
 
-| Deployment     | Support Replicas        | Reasoning                     |
-|----------------|-------------------------|-------------------------------|
-| Operator       | 1                       |                               |
-| Metrics Server | 1                       | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
+| Deployment     | Support Replicas | Note                                                                                                                                                                                                                   |
+| -------------- | ---------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Metrics Server | 1                | You can run multiple replicas of our metrics sever, and it is recommended to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to our metrics servers are load balanced. |
+| Operator       | 1                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.<br /><br />This is only supported as of KEDA v2.6 if you are using our Helm chart. |
