@@ -76,7 +76,7 @@ spec:
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
 
-Here is an example of a prometheus scaler with bearer authentication,
+Here is an example of a prometheus scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -164,7 +164,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -218,7 +218,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -279,7 +279,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
