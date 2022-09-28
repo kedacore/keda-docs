@@ -36,6 +36,7 @@ triggers:
 - `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
 - `ignoreNullValues` - Value to reporting error when Loki target is lost. (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
+- `authMode` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
 
 ### Authentication Parameters
 
