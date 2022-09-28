@@ -46,12 +46,12 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 
 **Bearer authentication:**
 - `authModes`: It must contain `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
-- `bearerToken`: The token needed for authentication. This is a required field.
+- `bearerToken`: The token needed for authentication.
 
 **Basic authentication:**
 - `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
-- `username` - This is a required field. Provide the username to be used for basic authentication.
-- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
+- `username` - Provide the username to be used for basic authentication.
+- `password` - Provide the password to be used for authentication. (Optional, For convenience this has been marked optional as many applications implement basic auth with a username as apikey and password as empty.)
 
 ### Example
 
