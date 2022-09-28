@@ -96,7 +96,7 @@ q = "Can I run multiple metric servers serving external metrics in the same clus
 a = """
 Unfortunately, you cannot do that.
 
-Kubernetes currently only supports one metric server per cluster. This is because only one API Service can be registered to handle external metrics.
+Kubernetes currently only supports one metric server serving `external.metrics.k8s.io` metrics per cluster. This is because only one API Service can be registered to handle external metrics.
 
 If you want to know what external metric server is currently registered, you can use the following command:
 
