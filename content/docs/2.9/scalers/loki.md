@@ -1,6 +1,6 @@
 +++
 title = "Loki"
-availability = "v1.0+"
+availability = "v2.9+"
 maintainer = "Community"
 description = "Scale applications based on Loki query result."
 go_file = "loki_scaler"
@@ -39,9 +39,13 @@ triggers:
 
 ### Authentication Parameters
 
-Loki doesn't provide any kind of authentication out of the box. However, most commonly Loki is configured along with a Basic Auth, which is the only valid auth mode to be configured here.
+Loki doesn't provide any kind of authentication out of the box. However, most commonly Loki is configured along with a Basic Auth or Bearer Auth, which are the only valid options for authentication here.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
+
+**Bearer authentication:**
+- `authModes`: It must contain `bearer` in case of Bearer Authentication. Specify this in trigger configuration.
+- `bearerToken`: The token needed for authentication. This is a required field.
 
 **Basic authentication:**
 - `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
