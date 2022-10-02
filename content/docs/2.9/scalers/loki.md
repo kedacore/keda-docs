@@ -21,7 +21,7 @@ triggers:
     threshold: '0.7'
     # Optional fields:
     activationThreshold: '2.50'
-    cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
+    tenantName: Tenant1 # Optional. X-Scope-OrgID header for specifying the tenant name in a multi-tenant setup.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Loki. Set to `false` the scaler will return error when Loki target is lost
     unsafeSsl: false #  Default is `false`, Used for skipping certificate check when having self signed certs for Loki endpoint
 ```
@@ -33,7 +33,7 @@ triggers:
 - `query` - LogQL query to run. The query must return a vector/scalar single element response.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
+- `tenantName` - The `X-Scope-OrgID` header for specifying the tenant name in a multi-tenant setup. (Optional)
 - `ignoreNullValues` - Value to reporting error when Loki target is lost. (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
 - `authMode` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
