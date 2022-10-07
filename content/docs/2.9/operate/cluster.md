@@ -88,7 +88,7 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 ## Kubernetes Client Parameters
 
-The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
+The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
 | Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
 | -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
