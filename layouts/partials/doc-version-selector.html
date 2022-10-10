@@ -3,7 +3,7 @@
 {{ $version       := index (split .File.Path "/") 1 }}
 {{ $isLatest      := eq $latest $version }}
 {{ $versionsOfDoc := slice }}
-{{ $here          := .RelPermalink }}
+{{ $here          := (delimit (after 3 (split (delimit (split .RelPermalink "/") "," "") ",")) "/") }}
 {{ $path          := .File.Path }}
 {{ $section       := .Section }}
 {{ range $allVersions }}
@@ -39,7 +39,7 @@
     <div class="dropdown-content">
       {{ range $versionsOfDoc }}
       {{ $isLatest := eq . $latest }}
-      <a class="dropdown-item" href="/{{ $section }}/{{ . }}">
+      <a class="dropdown-item" href="/{{ $section }}/{{ . }}/{{ $here }}">
         <span>
           {{ . }}
         </span>
