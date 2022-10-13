@@ -16,8 +16,7 @@ triggers:
   metadata:
     # Required fields:
     serverAddress: http://<loki-host>:3100 # Note: loki server URL 
-    metricName: syslog_write_total # Note: name to identify the metric, generated value would be `loki-syslog_write_total`
-    query: sum(rate({filename="/var/log/syslog"}[1m])) by (level) # Note: query must return a vector/scalar single element response
+    query: sum(rate({filename="/var/log/syslog"}[1m])) # Note: query must return a vector/scalar single element response
     threshold: '0.7'
     # Optional fields:
     activationThreshold: '2.50'
@@ -29,14 +28,13 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - URL of Loki server.
-- `metricName` - Name to identify the metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - LogQL query to run. The query must return a vector/scalar single element response.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `tenantName` - The `X-Scope-OrgID` header for specifying the tenant name in a multi-tenant setup. (Optional)
 - `ignoreNullValues` - Value to reporting error when Loki target is lost. (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
-- `authMode` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
+- `authModes` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
 
 ### Authentication Parameters
 
@@ -49,7 +47,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 - `bearerToken`: The token needed for authentication.
 
 **Basic authentication:**
-- `authMode`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
+- `authModes`: It must contain `basic` in case of Basic Authentication. Specify this in trigger configuration.
 - `username` - Provide the username to be used for basic authentication.
 - `password` - Provide the password to be used for authentication. (Optional, For convenience this has been marked optional as many applications implement basic auth with a username as apikey and password as empty.)
 
@@ -69,9 +67,8 @@ spec:
     - type: loki
       metadata:
         serverAddress: http://<loki-host>:3100
-        metricName: syslog_write_total
         threshold: '0.7'
-        query: sum(rate({filename="/var/log/syslog"}[1m])) by (level)
+        query: sum(rate({filename="/var/log/syslog"}[1m]))
 ```
 
 Here is an example of a loki scaler with Bearer Authentication, where the `Secret` and `TriggerAuthentication` are defined as follows:
@@ -109,9 +106,8 @@ spec:
     - type: loki
       metadata:
         serverAddress: http://<loki-host>:3100
-        metricName: syslog_write_total
         threshold: '0.7'
-        query: sum(rate({filename="/var/log/syslog"}[1m])) by (level)
+        query: sum(rate({filename="/var/log/syslog"}[1m]))
         authModes: "bearer"
       authenticationRef:
         name: keda-loki-creds
@@ -156,9 +152,8 @@ spec:
     - type: loki
       metadata:
         serverAddress: http://<loki-host>:3100
-        metricName: syslog_write_total
         threshold: '0.7'
-        query: sum(rate({filename="/var/log/syslog"}[1m])) by (level)
+        query: sum(rate({filename="/var/log/syslog"}[1m]))
         authModes: "basic"
       authenticationRef:
         name: keda-loki-creds
