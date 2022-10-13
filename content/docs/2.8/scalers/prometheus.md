@@ -22,7 +22,7 @@ triggers:
     activationThreshold: '5.5'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
-    cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
+    cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
 ```
 
@@ -34,7 +34,7 @@ triggers:
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
-- `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
+- `cortexOrgID` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 
 ### Authentication Parameters
@@ -80,7 +80,7 @@ spec:
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
 
-Here is an example of a prometheus scaler with bearer authentication,
+Here is an example of a prometheus scaler with Bearer Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -168,7 +168,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -222,7 +222,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -283,7 +283,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total

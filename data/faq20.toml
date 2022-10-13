@@ -87,7 +87,41 @@ Because KEDA primarily serves metrics for metric sources outside of the Kubernet
 
 This is why KEDA registers the `v1beta1.external.metrics.k8s.io` namespace in the API service. However, this is just an implementation detail as both offer the same functionality.
 
-Read [this article](https://cloud.google.com/kubernetes-engine/docs/concepts/custom-and-external-metrics) by Google Cloud to learn more.
+Read [about the different metric APIs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-metrics-apis) or [this article](https://cloud.google.com/kubernetes-engine/docs/concepts/custom-and-external-metrics) by Google Cloud to learn more.
+"""
+type = "Kubernetes"
+
+[[qna]]
+q = "Can I run multiple metric servers serving external metrics in the same cluster?"
+a = """
+Unfortunately, you cannot do that.
+
+Kubernetes currently only supports one metric server serving `external.metrics.k8s.io` metrics per cluster. This is because only one API Service can be registered to handle external metrics.
+
+If you want to know what external metric server is currently registered, you can use the following command:
+
+```shell
+~  kubectl  get APIService/v1beta1.external.metrics.k8s.io
+NAME                              SERVICE                                       AVAILABLE   AGE
+v1beta1.external.metrics.k8s.io   keda-system/keda-operator-metrics-apiserver   True        457d
+```
+
+Once a new metric server is installed, it will overwrite the existing API Server registration and take over the `v1beta1.external.metrics.k8s.io` namespace. This will cause the previously installed metric server to be ignored.
+
+There is an [open proposal](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) to allow multiple metric servers in the same cluster, but it's not implemented yet.
+"""
+type = "Kubernetes"
+
+[[qna]]
+q = "Can I run multiple installations of KEDA in the same cluster?"
+a = """
+Unfortunately, you cannot do that.
+
+This is a limitation that is because Kubernetes does not allow you to run multiple metric servers in the same cluster that serve external metrics.
+
+Also, KEDA does not allow you to share a single metric server across multiple operator installations.
+
+Learn more in the "Can I run multiple metric servers serving external metrics in the same cluster?" FAQ entry.
 """
 type = "Kubernetes"
 

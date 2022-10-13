@@ -452,6 +452,10 @@ url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
 [[params.users]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
+
+[[params.users]]
 url = "https://seldon.io/"
 logo = "seldon.png"
 
@@ -483,6 +487,10 @@ logo = "microsoft.png"
 [[params.partners]]
 url = "https://redhat.com"
 logo = "red-hat.png"
+
+[[params.partners]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
 
 # "Supported by" section on the Community page
 [[params.supportedby]]
