@@ -18,7 +18,7 @@ The below is an example trigger configuration for chrome node.
 triggers:
   - type: selenium-grid
     metadata:
-      url: 'http://selenium-hub:4444/graphql' # Required
+      url: 'http://selenium-hub:4444/graphql' # Required. Can be ommitted if specified via TriggerAuthentication/ClusterTriggerAuthentication.
       browserName: 'chrome'  # Required
       browserVersion: '91.0' # Optional. Only required when supporting multiple versions of browser in your Selenium Grid.
       unsafeSsl : 'true' # Optional
@@ -142,4 +142,48 @@ spec:
         url: 'http://selenium-hub:4444/graphql'
         browserName: 'chrome'
         browserVersion: '90.0'
+```
+
+### Authentication Parameters
+
+The `url` parameter can optionally be specified via a `TriggerAuthentication` or `ClusterTriggerAuthentication` resource. This allows securely specifying a username and password in the URL when Selenium Grid's Basic HTTP Authentication is configured.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: selenium-grid-secret
+  namespace: keda
+type: Opaque
+data:
+  graphql-url: base64 encoded value of GraphQL URL
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-selenium-grid-secret
+  namespace: keda
+spec:
+  secretTargetRef:
+  - parameter: url
+    name: selenium-grid-secret
+    key: graphql-url
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: selenium-grid-chrome-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: selenium-chrome-node
+spec:
+  maxReplicaCount: 8
+  scaleTargetRef:
+    name: selenium-chrome-node
+  triggers:
+    - type: selenium-grid
+      metadata:
+        browserName: 'chrome'
+      authenticationRef:
+        name: keda-trigger-auth-selenium-grid-secret
 ```
