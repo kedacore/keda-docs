@@ -79,7 +79,7 @@ particularly these would be exclusive agents where jobs would fail if run on the
 
 - **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored)
 
-Microsoft's documentation: [https://docs.microsoft.com/en-us/azure/devops/pipelines/agent/agent-pool-demands](https://docs.microsoft.com/en-us/azure/devops/pipelines/agent/agent-pool-demands)
+Microsoft's documentation: [https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml)
 
 Please note that the parent template feature is exclusive to KEDA and not Microsoft and is another way of supporting demands.
 
