@@ -452,6 +452,10 @@ url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
 [[params.users]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
+
+[[params.users]]
 url = "https://seldon.io/"
 logo = "seldon.png"
 
@@ -484,6 +488,10 @@ logo = "microsoft.png"
 url = "https://redhat.com"
 logo = "red-hat.png"
 
+[[params.partners]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
+
 # "Supported by" section on the Community page
 [[params.supportedby]]
 url = "https://azure.microsoft.com/en-us/services/devops/"
@@ -499,9 +507,16 @@ logo = "vexxhost.png"
 
 # "Commercial support" section on the support page
 [[params.vendors]]
-url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
-logo = "microsoft.png"
+name = "Azure Container Apps"
+url = "https://docs.microsoft.com/en-us/azure/container-apps/scale-app"
+logo = "vendors/azure-container-apps.png"
 
 [[params.vendors]]
+name = "Custom Metrics Autoscaler on Red Hat OpenShift"
 url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
-logo = "red-hat.png"
+logo = "vendors/red-hat.png"
+
+[[params.vendors]]
+name = "KEDA Add-On for Azure Kubernetes Service"
+url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
+logo = "vendors/azure-kubernetes-service.png"

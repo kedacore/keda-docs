@@ -21,7 +21,7 @@ triggers:
     threshold: '100'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
-    cortexOrgId: my-org # Optional. X-Scope-OrgID header for Cortex.
+    cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
 ```
 
 **Parameter list:**
@@ -31,7 +31,7 @@ triggers:
 - `query` - Query to run.
 - `threshold` - Value to start scaling for.
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
-- `cortexOrgId` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/). (Optional)
+- `cortexOrgID` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 
 ### Authentication Parameters
 
@@ -76,7 +76,7 @@ spec:
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
 
-Here is an example of a prometheus scaler with bearer authentication,
+Here is an example of a prometheus scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -164,7 +164,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -218,7 +218,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -279,7 +279,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total

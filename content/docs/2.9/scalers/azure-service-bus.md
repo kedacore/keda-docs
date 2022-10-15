@@ -41,6 +41,8 @@ triggers:
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
 - `namespace` - Name of the Azure Service Bus namespace that contains your queue or topic. (Optional*, Required when pod identity is used)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string of the Azure Service Bus namespace. (Optional)
+- `useRegex` - Provides indication whether or not a regex is used in the `queueName` or `subscriptionName` parameters. (Values: `true`, `false`, Default: `false`, Optional)
+- `operation` - Defines how to compute the number of messages when `useRegex` is set to `true`. (Values: `sum`, `max`, or `avg`, Default: `sum`, Optional).
 - `cloud` - Name of the cloud environment that the service bus belongs to. Must be a known Azure cloud environment, or `Private` for Azure Stack Hub or Air Gapped clouds. (valid values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`; default: `AzurePublicCloud`)
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the service bus endpoint suffix of the cloud environment that the service bus belongs to, e.g. `servicebus.usgovcloudapi.net` for `AzureUSGovernmentCloud`.
@@ -53,7 +55,16 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Service Bus Namespace.
+- `connection` - Connection string for the Azure Service Bus Namespace. 
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - 
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
+  - With **SharedAccessSignature** -  
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessSignature=SharedAccessSignature sig=<signature-string>&se=<expiry>&skn=<keyName>&sr=<URL-encoded-resourceURI>`  
+    Refer to this [page](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-sas) for more information
+    on using Shared Access Signatures.
 
 **Pod identity based authentication:**
 

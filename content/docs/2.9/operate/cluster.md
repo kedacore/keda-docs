@@ -12,8 +12,13 @@ The supported window of Kubernetes versions with KEDA is known as "N-2" which me
 
 However, maintainers can decide to extend this by supporting more minor versions based on the required CRDs being used; but there is no guarantee.
 
-> Example - At time of writing, Kubernetes 1.25 is the latest minor version so KEDA can only use new features that were introduced in 1.23
-You can learn more about the currently supported Kubernetes version in our [FAQ](https://keda.sh/docs/latest/faq/).
+As a reference, this compatibility matrix shows supported k8s versions per KEDA version:
+
+|   KEDA    |   Kubernetes  |
+|-----------|---------------|
+|   v2.9    | v1.23 - v1.25 |
+|   v2.8    | v1.17 - v1.24 |
+|   v2.7    | v1.17 - v1.24 |
 
 ### Cluster Capacity
 
@@ -43,14 +48,14 @@ Here is an overview of the required ports that need to be accessible for KEDA to
 
 ## High Availability
 
-KEDA does not provide support for high-availability due to upstream limitations.
+KEDA does not provide full support for high-availability due to upstream limitations.
 
-Here is an overview of all KEDA deployments and the supported replicas:
+Here is an overview of all KEDA deployments and the HA notes:
 
-| Deployment     | Support Replicas | Reasoning                                                                                                        |
-| -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Metrics Server | 1                | Limitation in [k8s custom metrics server](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) |
-| Operator       | 2                | While you can run more replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.|
+| Deployment     | Support Replicas | Note                                                                                                                                                                                                                   |
+| -------------- | ---------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Metrics Server | 1                | You can run multiple replicas of our metrics sever, and it is recommended to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to our metrics servers are load balanced. However, [you can only run one active metric server in a Kubernetes cluster serving external.metrics.k8s.io](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) which has to be the KEDA metric server. |
+| Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover. |
 
 ## HTTP Timeouts
 
@@ -83,7 +88,7 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 ## Kubernetes Client Parameters
 
-The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
+The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
 | Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
 | -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
