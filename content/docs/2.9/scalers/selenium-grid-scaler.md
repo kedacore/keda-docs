@@ -146,7 +146,9 @@ spec:
 
 ### Authentication Parameters
 
-The `url` parameter can optionally be specified via a `TriggerAuthentication` or `ClusterTriggerAuthentication` resource. This allows securely specifying a username and password in the URL when Selenium Grid's Basic HTTP Authentication is configured.
+It is possible to specify the Graphql url of your Selenium Grid using authentication parameters. This useful if you have enabled Selenium Grid's Basic HTTP Authentication and would like to keep your credentials secure.
+
+- `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) for more info.
 
 ```yaml
 apiVersion: v1
