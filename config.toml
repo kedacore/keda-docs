@@ -396,6 +396,10 @@ url = "https://www.freepikcompany.com/"
 logo = "freepik-company.png"
 
 [[params.users]]
+url = "https://www.grafana.com"
+logo = "grafana.png"
+
+[[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
 
