@@ -1,8 +1,7 @@
 +++
 title = "Azure Log Analytics"
-layout = "scaler"
 availability = "v2.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Log Analytics query result"
 go_file = "azure_log_analytics_scaler"
 +++
@@ -31,7 +30,7 @@ triggers:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"
@@ -81,7 +80,7 @@ It is important to design your query to return 1 table with 1 row. A good practi
 Scaler will take value from:
 
 - 1st cell as Metrics Value.
-- 2d cell as Threshold (optional).
+- 2nd cell as Threshold (optional).
 
 You can define threshold in trigger metadata, it will be used if your query results only 1 cell, that will be interpreted as metric value. Be aware, even if you have defined threshold in metadata, it can be overwritten by your query.
 
@@ -103,7 +102,7 @@ Perf
 | where TimeGenerated > AvgDuration
 | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
 | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-| join (Perf 
+| join (Perf
         | where InstanceName contains AppName
         | where InstanceName contains ClusterName
         | where CounterName == "cpuLimitNanoCores"
@@ -121,8 +120,8 @@ Example result:
 
 ### Scaler Limitations
 
-- As it was mentioned before, you can define a threshold using query (2d cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to Horizontal Pod Autoscaler target.
-  
+- As it was mentioned before, you can define a threshold using query (2nd cell of query result will be interpret as threshold). Be aware! Threshold from query result will be set only once, during scaler creation. So, if your query will return different threshold values during runtime, they will not be propagated to Horizontal Pod Autoscaler target.
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials and resource identifiers.
@@ -207,7 +206,7 @@ spec:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"
@@ -265,7 +264,7 @@ spec:
         | where TimeGenerated > AvgDuration
         | extend AppName = substring(InstanceName, indexof((InstanceName), "/", 0, -1, 10) + 1)
         | summarize MetricValue=round(avg(CounterValue)) by CounterName, AppName
-        | join (Perf 
+        | join (Perf
                 | where InstanceName contains AppName
                 | where InstanceName contains ClusterName
                 | where CounterName == "cpuLimitNanoCores"

@@ -1,5 +1,6 @@
 {{ $notice   := .Params.notice }}
 {{ $isScaler := eq .CurrentSection.Title "Scalers" }}
+{{ $index := eq .File.LogicalName "_index.md"}}
 <section class="section">
   <div class="container">
     <div class="content is-medium is-constrained has-bottom-margin">
@@ -18,15 +19,10 @@
 
       {{ .Content | replaceRE "(<h[2-9] id=\"([^\"]+)\".+)(</h[2-9]+>)" `${1} <a class="headline-hash" href="#${2}"><span class="icon hashlink"><i class="fas fa-hashtag"></i></span></a>${3}` | safeHTML }}
 
-      {{ if $isScaler }}
-      <br />
-      <br />
-
-      <h2 id="available-scalers">
-        Currently available scalers for KEDA
-      </h2>
-      {{ partial "scalers.html" . }}
+      {{ if and ($isScaler) ($index) }}
+      {{ partial "scaler-layout" . }}
       {{ end }}
     </div>
   </div>
 </section>
+

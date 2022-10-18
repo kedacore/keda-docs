@@ -3,7 +3,6 @@ title = "Solace PubSub+ Event Broker"
 availability = "2.4+"
 maintainer = "Community"
 description = "Scale applications based on Solace PubSub+ Event Broker Queues"
-layout = "scaler"
 go_file = "solace_scaler"
 +++
 

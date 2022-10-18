@@ -1,8 +1,7 @@
 +++
 title = "Azure Event Hubs"
-layout = "scaler"
 availability = "v1.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Event Hubs."
 notice = "As of now, the Event Hub scaler only supports reading checkpoints from Blob Storage, as well as scaling only Event Hub applications written in C#, Java, Python or created with Azure Functions."
 go_file = "azure_eventhub_scaler"
@@ -17,7 +16,7 @@ triggers:
 - type: azure-eventhub
   metadata:
     connection: EVENTHUB_CONNECTIONSTRING_ENV_NAME # Connection string for Event Hub namespace appended with "EntityPath=<event_hub_name>"
-    storageConnection: STORAGE_CONNECTIONSTRING_ENV_NAME # Connection string for account used to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage. 
+    storageConnection: STORAGE_CONNECTIONSTRING_ENV_NAME # Connection string for account used to store checkpoint. As of now the Event Hub scaler only reads from Azure Blob Storage.
     consumerGroup: $Default # Optional. Consumer group of event hub consumer. Default: $Default
     unprocessedEventThreshold: '64' # Optional. Target number of unprocessed events across all partitions in Event Hub for HPA. Default: 64 events.
     blobContainer: 'name_of_container' # Optional. Container name to store checkpoint. This is needed when a using an Event Hub application written in dotnet or java, and not an Azure function.

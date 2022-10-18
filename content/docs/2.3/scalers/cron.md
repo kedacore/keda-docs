@@ -1,6 +1,5 @@
 +++
 title = "Cron"
-layout = "scaler"
 availability = "v1.5+"
 maintainer = "Community"
 description = "Scale applications based on a cron schedule."

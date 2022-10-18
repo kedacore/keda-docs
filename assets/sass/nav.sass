@@ -10,6 +10,7 @@
   justify-content: space-between
 
 .nav
+  padding-top: 5rem
   padding-bottom: 2rem
 
   &-subsection
@@ -62,11 +63,11 @@
 
     & + &
       margin-top: 1rem
-	
-.scrolled 
+
+.scrolled
     background: #1d1c29 !important
     transition: background 1000ms
-	
+
 .navbar-link, .navbar-item
 	color: white;
 
@@ -83,3 +84,7 @@
 
   .is-left-padded
     padding-left: 40px
+
+@media screen and (max-width: 1023px)
+  .navbar-link, .navbar-item
+    color: $dark

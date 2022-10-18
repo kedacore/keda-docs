@@ -1,8 +1,7 @@
 +++
 title = "Azure Blob Storage"
-layout = "scaler"
 availability = "v1.1+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on the count of blobs in a given Azure Blob Storage container."
 notice = "As of now, this Azure Blob Storage scaler scales based on the count of the blobs in a container as opposed to the Azure Functions behavior where code is only triggered on new blobs."
 go_file = "azure_blob_scaler"

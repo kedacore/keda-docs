@@ -1,24 +1,315 @@
 {{ $alpineVersion := site.Params.alpine_js_version }}
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v{{ $alpineVersion }}/dist/alpine.js" defer></script>
+<script
+  src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v{{ $alpineVersion }}/dist/alpine.js"
+  defer
+></script>
 
 {{/* Anchor link scroll offset */}}
 <script>
-  const navbarHeight = document.getElementsByClassName('navbar')[0].offsetHeight;
+  const navbarHeight =
+    document.getElementsByClassName("navbar")[0].offsetHeight;
   const extraPadding = 15;
   const navbarOffset = -1 * (navbarHeight + extraPadding);
-  var shiftWindow = function() { scrollBy(0, navbarOffset) };
+  var shiftWindow = function () {
+    scrollBy(0, navbarOffset);
+  };
   window.addEventListener("hashchange", shiftWindow);
   window.addEventListener("pageshow", shiftWindow);
-  function load() { if (window.location.hash) shiftWindow(); }
+  function load() {
+    if (window.location.hash) shiftWindow();
+  }
 </script>
 
 {{/* Algolia search bar */}}
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+></script>
 <script type="text/javascript">
   docsearch({
-    apiKey: 'c42d672f33ecea131ab51c71699b7c37',
-    indexName: 'keda',
-    inputSelector: '#search-bar',
-    debug: false
+    apiKey: "c42d672f33ecea131ab51c71699b7c37",
+    indexName: "keda",
+    inputSelector: "#search-bar",
+    debug: false,
   });
+</script>
+
+{{/* Scalers filter */}}
+<script type="text/javascript">
+  const builtInScalers = document.querySelectorAll("#built-in-scalers");
+  const externalScalers = document.getElementById("external-scalers");
+  const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
+  const builtInSearchResultCount = document.querySelector(".results");
+  const externalSearchResultCount = document.querySelector(".external-results");
+  let btns = document.getElementsByClassName("filterBtn");
+
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      let filterValue = btns[i].value.toLowerCase();
+      if (filterValue === "built-in-scalers") {
+        builtInScalers.forEach((node) => (node.style.display = "flex"));
+        externalScalers.style.display = "none";
+        builtInSearchResultCount.style.display = "block";
+        externalSearchResultCount.style.display = "none";
+      } else if (filterValue === "external-scalers") {
+        // remove focus when changed
+        btnFocusOnMount.classList.remove("is-focused");
+        builtInScalers.forEach((node) => (node.style.display = "none"));
+        externalScalers.style.display = "inline";
+        builtInSearchResultCount.style.display = "none";
+        externalSearchResultCount.style.display = "block";
+      }
+    });
+  }
+</script>
+
+{{/* In-built Scalers Search */}}
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+<script>
+  window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      "use strict";
+      let index;
+      let debounceTimer;
+      const currentUrl = window.location.pathname;
+      const currentLocation = String(currentUrl).split("/");
+      const currentVersion = currentLocation[2];
+      const form = document.getElementById("search");
+      const input = document.getElementById("search-input");
+      const target = document.querySelector(".is-search-result");
+      const externalTarget = document.querySelector(
+        ".is-external-search-result"
+      );
+      const searchResultCount = document.querySelector(".results");
+      const externalSearchResultCount =
+        document.querySelector(".external-results");
+      const template = document.getElementById("is-search-template");
+      const isExternalScalers = document.getElementById("external-scalers");
+      const isBuiltInScalers = document.getElementById("built-in-scalers");
+      const externalBanner = document.getElementById("external-banner");
+      const groups = document.getElementsByClassName(
+        "artifacthub-widget-group"
+      );
+      const interval = 500;
+      let query = input.value.trim();
+      let parse = {};
+
+      // fetch all scalers on inital load
+      if (!query) {
+        initSearchIndex();
+        externalScalersIndex();
+      }
+
+      input.addEventListener(
+        "input",
+        function (event) {
+          event.preventDefault();
+          clearTimeout(debounceTimer);
+          const keywords = input.value.trim();
+
+          // disable all buttons during search by default
+          const filterBtns = document.querySelectorAll(".filterBtn");
+          filterBtns.forEach((btn) => (btn.disabled = true));
+
+          if (!keywords) {
+            // enable all buttons when input search is empty
+            const filterBtns = document.querySelectorAll(".filterBtn");
+            filterBtns.forEach((btn) => (btn.disabled = false));
+          }
+
+          query = keywords;
+          if (isExternalScalers.style.display === "inline") {
+            // hide banner during scaler search
+            externalBanner.style.display = "none";
+            if (query === "") {
+              externalBanner.style.display = "block";
+            }
+            let externalSearchUrl = new URL(
+              "https://artifacthub.io/api/v1/packages/search"
+            );
+            externalSearchUrl.search = new URLSearchParams({
+              kind: "8",
+              sort: "relevance",
+              ts_query_web: query !== "" ? query : "",
+            });
+            debounceTimer = setTimeout(() => {
+              groups[0].dataset.url = externalSearchUrl;
+              externalScalersIndex();
+            }, interval);
+
+            // clear out all the scaler item card when external scalers are being searched
+            while (externalTarget.firstChild.nextSibling) {
+              externalTarget.removeChild(
+                externalTarget.firstChild.nextSibling.nextSibling
+                  .nextElementSibling
+              );
+            }
+            return;
+          }
+
+          debounceTimer = setTimeout(initSearchIndex, interval);
+
+          // clear out all the scaler item card when in-built scalers are being searched
+          while (target.firstChild.nextSibling) {
+            target.removeChild(template.nextSibling.nextElementSibling);
+          }
+        },
+        false
+      );
+
+      async function externalScalersIndex() {
+        const externalScalerUrl = groups[0].dataset.url;
+        const results = await fetch(externalScalerUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            return data.packages;
+          })
+          .catch((err) => console.error("error:", err));
+
+        if ("content" in template) {
+          // show result count
+          const title = document.createElement("h3");
+          title.id = "external-search-results";
+          title.className = "subtitle is-size-3 external-search-results";
+
+          if (results.length == 0)
+            title.textContent = `No results found for "${query}"`;
+          else if (results.length == 1)
+            title.textContent = `Found one result for "${query}"`;
+          else if (results.length > 1 && query === "")
+            title.textContent = `${results.length} scalers available`;
+          else
+            title.textContent = `Found ${results.length} results for "${query}"`;
+          externalSearchResultCount.replaceChildren(title);
+
+          // show the matched result
+          results.forEach(function (result) {
+            const element = template.content.cloneNode(true);
+            element.querySelector(".scaler-title").textContent =
+              result.display_name;
+            element
+              .querySelector(".scaler-title")
+              .setAttribute("href", result.repository.url);
+            result.description &&
+              (element.querySelector(".description").textContent =
+                result.description);
+            result.repository.organization_name &&
+              (element.querySelector(".maintainer").textContent =
+                result.repository.organization_name);
+            result.repository.user_alias &&
+              (element.querySelector(".maintainer").textContent =
+                result.repository.user_alias);
+            result.version &&
+              (element.querySelector(
+                ".availability"
+              ).textContent = `v${result.version}`);
+            externalTarget.appendChild(element);
+          }, this);
+        }
+      }
+
+      async function initSearchIndex() {
+        const scalers = await fetch("/index.json", { method: "GET" })
+          .then((response) => response.json())
+          .then((data) => {
+            return data;
+          })
+          .catch((err) => console.error("error:", err));
+        index = lunr(function () {
+          const documents = scalers;
+
+          this.ref("title");
+          this.field("title", {
+            boost: 20,
+            usePipeline: true,
+            wildcard: lunr.Query.wildcard.TRAILING,
+            presence: lunr.Query.presence.REQUIRED,
+          });
+          this.field("maintainer", {
+            boost: 15,
+          });
+          this.field("href", {
+            boost: 15,
+          });
+          this.field("description", {
+            boost: 10,
+          });
+          this.field("availability", {
+            boost: 5,
+          });
+
+          documents.forEach(function (doc) {
+            if (doc.version === currentVersion) {
+              this.add(doc);
+              parse[doc.title] = {
+                href: doc.href,
+                title: doc.title,
+                maintainer: doc.maintainer,
+                description: doc.description,
+                availability: doc.availability,
+              };
+            }
+          }, this);
+        });
+
+        search(query);
+      }
+
+      function search(keywords) {
+        // show all scalers by default
+        let queryString = index.search("");
+
+        /* By default, Lunr can only match words stored in the records/index. We want to be able to match both words and characters. 
+        To be able to perform character matching, we do wildcard search. */
+        if (keywords.length > 0) {
+          queryString = index.search(keywords);
+          queryString =
+            queryString.length <= 0
+              ? index.search(`${keywords}*`)
+              : queryString;
+        }
+
+        const results = queryString;
+
+        if ("content" in template) {
+          // show result count
+          const title = document.createElement("h3");
+          title.id = "search-results";
+          title.className = "subtitle is-size-3";
+
+          if (results.length == 0)
+            title.textContent = `No results found for "${keywords}"`;
+          else if (results.length == 1)
+            title.textContent = `Found one result for "${keywords}"`;
+          else if (results.length > 1 && keywords === "")
+            title.textContent = `${results.length} scalers available`;
+          else
+            title.textContent = `Found ${results.length} results for "${keywords}"`;
+          searchResultCount.replaceChildren(title);
+
+          // show the matched result
+          results.forEach(function (result) {
+            const doc = parse[result.ref];
+            const element = template.content.cloneNode(true);
+            element.querySelector(".scaler-title").textContent = doc.title;
+            element
+              .querySelector(".scaler-title")
+              .setAttribute("href", doc.href);
+            doc.description &&
+              (element.querySelector(".description").textContent =
+                doc.description);
+            doc.maintainer &&
+              (element.querySelector(".maintainer").textContent =
+                doc.maintainer);
+            doc.availability &&
+              (element.querySelector(".availability").textContent =
+                doc.availability);
+            target.appendChild(element);
+          }, this);
+        }
+      }
+    },
+    false
+  );
 </script>

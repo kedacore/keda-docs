@@ -1,8 +1,7 @@
 +++
 title = "Azure Data Explorer"
-layout = "scaler"
 availability = "v2.7+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Data Explorer query result."
 go_file = "azure_data_explorer_scaler"
 +++

@@ -1,6 +1,5 @@
 +++
 title = "Metrics API"
-layout = "scaler"
 availability = "v2.0+"
 maintainer = "Community"
 description = "Scale applications based on a metric provided by an API"
@@ -9,9 +8,9 @@ go_file = "metrics_api_scaler"
 
 ### Trigger Specification
 
-This specification describes the `metrics-api` trigger that scales based on a metric value provided by an API. 
+This specification describes the `metrics-api` trigger that scales based on a metric value provided by an API.
 
-This scaler allows users to utilize **any existing APIs** as a metric provider.  
+This scaler allows users to utilize **any existing APIs** as a metric provider.
 
 Here is an example of trigger configuration using metrics-api scaler:
 
@@ -32,8 +31,8 @@ triggers:
 
 ### Authentication Parameters
 
-Metrics Scaler API supported three types of authentication - API Key based authentication, basic authentication and TLS 
-authentication. 
+Metrics Scaler API supported three types of authentication - API Key based authentication, basic authentication and TLS
+authentication.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
  along with secret credentials in `TriggerAuthentication` as mentioned below:
@@ -47,7 +46,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 **Basic authentication:**
 - `authMode` - It must be set to `basic` in case of Basic Authentication. Specify this in trigger configuration.
 - `username` - This is a required field. Provide the username to be used for basic authentication.
-- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, 
+- `password` - Provide the password to be used for authentication. For convenience, this has been marked optional,
 because many application implements basic auth with a username as apikey and password as empty.
 
 **TLS authentication:**
@@ -81,7 +80,7 @@ spec:
 ```
 
 When checking current metric Metrics API scaler sends GET request to provided `url` and then uses `valueLocation`
-to access the value in response's payload. 
+to access the value in response's payload.
 
 The above example expects that the API endpoint will return response similar to this one:
 ```json
@@ -109,7 +108,7 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  apiKey: "APIKEY" 
+  apiKey: "APIKEY"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -155,7 +154,7 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  username: "username" 
+  username: "username"
   password: "password"
 ---
 apiVersion: keda.sh/v1alpha1
@@ -204,7 +203,7 @@ metadata:
   name: keda-metric-api-secret
   namespace: default
 data:
-  cert: "cert" 
+  cert: "cert"
   key: "key"
   ca: "ca"
 ---

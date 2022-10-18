@@ -18,6 +18,20 @@ logo = "coralogix.gif"
 
 Here's a good example of [Coralogix becoming a listed user](https://github.com/kedacore/keda-docs/pull/182)!
 
+## Become a listed KEDA commercial offering!
+
+Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/support/#commercial-support)? Say no more!
+
+You can easily get listed by following these steps:
+1. Upload your logo to `static/img/logos/` _(350x180)_
+2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+
+```toml
+[[params.vendors]]
+url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
+logo = "red-hat.png"
+```
+
 ## Building or serving the site locally
 
 To build or serve the site locally, follow these steps:
@@ -85,6 +99,19 @@ Make sure to update the following metadata fields:
 * `maintainer`
 * `description`
 
+## Writing documentation for a new authentication provider
+To add documentation for a new [provider](https://keda.sh/docs/concept/authentication):
+
+```console
+$ hugo new --kind provider docs/<VERSION>/providers/my-new-provider.md
+```
+
+This creates a boilerplate Markdown file in
+`content/docs/<VERSION>/providers/my-new-provider.md` whose contents you can modify.
+Make sure to update the following metadata fields:
+
+* `title`
+
 ## Writing documentation for a scaler
 
 In order to maintain the style consistency across different scalers, all the
@@ -145,6 +172,8 @@ current version.
 
 Make sure that the version on `content/docs/{next-version}/deploy.md` is updated
 and uses the next version, instead of the current one.
+
+Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster.md` is updated with the compatibilities for the incoming version.
 
 ### Publishing a new version
 

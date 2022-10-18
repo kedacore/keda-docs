@@ -1,6 +1,5 @@
 +++
 title = "Apache Kafka"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Microsoft"
 description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
@@ -28,6 +27,7 @@ triggers:
     consumerGroup: my-group
     topic: test-topic
     lagThreshold: '5'
+    activationLagThreshold: '3'
     offsetResetPolicy: latest
     allowIdleConsumers: false
     scaleToZeroOnInvalidOffset: false
@@ -40,6 +40,7 @@ triggers:
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag. (Optional, see note below)
 - `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+- `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
@@ -67,7 +68,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert` and `key`. `cert` and `key` must be specified together.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
 
 **Credential based authentication:**
 
@@ -83,6 +84,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
 
 ### New Consumers and Offset Reset Policy
 

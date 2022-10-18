@@ -1,6 +1,5 @@
 +++
 title = "Prometheus"
-layout = "scaler"
 availability = "v1.0+"
 maintainer = "Community"
 description = "Scale applications based on Prometheus."
@@ -34,7 +33,7 @@ triggers:
 
 ### Authentication Parameters
 
-Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication. 
+Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
@@ -75,7 +74,7 @@ spec:
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
 
-Here is an example of a prometheus scaler with bearer authentication,
+Here is an example of a prometheus scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
 apiVersion: v1
@@ -85,7 +84,7 @@ metadata:
   namespace: default
 data:
   bearerToken: "BEARER_TOKEN"
-  ca: "CUSTOM_CA_CERT" 
+  ca: "CUSTOM_CA_CERT"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -163,7 +162,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -184,7 +183,7 @@ metadata:
   name: keda-prom-secret
   namespace: default
 data:
-  cert: "cert" 
+  cert: "cert"
   key: "key"
   ca: "ca"
 ---
@@ -217,7 +216,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total
@@ -237,10 +236,10 @@ metadata:
   name: keda-prom-secret
   namespace: default
 data:
-  cert: "cert" 
+  cert: "cert"
   key: "key"
   ca: "ca"
-  username: "username" 
+  username: "username"
   password: "password"
 ---
 apiVersion: keda.sh/v1alpha1
@@ -278,7 +277,7 @@ spec:
   scaleTargetRef:
     name: dummy
   triggers:
-    - type: metrics-api
+    - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
         metricName: http_requests_total

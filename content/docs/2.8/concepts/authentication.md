@@ -92,47 +92,47 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
-      identityId: <identity-id>                         # Optional. Only used by azure & azure-workload providers.
-  secretTargetRef:                                      # Optional.
-  - parameter: {scaledObject-parameter-name}            # Required.
-    name: {secret-name}                                 # Required.
-    key: {secret-key-name}                              # Required.
-  env:                                                  # Optional.
-  - parameter: {scaledObject-parameter-name}            # Required.
-    name: {env-name}                                    # Required.
-    containerName: {container-name}                     # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-  hashiCorpVault:                                       # Optional.
-    address: {hashicorp-vault-address}                  # Required.
-    namespace: {hashicorp-vault-namespace}              # Optional. Default is root namespace. Useful for Vault Enterprise
-    authentication: token | kubernetes                  # Required.
-    role: {hashicorp-vault-role}                        # Optional.
-    mount: {hashicorp-vault-mount}                      # Optional.
-    credential:                                         # Optional.
-      token: {hashicorp-vault-token}                    # Optional.
-      serviceAccount: {path-to-service-account-file}    # Optional.
-    secrets:                                            # Required.
-    - parameter: {scaledObject-parameter-name}          # Required.
-      key: {hasicorp-vault-secret-key-name}             # Required.
-      path: {hasicorp-vault-secret-path}                # Required.
-  azureKeyVault:                                        # Optional.
-    vaultURI: {key-vault-address}                       # Required.
-    credentials:                                        # Optional. Required when not using pod identity.
-      clientId: {azure-ad-client-id}                    # Required.
-      clientSecret:                                     # Required.
-        valueFrom:                                      # Required.
-          secretKeyRef:                                 # Required.
-            name: {k8s-secret-with-azure-ad-secret}     # Required.
-            key: {key-within-the-secret}                # Required.
-      tenantId: {azure-ad-tenant-id}                    # Required.
-    cloud:                                              # Optional.
+      provider: none | azure | azure-workload | aws-eks | aws-kiam | gcp  # Optional. Default: none
+      identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+  secretTargetRef:                                                        # Optional.
+  - parameter: {scaledObject-parameter-name}                              # Required.
+    name: {secret-name}                                                   # Required.
+    key: {secret-key-name}                                                # Required.
+  env:                                                                    # Optional.
+  - parameter: {scaledObject-parameter-name}                              # Required.
+    name: {env-name}                                                      # Required.
+    containerName: {container-name}                                       # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  hashiCorpVault:                                                         # Optional.
+    address: {hashicorp-vault-address}                                    # Required.
+    namespace: {hashicorp-vault-namespace}                                # Optional. Default is root namespace. Useful for Vault Enterprise
+    authentication: token | kubernetes                                    # Required.
+    role: {hashicorp-vault-role}                                          # Optional.
+    mount: {hashicorp-vault-mount}                                        # Optional.
+    credential:                                                           # Optional.
+      token: {hashicorp-vault-token}                                      # Optional.
+      serviceAccount: {path-to-service-account-file}                      # Optional.
+    secrets:                                                              # Required.
+    - parameter: {scaledObject-parameter-name}                            # Required.
+      key: {hasicorp-vault-secret-key-name}                               # Required.
+      path: {hasicorp-vault-secret-path}                                  # Required.
+  azureKeyVault:                                                          # Optional.
+    vaultURI: {key-vault-address}                                         # Required.
+    credentials:                                                          # Optional. Required when not using pod identity.
+      clientId: {azure-ad-client-id}                                      # Required.
+      clientSecret:                                                       # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-azure-ad-secret}                       # Required.
+            key: {key-within-the-secret}                                  # Required.
+      tenantId: {azure-ad-tenant-id}                                      # Required.
+    cloud:                                                                # Optional.
       type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-      keyVaultResourceURL: {key-vault-resource-url-for-cloud}         # Required when type = Private.
-      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}  # Required when type = Private.
-    secrets:                                            # Required.
-    - parameter: {param-name-used-for-auth}             # Required.
-      name: {key-vault-secret-name}                     # Required.
-      version: {key-vault-secret-version}               # Optional.
+      keyVaultResourceURL: {key-vault-resource-url-for-cloud}             # Required when type = Private.
+      activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}      # Required when type = Private.
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      name: {key-vault-secret-name}                                       # Required.
+      version: {key-vault-secret-version}                                 # Optional.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -173,166 +173,8 @@ spec:
   # As before ...
 ```
 
-## Authentication parameters
+## Available authentication providers for KEDA
 
-Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
+Authentication parameters can be retrieved from a variety of authentication providers in KEDA:
 
-### Environment variable(s)
-
-You can pull information via one or more environment variables by providing the `name` of the variable for a given `containerName`.
-
-```yaml
-env:                              # Optional.
-  - parameter: region             # Required - Defined by the scale trigger
-    name: my-env-var              # Required.
-    containerName: my-container   # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
-```
-
-**Assumptions:** `containerName` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
-
-### Secret(s)
-
-You can pull one or more secrets into the trigger by defining the `name` of the Kubernetes Secret and the `key` to use.
-
-```yaml
-secretTargetRef:                          # Optional.
-  - parameter: connectionString           # Required - Defined by the scale trigger
-    name: my-keda-secret-entity           # Required.
-    key: azure-storage-connectionstring   # Required.
-```
-
-**Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
-
-### Hashicorp Vault secret(s)
-
-You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
-`secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
-`namespace` may be used to target a given Vault Enterprise namespace.
-
-```yaml
-hashiCorpVault:                                     # Optional.
-  address: {hashicorp-vault-address}                # Required.
-  namespace: {hashicorp-vault-namespace}            # Optional. Default is root namespace. Useful for Vault Enterprise
-  authentication: token | kubernetes                # Required.
-  role: {hashicorp-vault-role}                      # Optional.
-  mount: {hashicorp-vault-mount}                    # Optional.
-  credential:                                       # Optional.
-    token: {hashicorp-vault-token}                  # Optional.
-    serviceAccount: {path-to-service-account-file}  # Optional.
-  secrets:                                          # Required.
-  - parameter: {scaledObject-parameter-name}        # Required.
-    key: {hasicorp-vault-secret-key-name}           # Required.
-    path: {hasicorp-vault-secret-path}              # Required.
-```
-
-### Azure Key Vault secret(s)
-
-You can pull secrets from Azure Key Vault into the trigger by using the `azureKeyVault` key.
-
-The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
-
-You can use pod identity providers `azure` or `azure-workload` to authenticate to the key vault by specifying it in the
-`TriggerAuthentication` / `ClusterTriggerAuthentication` definition.
-
-If you do not wish to use a pod identity provider, you need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
-
-Ensure that "read secret" permissions have been granted to the managed identity / Azure AD application on the Azure Key Vault. Learn more in the Azure Key Vault [documentation](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal).
-
-The `cloud` parameter can be used to specify cloud environments besides `Azure Public Cloud`, such as known Azure clouds like
-`Azure China Cloud`, etc. and even Azure Stack Hub or Air Gapped clouds.
-
-```yaml
-azureKeyVault:                                          # Optional.
-  vaultURI: {key-vault-address}                         # Required.
-  credentials:                                          # Optional. Required when not using pod identity.
-    clientId: {azure-ad-client-id}                      # Required.
-    clientSecret:                                       # Required.
-      valueFrom:                                        # Required.
-        secretKeyRef:                                   # Required.
-          name: {k8s-secret-with-azure-ad-secret}       # Required.
-          key: {key-within-the-secret}                  # Required.
-    tenantId: {azure-ad-tenant-id}                      # Required.
-  cloud:                                                # Optional.
-    type: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | Private # Required.
-    keyVaultResourceURL: {key-vault-resource-url-for-cloud}           # Required when type = Private.
-    activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}    # Required when type = Private.
-  secrets:                                              # Required.
-  - parameter: {param-name-used-for-auth}               # Required.
-    name: {key-vault-secret-name}                       # Required.
-    version: {key-vault-secret-version}                 # Optional.
-```
-
-### Pod Authentication Providers
-
-Several service providers allow you to assign an identity to a pod. By using that identity, you can defer authentication to the pod & the service provider, rather than configuring secrets.
-
-Currently we support the following:
-
-```yaml
-podIdentity:
-  provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
-  identityId: <identity-id>                                     # Optional. Only used by azure & azure-workload providers.
-```
-
-#### Azure Pod Identity
-
-Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure           # Optional. Default: none
-  identityId: <identity-id> # Optional. Default: Identity linked with the label set when installing KEDA.
-```
-
-Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set podIdentity.activeDirectory.identity={your-label-name}`.
-
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
-
-#### Azure Workload Identity
-
-[**Azure AD Workload Identity**](https://github.com/Azure/azure-workload-identity) is the newer version of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity). It lets your Kubernetes workloads access Azure resources using an
-[**Azure AD Application**](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
-without having to specify secrets, using [federated identity credentials](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html) - *Don't manage secrets, let Azure AD do the hard work*.
-
-You can tell KEDA to use Azure AD Workload Identity via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: azure-workload  # Optional. Default: none
-  identityId: <identity-id> # Optional. Default: ClientId From annotation on service-account.
-```
-
-Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
-to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/service-account-labels-and-annotations.html) for more information. You can set these labels and annotations on the KEDA Operator service account. This can be done for you during deployment with Helm with the
-following flags -
-
-1. `--set podIdentity.azureWorkload.enabled=true`
-2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
-3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
-
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
-
-#### EKS Pod Identity Webhook for AWS
-
-[**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
-
-You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-eks # Optional. Default: none
-```
-
-#### Kiam Pod Identity for AWS
-
-[**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
-
-You can tell KEDA to use Kiam via `podIdentity.provider`.
-
-```yaml
-podIdentity:
-  provider: aws-kiam # Optional. Default: none
-```
+{{< authentication-providers >}}

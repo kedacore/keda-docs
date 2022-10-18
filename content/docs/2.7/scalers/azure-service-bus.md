@@ -1,6 +1,5 @@
 +++
 title = "Azure Service Bus"
-layout = "scaler"
 maintainer = "Microsoft"
 description = "Scale applications based on Azure Service Bus Queues or Topics."
 availability = "v1.0+"
@@ -52,7 +51,12 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for Azure Service Bus Namespace.
+- `connection` - Connection string for the Azure Service Bus Namespace. 
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - 
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
 
 ### Example
 

@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -56,7 +56,18 @@ mediaType = "text/netlify"
 baseName = "_redirects"
 
 [outputs]
-home = [ "HTML", "REDIRECTS" ]
+home = [ "HTML", "RSS", "REDIRECTS", "Lunr" ]
+
+[outputFormats.Lunr]
+baseName = "index"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true
+
+# parameters for lunr search
+[params.lunr]
+vars = ["title", "maintainer", "description", "availability"]
+params = ["availability", "maintainer"]
 
 # "Highlighted Samples" section on the main page
 [[params.samples]]
@@ -128,10 +139,16 @@ pre = "fas fa-ruler-vertical"
 weight = 4
 
 [[menu.buttons]]
+url = "/docs/authentication-providers"
+name = "Auth providers"
+pre = "fa fa-lock"
+weight = 5
+
+[[menu.buttons]]
 url = "/blog"
 name = "Blog"
 pre = "fa fa-rss"
-weight = 5
+weight = 6
 
 # Navbar and footer menu
 [[menu.docs]]
@@ -153,34 +170,40 @@ parent = "docs"
 weight = 2
 
 [[menu.docs]]
+url = "/docs/authentication-providers/"
+name = "Authentication providers"
+parent = "docs"
+weight = 3
+
+[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 3
+weight = 4
 
 [[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
-weight = 4
+weight = 5
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 5
+weight = 6
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 6
+weight = 7
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 7
+weight = 8
 
 [[menu.main]]
 url = "/blog"
@@ -228,26 +251,26 @@ parent = "project"
 weight = 3
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/ROADMAP.md"
+url = "https://github.com/kedacore/keda/blob/main/ROADMAP.md"
 name = "Roadmap"
 parent = "project"
 weight = 4
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
-name = "Contributing"
+url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
+name = "Changelog"
 parent = "project"
 weight = 5
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
-name = "Changelog"
+url = "/support/"
+name = "Support"
 parent = "project"
 weight = 6
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
-name = "Maintainers"
+url = "https://github.com/kedacore/keda/blob/main/CONTRIBUTING.md"
+name = "Contributing"
 parent = "project"
 weight = 7
 
@@ -264,30 +287,46 @@ parent = "project"
 weight = 9
 
 [[menu.main]]
+url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+name = "Maintainers"
+parent = "project"
+weight = 10
+
+[[menu.main]]
 url = "https://store.cncf.io/collections/keda"
 name = "Merch"
 weight = 5
 
 # "Features" section on the main page
 [[params.features]]
-title = "Event-driven"
-content = "Intelligently scale your event-driven application"
-icon = "fas fa-bolt"
-
-[[params.features]]
 title = "Autoscaling Made Simple"
 content = "Bring rich scaling to every workload in your [Kubernetes](https://kubernetes.io) cluster"
 icon = "fas fa-rocket"
 
 [[params.features]]
+title = "Event-driven"
+content = "Intelligently scale your event-driven application"
+icon = "fas fa-bolt"
+
+[[params.features]]
 title = "Built-in Scalers"
-content = "Out-of-the-box scalers for various vendors, databases, messaging systems, telemetry systems, CI/CD, and more"
+content = "Catalog of 50+ built-in scalers for various cloud platforms, databases, messaging systems, telemetry systems, CI/CD, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
 title = "Multiple Workload Types"
 content = "Support for variety of workload types such as deployments, jobs & custom resources with `/scale` sub-resource"
 icon = "fas fa-shapes"
+
+[[params.features]]
+title = "Reduce environmental impact"
+content = "Build sustainable platforms by optimizing workload scheduling and scale-to-zero"
+icon = "fas fa-seedling"
+
+[[params.features]]
+title = "Extensible"
+content = "Bring-your-own or use community-maintained scalers"
+icon = "fas fa-project-diagram"
 
 [[params.features]]
 title = "Vendor-Agnostic"
@@ -321,8 +360,16 @@ url = "https://baseten.co/"
 logo = "baseten.png"
 
 [[params.users]]
+url = "https://www.bolddesk.com/"
+logo = "bolddesk.svg"
+
+[[params.users]]
 url = "https://chattermill.com"
 logo = "chattermill.png"
+
+[[params.users]]
+url = "https://cisco.com"
+logo = "cisco.svg"
 
 [[params.users]]
 url = "https://www.cloud-trade.com"
@@ -345,8 +392,8 @@ url = "https://fission.io/"
 logo = "fission.png"
 
 [[params.users]]
-url = "https://www.gittigidiyor.com/"
-logo = "gittigidiyor.png"
+url = "https://www.freepikcompany.com/"
+logo = "freepik-company.png"
 
 [[params.users]]
 url = "https://github.com/hmcts/"
@@ -393,12 +440,20 @@ url = "https://qonto.com"
 logo = "qonto.png"
 
 [[params.users]]
+url = "https://www.reddit.com/"
+logo = "reddit.svg"
+
+[[params.users]]
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
 [[params.users]]
 url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
+
+[[params.users]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
 
 [[params.users]]
 url = "https://seldon.io/"
@@ -417,14 +472,14 @@ url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
 [[params.users]]
+url = "https://www.workiva.com"
+logo = "workiva.png"
+
+[[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
 # "Partners" section on the Community page
-[[params.partners]]
-url = "https://docplanner.tech"
-logo = "docplanner-tech.png"
-
 [[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
@@ -432,6 +487,10 @@ logo = "microsoft.png"
 [[params.partners]]
 url = "https://redhat.com"
 logo = "red-hat.png"
+
+[[params.partners]]
+url = "https://scrm.lidl"
+logo = "SCRM.png"
 
 # "Supported by" section on the Community page
 [[params.supportedby]]
@@ -445,3 +504,19 @@ logo = "snyk.png"
 [[params.supportedby]]
 url = "https://vexxhost.com"
 logo = "vexxhost.png"
+
+# "Commercial support" section on the support page
+[[params.vendors]]
+name = "Azure Container Apps"
+url = "https://docs.microsoft.com/en-us/azure/container-apps/scale-app"
+logo = "vendors/azure-container-apps.png"
+
+[[params.vendors]]
+name = "Custom Metrics Autoscaler on Red Hat OpenShift"
+url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
+logo = "vendors/red-hat.png"
+
+[[params.vendors]]
+name = "KEDA Add-On for Azure Kubernetes Service"
+url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
+logo = "vendors/azure-kubernetes-service.png"

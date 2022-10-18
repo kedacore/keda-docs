@@ -1,6 +1,5 @@
 +++
 title = "MongoDB"
-layout = "scaler"
 maintainer = "Community"
 description = "Scale applications based on MongoDB queries."
 availability = "v2.1+"
@@ -85,7 +84,7 @@ mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/
 
 You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on masked version of the server hostname and collection name. For example: **mongodb-mongodb---test_user-test_password@xxx-27017-test-test_collection**. If using more than one trigger it is required that all `metricName`(s) be unique. The value will be prefixed with `mongodb-` .
 
-### Authentication Parameters 
+### Authentication Parameters
 
 As an alternative to environment variables, You can authenticate with the MongoDB server by using connection string or password authentication via `TriggerAuthentication` or `ClusterTriggerAuthentication` configuration.
 

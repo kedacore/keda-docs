@@ -1,8 +1,7 @@
 +++
 title = "Azure Event Hubs"
-layout = "scaler"
 availability = "v1.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Event Hubs."
 notice = "As of now, the Event Hub scaler only supports reading checkpoints from Blob Storage, as well as scaling only Event Hub applications written in C#, Java, Python or created with Azure Functions."
 go_file = "azure_eventhub_scaler"

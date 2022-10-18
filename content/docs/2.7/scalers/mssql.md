@@ -1,6 +1,5 @@
 +++
 title = "MSSQL"
-layout = "scaler"
 availability = "v2.2+"
 maintainer = "Microsoft"
 description = "Scale applications based on Microsoft SQL Server (MSSQL) query results."

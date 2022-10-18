@@ -1,8 +1,7 @@
 +++
 title = "Azure Event Hubs"
-layout = "scaler"
 availability = "v1.0+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Event Hubs."
 notice = "As of now, the Event Hub scaler only supports reading checkpoints from Blob Storage, as well as scaling only Event Hub applications written in C#, Java, Python or created with Azure Functions."
 go_file = "azure_eventhub_scaler"
@@ -37,7 +36,7 @@ triggers:
 
 The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Pod Identity](https://azure.github.io/aad-pod-identity/docs/demo/standard_walkthrough/) if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
 
-To use Pod Identity, you have to add a [TriggerAuthentication](https://keda.sh/docs/2.0/concepts/authentication/#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
+To use Pod Identity, you have to add a [TriggerAuthentication](../concepts/authentication.md#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
 
 ```
 apiVersion: keda.sh/v1alpha1

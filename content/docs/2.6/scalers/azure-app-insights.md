@@ -1,8 +1,7 @@
 +++
 title = "Azure Application Insights"
-layout = "scaler"
 availability = "v2.6+"
-maintainer = "Community"
+maintainer = "Microsoft"
 description = "Scale applications based on Azure Application Insights metrics."
 go_file = "azure_app_insights_scaler"
 +++
