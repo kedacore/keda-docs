@@ -20,6 +20,8 @@ triggers:
     maxBucketItemsToScan: '1000'
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
     credentialsFromEnvFile: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
+    blobPrefix:  # Optional. Prefix for the Blob. Use this to specify sub path for the blobs if required. Default : ""
+    blobDelimiter: # Optional. Delimiter for identifying the blob Prefix. Default: ""
 ```
 
 **Parameter list:**
@@ -28,6 +30,8 @@ triggers:
 - `targetObjectCount` - Average target value to trigger scaling actions. (Default: `100`, Optional)
 - `activationTargetObjectCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
+- `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (Default: `""`, Optional)
+- `blobDelimiter` - Delimiter for identifying the blob prefix. (Default: `""`, Optional)
 As counting the number of objects involves iterating over their metadata it is advised to set this number to the value of `targetObjectCount` * `maxReplicaCount`.
 
 The metric name will be generated automatically based on the trigger index and `bucketName`, for example: **s0-gcp-storage-bucketName**.
@@ -93,6 +97,8 @@ spec:
     metadata:
       bucketName: "Transactions"
       targetObjectCount: "5"
+      blobPrefix: blobsubpath # Default : ""
+      blobDelimiter: "/" # Default: ""
 ```
 
 #### Use TriggerAuthentication with GCP Identity
