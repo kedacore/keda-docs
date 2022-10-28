@@ -31,7 +31,7 @@ triggers:
 - `shardCount` - The target value that a Kinesis data streams consumer can handle. (Default: `2`, Optional)
 - `activationShardCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `awsRegion` - AWS Region for the Kinesis Stream.
-- `awsEndpoint` - An optional endpoint URL that overrides the default AWS endpoint.
+- `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.

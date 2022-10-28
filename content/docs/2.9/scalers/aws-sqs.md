@@ -38,7 +38,7 @@ triggers:
 - `scaleOnInFlight` - Indication whether or not to scale on queued messages or to include in-flight messages as well.
   - When set to `false` "actual messages" is equal to `ApproximateNumberOfMessages`. When set to `true` "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing. (default: true)
 - `awsRegion` - AWS Region for the SQS Queue.
-- `awsEndpoint` - An optional endpoint URL that overrides the default AWS endpoint.
+- `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.

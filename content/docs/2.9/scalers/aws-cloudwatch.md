@@ -48,6 +48,8 @@ triggers:
 
 **Parameter list:**
 
+- `awsRegion` - AWS Region for the AWS Cloudwatch.
+- `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `dimensionName` - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName (Optional, Required when `expression` is not specified)
 - `dimensionValue` - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2 (Optional, Required when `expression` is not specified)
 - `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
