@@ -16,6 +16,8 @@ triggers:
   metadata:
     # Required: awsRegion
     awsRegion: "ap-northeast-1"
+    # Optional: awsEndpoint
+    awsEndpoint: ""
     # Required: tableName
     tableName: myTableName
     # Optional targetValue
@@ -27,6 +29,7 @@ triggers:
 **Parameter list:**
 
 - `awsRegion` - AWS Region for the DynamoDB.
+- `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `tableName` - The target DynamoDB table to which the stream belongs.
 - `shardCount` - The target value that a DynamoDB streams consumer can handle. (Default: `2`, Optional)
 - `activationShardCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
