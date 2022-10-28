@@ -16,6 +16,8 @@ triggers:
   metadata:
     # Required: awsRegion
     awsRegion: "eu-west-1"
+    # Optional: awsEndpoint
+    awsEndpoint: ""
     # Required: tableName
     tableName: myTableName
     # Required: targetValue
@@ -33,6 +35,7 @@ triggers:
 **Parameter list:**
 
 - `awsRegion` - AWS Region for the DynamoDB Table.
+- `awsEndpoint` - An optional endpoint URL that overrides the default AWS endpoint.
 - `tableName` - The target table where the scaler execute the query.
 - `targetValue` - The target value for the number of items retrieved by the query.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
