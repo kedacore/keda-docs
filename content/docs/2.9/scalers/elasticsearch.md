@@ -42,12 +42,19 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using a username/password authentication.
+You can authenticate by using a username/password or apiKey/cloudID if you're using using ElasticSearch on Elastic Cloud.
 
 **Password Authentication:**
 
 - `username` - Username to authenticate with to Elasticsearch cluster.
 - `password` - Password for configured user to login to Elasticsearch cluster.
+
+**Cloud ID and API Key Authentication:**
+
+[Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html) and API Key can be used for Elastic Cloud Service.
+
+- `cloudID` - CloudID to connect with ElasticSearch on Elastic Cloud.
+- `apiKey` - API key to authenticate with ElasticSearch on Elastic Cloud.
 
 ### Example
 
