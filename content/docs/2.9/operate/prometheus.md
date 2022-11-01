@@ -10,7 +10,7 @@ weight = 200
 
 The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
-- `keda_operator_crd_totals` - Total number of KEDA custom resources per namespace for each resource.
+- `keda_operator_customresource_totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD).
 - `keda_operator_trigger_totals` - Total number of triggers per trigger type.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
