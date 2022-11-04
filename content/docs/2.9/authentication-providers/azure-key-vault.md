@@ -7,9 +7,9 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
-Currently pod identity providers are not supported for key vault.
+Currently, `azure` and `azure-workload` pod identity providers are supported for Azure Key Vault using `podIdentity` inside `azureKeyVault`.
 
-You need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
+Service principal authentication is also supported, needing to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specifying its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
 
 Ensure that "read secret" permissions have been granted to the Azure AD application on the Azure Key Vault. Learn more in the Azure Key Vault [documentation](https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal).
 
@@ -19,7 +19,10 @@ The `cloud` parameter can be used to specify cloud environments besides `Azure P
 ```yaml
 azureKeyVault:                                          # Optional.
   vaultUri: {key-vault-address}                         # Required.
-  credentials:                                          # Required.
+  podIdentity:                                          # Optional.
+    provider: azure | azure-workload                    # Required.
+    identityId: <identity-id>                           # Optional
+  credentials:                                          # Optional.
     clientId: {azure-ad-client-id}                      # Required.
     clientSecret:                                       # Required.
       valueFrom:                                        # Required.
