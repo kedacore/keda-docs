@@ -7,7 +7,7 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
-Currently, `azure` and `azure-workload` pod identity providers are supported for key vault using the podIdentity block inside `azureKeyVault`.
+Currently, `azure` and `azure-workload` pod identity providers are supported for Azure Key Vault using `podIdentity` inside `azureKeyVault`.
 
 Service principal authentication is also supported, needing to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specifying its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
 
