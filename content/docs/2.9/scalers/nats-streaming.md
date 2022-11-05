@@ -20,7 +20,7 @@ triggers:
     subject: "Test"
     lagThreshold: "10"
     activationLagThreshold: "5"
-    useHttps: "false"
+    useHTTPS: "false"
 ```
 
 **Parameter list:**
@@ -31,7 +31,7 @@ triggers:
 - `subject` - Name of the channel.
 - `lagThreshold` - Average target value to trigger scaling actions.
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `useHttps` - Specifies if the NATS Streaming monitoring endpoint is using HTTPS. Default value is false.
+- `useHTTPS` - Specifies if the NATS Streaming monitoring endpoint is using HTTPS. Default value is false.
 
 ### Authentication Parameters
 
@@ -62,7 +62,7 @@ spec:
       durableName: "ImDurable"
       subject: "Test"
       lagThreshold: "10"
-      useHttps: "false"
+      useHTTPS: "false"
 ```
 #### Example with TriggerAuthentication:
 
