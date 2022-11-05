@@ -21,6 +21,7 @@ triggers:
     consumer: "pull_consumer"
     lagThreshold: "10"
     activationLagThreshold: "15"
+    useHttps: "false"
 ```
 
 **Parameter list:**
@@ -31,6 +32,7 @@ triggers:
 - `consumer` - Name of the consumer for a given stream.
 - `lagThreshold` - Average target value to trigger scaling actions.
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `useHttps` - Specifies if the NATS server monitoring endpoint is using HTTPS. Default value is false.
 
 ### Authentication Parameters
 
@@ -60,4 +62,5 @@ spec:
       consumer: "pull_consumer"
       lagThreshold: "10"
       activationLagThreshold: "15"
+      useHttps: "false"
 ```
