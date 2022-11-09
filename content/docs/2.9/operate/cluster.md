@@ -17,8 +17,8 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 |   KEDA    |   Kubernetes  |
 |-----------|---------------|
 |   v2.9    | v1.23 - v1.25 |
-|   v2.8    | v1.17 - v1.24 |
-|   v2.7    | v1.17 - v1.24 |
+|   v2.8    | v1.17 - v1.25 |
+|   v2.7    | v1.17 - v1.25 |
 
 ### Cluster Capacity
 
