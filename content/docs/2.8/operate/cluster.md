@@ -8,7 +8,7 @@ weight = 100
 
 ### Kubernetes
 
-KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above.
+KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above until v1.25.0 (incl).
 
 ### Cluster Capacity
 
