@@ -16,6 +16,7 @@ triggers:
   metadata:
     adminURL: http://localhost:80
     topic: persistent://public/default/my-topic
+    isPartitionedTopic: false
     subscription: sub1
     msgBacklogThreshold: '5'
     activationMsgBacklogThreshold: '2'
@@ -25,6 +26,7 @@ triggers:
 
 - `adminURL` - Stats URL of the admin API for your topic.
 - `topic` - Pulsar topic. format of `persistent://{tenant}/{namespace}/{topicName}`
+- `isPartitionedTopic` - Whether the `topic` is partitioned. When `true`, the `msgBacklogThreshold` will be the cumulative subscription backlog across partitions. (default: `false`, Optional)
 - `subscription` - Name of the topic subscription
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
 - `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
@@ -60,6 +62,7 @@ spec:
     metadata:
       adminURL: http://localhost:80
       topic: persistent://public/default/my-topic
+      isPartitionedTopic: false
       subscription: sub1
       msgBacklogThreshold: '5'
 ```
