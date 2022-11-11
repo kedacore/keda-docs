@@ -64,11 +64,13 @@ You can find all supported triggers [here](../scalers).
 
 ```yaml
   jobTargetRef:
-    parallelism: 1              # Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    completions: 1              # Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    activeDeadlineSeconds: 600  # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-    backoffLimit: 6             # Specifies the number of retries before marking this job failed. Defaults to 6
+    parallelism: 1              # Optional. Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    completions: 1              # Optional. Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    activeDeadlineSeconds: 600  # Optional. Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
+    backoffLimit: 6             # Optional. Specifies the number of retries before marking this job failed. Defaults to 6
 ```
+
+The `jobTargetRef` is a batch/v1 `JobSpec` object; refer to the Kubernetes API for [more details](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobSpec) about the fields. The `template` field is required.
 
 ---
 
