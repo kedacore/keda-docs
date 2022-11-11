@@ -35,7 +35,7 @@ triggers:
 - `account` - The account within New Relic that the request should be targeted against.
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 - `region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
-- `noDataError` - Should queries that return nodata be treated as an error (Values: `true`, `false`, Default: `false`, Optional)
+- `noDataError` - Should queries that return nodata be treated as an error, if set to false and a query returns nodata, the result be `0`. (Values: `true`, `false`, Default: `false`, Optional)
 - `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the HPA configuration. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
