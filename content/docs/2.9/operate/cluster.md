@@ -90,10 +90,11 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
-| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
-| -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
-| kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
-| kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+|     Adapter Flag    | Client Config Setting   | Default Value | Description                                                    |
+| ------------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
+| kube-api-qps        | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
+| kube-api-burst      | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+| disable-compression | cfg.DisableCompression  | false         | Disable compression for response in k8s restAPI in client-go   |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
