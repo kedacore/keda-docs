@@ -94,7 +94,7 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | ------------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
 | kube-api-qps        | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
 | kube-api-burst      | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
-| disable-compression | cfg.DisableCompression  | false         | Disable compression for response in k8s restAPI in client-go   |
+| disable-compression | cfg.DisableCompression  | false         | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
