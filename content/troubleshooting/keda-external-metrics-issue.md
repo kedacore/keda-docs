@@ -36,9 +36,9 @@ If the status is `False`, then there seems to be an issue and  network might be 
 
 ### Solution for managed Kubernetes services:
 
-In managed Kubernetes services you might solve the issue by updating deployment file of operator and metric-apiserver
+In managed Kubernetes services you might solve the issue by updating deployment file of metric-apiserver
 
-Make sure these are present in deployment files.
+Make sure these are present in deployment file.
 ```sh
     dnsPolicy: ClusterFirst
     hostNetwork: true
