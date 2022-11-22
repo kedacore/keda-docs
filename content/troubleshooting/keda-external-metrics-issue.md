@@ -1,5 +1,5 @@
 +++
-title = "Kubernetes Control plane unable to Communicate to Metrics-api-server ?"
+title = "Kubernetes Control plane is unable to communicate to Metric server?"
 weight = 1
 +++
 
