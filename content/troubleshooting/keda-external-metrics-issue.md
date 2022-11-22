@@ -31,7 +31,7 @@ Example:
 kubectl get apiservice v1beta1.external.metrics.k8s.io -o yaml
 ```
 
-If the status is `False`, then there seems to be an issue and  network might be the primary reason for it.
+If the status is `False`, then there seems to be an issue and network might be the primary reason for it.
 
 
 ### Solution for managed Kubernetes services:
