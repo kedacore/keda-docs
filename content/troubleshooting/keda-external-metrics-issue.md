@@ -39,7 +39,7 @@ If the status is `False`, then there seems to be an issue and network might be t
 In managed Kubernetes services you might solve the issue by updating deployment file of metric-apiserver
 
 Make sure these are present in deployment file.
-```sh
+```yaml
     dnsPolicy: ClusterFirst
     hostNetwork: true
 ```
