@@ -36,10 +36,9 @@ If the status is `False`, then there seems to be an issue and network might be t
 
 ### Solution for managed Kubernetes services:
 
-In managed Kubernetes services you might solve the issue by updating deployment file of metric-apiserver
-
-Make sure these are present in deployment file.
+In managed Kubernetes services you might solve the issue by updating deployment file of metric-apiserver as below.
 ```yaml
     dnsPolicy: ClusterFirst
     hostNetwork: true
 ```
+Eg: [Modify](https://github.com/kedacore/charts/blob/f70e45e9a21e46036d51f8e16c2c63a7de8eea1b/keda/values.yaml#L42) useHostNetwork in values file.
