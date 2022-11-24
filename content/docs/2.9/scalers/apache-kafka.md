@@ -48,7 +48,7 @@ partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
 - `scaleToZeroOnInvalidOffset` - This parameter controls what the scaler does when a partition doesn't have a valid offset.
 If 'false' (the default), the scaler will keep a single consumer for that partition. Otherwise ('true'), the consumers for that
 partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
-- `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed.
+- `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 
 > **Note:**
