@@ -75,6 +75,23 @@ $env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
 
 All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
 
+## HTTP connection disable keep alive
+
+Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios. 
+
+You can override this default setting `KEDA_HTTP_DISABLE_KEEP_ALIVE` environment variable to true. For example, on Linux/Mac/Windows WSL2 operating systems, you'd use this command to set to true:
+
+```shell
+export KEDA_HTTP_DISABLE_KEEP_ALIVE=true
+```
+
+And on Windows Powershell, you'd use this command:
+
+```shell
+$env:KEDA_HTTP_DISABLE_KEEP_ALIVE=true
+```
+All applicable scalers will use this keep alive behaviour. Setting a per-scaler keep alive behaviour is currently unsupported.
+
 ## HTTP Proxies
 
 Some scalers issue HTTP requests to external servers (i.e. cloud services). As certain companies require external servers to be accessed by proxy servers, adding the relevant environment variables to both the KEDA Operator, and KEDA Metrics Server deployments (HTTP_PROXY, HTTPS_PROXY, NO_PROXY, etc.) would allow the scaler to connect via the desired proxy.
