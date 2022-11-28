@@ -404,6 +404,10 @@ url = "https://github.com/hmcts/"
 logo = "hmcts.png"
 
 [[params.users]]
+url = "https://intension.de"
+logo = "intension.png"
+
+[[params.users]]
 url = "https://www.intercept.cloud"
 logo = "intercept.png"
 
@@ -474,6 +478,10 @@ logo = "swisslife.jpg"
 [[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
+
+[[params.users]]
+url = "https://vitc.gmbh"
+logo = "vitc.png"
 
 [[params.users]]
 url = "https://www.workiva.com"
