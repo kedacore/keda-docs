@@ -33,7 +33,7 @@ triggers:
 
 ### Authentication Parameters
 
-  The `authModes` are specified on the `metadata` field of the `ScaledObject`, as shown above. The associated configuration parameters are specified in the `TriggerAuthentication` spec.  
+The authentication is defined in `authModes`. The associated configuration parameters are specified in the `TriggerAuthentication` spec.  
 
 **Bearer Auth**
 
