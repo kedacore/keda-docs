@@ -29,7 +29,7 @@ triggers:
 - `subscription` - Name of the topic subscription
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
 - `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `authModes` - a comma separated list of authentication modes to use. Default `""`. Valid options are `bearer`, `tls`, and `basic`. Note that `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request.
+- `authModes` - a comma separated list of authentication modes to use. (Values: `bearer`, `tls`,`basic`, Default: `""`, Optional, `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request)
 
 ### Authentication Parameters
 
