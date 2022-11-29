@@ -45,7 +45,7 @@ triggers:
 - `eventHubNamespace` - Name of the Event Hub namespace which has the Event Hub. (Optional)
 - `eventHubNamespaceFromEnv` - Name of the environment variable that provides the name of the Event Hub namespace, which has the Event Hub. (Optional)
 - `eventHubName` - Name of the Event Hub containing the messages. (Optional)
-- `eventHubName` - Name of the environment variable that provides the name of the Event Hub, containing the messages. (Optional)
+- `eventHubNameFromEnv` - Name of the environment variable that provides the name of the Event Hub, containing the messages. (Optional)
 - `storageAccountName` - Account name for blob storage used for checkpoints. (Required when `storageConnectionFromEnv` is not specified. The storage account name is the first part in the hostname of a Blob Storage endpoint. E.g.: for `examplename.blob.core.windows.net` the account name is `examplename`.)
 - `checkpointStrategy` - configure the checkpoint behaviour of different Event Hub SDKs. (Values: `azureFunction`, `blobMetadata`, `goSdk`, default: `""`, Optional)
     - `azureFunction` - Suitable for Azure Functions & Azure WebJobs SDK. This is the default setting, when `blobcontainer` is not specified.
