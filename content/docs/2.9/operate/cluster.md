@@ -79,7 +79,7 @@ All applicable scalers will use this timeout. Setting a per-scaler timeout is cu
 
 Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios. 
 
-You can disable keep alive for every HTTP connection by adding the relevant environment variables to both the KEDA Operator, and KEDA Metrics Server deployments:
+You can disable keep alive for every HTTP connection by adding the relevant environment variable to both the KEDA Operator, and KEDA Metrics Server deployments:
 
 ```yaml
 - env:
