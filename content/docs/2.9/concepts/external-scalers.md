@@ -19,7 +19,7 @@ Since external scalers mirror the interface of built-in scalers, it's worth beco
 
 ```go
 type Scaler interface {
-	GetMetrics(ctx context.Context, metricName string, metricSelector labels.Selector) ([]external_metrics.ExternalMetricValue, error)
+	GetMetrics(ctx context.Context, metricName string) ([]external_metrics.ExternalMetricValue, error)
 	GetMetricSpecForScaling() []v2beta2.MetricSpec
 	IsActive(ctx context.Context) (bool, error)
 	Close() error
