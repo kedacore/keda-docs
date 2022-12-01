@@ -100,7 +100,7 @@ Make sure to update the following metadata fields:
 * `description`
 
 ## Writing documentation for a new authentication provider
-To add documentation for a new [provider](https://keda.sh/docs/concept/authentication):
+To add documentation for a new [provider](https://keda.sh/docs/concepts/authentication):
 
 ```console
 $ hugo new --kind provider docs/<VERSION>/providers/my-new-provider.md
