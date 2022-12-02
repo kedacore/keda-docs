@@ -34,7 +34,16 @@ triggers:
 
 ### Authentication Parameters
 
-Not supported yet.
+You can authenticate by using connection string authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for the Azure Service Bus Namespace.
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
+- `storageConnection` - Connection string for the Azure Storage Account used to store checkpoint information.
 
 ### Example
 
