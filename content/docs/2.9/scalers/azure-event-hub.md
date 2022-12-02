@@ -61,13 +61,26 @@ triggers:
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
+
 ### Authentication Parameters
 
-The common way of authenticating to Azure Event Hub is by using the connection string. However, you can use [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers if you host your cluster in Azure AKS, and if have configured it to support Pod Identity.
+You can authenticate by using pod identity or connection string authentication.
 
-To use Pod Identity, you have to add a [TriggerAuthentication](../concepts/authentication.md#re-use-credentials-and-delegate-auth-with-triggerauthentication) and configure it to use Pod Identity like so:
+**Connection String Authentication:**
 
-```
+- `connection` - Connection string for the Azure Service Bus Namespace.
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - 
+    `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>`
+- `storageConnection` - Connection string for the Azure Storage Account used to store checkpoint information.
+
+**Pod identity based authentication:**
+
+[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
+```yaml
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
@@ -78,7 +91,7 @@ spec:
     provider: Azure | azure-workload
 ```
 
-When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod / Workload Identity to authenticate to Azure Blob Storage instead of a connection string. 
+When you do so, the Event Hub scaler will depend on the existence of two configurations you have to provide: `eventHubNamespace` and `eventHubName`. You can also configure `storageAccountName` if you wish to use Azure AD Pod / Workload Identity to authenticate to Azure Blob Storage instead of a connection string.
 
 > 💡 When using Azure AD Pod Identity to authenticate the identity must have appropriate [RBAC role-assignments](https://docs.microsoft.com/azure/role-based-access-control/role-assignments-steps) for both Event Hub and Storage Account. Permissions covered by `Azure Event Hubs Data Receiver` and `Storage Blob Data Reader` are required.
 
