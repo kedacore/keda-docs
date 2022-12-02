@@ -38,7 +38,7 @@ You can authenticate by using connection string authentication.
 
 **Connection String Authentication:**
 
-- `connection` - Connection string for the Azure Service Bus Namespace.
+- `connection` - Connection string for the Azure Event Hubs Namespace.
   
   The following formats are supported.
   
