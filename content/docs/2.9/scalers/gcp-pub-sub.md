@@ -16,8 +16,8 @@ triggers:
   metadata:
     subscriptionSize: "5" # Deprecated, use mode and value fields instead
     mode: "SubscriptionSize" # Optional - Default is SubscriptionSize - SubscriptionSize or OldestUnackedMessageAge
-    value: "5" # Optional - Default is 5 for SubscriptionSize | Default is 10 for OldestUnackedMessageAge
-    activationValue: "10" # Optional - Default is 0
+    value: "5.5" # Optional - Default is 5 for SubscriptionSize | Default is 10 for OldestUnackedMessageAge
+    activationValue: "10.5" # Optional - Default is 0
     subscriptionName: "mysubscription" # Required
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
