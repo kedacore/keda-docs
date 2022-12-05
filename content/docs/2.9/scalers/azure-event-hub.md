@@ -50,7 +50,10 @@ triggers:
 - `checkpointStrategy` - configure the checkpoint behaviour of different Event Hub SDKs. (Values: `azureFunction`, `blobMetadata`, `goSdk`, default: `""`, Optional)
     - `azureFunction` - Suitable for Azure Functions & Azure WebJobs SDK. This is the default setting, when `blobcontainer` is not specified.
     - `blobMetadata` - For all implementations that store checkpoint information on blob metadata such as current C#, Python, Java and JavaScript Event Hub SDKs.
-    - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing, for example Dapr.
+    - `goSdk` - For all implementations using the [Golang SDK](https://github.com/Azure/azure-event-hubs-go)'s checkpointing.
+    - `dapr` - Suitable for Dapr pubsub and bindings, depending on the used Dapr version:
+      - pubsub components: >= Dapr 1.6 (older versions need the GoSdk checkpointer)
+      - binding components: >= Dapr 1.9 (older versions need the GoSdk checkpointer)
     - When no checkpoint strategy is specified, the Event Hub scaler will use backwards compatibility and able to scale older implementations of C#, Python or Java Event Hub SDKs. (see "Legacy checkpointing"). If this behaviour should be used, `blobContainer` is also required.
 - `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`).
