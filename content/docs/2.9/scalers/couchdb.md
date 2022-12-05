@@ -14,13 +14,13 @@ This specification describes the `couchdb` trigger that scales based on the outp
 triggers:
 - type: couchdb
   metadata:
+    connectionString: "http://admin:password@test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local:5984/"
     hostname: "test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local"   
     port: "5984" 
     dbName: "animals" 
     queryValue: "1" 
     query: '{ "selector": { "feet": { "$gt": 0 } }, "fields": ["_id", "feet", "greeting"] }'
     activationQueryValue: "1"
-    metricName: "global-metric"
 ```
 
 **Parameter list:**
@@ -31,7 +31,7 @@ triggers:
 - `port` - The port number of the CouchDB service.
 - `query` - A CouchDB query that should return single numeric value.
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `metricName` - Name to assign to the metric. (Default: `s<X>-couchdb-<KEYSPACE>`, Optional, In case of `metricName` is specified, it will be used to generate the `metricName` like this: `s<X>-couchdb-<METRICNAME>`, where `<X>` is the index of the trigger in a ScaledObject)
+- `connectionString` - Connection string for CouchDB database.
 
 ### Authentication Parameters
 
