@@ -29,7 +29,9 @@ A premade [Grafana dashboard](https://github.com/kedacore/keda/tree/main/config/
 
 ![KEDA Grafana dashboard](/img/grafana-dashboard.png)
 
-The dashboard has two sections; the metric server visualizes metrics from KEDA, and the scale target visualizes the changes in replicas initially triggered by KEDA.
+The dashboard has two sections:
+- Visualization of KEDA's metric server
+- Visualization of the scale target and its changes in replicas scaled by KEDA
 
 The metric queries are:
 
