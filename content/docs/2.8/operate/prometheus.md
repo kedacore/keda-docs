@@ -33,15 +33,6 @@ The dashboard has two sections:
 - Visualization of KEDA's metric server
 - Visualization of the scale target and its changes in replicas scaled by KEDA
 
-The metric queries are:
-
-- `sum by(job) (rate(keda_metrics_adapter_scaler_errors_total{}[5m]))`
-- `sum by(scaler) (rate(keda_metrics_adapter_scaler_errors{namespace=~"$namespace", scaledObject=~"$scaledObject", scaler=~"$scaler"}[5m]))`
-- `sum by(scaledObject) (rate(keda_metrics_adapter_scaled_object_errors{namespace=~"$namespace", scaledObject=~"$scaledObject"}[5m]))`
-- `sum by(metric) (rate(keda_metrics_adapter_scaler_metrics_value{namespace=~"$namespace", metric=~"$metric"}[5m]))`
-- `changes(kube_deployment_spec_replicas{deployment=~"$scaledObject"}[1m])`
-- `changes(kube_statefulset_replicas{statefulset=~"$scaledObject"}[1m])`
-
 On top, the dashboard supports the following variables:
 
 - datasource
