@@ -233,14 +233,14 @@ identifier = "project"
 weight = 4
 
 [[menu.main]]
-url = "/resources/"
-name = "Learning Resources"
+url = "https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
+name = "Code of Conduct"
 parent = "project"
 weight = 1
 
 [[menu.main]]
-url = "https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
-name = "Code of Conduct"
+url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
+name = "Changelog"
 parent = "project"
 weight = 2
 
@@ -257,14 +257,14 @@ parent = "project"
 weight = 4
 
 [[menu.main]]
-url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
-name = "Changelog"
+url = "/support/"
+name = "Support"
 parent = "project"
 weight = 5
 
 [[menu.main]]
-url = "/support/"
-name = "Support"
+url = "https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md"
+name = "Breaking Changes & Deprecations"
 parent = "project"
 weight = 6
 
@@ -291,6 +291,12 @@ url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
 name = "Maintainers"
 parent = "project"
 weight = 10
+
+[[menu.main]]
+url = "/resources/"
+name = "Learning Resources"
+parent = "project"
+weight = 11
 
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
