@@ -41,7 +41,7 @@ triggers:
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `timeWindowOffset`: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust `timeWindowOffset` if you encounter this issue. (Default: `0`, Optional)
-- `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate (because of the implicit rollup fucntion)[https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom], try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
+- `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate [because of the implicit rollup function](https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom), try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
@@ -222,7 +222,7 @@ spec:
 
 Using the example above, if we assume that `http.requests` is currently returning `360`, dividing that by `180` in the query, results in a value of `2`; if `http.backlog` returns `90`, dividing that by `30` in the query, results in a value of `3`. With the `max` Aggregator set, the scaler will set the target scale to `3` as that is the higher value from all returned queries.
 
-## Unexpected metrics value in DataDog API response
+## Cases of unexpected metrics value in DataDog API response
 ### Latest data point is unavailable
 
 By default Datadog scaler retrieves the metrics with time window from `now - metadata.age (in seconds)` to `now`, however, some kinds of queries need a small delay (usually 30 secs - 2 mins) before data is available when querying from the API. In this case, adjust `timeWindowOffset` to ensure that the latest point of your query is always available.
