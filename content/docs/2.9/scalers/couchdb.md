@@ -15,7 +15,7 @@ triggers:
 - type: couchdb
   metadata:
     connectionString: "http://admin:password@test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local:5984/"
-    hostname: "test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local"   
+    host: "test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local"   
     port: "5984" 
     dbName: "animals" 
     queryValue: "1" 
