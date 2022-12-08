@@ -32,8 +32,7 @@ triggers:
 - `queryValue` - Value to reach to start scaling.
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
-- `timeWindowOffset`: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust `timeWindowOffset` if you encounter this issue. (Default: `0`, Optional)
-- `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate (because of the implicit rollup fucntion)[https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom], try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
+
 ### Authentication
 
 Datadog requires both an API key and an APP key to retrieve metrics from your account.

@@ -27,6 +27,8 @@ triggers:
     queryAggregator: "max"
     type: "global" # Deprecated in favor of trigger.metricType
     age: "120"
+    timeWindowOffset: "30"
+    lastAvailablePointOffset: "1"
     metricUnavailableValue: "1.5"
 ```
 
@@ -38,6 +40,8 @@ triggers:
 - `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
+- `timeWindowOffset`: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust `timeWindowOffset` if you encounter this issue. (Default: `0`, Optional)
+- `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate (because of the implicit rollup fucntion)[https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom], try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
@@ -217,3 +221,64 @@ spec:
 ```
 
 Using the example above, if we assume that `http.requests` is currently returning `360`, dividing that by `180` in the query, results in a value of `2`; if `http.backlog` returns `90`, dividing that by `30` in the query, results in a value of `3`. With the `max` Aggregator set, the scaler will set the target scale to `3` as that is the higher value from all returned queries.
+
+## Unexpected metrics value in DataDog API response
+### Latest data point is unavailable
+
+By default Datadog scaler retrieves the metrics with time window from `now - metadata.age (in seconds)` to `now`, however, some kinds of queries need a small delay (usually 30 secs - 2 mins) before data is available when querying from the API. In this case, adjust `timeWindowOffset` to ensure that the latest point of your query is always available.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: datadog-scaledobject
+  namespace: my-project
+spec:
+  scaleTargetRef:
+    name: worker
+  triggers:
+  - type: datadog
+    metricType: "AverageValue"
+    metadata:
+      query: "sum:trace.express.request.hits{*}.as_rate()"
+      queryValue: "100"
+      age: "90"
+      metricUnavailableValue: "0"
+      # Optional: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust it if you encounter this issue. Default: 0
+      timeWindowOffset: "30"
+      # Optional: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate, try to adjust to 1 if you encounter this issue. Default: 0
+      lastAvailablePointOffset: "1"
+    authenticationRef:
+      name: keda-trigger-auth-datadog-secret
+```
+Check [here]([https://github.com/kedacore/keda/pull/3954#discussion_r1042820206]) for the details of this issue
+
+### The value of last data point is inaccurate
+
+Datadog implicitly rolls up data points automatically with the `avg` method, effectively displaying the average of all data points within a time interval for a given metric. Essentially, there is a rollup for each point. The values at the end attempt to have the rollup applied. When this occurs, it looks at a X second bucket according to your time window, and will default average those values together. Since this is the last point in the query, there are no other values to average with in that X second bucket. This leads to the value of last data point that was not rolled up in the same fashion as the others, and leads to an inaccurate number. In these cases, adjust `lastAvailablePointOffset` to 1 to use the second to last points of an API response would be the most accurate.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: datadog-scaledobject
+  namespace: my-project
+spec:
+  scaleTargetRef:
+    name: worker
+  triggers:
+  - type: datadog
+    metricType: "AverageValue"
+    metadata:
+      query: "sum:trace.express.request.hits{*}.as_rate()"
+      queryValue: "100"
+      age: "90"
+      metricUnavailableValue: "0"
+      # Optional: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust it if you encounter this issue. Default: 0
+      timeWindowOffset: "30"
+      # Optional: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate, try to adjust to 1 if you encounter this issue. Default: 0
+      lastAvailablePointOffset: "1"
+    authenticationRef:
+      name: keda-trigger-auth-datadog-secret
+```
+Check [here]([https://github.com/kedacore/keda/pull/3954#discussion_r1042820206]) for the details of this issue
