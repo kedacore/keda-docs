@@ -478,6 +478,10 @@ url = "https://seldon.io/"
 logo = "seldon.png"
 
 [[params.users]]
+url = "https://sharry.tech/"
+logo = "sharry.png"
+
+[[params.users]]
 url = "https://stilingue.com.br"
 logo = "stilingue.png"
 
