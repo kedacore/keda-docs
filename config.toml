@@ -438,6 +438,10 @@ url = "https://microsoft.com"
 logo = "microsoft.png"
 
 [[params.users]]
+url = "https://nemlig.com"
+logo = "nemlig.png"
+
+[[params.users]]
 url = "https://www.mivation.com"
 logo = "mivation-inc.png"
 
