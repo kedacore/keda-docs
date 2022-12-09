@@ -166,3 +166,29 @@ spec:
   versionPriority: 100
 ...
 ```
+
+## Restrict Secret Access
+
+By default, KEDA requires adding `secrets` to the cluster role as following:
+```yaml
+- apiGroups:
+  - ""
+  resources:
+  - external
+  - pods
+  - secrets
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+```
+However, this might lead to security risk (especially in production environment) since it will grant permission to read `secrets` from all namespaces.
+
+To restrict `secret` access and limited to KEDA namespace, you could add `KEDA_RESTRICT_SECRET_ACCESS` as environment variable to both KEDA Operator and KEDA Metrics Server:
+```yaml
+env:
+  - name: KEDA_RESTRICT_SECRET_ACCESS
+    value: "true"
+```
+This allows you to omit `secrets` from the cluster role, which will disallow `TriggerAuthentication` to be used for your triggers if the `TriggerAuthentication` is using secrets. You can, however, still use `ClusterTriggerAuthentication`.
