@@ -6,7 +6,7 @@ weight = 200
 
 ## Prometheus Exporter Metrics
 
-### Operator 
+### Operator
 
 The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
@@ -14,7 +14,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 
 ### Metrics Adapter
 
-The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port `9022` (this can be changed by setting the `metrics-port` argument for the Metrics Adapter) at `/metrics`.  The metrics collected in the Metrics Adapter are only active when the HPA is active (> 0 replicas).
+The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port `9022` (this can be changed by setting the `metrics-port` argument for the Metrics Adapter) at `/metrics`. The metrics collected in the Metrics Adapter are only active when the HPA is active (> 0 replicas).
 
 The following metrics are being gathered:
 
