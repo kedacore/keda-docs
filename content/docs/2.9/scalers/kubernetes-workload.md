@@ -45,5 +45,5 @@ spec:
   - type: kubernetes-workload
     metadata:
       podSelector: 'app=backend, deploy notin (critical, monolith)'
-      value: '3'`
+      value: '3'
 ```
