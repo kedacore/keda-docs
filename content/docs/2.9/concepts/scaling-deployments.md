@@ -210,6 +210,8 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default the name is generated from the trigger type. (Optional)
+- **useCachedMetrics**: ([Experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features)) Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics (Experimental)"](#caching-metrics-experimental). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)
 - **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
@@ -219,6 +221,16 @@ Trigger fields:
     - The `Value` metric type, on the other hand, can be used when we don't want to take the average of the given metric across all replicas. For example, with the `Value` type, we can control the average time of messages in the queue. If our metric is average time in the queue, the threshold is 5 milliseconds, and the current average time is 20 milliseconds, HPA will scale the deployment to 3 * 20 / 5 = 12.
 
 > ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
+
+### Caching Metrics (Experimental)
+
+ This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metris Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval. 
+ 
+ Enabling this feature can significantly reduce the load on the scaler service. 
+ 
+ This is an [experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features).
+ 
+ This feature is not supported for `cpu`, `memory` or `cron` scaler.
 
 ### Pause autoscaling
 
