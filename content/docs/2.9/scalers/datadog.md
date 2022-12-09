@@ -53,6 +53,7 @@ Datadog requires both an API key and an APP key to retrieve metrics from your ac
 You should use `TriggerAuthentication` CRD to configure the authentication:
 
 **Parameter list:**
+
 - `apiKey` - Datadog API key.
 - `appKey` - Datadog APP key.
 - `datadogSite` - Datadog site where to get the metrics from. This is commonly referred as DD_SITE in Datadog documentation. (Default: `datadoghq.com`, Optional)
@@ -223,6 +224,7 @@ spec:
 Using the example above, if we assume that `http.requests` is currently returning `360`, dividing that by `180` in the query, results in a value of `2`; if `http.backlog` returns `90`, dividing that by `30` in the query, results in a value of `3`. With the `max` Aggregator set, the scaler will set the target scale to `3` as that is the higher value from all returned queries.
 
 ## Cases of unexpected metrics value in DataDog API response
+
 ### Latest data point is unavailable
 
 By default Datadog scaler retrieves the metrics with time window from `now - metadata.age (in seconds)` to `now`, however, some kinds of queries need a small delay (usually 30 secs - 2 mins) before data is available when querying from the API. In this case, adjust `timeWindowOffset` to ensure that the latest point of your query is always available.
@@ -251,7 +253,7 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
-Check [here]([https://github.com/kedacore/keda/pull/3954#discussion_r1042820206]) for the details of this issue
+Check [here](https://github.com/kedacore/keda/pull/3954#discussion_r1042820206) for the details of this issue
 
 ### The value of last data point is inaccurate
 
@@ -281,4 +283,5 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
-Check [here]([https://github.com/kedacore/keda/pull/3954#discussion_r1042820206]) for the details of this issue
+
+Check [here](https://github.com/kedacore/keda/pull/3954#discussion_r1042820206) for the details of this issue.
