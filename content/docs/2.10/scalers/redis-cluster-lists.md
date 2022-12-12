@@ -21,6 +21,7 @@ triggers:
     listLength: "5" # Required
     activationListLength: "5" # optional
     enableTLS: "false" # optional
+    unsafeSsl: "false" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
     addressesFromEnv: REDIS_ADDRESSES # Optional. You can use this instead of `addresses` parameter

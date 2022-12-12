@@ -28,6 +28,7 @@ triggers:
     consumerGroup: my-consumer-group # Required - name of consumer group associated with Redis Stream
     pendingEntriesCount: "10" # Required - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
     enableTLS: "false" # optional
+    unsafeSsl: "false" # optional
     databaseIndex: "0" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
@@ -58,6 +59,7 @@ triggers:
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
