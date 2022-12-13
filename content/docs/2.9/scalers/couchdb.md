@@ -24,11 +24,10 @@ triggers:
 ```
 
 **Parameter list:**
-
-- `host` - The hostname for connecting to the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` aren't set)
-- `dbName` - Name of the database. (Optional, Required if `connectionString` and `connectionStringFromEnv` aren't set)
-- `queryValue` - A threshold that will define when scaling should occur. (Optional, Required if `connectionString` and `connectionStringFromEnv` aren't set)
-- `port` - The port number of the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` aren't set)
+- `host` - The hostname for connecting to the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `dbName` - Name of the database. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `queryValue` - A threshold that will define when scaling should occur. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `port` - The port number of the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
 - `query` - A CouchDB query that should return single numeric value. (Optional)
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `connectionStringFromEnv` - Environment variable from workload with the connection string. (Optional, Required if `connectionString` and connection parameters aren't set)
