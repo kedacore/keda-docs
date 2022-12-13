@@ -17,8 +17,8 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 |   KEDA    |   Kubernetes  |
 |-----------|---------------|
 |   v2.9    | v1.23 - v1.25 |
-|   v2.8    | v1.17 - v1.24 |
-|   v2.7    | v1.17 - v1.24 |
+|   v2.8    | v1.17 - v1.25 |
+|   v2.7    | v1.17 - v1.25 |
 
 ### Cluster Capacity
 
@@ -75,6 +75,19 @@ $env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
 
 All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
 
+## HTTP connection disable keep alive
+
+Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios. 
+
+You can disable keep alive for every HTTP connection by adding the relevant environment variable to both the KEDA Operator, and KEDA Metrics Server deployments:
+
+```yaml
+- env:
+    KEDA_HTTP_DISABLE_KEEP_ALIVE: true
+```
+
+All applicable scalers will use this keep alive behaviour. Setting a per-scaler keep alive behaviour is currently unsupported.
+
 ## HTTP Proxies
 
 Some scalers issue HTTP requests to external servers (i.e. cloud services). As certain companies require external servers to be accessed by proxy servers, adding the relevant environment variables to both the KEDA Operator, and KEDA Metrics Server deployments (HTTP_PROXY, HTTPS_PROXY, NO_PROXY, etc.) would allow the scaler to connect via the desired proxy.
@@ -90,10 +103,11 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
-| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
-| -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
-| kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
-| kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+|     Adapter Flag    | Client Config Setting   | Default Value | Description                                                    |
+| ------------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
+| kube-api-qps        | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
+| kube-api-burst      | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+| disable-compression | cfg.DisableCompression  | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
@@ -130,3 +144,64 @@ To specify values other than their defaults, you can set the following environme
 | KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | LeaseDuration    |
 | KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | RenewDeadline    |
 | KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | RetryPeriod      |
+
+## Certificates used by KEDA Metrics Server
+
+By default KEDA Metrics Server uses self signed certificates while communicating with Kubernetes API Server. It is recommended to provide own (trusted) certificates instead.
+
+Certificates and CA bundle can be referenced in `args` section in KEDA Metrics Server Deployment:
+
+```yaml
+...
+args:
+  - '--client-ca-file=/cabundle/service-ca.crt'
+  - '--tls-cert-file=/certs/tls.crt'
+  - '--tls-private-key-file=/certs/tls.key'
+...
+```
+
+The custom CA bundle should be also referenced in the `v1beta1.external.metrics.k8s.io` [APIService](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/api-service-v1/#APIServiceSpec) resource (which is created during the installation of KEDA). 
+
+You should also make sure that `insecureSkipTLSVerify` is not set to `true`.
+
+```yaml
+...
+spec:
+  service:
+    namespace: keda
+    name: keda-metrics-apiserver
+    port: 443
+  group: external.metrics.k8s.io
+  version: v1beta1
+  caBundle: >-
+    YOURCABUNDLE...
+  groupPriorityMinimum: 100
+  versionPriority: 100
+...
+```
+
+## Restrict Secret Access
+
+By default, KEDA requires adding `secrets` to the cluster role as following:
+```yaml
+- apiGroups:
+  - ""
+  resources:
+  - external
+  - pods
+  - secrets
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+```
+However, this might lead to security risk (especially in production environment) since it will grant permission to read `secrets` from all namespaces.
+
+To restrict `secret` access and limited to KEDA namespace, you could add `KEDA_RESTRICT_SECRET_ACCESS` as environment variable to both KEDA Operator and KEDA Metrics Server:
+```yaml
+env:
+  - name: KEDA_RESTRICT_SECRET_ACCESS
+    value: "true"
+```
+This allows you to omit `secrets` from the cluster role, which will disallow `TriggerAuthentication` to be used for your triggers if the `TriggerAuthentication` is using secrets. You can, however, still use `ClusterTriggerAuthentication`.

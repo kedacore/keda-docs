@@ -24,7 +24,7 @@ triggers:
     # Optional, required when pod identity is used
     namespace: service-bus-namespace
     # Optional, can use TriggerAuthentication as well
-    connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME # This must be a connection string for a queue itself, and not a namespace level (e.g. RootAccessPolicy) connection string [#215](https://github.com/kedacore/keda/issues/215)
+    connectionFromEnv: SERVICEBUS_CONNECTIONSTRING_ENV_NAME
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
     cloud: Private # Optional. Default: AzurePublicCloud

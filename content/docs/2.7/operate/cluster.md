@@ -8,7 +8,7 @@ weight = 100
 
 ### Kubernetes
 
-KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above.
+KEDA is designed, tested and supported to be run on any Kubernetes cluster that runs Kubernetes v1.17.0 or above until v1.25.0 (incl).
 
 ### Cluster Capacity
 
@@ -102,3 +102,38 @@ To modify this properties you can set environment variables on both KEDA Operato
 | KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
 | KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
 | KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
+
+## Certificates used by KEDA Metrics Server
+
+By default KEDA Metrics Server uses self signed certificates while communicating with Kubernetes API Server. It is recommended to provide own (trusted) certificates instead.
+
+Certificates and CA bundle can be referenced in `args` section in KEDA Metrics Server Deployment:
+
+```yaml
+...
+args:
+  - '--client-ca-file=/cabundle/service-ca.crt'
+  - '--tls-cert-file=/certs/tls.crt'
+  - '--tls-private-key-file=/certs/tls.key'
+...
+```
+
+The custom CA bundle should be also referenced in the `v1beta1.external.metrics.k8s.io` [APIService](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/api-service-v1/#APIServiceSpec) resource (which is created during the installation of KEDA). 
+
+You should also make sure that `insecureSkipTLSVerify` is not set to `true`.
+
+```yaml
+...
+spec:
+  service:
+    namespace: keda
+    name: keda-metrics-apiserver
+    port: 443
+  group: external.metrics.k8s.io
+  version: v1beta1
+  caBundle: >-
+    YOURCABUNDLE...
+  groupPriorityMinimum: 100
+  versionPriority: 100
+...
+```

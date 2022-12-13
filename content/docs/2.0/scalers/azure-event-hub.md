@@ -34,7 +34,19 @@ triggers:
 
 ### Authentication Parameters
 
-Not supported yet.
+You can authenticate by using connection string authentication.
+
+**Connection String Authentication:**
+
+- `connection` - Connection string for the Azure Event Hubs Namespace.
+  
+  The following formats are supported.
+  
+  - With **SharedAccessKey** - `Endpoint=sb://<sb>.servicebus.windows.net/;SharedAccessKeyName=<key name>;SharedAccessKey=<key value>;EntityPath=<hub-name>`.
+
+- `storageConnection` - Connection string for the Azure Storage Account used to store checkpoint information.
+
+> 💡 When providing `connection`, `EntityPath` is optional. If it is not provided, then `eventHubName` must be used to provide the name of the Azure Event Hub instance to use inside the namespace.
 
 ### Example
 
