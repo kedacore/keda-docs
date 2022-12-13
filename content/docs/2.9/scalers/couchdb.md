@@ -24,6 +24,7 @@ triggers:
 ```
 
 **Parameter list:**
+
 - `host` - The hostname for connecting to the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
 - `dbName` - Name of the database. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
 - `queryValue` - A threshold that will define when scaling should occur. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
