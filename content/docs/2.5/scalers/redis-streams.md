@@ -59,6 +59,8 @@ triggers:
 - `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
+> ⚠️ **WARNING:** In this version, `enableTLS: true` automatically skips the certificate verification which is insecure. Use v2.9 or above to properly verify the server certificate.
+
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
 - `addressFromEnv` - The host and port of the Redis server, similar to `address`, but reads it from an environment variable on the scale target. Name of the environment variable your deployment uses to get the Redis server URL. The resolved host should follow a format like `my-redis:6379`.
