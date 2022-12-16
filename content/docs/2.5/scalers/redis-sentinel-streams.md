@@ -61,6 +61,8 @@ triggers:
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 
+> ⚠️ **WARNING:** In this version, `enableTLS: true` automatically skips the certificate verification which is insecure. Use v2.9 or above to properly verify the server certificate.
+
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
 - `addressesFromEnv` - The hosts and corresponding ports of Redis Sentinel nodes, similar to `addresses`, but reads it from an environment variable on the scale target. Name of the environment variable your deployment uses to get the URLs of Redis Sentinel nodes. The resolved hosts should follow a format like `node1:26379, node2:26379, node3:26379 ...`.
