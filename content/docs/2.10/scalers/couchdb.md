@@ -14,7 +14,7 @@ This specification describes the `couchdb` trigger that scales based on the outp
 triggers:
 - type: couchdb
   metadata:
-    connectionString: "http://admin:password@test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local:5984/"
+    connectionStringFromEnv: "CONNECTION_STRING"
     host: "test-release-svc-couchdb.couchdb-test-ns.svc.cluster.local"   
     port: "5984" 
     dbName: "animals" 
@@ -25,17 +25,21 @@ triggers:
 
 **Parameter list:**
 
-- `host` - The hostname for connecting to the CouchDB service.
-- `dbName` - Name of the database.
-- `queryValue` - A threshold that will define when scaling should occur.
-- `port` - The port number of the CouchDB service.
-- `query` - A CouchDB query that should return single numeric value.
+- `host` - The hostname for connecting to the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `dbName` - Name of the database. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `queryValue` - A threshold that will define when scaling should occur. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `port` - The port number of the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
+- `query` - A CouchDB query that should return single numeric value. (Optional)
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `connectionString` - Connection string for CouchDB database.
+- `connectionStringFromEnv` - Environment variable from workload with the connection string. (Optional, Required if `connectionString` and connection parameters aren't set)
 
 ### Authentication Parameters
 
 You can authenticate by using a username and password via `TriggerAuthentication` configuration.
+
+**ConnectionString:**
+
+- `connectionString` - Connection string for CouchDB database. (Optional, Required if `connectionStringFromEnv` and connection parameters aren't set)
 
 **Password Authentication:**
 
