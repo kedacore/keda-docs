@@ -163,6 +163,7 @@ Here's an overview:
 
 **Kafka**
  - `authMode` property was replaced with `sasl` and `tls` properties. Please refer [documentation](../scalers/apache-kafka/#authentication-parameters) for Kafka Authentication Parameters details.
+ - `tls` and `sasl` properties were moved to `TriggerAuthentication` metadata and no longer required to read from Kubernetes Secret. Please refer [documentation](../scalers/apache-kafka/#authentication-parameters) for Kafka Authentication Parameters details.
 
 **RabbitMQ**
 

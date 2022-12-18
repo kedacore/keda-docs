@@ -133,10 +133,8 @@ metadata:
   name: keda-kafka-secrets
   namespace: default
 data:
-  sasl: "plaintext"
   username: "admin"
   password: "admin"
-  tls: "enable"
   ca: <your ca>
   cert: <your cert>
   key: <your key>
@@ -146,20 +144,16 @@ kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-kafka-credential
   namespace: default
+  tls: enable
+  sasl: plaintext
 spec:
   secretTargetRef:
-  - parameter: sasl
-    name: keda-kafka-secrets
-    key: sasl
   - parameter: username
     name: keda-kafka-secrets
     key: username
   - parameter: password
     name: keda-kafka-secrets
     key: password
-  - parameter: tls
-    name: keda-kafka-secrets
-    key: tls
   - parameter: ca
     name: keda-kafka-secrets
     key: ca
@@ -201,12 +195,10 @@ metadata:
   name: keda-kafka-secrets
   namespace: default
 data:
-  sasl: "oauthbearer"
   username: "admin"
   password: "admin"
   oauthTokenEndpointUri: "https://tokenendpoint.com/token"
   scopes: "default"
-  tls: "enable"
   ca: <your ca>
   cert: <your cert>
   key: <your key>
@@ -216,11 +208,10 @@ kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-kafka-credential
   namespace: default
+  tls: enable
+  sasl: oauthbearer
 spec:
   secretTargetRef:
-  - parameter: sasl
-    name: keda-kafka-secrets
-    key: sasl
   - parameter: username
     name: keda-kafka-secrets
     key: username
@@ -233,9 +224,6 @@ spec:
   - parameter: scopes
     name: keda-kafka-secrets
     key: scopes
-  - parameter: tls
-    name: keda-kafka-secrets
-    key: tls
   - parameter: ca
     name: keda-kafka-secrets
     key: ca
