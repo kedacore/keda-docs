@@ -35,7 +35,7 @@ triggers:
 
 You can authenticate by using a username and password via `TriggerAuthentication` configuration.
 
-**ConnectionString:**
+**Connection String:**
 
 - `connectionString` - Connection string for Neo4j cluster. (Optional, Required if `connectionStringFromEnv` and connection parameters aren't set)
 
