@@ -66,6 +66,11 @@ If you are using a Horizontal Pod Autoscaler (HPA) to scale on CPU and/or memory
 type = "Best Practices"
 
 [[qna]]
+q = "Which least version of kubernetes is required for keda ?"
+a = "KEDA is designed, tested and is supported to be run on any [Kubernetes cluster](https://keda.sh/docs/operate/cluster/#requirements) that runs Kubernetes v1. 17.0 or above."
+type = "Kubernetes"
+
+[[qna]]
 q = "What does the target metric value in the Horizontal Pod Autoscaler (HPA) represent?"
 a = """
 The target metric value is used by the Horizontal Pod Autoscaler (HPA) to make scaling decisions.
