@@ -16,7 +16,7 @@ triggers:
   metadata:
     # Required fields:
     endpoints: "https://<endpoint1>:8529,https://<endpoint2>:8529" # Note: add one or more comma separated URL endpoints of all the coordinators
-    query: FOR students IN class RETURN students # Note: the query should potentially only return database documents
+    query: FOR students IN class COLLECT WITH COUNT INTO length RETURN {"value":length} # Note: the query should return only a single numeric value in the JSON format {"value":<value>}
     queryValue: '3'
     dbName: gradesheet
     collection: class
@@ -29,7 +29,7 @@ triggers:
 **Parameter list:**
 
 - `endpoints` - ArangoDB server endpoint URL or comma separated URL endpoints of all the coordinators. It can also be provided as an authentication parameter.
-- `query` - ArangoDB query to scale for, which should potentially only return database documents based on the query.
+- `query` - ArangoDB query to scale for. Please note that the query should return only a single numeric value, i.e. an integer or a float, in the JSON format `{"value":<value>}`.
 - `dbName` - Name of the database. It can also be provided as an authentication parameter.
 - `collection` - Name of the collection.
 - `threshold` - A threshold that will define when scaling should occur.
@@ -76,7 +76,7 @@ spec:
         activationQueryValue: '3'
         dbName: gradesheet
         collection: class
-        query: FOR doc IN class RETURN doc
+        query: FOR students IN class COLLECT WITH COUNT INTO length RETURN {"value":length}
 ```
 
 Here is an example of a arangodb scaler with Bearer Authentication, where the `Secret` and `TriggerAuthentication` are defined as follows:
@@ -117,7 +117,7 @@ spec:
         queryValue: '3'
         dbName: gradesheet
         collection: class
-        query: FOR doc IN class RETURN doc
+        query: FOR students IN class COLLECT WITH COUNT INTO length RETURN {"value":length}
         serverID: "uDmcE-0Zd"
         authModes: "bearer"
       authenticationRef:
@@ -166,7 +166,7 @@ spec:
         queryValue: '3'
         dbName: gradesheet
         collection: class
-        query: FOR doc IN class RETURN doc
+        query: FOR students IN class COLLECT WITH COUNT INTO length RETURN {"value":length}
         authModes: "basic"
       authenticationRef:
         name: keda-arangodb-creds
