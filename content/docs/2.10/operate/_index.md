@@ -10,3 +10,4 @@ We provide guidance & requirements around various areas to operate KEDA:
 - Integrate with Prometheus ([link](./prometheus))
 - Kubernetes Events ([link](./events))
 - KEDA Metrics Server ([link](./metrics-server))
+- Validating Webhook ([link](./validating-webhook))
