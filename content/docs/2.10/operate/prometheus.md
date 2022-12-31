@@ -18,6 +18,13 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_trigger_totals` - Total number of triggers per trigger type.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
+### Webhooks
+
+The KEDA Webhooks expose Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
+
+- `scaled_object_validating_total`- The current value for scaled object validations.
+- `scaled_object_validating_errors` - The number of validating errors.
+
 ### Metrics Server
 
 > 💡 **DEPRECATED:** Prometheus Metrics exposed from Metrics Server are deprecated, please consume metrics from KEDA Operator.
