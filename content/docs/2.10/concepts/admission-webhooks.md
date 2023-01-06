@@ -1,10 +1,8 @@
 +++
 title = "Admission Webhook"
 description = "Automatically validate resource changes to prevent misconfiguration and enforce best practices"
-weight = 100
+weight = 600
 +++
-
-## Admission Webhooks
 
 > 💡 The Admission Webhooks are an opt-in feature and will become an opt-out feature as of KEDA v2.12.
 
