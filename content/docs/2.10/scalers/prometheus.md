@@ -25,6 +25,7 @@ triggers:
     cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
+    victoriaMetricsPrefixPath: "/select/0/prometheus" # Specify the prefix path to the Prometheus querying API. Eg: `/select/0/prometheus` (VictoriaMetrics cluster version only)
 ```
 
 **Parameter list:**
@@ -38,6 +39,7 @@ triggers:
 - `cortexOrgID` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs  (Values: `true`,`false`, Default: `false`, Optional)
+- `victoriaMetricsPrefixPath` - If you are using [VictoriaMetrics](https://victoriametrics.com) cluster version, you must specify the prefix path to the Prometheus querying API. Eg: `/select/0/prometheus`. (Optional)
 
 ### Authentication Parameters
 
