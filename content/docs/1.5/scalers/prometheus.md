@@ -21,7 +21,7 @@ triggers:
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
 ```
 
-The `serverAddress` indicates where Prometheus is running which contains the configured metric defined in `metricName` or `query`.
+The `serverAddress` indicates where Prometheus is running which contains the configured metric defined in `metricName` or `query`. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
 
 ### Authentication Parameters
 
