@@ -81,7 +81,11 @@ Locate installed KEDA Operator in `keda` namespace, then remove created `KedaCon
 
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
-- We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page. There are 2 files available, with and without the admission webhooks (keda-2.xx.x.yaml and keda-2.xx.x-core.yaml respectively), you can chose the installation mode just using the correct file.
+- We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page. 
+  - We offer two options to deploy KEDA:
+    - Use `keda-2.xx.x.yaml` that includes all features, including admission webhooks (recommended)
+    - Use `keda-2.xx.x-core.yaml` that installs the minimal required KEDA components, without admission webhooks
+
 Run the following command (if needed, replace the version, in this case `2.10.0`, with the one you are using):
 
 ```sh
