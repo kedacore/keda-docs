@@ -1,7 +1,7 @@
 +++
 title = "Operate"
 description = "Guidance & requirements for operating KEDA"
-weight = 1
+weight = 6
 +++
 
 We provide guidance & requirements around various areas to operate KEDA:

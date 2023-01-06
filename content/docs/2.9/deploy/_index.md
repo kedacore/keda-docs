@@ -1,5 +1,6 @@
 +++
-title = "Deploying KEDA"
+title = "Deploy"
+weight = 5
 +++
 
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:

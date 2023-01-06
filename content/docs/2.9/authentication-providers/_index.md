@@ -1,6 +1,6 @@
 +++
 title = "Authentication Providers"
-weight = 5
+weight = 4
 +++
 
 Available authentication providers for KEDA:
