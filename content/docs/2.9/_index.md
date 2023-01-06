@@ -1,5 +1,5 @@
 +++
-title = "The KEDA Documentation"
+title = "Welcome"
 weight = 1
 +++
 

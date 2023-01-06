@@ -1,7 +1,7 @@
 +++
-title = "KEDA Concepts"
+title = "Concepts"
 description = "What KEDA is and how it works"
-weight = 1
+weight = 2
 +++
 
 ## What is KEDA?
