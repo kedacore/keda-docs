@@ -1,6 +1,6 @@
 +++
-title = "Admission Webhook"
-description = "Automatically validate resource changes to prevent misconfiguration and enforce best practices"
+title = "Admission Webhooks"
+description = "Admission webhooks configurations guidance"
 weight = 100
 +++
 
