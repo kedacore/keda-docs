@@ -505,6 +505,10 @@ logo = "workiva.png"
 url = "https://zapier.com"
 logo = "zapier.png"
 
+[[params.users]]
+url = "https://cyera.io"
+logo = "cyera.png"
+
 # "Partners" section on the Community page
 [[params.partners]]
 url = "https://microsoft.com"
