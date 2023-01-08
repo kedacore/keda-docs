@@ -386,6 +386,10 @@ url = "https://coralogix.com/"
 logo = "coralogix.gif"
 
 [[params.users]]
+url = "https://cyera.io"
+logo = "cyera.png"
+
+[[params.users]]
 url = "https://docplanner.tech"
 logo = "docplanner-tech.png"
 
@@ -504,10 +508,6 @@ logo = "workiva.png"
 [[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
-
-[[params.users]]
-url = "https://cyera.io"
-logo = "cyera.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
