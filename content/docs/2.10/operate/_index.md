@@ -6,8 +6,9 @@ weight = 1
 
 We provide guidance & requirements around various areas to operate KEDA:
 
+- Admission Webhooks ([link](./admission-webhooks))
 - Cluster ([link](./cluster))
-- Integrate with Prometheus ([link](./prometheus))
 - Kubernetes Events ([link](./events))
 - KEDA Metrics Server ([link](./metrics-server))
-- Admission Webhooks ([link](./admission-webhooks))
+- Integrate with Prometheus ([link](./prometheus))
+- Use your own TLS Certificates ([link](./tls-certificates))

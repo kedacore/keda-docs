@@ -1,7 +1,7 @@
 +++
 title = "Integrate with Prometheus"
 description = "Overview of all Prometheus metrics that KEDA provides"
-weight = 200
+weight = 100
 +++
 
 ## Prometheus Exporter Metrics
