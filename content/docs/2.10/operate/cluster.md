@@ -27,9 +27,9 @@ The KEDA runtime require the following resources in a production-ready setup:
 
 | Deployment         | CPU                     | Memory                        |
 | ------------------ | ----------------------- | ----------------------------- |
+| Admission Webhooks | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
 | Metrics Server     | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
 | Operator           | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
-| Admission Webhooks | Limit: 1, Request: 100m | Limit: 1000Mi, Request: 100Mi |
 
 These are used by default when deploying through YAML.
 

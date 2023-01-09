@@ -21,7 +21,7 @@ KEDA performs two key roles within Kubernetes:
 
 The diagram below shows how KEDA works in conjunction with the Kubernetes Horizontal Pod Autoscaler, external event sources, and Kubernetes' [etcd](https://etcd.io) data store:
 
-![KEDA architecture](/img/keda-arch-old.png)
+![KEDA architecture](/img/keda-arch-no-webhooks.png)
 
 ### Event sources and scalers
 
