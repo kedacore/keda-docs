@@ -1,7 +1,7 @@
 +++
 title = "Integrate with Prometheus"
 description = "Overview of all Prometheus metrics that KEDA provides"
-weight = 200
+weight = 100
 +++
 
 ## Prometheus Exporter Metrics
@@ -18,6 +18,13 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_resource_totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD).
 - `keda_trigger_totals` - Total number of triggers per trigger type.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
+
+### Admission Webhooks
+
+The KEDA Webhooks expose Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
+
+- `scaled_object_validation_total`- The current value for scaled object validations.
+- `scaled_object_validation_errors` - The number of validation errors.
 
 ### Metrics Server
 

@@ -12,10 +12,11 @@ weight = 1
 
 ## How KEDA works
 
-KEDA performs two key roles within Kubernetes:
+KEDA performs three key roles within Kubernetes:
 
 1. **Agent** — KEDA activates and deactivates Kubernetes [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment) to scale to and from zero on no events. This is one of the primary roles of the `keda-operator` container that runs when you install KEDA.
-1. **Metrics** — KEDA acts as a [Kubernetes metrics server](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics) that exposes rich event data like queue length or stream lag to the Horizontal Pod Autoscaler to drive scale out.  It is up to the Deployment to consume the events directly from the source.  This preserves rich event integration and enables gestures like completing or abandoning queue messages to work out of the box.  The metric serving is the primary role of the `keda-operator-metrics-apiserver` container that runs when you install KEDA.
+2. **Metrics** — KEDA acts as a [Kubernetes metrics server](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-custom-metrics) that exposes rich event data like queue length or stream lag to the Horizontal Pod Autoscaler to drive scale out.  It is up to the Deployment to consume the events directly from the source.  This preserves rich event integration and enables gestures like completing or abandoning queue messages to work out of the box.  The metric serving is the primary role of the `keda-operator-metrics-apiserver` container that runs when you install KEDA.
+3. **Admission Webhooks** - Automatically validate resource changes to prevent misconfiguration and enforce best practices by using an [admission controller](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/). As an example, it will prevent multiple ScaledObjects to target the same scale target.
 
 ## Architecture
 
