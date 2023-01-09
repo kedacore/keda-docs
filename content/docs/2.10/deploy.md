@@ -89,17 +89,17 @@ If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a differe
 Run the following command (if needed, replace the version, in this case `2.10.0`, with the one you are using):
 
 ```sh
-// Including admission webhooks
+# Including admission webhooks
 kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
-// Without admission webhooks
+# Without admission webhooks
 kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0-core.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
-// Including admission webhooks
+# Including admission webhooks
 kubectl apply -f keda-2.10.0.yaml
-// Without admission webhooks
+# Without admission webhooks
 kubectl apply -f keda-2.10.0-core.yaml
 ```
 
@@ -116,18 +116,18 @@ VERSION=2.10.0 make deploy
 - In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.10.0`, with the one you are using):
 
 ```sh
-// Including admission webhooks
+# Including admission webhooks
 kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
-// Without admission webhooks
+# Without admission webhooks
 kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0-core.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
-// Including admission webhooks
+# Including admission webhooks
 kubectl delete -f keda-2.10.0.yaml
-// Without admission webhooks
+# Without admission webhooks
 kubectl delete -f keda-2.10.0-core.yaml
 ```
 

@@ -11,4 +11,4 @@ We provide guidance & requirements around various areas to operate KEDA:
 - Kubernetes Events ([link](./events))
 - KEDA Metrics Server ([link](./metrics-server))
 - Integrate with Prometheus ([link](./prometheus))
-- Use your own TLS Certificates ([link](./tls-certificates))
+- Security ([link](./security))

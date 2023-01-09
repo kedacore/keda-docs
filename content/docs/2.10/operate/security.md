@@ -1,8 +1,10 @@
 +++
-title = "Use your own TLS Certificates"
-description = "Guidance to use user given TLS certificates"
+title = "Security"
+description = "Guidance to configure security options"
 weight = 100
 +++
+
+## Use your own TLS Certificates
 
 KEDA uses self-signed certificates for different things. These certificates are generated and rotated by the operator, storing them in a Kubernetes secret (`kedaorg-certs`) that it's mounted in other KEDA components in the (default) path `/certs` using the names `tls.crt` and `tls.key` for TLS certificate and `ca.crt` and `ca.key` for CA certificate. KEDA also patches Kubernetes resources to include the `caBundle`, making Kubernetes to trust in the CA.
 
