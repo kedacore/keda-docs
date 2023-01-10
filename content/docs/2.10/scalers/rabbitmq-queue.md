@@ -68,6 +68,15 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
 
+**TLS:**
+
+- `tls` - To enable SSL auth for RabbitMQ, set this to `enable`. If not set, TLS for RabbitMQ is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS client authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+
+> Using RabbitMQ host with amqps will require enabling the tls settings and passing the required parameters.
+
 ### Example
 
 #### AMQP protocol:
@@ -90,6 +99,63 @@ spec:
     - parameter: host
       name: keda-rabbitmq-secret
       key: host
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: rabbitmq-deployment
+  triggers:
+  - type: rabbitmq
+    metadata:
+      protocol: amqp
+      queueName: testqueue
+      mode: QueueLength
+      value: "20"
+      metricName: custom-testqueue #optional. Generated value would be `rabbitmq-custom-testqueue`
+    authenticationRef:
+      name: keda-trigger-auth-rabbitmq-conn
+```
+
+#### AMQPS protocol with TLS auth:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-rabbitmq-secret
+data:
+  host: <AMQPS URI connection string> # base64 encoded value of format amqps://guest:password@localhost:5672/vhost
+  tls: "enable"
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-rabbitmq-conn
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: host
+      name: keda-rabbitmq-secret
+      key: host
+    - parameter: tls
+      name: keda-rabbitmq-secret
+      key: tls
+    - parameter: ca
+      name: keda-rabbitmq-secret
+      key: ca
+    - parameter: cert
+      name: keda-rabbitmq-secret
+      key: cert
+    - parameter: key
+      name: keda-rabbitmq-secret
+      key: key
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
