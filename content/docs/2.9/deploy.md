@@ -8,7 +8,7 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 - [Operator Hub](#operatorhub)
 - [YAML declarations](#yaml)
 
-> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.16 and higher
+> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.23 and higher
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
