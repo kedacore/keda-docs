@@ -68,7 +68,7 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
 
-**TLS:**
+**TLS authentication:**
 
 - `tls` - To enable SSL auth for RabbitMQ, set this to `enable`. If not set, TLS for RabbitMQ is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
