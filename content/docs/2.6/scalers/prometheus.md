@@ -25,7 +25,7 @@ triggers:
 
 **Parameter list:**
 
-- `serverAddress` - Address of Prometheus. server
+- `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - Query to run.
 - `threshold` - Value to start scaling for.

@@ -41,6 +41,8 @@ triggers:
 - `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
 
+> ⚠️ **WARNING:** In this version, `enableTLS: true` automatically skips the certificate verification which is insecure. Use v2.9 or above to properly verify the server certificate.
+
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
 - `addressFromEnv` - The host and port of the Redis server, similar to `address`, but reads it from an environment variable on the scale target.

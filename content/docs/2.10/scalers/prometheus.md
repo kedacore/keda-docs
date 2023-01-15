@@ -24,12 +24,12 @@ triggers:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
-    unsafeSsl: false #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
+    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
 ```
 
 **Parameter list:**
 
-- `serverAddress` - Address of Prometheus. server
+- `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
 - `query` - Query to run.
 - `threshold` - Value to start scaling for. (This value can be a float)
