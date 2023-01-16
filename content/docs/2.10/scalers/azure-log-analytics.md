@@ -54,6 +54,8 @@ triggers:
       logAnalyticsResourceURL: https://api.loganalytics.airgap.io/
       # Required when cloud = Private.
       activeDirectoryEndpoint: https://login.airgap.example/
+      # Optional (Default: false)
+      unsafeSsl: "false"
 ```
 
 **Parameter list:**
@@ -69,6 +71,8 @@ triggers:
 - `cloud` - Name of the cloud environment that the Azure Log Analytics workspace belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
+- `unsafeSsl` - Controls whether a client verifies the server's certificate chain and host name. (Default: `false`, Optional, This value can be a bool)
+
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -78,7 +82,7 @@ The authentication parameters could be provided using environmental variables, i
 - `workspaceIdFromEnv` - An environmental variable name, that stores your Log Analytics workspace id. Follow [this](https://docs.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace?view=azure-cli-latest#az-monitor-log-analytics-workspace-list) link to get your Log Analytics workspace id. (Optional)
 
 > 💡 **NOTE:** The workspaceID for Log Analytics is called the `customerId`;
- it's not the full `id`! the example `az` command below can be used.
+it's not the full `id`! the example `az` command below can be used.
 
 ```sh
 az monitor log-analytics workspace list --query '[]. {ResourceGroup:resourceGroup,WorkspaceName:name,"workspaceID (customerId)":customerId}' -o table
@@ -135,7 +139,7 @@ Example result:
 
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials and resource identifiers.
+You can use `TriggerAuthentication` CRD to configure the authentication by providing a set of Azure Active Directory credentials and resource identifiers.
 
 **Service Principal based authentication:**
 
@@ -379,3 +383,4 @@ kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": 
 - [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
 - [Azure Pod Identity on keda.sh](https://keda.sh/docs/2.0/concepts/authentication/#azure-pod-identity)
 - [Best practices for authentication and authorization in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-identity)
+
