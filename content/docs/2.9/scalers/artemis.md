@@ -23,6 +23,7 @@ triggers:
     username: 'ARTEMIS_USERNAME'
     password: 'ARTEMIS_PASSWORD'
     restApiTemplate: # Optional. Default : "http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"
+    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
 ```
 
 **Parameter list:**
