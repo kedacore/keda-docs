@@ -15,7 +15,7 @@ triggers:
   - type: new-relic
     metadata:
       # Required: Account - Subaccount to run the query on
-      account: 1234567
+      account: '1234567'
       # Required: QueryKey - Api key to connect to New Relic
       queryKey: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
       # Optional: nrRegion - Region to query data for. Default value is US.
@@ -98,7 +98,7 @@ spec:
       metadata:
         nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
         noDataError: "true"
-        threshold: 1000
+        threshold: '1000'
       authenticationRef:
         name: keda-trigger-auth-new-relic
 ```
