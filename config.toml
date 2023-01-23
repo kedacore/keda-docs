@@ -390,6 +390,10 @@ url = "https://cyera.io"
 logo = "cyera.png"
 
 [[params.users]]
+url = "https://dig.security"
+logo = "digsecurity.gif"
+
+[[params.users]]
 url = "https://docplanner.tech"
 logo = "docplanner-tech.png"
 
