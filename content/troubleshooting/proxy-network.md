@@ -61,7 +61,7 @@ Check the API service status and the pods now. Should work!
 
 In managed Kubernetes services you might solve the issue by updating firewall rules in your cluster.
 
-#### GKE
+#### Google Kubernetes Engine (GKE)
 
 E.g. in GKE private cluster [add](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) port 6443 (kube-apiserver) to allowed ports in master node firewall rules.
 
