@@ -370,6 +370,10 @@ url = "https://www.bolddesk.com/"
 logo = "bolddesk.svg"
 
 [[params.users]]
+url = "https://dig.security"
+logo = "digsecurity.gif"
+
+[[params.users]]
 url = "https://chattermill.com"
 logo = "chattermill.png"
 
