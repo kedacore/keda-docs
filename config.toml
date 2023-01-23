@@ -370,10 +370,6 @@ url = "https://www.bolddesk.com/"
 logo = "bolddesk.svg"
 
 [[params.users]]
-url = "https://dig.security"
-logo = "digsecurity.gif"
-
-[[params.users]]
 url = "https://chattermill.com"
 logo = "chattermill.png"
 
@@ -392,6 +388,10 @@ logo = "coralogix.gif"
 [[params.users]]
 url = "https://cyera.io"
 logo = "cyera.png"
+
+[[params.users]]
+url = "https://dig.security"
+logo = "digsecurity.gif"
 
 [[params.users]]
 url = "https://docplanner.tech"
