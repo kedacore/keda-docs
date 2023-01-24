@@ -32,7 +32,7 @@ triggers:
     activeDirectoryEndpoint: https://login.airgap.example/
 ```
 
-This scaler is backed by the Azure Application Instance REST API. Please see [this](https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get) page
+This scaler is backed by the Azure Application Insights REST API. Please see [this](https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get) page
 for further details.
 
 **Parameter list:**
