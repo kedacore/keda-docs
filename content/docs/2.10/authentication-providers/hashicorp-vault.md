@@ -8,6 +8,9 @@ You can pull one or more Hashicorp Vault secrets into the trigger by defining th
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
 
+> Since version `1.5.0` Vault secrets backend **version 2** is supported. 
+> The support for Vault secrets backend **version 1** was added on version `2.10`.
+
 ```yaml
 hashiCorpVault:                                     # Optional.
   address: {hashicorp-vault-address}                # Required.
