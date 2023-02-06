@@ -29,6 +29,8 @@ triggers:
       parent: "{parent ADO agent name}"
       # Optional: Demands string to read demands from ScaledObject
       demands: "{demands}"
+      # Optional: Demands of jobs must exactly match the capabilities the trigger defines
+      requireAllDemands: false 
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -44,6 +46,7 @@ triggers:
 - `activationTargetPipelinesQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
+- `requireAllDemands` - Demands of jobs must exactly match the capabilities the trigger defines, e.g. if a jobs requires `maven`and the trigger definition has `maven,java` it does **not** match (Default: `false`, Optional)
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
@@ -77,7 +80,7 @@ particularly these would be exclusive agents where jobs would fail if run on the
 
 - **Using Parent:** Azure DevOps is able to determine which agents can match any job it is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfill the job. If the parent is able to complete the job it scales the workload fulfill the request. The parent template that is generally offline must stay in the Pool's Agent list.
 
-- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored)
+- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored). If `requireAllDemands` is set to `true` it is checked if a jobs demands are fulfilled exactly by a trigger and only scales if this is true. This means a job with demands `maven` will not match an agent with capabilities `maven,java`.
 
 Microsoft's documentation: [https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml)
 
