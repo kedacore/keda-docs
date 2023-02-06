@@ -86,3 +86,5 @@ module "eks" {
     }
   }
 ```
+
+As of version `19.6.0` of the `terraform-aws-modules/eks/aws` module it is enough to have `node_security_group_enable_recommended_rules` option enabled(default) to get neccessary security group ingress rule.
