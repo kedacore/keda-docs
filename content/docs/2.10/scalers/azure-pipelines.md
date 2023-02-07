@@ -46,7 +46,6 @@ triggers:
 - `activationTargetPipelinesQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
-- `requireAllDemands` - Demands of jobs must exactly match the capabilities the trigger defines, e.g. if a jobs requires `maven`and the trigger definition has `maven,java` it does **not** match (Default: `false`, Optional)
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
