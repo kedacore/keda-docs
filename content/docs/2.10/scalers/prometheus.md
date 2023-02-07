@@ -23,7 +23,7 @@ triggers:
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
-    customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Auth-Token=authtoken # Optional. Custom headers to include in query.
+    customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Token=oid # Optional. Custom headers to include in query.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
 ```
@@ -61,6 +61,11 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 - `ca` - Certificate authority file for TLS client authentication.
 - `cert` - Certificate for client authentication. This is a required field.
 - `key` - Key for client authentication. Optional. This is a required field.
+
+**Custom authentication:**
+- `authModes`: It must contain `custom` in case of Custom Authentication. Specify this in trigger configuration.
+- `customAuthHeader`: Custom Authorization Header name to be used. This is required field.
+- `customAuthValue`: Custom Authorization Header value. This is required field.
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
@@ -294,6 +299,55 @@ spec:
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "tls,basic"
+      authenticationRef:
+        name: keda-prom-creds
+```
+
+Here is an example of a prometheus scaler with Custom Authentication, define the `Secret` and `TriggerAuthentication` as follows
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  customAuthHeader: "X-AUTH-TOKEN"
+  customAuthValue: "auth-token"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: customAuthHeader
+      name: keda-prom-secret
+      key: customAuthHeader
+    - parameter: customAuthValue
+      name: keda-prom-secret
+      key: customAuthValue
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://<prometheus-host>:9090
+        metricName: http_requests_total
+        threshold: '100'
+        query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+        authModes: "custom"
       authenticationRef:
         name: keda-prom-creds
 ```
