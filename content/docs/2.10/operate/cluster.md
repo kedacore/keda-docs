@@ -103,8 +103,11 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 ## HTTP TLS min version
 
-Nowadays, not all TLS versions are secure as TLS1.0 and TLS1.1 have know vulnerabilities. As default, KEDA uses TLS1.2 as minimum because it's minimum non broken version. If you have any service which needs older TLS versions, the minimum version can be configured using the environment variable `KEDA_HTTP_MIN_TLS_VERSION`. Valid values are: `TLS13`, `TLS12`, `TLS11` and `TLS10`.
+Our industry has seen an evolution of TLS versions and some are more secure than another. For example, TLS1.0 and TLS1.1 have known vulnerabilities.
 
+By default, KEDA uses TLS1.2 as a minimum TLS version given it is the lowest version without vulnerabilities. However, if you need to support and older version you can configure it by using the environment variable `KEDA_HTTP_MIN_TLS_VERSION`.
+
+For example:
 ```yaml
 - env:
     KEDA_HTTP_MIN_TLS_VERSION: TLS13
