@@ -113,6 +113,8 @@ For example:
     KEDA_HTTP_MIN_TLS_VERSION: TLS13
 ```
 
+The following values are allowed: `TLS13`, `TLS12`, `TLS11` and `TLS10`.
+
 ## Kubernetes Client Parameters
 
 The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
