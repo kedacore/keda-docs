@@ -149,7 +149,7 @@ To specify values other than their defaults, you can set the following environme
 
 ## Certificates used by KEDA Metrics Server
 
-This information has been moved to [security section](./security#use-your-own-tls-certificates)
+To learn more please refer to [security section](./security#use-your-own-tls-certificates)
 
 ## Restrict Secret Access
 
