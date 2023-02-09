@@ -101,6 +101,20 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
     NO_PROXY: 10.0.0.0/8
 ```
 
+## HTTP TLS min version
+
+Our industry has seen an evolution of TLS versions and some are more secure than another. For example, TLS1.0 and TLS1.1 have known vulnerabilities.
+
+By default, KEDA uses TLS1.2 as a minimum TLS version given it is the lowest version without vulnerabilities. However, if you need to support another version you can configure it by using the environment variable `KEDA_HTTP_MIN_TLS_VERSION`.
+
+For example:
+```yaml
+- env:
+    KEDA_HTTP_MIN_TLS_VERSION: TLS13
+```
+
+The following values are allowed: `TLS13`, `TLS12`, `TLS11` and `TLS10`.
+
 ## Kubernetes Client Parameters
 
 The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
