@@ -29,6 +29,8 @@ triggers:
       parent: "{parent ADO agent name}"
       # Optional: Demands string to read demands from ScaledObject
       demands: "{demands}"
+      # Optional: Demands of jobs must exactly match the capabilities the trigger defines
+      requireAllDemands: false 
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -77,7 +79,7 @@ particularly these would be exclusive agents where jobs would fail if run on the
 
 - **Using Parent:** Azure DevOps is able to determine which agents can match any job it is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfill the job. If the parent is able to complete the job it scales the workload fulfill the request. The parent template that is generally offline must stay in the Pool's Agent list.
 
-- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored)
+- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored). If `requireAllDemands` is set to `true` it is checked if a jobs demands are fulfilled exactly by a trigger and only scales if this is true. This means a job with demands `maven` will not match an agent with capabilities `maven,java`.
 
 Microsoft's documentation: [https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml)
 

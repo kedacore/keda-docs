@@ -101,6 +101,20 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
     NO_PROXY: 10.0.0.0/8
 ```
 
+## HTTP TLS min version
+
+Our industry has seen an evolution of TLS versions and some are more secure than another. For example, TLS1.0 and TLS1.1 have known vulnerabilities.
+
+By default, KEDA uses TLS1.2 as a minimum TLS version given it is the lowest version without vulnerabilities. However, if you need to support another version you can configure it by using the environment variable `KEDA_HTTP_MIN_TLS_VERSION`.
+
+For example:
+```yaml
+- env:
+    KEDA_HTTP_MIN_TLS_VERSION: TLS13
+```
+
+The following values are allowed: `TLS13`, `TLS12`, `TLS11` and `TLS10`.
+
 ## Kubernetes Client Parameters
 
 The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
@@ -149,38 +163,7 @@ To specify values other than their defaults, you can set the following environme
 
 ## Certificates used by KEDA Metrics Server
 
-By default KEDA Metrics Server uses self signed certificates while communicating with Kubernetes API Server. It is recommended to provide own (trusted) certificates instead.
-
-Certificates and CA bundle can be referenced in `args` section in KEDA Metrics Server Deployment:
-
-```yaml
-...
-args:
-  - '--client-ca-file=/cabundle/service-ca.crt'
-  - '--tls-cert-file=/certs/tls.crt'
-  - '--tls-private-key-file=/certs/tls.key'
-...
-```
-
-The custom CA bundle should be also referenced in the `v1beta1.external.metrics.k8s.io` [APIService](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/api-service-v1/#APIServiceSpec) resource (which is created during the installation of KEDA). 
-
-You should also make sure that `insecureSkipTLSVerify` is not set to `true`.
-
-```yaml
-...
-spec:
-  service:
-    namespace: keda
-    name: keda-metrics-apiserver
-    port: 443
-  group: external.metrics.k8s.io
-  version: v1beta1
-  caBundle: >-
-    YOURCABUNDLE...
-  groupPriorityMinimum: 100
-  versionPriority: 100
-...
-```
+To learn more please refer to [security section](./security#use-your-own-tls-certificates)
 
 ## Restrict Secret Access
 
