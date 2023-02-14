@@ -65,6 +65,21 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 The user will need access to read properties from the specified AWS SQS queue.
 
+This is the minimal policy needed by the operator to read properties of a specific SQS queue :
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "<SQS_QUEUE_ARN>"
+        }
+    ]
+}
+```
+
 ### Example
 
 #### Scaling a deployment using podIdentity providers
