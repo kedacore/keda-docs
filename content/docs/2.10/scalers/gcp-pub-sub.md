@@ -34,8 +34,14 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 - Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`.
 
 You can use either `subscriptionSize` to define the target average which the deployment will be scaled on or `mode` and `value` fields. `subscriptionSize` field is deprecated, it is recommended to use `mode` and `value` fields instead. Scaler will not work if you define both `subscriptionSize` and at least one of `mode` or `value`.
-The mode chooses whether to scale using number of messages `SubscriptionSize` or using oldest unacked message age `OldestUnackedMessageAge`.
-The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge`.
+
+The `mode` chooses whether to scale using
+
+- `SubscriptionSize`: number of messages
+- `OldestUnackedMessageAge`: oldest unacked message age
+- `PullAckRequestCount`: pull ack request count
+
+The `value` determines the target average which the deployment will be scaled on. The default value is 5 for `SubscriptionSize` and 10 for `OldestUnackedMessageAge` and 10 for `PullAckRequestCount`.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
