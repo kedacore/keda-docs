@@ -16,6 +16,6 @@ All components inspect the folder `/certs` for any certificates inside it. Argum
 
 ## Register your own CA in KEDA Operator Trusted Store
 
-There are some use cases where the upstream expose self-signed CAs (or other cases like AWS where their CA isn't registered as trusted either). Some scalers allow skipping the cert validation thanks to `unsafeSsl` but this parameter isn't totally integrated and it allows any certificate, which is not totally secure.
+There are use cases where we need to use self-signed CAs (cases like AWS where their CA isn't registered as trusted etc.). Some scalers allow skipping the cert validation by setting the `unsafeSsl` parameter, but this isn't ideal because it allows any certificate, which is not secure.
 
-Due to to this, KEDA supports registering custom CAs to be used on all the SDKs where is possible. To register custom CAs, you need to ensure that the certs are in `/custom/ca` folder because KEDA will try to register as trusted CAs all the certificates inside the folder. This can be done with kustomize or helm (using `volumes.keda.extraVolumes` and `volumes.keda.extraVolumeMounts`).
+To overcome this problem, KEDA supports registering custom CAs to be used by SDKs where it is possible. To register custom CAs, you need to ensure that the certs are in `/custom/ca` folder and KEDA will try to register as trusted CAs all certificates inside this folder. This can be done with kustomize or helm (using `volumes.keda.extraVolumes` and `volumes.keda.extraVolumeMounts`).
