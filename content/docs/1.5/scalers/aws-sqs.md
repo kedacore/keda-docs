@@ -46,12 +46,14 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 - `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
 
+The role will need read permissions (`sqs:GetQueueAttributes`) on the target queue(s) in AWS SQS.
+
 **Credential based authentication:**
 
 - `awsAccessKeyID` - Id of the user.
 - `awsSecretAccessKey` - Access key for the user to authenticate with.
 
-The user will need access to read properties from the specified AWS SQS queue.
+The user will need read permissions (`sqs:GetQueueAttributes`) on the target queue(s) in AWS SQS.
 
 ### Example
 
