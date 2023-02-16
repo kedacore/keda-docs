@@ -20,7 +20,7 @@ triggers:
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
-    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`. This will be deprecated in v2.12
+    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`. This will be deprecated in v2.10 and removed in v2.12
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
