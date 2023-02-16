@@ -65,7 +65,7 @@ The role will need the `sqs:GetQueueAttributes` permission on the target queue(s
 - `awsSecretAccessKey` - Access key for the user to authenticate with.
 - `awsSessionToken` - Session token, only required when using [temporary credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html).
 
-The user will need the `sqs:GetQueueAttributes` permission on the target queue(s).
+The user will need read permissions (`sqs:GetQueueAttributes`) on the target queue(s) in AWS SQS.
 
 ### Example
 
