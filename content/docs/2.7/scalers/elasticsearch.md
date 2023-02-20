@@ -21,7 +21,7 @@ triggers:
       passwordFromEnv: "ELASTIC_PASSWORD"
       index: "my-index"
       searchTemplateName: "my-search-template-name"
-      params: "param1:value1;param2:value2"
+      parameters: "param1:value1;param2:value2"
       valueLocation: "hits.total.value"
       targetValue: "1"
 ```
