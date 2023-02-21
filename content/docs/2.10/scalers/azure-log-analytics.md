@@ -67,7 +67,7 @@ triggers:
 - `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold` - Value that is used as a threshold to calculate # of pods for scale target. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId)
+- `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId. DEPRECATED: This parameter will be removed in version `2.12`, don't set it)
 - `cloud` - Name of the cloud environment that the Azure Log Analytics workspace belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).

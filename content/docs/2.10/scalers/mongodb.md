@@ -26,7 +26,7 @@ triggers:
       queryValue: "1"
       # Optional: according to the number of query result, the scaler is active
       activationQueryValue: "1"
-      # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name
+      # DEPRECATED: This parameter will be removed in version 2.12, don't set it. Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name
       metricName: "global-metric"
 ```
 
@@ -54,7 +54,7 @@ triggers:
       queryValue: "1"
       # Optional: according to the number of query result, the scaler is active
       activationQueryValue: "1"
-      # Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name.
+      # DEPRECATED: This parameter will be removed in version 2.12, don't set it. Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name.
       metricName: "global-metric"
 ```
 
@@ -87,7 +87,7 @@ When configuring with a connection string, you can use this URL format:
 mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
 ```
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and collection name. For example: **s1-mongodb-test_collection**. The value will be prefixed with `s{triggerIndex}-mongodb-` .
+You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and collection name. For example: **s1-mongodb-test_collection**. The value will be prefixed with `s{triggerIndex}-mongodb-` . (DEPRECATED: This parameter will be removed in version `2.12`, don't set it)
 
 ### Authentication Parameters
 
@@ -139,7 +139,7 @@ spec:
         collection: "test_collection"
         query: '{"region":"eu-1","state":"running","plan":"planA"}'
         queryValue: "1"
-        metricName: "global-metric"
+        metricName: "global-metric" # DEPRECATED: This parameter will be removed in version 2.12, don't set it
       authenticationRef:
         name: mongodb-trigger
 ---
