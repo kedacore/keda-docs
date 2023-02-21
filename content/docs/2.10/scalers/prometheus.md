@@ -9,18 +9,17 @@ go_file = "prometheus_scaler"
 ### Trigger Specification
 
 This specification describes the `prometheus` trigger that scales based on a Prometheus.
-
 ```yaml
 triggers:
 - type: prometheus
   metadata:
     # Required fields:
     serverAddress: http://<prometheus-host>:9090
-    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
+    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`. This will be deprecated in v2.10 and removed in v2.12
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
