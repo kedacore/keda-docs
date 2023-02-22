@@ -18,7 +18,7 @@ triggers:
     tenantId: xxx-xxx-xxx-xxx-xxx
     subscriptionId: yyy-yyy-yyy-yyy-yyy
     resourceGroupName: azureMonitor
-    metricName: kube_pod_status_ready # DEPRECATED: This parameter will be removed in version 2.12, don't set it
+    metricName: kube_pod_status_ready # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
     targetValue: "0.5"
@@ -40,7 +40,7 @@ triggers:
 - `tenantId` - Id of the tenant that contains the Azure resource. This is used for authentication.
 - `subscriptionId` - Id of Azure subscription that contains the Azure resource. This is used for determining the full resource URI.
 - `resourceGroupName` - Name of the resource group for the Azure resource.
-- `metricName` - Name of the metric to query. (DEPRECATED: This parameter will be removed in version `2.12`, don't set it)
+- `metricName` - Name of the metric to query. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
   - Azure metrics are available as a list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
   - Custom metric name when querying Azure Monitor [custom metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-custom-overview).
 - `metricNamespace` - Name of the metric namespace.
@@ -117,7 +117,7 @@ spec:
       tenantId: xxx-xxx-xxx-xxx-xxx
       subscriptionId: yyy-yyy-yyy-yyy-yyy
       resourceGroupName: azureMonitor
-      metricName: pod_custom_metric # DEPRECATED: This parameter will be removed in version `2.12`, don't set it
+      metricName: pod_custom_metric # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`
       metricNamespace: pod_custom_metrics_namespace
       metricFilter: namespace eq 'default'
       metricAggregationInterval: "0:1:0"

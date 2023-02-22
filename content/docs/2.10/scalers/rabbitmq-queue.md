@@ -39,7 +39,7 @@ triggers:
 - `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
 - `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
-- `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (DEPRECATED: This parameter will be removed in version `2.12`, don't set it)
+- `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
 - `excludeUnacknowledged` - Set to `true` to specify that the `QueueLength` value should exclude unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 
@@ -115,7 +115,7 @@ spec:
       queueName: testqueue
       mode: QueueLength
       value: "20"
-      metricName: custom-testqueue # DEPRECATED: This parameter will be removed in version `2.12`, don't set it. optional. Generated value would be `rabbitmq-custom-testqueue`
+      metricName: custom-testqueue # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional. Generated value would be `rabbitmq-custom-testqueue`
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
 ```
@@ -172,7 +172,7 @@ spec:
       queueName: testqueue
       mode: QueueLength
       value: "20"
-      metricName: custom-testqueue # DEPRECATED: This parameter will be removed in version `2.12`, don't set it. optional. Generated value would be `rabbitmq-custom-testqueue`
+      metricName: custom-testqueue # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional. Generated value would be `rabbitmq-custom-testqueue`
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
 ```

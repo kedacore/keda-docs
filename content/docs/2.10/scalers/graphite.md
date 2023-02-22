@@ -16,7 +16,7 @@ triggers:
   metadata:
     # Required
     serverAddress: http://<graphite-host>:81
-    metricName: request-count # Note: name to identify the metric, DEPRECATED: This parameter will be removed in version 2.12, don't set it
+    metricName: request-count # Note: name to identify the metric, DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
     query: stats.counters.http.hello-world.request.count.count # Note: query must return a vector/scalar single element response
     threshold: '10.5'
     activationThreshold: '5'
@@ -25,7 +25,7 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - Address of Graphite
-- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique (DEPRECATED: This parameter will be removed in version `2.12`, don't set it)
+- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `query` - Query to run.
 - `threshold` - Target value to trigger scaling actions. (Default: 100, Optional, This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
@@ -55,7 +55,7 @@ spec:
   - type: graphite
     metadata:
       serverAddress: http://<graphite-host>:81
-      metricName: LagMetric # DEPRECATED: This parameter will be removed in version 2.12, don't set it
+      metricName: LagMetric # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
       threshold: '100'
       query: maxSeries(keepLastValue(reportd.*.gauge.detect.latest_max_time.value, 1))
       queryTime: '-1Minutes'
@@ -105,7 +105,7 @@ spec:
   - type: graphite
     metadata:
       authMode: "basic"
-      metricName: https_metric # DEPRECATED: This parameter will be removed in version 2.12, don't set it
+      metricName: https_metric # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
       query: https_metric
       queryTime: -1Hours
       serverAddress: http://<graphite server>:81
