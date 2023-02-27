@@ -88,7 +88,7 @@ spec:
       queryValue: "1"
       query: '{ "selector": { "feet": { "$gt": 0 } }, "fields": ["_id", "feet", "greeting"] }'
       activationQueryValue: "1"
-      metricName: "global-metric"
+      metricName: "global-metric" # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
     authenticationRef:
       name: keda-trigger-auth-couchdb-secret
 ```
