@@ -70,9 +70,9 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
 **Auth for Azure managed service for Prometheus:**
-See the "Azure managed service for Prometheus" section later on this page.
+- See the `Azure managed service for Prometheus` section later on this page.
 
-### Example
+### Examples
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
