@@ -25,7 +25,14 @@ triggers:
     cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
-    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
+    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint    
+    # Required when using Azure managed service for Prometheus
+    authenticationRef:
+    # Valid when using Azure managed service for Prometheus
+    cloud: Private # Default is `AzurePublicCloud`
+    # Required when cloud = Private
+    azureManagedPrometheusResourceURL: https://prometheus.monitor.azure.airgap/.default
+
 ```
 
 **Parameter list:**
@@ -40,10 +47,12 @@ triggers:
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs  (Values: `true`,`false`, Default: `false`, Optional)
+- `cloud` - Valid when using Azure managed service for Prometheus. (Values: `AZUREPUBLICCLOUD`,`AZUREUSGOVERNMENTCLOUD`,`AZURECHINACLOUD`,`PRIVATE`, Default: `AZUREPUBLICCLOUD`)
+- `azureManagedPrometheusResourceURL` - Valid when using Azure managed service for Prometheus. Required when `cloud = PRIVATE`
 
 ### Authentication Parameters
 
-Prometheus Scaler supports five types of authentication - bearer authentication, basic authentication, TLS authentication, custom authentication and Azure Workload/Pod Identity for Azure managed service for Prometheus.
+Prometheus Scaler supports various types of authentication to help you integrate with Prometheus.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
@@ -69,8 +78,13 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
-**Auth for Azure managed service for Prometheus:**
-- See the `Azure managed service for Prometheus` section later on this page.
+### Azure managed service for Prometheus
+Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
+- [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used for Auth.
+- No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
+- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
+- `cloud` can be provided in the trigger metadata if needed (Optional)
+- `azureManagedPrometheusResourceURL` - Will be needed if `cloud = PRIVATE`
 
 ### Examples
 
@@ -355,14 +369,6 @@ spec:
         name: keda-prom-creds
 ```
 
-### Azure managed service for Prometheus
-
-Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
-- [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used for Auth.
-- No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
-- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
-- `cloud` can be provided in the trigger metadata if needed.
-
 Here is an example of a prometheus scaler with Azure Pod Identity and Azure Workload Identity, define the `TriggerAuthentication` and `ScaledObject` as follows
 
 ```yaml
@@ -374,7 +380,6 @@ spec:
   podIdentity:
       provider: azure | azure-workload # use "azure" for pod identity and "azure-workload" for workload identity
       identityId: <identity-id> # Optional. Default: Identity linked with the label set when installing KEDA.
-
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
