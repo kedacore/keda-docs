@@ -16,13 +16,14 @@ triggers:
   metadata:
     # Required fields:
     serverAddress: http://<prometheus-host>:9090
-    metricName: http_requests_total # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
+    metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
-    cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
+    cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
+    customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint
 ```
@@ -30,18 +31,19 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
-- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. If using more than one trigger it is required that all `metricName`(s) be unique.
+- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `query` - Query to run.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
-- `cortexOrgID` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
+- `cortexOrgID` - DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of `customHeaders` and will be removed in version 2.12. Use `customHeaders: X-Scope-OrgID=##` instead to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
+- `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs  (Values: `true`,`false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
-Prometheus Scaler supports three types of authentication - bearer authentication, basic authentication and TLS authentication.
+Prometheus Scaler supports four types of authentication - bearer authentication, basic authentication, TLS authentication and custom authentication.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
@@ -60,6 +62,11 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 - `cert` - Certificate for client authentication. This is a required field.
 - `key` - Key for client authentication. Optional. This is a required field.
 
+**Custom authentication:**
+- `authModes`: It must contain `custom` in case of Custom Authentication. Specify this in trigger configuration.
+- `customAuthHeader`: Custom Authorization Header name to be used. This is required field.
+- `customAuthValue`: Custom Authorization Header value. This is required field.
+
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
 ### Example
@@ -77,7 +84,7 @@ spec:
   - type: prometheus
     metadata:
       serverAddress: http://<prometheus-host>:9090
-      metricName: http_requests_total
+      metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
       threshold: '100'
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
@@ -124,7 +131,7 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total
+        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "bearer"
@@ -173,7 +180,7 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total
+        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "basic"
@@ -227,7 +234,7 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total
+        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "tls"
@@ -288,10 +295,59 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total
+        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "tls,basic"
+      authenticationRef:
+        name: keda-prom-creds
+```
+
+Here is an example of a prometheus scaler with Custom Authentication, define the `Secret` and `TriggerAuthentication` as follows
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  customAuthHeader: "X-AUTH-TOKEN"
+  customAuthValue: "auth-token"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: customAuthHeader
+      name: keda-prom-secret
+      key: customAuthHeader
+    - parameter: customAuthValue
+      name: keda-prom-secret
+      key: customAuthValue
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://<prometheus-host>:9090
+        metricName: http_requests_total
+        threshold: '100'
+        query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+        authModes: "custom"
       authenticationRef:
         name: keda-prom-creds
 ```
