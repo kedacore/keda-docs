@@ -21,7 +21,7 @@ triggers:
       # Required: The scope of the runner, can be either "org", "ent" or "repo"
       runnerScope: "{runnerScope}"
       # Required: The personal access token to access the GitHub API
-      personalAccessToken: "{personalAccessToken}"
+      personalAccessTokenFromEnv: "{personalAccessToken}"
       # Optional: The list of repositories to scale, separated by comma
       repos: "{repos}"
       # Optional: The list of runner labels to scale on, separated by comma
@@ -39,7 +39,7 @@ triggers:
 - `githubAPIURL` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
 - `owner` - The owner of the GitHub repository, or the organization that owns the repository. (Required)
 - `runnerScope` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
-- `personalAccessToken` - The personal access token to access the GitHub API. (Required)
+- `personalAccessTokenFromEnv` - The personal access token to access the GitHub API. (Required)
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
@@ -54,7 +54,7 @@ There are also a set of default environment variables that will be used if none 
 
 - `githubAPIURL` - `GITHUB_API_URL`
 - `runnerScope` - `RUNNER_SCOPE`
-- `personalAccessToken` - `ACCESS_TOKEN`
+- `personalAccessTokenFromEnv` - `ACCESS_TOKEN`
 - `labels` - `LABELS`
 - `owner` - No defaults, must be specified if runnerScope is not `org` or `ent`. Otherwise `ORG_NAME` or `ENTERPRISE_NAME` will be used.
 - `repos` - No defaults, must be specified or left empty
