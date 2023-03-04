@@ -190,7 +190,7 @@
               result.display_name;
             element
               .querySelector(".scaler-title")
-              .setAttribute("href", `https://artifacthub.io/packages/keda-scaler/${result.repository.name}/${result.name}`);
+              .setAttribute("href", `https://artifacthub.io/packages/keda-scaler/${result.repository.name}/${result.normalized_name}`);
             result.description &&
               (element.querySelector(".description").textContent =
                 result.description);
