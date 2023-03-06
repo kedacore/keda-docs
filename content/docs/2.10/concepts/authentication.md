@@ -313,7 +313,9 @@ following flags -
 2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
 3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
 
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
+Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload identity authentication to work. For KEDA to get access to the provided client id federated credential has to be configured on the target Managed Identity / Azure AD application. Refer to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html). Federated credential should use this subject (if KEDA is installed in `keda` namespace): `system:serviceaccount:keda:keda-operator`.
+
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
 #### EKS Pod Identity Webhook for AWS
 
