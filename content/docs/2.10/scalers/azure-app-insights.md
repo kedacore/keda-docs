@@ -30,7 +30,7 @@ triggers:
     appInsightsResourceURL: https://api.applicationinsights.airgap.io/
     # Required when cloud = Private.
     activeDirectoryEndpoint: https://login.airgap.example/
-    ignoreNullValues: false # Default is `true`, which means ignoring any errors with data extraction from a successful query. Set to `false` the scaler will return error when null values are discovered 
+    ignoreNullValues: true # Default is `false`. Set to `true` to ignore any errors with data extraction from a successful query. Set to `false` the scaler will return error when null values are discovered 
 ```
 
 This scaler is backed by the Azure Application Insights REST API. Please see [this](https://docs.microsoft.com/en-us/rest/api/application-insights/metrics/get) page
@@ -51,7 +51,7 @@ for further details.
 - `cloud` - Name of the cloud environment that the Azure Application Insights instance belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `appInsightsResourceURL` - Application Insights REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.applicationinsights.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
-- `ignoreNullValues` - Ignore any errors with data extraction from a successful query (Values: `true`,`false`, Default: `true`, Optional).
+- `ignoreNullValues` - Ignore any errors with data extraction from a successful query (Values: `true`,`false`, Default: `false`, Optional).
 
 Some parameters can be provided using environment variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
