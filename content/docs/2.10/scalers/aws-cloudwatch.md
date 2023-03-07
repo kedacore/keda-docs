@@ -14,7 +14,7 @@ This specification describes the `aws-cloudwatch` trigger that scales based on a
 triggers:
 - type: aws-cloudwatch
   metadata:
-    # Required: namespace
+    # Optional: namespace
     namespace: AWS/SQS
     # Optional: Dimension Name
     dimensionName: QueueName
@@ -22,6 +22,7 @@ triggers:
     dimensionValue: keda
     # Optional: Expression query
     expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
+    # Optional: metricName
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2.1"
     minMetricValue: "1.5"
@@ -50,6 +51,8 @@ triggers:
 
 - `awsRegion` - AWS Region for the AWS Cloudwatch.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
+- `namespace` - AWS Cloudwatch namespace where the metric is located (Optional, Required when `expression` is not specified)
+- `metricName` - AWS Cloudwatch metric name (Optional, Required when `expression` is not specified)
 - `dimensionName` - Supports specifying multiple dimension names by using ";" as a separator i.e. dimensionName: QueueName;QueueName (Optional, Required when `expression` is not specified)
 - `dimensionValue` - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2 (Optional, Required when `expression` is not specified)
 - `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
