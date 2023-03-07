@@ -190,7 +190,7 @@
               result.display_name;
             element
               .querySelector(".scaler-title")
-              .setAttribute("href", result.repository.url);
+              .setAttribute("href", "https://artifacthub.io/packages/keda-scaler/" + result.repository.name + "/" + result.normalized_name);
             result.description &&
               (element.querySelector(".description").textContent =
                 result.description);
@@ -260,7 +260,7 @@
         // show all scalers by default
         let queryString = index.search("");
 
-        /* By default, Lunr can only match words stored in the records/index. We want to be able to match both words and characters. 
+        /* By default, Lunr can only match words stored in the records/index. We want to be able to match both words and characters.
         To be able to perform character matching, we do wildcard search. */
         if (keywords.length > 0) {
           queryString = index.search(keywords);
