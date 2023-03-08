@@ -216,8 +216,6 @@ kind: TriggerAuthentication
 metadata:
   name: keda-trigger-auth-kafka-credential
   namespace: default
-  tls: enable
-  sasl: oauthbearer
 spec:
   secretTargetRef:
   - parameter: sasl
