@@ -18,18 +18,14 @@ triggers:
       githubAPIURL: "https://api.github.com"
       # Required: The owner of the GitHub repository, or the organization that owns the repository
       owner: "{owner}"
-      # Required: The scope of the runner, can be either "org", "ent" or "repo"
+      # Required: The scope of the runner, can be either "org" (organisation), "ent" (enterprise) or "repo" (repository)
       runnerScope: "{runnerScope}"
-      # Required: The personal access token to access the GitHub API
-      personalAccessTokenFromEnv: "{personalAccessToken}"
       # Optional: The list of repositories to scale, separated by comma
       repos: "{repos}"
       # Optional: The list of runner labels to scale on, separated by comma
       labels: "{labels}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
-      # Optional: The target number of queued jobs to achieve to activate the scaler
-      activationTargetWorkflowQueueLength: "0" # Default 0
     authenticationRef:
       name: personalAccessToken
 ```
@@ -39,31 +35,26 @@ triggers:
 - `githubAPIURL` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
 - `owner` - The owner of the GitHub repository, or the organization that owns the repository. (Required)
 - `runnerScope` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
-- `personalAccessTokenFromEnv` - The personal access token to access the GitHub API. (Required)
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
-- `activationTargetWorkflowQueueLength` - The target number of queued jobs to achieve to activate the scaler. (Optional, Default: 0)
 
 *Parameters from Environment Variables*
 
 You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
 the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `labelsFromEnv: "RUNNER_LABELS"` will use the environment variable `RUNNER_LABELS` as the source fo the `labels` parameter.
 
-There are also a set of default environment variables that will be used if none of the above are specified directly.
+- `githubAPIURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
+- `ownerFromEnv` - The owner of the GitHub repository, or the organization that owns the repository. (Required)
+- `runnerScopeFromEnv` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
+- `reposFromEnv` - The list of repositories to scale, separated by comma. (Optional)
+- `labelsFromEnv` - The list of runner labels to scale on, separated by comma. (Optional)
+- `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
 
-- `githubAPIURL` - `GITHUB_API_URL`
-- `runnerScope` - `RUNNER_SCOPE`
-- `personalAccessTokenFromEnv` - `ACCESS_TOKEN`
-- `labels` - `LABELS`
-- `owner` - No defaults, must be specified if runnerScope is not `org` or `ent`. Otherwise `ORG_NAME` or `ENTERPRISE_NAME` will be used.
-- `repos` - No defaults, must be specified or left empty
-- `targetWorkflowQueueLength` - No defaults, must be specified or left empty
-- `activationTargetWorkflowQueueLength` - No defaults, must be specified or left empty
 
 ### Authentication Parameters
 
-As an alternative to using environment variables, you can authenticate with GitHub using a Personal Access Token via `TriggerAuthentication` configuration.
+You authenticate with GitHub using a Personal Access Token via `TriggerAuthentication` configuration.
 
 **Personal Access Token Authentication:**
 
@@ -71,23 +62,20 @@ As an alternative to using environment variables, you can authenticate with GitH
 
 ### How does it work?
 
-The scaler will query the GitHub API to get the number of queued jobs in the specified repositories. If the number of queued jobs is greater than the `targetWorkflowQueueLength`, the scaler will scale up. If the number of queued jobs is less than the `activationTargetWorkflowQueueLength`, the scaler will scale down.
+The scaler will query the GitHub API to get the number of queued jobs in the specified repositories, subject to filters. If the number of queued jobs is equal to or greater than the `targetWorkflowQueueLength`,  the scaler will scale up.
 
-If no `repos` are specified, the scaler will query all repositories in the specified `owner`. This is useful if you want to scale on all repositories in an organization, but will result in a lot of API calls and affect the Rate Limit.
-
-The `labels` parameter is used to filter the runners that the scaler will scale. It uses the minimum applicable label for the runner. For example, if you have a runner with the labels `golang` and `helm`, and you specify `helm` in the `labels` field on the GitHub Action, the scaler will scale up that runner.
+We provide various options to have granular control over what runners to scale:
+- **Repository Filtering** - If no `repos` are specified, the scaler will query all repositories in the specified `owner`. This is useful if you want to scale on all repositories in an organization, but will result in a lot of API calls and affect the Rate Limit.
+- **Label-based Filtering** - The `labels` parameter is used to filter the runners that the scaler will scale. It uses the minimum applicable label for the runner. For example, if you have a runner with the labels `golang` and `helm`, and you specify `helm` in the `labels` field on the GitHub Action, the scaler will scale up that runner.
 
 **API Query Chain**
 
 The scaler will query the GitHub API in the following order:
 
-If no repos are specified: Get the list of repos for the specified owner.
-
-For each repo: Get the list of workflows runs in the repo.
-
-For each queued workflow run: Get the list of jobs in the queued workflow run.
-
-For each job: if the scaler matches, increment the queue length for that scaler.
+- If no repos are specified: Get the list of repos for the specified owner.
+- For each repo: Get the list of workflows runs in the repo.
+- For each queued workflow run: Get the list of jobs in the queued workflow run.
+- For each job: if the scaler matches, increment the queue length for that scaler.
 
 **Notes on Rate Limits**
 
@@ -113,19 +101,19 @@ apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
-  name: pipeline-auth
+  name: github-auth
 data:
   personalAccessToken: <encoded personalAccessToken>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: pipeline-trigger-auth
+  name: github-trigger-auth
   namespace: default
 spec:
   secretTargetRef:
     - parameter: personalAccessToken
-      name: pipeline-auth
+      name: github-auth
       key: personalAccessToken
 ---
 apiVersion: keda.sh/v1alpha1
@@ -147,7 +135,54 @@ spec:
       repos: "keda,keda-docs"
       labels: "golang,helm"
       targetWorkflowQueueLength: "1"
-      activationTargetWorkflowQueueLength: "0"
     authenticationRef:
-     name: pipeline-trigger-auth
+     name: github-trigger-auth
+```
+Alternate example using ScaledJobs and using myoung34's work on containerised runners:
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: scaledjob-github-runner
+  namespace: github-runner
+spec:
+  jobTargetRef:
+    template:
+      metadata:
+        labels:
+          app: scaledjob-github-runner
+      spec:
+        containers:
+        - name: scaledjob-github-runner
+          image: myoung34/github-runner:2.302.1-ubuntu-focal
+          imagePullPolicy: Always
+          env:
+          - name: EPHEMERAL
+            value: "true"
+          - name: DISABLE_RUNNER_UPDATE
+            value: "true"
+          - name: REPO_URL
+            value: "https://github.com/OWNER/REPONAME"
+          - name: RUNNER_SCOPE
+            value: "repo"
+          - name: LABELS
+            value: "my-label"
+          - name: ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{.SecretName}}
+                key: personalAccessToken
+        restartPolicy: Never
+  minReplicaCount: 0
+  maxReplicaCount: 20
+  pollingInterval: 30
+  triggers:
+  - type: github-runner
+    metadata:
+      owner: OWNER
+      repos: REPONAME(S)
+      labelsFromEnv: "LABELS"
+      runnerScopeFromEnv: "RUNNER_SCOPE"
+    authenticationRef:
+     name: github-trigger-auth
 ```
