@@ -73,7 +73,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
- Another alternative is to specify `tls` and `sasl` in ScaledObject instead of TriggerAuthentication.
+ Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
 
 **Credential based authentication:**
 
