@@ -73,13 +73,13 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
- Another alternative is to specify in ScaledObject `enableTls` and `saslAuthType`  instead of `sasl` and `tls` in TriggerAuthentication respectively.
+ Another alternative is to specify `tls` and `sasl` in ScaledObject instead of TriggerAuthentication.
 
 **Credential based authentication:**
 
 **SASL:**
 
-- `sasl` / `saslAuthType` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional)
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional)
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
 - `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
@@ -87,7 +87,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
 **TLS:**
 
-- `tls` / `enableTls` - To enable SSL auth for Kafka, set this to `enable` / `disable`. If not set, TLS for Kafka is not used. (Values: `enable` / `true`, `disable` / `false`, Default: `disable` / `false`, Optional)
+- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
@@ -195,7 +195,7 @@ spec:
       name: keda-trigger-auth-kafka-credential
 ```
 
-##### Method 2: `enableTls` and `saslAuthType` are in ScaledObject
+##### Method 2: `tls` and `sasl` are in ScaledObject
 
 ```yaml
 apiVersion: v1
@@ -248,8 +248,8 @@ spec:
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
-      enableTls: true
-      saslAuthType: plaintext
+      tls: enable
+      sasl: plaintext
       # Optional
       lagThreshold: "50"
       offsetResetPolicy: latest
@@ -335,7 +335,7 @@ spec:
       name: keda-trigger-auth-kafka-credential
 ```
 
-##### Method 2: `enableTls` and `saslAuthType` are in ScaledObject
+##### Method 2: `tls` and `sasl` are in ScaledObject
 
 ```yaml
 apiVersion: v1
@@ -396,8 +396,8 @@ spec:
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
-      enableTls: true
-      saslAuthType: oauthbearer
+      tls: enable
+      sasl: oauthbearer
       # Optional
       lagThreshold: "50"
       offsetResetPolicy: latest
