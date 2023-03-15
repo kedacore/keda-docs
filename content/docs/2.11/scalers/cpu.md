@@ -8,7 +8,7 @@ go_file = "cpu_memory_scaler"
 
 > **Notice:**
 > - This scaler **requires prerequisites**. See the 'Prerequisites' section.
-> - This scaler can scale to 0 only when user defines at least one additional scaler which is not CPU or Memory (eg. Kafka + CPU/Memory, or Prometheus + CPU/Memory) and sets minReplicaCount to 0.
+> - This scaler can scale to 0 only when user defines at least one additional scaler which is not CPU or Memory (eg. Kafka + CPU, or Prometheus + CPU) and `minReplicaCount` is 0.
 > - This scaler only applies to ScaledObject, not to Scaling Jobs.
 
 ### Prerequisites
