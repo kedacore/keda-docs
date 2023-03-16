@@ -149,7 +149,9 @@ a = """KEDA client-go is exported as part of the KEDA repository."""
 [[qna]]
 q = "How do I run KEDA with `readOnlyRootFilesystem=true`?"
 a = """
-By default you can't run KEDA with `readOnlyRootFilesystem=true` because Metrics adapter generates self-signed certificates during deployment and stores them on the root file system.
+As default, KEDA v2.10 or above sets `readOnlyRootFilesystem=true` as default without any other manual intervention.
+
+If you are running KEDA v2.9 or below, you can't run KEDA with `readOnlyRootFilesystem=true` as default because Metrics adapter generates self-signed certificates during deployment and stores them on the root file system.
 To overcome this, you can create a secret/configmap with a valid CA, cert and key and then mount it to the Metrics Deployment.
 To use your certificate, you need to reference it in the container `args` section, e.g.:
 ```
