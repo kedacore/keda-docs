@@ -1,6 +1,6 @@
 +++
 title = "Solr"
-availability = "v2.10+"
+availability = "v2.11+"
 maintainer = "Community"
 description = "Scale applications based on Solr query results."
 go_file = "solr_scaler"
