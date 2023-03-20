@@ -16,7 +16,7 @@ triggers:
     metadata:
       host: "http://solr-service.solr-ns.svc.cluster.local:8983"
       query: "*:*"
-      core: "my_core"
+      collection: "my_core"
       targetQueryValue: "1"
       activationTargetQueryValue : "3"
       username: "solr"
@@ -26,7 +26,7 @@ triggers:
 
 - `host` - The hostname for connecting to the Solr service.
 - `query`- A Solr query that should return single numeric value. (Default: `*:*`, Optional)
-- `core` - Your collection name on Solr.
+- `collection` - Your collection name on Solr.
 - `targetQueryValue` - A threshold that is used as targetValue or targetAverageValue (depending on the trigger metric type) in HPA. (This value can be a float)
 - `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `username` - Username credential to connect to the Solr service.
@@ -72,7 +72,7 @@ spec:
     metadata:
       host: "http://solr-service.solr-ns.svc.cluster.local:8983"
       query: "*:*"
-      core: "my_core"
+      collection: "my_core"
       targetQueryValue: "1"
       username: "solr"
     authenticationRef:
