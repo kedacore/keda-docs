@@ -19,7 +19,6 @@ triggers:
       collection: "my_core"
       targetQueryValue: "1"
       activationTargetQueryValue : "3"
-      username: "solr"
 ```
 
 **Parameter list:**
@@ -29,7 +28,6 @@ triggers:
 - `collection` - Your collection name on Solr.
 - `targetQueryValue` - A threshold that is used as targetValue or targetAverageValue (depending on the trigger metric type) in HPA. (This value can be a float)
 - `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `username` - Username credential to connect to the Solr service.
 
 ### Authentication Parameters
 
@@ -37,6 +35,7 @@ You can authenticate by using a password via TriggerAuthentication configuration
 
 **Credential based authentication:**
 
+- `username` - Username for configured user to login to the Solr instance.
 - `password` - Password for configured user to login to the Solr instance.
 
 ### Example
@@ -48,6 +47,7 @@ metadata:
   name: solr-secret
 type: Opaque
 data:
+  solr_username: SOLR_USERNAME
   solr_password: SOLR_PASSWORD
 ---
 apiVersion: keda.sh/v1alpha1
@@ -56,6 +56,9 @@ metadata:
   name: trigger-auth-solr
 spec:
   secretTargetRef:
+  - parameter: username
+    name: solr-secret
+    key: solr_username
   - parameter: password
     name: solr-secret
     key: solr_password
@@ -74,7 +77,6 @@ spec:
       query: "*:*"
       collection: "my_core"
       targetQueryValue: "1"
-      username: "solr"
     authenticationRef:
       name: trigger-auth-solr
 ```
