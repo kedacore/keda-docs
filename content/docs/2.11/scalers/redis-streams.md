@@ -12,7 +12,9 @@ Redis 5.0 introduced [Redis Streams](https://redis.io/topics/streams-intro) whic
 
 One of its features includes [`Consumer Groups`](https://redis.io/topics/streams-intro#consumer-groups), that allows a group of clients to co-operate consuming a different portion of the same stream of messages.
 
-This specification describes the `redis-streams` trigger that scales based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream.
+There are two ways to configure `redis-streams` trigger:
+1. Based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream
+2. Based on the *Stream Length* (see [`XLEN`](https://redis.io/commands/xlen))
 
 
 ```yaml
@@ -25,8 +27,9 @@ triggers:
     usernameFromEnv: REDIS_USERNAME # optional (can also use authenticationRef)
     passwordFromEnv: REDIS_PASSWORD # optional (can also use authenticationRef)
     stream: my-stream # Required - name of the Redis Stream
-    consumerGroup: my-consumer-group # Required - name of consumer group associated with Redis Stream
-    pendingEntriesCount: "10" # Required - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+    consumerGroup: my-consumer-group # optional - name of consumer group associated with Redis Stream
+    pendingEntriesCount: "10" # optional - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
+    streamLength: "50" # optional - Redis stream length, alternative to pendingEntriesCount scaler trigger
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     databaseIndex: "0" # optional
@@ -56,7 +59,9 @@ triggers:
 
 - `stream` - Name of the Redis Stream.
 - `consumerGroup` - Name of the Consumer group associated with Redis Stream.
+> Setting the `consumerGroup` causes the scaler to operate on `pendingEntriesCount`. Lack of `consumerGroup` will cause the scaler to be based on `streamLength`
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
+- `streamLength` - Threshold for stream length, alternative average target value to scale workload. (Default: `5`, Optional)
 - `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
@@ -151,4 +156,31 @@ spec:
         pendingEntriesCount: "10"
       authenticationRef:
         name: keda-redis-stream-triggerauth # name of the TriggerAuthentication resource
+```
+
+#### Using `streamLength`
+
+To scale based on redis stream `XLEN` don't set `consumerGroup`. Example:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-streams-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: redis-streams-consumer
+  pollingInterval: 20
+  cooldownPeriod: 200
+  maxReplicaCount: 10
+  minReplicaCount: 1
+  triggers:
+    - type: redis-streams
+      metadata:
+        addressFromEnv: REDIS_HOST
+        usernameFromEnv: REDIS_USERNAME # name of the environment variable in the Deployment
+        passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
+        stream: my-stream
+        streamLength: "50"
 ```
