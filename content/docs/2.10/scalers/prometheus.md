@@ -81,6 +81,7 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
+- `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - `cloud` can be provided in the trigger metadata if needed (Optional)
 - `azureManagedPrometheusResourceURL` - Will be needed if `cloud = PRIVATE`
 
