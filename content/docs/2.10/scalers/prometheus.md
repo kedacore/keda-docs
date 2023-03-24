@@ -26,10 +26,6 @@ triggers:
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Prometheus endpoint    
-    # Valid when using Azure managed service for Prometheus
-    cloud: Private # Default is `AzurePublicCloud`
-    # Required when cloud = Private
-    azureManagedPrometheusResourceURL: https://prometheus.monitor.azure.airgap/.default
 
 ```
 
@@ -45,8 +41,6 @@ triggers:
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs  (Values: `true`,`false`, Default: `false`, Optional)
-- `cloud` - Valid when using Azure managed service for Prometheus. (Values: `AZUREPUBLICCLOUD`,`AZUREUSGOVERNMENTCLOUD`,`AZURECHINACLOUD`,`PRIVATE`, Default: `AZUREPUBLICCLOUD`)
-- `azureManagedPrometheusResourceURL` - Valid when using Azure managed service for Prometheus. Required when `cloud = PRIVATE`
 
 ### Authentication Parameters
 
@@ -76,13 +70,12 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
-**Azure managed service for Prometheus**
+**Azure monitor managed service for Prometheus**
 Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
+- `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
-- `cloud` can be provided in the trigger metadata if needed (Optional)
-- `azureManagedPrometheusResourceURL` - Will be needed if `cloud = PRIVATE`
 
 ### Examples
 
@@ -396,10 +389,6 @@ spec:
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
       threshold: '100.50'
       activationThreshold: '5.5'
-      # Optional (Default: AzurePublicCloud)
-      cloud: Private
-      # Required when cloud = Private
-      azureManagedPrometheusResourceURL: https://prometheus.monitor.azure.airgap/.default
     authenticationRef:
       name: azure-managed-prometheus-trigger-auth
 ```
