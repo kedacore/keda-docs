@@ -454,6 +454,10 @@ url = "https://nemlig.com"
 logo = "nemlig.png"
 
 [[params.users]]
+url = "https://opsworks.co"
+logo = "opsworks.png"
+
+[[params.users]]
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
