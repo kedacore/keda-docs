@@ -116,6 +116,10 @@ spec:
       key: {hasicorp-vault-secret-key-name}                               # Required.
       path: {hasicorp-vault-secret-path}                                  # Required.
   azureKeyVault:                                                          # Optional.
+    vaultUri: {key-vault-address}                                         # Required.
+    podIdentity:                                                          # Optional. Required when using pod identity.
+      provider: azure | azure-workload                                    # Required.
+      identityId: <identity-id>                                           # Optional
     vaultURI: {key-vault-address}                                         # Required.
     credentials:                                                          # Optional. Required when not using pod identity.
       clientId: {azure-ad-client-id}                                      # Required.
