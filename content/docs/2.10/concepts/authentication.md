@@ -237,7 +237,7 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
 You can use pod identity providers `azure` or `azure-workload` to authenticate to the key vault by specifying it in the
-`TriggerAuthentication` / `ClusterTriggerAuthentication` definition.
+`TriggerAuthentication` / `ClusterTriggerAuthentication` definition. Pod Identity binding needs to be applied in the keda namespace.
 
 If you do not wish to use a pod identity provider, you need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
 
