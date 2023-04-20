@@ -24,8 +24,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 
 The KEDA Webhooks expose Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
-- `scaled_object_validation_total`- The current value for scaled object validations.
-- `scaled_object_validation_errors` - The number of validation errors.
+- `keda_webhook_scaled_object_validation_total`- The current value for scaled object validations.
+- `keda_webhook_scaled_object_validation_errors` - The number of validation errors.
 
 ### Metrics Server
 
