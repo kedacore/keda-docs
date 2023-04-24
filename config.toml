@@ -537,7 +537,7 @@ logo = "azure-devops.png"
 
 [[params.supportedby]]
 url = "https://azure.microsoft.com/"
-logo = "microsoft-azure.svg"
+logo = "microsoft-azure.png"
 
 [[params.supportedby]]
 url = "https://snyk.io"
