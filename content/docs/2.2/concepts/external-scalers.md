@@ -384,7 +384,7 @@ func (e *ExternalScaler) StreamIsActive(scaledObject *pb.ScaledObjectRef, epsSer
 
 {{< collapsible "C#" >}}
 ```csharp
-public override Task StreamIsActive(ScaledObjectRef request, IServerStreamWriter<IsActiveResponse> responseStream, ServerCallContext context)
+public override async Task StreamIsActive(ScaledObjectRef request, IServerStreamWriter<IsActiveResponse> responseStream, ServerCallContext context)
 {
   if (!request.ScalerMetadata.ContainsKey("latitude") ||
     !request.ScalerMetadata.ContainsKey("longitude"))
@@ -467,7 +467,7 @@ func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*p
 
 {{< collapsible "C#" >}}
 ```csharp
-public override Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
+public override async Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
 {
   var resp = new GetMetricSpecResponse();
 
