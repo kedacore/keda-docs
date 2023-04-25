@@ -1,5 +1,5 @@
 +++
-title = "Exploring the new certificate management in KEDA 2.10: Enhancing security for autoscaling"
+title = "Securing autoscaling with the newly improved certificate management in KEDA 2.10"
 date = 2023-04-20
 author = "Jorge Turrado (SCRM Lidl International Hub)"
 aliases = [
@@ -7,13 +7,13 @@ aliases = [
 ]
 +++
 
-Recently we have release KEDA v2.10, which has come with some important improvements related with the security and certificate management: 
+Recently, we have release KEDA v2.10 that introduced a key improvement for managing certificates and your autoscaling security: 
 
-- The usage of certificates to encrypt any communication between components.
-- The support for providing your own certificated for internal communications.
-- The support for providing customs CAs and trust in them.
+- Encryption of any communication between KEDA components.
+- Support for providing your own certificates for internal communications.
+- Support for using customs certificate authorities (CA).
 
-Thanks to them, we can improve the security between KEDA components, but also between k8s API server and between KEDA and upstreams. Let's explain all of them deeper :) 
+With these new improvements, we can dramatically improve the security between KEDA components, the Kubernetes API server and scaler sources. Let's take a closer look.
 
 ## Where do we come from?
 
