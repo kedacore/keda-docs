@@ -1,6 +1,6 @@
 +++
 title = "Securing autoscaling with the newly improved certificate management in KEDA 2.10"
-date = 2023-04-20
+date = 2023-05-02
 author = "Jorge Turrado (SCRM Lidl International Hub)"
 aliases = [
 "/blog/exploring-new-certificate-management"
