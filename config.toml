@@ -458,6 +458,10 @@ url = "https://home.kpmg/uk/en/home.html"
 logo = "KPMG.jpeg"
 
 [[params.users]]
+url = "https://www.leanix.net/"
+logo = "leanix.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
