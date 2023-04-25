@@ -68,3 +68,9 @@ certificates:
 ```
 
 > Note: As KEDA needs that the services are correctly patched, when the cert manager integration is enabled the manifests are annotated for it. If you provide a CA via secret, the secret has to be annotated with `cert-manager.io/allow-direct-injection: "true"`. Otherwise cert manager won't be able to patch the resources with the CA.
+
+## Conclusion
+
+The improvements made to certificate management in KEDA 2.10 are a significant step forward in enhancing security and reliability, but they are not the only ones. We are working to make KEDA even more secure by default with small actions like limiting the default minimum TLS version or correctly using security contexts in Kubernetes.
+
+If you want to dive deeper, don't hesitate to check the [repo changelog](https://github.com/kedacore/keda/blob/main/CHANGELOG.md), where every change is listed. And stay tuned to future posts about other security tips! ;)
