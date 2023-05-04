@@ -13,7 +13,7 @@ Our job is to make sure that your are able to scale the workloads that you run w
 
 In order to be successful, we need to learn how big of KEDA deployments end-users are running, what is causing frustration and what we can improve. This is why we have created a survey to gain more insights and make KEDA better.
 
-**If you want to help shape KEDA's future, feel free to fill in [our 2-minute survey](https://forms.gle/Zv6yxzQvfgAB2pab8).**
+**If you want to help shape KEDA's future, feel free to fill in [our 2-minute survey](https://forms.gle/nC393JzCqK1evjcH9).**
 
 Proud of your autoscaling infrastructure? You're more then welcome to show it in our [KEDA deployment show & tell discussion](https://github.com/kedacore/keda/discussions/4410) as well!
 
