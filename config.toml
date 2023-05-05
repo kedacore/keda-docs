@@ -568,6 +568,10 @@ url = "https://www.cncf.io/"
 logo = "cncf-color.png"
 
 [[params.supportedby]]
+url = "https://azure.microsoft.com/"
+logo = "microsoft-azure.png"
+
+[[params.supportedby]]
 url = "https://snyk.io"
 logo = "snyk.png"
 
