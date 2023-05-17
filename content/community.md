@@ -3,9 +3,11 @@ title = "Community"
 description = "How you can get involved with the KEDA ecosystem"
 +++
 
+## Get Involved
+
 {{< include "get-involved.md" >}}
 
-## Users
+## End-Users
 
  A variety of users are autoscaling applications with KEDA:
 

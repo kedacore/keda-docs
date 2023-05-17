@@ -349,7 +349,7 @@ func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*p
 
 {{< collapsible "C#" >}}
 ```csharp
-public override Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
+public override async Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
 {
   var resp = new GetMetricSpecResponse();
 

@@ -152,14 +152,14 @@ Like reconciliation, KEDA also uses the [controller-runtime project](https://git
 
 To specify values other than their defaults, you can set the following environment variables:
 
-| Environment variable name                    | Deployment     | Manager Property |
-| -------------------------------------------- | -------------- | ---------------- |
-| KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator       | LeaseDuration    |
-| KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator       | RenewDeadline    |
-| KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator       | RetryPeriod      |
-| KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | LeaseDuration    |
-| KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | RenewDeadline    |
-| KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | RetryPeriod      |
+| Environment variable name                    | Deployment     | Default Value | Manager Property |
+| -------------------------------------------- | -------------- | ------------- | ---------------- |
+| KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator       | 15s           | LeaseDuration    |
+| KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator       | 10s           | RenewDeadline    |
+| KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator       | 2s            | RetryPeriod      |
+| KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | 15s           | LeaseDuration    |
+| KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | 10s           | RenewDeadline    |
+| KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | 2s            | RetryPeriod      |
 
 ## Certificates used by KEDA Metrics Server
 

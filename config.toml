@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -222,10 +222,34 @@ parent = "community"
 weight = 1
 
 [[menu.main]]
+url = "/community/#get-involved"
+name = "Get Involved"
+parent = "community"
+weight = 2
+
+[[menu.main]]
+url = "/community/#end-users"
+name = "End-Users"
+parent = "community"
+weight = 3
+
+[[menu.main]]
+url = "/community/#partners"
+name = "Partners"
+parent = "community"
+weight = 4
+
+[[menu.main]]
+url = "/community/#supported-by"
+name = "Supported by"
+parent = "community"
+weight = 5
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 2
+weight = 6
 
 [[menu.main]]
 name = "Project"
@@ -434,6 +458,10 @@ url = "https://home.kpmg/uk/en/home.html"
 logo = "KPMG.jpeg"
 
 [[params.users]]
+url = "https://www.leanix.net/"
+logo = "leanix.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
@@ -452,6 +480,10 @@ logo = "mivation-inc.png"
 [[params.users]]
 url = "https://nemlig.com"
 logo = "nemlig.png"
+
+[[params.users]]
+url = "https://opsworks.co"
+logo = "opsworks.png"
 
 [[params.users]]
 url = "https://www.theproindia.com"
@@ -530,6 +562,14 @@ logo = "SCRM.png"
 [[params.supportedby]]
 url = "https://azure.microsoft.com/en-us/services/devops/"
 logo = "azure-devops.png"
+
+[[params.supportedby]]
+url = "https://www.cncf.io/"
+logo = "cncf-color.png"
+
+[[params.supportedby]]
+url = "https://azure.microsoft.com/"
+logo = "microsoft-azure.png"
 
 [[params.supportedby]]
 url = "https://snyk.io"

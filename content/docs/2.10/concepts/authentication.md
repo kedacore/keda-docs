@@ -116,6 +116,10 @@ spec:
       key: {hasicorp-vault-secret-key-name}                               # Required.
       path: {hasicorp-vault-secret-path}                                  # Required.
   azureKeyVault:                                                          # Optional.
+    vaultUri: {key-vault-address}                                         # Required.
+    podIdentity:                                                          # Optional. Required when using pod identity.
+      provider: azure | azure-workload                                    # Required.
+      identityId: <identity-id>                                           # Optional
     vaultURI: {key-vault-address}                                         # Required.
     credentials:                                                          # Optional. Required when not using pod identity.
       clientId: {azure-ad-client-id}                                      # Required.
@@ -233,7 +237,7 @@ You can pull secrets from Azure Key Vault into the trigger by using the `azureKe
 The `secrets` list defines the mapping between the key vault secret and the authentication parameter.
 
 You can use pod identity providers `azure` or `azure-workload` to authenticate to the key vault by specifying it in the
-`TriggerAuthentication` / `ClusterTriggerAuthentication` definition.
+`TriggerAuthentication` / `ClusterTriggerAuthentication` definition. Pod Identity binding needs to be applied in the keda namespace.
 
 If you do not wish to use a pod identity provider, you need to register an [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with Azure Active Directory and specify its credentials. The `clientId` and `tenantId` for the application are to be provided as part of the spec. The `clientSecret` for the application is expected to be within a kubernetes secret in the same namespace as the authentication resource.
 
@@ -313,7 +317,9 @@ following flags -
 2. `--set podIdentity.azureWorkload.clientId={azure-ad-client-id}`
 3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
 
-You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
+Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload identity authentication to work. For KEDA to get access to the provided client id federated credential has to be configured on the target Managed Identity / Azure AD application. Refer to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html). Federated credential should use this subject (if KEDA is installed in `keda` namespace): `system:serviceaccount:keda:keda-operator`.
+
+You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
 #### EKS Pod Identity Webhook for AWS
 

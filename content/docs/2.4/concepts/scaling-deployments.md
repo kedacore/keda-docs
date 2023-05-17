@@ -133,7 +133,7 @@ Minimum number of replicas KEDA will scale the resource down to. By default it's
   maxReplicaCount: 100 # Optional. Default: 100
 ```
 
-This setting is passed to the HPA definition that KEDA will create for a given resource and holds the maximum number of replicas of the target resouce.
+This setting is passed to the HPA definition that KEDA will create for a given resource and holds the maximum number of replicas of the target resource.
 
 ---
 
