@@ -142,7 +142,6 @@ To modify this properties you can set environment variables on both KEDA Operato
 | ------------------------------------- | -------------- | ------------- | -------------------------------------------------------------- |
 | KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
 | KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
-| KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
 
 ## Configure Leader Election
 
