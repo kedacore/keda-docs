@@ -76,7 +76,8 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
+ If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
  Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
 
 **Credential based authentication:**
@@ -88,6 +89,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `password` - Password used for sasl authentication. (Optional)
 - `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
 - `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
+- `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
 
 **TLS:**
 
@@ -277,6 +279,7 @@ data:
   password: "admin"
   oauthTokenEndpointUri: "https://tokenendpoint.com/token"
   scopes: "default"
+  oauthExtensions: "extension_logicalCluster=1,extension_identityPoolId=2"
   tls: "enable"
   ca: <your ca>
   cert: <your cert>
@@ -304,6 +307,9 @@ spec:
   - parameter: scopes
     name: keda-kafka-secrets
     key: scopes
+  - parameter: oauthExtensions
+    name: keda-kafka-secrets
+    key: oauthExtensions
   - parameter: tls
     name: keda-kafka-secrets
     key: tls
@@ -352,6 +358,7 @@ data:
   password: "admin"
   oauthTokenEndpointUri: "https://tokenendpoint.com/token"
   scopes: "default"
+  oauthExtensions: "extension_logicalCluster=1,extension_identityPoolId=2"
   ca: <your ca>
   cert: <your cert>
   key: <your key>
@@ -375,6 +382,9 @@ spec:
   - parameter: scopes
     name: keda-kafka-secrets
     key: scopes
+  - parameter: oauthExtensions
+    name: keda-kafka-secrets
+    key: oauthExtensions
   - parameter: ca
     name: keda-kafka-secrets
     key: ca
