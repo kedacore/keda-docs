@@ -10,7 +10,7 @@ weight = 100
 
 The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
-- `keda_scaler_activity` - This metric marks whether the particular scaler is active (value == 1) or in-active (value == 0).
+- `keda_scaler_active` - This metric marks whether the particular scaler is active (value == 1) or in-active (value == 0).
 - `keda_scaler_metrics_value` - The current value for each scaler's metric that would be used by the HPA in computing the target average.
 - `keda_scaler_metrics_latency` - The latency of retrieving current metric from each scaler.
 - `keda_scaler_errors` - The number of errors that have occurred for each scaler.
