@@ -24,7 +24,7 @@ triggers:
     activationThreshold: "10.5"
     tenantId: 045ef409-6dee-4893-a824-5612eac467b1 # Can use TriggerAuthentication as well
     clientId: 4ba039f1-d69c-434e-9268-4a2bb7bba90d # Can use TriggerAuthentication as well
-    clientSecret: t0p-s3cret  # Can use TriggerAuthentication as well
+    clientSecret: t0p-s3cret  # DEPRECATED, use TriggerAuthentication or clientSecretFromEnv
     # Alternatively, you can use existing environment variables to read aad app creds from:
     clientIdFromEnv: AAD_APP_CLIENT_ID_ENV_VAR_NAME # Optional. You can use this instead of `clientId` parameter.
     clientSecretFromEnv: AAD_APP_SECRET_ENV_VAR_NAME # Optional. You can use this instead of `clientSecret` parameter.
@@ -44,7 +44,7 @@ triggers:
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `tenantId` - Id of the Azure AD tenant.
 - `clientId` - Id of the Azure AD application.
-- `clientSecret` - Password of the Azure AD application.
+- `clientSecret` - Password of the Azure AD application. (DEPRECATED: This parameter is deprecated as of KEDA v2.11 and will be removed in version `2.13`)
 - `cloud` - Name of the cloud environment that the Azure Data Explorer cluster belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 
