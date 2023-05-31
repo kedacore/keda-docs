@@ -36,7 +36,10 @@ triggers:
 
 ### Authentication Parameters
 
-Not supported yet.
+Some parameters of the JetStream details can be pulled from `TriggerAuthentication` objects:
+
+- `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
+- `account` - Name of the NATS account. "$G" is default when no account is configured.
 
 ### Example
 
