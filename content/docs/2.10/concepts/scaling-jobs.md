@@ -27,6 +27,10 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
   name: {scaled-job-name}
+  labels:
+    my-label: my-label-value                  # labels on the ScaledJob will be copied to each Job
+  annotations:
+    my-annotation: my-annotation-value        # annotations on the ScaledJob will be copied to each Job
 spec:
   jobTargetRef:
     parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
@@ -61,6 +65,17 @@ spec:
 You can find all supported triggers [here](../scalers).
 
 ## Details
+
+```yaml
+  labels:
+    my-label: my-label-value                  # labels on the ScaledJob will be passed to the Job
+  annotations:
+    my-annotation: my-annotation-value        # annotations on the ScaledJob will be passed to the Job
+```
+
+The labels and annotations of the ScaledJob will be copied to each Job created.
+
+---
 
 ```yaml
   jobTargetRef:
