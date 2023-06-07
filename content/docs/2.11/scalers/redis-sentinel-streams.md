@@ -15,7 +15,7 @@ One of its features includes [`Consumer Groups`](https://redis.io/topics/streams
 There are three ways to configure `redis-streams` trigger:
 1. Based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream
 2. Based on the *Stream Length* (see [`XLEN`](https://redis.io/commands/xlen))
-3. Based on the *Consumer Group Lag* (see [`XINFO GROUPS`](https://redis.io/commands/xinfo-groups/))
+3. Based on the *Consumer Group Lag* (see [`XINFO GROUPS`](https://redis.io/commands/xinfo-groups/)). This is the only configuration that supports scaling down to 0. IMPORTANT: Redis 7+ is required for this feature to run.
 
 
 ```yaml
