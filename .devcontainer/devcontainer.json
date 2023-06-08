@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/go
 {
-	"name": "Keda Docs",
+	"name": "docs",
 	"dockerFile": "Dockerfile",
 	"runArgs": [
 		// Uncomment the next line to use a non-root user. On Linux, this will prevent
