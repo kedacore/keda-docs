@@ -107,7 +107,9 @@ ___
   minReplicaCount: 10 # Optional. Default: 0
 ```
 
-The min number of jobs that is created by default. This can be useful to avoid bootstrapping time of new jobs. If minReplicaCount is greater than maxReplicaCount, minReplicaCount will be set to maxReplicaCount. 
+The min number of jobs that is created by default. This can be useful to avoid bootstrapping time of new jobs. If minReplicaCount is greater than maxReplicaCount, minReplicaCount will be set to maxReplicaCount.  
+  
+New messages may create new jobs - within the limits imposed by maxReplicaCount - in order to reach the state where minReplicaCount jobs are always running.  For example, if one sets minReplicaCount to 2 then there will be 2 jobs running permanently. Using a targetValue of 1, if 3 new messages are sent, 2 of those messages will be processed on the already running jobs but another 3 jobs will be created in order to fulfill the desired state dictated by the minReplicaCount parameter that is set to 2.
 ___
 
 ---

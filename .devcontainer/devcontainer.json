@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/go
 {
-	"name": "Npm",
+	"name": "docs",
 	"dockerFile": "Dockerfile",
 	"runArgs": [
 		// Uncomment the next line to use a non-root user. On Linux, this will prevent
@@ -18,13 +18,7 @@
 		"--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
 	],
 
-	// Use 'settings' to set *default* container specific settings.json values on container create.
-	// You can edit these settings after create using File > Preferences > Settings > Remote.
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
-	},
-
-	// Add the IDs of extensions you want installed when the container is created in the array below.
-	"extensions": [
-	]
+	"features": {
+		"ghcr.io/devcontainers/features/hugo:1": {}
+	}
 }

@@ -222,10 +222,34 @@ parent = "community"
 weight = 1
 
 [[menu.main]]
+url = "/community/#get-involved"
+name = "Get Involved"
+parent = "community"
+weight = 2
+
+[[menu.main]]
+url = "/community/#end-users"
+name = "End-Users"
+parent = "community"
+weight = 3
+
+[[menu.main]]
+url = "/community/#partners"
+name = "Partners"
+parent = "community"
+weight = 4
+
+[[menu.main]]
+url = "/community/#supported-by"
+name = "Supported by"
+parent = "community"
+weight = 5
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 2
+weight = 6
 
 [[menu.main]]
 name = "Project"
@@ -434,6 +458,10 @@ url = "https://home.kpmg/uk/en/home.html"
 logo = "KPMG.jpeg"
 
 [[params.users]]
+url = "https://www.leanix.net/"
+logo = "leanix.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
@@ -534,6 +562,14 @@ logo = "SCRM.png"
 [[params.supportedby]]
 url = "https://azure.microsoft.com/en-us/services/devops/"
 logo = "azure-devops.png"
+
+[[params.supportedby]]
+url = "https://www.cncf.io/"
+logo = "cncf-color.png"
+
+[[params.supportedby]]
+url = "https://azure.microsoft.com/"
+logo = "microsoft-azure.png"
 
 [[params.supportedby]]
 url = "https://snyk.io"
