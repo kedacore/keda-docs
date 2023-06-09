@@ -35,11 +35,11 @@ triggers:
 - `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored.
 - `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
-- `activationMessageCountTarget` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `activationMessageCountTarget` - Target message count oberved on a queue for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
-- `activationMessageSpoolUsageTarget` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `activationMessageSpoolUsageTarget` - Target message spool backlog (data stored in a queue expressed in Megabytes) for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `messageReceiveRateTarget` - Target number of messages/second managable by a replica.
-- `activationMessageReceiveRateTarget` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `activationMessageReceiveRateTarget` - Target number of messages per second delivered to a queue for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `username` - User account with access to Solace SEMP RESTful endpoint.
 - `password` - Password for the user account.
 - `usernameFromEnv` - Environment variable set with SEMP user account.
@@ -62,9 +62,10 @@ triggers:
 
 > &#128161; **Important:** For best results, both `messageCountTarget` and `messageReceiveRateTarget` should be specified to configure a Solace Scaler. A combined approach capitalizes on the best characteristics of each metric.
 
-> &#128293; **Note:** Configured by itself, `messageCountTarget` will make consumer scaling reactive but may introduce ***flapping***: the constant creation and destruction of replicas as the system tries to achieve a steady state.
+> &#128161; **Note:** Configured by itself, `messageCountTarget` will make consumer scaling reactive but may introduce [flapping](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#flapping): the constant creation and destruction of replicas as the system tries to achieve a steady state.
+>> For example, a Solace consumer app scaled by KEDA experiences an increase in the rate of message delivery to its source queue, resulting in a backlog (high message count). Based on the `messageCountTarget`, KEDA increases the number of replicas and the backlog is cleared. With the backlog reduced, KEDA scales-in the application, reducing the number of replicas. If the rate of message delivery remains high, the application may not be able to maintain the backlog with the lower number of replicas, causing KEDA to scale-out the workload again. The backlog is again cleared - and the pattern repeats. Using the `messageReceiveRateTarget` as an additional metric can be used to identify a suitable replica count to handle the inbound message rate while keeping the backlog clear and the application performant.
 
-> &#128293; **Note:** Configured by itself, `messageReceiveRateTarget` cannot scale consumers based on queue backlog.
+> &#128161; **Note:** Configured by itself, `messageReceiveRateTarget` cannot scale consumers based on queue backlog.
 
 > &#128161; **Activation Values:** `activationMessageCountTarget`, `activationMessageSpoolUsageTarget`, and `activationMessageReceiveRateTarget` are assumed to be `0` (zero) if not specified.
 
