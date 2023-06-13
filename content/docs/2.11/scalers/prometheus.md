@@ -77,6 +77,21 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
+**Google Managed for Prometheus:**
+
+Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
+By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP managed service and handle authentication using the GCP workload identity mechanism.
+
+See the follwowing steps to configure the scaler integration.
+
+- Setup [GCP Workload Identity](./../authentication-providers/gcp-workload-identity) on KEDA operator;
+- Assign the [Monitoring Viewer](https://cloud.google.com/iam/docs/understanding-roles#monitoring.viewer) role (namely `roles/monitoring.viewer`) to the Google Service Account on Identity Access and Management (IAM).
+- No other auth (via `authModes`) should be provided other than GCP workload identity auth;
+- Prometheus server address should follow the Google's Monitoring API for [Prometheus HTTP API](https://cloud.google.com/stackdriver/docs/managed-prometheus/query#api-prometheus):
+  - Example: `https://monitoring.googleapis.com/v1/projects/GOOGLE_PROJECT_ID/location/global/prometheus` - where `GOOGLE_PROJECT_ID` should be replaced by your Google project ID.
+
+To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example](#example-google-managed-prometheus).
+
 ### Examples
 
 ```yaml
@@ -391,4 +406,36 @@ spec:
       activationThreshold: '5.5'
     authenticationRef:
       name: azure-managed-prometheus-trigger-auth
+```
+
+#### Example: Google Managed Prometheus
+
+Below is an example showcasing the use of Prometheus scaler with GCP Workload Identity. Please note that in this particular example, the Google project ID has been set as `my-google-project`.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterTriggerAuthentication
+metadata:
+  name: google-workload-identity-auth
+spec:
+  podIdentity:
+    provider: gcp
+---
+apiVersion: keda.sh/v1alpha1
+metadata:
+  name: google-managed-prometheus-scaler
+spec:
+  scaleTargetRef:
+    name: deployment-name-to-be-scaled
+  minReplicaCount: 1
+  maxReplicaCount: 20
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: https://monitoring.googleapis.com/v1/projects/my-google-project/location/global/prometheus
+      query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+      threshold: '50.0'
+    authenticationRef:
+      kind: ClusterTriggerAuthentication
+      name: google-workload-identity-auth
 ```
