@@ -20,6 +20,8 @@ triggers:
     awsEndpoint: ""
     # Required: tableName
     tableName: myTableName
+    # Optional: indexName
+    indexName: ""
     # Required: targetValue
     targetValue: "1"
     # Required: expressionAttributeNames
@@ -37,6 +39,7 @@ triggers:
 - `awsRegion` - AWS Region for the DynamoDB Table.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `tableName` - The target table where the scaler execute the query.
+- `indexName` - The index used by the DynamoDB Query. (Optional)
 - `targetValue` - The target value for the number of items retrieved by the query.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `expressionAttributeNames` - one or more substitution tokens for attribute names in an expression. Defined as JSON.
