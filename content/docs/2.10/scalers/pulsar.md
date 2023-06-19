@@ -32,7 +32,11 @@ triggers:
 - `subscription` - Name of the topic subscription
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
 - `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `authModes` - a comma separated list of authentication modes to use. (Values: `bearer`, `tls`,`basic`, Default: `""`, Optional, `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request)
+- `authModes` - a comma separated list of authentication modes to use. (Values: `bearer`, `tls`, `basic`, `oauth`, Default: `""`, Optional, `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request)
+- `oauthTokenURI` - Token endpoint for your OAuth provider
+- `grantType` - only `client_credentials` is supported
+- `scopes` - space delimited oauth scopes(Optional). 
+- `clientID` - clientID from your OAuth provider.  It will be ignored if clientID is also provided from `authenticationRef`
 
 ### Authentication Parameters
 
@@ -58,6 +62,12 @@ When configuring mutual TLS authentication, configure the following:
 - `cert`: Certificate for client authentication.
 - `key`: Key for client authentication. 
 
+**OAuth 2**
+
+When configuring OAuth Authentication, configure the following:
+
+- `clientID`: the clientID  (optional)
+- `clientSecret`: the clientSecret  (optional)
 
 ### TLS with custom CA Certificates
 
@@ -240,4 +250,80 @@ spec:
       msgBacklogThreshold: '5'
     authenticationRef:
       name:  keda-trigger-auth-pulsar-credential
+```
+
+#### OAuth Authentication
+
+In order to enable Pulsar's OAuth Authentication feature, you can use the following example. Note that only client credentials flow is supported.
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-pulsar-secrets
+  namespace: default
+data:
+  clientID: <your clientID>
+  clientSecret: <your clientSecret>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-pulsar-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: clientID
+    name: keda-pulsar-secrets
+    key: clientID
+  - parameter: clientSecret
+    name: keda-pulsar-secrets
+    key: clientSecret
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: pulsar-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: pulsar-consumer
+  pollingInterval: 30
+  triggers:
+  - type: pulsar
+    metadata:
+      authModes: "oauth"
+      adminURL: https://pulsar.com:8443
+      topic: persistent://public/default/my-topic
+      subscription: sub1
+      msgBacklogThreshold: '5'
+      grantType: client_credentials
+      oauthTokenURI: http://oauth.com/oauth2/token
+      scope: <your scope>
+    authenticationRef:
+      name:  keda-trigger-auth-pulsar-credential
+```
+You can also use the following example without `authenticationRef` if your OAuth provider supports.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: pulsar-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: pulsar-consumer
+  pollingInterval: 30
+  triggers:
+  - type: pulsar
+    metadata:
+      authModes: "oauth"
+      adminURL: https://pulsar.com:8443
+      topic: persistent://public/default/my-topic
+      subscription: sub1
+      msgBacklogThreshold: '5'
+      grantType: client_credentials
+      oauthTokenURI: http://oauth.com/oauth2/token
+      scope: <your scope>
+      clientID: <your clientID>
 ```
