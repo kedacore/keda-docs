@@ -26,8 +26,12 @@ triggers:
       labels: "{labels}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
+      # Optional: The name of the application ID from the GitHub App
+      applicationID: "{applicatonID}"
+      # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
+      installationID: "{installationID}"      
     authenticationRef:
-      name: personalAccessToken
+      name: personalAccessToken or appKey triggerAuthentication Reference
 ```
 
 **Parameter list:**
@@ -38,6 +42,8 @@ triggers:
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
+- `applicationID` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
+- `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
 
 *Parameters from Environment Variables*
 
@@ -54,11 +60,32 @@ the scaler will use the value from the environment variable. The environment var
 
 ### Authentication Parameters
 
-You authenticate with GitHub using a Personal Access Token via `TriggerAuthentication` configuration.
+You authenticate with GitHub using a Personal Access Token or a GitHub App private key via `TriggerAuthentication` configuration.
 
-**Personal Access Token Authentication:**
+**Token or Key Authentication:**
 
 - `personalAccessToken` - The Personal Access Token (PAT) for GitHub from your user.
+- `appKey` - The private key for the GitHub App. This is the contents of the `.pem` file you downloaded when you created the GitHub App.
+
+### Setting up the GitHub App
+
+You can use the GitHub App to authenticate with GitHub. This is useful if you want a more secure method of authentication with higher rate limits.
+
+1. Create a GitHub App in your organization or repository. [https://docs.github.com/en/developers/apps/creating-a-github-app](https://docs.github.com/en/developers/apps/creating-a-github-app)
+2. Make a note of the Application ID. You will need these to configure the scaler.
+3. Disable Webhooks on your GitHub App.
+4. Set the permissions for your GitHub App. The following permissions are required:
+    - **Repository permissions**
+        - Actions - Read-only
+        - Administration - Read & Write
+        - Metadata - Read-only
+    - **Organization permissions**
+        - Actions - Read-only
+        - Metadata - Read-only
+        - Self-hosted Runners - Read & write
+5. Download the private key for the GitHub App. [https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key)
+6. Install the GitHub App on your organization or repository. [https://docs.github.com/en/developers/apps/installing-github-apps](https://docs.github.com/en/developers/apps/installing-github-apps)
+7. Make a note of the Installation ID. You will need these to configure the scaler.
 
 ### How does it work?
 
@@ -87,6 +114,8 @@ and 1 request per queued workflow to get the list of jobs. If you have 100 repos
 Careful design of how you design your repository request layout can help reduce the number of API calls. Usage of the `repos` parameter is recommended to reduce the number of API calls to the GitHub API.
 
 Note: This does not apply to a hosted appliance as there are no rate limits.
+
+Additional Note: The GitHub App authentication method has a rate limit of 15000 rather than 5000 per hour.
 
 **References**
 
@@ -183,6 +212,75 @@ spec:
       repos: REPONAME(S)
       labelsFromEnv: "LABELS"
       runnerScopeFromEnv: "RUNNER_SCOPE"
+    authenticationRef:
+     name: github-trigger-auth
+```
+GitHub App example using ScaledJobs and using myoung34's work on containerised runners:
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: github-auth
+data:
+  appKey: <encoded PEM certificate from GitHub App>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: github-trigger-auth
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: appKey
+      name: github-auth
+      key: appKey
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: scaledjob-github-runner
+  namespace: github-runner
+spec:
+  jobTargetRef:
+    template:
+      metadata:
+        labels:
+          app: scaledjob-github-runner
+      spec:
+        containers:
+        - name: scaledjob-github-runner
+          image: myoung34/github-runner:2.302.1-ubuntu-focal
+          imagePullPolicy: Always
+          env:
+          - name: EPHEMERAL
+            value: "true"
+          - name: DISABLE_RUNNER_UPDATE
+            value: "true"
+          - name: REPO_URL
+            value: "https://github.com/OWNER/REPONAME"
+          - name: RUNNER_SCOPE
+            value: "repo"
+          - name: LABELS
+            value: "my-label"
+          - name: ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{.SecretName}}
+                key: personalAccessToken
+        restartPolicy: Never
+  minReplicaCount: 0
+  maxReplicaCount: 20
+  pollingInterval: 30
+  triggers:
+  - type: github-runner
+    metadata:
+      owner: OWNER
+      repos: REPONAME(S)
+      labelsFromEnv: "LABELS"
+      runnerScopeFromEnv: "RUNNER_SCOPE"
+      applicationID: "1234"
+      installationID: "5678"
     authenticationRef:
      name: github-trigger-auth
 ```
