@@ -56,7 +56,8 @@ the scaler will use the value from the environment variable. The environment var
 - `reposFromEnv` - The list of repositories to scale, separated by comma. (Optional)
 - `labelsFromEnv` - The list of runner labels to scale on, separated by comma. (Optional)
 - `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
-
+- `applicationIDFromEnv` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
+- `installationIDFromEnv` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
 
 ### Authentication Parameters
 
