@@ -490,6 +490,10 @@ url = "https://opsworks.co"
 logo = "opsworks.png"
 
 [[params.users]]
+url = "https://www.pollinate.global"
+logo = "pollinate.gif"
+
+[[params.users]]
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
