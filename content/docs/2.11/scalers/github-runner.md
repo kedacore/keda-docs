@@ -42,8 +42,8 @@ triggers:
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
-- `applicationID` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
-- `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
+- `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
+- `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
 
 *Parameters from Environment Variables*
 
