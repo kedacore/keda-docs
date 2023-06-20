@@ -65,8 +65,8 @@ You authenticate with GitHub using a Personal Access Token or a GitHub App priva
 
 **Token or Key Authentication:**
 
-- `personalAccessToken` - The Personal Access Token (PAT) for GitHub from your user.
-- `appKey` - The private key for the GitHub App. This is the contents of the `.pem` file you downloaded when you created the GitHub App.
+- `personalAccessToken` - The Personal Access Token (PAT) for GitHub from your user. (Optional)
+- `appKey` - The private key for the GitHub App. This is the contents of the `.pem` file you downloaded when you created the GitHub App. (Optional, Required if applicationID set)
 
 ### Setting up the GitHub App
 
