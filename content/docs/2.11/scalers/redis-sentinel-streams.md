@@ -32,7 +32,7 @@ triggers:
     pendingEntriesCount: "10" # optional - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
     streamLength: "50" # optional - Redis stream length, alternative to pendingEntriesCount scaler trigger
     lagCount: "5" # optional - number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
-    activationTargetLag: "3" # required if lagCount is provided - lag count at which scaler triggers
+    activationLagCount: "3" # required if lagCount is provided - lag count at which scaler triggers
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
@@ -69,7 +69,7 @@ triggers:
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `streamLength` - Threshold for stream length, alternative average target value to scale workload. (Default: `5`, Optional)
 - `lagCount` - Threshold for the consumer group lag number, alternative average target value to scale workload. (Default: `5`, Optional)
-- `activationTargetLag` - Lag count threshold at which to start scaling. Any average lag count below this value will not trigger the scaler. (Default: `0`, Optional)
+- `activationLagCount` - Lag count threshold at which to start scaling. Any average lag count below this value will not trigger the scaler. (Default: `0`, Optional)
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 
@@ -198,7 +198,7 @@ spec:
 
 #### Using `lagCount`
 
-To scale based on redis stream `XINFO GROUPS`, be sure to set `activationTargetLag`. Example:
+To scale based on redis stream `XINFO GROUPS`, be sure to set `activationLagCount`. Example:
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -222,5 +222,5 @@ spec:
         stream: my-stream
         consumerGroup: consumer-group-1
         lagCount: "10"
-        activationTargetLag: "3"
+        activationLagCount: "3"
 ```
