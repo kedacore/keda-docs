@@ -30,9 +30,7 @@ triggers:
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](https://keda.sh/docs/2.10/concepts/scaling-deployments/#activating-and-scaling-thresholds). 
 - `namespace` - Namespace of the Temporal Workflow. Default is 'default'.
 - `serverName` - If you are using a self signed certificate, you can provide the name 
-- `authModes` - Add this field with 'tls' if you need to communicate with Temporal using mTLS communication.
-
-
+- `authModes` - Defines the authentication mode to use. Options are 'tls' if you need to communicate with Temporal using mTLS communication.
 
 ### Authentication Parameters
 
