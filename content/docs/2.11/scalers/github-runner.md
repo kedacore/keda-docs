@@ -72,7 +72,7 @@ You authenticate with GitHub using a Personal Access Token or a GitHub App priva
 
 You can use the GitHub App to authenticate with GitHub. This is useful if you want a more secure method of authentication with higher rate limits.
 
-1. Create a GitHub App in your organization or repository. [https://docs.github.com/en/developers/apps/creating-a-github-app](https://docs.github.com/en/developers/apps/creating-a-github-app)
+1. Create a GitHub App in your organization or repository. ([docs](https://docs.github.com/en/developers/apps/creating-a-github-app))
 2. Make a note of the Application ID. You will need these to configure the scaler.
 3. Disable Webhooks on your GitHub App.
 4. Set the permissions for your GitHub App. The following permissions are required:
@@ -84,8 +84,8 @@ You can use the GitHub App to authenticate with GitHub. This is useful if you wa
         - Actions - Read-only
         - Metadata - Read-only
         - Self-hosted Runners - Read & write
-5. Download the private key for the GitHub App. [https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key)
-6. Install the GitHub App on your organization or repository. [https://docs.github.com/en/developers/apps/installing-github-apps](https://docs.github.com/en/developers/apps/installing-github-apps)
+5. Download the private key for the GitHub App. ([docs](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key))
+6. Install the GitHub App on your organization or repository. ([docs](https://docs.github.com/en/developers/apps/installing-github-apps))
 7. Make a note of the Installation ID. You will need these to configure the scaler.
 
 ### How does it work?
