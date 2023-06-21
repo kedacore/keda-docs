@@ -20,7 +20,7 @@ triggers:
     value: "100.50" # message backlog or publish/sec. target per instance
     activationValue: "10.5" # Optional. Activation threshold
     queueName: testqueue
-    vhostName: / # Optional. If not specified, use the vhost in the `host` connection string.
+    vhostName: / # Optional. If not specified, use the vhost in the `host` connection string. Required for Azure AD Workload Identity authorization (see bellow)
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
     hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
@@ -35,7 +35,7 @@ triggers:
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
-- `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional)
+- `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional / Required if Azure AD Workload Identity authorization is used)
 - `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
 - `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
@@ -78,6 +78,10 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 - `key` - Key for client authentication. (Optional)
 
 > Using RabbitMQ host with amqps will require enabling the tls settings and passing the required parameters.
+
+**Azure Workload Identity authentication:**
+
+For RabbitMQ with OIDC support (>= 3.11) you can use TriggerAuthentication CRD with `podIdentity.provider = azure-workload` and with parameter `workloadIdentityResource` which would hold application identifier of App Registraion in Azure AD. In this case `username:password` part in host URI should be ommited and `vHostName` has to be set explicitly in `ScaledObject`. Only HTTP protocol is supported for AKS Workload Identity currently.
 
 ### Example
 
@@ -305,6 +309,53 @@ spec:
       value: "20"
       useRegex: "true"
       operation: max
+    authenticationRef:
+      name: keda-trigger-auth-rabbitmq-conn
+```
+
+#### HTTP protocol (`QueueLength`) with Azure Workload Identity:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-rabbitmq-secret
+data:
+  host: <HTTP API endpoint> # base64 encoded value of format http://localhost:15672/ !! no password !!
+  clientId: <RabbitMQ AzureAD App Registration Client ID> # base64 encoded value of Client ID (same as for Rabbit's auth_oauth2.resource_server_id)
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-rabbitmq-conn
+  namespace: default
+spec:
+  podIdentity:
+    provider: azure-workload
+  secretTargetRef:
+    - parameter: host
+      name: keda-rabbitmq-secret
+      key: host
+    - parameter: workloadIdentityResource
+      name: keda-rabbitmq-secret
+      key: clientId
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: rabbitmq-deployment
+  triggers:
+  - type: rabbitmq
+    metadata:
+      protocol: http
+      vHostName: /
+      queueName: testqueue
+      mode: QueueLength
+      value: "20"
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
 ```
