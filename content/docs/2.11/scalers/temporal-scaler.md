@@ -13,13 +13,19 @@ This specification describes the `Temporal` trigger that scales based on Tempora
 triggers:
   - type: temporal
     metadata:
-      # Required fields
-      address: 10.0.4.118:7233 
+      # Required: address
+      address: 10.0.4.118:7233
+      # Required: threshold
       threshold: '10'
-      # Optional fields
+      # Optional: namespace
       namespace: example-namespace
+      # Optional: serverName
       serverName: "tls-sample"
+      # Optional: activationThreshold
       activationThreshold: '50'
+      # Optional: unsafeSSL
+      unsafeSSL: "false"
+      # Optional: authModes
       authModes: "tls" # Only tls is supported at the moment. Do not include this field for unsecured connectivity with Temporal.
 ```
 
@@ -27,10 +33,11 @@ triggers:
 
 - `address` - The address of the Temporal Service.
 - `threshold` - Value to start scaling for. (This value can be a float)
-- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](https://keda.sh/docs/2.10/concepts/scaling-deployments/#activating-and-scaling-thresholds). 
-- `namespace` - Namespace of the Temporal Workflow. Default is 'default'.
-- `serverName` - If you are using a self signed certificate, you can provide the name 
-- `authModes` - Defines the authentication mode to use. Options are 'tls' if you need to communicate with Temporal using mTLS communication.
+- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](https://keda.sh/docs/2.10/concepts/scaling-deployments/#activating-and-scaling-thresholds). (Optional)
+- `namespace` - Namespace of the Temporal Workflow. (Default: `default`, Optional)
+- `serverName` - If you are using a self signed certificate, you can provide the name. (Optional)
+- `unsafeSSL` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
+- `authModes` - Enables authentication with the Temporal Server. (Values: `tls`, Default "", Optional, Required if you are using `TriggerAuthentication`)
 
 ### Authentication Parameters
 
