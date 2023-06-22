@@ -33,9 +33,9 @@ triggers:
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
 - `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `authModes` - a comma separated list of authentication modes to use. (Values: `bearer`, `tls`, `basic`, `oauth`, Default: `""`, Optional, `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request)
-- `oauthTokenURI` - Token endpoint for your OAuth provider. Ignored if provided from `authenticationRef`
-- `scope` - space delimited oauth scopes(Optional). Ignored if provided from `authenticationRef`
-- `clientID` - clientID from your OAuth provider. Ignored if provided from `authenticationRef`
+- `oauthTokenURI` - The OAuth Access Token URI for the OAuth provider, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
+- `scope` - A comma separated lists of OAuth scopes, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
+- `clientID` - Client ID for the OAuth provider, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
 
 ### Authentication Parameters
 
