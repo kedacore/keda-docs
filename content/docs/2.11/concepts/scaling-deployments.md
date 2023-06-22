@@ -38,25 +38,28 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
+  annotations:
+    autoscaling.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+    autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
 spec:
   scaleTargetRef:
-    apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
-    kind:          {kind-of-target-resource}         # Optional. Default: Deployment
-    name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
-    envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval:  30                               # Optional. Default: 30 seconds
-  cooldownPeriod:   300                              # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                # Optional. Default: ignored, must be less than minReplicaCount 
-  minReplicaCount:  1                                # Optional. Default: 0
-  maxReplicaCount:  100                              # Optional. Default: 100
-  fallback:                                          # Optional. Section to specify fallback options
-    failureThreshold: 3                              # Mandatory if fallback section is included
-    replicas: 6                                      # Mandatory if fallback section is included
-  advanced:                                          # Optional. Section to specify advanced options
-    restoreToOriginalReplicaCount: true/false        # Optional. Default: false
-    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
-      name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
-      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+    apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
+    kind:          {kind-of-target-resource}                # Optional. Default: Deployment
+    name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
+    envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
+  pollingInterval:  30                                      # Optional. Default: 30 seconds
+  cooldownPeriod:   300                                     # Optional. Default: 300 seconds
+  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount 
+  minReplicaCount:  1                                       # Optional. Default: 0
+  maxReplicaCount:  100                                     # Optional. Default: 100
+  fallback:                                                 # Optional. Section to specify fallback options
+    failureThreshold: 3                                     # Mandatory if fallback section is included
+    replicas: 6                                             # Mandatory if fallback section is included
+  advanced:                                                 # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: true/false               # Optional. Default: false
+    horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
+      name: {name-of-hpa-resource}                          # Optional. Default: keda-hpa-{scaled-object-name}
+      behavior:                                             # Optional. Use to modify HPA's scaling behavior
         scaleDown:
           stabilizationWindowSeconds: 300
           policies:
@@ -268,6 +271,23 @@ There are some important topics to take into account:
 - The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.
+
+## Transfer ownership of an existing HPA
+
+If your environment already operates using kubernetes HPA, you can transfer the ownership of this resource to a new ScaledObject:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/transfer-hpa-ownership: "true"
+spec:
+   advanced:
+      horizontalPodAutoscalerConfig:
+      name: {name-of-hpa-resource}
+```
+
+> ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.
+
 
 ## Long-running executions
 
