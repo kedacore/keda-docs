@@ -64,10 +64,10 @@ When configuring mutual TLS authentication, configure the following:
 **OAuth 2**
 
 When configuring OAuth Authentication, configure the following:
-- `oauthTokenURI` - Token endpoint for your OAuth provider(Optional)
-- `scope` - space delimited oauth scopes(Optional)
-- `clientID`: the clientID  (optional)
-- `clientSecret`: the clientSecret  (optional)
+- `oauthTokenURI` - The OAuth Access Token URI for the OAuth provider. (Optional)
+- `scope` -  A comma separated lists of OAuth scopes. (Optional)
+- `clientID`: Client ID for the OAuth provider. (Optional)
+- `clientSecret`: Client secret for the OAuth provider. (Optional)
 
 These can also be configured in the trigger metadata except the `clientSecret`
 
