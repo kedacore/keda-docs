@@ -39,7 +39,7 @@ kind: ScaledObject
 metadata:
   name: {scaled-object-name}
   annotations:
-    autoscaling.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
     autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
 spec:
   scaleTargetRef:
@@ -277,7 +277,7 @@ If your environment already operates using kubernetes HPA, you can transfer the 
 ```yaml
 metadata:
   annotations:
-    autoscaling.keda.sh/transfer-hpa-ownership: "true"
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"
 spec:
    advanced:
       horizontalPodAutoscalerConfig:
