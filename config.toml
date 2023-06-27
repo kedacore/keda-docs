@@ -154,6 +154,7 @@ weight = 6
 [[menu.main]]
 url = "/docs/authentication-providers"
 name = "Authentication providers"
+identifier = "authentication-providers"
 weight = 1
 
 [[menu.docs]]
