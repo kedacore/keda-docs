@@ -152,7 +152,7 @@ weight = 6
 
 # Navbar and footer menu
 [[menu.main]]
-url = "/docs/authentication-providers/"
+url = "/docs/authentication-providers"
 name = "Authentication providers"
 weight = 1
 
