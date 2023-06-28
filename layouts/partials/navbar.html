@@ -67,7 +67,7 @@
                     {{ range .Children }}
                       <div class="dropdown-content">
                       {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-                      <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+                      <a class="dropdown-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                         <span>
                           {{ .Name }}
                         </span>
