@@ -74,6 +74,7 @@
           </span>
         </a>
       </div>
+      {{ if not $isLatest }}
       <article class="message is-small is-warning">
         <div class="message-header">
           <p>Warning</p>  
@@ -82,6 +83,7 @@
           Version $version of the documentation is no longer actively maintained. The site that you are currently viewing is an archived snapshot. For up-to-date documentation please use the selection box above
         </div>
       </article>
+      {{ end }}
     </div>
   </div>
 </section>
