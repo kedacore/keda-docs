@@ -90,13 +90,9 @@
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
             {{ $isExternal := hasPrefix .URL "http" }}
-            {{ if .HasChildren }}
             <a class="navbar-item" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
               <span>
                 {{ .Name }}
-              </span>
-              <span class="icon has-text-white">
-                <i class="fas fa-md fa-caret-down"></i>
               </span>
               {{ if $isExternal }}
               <span class="icon has-text-white">
@@ -104,7 +100,6 @@
               </span>
               {{ end }}
             </a>
-            {{ end }}
             {{ end }}
           </div>
         </div>
