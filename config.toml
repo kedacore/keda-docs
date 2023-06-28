@@ -151,17 +151,11 @@ pre = "fa fa-rss"
 weight = 6
 
 # Navbar and footer menu
-[[menu.main]]
-url = "/docs/authentication-providers"
-name = "Authentication providers"
-identifier = "authentication-providers"
-weight = 1
-
 [[menu.docs]]
 url = "/docs/"
 name = "Docs"
 identifier = "docs"
-weight = 2
+weight = 1
 
 [[menu.docs]]
 url = "/docs/deploy"
@@ -208,12 +202,12 @@ weight = 7
 [[menu.main]]
 url = "/blog"
 name = "Blog"
-weight = 3
+weight = 2
 
 [[menu.main]]
 name = "Community"
 identifier = "community"
-weight = 4
+weight = 3
 
 [[menu.main]]
 url = "/community/"
@@ -254,7 +248,7 @@ weight = 6
 [[menu.main]]
 name = "Project"
 identifier = "project"
-weight = 5
+weight = 4
 
 [[menu.main]]
 url = "https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
