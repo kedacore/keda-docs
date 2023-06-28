@@ -82,6 +82,18 @@
             </div>
             {{ end }}
             {{ end }}
+            {{ else }}
+                <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+                  <span>
+                    {{ .Name }}
+                  </span>
+                  {{ if $isExternal }}
+                  <span class="icon has-text-white">
+                    <i class="fas fa-xs fa-external-link-alt"></i>
+                  </span>
+                  {{ end }}
+                </a>
+              {{ end }}
           </div>
         </div>
         </div>
