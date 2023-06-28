@@ -45,7 +45,7 @@
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}/{{ $latest }}"{{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -70,7 +70,7 @@
             </a>
             {{ if .HasChildren }}
             <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-              <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
+              <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}/{{ $latest }}"{{ end }}>
                 <span>
                   {{ .Name }}
                 </span>
@@ -92,12 +92,13 @@
                   </span>
                   {{ end }}
                 </a>
+                {{ end }}
               </div>
-             </div>
-            </div>    
+            </div>
             {{ end }}
             {{ end }}
           </div>
+        </div>
         {{ end }}
         {{ end }}
 
