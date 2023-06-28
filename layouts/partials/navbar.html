@@ -59,12 +59,10 @@
               {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
               {{ $isExternal := hasPrefix .URL "http" }}
               {{ if .HasChildren }}
-              <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-                <div class="navbar-item has-dropdown is-hoverable">
+              <div class="navbar-item has-dropdown is-hoverable">
                   <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                     {{ .Name }}
                   </a>
-                  <div class="navbar-dropdown">
                   <div class="nested dropdown">
                     {{ range .Children }}
                       <div class="dropdown-content">
@@ -82,9 +80,7 @@
                     </div>
                     {{ end }}
                     </div>
-                  </div>
                 </div>
-              </div>
               {{ else }}
                 <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                   <span>
