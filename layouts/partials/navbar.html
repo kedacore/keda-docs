@@ -37,10 +37,6 @@
           <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/scalers">Scalers</a>
         </div>
 
-        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/authentication-providers">Auth providers</a>
-        </div>
-
         {{ range $docs }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
@@ -53,53 +49,30 @@
               <i class="fas fa-md fa-caret-down"></i>
             </span>
           </a>
-      
+
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
-              {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-              {{ $isExternal := hasPrefix .URL "http" }}
-              {{ if .HasChildren }}
-                <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
-                    {{ .Name }}
-                    <span class="icon">
-                      <i class="fas fa-chevron-right"></i>
-                    </span>
-                  </a>
-                    {{ range .Children }}
-                    <div class="navbar-dropdown is-hoverable">
-                      {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-                      <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
-                        <span>
-                          {{ .Name }}
-                        </span>
-                        {{ if $isExternal }}
-                        <span class="icon has-text-black">
-                          <i class="fas fa-xs fa-external-link-alt"></i>
-                        </span>
-                        {{ end }}
-                      </a>
-                    </div>
-                    {{ end }}
-                    </div>
-                  </div>
-                </div>
-              {{ else }}
-                <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
-                  <span>
-                    {{ .Name }}
-                  </span>
-                  {{ if $isExternal }}
-                  <span class="icon has-text-white">
-                    <i class="fas fa-xs fa-external-link-alt"></i>
-                  </span>
-                  {{ end }}
-                </a>
+            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+            {{ $isExternal := hasPrefix .URL "http" }}
+            {{ if .HasChildren }}
+            <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+              <span>
+                {{ .Name }}
+              </span>
+              {{ if $isExternal }}
+              <span class="icon has-text-black">
+                <i class="fas fa-xs fa-external-link-alt"></i>
+              </span>
               {{ end }}
+            </a>
+            {{ end }}
           </div>
         </div>
-      {{ end }}
-      
+        </div>
+        {{ end }}
+        {{ end }}
+        {{ end }}
 
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
