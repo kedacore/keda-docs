@@ -66,6 +66,21 @@
               </span>
               {{ end }}
             </a>
+            {{ range .Children }}
+            <div class="navbar-dropdown is-hoverable">
+              {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+              <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+                <span>
+                  {{ .Name }}
+                </span>
+                {{ if $isExternal }}
+                <span class="icon has-text-black">
+                  <i class="fas fa-xs fa-external-link-alt"></i>
+                </span>
+                {{ end }}
+              </a>
+            </div>
+            {{ end }}
             {{ end }}
           </div>
         </div>
