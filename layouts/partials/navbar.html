@@ -65,17 +65,19 @@
                   </a>
                   <div class="navbar-dropdown">
                     {{ range .Children }}
+                    <div class="nested dropdown">
                       {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
                       <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                         <span>
                           {{ .Name }}
                         </span>
                         {{ if $isExternal }}
-                        <span class="icon has-text-white">
+                        <span class="icon has-text-black">
                           <i class="fas fa-xs fa-external-link-alt"></i>
                         </span>
                         {{ end }}
                       </a>
+                      </div>
                     {{ end }}
                   </div>
                 </div>
@@ -119,7 +121,7 @@
                 {{ .Name }}
               </span>
               {{ if $isExternal }}
-              <span class="icon has-text-white">
+              <span class="icon has-text-black">
                 <i class="fas fa-xs fa-external-link-alt"></i>
               </span>
               {{ end }}
