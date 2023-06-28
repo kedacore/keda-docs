@@ -63,9 +63,8 @@
                   <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                     {{ .Name }}
                   </a>
-                  <div class="navbar-dropdown">
+                  <div class="nested dropdown">
                     {{ range .Children }}
-                    <div class="nested dropdown">
                       <div class="dropdown-content">
                       {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
                       <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
@@ -78,7 +77,6 @@
                         </span>
                         {{ end }}
                       </a>
-                      </div>
                     </div>
                     {{ end }}
                   </div>
