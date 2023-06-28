@@ -41,11 +41,10 @@
           <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/authentication-providers">Auth providers</a>
         </div>
 
-        <ul>
         {{ range $docs }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
-        <li class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
           <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
             <span>
               {{ .Name }}
@@ -54,10 +53,8 @@
               <i class="fas fa-md fa-caret-down"></i>
             </span>
           </a>
-          </li>
 
-          <ul>
-          <li class="navbar-dropdown is-radiusless">
+          <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
             {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
             {{ $isExternal := hasPrefix .URL "http" }}
@@ -72,11 +69,10 @@
               {{ end }}
             </a>
             {{ end }}
-          </li>
-        </ul>
+          </div>
+        </div>
         {{ end }}
         {{ end }}
-        </ul>
 
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
