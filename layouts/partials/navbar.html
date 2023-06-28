@@ -62,6 +62,9 @@
               <span>
                 {{ .Name }}
               </span>
+              <span class="icon has-text-white">
+                <i class="fas fa-md fa-caret-down"></i>
+              </span>
               {{ if $isExternal }}
               <span class="icon has-text-white">
                 <i class="fas fa-xs fa-external-link-alt"></i>
@@ -91,6 +94,17 @@
         </div>
         {{ end }}
         {{ end }}
+        
+        <style>
+        .navbar-dropdown .navbar-dropdown {
+          display: none;
+        }
+        
+        .navbar-item.has-dropdown:hover > .navbar-dropdown {
+          display: block;
+        }
+        </style>
+        
         
 
         {{ range $menu }}
