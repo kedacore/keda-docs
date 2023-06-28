@@ -62,6 +62,9 @@
                 <div class="navbar-item has-dropdown is-hoverable">
                   <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                     {{ .Name }}
+                    <span class="icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
                   </a>
                   <div class="navbar-dropdown">
                   <div class="nested dropdown">
@@ -71,9 +74,6 @@
                       <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                         <span>
                           {{ .Name }}
-                          <span class="icon">
-                            <i class="fas fa-chevron-right"></i>
-                          </span>
                         </span>
                         {{ if $isExternal }}
                         <span class="icon has-text-black">
