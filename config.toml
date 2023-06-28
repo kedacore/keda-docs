@@ -170,6 +170,42 @@ parent = "docs"
 weight = 2
 
 [[menu.docs]]
+url = "/docs/concepts/scaling-deployments/"
+name = "Scaling Deployments, StatefulSets & Custom Resources"
+parent = "Concepts"
+weight = 1
+
+[[menu.docs]]
+url = "/docs/concepts/scaling-jobs/"
+name = "Scaling Jobs"
+parent = "Concepts"
+weight = 2
+
+[[menu.docs]]
+url = "/docs/concepts/authentication/"
+name = "Authentication"
+parent = "Concepts"
+weight = 3
+
+[[menu.docs]]
+url = "/docs/concepts/external-scalers/"
+name = "External Scalers"
+parent = "Concepts"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/concepts/admission-webhooks/"
+name = "Admission Webhooks"
+parent = "Concepts"
+weight = 5
+
+[[menu.docs]]
+url = "/docs/concepts/troubleshooting/"
+name = "Troubleshooting"
+parent = "Concepts"
+weight = 6
+
+[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
@@ -180,6 +216,42 @@ url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
 weight = 4
+
+[[menu.docs]]
+url = "/docs/operate/admission-webhooks/"
+name = "Admission Webhooks"
+parent = "Operate"
+weight = 1
+
+[[menu.docs]]
+url = "/docs/operate/cluster/"
+name = "Cluster"
+parent = "Operate"
+weight = 2
+
+[[menu.docs]]
+url = "/docs/operate/events/"
+name = "Events"
+parent = "Operate"
+weight = 3
+
+[[menu.docs]]
+url = "/docs/operate/prometheus/"
+name = "Integrate with Prometheus"
+parent = "Operate"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/operate/metrics-server/"
+name = "KEDA Metrics Server"
+parent = "Operate"
+weight = 5
+
+[[menu.docs]]
+url = "/docs/operate/security/"
+name = "Security"
+parent = "Operate"
+weight = 6
 
 [[menu.docs]]
 url = "/docs/migration/"
