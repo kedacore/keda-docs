@@ -93,18 +93,20 @@ Run the following command (if needed, replace the version, in this case `2.11.0`
 
 ```sh
 # Including admission webhooks
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.11.0/keda-2.11.0.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.11.0/keda-2.11.0.yaml
 # Without admission webhooks
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.11.0/keda-2.11.0-core.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.11.0/keda-2.11.0-core.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
 # Including admission webhooks
-kubectl apply -f keda-2.11.0.yaml
+kubectl apply --server-side -f keda-2.11.0.yaml
 # Without admission webhooks
-kubectl apply -f keda-2.11.0-core.yaml
+kubectl apply --server-side -f keda-2.11.0-core.yaml
 ```
+
+> 💡 **NOTE:** `--server-side` option is needed because the ScaledJob CRD is too long to process, see [this issue](https://github.com/kedacore/keda/issues/4740) for details.
 
 - You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
 
