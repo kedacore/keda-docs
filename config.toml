@@ -164,7 +164,7 @@ parent = "docs"
 weight = 1
 
 [[menu.docs]]
-url = "/docs/concepts/"
+url = "/docs/concepts"
 name = "Concepts"
 identifier = "Concepts"
 parent = "docs"
