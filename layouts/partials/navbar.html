@@ -62,9 +62,6 @@
               <span>
                 {{ .Name }}
               </span>
-              <span class="icon has-text-white">
-                <i class="fas fa-md fa-caret-down"></i>
-              </span>
               {{ if $isExternal }}
               <span class="icon has-text-white">
                 <i class="fas fa-xs fa-external-link-alt"></i>
@@ -73,20 +70,32 @@
             </a>
             {{ if .HasChildren }}
             <div class="navbar-dropdown is-radiusless">
-              {{ range .Children }}
-              {{ $subUrl := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-              {{ $subIsExternal := hasPrefix .URL "http" }}
-              <a class="navbar-item" href="{{ $subUrl }}"{{ if $subIsExternal }} target="_blank"{{ end }}>
-                <span>
-                  {{ .Name }}
-                </span>
-                {{ if $subIsExternal }}
-                <span class="icon has-text-white">
-                  <i class="fas fa-xs fa-external-link-alt"></i>
-                </span>
-                {{ end }}
-              </a>
-              {{ end }}
+              <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-link">
+                  <span>
+                    {{ .Name }}
+                  </span>
+                  <span class="icon has-text-white">
+                    <i class="fas fa-md fa-caret-down"></i>
+                  </span>
+                </div>
+                <div class="navbar-dropdown is-radiusless">
+                  {{ range .Children }}
+                  {{ $subUrl := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+                  {{ $subIsExternal := hasPrefix .URL "http" }}
+                  <a class="navbar-item" href="{{ $subUrl }}"{{ if $subIsExternal }} target="_blank"{{ end }}>
+                    <span>
+                      {{ .Name }}
+                    </span>
+                    {{ if $subIsExternal }}
+                    <span class="icon has-text-white">
+                      <i class="fas fa-xs fa-external-link-alt"></i>
+                    </span>
+                    {{ end }}
+                  </a>
+                  {{ end }}
+                </div>
+              </div>
             </div>
             {{ end }}
             {{ end }}
@@ -95,17 +104,7 @@
         {{ end }}
         {{ end }}
         
-        <style>
-        .navbar-dropdown .navbar-dropdown {
-          display: none;
-        }
-        
-        .navbar-item.has-dropdown:hover > .navbar-dropdown {
-          display: block;
-        }
-        </style>
-        
-        
+            
 
         {{ range $menu }}
         {{ $isExternal := hasPrefix .URL "http" }}
