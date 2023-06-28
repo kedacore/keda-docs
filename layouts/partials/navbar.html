@@ -45,7 +45,7 @@
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}/{{ $latest }}"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -68,34 +68,6 @@
               </span>
               {{ end }}
             </a>
-            {{ if .HasChildren }}
-            <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-              <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}/{{ $latest }}"{{ end }}>
-                <span>
-                  {{ .Name }}
-                </span>
-                <span class="icon has-text-white">
-                  <i class="fas fa-md fa-caret-down"></i>
-                </span>
-              </a>
-              <div class="navbar-dropdown is-radiusless">
-                {{ range .Children }}
-                {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-                {{ $isExternal := hasPrefix .URL "http" }}
-                <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
-                  <span>
-                    {{ .Name }}
-                  </span>
-                  {{ if $isExternal }}
-                  <span class="icon has-text-white">
-                    <i class="fas fa-xs fa-external-link-alt"></i>
-                  </span>
-                  {{ end }}
-                </a>
-                {{ end }}
-              </div>
-            </div>
-            {{ end }}
             {{ end }}
           </div>
         </div>
