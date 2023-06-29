@@ -164,46 +164,114 @@ parent = "docs"
 weight = 1
 
 [[menu.docs]]
-url = "/docs/concepts/"
+url = "/docs/concepts"
 name = "Concepts"
+identifier = "Concepts"
 parent = "docs"
 weight = 2
 
 [[menu.docs]]
-url = "/docs/authentication-providers/"
-name = "Authentication providers"
-parent = "docs"
+url = "/docs/concepts/scaling-deployments/"
+name = "Scaling Deployments, StatefulSets & Custom Resources"
+parent = "Concepts"
+weight = 1
+
+[[menu.docs]]
+url = "/docs/concepts/scaling-jobs/"
+name = "Scaling Jobs"
+parent = "Concepts"
+weight = 2
+
+[[menu.docs]]
+url = "/docs/concepts/authentication/"
+name = "Authentication"
+parent = "Concepts"
 weight = 3
+
+[[menu.docs]]
+url = "/docs/concepts/external-scalers/"
+name = "External Scalers"
+parent = "Concepts"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/concepts/admission-webhooks/"
+name = "Admission Webhooks"
+parent = "Concepts"
+weight = 5
+
+[[menu.docs]]
+url = "/docs/concepts/troubleshooting/"
+name = "Troubleshooting"
+parent = "Concepts"
+weight = 6
 
 [[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 4
+weight = 3
 
 [[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
+identifier = "Operate"
 parent = "docs"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/operate/admission-webhooks/"
+name = "Admission Webhooks"
+parent = "Operate"
+weight = 1
+
+[[menu.docs]]
+url = "/docs/operate/cluster/"
+name = "Cluster"
+parent = "Operate"
+weight = 2
+
+[[menu.docs]]
+url = "/docs/operate/events/"
+name = "Events"
+parent = "Operate"
+weight = 3
+
+[[menu.docs]]
+url = "/docs/operate/prometheus/"
+name = "Integrate with Prometheus"
+parent = "Operate"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/operate/metrics-server/"
+name = "KEDA Metrics Server"
+parent = "Operate"
 weight = 5
+
+[[menu.docs]]
+url = "/docs/operate/security/"
+name = "Security"
+parent = "Operate"
+weight = 6
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 6
+weight = 5
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 7
+weight = 6
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 8
+weight = 7
 
 [[menu.main]]
 url = "/blog"
@@ -325,7 +393,8 @@ weight = 11
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
 name = "Merch"
-weight = 5
+parent = "project"
+weight = 12
 
 # "Features" section on the main page
 [[params.features]]
