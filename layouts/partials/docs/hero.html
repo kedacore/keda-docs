@@ -74,6 +74,17 @@
           </span>
         </a>
       </div>
+      {{ if not $isLatest }}
+      {{ $url := replaceRE $version $latest .RelPermalink }}
+      <article class="message is-warning">
+        <div class="message-header">
+          <p>Warning</p>  
+        </div>
+        <div class="message-body">
+          You are currently viewing Version "{{ $version }}" of the documentation and it is not the latest. For the most recent documentation, kindly <a href="{{ $url }}"> click here.</a>
+        </div>
+      </article>
+      {{ end }}
     </div>
   </div>
 </section>
