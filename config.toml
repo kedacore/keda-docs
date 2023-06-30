@@ -170,40 +170,34 @@ parent = "docs"
 weight = 2
 
 [[menu.docs]]
-url = "/docs/authentication-providers/"
-name = "Authentication providers"
-parent = "docs"
-weight = 3
-
-[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 4
+weight = 3
 
 [[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
-weight = 5
+weight = 4
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 6
+weight = 5
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 7
+weight = 6
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 8
+weight = 7
 
 [[menu.main]]
 url = "/blog"
@@ -325,7 +319,8 @@ weight = 11
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
 name = "Merch"
-weight = 5
+parent = "project"
+weight = 12
 
 # "Features" section on the main page
 [[params.features]]
