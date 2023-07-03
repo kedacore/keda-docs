@@ -88,3 +88,20 @@
 @media screen and (max-width: 1023px)
   .navbar-link, .navbar-item
     color: $dark
+
+.nested.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.nested.dropdown .dropdown-menu {
+  top: -12px;
+  margin-left: 100%;
+}
+.nested.dropdown .dropdown-trigger button::after {
+
+}
+.nested.dropdown .dropdown-trigger button {
+  padding: 0px 0px;
+  border: 0px;
+  font-size: 14px;
+  font-weight: 400;  
+}
