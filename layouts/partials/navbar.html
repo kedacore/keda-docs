@@ -66,23 +66,22 @@
                 <a class="navbar-item">
                   <span class="navbar-link" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end }}>
                     <span>
-                    {{ .Name }}
-                  </span>
+                      {{ .Name }}
+                    </span>
                     <span class="icon">
                       <i class="fas fa-chevron-right"></i>
                     </span>
                   </span>
-                  </a>
-                 
-                    {{ range .Children }}
-                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                      <div class="nested content">
+                </a>
+
+                {{ range .Children }}
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="nested content">
 
                     <div class="dropdown-content">
                       {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-                      <a class="dropdown-item" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end
-                        }}>
-                          {{ .Name }}
+                      <a class="dropdown-item" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end }}>
+                        {{ .Name }}
                         {{ if $isExternal }}
                         <span class="icon has-text-black">
                           <i class="fas fa-xs fa-external-link-alt"></i>
@@ -108,62 +107,63 @@
                 {{ end }}
               </div>
             </div>
-            </div>
-            {{ end }}
-            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        {{ end }}
 
 
-            {{ range $menu }}
+        {{ range $menu }}
+        {{ $isExternal := hasPrefix .URL "http" }}
+        {{ if .HasChildren }}
+        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+          <a class="navbar-link is-arrowless" {{ with .URL }} href="{{ . }}" {{ end }}>
+            <span>
+              {{ .Name }}
+            </span>
+            <span class="icon has-text-white">
+              <i class="fas fa-md fa-caret-down"></i>
+            </span>
+          </a>
+
+          <div class="navbar-dropdown is-radiusless">
+            {{ range .Children }}
             {{ $isExternal := hasPrefix .URL "http" }}
-            {{ if .HasChildren }}
-            <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-              <a class="navbar-link is-arrowless" {{ with .URL }} href="{{ . }}" {{ end }}>
-                <span>
-                  {{ .Name }}
-                </span>
-                <span class="icon has-text-white">
-                  <i class="fas fa-md fa-caret-down"></i>
-                </span>
-              </a>
-
-              <div class="navbar-dropdown is-radiusless">
-                {{ range .Children }}
-                {{ $isExternal := hasPrefix .URL "http" }}
-                <a class="navbar-item" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
-                  <span>
-                    {{ .Name }}
-                  </span>
-                  {{ if $isExternal }}
-                  <span class="icon has-text-black">
-                    <i class="fas fa-xs fa-external-link-alt"></i>
-                  </span>
-                  {{ end }}
-                </a>
-                {{ end }}
-              </div>
-            </div>
-            {{ else }}
-            <a class="navbar-item is-size-5-desktop" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
+            <a class="navbar-item" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
               <span>
                 {{ .Name }}
               </span>
               {{ if $isExternal }}
-              <span class="icon has-text-white">
+              <span class="icon has-text-black">
                 <i class="fas fa-xs fa-external-link-alt"></i>
               </span>
               {{ end }}
             </a>
             {{ end }}
-            {{ end }}
+          </div>
+        </div>
+        {{ else }}
+        <a class="navbar-item is-size-5-desktop" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
+          <span>
+            {{ .Name }}
+          </span>
+          {{ if $isExternal }}
+          <span class="icon has-text-white">
+            <i class="fas fa-xs fa-external-link-alt"></i>
+          </span>
+          {{ end }}
+        </a>
+        {{ end }}
+        {{ end }}
 
-            <div class="navbar-item">
-              <div class="buttons">
-                {{ partial "social-buttons.html" (dict "btns" $social "compact" true "color" "dark") }}
-              </div>
-            </div>
+        <div class="navbar-item">
+          <div class="buttons">
+            {{ partial "social-buttons.html" (dict "btns" $social "compact" true "color" "dark") }}
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </nav>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
