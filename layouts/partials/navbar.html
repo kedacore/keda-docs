@@ -1,13 +1,14 @@
-{{ $home     := site.BaseURL }}
-{{ $here     := .RelPermalink }}
-{{ $logo     := site.Params.logos.navbar }}
-{{ $menu     := site.Menus.main }}
-{{ $docs     := site.Menus.docs }}
-{{ $social   := site.Params.social }}
-{{ $scalers  := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+{{ $home := site.BaseURL }}
+{{ $here := .RelPermalink }}
+{{ $logo := site.Params.logos.navbar }}
+{{ $menu := site.Menus.main }}
+{{ $docs := site.Menus.docs }}
+{{ $social := site.Params.social }}
+{{ $scalers := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
 {{ $versions := site.Params.versions.docs }}
-{{ $latest   := index $versions 0 }}
-<nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
+{{ $latest := index $versions 0 }}
+<nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top"
+  role="navigation" aria-label="main navigation" x-data="{ open: false }">
   <div class="container">
     <div class="navbar-brand is-left-padded" style="align-items: end;">
       <a class="navbar-item" href="{{ $home }}">
@@ -15,7 +16,8 @@
         <img src="{{ $url }}" style="transform: scale(2);" height="28" width="66" alt="Keda logo">
       </a>
 
-      <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
+      <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false"
+        @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -45,7 +47,7 @@
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
+          <a class="navbar-link is-arrowless" {{ with .URL }} href="{{ . }}{{ $latest }}" {{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -53,24 +55,34 @@
               <i class="fas fa-md fa-caret-down"></i>
             </span>
           </a>
-      
+
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
-              {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-              {{ $isExternal := hasPrefix .URL "http" }}
-              {{ if .HasChildren }}
-              <div class="navbar-item has-dropdown is-hoverable">
-                  <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+            {{ $isExternal := hasPrefix .URL "http" }}
+            {{ if .HasChildren }}
+            <div class="navbar-dropdown">
+              <div class="nested dropdown">
+                <a class="navbar-item">
+                  <span class="navbar-link" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end }}>
+                    <span>
                     {{ .Name }}
+                  </span>
+                    <span class="icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </span>
                   </a>
-                  <div class="nested dropdown">
+                 
                     {{ range .Children }}
-                      <div class="dropdown-content">
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                      <div class="nested content">
+
+                    <div class="dropdown-content">
                       {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
-                      <a class="navbar-item is-hoverable" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
-                        <span>
+                      <a class="dropdown-item" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end
+                        }}>
                           {{ .Name }}
-                        </span>
                         {{ if $isExternal }}
                         <span class="icon has-text-black">
                           <i class="fas fa-xs fa-external-link-alt"></i>
@@ -79,10 +91,10 @@
                       </a>
                     </div>
                     {{ end }}
-                    </div>
+                  </div>
                 </div>
-              {{ else }}
-                <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+                {{ else }}
+                <a class="navbar-item" href="{{ $url }}" {{ if $isExternal }} target="_blank" {{ end }}>
                   <span>
                     {{ .Name }}
                   </span>
@@ -92,76 +104,80 @@
                   </span>
                   {{ end }}
                 </a>
-              {{ end }}
+                {{ end }}
+                {{ end }}
+              </div>
+            </div>
+            </div>
             {{ end }}
-          </div>
-        </div>
-        {{ end }}
-      {{ end }}
-      
+            {{ end }}
 
-        {{ range $menu }}
-        {{ $isExternal := hasPrefix .URL "http" }}
-        {{ if .HasChildren }}
-        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}"{{ end }}>
-            <span>
-              {{ .Name }}
-            </span>
-            <span class="icon has-text-white">
-              <i class="fas fa-md fa-caret-down"></i>
-            </span>
-          </a>
 
-          <div class="navbar-dropdown is-radiusless">
-            {{ range .Children }}
+            {{ range $menu }}
             {{ $isExternal := hasPrefix .URL "http" }}
-            <a class="navbar-item" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
+            {{ if .HasChildren }}
+            <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+              <a class="navbar-link is-arrowless" {{ with .URL }} href="{{ . }}" {{ end }}>
+                <span>
+                  {{ .Name }}
+                </span>
+                <span class="icon has-text-white">
+                  <i class="fas fa-md fa-caret-down"></i>
+                </span>
+              </a>
+
+              <div class="navbar-dropdown is-radiusless">
+                {{ range .Children }}
+                {{ $isExternal := hasPrefix .URL "http" }}
+                <a class="navbar-item" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
+                  <span>
+                    {{ .Name }}
+                  </span>
+                  {{ if $isExternal }}
+                  <span class="icon has-text-black">
+                    <i class="fas fa-xs fa-external-link-alt"></i>
+                  </span>
+                  {{ end }}
+                </a>
+                {{ end }}
+              </div>
+            </div>
+            {{ else }}
+            <a class="navbar-item is-size-5-desktop" href="{{ .URL }}" {{ if $isExternal }} target="_blank" {{ end }}>
               <span>
                 {{ .Name }}
               </span>
               {{ if $isExternal }}
-              <span class="icon has-text-black">
+              <span class="icon has-text-white">
                 <i class="fas fa-xs fa-external-link-alt"></i>
               </span>
               {{ end }}
             </a>
             {{ end }}
-          </div>
-        </div>
-        {{ else }}
-        <a class="navbar-item is-size-5-desktop" href="{{ .URL }}"{{ if $isExternal }} target="_blank"{{ end }}>
-          <span>
-            {{ .Name }}
-          </span>
-          {{ if $isExternal }}
-          <span class="icon has-text-white">
-            <i class="fas fa-xs fa-external-link-alt"></i>
-          </span>
-          {{ end }}
-        </a>
-        {{ end }}
-        {{ end }}
+            {{ end }}
 
-        <div class="navbar-item">
-          <div class="buttons">
-            {{ partial "social-buttons.html" (dict "btns" $social "compact" true "color" "dark") }}
+            <div class="navbar-item">
+              <div class="buttons">
+                {{ partial "social-buttons.html" (dict "btns" $social "compact" true "color" "dark") }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </nav>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+  integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <script>
-        $(function () {
-            $(document).scroll(function () {
-                var $nav = $("#mainnav");
-                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-            });
-        });
-    </script>
+  $(function () {
+    $(document).scroll(function () {
+      var $nav = $("#mainnav");
+      $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+    });
+  });
+</script>
