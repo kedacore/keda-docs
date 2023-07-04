@@ -29,7 +29,7 @@ triggers:
 
 **Parameter list:**
 
-- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/<path>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/path/vhost` or `http://guest:password@localhost:15672/path/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/<path>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/path/vhost` or `http://guest:password@localhost:15672/path/vhost`. If the host doesn't contain vhost than the trailing slash is required in this case like `amqp://guest:password@localhost:5672/path/`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 - `queueName` - Name of the queue to read message from.
 - `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the published rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
