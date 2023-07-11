@@ -18,4 +18,4 @@ KEDA will block all incoming changes to `ScaledObject` that don't match these ru
 
 KEDA will block all incoming changes to `TriggerAuthentication`/`ClusterTriggerAuthentication` that don't match these rules:
 
-- The specified identity ID for Azure AD Workload Identity and/or Pod Identity is empty.
+- The specified identity ID for Azure AD Workload Identity and/or Pod Identity is empty. (Default/unset identity ID will be passed through.)
