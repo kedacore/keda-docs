@@ -33,8 +33,7 @@ Deploying KEDA with Helm is very simple:
 3. Install `keda` Helm chart
 
     ```sh
-    kubectl create namespace keda
-    helm install keda kedacore/keda --namespace keda
+    helm install keda kedacore/keda --namespace keda --create-namespace
     ```
 
 > 💡 **NOTE:** Are you upgrading to v2.2.1 or above? Make sure to read [our troubleshooting guide](https://keda.sh/docs/latest/troubleshooting/) to fix potential CRD issues.
