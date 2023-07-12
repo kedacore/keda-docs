@@ -24,4 +24,6 @@ following flags -
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.  
 
-Note, that you must "federate" the Azure Managed Identity (that the TriggerAuth `podIdentity.identityId` points to) with the 'subject' of the Keda Operator service account. This will probably look something like `system:serviceaccount:keda:keda-operator`.  The serviceAccount for the target deployment is not used here. 
+Note, that you must "federate" the Azure AD Managed Identity (that the TriggerAuthentication `podIdentity.identityId` points to) with the 'subject' of the KEDA Operator service account. This will be similar to `system:serviceaccount:keda:keda-operator`. 
+
+> 📝 The service account for the target deployment is not used here.
