@@ -10,8 +10,8 @@ You can tell KEDA to use GCP Workload Identity via `podIdentity.provider`.
 podIdentity:
   provider: gcp # Optional. Default: none
 ```
-### Steps to setup Workload Identity
-If you are using podIdentity provider as `gcp`, you need to setup workload identity as below and your GKE cluster must have Workload Identity enabled.
+### Steps to set up Workload Identity
+If you are using podIdentity provider as `gcp`, you need to set up workload identity as below and your GKE cluster must have Workload Identity enabled.
 
 * You need to create a GCP IAM service account with proper permissions to retrive metrics for particular scalers.
 
@@ -66,4 +66,4 @@ If you are using podIdentity provider as `gcp`, you need to setup workload ident
   GSA_PROJECT: the project ID of the Google Cloud project of your IAM service account. 
 
 
-  Refer to GCP official [documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to) for more. 
+  Refer to GCP official [documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to) for more.
