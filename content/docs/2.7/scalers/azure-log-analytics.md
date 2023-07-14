@@ -95,7 +95,7 @@ You can define threshold in trigger metadata, it will be used if your query resu
 
 Data types of your query result should be: real, int or long. Other data types are not supported. Later, during runtime, your data will be converted to int64.
 
-Be careful with setting up "pollingInterval" and long running queries. Test your query before.
+Be careful with setting up "pollingInterval" and long-running queries. Test your query before.
 
 Example query to get `MetricValue` and `Threshold` based on CPU usage and limits, defined for the pod.
 

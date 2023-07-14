@@ -6,7 +6,7 @@ weight = 300
 
 ## Overview
 
-As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
+As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long-running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
 
 For example, if you wanted to use KEDA to run a job for each message that lands on a RabbitMQ queue, the flow may be:
 
@@ -145,7 +145,7 @@ The max number of pods that is created within a single polling period. If there 
 
 The optional property rollout.strategy specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
 Possible values are `default` or `gradual`. \
-When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
+When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default, the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
 On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 
