@@ -144,7 +144,7 @@ This setting is passed to the HPA definition that KEDA will create for a given r
     replicas: 6                                      # Mandatory if fallback section is included
 ```
 
-The `fallback` section is optional. It defines a number of replicas to fall  back to if a scaler is in an error state.
+The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
 
 KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behaviour), the scaler will, instead, return a normalised metric using the formula:
 ```
