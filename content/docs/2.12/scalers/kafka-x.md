@@ -87,8 +87,8 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 **SASL:**
 
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional)
-- `username` - Username used for sasl authentication. (Optional)
-- `password` - Password used for sasl authentication. (Optional)
+- `username` - Username used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
+- `password` - Password used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
 
 
 **TLS:**
@@ -101,6 +101,10 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
 
 **AWS MSK IAM Specific Configuration:**
+
+- `awsRegion` - AWS region of your MSK cluster. (Optional, required for AWS MSK IAM authentication)
+
+For authentication, you can also use `TriggerAuthentication` CRD to configure the authenticate by providing `awsAccessKeyID` and `awsSecretAccessKey` or `awsRoleArn`.
 
 **Role based authentication:**
 
