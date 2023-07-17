@@ -31,7 +31,7 @@ This will return a json with the list of metrics exposed by KEDA (just an extern
 }
 ```
 
-In order to query an specific metric value, you also can do it using `kubectl`:
+In order to query a specific metric value, you also can do it using `kubectl`:
 ```bash
 kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/YOUR_NAMESPACE/YOUR_METRIC_NAME?labelSelector=scaledobject.keda.sh%2Fname%3D{SCALED_OBJECT_NAME}"
 ```

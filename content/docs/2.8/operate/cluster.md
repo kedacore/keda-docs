@@ -123,7 +123,7 @@ To specify values other than their defaults, you can set the following environme
 
 ## Certificates used by KEDA Metrics Server
 
-By default KEDA Metrics Server uses self signed certificates while communicating with Kubernetes API Server. It is recommended to provide own (trusted) certificates instead.
+By default, KEDA Metrics Server uses self signed certificates while communicating with Kubernetes API Server. It is recommended to provide own (trusted) certificates instead.
 
 Certificates and CA bundle can be referenced in `args` section in KEDA Metrics Server Deployment:
 

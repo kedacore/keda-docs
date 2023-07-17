@@ -6,12 +6,12 @@ weight = 300
 
 ## Overview
 
-As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
+As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long-running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
 
 For example, if you wanted to use KEDA to run a job for each message that lands on a RabbitMQ queue, the flow may be:
 
 1. When no messages are awaiting processing, no jobs are created.
-1. When a message arrives on the queue, KEDA creates a job.
+1. When a message arrives at the queue, KEDA creates a job.
 1. When the job starts running, it pulls *a single* message and processes it to completion.
 1. As additional messages arrive, additional jobs are created.  Each job processes a single message to completion.
 1. Periodically remove completed/failed job by the `SuccessfulJobsHistoryLimit` and `FailedJobsHistoryLimit.`
