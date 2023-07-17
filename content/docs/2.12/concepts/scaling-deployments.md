@@ -29,7 +29,7 @@ The only constraint is that the target `Custom Resource` must define `/scale` [s
 
 ## ScaledObject spec
 
-This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
+This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`.
 
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledobject_types.go)
 
@@ -49,7 +49,7 @@ spec:
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval:  30                                      # Optional. Default: 30 seconds
   cooldownPeriod:   300                                     # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
   minReplicaCount:  1                                       # Optional. Default: 0
   maxReplicaCount:  100                                     # Optional. Default: 100
   fallback:                                                 # Optional. Section to specify fallback options
@@ -66,6 +66,17 @@ spec:
           - type: Percent
             value: 100
             periodSeconds: 15
+    complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+      formula: {formula-for-fetched-metrics}                # Optional. Formula for calculation
+      target: {target-value-to-scale-on}                    # Optional. If metrics are anyhow composed together
+      externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
+        - name: {name-of-ec}                                # Mandatory if externalCalculators section is given
+          url: {url-of-ec-server}                           # Mandatory if externalCalculators section is given
+          timeout: {time-to-connect}                        # Mandatory if externalCalculators section is given
+          certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+        fallback:                                           # Optional. Section to specify ec-fallback options
+          replicas: 3                                       # Mandatory if fallback section is included
+          failureThreshold: 3                               # Mandatory if fallback section is included
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
@@ -113,7 +124,7 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 #### idleReplicaCount
 
 ```yaml
-  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount
 ```
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
@@ -167,7 +178,7 @@ advanced:
   restoreToOriginalReplicaCount: true/false        # Optional. Default: false
 ```
 
-This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted. 
+This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted.
 Default behavior is to keep the replica count at the same number as it is in the moment of `ScaledObject's` deletion.
 
 For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is created and the `Deployment` is scaled by KEDA to `10 replicas`. Then `ScaledObject` is deleted:
@@ -202,6 +213,40 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 **Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
 
 ---
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: {target-value-to-scale-on}                    # Optional. If metrics are anyhow composed together
+    formula: {formula-for-fetched-metrics}                # Optional. Formula for calculation
+    externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
+      - name: {name-of-ec}                                # Mandatory if externalCalculators section is given
+        url: {url-of-ec-server}                           # Mandatory if externalCalculators section is given
+        timeout: {time-to-connect}                        # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+      fallback:                                           # Optional. Section to specify ec-fallback options
+        replicas: 3                                       # Mandatory if fallback section is included
+        failureThreshold: 3                               # Mandatory if fallback section is included
+```
+
+**`complexScalingLogic`**
+
+Structure expects atleast one of `formula` or `externalCalculators` to be non-empty. Both can be specified at the same time. If `target` is given, metrics are going to be composed and/or manipulated in a way, that this target will be used to scale on. In this case, `composite-scaler` will be created within KEDA and passed on to HPA. HPA will create a request for metrics for this `composite-scaler` and work with all external metrics at once. Only way to not create the `composite-scaler` with this structure is to use `externalCalculators` without `target` in which case it will manipulate each external metric individually.
+
+**`complexScalingLogic.target`**
+
+Target value to scale on if `composite-scaler` is used. In this case metrics are composed using `formula` and/or `externalCalculators`. All external metrics must be of the same type in order for ScaledObject to be successfully validated.
+
+**`complexScalingLogic.externalCalculators`**
+
+External calculators provide possibility of adding user-defined grpc servers defined by `name` that are available at `url`s, have `timeout` to connect to the server and can be secured using certificates at `certDirectory`. User must provide the certificates. It is expected that `ca.crt`, `tls.crt` and `tls.key` will be present in the directory. Otherwise if `certDirectory` is `""`, KEDA will connect using `insecure.NewCredentials()`. Each `externalCalculator` has an optional `fallback` functionality. Each `externalCalculator` has it's health status. If any one of them starts failing, `fallback` functionality will be applied after `failureThreshold` is reached. All `externalCalculators` are called in order from top to bottom how they are defined in the SO. If `formula` is defined, it is applied after last `externalCalculator`.
+
+**`complexScalingLogic.formula`**
+
+Mathematical and/or conditional formula using https://github.com/antonmedv/expr for advanced scaling options. Formula always composes given metrics and therefore `target` is required to scale on. `formula` can be specified with `externalCalculators` in which case it can contain last `externalCalculators.name` to manipulate with its metrics because `formula` is evaluated after all `externalCalculators`. If `formula` is defined, all external triggers **must** have their names defined.
+
+---
+
 #### triggers
 ```yaml
   triggers:
