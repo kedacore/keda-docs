@@ -74,9 +74,6 @@ spec:
           url: {url-of-ec-server}                           # Mandatory if externalCalculators section is given
           timeout: {time-to-connect}                        # Mandatory if externalCalculators section is given
           certDirectory: ""                                 # Optional. Defaults to "", no certificates used
-        fallback:                                           # Optional. Section to specify ec-fallback options
-          replicas: 3                                       # Mandatory if fallback section is included
-          failureThreshold: 3                               # Mandatory if fallback section is included
   triggers:
   # {list of triggers to activate scaling of the target resource}
 ```
@@ -224,9 +221,6 @@ advanced:
         url: {url-of-ec-server}                           # Mandatory if externalCalculators section is given
         timeout: {time-to-connect}                        # Mandatory if externalCalculators section is given
         certDirectory: ""                                 # Optional. Defaults to "", no certificates used
-      fallback:                                           # Optional. Section to specify ec-fallback options
-        replicas: 3                                       # Mandatory if fallback section is included
-        failureThreshold: 3                               # Mandatory if fallback section is included
 ```
 
 **`complexScalingLogic`**
@@ -239,11 +233,101 @@ Target value to scale on if `composite-scaler` is used. In this case metrics are
 
 **`complexScalingLogic.externalCalculators`**
 
-External calculators provide possibility of adding user-defined grpc servers defined by `name` that are available at `url`s, have `timeout` to connect to the server and can be secured using certificates at `certDirectory`. User must provide the certificates. It is expected that `ca.crt`, `tls.crt` and `tls.key` will be present in the directory. Otherwise if `certDirectory` is `""`, KEDA will connect using `insecure.NewCredentials()`. Each `externalCalculator` has an optional `fallback` functionality. Each `externalCalculator` has it's health status. If any one of them starts failing, `fallback` functionality will be applied after `failureThreshold` is reached. All `externalCalculators` are called in order from top to bottom how they are defined in the SO. If `formula` is defined, it is applied after last `externalCalculator`.
+External calculators provide possibility of adding user-defined grpc servers defined by `name` that are available at `url`s, have `timeout` to connect to the server and can be secured using certificates at `certDirectory`. User must provide the certificates. It is expected that `ca.crt`, `tls.crt` and `tls.key` will be present in the directory. Otherwise if `certDirectory` is `""`, KEDA will connect using `insecure.NewCredentials()`. Each `externalCalculator` has it's health status. If any one of them starts failing, `fallback` functionality will be applied after `failureThreshold` is reached. All `externalCalculators` are called in order from top to bottom how they are defined in the SO. If `formula` is defined, it is applied after last `externalCalculator`.
+
+**Example 1**
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: "2"                                           # Optional. If metrics are anyhow composed together
+    externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
+      - name: average_calc                                # Mandatory if externalCalculators section is given
+        url: 10.10.10.10:50051                            # Mandatory if externalCalculators section is given
+        timeout: 10s                                      # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+```
+In this example, there exists `pod` that contains image with running server that has implemented `Calculate` method matching the .proto file structure (can be found in `keda/pkg/externalscaling/api`). `url` is endpoint address of this `pod` (with port). All external metrics are passed to the server, where `average` is calculated and 1 final metric is returned. This metric is then returned to HPA.
+
+**Example 2**
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: "2"                                           # Optional. If metrics are anyhow composed together
+    externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
+      - name: average_calc                                # Mandatory if externalCalculators section is given
+        url: 10.10.10.10:50051                            # Mandatory if externalCalculators section is given
+        timeout: 10s                                      # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+      - name: add_calc                                    # Mandatory if externalCalculators section is given
+        url: 11.11.11.11:50052                            # Mandatory if externalCalculators section is given
+        timeout: 10s                                      # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+```
+
+In this example, we have 2 random triggers that return values of 3 and 5. Fetched metrics are sent to `externalCalculator` `average_calc`. This returns average value `(3+5)/2=4`. Subsequently `externalCalculator` `add_calc` is called, adding the number 5 to the metric. Final metric value is therefore `4+5=9`. Because `target` is 2, replica count will be 5 (value of 4.5).
 
 **`complexScalingLogic.formula`**
 
 Mathematical and/or conditional formula using https://github.com/antonmedv/expr for advanced scaling options. Formula always composes given metrics and therefore `target` is required to scale on. `formula` can be specified with `externalCalculators` in which case it can contain last `externalCalculators.name` to manipulate with its metrics because `formula` is evaluated after all `externalCalculators`. If `formula` is defined, all external triggers **must** have their names defined.
+
+**Example 1**
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: "4"                                           # Optional. If metrics are anyhow composed together
+    formula: "m_trig + kw_trig"                           # Optional. Formula for calculation
+    ...
+triggers:
+  - type: kubernetes-workload
+    name: kw_trig
+    metadata:
+      podSelector: pod=workload-test
+      value: '1'
+  - type: metrics-api
+    name: m_trig
+    metadata:
+      targetValue: '2'
+      url: https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423
+      valueLocation: tasks
+```
+
+In this example, there exists deployment with label `workload-test` for trigger `kubernetes-workload`. Url for `metrics-api` trigger returns fixed value of 3. Workload deployment is scaled to 5 replicas. Therefore `kw_trig` returns metric value of 5, `m_trig` returns value of 3. `formula` is then applied, 5 + 3 = 8. `complexScalingLogic.target` is 4, therefore target deployment will be scaled to 2 replicas.
+
+**Example 2 combining both**
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: "4"                                           # Optional. If metrics are anyhow composed together
+    formula: "add_calc + 4"                               # Optional. Formula for calculation
+    externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
+      - name: average_calc                                # Mandatory if externalCalculators section is given
+        url: 10.10.10.10:50051                            # Mandatory if externalCalculators section is given
+        timeout: 10s                                      # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+      - name: add_calc                                    # Mandatory if externalCalculators section is given
+        url: 11.11.11.11:50052                            # Mandatory if externalCalculators section is given
+        timeout: 10s                                      # Mandatory if externalCalculators section is given
+        certDirectory: ""                                 # Optional. Defaults to "", no certificates used
+    ...
+triggers:
+  - type: kubernetes-workload
+    name: kw_trig
+    metadata:
+      podSelector: pod=workload-test
+      value: '1'
+  - type: metrics-api
+    name: m_trig
+    metadata:
+      targetValue: '2'
+      url: https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423
+      valueLocation: tasks
+```
+
+In this example, both `formula` and `externalCalculators` are used. Workload deployment has 5 replicas. Fetched metrics are passed through `average_calc` (`(3+5)/2 = 4`) and `add_calc`(`4+2=6`) in this order respectfully and then  subsequently `formula` is applied(`6+4=10`). Target is 4 therefore deployment is scaled to 3 replicas (`10/4=2.5`)
 
 ---
 
