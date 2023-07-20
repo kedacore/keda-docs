@@ -38,6 +38,8 @@ Deploying KEDA with Helm is very simple:
     helm install keda kedacore/keda --namespace keda --create-namespace
     ```
 
+To deploy the CRDs separately from the Helm chart, use the `keda-2.xx.x-crds.yaml` file provided on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
+
 > 💡 **NOTE:** Are you upgrading to v2.2.1 or above? Make sure to read [our troubleshooting guide](https://keda.sh/docs/latest/troubleshooting/) to fix potential CRD issues.
 
 ### Uninstall
