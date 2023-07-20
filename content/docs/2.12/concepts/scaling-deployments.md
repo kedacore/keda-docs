@@ -214,7 +214,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 ```yaml
 advanced:
   complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
-    target: {target-value-to-scale-on}                    # Optional. If metrics are anyhow composed together
+    target: {target-value-to-scale-on}                    # Optional. New target if metrics are anyhow composed together
     formula: {formula-for-fetched-metrics}                # Optional. Formula for calculation
     externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
       - name: {name-of-ec}                                # Mandatory if externalCalculators section is given
@@ -240,7 +240,7 @@ External calculators provide possibility of adding user-defined grpc servers def
 ```yaml
 advanced:
   complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
-    target: "2"                                           # Optional. If metrics are anyhow composed together
+    target: "2"                                           # Optional. New target if metrics are anyhow composed together
     externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
       - name: average_calc                                # Mandatory if externalCalculators section is given
         url: 10.10.10.10:50051                            # Mandatory if externalCalculators section is given
@@ -254,7 +254,7 @@ In this example, there exists `pod` that contains image with running server that
 ```yaml
 advanced:
   complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
-    target: "2"                                           # Optional. If metrics are anyhow composed together
+    target: "2"                                           # Optional. New target if metrics are anyhow composed together
     externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
       - name: average_calc                                # Mandatory if externalCalculators section is given
         url: 10.10.10.10:50051                            # Mandatory if externalCalculators section is given
@@ -277,7 +277,7 @@ Mathematical and/or conditional formula using https://github.com/antonmedv/expr 
 ```yaml
 advanced:
   complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
-    target: "4"                                           # Optional. If metrics are anyhow composed together
+    target: "4"                                           # Optional. New target if metrics are anyhow composed together
     formula: "m_trig + kw_trig"                           # Optional. Formula for calculation
     ...
 triggers:
@@ -301,7 +301,7 @@ In this example, there exists deployment with label `workload-test` for trigger 
 ```yaml
 advanced:
   complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
-    target: "4"                                           # Optional. If metrics are anyhow composed together
+    target: "4"                                           # Optional. New target if metrics are anyhow composed together
     formula: "add_calc + 4"                               # Optional. Formula for calculation
     externalCalculators:                                  # Optional. Section for user defined grpc calculation servers
       - name: average_calc                                # Mandatory if externalCalculators section is given
