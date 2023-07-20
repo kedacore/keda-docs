@@ -15,3 +15,4 @@ KEDA will block all incoming changes to `ScaledObject` that don't match these ru
 - The scaled workload (`scaledobject.spec.scaleTargetRef`) is already autoscaled by another other sources (other ScaledObject or HPA).
 - CPU and/or Memory trigger are used and the scaled workload doesn't have the requests defined. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
 - CPU and/or Memory trigger are **the only used triggers** and the ScaledObject defines `minReplicaCount:0`. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
+- When using advanced field `complexScalingLogic` atleast one of `formula` or `externalCalculators` must be defined. `target` is mandatory with `formula` and optional with `externalCalculators` if one single `target` is desired for all metrics (in case of composing metrics together during calculation).
