@@ -29,12 +29,13 @@ metadata:
 spec:
   scaleType: job
   jobTargetRef:
-    parallelism: 1 # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    completions: 1 # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    parallelism: 1 # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
+    completions: 1 # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
     activeDeadlineSeconds: 600 # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6 # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
-      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
+      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/job/)
+      
   pollingInterval: 30  # Optional. Default: 30 seconds
   cooldownPeriod:  300 # Optional. Default: 300 seconds
   minReplicaCount: 0   # Optional. Default: 0

@@ -29,12 +29,12 @@ metadata:
   name: {scaled-job-name}
 spec:
   jobTargetRef:
-    parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    completions: 1                            # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
+    completions: 1                            # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
     activeDeadlineSeconds: 600                #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6                           # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
-      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
+      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/job)
   pollingInterval: 30                         # Optional. Default: 30 seconds
   successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
@@ -54,8 +54,8 @@ You can find all supported triggers [here](../scalers).
 
 ```yaml
   jobTargetRef:
-    parallelism: 1              # Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    completions: 1              # Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    parallelism: 1              # Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism))
+    completions: 1              # Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism))
     activeDeadlineSeconds: 600  # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6             # Specifies the number of retries before marking this job failed. Defaults to 6
 ```
