@@ -36,7 +36,7 @@ spec:
     activeDeadlineSeconds: 600                #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6                           # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
-      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs/)
+      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/job)
   pollingInterval: 30                         # Optional. Default: 30 seconds
   successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
