@@ -29,7 +29,7 @@ The only constraint is that the target `Custom Resource` must define `/scale` [s
 
 ## ScaledObject spec
 
-This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
+This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`.
 
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledobject_types.go)
 
@@ -49,7 +49,7 @@ spec:
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval:  30                                      # Optional. Default: 30 seconds
   cooldownPeriod:   300                                     # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
   minReplicaCount:  1                                       # Optional. Default: 0
   maxReplicaCount:  100                                     # Optional. Default: 100
   fallback:                                                 # Optional. Section to specify fallback options
@@ -113,7 +113,7 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 #### idleReplicaCount
 
 ```yaml
-  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount
 ```
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
@@ -167,7 +167,7 @@ advanced:
   restoreToOriginalReplicaCount: true/false        # Optional. Default: false
 ```
 
-This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted. 
+This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted.
 Default behavior is to keep the replica count at the same number as it is in the moment of `ScaledObject's` deletion.
 
 For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is created and the `Deployment` is scaled by KEDA to `10 replicas`. Then `ScaledObject` is deleted:
@@ -200,6 +200,52 @@ The name of the HPA resource KEDA will create. By default, it's `keda-hpa-{scale
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
 **Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
+
+---
+
+```yaml
+advanced:
+  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+    target: {target-value-to-scale-on}                    # Mandatory. New target if metrics are anyhow composed together
+    formula: {formula-for-fetched-metrics}                # Mandatory. Formula for calculation
+```
+
+**`complexScalingLogic:`**
+
+The `complexScalingLogic` is optional. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle then internally. With `complexScalingLogic` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
+
+**`complexScalingLogic.target`**
+
+`target` defines new target value to scale on for the composed metric. All external metrics must be of the same type in order for ScaledObject to be successfully validated.
+
+**`complexScalingLogic.formula`**
+
+  `formula` composes external metrics together and allows them to be modified/manipulated with. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr).
+
+**Example**
+
+```yaml
+advanced:
+  complexScalingLogic:
+    formula: "(trig_one + trig_two)/2"
+    target: "2"
+...
+triggers:
+  - type: kubernetes-workload
+    name: trig_one
+    metadata:
+      podSelector: 'pod=workload-test'
+      value: '1'
+  - type: metrics-api
+    name: trig_two
+    metadata:
+      targetValue: "2"
+      url: "https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423"
+      valueLocation: "tasks"
+```
+
+ScaledObject with this definition will collect both metrics from `kubernetes-workload` and `metrics-api` triggers and compose them together using the provided `formula`. Final metric is returned and passed to HPA. If one of the triggers fails and `fallback` is defined, the `formula` will NOT be applied.
+
 
 ---
 #### triggers
