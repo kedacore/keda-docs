@@ -21,6 +21,7 @@ triggers:
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
+    serverAPIPath: /api/some-path # Default is `/api/v1/query`. Change this if the Prometheus query endpoint differs from the default
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
@@ -32,6 +33,7 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
+- `serverAPIPath` - API path to query the Prometheus Server. On Grafana Cloud, this would be `/api/prom`. (Default: `/api/v1/query`)
 - `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `query` - Query to run.
 - `threshold` - Value to start scaling for. (This value can be a float)
