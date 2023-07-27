@@ -1,7 +1,7 @@
 +++
 title = "Apache Kafka Experimental Scaler"
 availability = "v2.12+"
-maintainer = "Microsoft"
+maintainer = "Community"
 description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
 go_file = "kafka_x_scaler"
 +++
