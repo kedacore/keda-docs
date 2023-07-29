@@ -7,6 +7,10 @@ go_file = "kafka_x_scaler"
 +++
 
 > **Notice:**
+> - This is an experimental kafka scaler based on kafka-go.
+> - This scaler is not fully compatible with the existing kafka scaler. There are some differences in the configuration and behavior. Please read the documentation carefully before using it. 
+> - If you are using OAuth authentication, please use the existing kafka scaler, as this scaler does not yet support OAuth2 authentication.
+> - This scaler has support for AWS MSK IAM based authentication.
 > - By default, the number of replicas will not exceed:
 >   - The number of partitions on a topic when a topic is specified;
 >   - The number of partitions of *all topics* in the consumer group when no topic is specified;
@@ -61,17 +65,8 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 > - When there are **active** consumer instances, _all topics_ includes:
 >   - Topics the consumer is *currently* subscribing to;
 >   - Topics that the consumer group *had prior commit history* (up to retention period for `__consumer_offset`, default to 7 days, see [KIP-186](https://cwiki.apache.org/confluence/display/KAFKA/KIP-186%3A+Increase+offsets+retention+default+to+7+days));
-> - When there are **no active** consumer instances, the feature is still a WIP and as such would highly recommend to specify `topic` to avoid unexpected behavior.
-> ---
-> An edge case exists where scaling could be **effectively disabled**:
->    - Consumer never makes a commit (no record in `__consumer_offset`);
->    - and `ScaledObject` had `minReplicaCount` as 0;
->
->   In such case, KEDA could scale the consumer down to 0 when there is no lag and won't be able scale up due to the topic could not be auto discovered.
->
-> Fix for such case:
->  - Set `minReplicaCount` > 0;
->  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
+> - When there are **no active** consumer instances, the feature is still a WIP and as such would highly recommend to specify `topic` to avoid unexpected behavior. Namely the scaler will not be able to determine the topics it had subscribed to in the past and will not be able to calculate the lag for those topics.
+
 ### Authentication Parameters
 
  You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`.
