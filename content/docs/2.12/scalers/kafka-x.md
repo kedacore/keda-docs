@@ -17,11 +17,11 @@ go_file = "kafka_x_scaler"
 
 ### Trigger Specification
 
-This specification describes the `kafka-x` trigger for an Apache Kafka topic.
+This specification describes the `apache-kafka` trigger for an Apache Kafka topic.
 
 ```yaml
 triggers:
-- type: kafka-x
+- type: apache-kafka
   metadata:
     bootstrapServers: kafka.svc:9092
     consumerGroup: my-group
@@ -324,7 +324,7 @@ spec:
     name: azure-functions-deployment
   pollingInterval: 30
   triggers:
-  - type: kafka-x
+  - type: apache-kafka
     metadata:
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
