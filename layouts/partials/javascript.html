@@ -1,4 +1,7 @@
 {{ $alpineVersion := site.Params.alpine_js_version }}
+{{ $allVersions   := site.Params.versions.docs }}
+{{ $latest        := index $allVersions 0 }}
+
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v{{ $alpineVersion }}/dist/alpine.js"
   defer
@@ -26,9 +29,16 @@
   src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"
 ></script>
 <script type="text/javascript">
+  const latest = "{{ $latest }}";
+  let currentVersion = latest;
+  
   const currentUrl = window.location.pathname;
   const currentLocation = String(currentUrl).split("/");
-  const currentVersion = currentLocation[2];
+  const docsPage = currentLocation[1];
+
+  if (docsPage === "docs") {
+    currentVersion = currentLocation[2];
+  }
 
   docsearch({
     apiKey: "1b7cb5ab29b5b996f6faf71c39cb4171",
