@@ -54,7 +54,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
 
 > **Note:**
@@ -76,7 +76,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
+ You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, password or keytab, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
  Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
 
@@ -84,9 +84,12 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
 **SASL:**
 
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional)
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer` or `none`, Default: `none`, Optional)
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
+- `keytab` - Kerberos keytab.  Either `password` or `keytab` is required in case of `gssapi`.  (Optional)
+- `realm` - Kerberos realm.  (Optional unless sasl mode is `gssapi`)
+- `krbConfig` - Kerberos configuration file. (Optional unless sasl mode is `gssapi`)
 - `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
 - `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
 - `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
