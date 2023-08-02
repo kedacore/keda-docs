@@ -220,9 +220,9 @@ The `complexScalingLogic` is optional. If defined, both `target` and `formula` a
 
 **`complexScalingLogic.formula`**
 
-  `formula` composes external metrics together and allows them to be modified/manipulated with. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr).
+  `formula` composes external metrics together and allows them to be modified/manipulated with. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If `fallback` is applied, the `formula` will NOT be applied. Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
 
-**Example**
+**Example 1**
 
 ```yaml
 advanced:
@@ -244,8 +244,36 @@ triggers:
       valueLocation: "tasks"
 ```
 
-ScaledObject with this definition will collect both metrics from `kubernetes-workload` and `metrics-api` triggers and compose them together using the provided `formula`. Final metric is returned and passed to HPA. If one of the triggers fails and `fallback` is defined, the `formula` will NOT be applied.
+Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is passed to HPA instead of 2 metrics individually.
 
+**More formula examples**
+
+```yaml
+advanced:
+  complexScalingLogic:
+    formula: "trig_one > 2 ? trig_one + trig_two : 1"
+```
+
+If metric value of trigger `trig_one` is more then 2, then return `trig_one` + `trig_two` otherwise return 1.
+
+```yaml
+advanced:
+  complexScalingLogic:
+    formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5 : 0"
+```
+
+If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
+
+```yaml
+advanced:
+  complexScalingLogic:
+    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
+```
+
+Conditions can be used within another condition as well.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
+
+Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
 
 ---
 #### triggers
