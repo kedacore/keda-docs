@@ -501,6 +501,10 @@ url = "https://qonto.com"
 logo = "qonto.png"
 
 [[params.users]]
+url = "https://redhat.com"
+logo = "red-hat.png"
+
+[[params.users]]
 url = "https://www.reddit.com/"
 logo = "reddit.svg"
 
@@ -552,10 +556,6 @@ logo = "zapier.png"
 [[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
-
-[[params.partners]]
-url = "https://redhat.com"
-logo = "red-hat.png"
 
 [[params.partners]]
 url = "https://scrm.lidl"
