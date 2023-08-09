@@ -16,7 +16,6 @@ triggers:
   metadata:
     # Required fields:
     serverAddress: http://<prometheus-host>:9090
-    metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
     threshold: '100.50'
     activationThreshold: '5.5'
@@ -32,7 +31,6 @@ triggers:
 **Parameter list:**
 
 - `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
-- `metricName` - Name to identify the Metric in the external.metrics.k8s.io API. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `query` - Query to run.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
@@ -40,7 +38,7 @@ triggers:
 - `cortexOrgID` - DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of `customHeaders` and will be removed in version 2.12. Use `customHeaders: X-Scope-OrgID=##` instead to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs  (Values: `true`,`false`, Default: `false`, Optional)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
@@ -107,7 +105,6 @@ spec:
   - type: prometheus
     metadata:
       serverAddress: http://<prometheus-host>:9090
-      metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
       threshold: '100'
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
@@ -154,7 +151,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "bearer"
@@ -203,7 +199,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "basic"
@@ -257,7 +252,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "tls"
@@ -318,7 +312,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "tls,basic"

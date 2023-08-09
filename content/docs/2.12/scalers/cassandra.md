@@ -23,7 +23,6 @@ triggers:
       query: "SELECT COUNT(*) FROM test_keyspace.test_table;"
       targetQueryValue: "1"
       activationTargetQueryValue: "10"
-      metricName: "test_keyspace" # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
 ```
 
 **Parameter list:**
@@ -37,7 +36,6 @@ triggers:
 - `query` - A Cassandra query that should return single numeric value.
 - `targetQueryValue` - The threshold value that is provided by the user and used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA).
 - `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
-- `metricName` - Name to assign to the metric. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. Default: `s<X>-cassandra-<KEYSPACE>`, Optional, In case of `metricName` is specified, it will be used to generate the `metricName` like this: `s<X>-cassandra-<METRICNAME>`, where `<X>` is the index of the trigger in a ScaledObject)
 
 ### Authentication Parameters
 
@@ -45,7 +43,7 @@ You can authenticate by using a password via `TriggerAuthentication` configurati
 
 **Password Authentication:**
 
-- `password` - Password for configured user to login to the Cassandra instance.
+- `password` - Password for configured user to log in to the Cassandra instance.
 
 ### Example
 
@@ -85,7 +83,6 @@ spec:
       protocolVersion: "4"
       query: "SELECT COUNT(*) FROM test_keyspace.test_table;"
       targetQueryValue: "1"
-      metricName: "test_keyspace" # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
     authenticationRef:
       name: keda-trigger-auth-cassandra-secret
 ```
