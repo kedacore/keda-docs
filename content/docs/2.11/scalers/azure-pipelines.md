@@ -54,12 +54,16 @@ triggers:
 
 ### Authentication Parameters
 
-As an alternative to using environment variables, you can authenticate with Azure Devops using a Personal Access Token via `TriggerAuthentication` configuration.
+As an alternative to using environment variables, you can authenticate with Azure Devops using a Personal Access Token or Managed identity via `TriggerAuthentication` configuration. If `personalAccessTokenFromEnv` or `personalAccessTokenFrom` is empty `TriggerAuthentication` must be configured using podIdentity.
 
 **Personal Access Token Authentication:**
 
 - `organizationURL` - The URL of the Azure DevOps organization.
 - `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
+
+**Pod Identity Authentication**
+
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
 
 ### How to determine your pool ID
 
@@ -203,7 +207,7 @@ spec:
      name: pipeline-trigger-auth
 ```
 
-###Example for Parent Deployment or StatefulSet
+### Example for Parent Deployment or StatefulSet
 
 ```yaml
 apiVersion: apps/v1
@@ -226,4 +230,36 @@ spec:
           - name: AZP_AGENT_NAME
             value: example-keda-template # Matches Scaled Job Parent
           
+```
+
+### Example for PodIdentity authentication
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: pipeline-trigger-auth
+spec:
+  podIdentity:
+    provider: azure-workload
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-pipelines-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azdevops-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: azure-pipelines
+    metadata:
+      poolID: "1"
+      organizationURLFromEnv: "AZP_URL"
+      parent: "example-keda-template"
+      demands: "maven,docker"      
+    authenticationRef:
+     name: pipeline-trigger-auth
 ```
