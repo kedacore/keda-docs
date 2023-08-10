@@ -1,6 +1,6 @@
 +++
 title = "Temporal"
-availability = "v2.13+"
+availability = "v2.12+"
 maintainer = "Community"
 description = "Scale applications based on Temporal worflows & activity."
 go_file = "temporal_scaler"
