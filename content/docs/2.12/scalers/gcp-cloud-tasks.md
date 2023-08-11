@@ -32,7 +32,6 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
 
-
 **Credential based authentication:**
 
 - `GoogleApplicationCredentials` - Service account credentials in JSON.
