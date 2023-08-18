@@ -549,6 +549,10 @@ url = "https://www.workiva.com"
 logo = "workiva.png"
 
 [[params.users]]
+url = "https://www.xbox.com"
+logo = "xbox.png"
+
+[[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
