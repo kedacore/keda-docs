@@ -421,3 +421,69 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
 ```
+
+#### Your kafka cluster turns on SASL/GSSAPI auth without TLS:
+
+##### `sasl/gssapi` in TriggerAuthentication
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-kafka-secrets
+  namespace: default
+data:
+  sasl: "gssapi"
+  tls: "disable"
+  username: "admin"
+  realm: <your kerberos realm>
+  keytab: <your kerberos keytab>
+  kerberosConfig: <your kerberos configuration>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secrets
+    key: sasl
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
+  - parameter: username
+    name: keda-kafka-secrets
+    key: username
+  - parameter: realm
+    name: keda-kafka-secrets
+    key: realm
+  - parameter: keytab
+    name: keda-kafka-secrets
+    key: keytab
+  - parameter: kerberosConfig
+    name: keda-kafka-secrets
+    key: kerberosConfig
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-functions-deployment
+  pollingInterval: 30
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: localhost:9092
+      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: test-topic
+      # Optional
+      lagThreshold: "50"
+      offsetResetPolicy: latest
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+```
