@@ -1,5 +1,5 @@
 +++
-title = "KEDA is gradutating to CNCF Graduted project 🎉"
+title = "KEDA is graduating to CNCF Graduated project 🎉"
 date = 2023-08-22
 author = "KEDA Maintainers"
 aliases = [
