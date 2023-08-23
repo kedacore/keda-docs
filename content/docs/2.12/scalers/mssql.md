@@ -18,7 +18,6 @@ triggers:
     query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
     targetValue: "5.5"
     activationTargetValue: '5'
-    metricName: backlog_process_count # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional - the generated value would be `mssql-{sha256hash}`
 ```
 
 > 💡 **NOTE:** The connection string format supported by this scaler has some incompatibilities with connection string formats supported by other platforms, like .NET. For example, the MSSQL instance's port number must be separated into its own `Port` property instead of adding it to the `Server` property. You can learn more about all the supported connection string formats for this mssql scaler [here](https://github.com/denisenkom/go-mssqldb#the-connection-string-can-be-specified-in-one-of-three-formats).
@@ -36,7 +35,6 @@ triggers:
     database: test_db_name
     query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
     targetValue: 1
-    metricName: backlog_process_count # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. optional - the generated value would be `mssql-test_db_name`
 ```
 
 The `mssql` trigger always requires the following information:
@@ -68,8 +66,6 @@ Or the more traditional ADO format:
 ```
 Server=example.database.windows.net;Port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 ```
-
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and the `database` value (if specified), or the `host` value, or will be in the form `s{triggerIndex}-mssql-{sha256hash}` where `{sha256hash}` is a SHA-256 hash of the connection string. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 
 ### Authentication parameters
 
