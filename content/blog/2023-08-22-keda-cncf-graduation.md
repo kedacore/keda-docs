@@ -3,7 +3,7 @@ title = "KEDA is graduating to CNCF Graduated project 🎉"
 date = 2023-08-22
 author = "KEDA Maintainers"
 aliases = [
-"/blog/keda-cncf-incubation"
+"/blog/keda-cncf-graduation"
 ]
 +++
 
