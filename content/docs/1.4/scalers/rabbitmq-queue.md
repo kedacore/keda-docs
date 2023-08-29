@@ -25,7 +25,7 @@ The `host` value is the name of the environment variable your deployment uses to
 
 `apiHost` has the similar format but for HTTP API endpoint, like `https://guest:password@localhost:443/vhostname`. Note it has optional vhost name after the host slash which will be used to scope API request.
 
-By default `includeUnacked` is `false` in this case scaler uses AMQP protocol, requires `host` and only counts messages in the queue and ignores unacked messages.
+By default, `includeUnacked` is `false` in this case scaler uses AMQP protocol, requires `host` and only counts messages in the queue and ignores unacked messages.
 If `includeUnacked` is `true` then `host` is not required but `apiHost` is required in this case scaler uses HTTP management API and counts messages in the queue + unacked messages count.
 
 ### Authentication Parameters

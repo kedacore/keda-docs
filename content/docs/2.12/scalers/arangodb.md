@@ -23,7 +23,7 @@ triggers:
     # Optional fields:
     activationQueryValue: '3'
     connectionLimit: 13 
-    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs
+    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs
 ```
 
 **Parameter list:**
@@ -35,7 +35,7 @@ triggers:
 - `threshold` - A threshold that will define when scaling should occur.
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `serverID` - The unique ArangoDB server ID. Only required if bearer JWT is being used. (Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional)
 - `connectionLimit` - Specify the max size of the active connection pool. (Optional)
 - `authModes` - Authentication mode to be used. (Values: `bearer`,`basic`, Optional)
 

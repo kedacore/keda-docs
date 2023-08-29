@@ -67,7 +67,6 @@ triggers:
 - `query` - Log Analytics [kusto](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/get-started-queries) query, JSON escaped. You can use [this](https://www.freeformatter.com/json-escape.html) tool to convert your query from Log Analytics query editor to JSON escaped string, and then review YAML specific escapes.
 - `threshold` - Value that is used as a threshold to calculate # of pods for scale target. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `metricName` - Name to assign to the metric. (Optional, if not set KEDA will generate a name based on the workspaceId. DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `cloud` - Name of the cloud environment that the Azure Log Analytics workspace belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
@@ -101,7 +100,7 @@ You can define threshold in trigger metadata, it will be used if your query resu
 
 Data types of your query result should be: real, int or long. Other data types are not supported. Later, during runtime, your data will be converted to int64.
 
-Be careful with setting up "pollingInterval" and long running queries. Test your query before.
+Be careful with setting up "pollingInterval" and long-running queries. Test your query before.
 
 Example query to get `MetricValue` and `Threshold` based on CPU usage and limits, defined for the pod.
 

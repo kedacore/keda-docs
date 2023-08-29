@@ -501,6 +501,10 @@ url = "https://qonto.com"
 logo = "qonto.png"
 
 [[params.users]]
+url = "https://redhat.com"
+logo = "red-hat.png"
+
+[[params.users]]
 url = "https://www.reddit.com/"
 logo = "reddit.svg"
 
@@ -545,6 +549,10 @@ url = "https://www.workiva.com"
 logo = "workiva.png"
 
 [[params.users]]
+url = "https://www.xbox.com"
+logo = "xbox.png"
+
+[[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
@@ -552,10 +560,6 @@ logo = "zapier.png"
 [[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
-
-[[params.partners]]
-url = "https://redhat.com"
-logo = "red-hat.png"
 
 [[params.partners]]
 url = "https://scrm.lidl"
