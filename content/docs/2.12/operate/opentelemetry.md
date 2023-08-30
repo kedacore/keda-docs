@@ -8,7 +8,7 @@ draft: true
 
 ### Operator
 
-The KEDA Operator supports outputting metrics to the OpenTelemetry collector using HTTP. The parameter "--enable-opentelemetry-metrics=true" needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the "OTEL_EXPORTER_OTLP_ENDPOINT" environment variable. Other environment variables in OpenTelemetry are also supported (https://opentelemetry.io/docs/concepts/sdk-configuration/otlp-exporter-configuration/). Here is an customize YAML example of Operator: 
+The KEDA Operator supports outputting metrics to the OpenTelemetry collector using HTTP. The parameter `--enable-opentelemetry-metrics=true` needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. Other environment variables in OpenTelemetry are also supported (https://opentelemetry.io/docs/concepts/sdk-configuration/otlp-exporter-configuration/). Here is an example configuration of the operator: 
 ```
 apiVersion: apps/v1
 kind: Deployment
