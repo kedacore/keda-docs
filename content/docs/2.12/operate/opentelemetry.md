@@ -42,5 +42,3 @@ The following metrics are being gathered:
 - `resource.totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD).
 - `trigger.totals` - Total number of triggers per trigger type.
 - `internal.scale.loop.latency` - Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
-
-
