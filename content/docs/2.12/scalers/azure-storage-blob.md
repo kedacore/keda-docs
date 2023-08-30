@@ -44,7 +44,6 @@ as metric value. (Default: `""`, Optional, The `blobPrefix`, `blobDelimiter` and
 
 When `cloud` is set to `Private`, the `endpointSuffix` parameter is required. Otherwise, it is automatically generated based on the cloud environment. `endpointSuffix` represents the storage blob endpoint suffix of the cloud environment that the blob belongs to, e.g. `blob.core.cloudapi.de` for `AzureGermanCloud`.
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on the trigger index and `blobContainerName`. For example: **s0-azure-blob-blobContainerName**. The value will be prefixed with `s{triggerIndex}-azure-blob-`. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 
 ### Authentication Parameters
 
