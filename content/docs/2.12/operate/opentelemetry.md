@@ -28,8 +28,6 @@ metadata:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://opentelemetry-collector.default.svc.cluster.local:4318"
 ```
-
-
 The following metrics are being gathered:
 
 - `build.info` - Info metric, with static information about KEDA build like: version, git commit and Golang runtime info.
