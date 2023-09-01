@@ -60,7 +60,7 @@
               {{ $isExternal := hasPrefix .URL "http" }}
               {{ if .HasChildren }}
               <div class="navbar-item has-dropdown">
-                  <a class="navbar-link" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
+                  <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
                     {{ .Name }}
                   </a>
                   <div class="nested dropdown">
