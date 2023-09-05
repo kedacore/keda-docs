@@ -222,7 +222,7 @@ The `complexScalingLogic` is optional. If defined, both `target` and `formula` a
 
   `formula` composes external metrics together and allows them to be modified/manipulated with. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If `fallback` is applied, the `formula` will NOT be applied. Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
 
-**Example 1**
+**Example: compose average value**
 
 ```yaml
 advanced:
@@ -244,9 +244,9 @@ triggers:
       valueLocation: "tasks"
 ```
 
-Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is passed to HPA instead of 2 metrics individually.
+Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is used to make autoscaling decisions on.
 
-**More formula examples**
+**Example: ternary operator**
 
 ```yaml
 advanced:
@@ -254,7 +254,9 @@ advanced:
     formula: "trig_one > 2 ? trig_one + trig_two : 1"
 ```
 
-If metric value of trigger `trig_one` is more then 2, then return `trig_one` + `trig_two` otherwise return 1.
+If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1.
+
+**Example: count function**
 
 ```yaml
 advanced:
@@ -263,6 +265,8 @@ advanced:
 ```
 
 If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
+
+**Example: nested conditions and operators**
 
 ```yaml
 advanced:
