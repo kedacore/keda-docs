@@ -558,6 +558,10 @@ logo = "zapier.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
+url = "https://kedify.io"
+logo = "kedify.png"
+
+[[params.partners]]
 url = "https://microsoft.com"
 logo = "microsoft.png"
 
