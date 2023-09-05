@@ -24,7 +24,7 @@ triggers:
 
 The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on the number of messages or oldest unacked message age in your Pub/Sub subscription.
 
-The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
+- `credentialsFromEnv` - This property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
 - `mode` - The metric used to scale your workload. It's the camel case of the official metric name. For example, if you are going to leverage the metric `subscription/pull_request_count`, you will fill the value as `PullRequestCount`. Please refer to https://cloud.google.com/monitoring/api/metrics_gcp#gcp-pubsub. All metric starts with `subscription/` are supported. (Default: `SubscriptionSize`, aka `NumUndeliveredMessages`)
 
