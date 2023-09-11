@@ -210,17 +210,66 @@ advanced:
     formula: {formula-for-fetched-metrics}                # Mandatory. Formula for calculation
 ```
 
-**`complexScalingLogic:`**
+**`complexScalingLogic`**
 
-The `complexScalingLogic` is optional. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle then internally. With `complexScalingLogic` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
+The `complexScalingLogic` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `complexScalingLogic` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
 
 **`complexScalingLogic.target`**
 
-`target` defines new target value to scale on for the composed metric. All external metrics must be of the same type in order for ScaledObject to be successfully validated.
+`target` defines new target value to scale on for the composed metric. All scaler metrics must be of the same type in order for ScaledObject to be successfully validated.
 
 **`complexScalingLogic.formula`**
 
-  `formula` composes external metrics together and allows them to be modified/manipulated with. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If `fallback` is applied, the `formula` will NOT be applied. Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
+  `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
+
+For examples of this feature see section [Complex Scaling Logic](#complex-scaling-logic-experimental) below.
+
+---
+#### triggers
+```yaml
+  triggers:
+  # {list of triggers to activate scaling of the target resource}
+```
+
+> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
+
+Trigger fields:
+- **type**: The type of trigger to use. (Mandatory)
+- **metadata**: The configuration parameters that the trigger requires. (Mandatory)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default, the name is generated from the trigger type. (Optional)
+- **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
+- **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
+  - More details can be found [here](./authentication). (Optional)
+- **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
+  - Learn more about how the [Horizontal Pod Autoscaler (HPA) calculates `replicaCount`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) based on metric type and value.
+  - To show the differences between the metric types, let's assume we want to scale a deployment with 3 running replicas based on a queue of messages:
+    - With `AverageValue` metric type, we can control how many messages, on average, each replica will handle. If our metric is the queue size, the threshold is 5 messages, and the current message count in the queue is 20, HPA will scale the deployment to 20 / 5 = 4 replicas, regardless of the current replica count.
+    - The `Value` metric type, on the other hand, can be used when we don't want to take the average of the given metric across all replicas. For example, with the `Value` type, we can control the average time of messages in the queue. If our metric is average time in the queue, the threshold is 5 milliseconds, and the current average time is 20 milliseconds, HPA will scale the deployment to 3 * 20 / 5 = 12.
+
+> ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
+
+### Caching Metrics
+
+This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
+
+Enabling this feature can significantly reduce the load on the scaler service.
+
+This feature is not supported for `cpu`, `memory` or `cron` scaler.
+
+### Pause autoscaling
+
+It can be useful to instruct KEDA to pause autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. You can enable this by adding the below annotation to your `ScaledObject` definition:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused-replicas: "0"
+```
+
+The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
+
+
+### Complex Scaling Logic (Experimental)
 
 **Example: compose average value**
 
@@ -278,51 +327,6 @@ Conditions can be used within another condition as well.
 If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
 Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
-
----
-#### triggers
-```yaml
-  triggers:
-  # {list of triggers to activate scaling of the target resource}
-```
-
-> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
-
-Trigger fields:
-- **type**: The type of trigger to use. (Mandatory)
-- **metadata**: The configuration parameters that the trigger requires. (Mandatory)
-- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default, the name is generated from the trigger type. (Optional)
-- **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
-- **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
-  - More details can be found [here](./authentication). (Optional)
-- **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
-  - Learn more about how the [Horizontal Pod Autoscaler (HPA) calculates `replicaCount`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) based on metric type and value.
-  - To show the differences between the metric types, let's assume we want to scale a deployment with 3 running replicas based on a queue of messages:
-    - With `AverageValue` metric type, we can control how many messages, on average, each replica will handle. If our metric is the queue size, the threshold is 5 messages, and the current message count in the queue is 20, HPA will scale the deployment to 20 / 5 = 4 replicas, regardless of the current replica count.
-    - The `Value` metric type, on the other hand, can be used when we don't want to take the average of the given metric across all replicas. For example, with the `Value` type, we can control the average time of messages in the queue. If our metric is average time in the queue, the threshold is 5 milliseconds, and the current average time is 20 milliseconds, HPA will scale the deployment to 3 * 20 / 5 = 12.
-
-> ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
-
-### Caching Metrics
-
-This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
-
-Enabling this feature can significantly reduce the load on the scaler service.
-
-This feature is not supported for `cpu`, `memory` or `cron` scaler.
-
-### Pause autoscaling
-
-It can be useful to instruct KEDA to pause autoscaling of objects, if you want to do to cluster maintenance or you want to avoid resource starvation by removing non-mission-critical workloads. You can enable this by adding the below annotation to your `ScaledObject` definition:
-
-```yaml
-metadata:
-  annotations:
-    autoscaling.keda.sh/paused-replicas: "0"
-```
-
-The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
-
 ### Activating and Scaling thresholds
 
 To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.
