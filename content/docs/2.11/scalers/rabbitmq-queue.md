@@ -29,7 +29,7 @@ triggers:
 
 **Parameter list:**
 
-- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/<path>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/path/vhost` or `http://guest:password@localhost:15672/path/vhost`. If the host doesn't contain vhost than the trailing slash is required in this case like `amqp://guest:password@localhost:5672/path/`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. If the protocol is HTTP than the host may follow this format `http://<host>:<port>/<path>/<vhost>`. In example the resolved host value could be `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/path/vhost`. If the host doesn't contain vhost than the trailing slash is required in this case like `http://guest:password@localhost:5672/`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 - `queueName` - Name of the queue to read message from.
 - `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the published rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
@@ -65,7 +65,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
-- For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/path/vhost`.
+- For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/vhost`.
 - For HTTP, the URI should look similar to `http://guest:password@localhost:15672/path/vhost`.
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
@@ -89,7 +89,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  host: <AMQP URI connection string> # base64 encoded value of format amqp://guest:password@localhost:5672/path/vhost
+  host: <AMQP URI connection string> # base64 encoded value of format amqp://guest:password@localhost:5672/vhost
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -130,7 +130,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  host: <AMQPS URI connection string> # base64 encoded value of format amqps://guest:password@localhost:5672/path/vhost
+  host: <AMQPS URI connection string> # base64 encoded value of format amqps://guest:password@localhost:5672/vhost
   tls: "enable"
   ca: <your ca>
   cert: <your cert>
