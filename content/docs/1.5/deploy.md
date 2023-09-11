@@ -33,7 +33,7 @@ Deploying KEDA with Helm is very simple:
     **Helm 2**
 
     ```sh
-    helm install kedacore/keda --version 1.5.0 --namespace keda --name keda
+    helm install keda kedacore/keda  --version 1.5.0 --namespace keda --create-namespace
     ```
 
     **Helm 3**

@@ -175,7 +175,7 @@ type = "Features"
 [[qna]]
 q = "How do I run KEDA with TLS v1.3 only?"
 a = """
-By default Keda listens on TLS v1.1 and TLSv1.2, with the default Golang ciphersuites.
+By default, Keda listens on TLS v1.1 and TLSv1.2, with the default Golang ciphersuites.
 In some environments, these ciphers may be considered less secure, for example CBC ciphers.
 
 As an alternative, you can configure the minimum TLS version to be v1.3 to increase security.
