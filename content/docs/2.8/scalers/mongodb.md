@@ -122,7 +122,6 @@ spec:
           - name: mongodb-update
             image: 1314520999/mongodb-update:latest
             args:
-            - --connectStr=mongodb://test_user:test_password@mongoDB-svc.mongoDB.svc.cluster.local:27017/test
             - --dataBase=test
             - --collection=test_collection
             imagePullPolicy: IfNotPresent
