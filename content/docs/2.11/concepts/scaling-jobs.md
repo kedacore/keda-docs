@@ -6,7 +6,7 @@ weight = 300
 
 ## Overview
 
-As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
+As an alternate to [scaling event-driven code as deployments](../scaling-deployments) you can also run and scale your code as Kubernetes Jobs.  The primary reason to consider this option is to handle processing long-running executions.  Rather than processing multiple events within a deployment, for each detected event a single Kubernetes Job is scheduled.  That job will initialize, pull a single event from the message source, and process to completion and terminate.
 
 For example, if you wanted to use KEDA to run a job for each message that lands on a RabbitMQ queue, the flow may be:
 
@@ -27,19 +27,16 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
   name: {scaled-job-name}
-  labels:
-    my-label: my-label-value                  # labels on the ScaledJob will be copied to each Job
   annotations:
     autoscaling.keda.sh/paused: true          # Optional. Use to pause autoscaling of Jobs
-    my-annotation: my-annotation-value        # annotations on the ScaledJob will be copied to each Job  
 spec:
   jobTargetRef:
-    parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
-    completions: 1                            # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism)
+    parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
+    completions: 1                            # [desired number of successfully finished pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
     activeDeadlineSeconds: 600                #  Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6                           # Specifies the number of retries before marking this job failed. Defaults to 6
     template:
-      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
+      # describes the [job template](https://kubernetes.io/docs/concepts/workloads/controllers/job)
   pollingInterval: 30                         # Optional. Default: 30 seconds
   successfulJobsHistoryLimit: 5               # Optional. Default: 100. How many completed jobs should be kept.
   failedJobsHistoryLimit: 5                   # Optional. Default: 100. How many failed jobs should be kept.
@@ -68,20 +65,9 @@ You can find all supported triggers [here](../scalers).
 ## Details
 
 ```yaml
-  labels:
-    my-label: my-label-value                  # labels on the ScaledJob will be passed to the Job
-  annotations:
-    my-annotation: my-annotation-value        # annotations on the ScaledJob will be passed to the Job
-```
-
-The labels and annotations of the ScaledJob will be copied to each Job created.
-
----
-
-```yaml
   jobTargetRef:
-    parallelism: 1              # Optional. Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
-    completions: 1              # Optional. Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#controlling-parallelism))
+    parallelism: 1              # Optional. Max number of desired instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism))
+    completions: 1              # Optional. Desired number of successfully finished instances ([docs](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism))
     activeDeadlineSeconds: 600  # Optional. Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     backoffLimit: 6             # Optional. Specifies the number of retries before marking this job failed. Defaults to 6
 ```
@@ -176,7 +162,7 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 >
 >`maxScale` is not the running Job count. It is measured as follows:
  >```go
- >maxValue = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
+ >maxScale = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
  >```
  >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
 >
@@ -245,7 +231,7 @@ For more details,  you can refer to [this PR](https://github.com/kedacore/keda/p
 
 ```yaml
 scalingStrategy:
-    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxValue`) when multiple scalers are defined.
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxScale`) when multiple scalers are defined.
 ```
 Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
 

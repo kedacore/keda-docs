@@ -165,7 +165,7 @@ metadata:
   name: keda-pulsar-secrets
   namespace: default
 data:
-  ca: <your self signed root CA>
+  ca: <your self-signed root CA>
   token: <your token>
 ---
 apiVersion: keda.sh/v1alpha1

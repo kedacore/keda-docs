@@ -15,3 +15,8 @@ KEDA will block all incoming changes to `ScaledObject` that don't match these ru
 - The scaled workload (`scaledobject.spec.scaleTargetRef`) is already autoscaled by another other sources (other ScaledObject or HPA).
 - CPU and/or Memory trigger are used and the scaled workload doesn't have the requests defined. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
 - CPU and/or Memory trigger are **the only used triggers** and the ScaledObject defines `minReplicaCount:0`. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
+
+KEDA will block all incoming changes to `TriggerAuthentication`/`ClusterTriggerAuthentication` that don't match these rules:
+
+- The specified identity ID for Azure AD Workload Identity and/or Pod Identity is empty. (Default/unset identity ID will be passed through.)
+	> NOTE: This only applies if the `TriggerAuthentication/ClusterTriggerAuthentication` is overriding the default identityId provided to KEDA during the installation

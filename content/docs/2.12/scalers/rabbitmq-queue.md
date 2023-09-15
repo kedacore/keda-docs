@@ -29,7 +29,7 @@ triggers:
 
 **Parameter list:**
 
-- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. The resolved host should follow a format like `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/vhost`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
+- `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. If the protocol is HTTP than the host may follow this format `http://<host>:<port>/<path>/<vhost>`. In example the resolved host value could be `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/path/vhost`. If the host doesn't contain vhost than the trailing slash is required in this case like `http://guest:password@localhost:5672/`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 - `queueName` - Name of the queue to read message from.
 - `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the published rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
@@ -40,7 +40,6 @@ triggers:
 - `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
 - `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
-- `metricName` - Name to assign to the metric. If not set KEDA will generate a name based on the queue name. If using more than one trigger it is required that all metricNames be unique. (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 - `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
 - `excludeUnacknowledged` - Set to `true` to specify that the `QueueLength` value should exclude unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `unsafeSsl` - Whether to allow unsafe SSL (Values: `true`, `false`, Default: `false` )
@@ -66,7 +65,7 @@ Some parameters could be provided using environmental variables, instead of sett
 TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 
 - For AMQP, the URI should look similar to `amqp://guest:password@localhost:5672/vhost`.
-- For HTTP, the URI should look similar to `http://guest:password@localhost:15672/vhost`.
+- For HTTP, the URI should look similar to `http://guest:password@localhost:15672/path/vhost`.
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
 
@@ -121,7 +120,6 @@ spec:
       queueName: testqueue
       mode: QueueLength
       value: "20"
-      metricName: custom-testqueue # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional. Generated value would be `rabbitmq-custom-testqueue`
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
 ```
@@ -178,7 +176,6 @@ spec:
       queueName: testqueue
       mode: QueueLength
       value: "20"
-      metricName: custom-testqueue # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional. Generated value would be `rabbitmq-custom-testqueue`
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
 ```
@@ -191,7 +188,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/vhost
+  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -231,7 +228,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/vhost
+  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -279,7 +276,7 @@ kind: Secret
 metadata:
   name: keda-rabbitmq-secret
 data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/vhost
+  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication

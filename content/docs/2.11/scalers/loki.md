@@ -22,7 +22,7 @@ triggers:
     activationThreshold: '2.50'
     tenantName: Tenant1 # Optional. X-Scope-OrgID header for specifying the tenant name in a multi-tenant setup.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Loki. Set to `false` the scaler will return error when Loki target is lost
-    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self signed certs for Loki endpoint
+    unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Loki endpoint
 ```
 
 **Parameter list:**
@@ -33,7 +33,7 @@ triggers:
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `tenantName` - The `X-Scope-OrgID` header for specifying the tenant name in a multi-tenant setup. (Optional)
 - `ignoreNullValues` - Value to reporting error when Loki target is lost. (Values: `true`,`false`, Default: `true`, Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional)
 - `authModes` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
 
 ### Authentication Parameters

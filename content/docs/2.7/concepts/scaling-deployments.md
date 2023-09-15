@@ -18,7 +18,7 @@ For example, if you wanted to use KEDA with an Apache Kafka topic as event sourc
 * When no messages are pending processing, KEDA can scale the deployment to zero.
 * When a message arrives, KEDA detects this event and activates the deployment.
 * When the deployment starts running, one of the containers connects to Kafka and starts pulling messages.
-* As more messages arrive on the Kafka Topic, KEDA can feed this data to the HPA to drive scale out.
+* As more messages arrive at the Kafka Topic, KEDA can feed this data to the HPA to drive scale out.
 * Each replica of the deployment is actively processing messages.  Very likely, each replica is processing a batch of messages in a distributed manner.
 
 ### Scaling of Custom Resources
@@ -89,7 +89,7 @@ To scale Kubernetes Deployments only `name` is needed to be specified, if one wa
   pollingInterval: 30  # Optional. Default: 30 seconds
 ```
 
-This is the interval to check each trigger on. By default KEDA will check each trigger source on every ScaledObject every 30 seconds.
+This is the interval to check each trigger on. By default, KEDA will check each trigger source on every ScaledObject every 30 seconds.
 
 **Example:** in a queue scenario, KEDA will check the queueLength every `pollingInterval`, and scale the resource up or down accordingly.
 
@@ -99,7 +99,7 @@ This is the interval to check each trigger on. By default KEDA will check each t
   cooldownPeriod:  300 # Optional. Default: 300 seconds
 ```
 
-The period to wait after the last trigger reported active before scaling the resource back to 0. By default it's 5 minutes (300 seconds).
+The period to wait after the last trigger reported active before scaling the resource back to 0. By default, it's 5 minutes (300 seconds).
 
 The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
 
@@ -124,7 +124,7 @@ If this property is set, KEDA will scale the resource down to this number of rep
   minReplicaCount: 1   # Optional. Default: 0
 ```
 
-Minimum number of replicas KEDA will scale the resource down to. By default it's scale to zero, but you can use it with some other value as well.
+Minimum number of replicas KEDA will scale the resource down to. By default, it's scale to zero, but you can use it with some other value as well.
 
 ---
 #### maxReplicaCount
@@ -142,7 +142,7 @@ This setting is passed to the HPA definition that KEDA will create for a given r
     replicas: 6                                      # Mandatory if fallback section is included
 ```
 
-The `fallback` section is optional. It defines a number of replicas to fallback to if a scaler is in an error state.
+The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
 
 KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behaviour), the scaler will, instead, return a normalised metric using the formula:
 ```
@@ -228,7 +228,7 @@ The presensce of this annotation will pause autoscaling no matter what number of
 
 ## Long-running executions
 
-One important consideration to make is how this pattern can work with long running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
+One important consideration to make is how this pattern can work with long-running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
 
 There are two main ways to handle this scenario.
 
@@ -242,4 +242,4 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 
 ### Run as jobs
 
-The other alternative to handling long running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).
+The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).

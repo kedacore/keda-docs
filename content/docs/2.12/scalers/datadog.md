@@ -227,7 +227,7 @@ Using the example above, if we assume that `http.requests` is currently returnin
 
 ### Latest data point is unavailable
 
-By default Datadog scaler retrieves the metrics with time window from `now - metadata.age (in seconds)` to `now`, however, some kinds of queries need a small delay (usually 30 secs - 2 mins) before data is available when querying from the API. In this case, adjust `timeWindowOffset` to ensure that the latest point of your query is always available.
+By default, Datadog scaler retrieves the metrics with time window from `now - metadata.age (in seconds)` to `now`, however, some kinds of queries need a small delay (usually 30 secs - 2 mins) before data is available when querying from the API. In this case, adjust `timeWindowOffset` to ensure that the latest point of your query is always available.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1

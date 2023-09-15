@@ -120,7 +120,7 @@ spec:
     podIdentity:                                                          # Optional. Required when using pod identity.
       provider: azure | azure-workload                                    # Required.
       identityId: <identity-id>                                           # Optional
-    vaultURI: {key-vault-address}                                         # Required.
+    vaultUri: {key-vault-address}                                         # Required.
     credentials:                                                          # Optional. Required when not using pod identity.
       clientId: {azure-ad-client-id}                                      # Required.
       clientSecret:                                                       # Required.

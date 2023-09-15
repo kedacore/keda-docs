@@ -26,8 +26,6 @@ triggers:
       queryValue: "1"
       # Optional: according to the number of query result, the scaler is active
       activationQueryValue: "1"
-      # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name
-      metricName: "global-metric"
 ```
 
 Alternatively, you can configure connection parameters explicitly instead of providing a connection string:
@@ -54,11 +52,7 @@ triggers:
       queryValue: "1"
       # Optional: according to the number of query result, the scaler is active
       activationQueryValue: "1"
-      # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. Optional: The generated metric name would be mongodb-global-metric. Here mongodb- use as a prefix for metric name.
-      metricName: "global-metric"
 ```
-
->**NOTE:** If **metricName** is not set, then one is generated based on trigger index and the `collection`, for example: **s0-mongodb-test_collection**
 
 **Parameter list:**
 
@@ -87,7 +81,6 @@ When configuring with a connection string, you can use this URL format:
 mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
 ```
 
-You can also optionally assign a name to the metric using the `metricName` value. If not specified, the `metricName` will be generated automatically based on trigger index and collection name. For example: **s1-mongodb-test_collection**. The value will be prefixed with `s{triggerIndex}-mongodb-` . (DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`)
 
 ### Authentication Parameters
 
@@ -122,7 +115,6 @@ spec:
           - name: mongodb-update
             image: 1314520999/mongodb-update:latest
             args:
-            - --connectStr=mongodb://test_user:test_password@mongoDB-svc.mongoDB.svc.cluster.local:27017/test
             - --dataBase=test
             - --collection=test_collection
             imagePullPolicy: IfNotPresent
@@ -139,7 +131,6 @@ spec:
         collection: "test_collection"
         query: '{"region":"eu-1","state":"running","plan":"planA"}'
         queryValue: "1"
-        metricName: "global-metric" # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12
       authenticationRef:
         name: mongodb-trigger
 ---
