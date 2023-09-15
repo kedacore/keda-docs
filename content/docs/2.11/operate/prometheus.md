@@ -35,6 +35,10 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
+The Metrics Adapter also exposes Promethues metrics provided by the kubernetes/apiserver library on port `6443` at `/metrics`. These metrics require you to define an allow rule for the `/metrics` endpoint as explained [here](https://kubernetes.io/docs/concepts/cluster-administration/system-metrics/) and must be accessed by providing a Bearer token
+
+- Metrics exposed (prepended w/ `apiserver_`) [here](https://kubernetes.io/docs/reference/instrumentation/metrics/)
+
 ## Premade Grafana dashboard
 
 A premade [Grafana dashboard](https://github.com/kedacore/keda/tree/main/config/grafana/keda-dashboard.json) is available to visualize metrics exposed by the KEDA Metrics Adapter.
