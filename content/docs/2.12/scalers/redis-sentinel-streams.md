@@ -119,6 +119,21 @@ spec:
 
 #### Using `TriggerAuthentication`
 
+**TLS:**
+
+Parameters used for configuring TLS authentication. Note this can not be used together with `enableTLS` and `unsafeSsl` on the `ScaledObject`, which is used to define using insecure TLS with skipping certificate check.
+
+- `tls` - To enable SSL auth for Redis, set this to `enable`. If not set, TLS for Redis is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
+
+**Authentication:**
+
+- `username` - Redis username to authenticate with.
+- `password` - Redis password to authenticate with.
+
 You can use `TriggerAuthentication` CRD to configure the authentication. For example:
 
 ```yaml
@@ -130,6 +145,10 @@ type: Opaque
 data:
   redis_username: <encoded redis username>
   redis_password: <encoded redis password>
+  tls: "enable"
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -143,6 +162,18 @@ spec:
     - parameter: password
       name: redis-streams-auth # name of the Secret
       key: redis_password # name of the key in the Secret
+    - parameter: tls
+      name: redis-streams-auth
+      key: tls
+    - parameter: ca
+      name: redis-streams-auth
+      key: ca
+    - parameter: cert
+      name: redis-streams-auth
+      key: cert
+    - parameter: key
+      name: redis-streams-auth
+      key: key
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

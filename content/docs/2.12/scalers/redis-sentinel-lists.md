@@ -75,6 +75,16 @@ You can authenticate by using a password.
 - `sentinelUsername` - Redis Sentinel username to authenticate with.
 - `sentinelPassword` - Redis Sentinel password to authenticate with.
 
+**TLS:**
+
+Parameters used for configuring TLS authentication. Note this can not be used together with `enableTLS` and `unsafeSsl` on the `ScaledObject`, which is used to define using insecure TLS with skipping certificate check.
+
+- `tls` - To enable SSL auth for Redis, set this to `enable`. If not set, TLS for Redis is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
+
 
 ### Example
 
