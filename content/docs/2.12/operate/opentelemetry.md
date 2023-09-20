@@ -1,8 +1,8 @@
----
++++
 title: "Integrate with OpenTelemetry Collector"
-date: 2023-08-30T11:13:57+08:00
-draft: true
----
+description = "Detail of integrating OpenTelemetry Collector in KEDA"
+weight = 100
++++
 
 ## Push Metrics to OpenTelemetry Collector
 
