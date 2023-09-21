@@ -28,3 +28,50 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 | `TriggerAuthenticationDeleted`        | `Normal`  | When a TriggerAuthentication is deleted                                                                                     |
 | `ClusterTriggerAuthenticationAdded`   | `Normal`  | When a new ClusterTriggerAuthentication is added                                                                            |
 | `ClusterTriggerAuthenticationDeleted` | `Normal`  | When a ClusterTriggerAuthentication is deleted                                                                              |
+
+## CloudEvent Support
+
+### CloudEvent Resource
+`CloudEvent` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Both Kubernetes Events and CloudEvents will be emitted if CloudEvent resource is created. This specification describes the `CloudEvent` Custom Resource definition:
+
+[`cloudevent_types.go`](https://github.com/kedacore/keda/blob/v1.4.0/pkg/apis/keda/v1alpha1/cloudevent_types.go)
+
+```yaml
+apiVersion: keda.k8s.io/v1alpha1
+kind: CloudEvent
+metadata:
+  name: {cloud-event-name}
+spec:
+  clusterName: {cluster-name} #Optional. Will be used in source/subject 
+  eventHandlers:
+  # {list of eventHandlers to handle emitting events}
+```
+
+In general, an event emitted by KEDA would fundamentally come down to the following structure:
+```json
+{
+    "specversion" : "1.0",
+    "type" : "com.cloudevents.keda",
+    "source" : "/{cluster-name}/{namespace}/keda",
+    "subject" : "/{cluster-name}/{namespace}/workload/{scaledobject-name}",
+    "id" : "<guid>",
+    "time" : "2018-04-05T17:31:00Z",
+    "datacontenttype" : "application/json",
+    "data" : {
+      "reason":"<event-reason>",
+      "message":"<event-message>"
+   }
+}
+```
+
+### CloudEventHandlers
+There will be multiple handlers to emit KEDA events. Nowadays an HTTP CloudEvent receiver is supported.
+#### CloudEventHTTPHandler
+```yaml
+  eventHandlers:
+  - type: cloud-event-http
+    name: "<event-handler-name>" #Optional. 
+    metadata:
+      endPoint: "cloudevent-http-receiver-endpoint" #An http endpoint that can receive cloudevent
+```
+The `cloud-event-http` handler can emit KEDA events to an CloudEvent HTTP receiver.
