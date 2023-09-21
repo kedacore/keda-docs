@@ -27,4 +27,4 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 | `TriggerAuthenticationAdded`          | `Normal`  | When a new TriggerAuthentication is added                                                                                   |
 | `TriggerAuthenticationDeleted`        | `Normal`  | When a TriggerAuthentication is deleted                                                                                     |
 | `ClusterTriggerAuthenticationAdded`   | `Normal`  | When a new ClusterTriggerAuthentication is added                                                                            |
-| `ClusterTriggerAuthenticationDeleted` | `Normal`  | When a ClusterTriggerAuthentication is deleted                                                                              | 
+| `ClusterTriggerAuthenticationDeleted` | `Normal`  | When a ClusterTriggerAuthentication is deleted                                                                              |
