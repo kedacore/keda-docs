@@ -5,4 +5,4 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreInternalURLs:
   - /docs/2.11/scalers/gcp-cloud-tasks/
-  - /docs/2.11/operate/opentelemetry/
+  - /docs/2.12/operate/opentelemetry/
