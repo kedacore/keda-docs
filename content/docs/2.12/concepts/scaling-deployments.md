@@ -205,24 +205,24 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 
 ```yaml
 advanced:
-  complexScalingLogic:                                    # Optional. Section to specify complex scaling logic
+  scalingModifiers:                                    # Optional. Section to specify scaling modifiers
     target: {target-value-to-scale-on}                    # Mandatory. New target if metrics are anyhow composed together
     formula: {formula-for-fetched-metrics}                # Mandatory. Formula for calculation
 ```
 
-**`complexScalingLogic`**
+**`scalingModifiers`**
 
-The `complexScalingLogic` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `complexScalingLogic` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
+The `scalingModifiers` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `scalingModifiers` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
 
-**`complexScalingLogic.target`**
+**`scalingModifiers.target`**
 
 `target` defines new target value to scale on for the composed metric. All scaler metrics must be of the same type in order for ScaledObject to be successfully validated.
 
-**`complexScalingLogic.formula`**
+**`scalingModifiers.formula`**
 
   `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
 
-For examples of this feature see section [Complex Scaling Logic](#complex-scaling-logic-experimental) below.
+For examples of this feature see section [Scaling Modifiers](#scaling-modifiers-experimental) below.
 
 ---
 #### triggers
@@ -269,13 +269,13 @@ metadata:
 The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
 
 
-### Complex Scaling Logic (Experimental)
+### Scaling Modifiers (Experimental)
 
 **Example: compose average value**
 
 ```yaml
 advanced:
-  complexScalingLogic:
+  scalingModifiers:
     formula: "(trig_one + trig_two)/2"
     target: "2"
 ...
@@ -299,7 +299,7 @@ Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `tr
 
 ```yaml
 advanced:
-  complexScalingLogic:
+  scalingModifiers:
     formula: "trig_one > 2 ? trig_one + trig_two : 1"
 ```
 
@@ -309,7 +309,7 @@ If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `
 
 ```yaml
 advanced:
-  complexScalingLogic:
+  scalingModifiers:
     formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5 : 0"
 ```
 
@@ -319,7 +319,7 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 
 ```yaml
 advanced:
-  complexScalingLogic:
+  scalingModifiers:
     formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
 ```
 
