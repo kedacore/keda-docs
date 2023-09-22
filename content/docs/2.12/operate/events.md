@@ -43,8 +43,9 @@ metadata:
   name: {cloud-event-name}
 spec:
   clusterName: {cluster-name} #Optional. Will be used in source/subject 
-  eventHandlers:
-  # {list of eventHandlers to handle emitting events}
+  destination:
+    http:
+      uri: http://foo.bar
 ```
 
 In general, an event emitted by KEDA would fundamentally come down to the following structure:
@@ -64,14 +65,11 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 }
 ```
 
-### CloudEventHandlers
-There will be multiple handlers to emit KEDA events. Nowadays an HTTP CloudEvent receiver is supported.
-#### CloudEventHTTPHandler
+### Destination
+There will be multiple type of destination to emit KEDA events. Nowadays an HTTP CloudEvent destination is supported.
+#### CloudEvent HTTP
 ```yaml
-  eventHandlers:
-  - type: cloud-event-http
-    name: "<event-handler-name>" #Optional. 
-    metadata:
-      endPoint: "cloudevent-http-receiver-endpoint" #An http endpoint that can receive cloudevent
+  destination:
+    http:
+      uri: http://foo.bar  #An http endpoint that can receive cloudevent
 ```
-The `cloud-event-http` handler can emit KEDA events to an CloudEvent HTTP receiver.
