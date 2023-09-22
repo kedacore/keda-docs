@@ -212,7 +212,7 @@ advanced:
 
 **`scalingModifiers`**
 
-The `scalingModifiers` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-scaler-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `scalingModifiers` all external triggers' names **must** be defined, for potentially being used in the `formula` itself.
+The `scalingModifiers` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `scalingModifiers` each trigger used in the `formula` **must** have a name defined.
 
 **`scalingModifiers.target`**
 
