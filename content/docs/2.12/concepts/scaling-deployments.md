@@ -302,11 +302,9 @@ triggers:
     name: trig_one
     metadata:
       podSelector: 'pod=workload-test'
-      value: '1'
   - type: metrics-api
     name: trig_two
     metadata:
-      targetValue: "2"
       url: "https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423"
       valueLocation: "tasks"
 ```
