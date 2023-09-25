@@ -206,9 +206,11 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 
 ```yaml
 advanced:
-  scalingModifiers:                                    # Optional. Section to specify scaling modifiers
-    target: {target-value-to-scale-on}                    # Mandatory. New target if metrics are anyhow composed together
-    formula: {formula-for-fetched-metrics}                # Mandatory. Formula for calculation
+  scalingModifiers:                                       # Optional. Section to specify scaling modifiers
+    target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
+    formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```
 
 **`scalingModifiers`**
@@ -217,7 +219,15 @@ The `scalingModifiers` is optional and **experimental**. If defined, both `targe
 
 **`scalingModifiers.target`**
 
-`target` defines new target value to scale on for the composed metric. All scaler metrics must be of the same type in order for ScaledObject to be successfully validated.
+`target` defines new target value to scale on for the composed metric.
+
+**`scalingModifiers.activationTarget`**
+
+`activationTarget` defines new [activation target value](./scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional)
+
+**`scalingModifiers.metricType`**
+
+`metricType` defines metric type used for this new `composite-metric`. (Values: `AverageValue`, `Value`, Default: `AverageValue`, Optional)
 
 **`scalingModifiers.formula`**
 
