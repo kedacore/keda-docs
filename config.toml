@@ -605,3 +605,8 @@ logo = "vendors/red-hat.png"
 name = "KEDA Add-On for Azure Kubernetes Service"
 url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
 logo = "vendors/azure-kubernetes-service.png"
+
+[[params.vendors]]
+name = "Kedify"
+url = "https://kedify.io"
+logo = "vendors/kedify.png"
