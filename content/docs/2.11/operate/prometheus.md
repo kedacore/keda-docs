@@ -34,7 +34,7 @@ The KEDA Webhooks expose Prometheus metrics which can be scraped on port `8080` 
 The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
-- Metrics exposed (prepended w/ `apiserver_`) by kubernetes/apiserver [here](https://kubernetes.io/docs/reference/instrumentation/metrics/)
+- Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
 
 ## Premade Grafana dashboard
 
