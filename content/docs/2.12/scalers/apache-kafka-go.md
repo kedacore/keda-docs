@@ -1,15 +1,15 @@
 +++
-title = "Apache Kafka Experimental Scaler"
+title = "Apache Kafka (Experimental)"
 availability = "v2.12+"
 maintainer = "Community"
-description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
-go_file = "kafka_x_scaler"
+description = "Experimental scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
+go_file = "apache_kafka_scaler"
 +++
 
 > **Notice:**
-> - This is an experimental kafka scaler based on kafka-go.
-> - This scaler is not fully compatible with the existing kafka scaler. There are some differences in the configuration and behavior. Please read the documentation carefully before using it. 
-> - If you are using OAuth authentication, please use the existing kafka scaler, as this scaler does not yet support OAuth2 authentication.
+> - This is an experimental Kafka scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library.
+> - This scaler is not fully compatible with the existing [Kafka scaler](./apache-kafka.md). There are some differences in the configuration and behavior. Please read the documentation carefully before using it. 
+> - If you are using OAuth authentication, please use the existing Kafka scaler, as this scaler does not yet support OAuth2 authentication.
 > - This scaler has support for AWS MSK IAM based authentication.
 > - By default, the number of replicas will not exceed:
 >   - The number of partitions on a topic when a topic is specified;
