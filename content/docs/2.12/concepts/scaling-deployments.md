@@ -206,9 +206,11 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 
 ```yaml
 advanced:
-  scalingModifiers:                                    # Optional. Section to specify scaling modifiers
-    target: {target-value-to-scale-on}                    # Mandatory. New target if metrics are anyhow composed together
-    formula: {formula-for-fetched-metrics}                # Mandatory. Formula for calculation
+  scalingModifiers:                                       # Optional. Section to specify scaling modifiers
+    target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
+    formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```
 
 **`scalingModifiers`**
@@ -217,7 +219,15 @@ The `scalingModifiers` is optional and **experimental**. If defined, both `targe
 
 **`scalingModifiers.target`**
 
-`target` defines new target value to scale on for the composed metric. All scaler metrics must be of the same type in order for ScaledObject to be successfully validated.
+`target` defines new target value to scale on for the composed metric.
+
+**`scalingModifiers.activationTarget`**
+
+`activationTarget` defines new [activation target value](./scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional)
+
+**`scalingModifiers.metricType`**
+
+`metricType` defines metric type used for this new `composite-metric`. (Values: `AverageValue`, `Value`, Default: `AverageValue`, Optional)
 
 **`scalingModifiers.formula`**
 
@@ -286,22 +296,32 @@ advanced:
   scalingModifiers:
     formula: "(trig_one + trig_two)/2"
     target: "2"
+    activationTarget: "2"
+    metricType: "AverageValue"
 ...
 triggers:
   - type: kubernetes-workload
     name: trig_one
     metadata:
       podSelector: 'pod=workload-test'
-      value: '1'
   - type: metrics-api
     name: trig_two
     metadata:
-      targetValue: "2"
       url: "https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423"
       valueLocation: "tasks"
 ```
 
 Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is used to make autoscaling decisions on.
+
+**Example: activationTarget**
+
+```yaml
+advanced:
+  scalingModifiers:
+    activationTarget: "2"
+```
+
+If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale to 0 if it's allowed.
 
 **Example: ternary operator**
 
