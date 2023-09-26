@@ -437,6 +437,10 @@ url = "https://www.grafana.com"
 logo = "grafana.png"
 
 [[params.users]]
+url = "https://www.grab.com"
+logo = "grab.svg"
+
+[[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
 
