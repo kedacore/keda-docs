@@ -296,6 +296,8 @@ advanced:
   scalingModifiers:
     formula: "(trig_one + trig_two)/2"
     target: "2"
+    activationTarget: "2"
+    metricType: "AverageValue"
 ...
 triggers:
   - type: kubernetes-workload
