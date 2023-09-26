@@ -313,6 +313,16 @@ triggers:
 
 Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is used to make autoscaling decisions on.
 
+**Example: activationTarget**
+
+```yaml
+advanced:
+  scalingModifiers:
+    activationTarget: "2"
+```
+
+If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale to 0 if it's allowed.
+
 **Example: ternary operator**
 
 ```yaml
