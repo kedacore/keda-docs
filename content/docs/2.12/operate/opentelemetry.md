@@ -1,5 +1,5 @@
 +++
-title= "Integrate with OpenTelemetry Collector"
+title= "Integrate with OpenTelemetry Collector (Experimental)"
 description= "Detail of integrating OpenTelemetry Collector in KEDA"
 weight = 100
 +++
