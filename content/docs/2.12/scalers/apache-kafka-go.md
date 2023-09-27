@@ -1,12 +1,16 @@
 +++
-title = "Apache Kafka"
-availability = "v1.0+"
-maintainer = "Microsoft"
-description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
-go_file = "kafka_scaler"
+title = "Apache Kafka (Experimental)"
+availability = "v2.12+"
+maintainer = "Community"
+description = "Experimental scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
+go_file = "apache_kafka_scaler"
 +++
 
 > **Notice:**
+> - This is an experimental Kafka scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library.
+> - This scaler is not fully compatible with the existing [Kafka scaler](./apache-kafka.md). There are some differences in the configuration and behavior. Please read the documentation carefully before using it. 
+> - If you are using OAuth authentication, please use the existing Kafka scaler, as this scaler does not yet support OAuth2 authentication.
+> - This scaler has support for AWS MSK IAM based authentication.
 > - By default, the number of replicas will not exceed:
 >   - The number of partitions on a topic when a topic is specified;
 >   - The number of partitions of *all topics* in the consumer group when no topic is specified;
@@ -17,11 +21,11 @@ go_file = "kafka_scaler"
 
 ### Trigger Specification
 
-This specification describes the `kafka` trigger for an Apache Kafka topic.
+This specification describes the `apache-kafka` trigger for an Apache Kafka topic.
 
 ```yaml
 triggers:
-- type: kafka
+- type: apache-kafka
   metadata:
     bootstrapServers: kafka.svc:9092
     consumerGroup: my-group
@@ -32,11 +36,9 @@ triggers:
     allowIdleConsumers: false
     scaleToZeroOnInvalidOffset: false
     excludePersistentLag: false
-    version: 1.0.0
     partitionLimitation: '1,2,10-20,31'
-    sasl: plaintext
     tls: enable
-    unsafeSsl: false
+    sasl: plaintext
 ```
 
 **Parameter list:**
@@ -53,11 +55,9 @@ partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
 If 'false' (the default), the scaler will keep a single consumer for that partition. Otherwise ('true'), the consumers for that
 partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
-- `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
-- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 > **Note:**
 >
@@ -65,33 +65,26 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 > - When there are **active** consumer instances, _all topics_ includes:
 >   - Topics the consumer is *currently* subscribing to;
 >   - Topics that the consumer group *had prior commit history* (up to retention period for `__consumer_offset`, default to 7 days, see [KIP-186](https://cwiki.apache.org/confluence/display/KAFKA/KIP-186%3A+Increase+offsets+retention+default+to+7+days));
-> - When there are **no active** consumer instances, _all topics_ only includes topics that the consumer group *had prior commit history*;
-> ---
-> An edge case exists where scaling could be **effectively disabled**:
->    - Consumer never makes a commit (no record in `__consumer_offset`);
->    - and `ScaledObject` had `minReplicaCount` as 0;
->
->   In such case, KEDA could scale the consumer down to 0 when there is no lag and won't be able scale up due to the topic could not be auto discovered.
->
-> Fix for such case:
->  - Set `minReplicaCount` > 0;
->  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
+> - When there are **no active** consumer instances, the feature is still a WIP and as such would highly recommend to specify `topic` to avoid unexpected behavior. Namely the scaler will not be able to determine the topics it had subscribed to in the past and will not be able to calculate the lag for those topics.
+
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
- If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
- Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
+ You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`.
+
+ If TLS is required you should set tls to enable. If required for your Kafka configuration, you may also provide a ca, cert, key and keyPassword. cert and key must be specified together. Another alternative is to specify tls and sasl in ScaledObject instead of tls and sasl in TriggerAuthentication, respectively.
+
+ In case of SASL based authetication provide the `username` and `password`.
+ 
+ For AWS MSK IAM authentication provide `aws_msk_iam` as `sasl`. You don't need to set `username` and `password` in this case. However, you need to enable TLS by setting `tls` to `enable`.
 
 **Credential based authentication:**
 
 **SASL:**
 
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional)
-- `username` - Username used for sasl authentication. (Optional)
-- `password` - Password used for sasl authentication. (Optional)
-- `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
-- `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
-- `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional)
+- `username` - Username used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
+- `password` - Password used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
+
 
 **TLS:**
 
@@ -100,6 +93,23 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
 - `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
+
+
+**AWS MSK IAM Specific Configuration:**
+
+- `awsRegion` - AWS region of your MSK cluster. (Optional, required for AWS MSK IAM authentication)
+
+For authentication, you can also use `TriggerAuthentication` CRD to configure the authenticate by providing `awsAccessKeyID` and `awsSecretAccessKey` or `awsRoleArn`.
+
+**Role based authentication:**
+
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
+
+**Credential based authentication:**
+
+- `awsAccessKeyID` - Id of the user.
+- `awsSecretAccessKey` - Access key for the user to authenticate with.
+
 
 ### New Consumers and Offset Reset Policy
 
@@ -265,9 +275,7 @@ spec:
       name: keda-trigger-auth-kafka-credential
 ```
 
-#### Your kafka cluster turns on SASL OAuthbearer/TLS auth:
-
-##### Method 1: `tls` and `sasl` are in TriggerAuthentication
+#### Your AWS MSK has IAM auth:
 
 ```yaml
 apiVersion: v1
@@ -276,16 +284,10 @@ metadata:
   name: keda-kafka-secrets
   namespace: default
 data:
-  sasl: "oauthbearer"
-  username: "admin"
-  password: "admin"
-  oauthTokenEndpointUri: "https://tokenendpoint.com/token"
-  scopes: "default"
-  oauthExtensions: "extension_logicalCluster=1,extension_identityPoolId=2"
+  sasl: "aws_msk_iam"
   tls: "enable"
-  ca: <your ca>
-  cert: <your cert>
-  key: <your key>
+  awsAccessKeyID: <your awsAccessKeyID>
+  awsSecretAccessKey: <your awsSecretAccessKey>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -297,33 +299,15 @@ spec:
   - parameter: sasl
     name: keda-kafka-secrets
     key: sasl
-  - parameter: username
-    name: keda-kafka-secrets
-    key: username
-  - parameter: password
-    name: keda-kafka-secrets
-    key: password
-  - parameter: oauthTokenEndpointUri
-    name: keda-kafka-secrets
-    key: oauthTokenEndpointUri
-  - parameter: scopes
-    name: keda-kafka-secrets
-    key: scopes
-  - parameter: oauthExtensions
-    name: keda-kafka-secrets
-    key: oauthExtensions
   - parameter: tls
     name: keda-kafka-secrets
     key: tls
-  - parameter: ca
+  - parameter: awsAccessKeyID
     name: keda-kafka-secrets
-    key: ca
-  - parameter: cert
+    key: awsAccessKeyID
+  - parameter: awsSecretAccessKey
     name: keda-kafka-secrets
-    key: cert
-  - parameter: key
-    name: keda-kafka-secrets
-    key: key
+    key: awsSecretAccessKey
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -335,85 +319,12 @@ spec:
     name: azure-functions-deployment
   pollingInterval: 30
   triggers:
-  - type: kafka
+  - type: apache-kafka
     metadata:
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
-      # Optional
-      lagThreshold: "50"
-      offsetResetPolicy: latest
-    authenticationRef:
-      name: keda-trigger-auth-kafka-credential
-```
-
-##### Method 2: `tls` and `sasl` are in ScaledObject
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keda-kafka-secrets
-  namespace: default
-data:
-  username: "admin"
-  password: "admin"
-  oauthTokenEndpointUri: "https://tokenendpoint.com/token"
-  scopes: "default"
-  oauthExtensions: "extension_logicalCluster=1,extension_identityPoolId=2"
-  ca: <your ca>
-  cert: <your cert>
-  key: <your key>
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-kafka-credential
-  namespace: default
-spec:
-  secretTargetRef:
-  - parameter: username
-    name: keda-kafka-secrets
-    key: username
-  - parameter: password
-    name: keda-kafka-secrets
-    key: password
-  - parameter: oauthTokenEndpointUri
-    name: keda-kafka-secrets
-    key: oauthTokenEndpointUri
-  - parameter: scopes
-    name: keda-kafka-secrets
-    key: scopes
-  - parameter: oauthExtensions
-    name: keda-kafka-secrets
-    key: oauthExtensions
-  - parameter: ca
-    name: keda-kafka-secrets
-    key: ca
-  - parameter: cert
-    name: keda-kafka-secrets
-    key: cert
-  - parameter: key
-    name: keda-kafka-secrets
-    key: key
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: kafka-scaledobject
-  namespace: default
-spec:
-  scaleTargetRef:
-    name: azure-functions-deployment
-  pollingInterval: 30
-  triggers:
-  - type: kafka
-    metadata:
-      bootstrapServers: localhost:9092
-      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
-      topic: test-topic
-      tls: enable
-      sasl: oauthbearer
+      awsRegion: us-east-1         # AWS region of your MSK cluster
       # Optional
       lagThreshold: "50"
       offsetResetPolicy: latest

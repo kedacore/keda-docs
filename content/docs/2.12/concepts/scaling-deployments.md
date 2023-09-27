@@ -29,7 +29,7 @@ The only constraint is that the target `Custom Resource` must define `/scale` [s
 
 ## ScaledObject spec
 
-This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`. 
+This specification describes the `ScaledObject` Custom Resource definition which is used to define how KEDA should scale your application and what the triggers are. The `.spec.ScaleTargetRef` section holds the reference to the target resource, ie. `Deployment`, `StatefulSet` or `Custom Resource`.
 
 [`scaledobject_types.go`](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledobject_types.go)
 
@@ -41,6 +41,7 @@ metadata:
   annotations:
     scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
     autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
+    autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
 spec:
   scaleTargetRef:
     apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
@@ -49,7 +50,7 @@ spec:
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval:  30                                      # Optional. Default: 30 seconds
   cooldownPeriod:   300                                     # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
   minReplicaCount:  1                                       # Optional. Default: 0
   maxReplicaCount:  100                                     # Optional. Default: 100
   fallback:                                                 # Optional. Section to specify fallback options
@@ -113,7 +114,7 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 #### idleReplicaCount
 
 ```yaml
-  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount 
+  idleReplicaCount: 0   # Optional. Default: ignored, must be less than minReplicaCount
 ```
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
@@ -167,7 +168,7 @@ advanced:
   restoreToOriginalReplicaCount: true/false        # Optional. Default: false
 ```
 
-This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted. 
+This property specifies whether the target resource (`Deployment`, `StatefulSet`,...) should be scaled back to original replicas count, after the `ScaledObject` is deleted.
 Default behavior is to keep the replica count at the same number as it is in the moment of `ScaledObject's` deletion.
 
 For example a `Deployment` with `3 replicas` is created, then `ScaledObject` is created and the `Deployment` is scaled by KEDA to `10 replicas`. Then `ScaledObject` is deleted:
@@ -200,6 +201,39 @@ The name of the HPA resource KEDA will create. By default, it's `keda-hpa-{scale
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
 **Assumptions:** KEDA must be running on Kubernetes cluster v1.18+, in order to be able to benefit from this setting.
+
+---
+
+```yaml
+advanced:
+  scalingModifiers:                                       # Optional. Section to specify scaling modifiers
+    target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
+    formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
+```
+
+**`scalingModifiers`**
+
+The `scalingModifiers` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `scalingModifiers` each trigger used in the `formula` **must** have a name defined.
+
+**`scalingModifiers.target`**
+
+`target` defines new target value to scale on for the composed metric.
+
+**`scalingModifiers.activationTarget`**
+
+`activationTarget` defines new [activation target value](./scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional)
+
+**`scalingModifiers.metricType`**
+
+`metricType` defines metric type used for this new `composite-metric`. (Values: `AverageValue`, `Value`, Default: `AverageValue`, Optional)
+
+**`scalingModifiers.formula`**
+
+  `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
+
+For examples of this feature see section [Scaling Modifiers](#scaling-modifiers-experimental) below.
 
 ---
 #### triggers
@@ -241,10 +275,86 @@ It can be useful to instruct KEDA to pause autoscaling of objects, if you want t
 metadata:
   annotations:
     autoscaling.keda.sh/paused-replicas: "0"
+    autoscaling.keda.sh/paused: "true"
 ```
 
-The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
+The presence of these annotations will pause autoscaling no matter what number of replicas is provided.
 
+The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and use the current instance count while the annotation `autoscaling.keda.sh/paused-replicas: "<number>"` will scale your current workload to specified amount of replicas and pause autoscaling. You can set the value of replicas for an object to be paused to any arbitrary number.
+
+Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
+
+To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition. 
+
+
+### Scaling Modifiers (Experimental)
+
+**Example: compose average value**
+
+```yaml
+advanced:
+  scalingModifiers:
+    formula: "(trig_one + trig_two)/2"
+    target: "2"
+    activationTarget: "2"
+    metricType: "AverageValue"
+...
+triggers:
+  - type: kubernetes-workload
+    name: trig_one
+    metadata:
+      podSelector: 'pod=workload-test'
+  - type: metrics-api
+    name: trig_two
+    metadata:
+      url: "https://mockbin.org/bin/336a8d99-9e09-4f1f-979d-851a6d1b1423"
+      valueLocation: "tasks"
+```
+
+Formula composes 2 given metrics from 2 triggers `kubernetes-workload` named `trig_one` and `metrics-api` named `trig_two` together as an average value and returns one final metric which is used to make autoscaling decisions on.
+
+**Example: activationTarget**
+
+```yaml
+advanced:
+  scalingModifiers:
+    activationTarget: "2"
+```
+
+If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale to 0 if it's allowed.
+
+**Example: ternary operator**
+
+```yaml
+advanced:
+  scalingModifiers:
+    formula: "trig_one > 2 ? trig_one + trig_two : 1"
+```
+
+If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1.
+
+**Example: count function**
+
+```yaml
+advanced:
+  scalingModifiers:
+    formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5 : 0"
+```
+
+If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
+
+**Example: nested conditions and operators**
+
+```yaml
+advanced:
+  scalingModifiers:
+    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
+```
+
+Conditions can be used within another condition as well.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
+
+Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
 ### Activating and Scaling thresholds
 
 To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.

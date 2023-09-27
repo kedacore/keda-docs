@@ -437,6 +437,10 @@ url = "https://www.grafana.com"
 logo = "grafana.png"
 
 [[params.users]]
+url = "https://www.grab.com"
+logo = "grab.svg"
+
+[[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
 
@@ -605,3 +609,8 @@ logo = "vendors/red-hat.png"
 name = "KEDA Add-On for Azure Kubernetes Service"
 url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
 logo = "vendors/azure-kubernetes-service.png"
+
+[[params.vendors]]
+name = "Kedify"
+url = "https://kedify.io"
+logo = "vendors/kedify.png"
