@@ -4,7 +4,7 @@ description= "Detail of integrating OpenTelemetry Collector in KEDA"
 weight = 100
 +++
 
-## Push Metrics to OpenTelemetry Collector
+## Push Metrics to OpenTelemetry Collector (Experimental)
 
 ### Operator
 
