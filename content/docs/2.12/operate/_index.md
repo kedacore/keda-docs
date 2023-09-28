@@ -11,4 +11,5 @@ We provide guidance & requirements around various areas to operate KEDA:
 - Kubernetes Events ([link](./events))
 - KEDA Metrics Server ([link](./metrics-server))
 - Integrate with Prometheus ([link](./prometheus))
+- Integrate with OpenTelemetry Collector (Experimental) ([link](./opentelemetry))
 - Security ([link](./security))
