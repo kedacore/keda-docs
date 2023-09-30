@@ -426,6 +426,22 @@ spec:
 
 #### Your kafka cluster turns on SASL/GSSAPI auth without TLS:
 
+##### `sasl/gssapi` in manager.yaml
+
+If you use `manager.yaml` to deploy keda, add below volume mount and volume to supply writable location for required gssapi configurations for the `keda-operator` container.
+
+```
+          volumeMounts:
+          - mountPath: /tmp/kerberos
+            name: temp-kerberos-vol
+            readOnly: false
+
+      volumes:
+      - name: temp-kerberos-vol
+        emptyDir:
+          medium: Memory
+```
+
 ##### `sasl/gssapi` in TriggerAuthentication
 
 ```yaml
