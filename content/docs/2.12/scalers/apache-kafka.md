@@ -442,6 +442,22 @@ If you use `manager.yaml` to deploy keda, add below volume mount and volume to s
           medium: Memory
 ```
 
+##### `sasl/gssapi` in keda-charts
+
+If you use `keda-charts` to deploy keda, add below volume mount and volume to supply writable location for required gssapi configurations.
+
+```
+volumes.keda.extraVolumeMounts
+- mountPath: /tmp/kerberos
+  name: temp-kerberos-vol
+  readOnly: false
+
+volumes.keda.extraVolumes
+- name: temp-kerberos-vol
+  emptyDir:
+    medium: Memory
+```
+
 ##### `sasl/gssapi` in TriggerAuthentication
 
 ```yaml
