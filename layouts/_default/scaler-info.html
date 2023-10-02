@@ -11,8 +11,9 @@
       <br /><br />
 
       {{ with $desc }}
+        {{ $escapedText := html . }}
       <div class="content is-medium">
-        {{ . }}
+        {{ $escapedText }}
       </div>
       {{ end }}
     </div>
