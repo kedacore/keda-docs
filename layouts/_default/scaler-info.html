@@ -12,7 +12,7 @@
 
       {{ with $desc }}
       <div class="content is-medium">
-        {{ . }}
+        {{ . | safeHTML }}
       </div>
       {{ end }}
     </div>
