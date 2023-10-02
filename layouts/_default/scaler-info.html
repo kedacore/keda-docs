@@ -1,4 +1,4 @@
-{{ $desc         := .Description | markdownify }}
+{{ $desc         := .Description | markdownify | safeHTML }}
 {{ $availability := .Params.availability }}
 {{ $maintainer   := .Params.maintainer }}
 <div class="column is-one-third">
