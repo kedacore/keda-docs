@@ -4,6 +4,8 @@ title = "Azure AD Pod Identity"
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
 
+> ⚠️ **WARNING:** [Azure AD Pod Identity was archived](https://github.com/Azure/aad-pod-identity#-announcement) and support for it will be removed from KEDA on v2.15. We strongly encourage the migration to [Azure Workload Identity](https://azure.github.io/azure-workload-identity).
+
 You can tell KEDA to use Azure AD Pod Identity via `podIdentity.provider`.
 
 ```yaml
