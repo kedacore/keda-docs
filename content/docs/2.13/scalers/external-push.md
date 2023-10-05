@@ -16,7 +16,6 @@ triggers:
   metadata:
     scalerAddress: external-scaler-service:8080
     caCert : /path/to/tls/ca.pem
-    tlsCertFile: /path/to/tls/cert.pem # Deprecated. https://github.com/kedacore/keda/issues/4549
     tlsClientCert: /path/to/tls/cert.pem
     tlsClientKey: /path/to/tls/key.pem
     unsafeSsl: false
