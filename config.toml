@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -170,40 +170,34 @@ parent = "docs"
 weight = 2
 
 [[menu.docs]]
-url = "/docs/authentication-providers/"
-name = "Authentication providers"
-parent = "docs"
-weight = 3
-
-[[menu.docs]]
 url = "/docs/concepts/#architecture"
 name = "Architecture"
 parent = "docs"
-weight = 4
+weight = 3
 
 [[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
-weight = 5
+weight = 4
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 6
+weight = 5
 
 [[menu.docs]]
 url = "/docs/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 7
+weight = 6
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 8
+weight = 7
 
 [[menu.main]]
 url = "/blog"
@@ -222,10 +216,34 @@ parent = "community"
 weight = 1
 
 [[menu.main]]
+url = "/community/#get-involved"
+name = "Get Involved"
+parent = "community"
+weight = 2
+
+[[menu.main]]
+url = "/community/#end-users"
+name = "End-Users"
+parent = "community"
+weight = 3
+
+[[menu.main]]
+url = "/community/#partners"
+name = "Partners"
+parent = "community"
+weight = 4
+
+[[menu.main]]
+url = "/community/#supported-by"
+name = "Supported by"
+parent = "community"
+weight = 5
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 2
+weight = 6
 
 [[menu.main]]
 name = "Project"
@@ -301,7 +319,8 @@ weight = 11
 [[menu.main]]
 url = "https://store.cncf.io/collections/keda"
 name = "Merch"
-weight = 5
+parent = "project"
+weight = 12
 
 # "Features" section on the main page
 [[params.features]]
@@ -390,6 +409,10 @@ url = "https://cyera.io"
 logo = "cyera.png"
 
 [[params.users]]
+url = "https://devtron.ai"
+logo = "devtron-logo.png"
+
+[[params.users]]
 url = "https://dig.security"
 logo = "digsecurity.gif"
 
@@ -414,6 +437,10 @@ url = "https://www.grafana.com"
 logo = "grafana.png"
 
 [[params.users]]
+url = "https://www.grab.com"
+logo = "grab.svg"
+
+[[params.users]]
 url = "https://github.com/hmcts/"
 logo = "hmcts.png"
 
@@ -432,6 +459,10 @@ logo = "kendaxa.png"
 [[params.users]]
 url = "https://home.kpmg/uk/en/home.html"
 logo = "KPMG.jpeg"
+
+[[params.users]]
+url = "https://www.leanix.net/"
+logo = "leanix.png"
 
 [[params.users]]
 url = "https://underthehood.meltwater.com/"
@@ -458,6 +489,10 @@ url = "https://opsworks.co"
 logo = "opsworks.png"
 
 [[params.users]]
+url = "https://www.pollinate.global"
+logo = "pollinate.gif"
+
+[[params.users]]
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
@@ -468,6 +503,10 @@ logo = "purefacts.png"
 [[params.users]]
 url = "https://qonto.com"
 logo = "qonto.png"
+
+[[params.users]]
+url = "https://redhat.com"
+logo = "red-hat.png"
 
 [[params.users]]
 url = "https://www.reddit.com/"
@@ -514,17 +553,21 @@ url = "https://www.workiva.com"
 logo = "workiva.png"
 
 [[params.users]]
+url = "https://www.xbox.com"
+logo = "xbox.png"
+
+[[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
-url = "https://microsoft.com"
-logo = "microsoft.png"
+url = "https://kedify.io"
+logo = "kedify.png"
 
 [[params.partners]]
-url = "https://redhat.com"
-logo = "red-hat.png"
+url = "https://microsoft.com"
+logo = "microsoft.png"
 
 [[params.partners]]
 url = "https://scrm.lidl"
@@ -534,6 +577,14 @@ logo = "SCRM.png"
 [[params.supportedby]]
 url = "https://azure.microsoft.com/en-us/services/devops/"
 logo = "azure-devops.png"
+
+[[params.supportedby]]
+url = "https://www.cncf.io/"
+logo = "cncf-color.png"
+
+[[params.supportedby]]
+url = "https://azure.microsoft.com/"
+logo = "microsoft-azure.png"
 
 [[params.supportedby]]
 url = "https://snyk.io"
@@ -558,3 +609,8 @@ logo = "vendors/red-hat.png"
 name = "KEDA Add-On for Azure Kubernetes Service"
 url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
 logo = "vendors/azure-kubernetes-service.png"
+
+[[params.vendors]]
+name = "Kedify"
+url = "https://kedify.io"
+logo = "vendors/kedify.png"

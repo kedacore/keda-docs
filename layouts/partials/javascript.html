@@ -1,4 +1,7 @@
 {{ $alpineVersion := site.Params.alpine_js_version }}
+{{ $allVersions   := site.Params.versions.docs }}
+{{ $latest        := index $allVersions 0 }}
+
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v{{ $alpineVersion }}/dist/alpine.js"
   defer
@@ -23,14 +26,27 @@
 {{/* Algolia search bar */}}
 <script
   type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
+  src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"
 ></script>
 <script type="text/javascript">
+  const latest = "{{ $latest }}";
+  let currentVersion = latest;
+  
+  const currentUrl = window.location.pathname;
+  const currentLocation = String(currentUrl).split("/");
+  const docsPage = currentLocation[1];
+
+  if (docsPage === "docs") {
+    currentVersion = currentLocation[2];
+  }
+
   docsearch({
-    apiKey: "c42d672f33ecea131ab51c71699b7c37",
+    apiKey: "1b7cb5ab29b5b996f6faf71c39cb4171",
+    appId: "3IFB1FERQT",
     indexName: "keda",
-    inputSelector: "#search-bar",
-    debug: false,
+    container: "#navbar-search",
+    searchParameters: { 'facetFilters': [`version: ${currentVersion}`] },
+    insights: true,
   });
 </script>
 

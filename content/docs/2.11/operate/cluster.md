@@ -16,7 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 |   KEDA    |   Kubernetes  |
 |-----------|---------------|
-|   v2.11   | TO BE DEFINED |
+|   v2.11   | v1.25 - v1.27 |
 |   v2.10   | v1.24 - v1.26 |
 |   v2.9    | v1.23 - v1.25 |
 |   v2.8    | v1.17 - v1.25 |
@@ -142,7 +142,6 @@ To modify this properties you can set environment variables on both KEDA Operato
 | ------------------------------------- | -------------- | ------------- | -------------------------------------------------------------- |
 | KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
 | KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
-| KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
 
 ## Configure Leader Election
 

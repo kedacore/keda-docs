@@ -7,6 +7,7 @@
 {{ $img         := "img/logos/keda-icon-color.png" | absURL }}
 {{ $imgAlt      := printf "%s color logo" site.Title }}
 {{ $locale      := site.Params.locale }}
+{{ $version := index (split .File.Path "/") 1 }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,6 +23,9 @@
 <meta name="twitter:creator" content="{{ $twitter }}">
 <meta name="twitter:image" content="{{ $img }}">
 <meta name="twitter:image:alt" content="{{ $imgAlt }}">
+
+<meta name="docsearch:language" content="en" />
+<meta name="docsearch:version" content="{{ $version }}" />
 
 {{/* OpenGraph metadata */}}
 <meta property="og:url" content="{{ $url }}">

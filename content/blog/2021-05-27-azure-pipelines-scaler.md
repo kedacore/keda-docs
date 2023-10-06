@@ -244,5 +244,5 @@ Once that happens, you will see the jobs in the Azure Pipelines' agent pool:
 
 ![scaledjobs agents](/img/blog/azure-pipelines-scaler/jobs-agents-autoscaled.png)
 
-Using a `ScaledJob` is the preferred way to autoscale your Azure Pipelines agents if you have long running jobs.
+Using a `ScaledJob` is the preferred way to autoscale your Azure Pipelines agents if you have long-running jobs.
 The other option is using a `deployment` and leveraging the container lifecycle. ([docs](https://keda.sh/docs/1.4/concepts/scaling-deployments/#leverage-the-container-lifecycle))

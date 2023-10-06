@@ -12,9 +12,10 @@ Redis 5.0 introduced [Redis Streams](https://redis.io/topics/streams-intro) whic
 
 One of its features includes [`Consumer Groups`](https://redis.io/topics/streams-intro#consumer-groups), that allows a group of clients to co-operate consuming a different portion of the same stream of messages.
 
-There are two ways to configure `redis-streams` trigger:
+There are three ways to configure `redis-streams` trigger:
 1. Based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream
 2. Based on the *Stream Length* (see [`XLEN`](https://redis.io/commands/xlen))
+3. Based on the *Consumer Group Lag* (see [`XINFO GROUPS`](https://redis.io/commands/xinfo-groups/)). This is the only configuration that supports scaling down to 0. IMPORTANT: Redis 7+ is required for this feature to run.
 
 
 ```yaml
@@ -30,6 +31,8 @@ triggers:
     consumerGroup: my-consumer-group # optional - name of consumer group associated with Redis Stream
     pendingEntriesCount: "10" # optional - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
     streamLength: "50" # optional - Redis stream length, alternative to pendingEntriesCount scaler trigger
+    lagCount: "5" # optional - number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+    activationLagCount: "3" # required if lagCount is provided - lag count at which scaler triggers
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
@@ -61,8 +64,10 @@ triggers:
 > Setting the `consumerGroup` causes the scaler to operate on `pendingEntriesCount`. Lack of `consumerGroup` will cause the scaler to be based on `streamLength`
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `streamLength` - Threshold for stream length, alternative average target value to scale workload. (Default: `5`, Optional)
+- `lagCount` - Threshold for the consumer group lag number, alternative average target value to scale workload. (Default: `5`, Optional)
+- `activationLagCount` - Lag count threshold at which to start scaling. Any average lag count below this value will not trigger the scaler. (Default: `0`, Optional)
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -181,4 +186,33 @@ spec:
         passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
         stream: my-stream
         streamLength: "50"
+```
+
+#### Using `lagCount`
+
+To scale based on redis stream `XINFO GROUPS`, be sure to set `activationLagCount`. Example:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-streams-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: redis-streams-consumer
+  pollingInterval: 15
+  cooldownPeriod: 200
+  maxReplicaCount: 25
+  minReplicaCount: 1
+  triggers:
+    - type: redis-cluster-streams
+      metadata:
+        addressesFromEnv: REDIS_ADDRESSES
+        usernameFromEnv: REDIS_USERNAME # name of the environment variable in the Deployment
+        passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
+        stream: my-stream
+        consumerGroup: consumer-group-1
+        lagCount: "10"
+        activationLagCount: "3"
 ```

@@ -49,7 +49,7 @@ triggers:
 - `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
 - `jobsToFetch` - The number of the jobs that KEDA will fetch for the pool from Azure Pipeline API (Default: `250`, Optional)
-- 
+
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
 ### Authentication Parameters

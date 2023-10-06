@@ -35,8 +35,7 @@ Deploying KEDA with Helm is very simple:
     **Helm 3**
 
     ```sh
-    kubectl create namespace keda
-    helm install keda kedacore/keda --namespace keda
+    helm install keda kedacore/keda --namespace keda --create-namespace
     ```
 
 > 💡 **NOTE:** Are you upgrading to v2.2.1 or above? Make sure to read [our troubleshooting guide](https://keda.sh/docs/latest/troubleshooting/) to fix potential CRD issues.
@@ -89,21 +88,21 @@ If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a differe
     - Use `keda-2.xx.x.yaml` that includes all features, including [admission webhooks](./concepts/admission-webhooks.md) (recommended)
     - Use `keda-2.xx.x-core.yaml` that installs the minimal required KEDA components, without admission webhooks
 
-Run the following command (if needed, replace the version, in this case `2.10.0`, with the one you are using):
+Run the following command (if needed, replace the version, in this case `2.10.1`, with the one you are using):
 
 ```sh
 # Including admission webhooks
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.1/keda-2.10.1.yaml
 # Without admission webhooks
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0-core.yaml
+kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.1/keda-2.10.1-core.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
 # Including admission webhooks
-kubectl apply -f keda-2.10.0.yaml
+kubectl apply -f keda-2.10.1.yaml
 # Without admission webhooks
-kubectl apply -f keda-2.10.0-core.yaml
+kubectl apply -f keda-2.10.1-core.yaml
 ```
 
 - You can also find the same YAML declarations in our `/config` directory on our [GitHub repo](https://github.com/kedacore/keda) if you prefer to clone it.
@@ -111,33 +110,33 @@ kubectl apply -f keda-2.10.0-core.yaml
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-VERSION=2.10.0 make deploy
+VERSION=2.10.1 make deploy
 ```
 
 ### Uninstall
 
-- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.10.0`, with the one you are using):
+- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.10.1`, with the one you are using):
 
 ```sh
 # Including admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.1/keda-2.10.1.yaml
 # Without admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0-core.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.10.1/keda-2.10.1-core.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
 # Including admission webhooks
-kubectl delete -f keda-2.10.0.yaml
+kubectl delete -f keda-2.10.1.yaml
 # Without admission webhooks
-kubectl delete -f keda-2.10.0-core.yaml
+kubectl delete -f keda-2.10.1-core.yaml
 ```
 
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-VERSION=2.10.0 make undeploy
+VERSION=2.10.1 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}

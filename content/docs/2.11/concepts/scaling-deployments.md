@@ -18,7 +18,7 @@ For example, if you wanted to use KEDA with an Apache Kafka topic as event sourc
 * When no messages are pending processing, KEDA can scale the deployment to zero.
 * When a message arrives, KEDA detects this event and activates the deployment.
 * When the deployment starts running, one of the containers connects to Kafka and starts pulling messages.
-* As more messages arrive on the Kafka Topic, KEDA can feed this data to the HPA to drive scale out.
+* As more messages arrive at the Kafka Topic, KEDA can feed this data to the HPA to drive scale out.
 * Each replica of the deployment is actively processing messages.  Very likely, each replica is processing a batch of messages in a distributed manner.
 
 ### Scaling of Custom Resources
@@ -38,25 +38,28 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: {scaled-object-name}
+  annotations:
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+    autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
 spec:
   scaleTargetRef:
-    apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
-    kind:          {kind-of-target-resource}         # Optional. Default: Deployment
-    name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
-    envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval:  30                               # Optional. Default: 30 seconds
-  cooldownPeriod:   300                              # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                # Optional. Default: ignored, must be less than minReplicaCount 
-  minReplicaCount:  1                                # Optional. Default: 0
-  maxReplicaCount:  100                              # Optional. Default: 100
-  fallback:                                          # Optional. Section to specify fallback options
-    failureThreshold: 3                              # Mandatory if fallback section is included
-    replicas: 6                                      # Mandatory if fallback section is included
-  advanced:                                          # Optional. Section to specify advanced options
-    restoreToOriginalReplicaCount: true/false        # Optional. Default: false
-    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
-      name: {name-of-hpa-resource}                   # Optional. Default: keda-hpa-{scaled-object-name}
-      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+    apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
+    kind:          {kind-of-target-resource}                # Optional. Default: Deployment
+    name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
+    envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
+  pollingInterval:  30                                      # Optional. Default: 30 seconds
+  cooldownPeriod:   300                                     # Optional. Default: 300 seconds
+  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount 
+  minReplicaCount:  1                                       # Optional. Default: 0
+  maxReplicaCount:  100                                     # Optional. Default: 100
+  fallback:                                                 # Optional. Section to specify fallback options
+    failureThreshold: 3                                     # Mandatory if fallback section is included
+    replicas: 6                                             # Mandatory if fallback section is included
+  advanced:                                                 # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: true/false               # Optional. Default: false
+    horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
+      name: {name-of-hpa-resource}                          # Optional. Default: keda-hpa-{scaled-object-name}
+      behavior:                                             # Optional. Use to modify HPA's scaling behavior
         scaleDown:
           stabilizationWindowSeconds: 300
           policies:
@@ -143,7 +146,7 @@ This setting is passed to the HPA definition that KEDA will create for a given r
     replicas: 6                                      # Mandatory if fallback section is included
 ```
 
-The `fallback` section is optional. It defines a number of replicas to fallback to if a scaler is in an error state.
+The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
 
 KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behaviour), the scaler will, instead, return a normalised metric using the formula:
 ```
@@ -211,7 +214,7 @@ Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
 - **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default the name is generated from the trigger type. (Optional)
-- **useCachedMetrics**: ([Experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features)) Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics (Experimental)"](#caching-metrics-experimental). (Values: `false`, `true`, Default: `false`, Optional)
+- **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)
 - **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
@@ -222,15 +225,13 @@ Trigger fields:
 
 > ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
 
-### Caching Metrics (Experimental)
+### Caching Metrics
 
- This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metris Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval. 
- 
- Enabling this feature can significantly reduce the load on the scaler service. 
- 
- This is an [experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features).
- 
- This feature is not supported for `cpu`, `memory` or `cron` scaler.
+This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
+
+Enabling this feature can significantly reduce the load on the scaler service.
+
+This feature is not supported for `cpu`, `memory` or `cron` scaler.
 
 ### Pause autoscaling
 
@@ -269,9 +270,26 @@ There are some important topics to take into account:
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.
 
+## Transfer ownership of an existing HPA
+
+If your environment already operates using kubernetes HPA, you can transfer the ownership of this resource to a new ScaledObject:
+
+```yaml
+metadata:
+  annotations:
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"
+spec:
+   advanced:
+      horizontalPodAutoscalerConfig:
+      name: {name-of-hpa-resource}
+```
+
+> ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.
+
+
 ## Long-running executions
 
-One important consideration to make is how this pattern can work with long running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
+One important consideration to make is how this pattern can work with long-running executions.  Imagine a deployment triggers on a RabbitMQ queue message.  Each message takes 3 hours to process.  It's possible that if many queue messages arrive, KEDA will help drive scaling out to many replicas - let's say 4.  Now the HPA makes a decision to scale down from 4 replicas to 2.  There is no way to control which of the 2 replicas get terminated to scale down.  That means the HPA may attempt to terminate a replica that is 2.9 hours into processing a 3 hour queue message.
 
 There are two main ways to handle this scenario.
 
@@ -285,4 +303,4 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 
 ### Run as jobs
 
-The other alternative to handling long running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).
+The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).
