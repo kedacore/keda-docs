@@ -2,7 +2,7 @@
 title = "Apache Kafka (Experimental)"
 availability = "v2.12+"
 maintainer = "Community"
-description = "Experimental scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
+description = "Experimental scaler based on 'segmentio/kafka-go' library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
 go_file = "apache_kafka_scaler"
 +++
 
