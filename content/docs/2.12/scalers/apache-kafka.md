@@ -428,7 +428,7 @@ spec:
 
 ##### `sasl/gssapi` in manager.yaml
 
-If you use `manager.yaml` to deploy keda, add below volume mount and volume to supply writable location for required gssapi configurations for the `keda-operator` container.
+If you use YAML declarations to deploy KEDA, add below volume mount and volume to supply writable location for required GSSAPI configurations for the `keda-operator` container.
 
 ```
           volumeMounts:
