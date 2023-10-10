@@ -17,6 +17,7 @@ triggers:
     # Required fields:
     serverAddress: http://<prometheus-host>:9090
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
+    queryParameters: key-1=value-1,key-2=value-2
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
@@ -32,6 +33,7 @@ triggers:
 
 - `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
 - `query` - Query to run.
+- `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
