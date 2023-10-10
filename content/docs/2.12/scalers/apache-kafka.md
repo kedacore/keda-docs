@@ -444,7 +444,7 @@ If you use YAML declarations to deploy KEDA, add below volume mount and volume t
 
 ##### `sasl/gssapi` in keda-charts
 
-If you use `keda-charts` to deploy keda, add below volume mount and volume to supply writable location for required gssapi configurations.
+If you use Helm Charts to deploy KEDA, add below volume mount and volume to supply writable location for required gssapi configurations.
 
 ```
 volumes.keda.extraVolumeMounts
