@@ -23,6 +23,8 @@ hashiCorpVault:                                     # Optional.
     serviceAccount: {path-to-service-account-file}  # Optional.
   secrets:                                          # Required.
   - parameter: {scaledObject-parameter-name}        # Required.
-    key: {hasicorp-vault-secret-key-name}           # Required.
-    path: {hasicorp-vault-secret-path}              # Required.
+    key: {hashicorp-vault-secret-key-name}          # Required.
+    path: {hashicorp-vault-secret-path}             # Required.
+    type: {hashicorp-vault-secret-mode}             # Optional. Default to `""`
+    pkidata: {hashicorp-vault-secret-pkidata}       # Optional. Data to be send with the secret  if `hashicorp-vault-secret-type` is pki request 
 ```
