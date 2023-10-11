@@ -31,14 +31,14 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 
 ## CloudEvent Support (Experimental)
 
-### CloudEvent Resource
-`CloudEvent` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Both Kubernetes Events and CloudEvents will be emitted if CloudEvent resource is created. This specification describes the `CloudEvent` Custom Resource definition:
+### EventSource Resource
+`EventSource` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Event will be emitted to both Kubernetes Events and CloudEvents Destination if EventSource resource is created. This specification describes the `EventSource` Custom Resource definition:
 
-[`cloudevent_types.go`](https://github.com/kedacore/keda/blob/v1.4.0/pkg/apis/keda/v1alpha1/cloudevent_types.go)
+[`eventsource_types.go`](https://github.com/kedacore/keda/blob/v1.4.0/pkg/apis/keda/v1alpha1/eventsource_types.go)
 
 ```yaml
 apiVersion: keda.k8s.io/v1alpha1
-kind: CloudEvent
+kind: EventSource
 metadata:
   name: {cloud-event-name}
 spec:
@@ -52,7 +52,7 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 ```json
 {
     "specversion" : "1.0",
-    "type" : "com.cloudevents.keda",
+    "type" : "com.eventsource.keda",
     "source" : "/{cluster-name}/{namespace}/keda",
     "subject" : "/{cluster-name}/{namespace}/workload/{scaledobject-name}",
     "id" : "<guid>",
