@@ -29,7 +29,7 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 | `ClusterTriggerAuthenticationAdded`   | `Normal`  | When a new ClusterTriggerAuthentication is added                                                                            |
 | `ClusterTriggerAuthenticationDeleted` | `Normal`  | When a ClusterTriggerAuthentication is deleted                                                                              |
 
-## CloudEvent Support
+## CloudEvent Support (Experimental)
 
 ### CloudEvent Resource
 `CloudEvent` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Both Kubernetes Events and CloudEvents will be emitted if CloudEvent resource is created. This specification describes the `CloudEvent` Custom Resource definition:
