@@ -57,7 +57,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be speicied when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
@@ -80,7 +80,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authenticate by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
+ You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, password or keytab, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
  Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
 
@@ -88,9 +88,12 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
 **SASL:**
 
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional)
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer` or `none`, Default: `none`, Optional)
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
+- `keytab` - Kerberos keytab.  Either `password` or `keytab` is required in case of `gssapi`.  (Optional)
+- `realm` - Kerberos realm.  (Optional unless sasl mode is `gssapi`)
+- `kerberosConfig` - Kerberos configuration file. (Optional unless sasl mode is `gssapi`)
 - `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
 - `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
 - `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
@@ -416,6 +419,104 @@ spec:
       topic: test-topic
       tls: enable
       sasl: oauthbearer
+      # Optional
+      lagThreshold: "50"
+      offsetResetPolicy: latest
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+```
+
+#### Your kafka cluster turns on SASL/GSSAPI auth without TLS:
+
+##### `sasl/gssapi` in manager.yaml
+
+If you use YAML declarations to deploy KEDA, add below volume mount and volume to supply writable location for required GSSAPI configurations for the `keda-operator` container.
+
+```
+          volumeMounts:
+          - mountPath: /tmp/kerberos
+            name: temp-kerberos-vol
+            readOnly: false
+
+      volumes:
+      - name: temp-kerberos-vol
+        emptyDir:
+          medium: Memory
+```
+
+##### `sasl/gssapi` in keda-charts
+
+If you use Helm Charts to deploy KEDA, add below volume mount and volume to supply writable location for required gssapi configurations.
+
+```
+volumes.keda.extraVolumeMounts
+- mountPath: /tmp/kerberos
+  name: temp-kerberos-vol
+  readOnly: false
+
+volumes.keda.extraVolumes
+- name: temp-kerberos-vol
+  emptyDir:
+    medium: Memory
+```
+
+##### `sasl/gssapi` in TriggerAuthentication
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-kafka-secrets
+  namespace: default
+data:
+  sasl: "gssapi"
+  tls: "disable"
+  username: "admin"
+  realm: <your kerberos realm>
+  keytab: <your kerberos keytab>
+  kerberosConfig: <your kerberos configuration>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secrets
+    key: sasl
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
+  - parameter: username
+    name: keda-kafka-secrets
+    key: username
+  - parameter: realm
+    name: keda-kafka-secrets
+    key: realm
+  - parameter: keytab
+    name: keda-kafka-secrets
+    key: keytab
+  - parameter: kerberosConfig
+    name: keda-kafka-secrets
+    key: kerberosConfig
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-functions-deployment
+  pollingInterval: 30
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: localhost:9092
+      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: test-topic
       # Optional
       lagThreshold: "50"
       offsetResetPolicy: latest
