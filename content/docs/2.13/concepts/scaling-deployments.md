@@ -284,7 +284,7 @@ The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and u
 
 Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
 
-To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition. 
+To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition.
 
 
 ### Scaling Modifiers (Experimental)
@@ -328,7 +328,7 @@ If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "trig_one > 2 ? trig_one + trig_two : 1"
+    formula: "trig_one > 2 ? trig_one + trig_two : 1.0"
 ```
 
 If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1.
@@ -338,7 +338,7 @@ If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5 : 0"
+    formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5.0 : 0.0"
 ```
 
 If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
@@ -348,7 +348,7 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
+    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5.0 : 10.0 : 0.0"
 ```
 
 Conditions can be used within another condition as well.
