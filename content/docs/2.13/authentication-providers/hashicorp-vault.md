@@ -25,7 +25,7 @@ hashiCorpVault:                                               # Optional.
   - parameter: {scaledObject-parameter-name}                  # Required.
     key: {hashicorp-vault-secret-key-name}                    # Required.
     path: {hashicorp-vault-secret-path}                       # Required.
-    type: {hashicorp-vault-secret-mode}                       # Optional. Default to `""`
+    type: {hashicorp-vault-secret-type}                       # Optional. Default to `""`. Allowed values: `secret`, `secretV2`, `pki`
     pkidata: {hashicorp-vault-secret-pkidata}                 # Optional. Data to be send with the secret  if `hashicorp-vault-secret-type` is pki request
       commonName: {hashicorp-vault-secret-pkidata-commonName} # Optional.
       altNames: {hashicorp-vault-secret-pkidata-altNames}     # Optional.
@@ -37,7 +37,7 @@ hashiCorpVault:                                               # Optional.
 ```
 
 ### Example
-Vault Secret can be used to provide authentication for a Scaler. If using the  [Prometheus scaler](https://keda.sh/docs/2.3/scalers/prometheus/), mTls can be used by the `ScaledObject` to authenticate to the Prometheus server. The following example would request a certificate to Vault dynamically.
+Vault Secret can be used to provide authentication for a Scaler. If using the [Prometheus scaler](https://keda.sh/docs/2.3/scalers/prometheus/), mTls can be used by the `ScaledObject` to authenticate to the Prometheus server. The following example would request a certificate to Vault dynamically.
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
