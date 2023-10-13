@@ -270,6 +270,7 @@ data:
   scope: <your Scope>
   clientID: <your clientID>
   clientSecret: <your clientSecret>
+  endpointParams: <your endpointParams>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -290,6 +291,9 @@ spec:
   - parameter: clientSecret
     name: keda-pulsar-secrets
     key: clientSecret
+  - parameter: endpointParams
+    name: keda-pulsar-secrets
+    key: endpointParams
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -334,4 +338,5 @@ spec:
       oauthTokenURI: http://oauth.com/oauth2/token
       scope: <your scope>
       clientID: <your clientID>
+      endpointParams: <your endpointParams>
 ```
