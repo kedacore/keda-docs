@@ -25,9 +25,11 @@ following flags -
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
 
 ## Considerations about Federations and Overrides
+
 The concept of "overrides" can be somewhat confusing in certain scenarios, as it may not always be clear which service account needs to be federated with a specific Azure Identity to ensure proper functionality. Let's clarify this with two examples:
 
 ### Case 1
+
 Imagine you have an identity for KEDA that has access to ServiceBus A, ServiceBus B, and ServiceBus C. Additionally, you have separate identities for various workloads, resulting in the following setup:
 
 - KEDA's identity with access to ServiceBus A, ServiceBus B, and ServiceBus C (the identity set during installation and not overridden).
@@ -38,6 +40,7 @@ Imagine you have an identity for KEDA that has access to ServiceBus A, ServiceBu
 In this case, KEDA's Managed Service Identity should only be federated with KEDA's service account.
 
 ### Case 2
+
 To avoid granting too many permissions to KEDA's identity, you have a KEDA identity without access to any Service Bus (perhaps unrelated, such as Key Vault). Similar to the previous scenario, you also have separate identities for your workloads:
 
 - KEDA's identity without access to any Service Bus.
