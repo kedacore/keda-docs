@@ -25,9 +25,7 @@ triggers:
 **Parameter list:**
 
 - `scalerAddress` - Address of the external push scaler implementing `ExternalScaler.StreamIsActive` in externalscaler.proto. Format must be `host:port`.
-- `caCert` - Location of a Certificate Authority (CA) certificate to use for the GRPC connection to authenticate with. (Optional)
-- `tlsClientCert` - Location of a client certificate to use for the GRPC connection to authenticate with. (Optional)
-- `tlsClientKey` - Location of a client private key to use for the GRPC connection to authenticate with. (Optional)
+- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 The entire metadata object is passed to the external scaler in `ScaledObjectRef.scalerMetadata`.
@@ -36,7 +34,9 @@ The entire metadata object is passed to the external scaler in `ScaledObjectRef.
 
 ### Authentication Parameters
 
-Not supported.
+- `caCert` - Certificate Authority (CA) certificate to use for the GRPC connection to authenticate with. (Optional)
+- `tlsClientCert` - Client certificate to use for the GRPC connection to authenticate with. (Optional)
+- `tlsClientKey` - Client private key to use for the GRPC connection to authenticate with. (Optional)
 
 ### Example
 
