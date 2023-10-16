@@ -16,7 +16,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaler_metrics_latency` - The latency of retrieving current metric from each scaler.
 - `keda_scaler_errors` - The number of errors that have occurred for each scaler.
 - `keda_scaler_errors_total` - The total number of errors encountered for all scalers.
-- `keda_scaled_object_errors` - The number of errors that have occurred for each ScaledObject.
+- `keda_scaled_object_errors` - The number of errors that have occurred for each ScaledObejct.
+- `keda_scaled_object_pause` - The number of pause scaledObject (using the annotaion detailed [here](https://keda.sh/docs/latest/concepts/scaling-deployments/#pause-autoscaling))
 - `keda_resource_totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD).
 - `keda_trigger_totals` - Total number of triggers per trigger type.
 - `keda_internal_scale_loop_latency` - Total deviation (in miliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
