@@ -44,8 +44,7 @@ The entire metadata object is passed to the external scaler in `ScaledObjectRef.
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: redis-scaledobject
-  namespace: keda-redis-test
+  name: external-scaledobject
 spec:
   scaleTargetRef:
     name: keda-redis-node
@@ -57,4 +56,50 @@ spec:
       password: REDIS_PASSWORD
       listName: mylist
       listLength: "5"
+```
+
+Here is an example of external scaler with certificates
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: certificate
+data:
+  ca.crt: "YOUR_CA_IN_SECRET"
+  tls.crt: "YOUR_CERTIFICATE_IN_SECRET"
+  tls.key: "YOUR_KEY_IN_SECRET"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth
+spec:
+  secretTargetRef:
+  - parameter: caCert
+    name: certificate
+    key: ca.crt
+  - parameter: tlsClientCert
+    name: certificate
+    key: tls.crt
+  - parameter: tlsClientKey
+    name: certificate
+    key: tls.key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: external-scaledobject
+spec:
+  scaleTargetRef:
+    name: keda-redis-node
+  triggers:
+  - type: external
+    metadata:
+      scalerAddress: redis-external-scaler-service:8080
+      metricType: mymetric
+      scalerAddress: mydomain.com:443
+      extraKey: "demo"
+    authenticationRef:
+      name: keda-trigger-auth
 ```

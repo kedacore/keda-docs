@@ -38,14 +38,19 @@ The entire metadata object is passed to the external scaler in `ScaledObjectRef.
 - `tlsClientCert` - Client certificate to use for the GRPC connection to authenticate with. (Optional)
 - `tlsClientKey` - Client private key to use for the GRPC connection to authenticate with. (Optional)
 
+### Authentication Parameters
+
+- `caCert` - Certificate Authority (CA) certificate to use for the GRPC connection to authenticate with. (Optional)
+- `tlsClientCert` - Client certificate to use for the GRPC connection to authenticate with. (Optional)
+- `tlsClientKey` - Client private key to use for the GRPC connection to authenticate with. (Optional)
+
 ### Example
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: name
-  namespace: namespace
+  name: external-scaledobject
 spec:
   scaleTargetRef:
     name: keda-node
@@ -53,8 +58,48 @@ spec:
   - type: external-push
     metadata:
       scalerAddress: external-scaler-service:8080
-      caCert : /path/to/tls/ca.pem
-      tlsClientCert: /path/to/tls/cert.pem
-      tlsClientKey: /path/to/tls/key.pem
       unsafeSsl: false
+```
+
+Here is an example of external scaler with certificates
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: certificate
+data:
+  ca.crt: "YOUR_CA_IN_SECRET"
+  tls.crt: "YOUR_CERTIFICATE_IN_SECRET"
+  tls.key: "YOUR_KEY_IN_SECRET"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth
+spec:
+  secretTargetRef:
+  - parameter: caCert
+    name: certificate
+    key: ca.crt
+  - parameter: tlsClientCert
+    name: certificate
+    key: tls.crt
+  - parameter: tlsClientKey
+    name: certificate
+    key: tls.key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: external-scaledobject
+spec:
+  scaleTargetRef:
+    name: keda-node
+  triggers:
+  - type: external-push
+    metadata:
+      scalerAddress: external-scaler-service:8080
+    authenticationRef:
+      name: keda-trigger-auth
 ```
