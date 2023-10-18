@@ -10,7 +10,7 @@ For example, if our `keda-operator` pod is keeps getting OOM after a specific ti
 
 Golang support many profiling options like heap, cpu, goroutines and more... (for more info check this site https://pkg.go.dev/net/http/pprof).
 
-In Keda we provide the option to enable profiling on each component separately by enabling it using
+In KEDA we provide the option to enable profiling on each component separately by enabling it using
 the Helm chart and providing a port (if not enabled then it won't work).
 
 ```yaml
