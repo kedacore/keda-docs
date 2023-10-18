@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -429,12 +429,20 @@ url = "https://fission.io/"
 logo = "fission.png"
 
 [[params.users]]
+url = "https://www.foresightmining.com/"
+logo = "foresight.png"
+
+[[params.users]]
 url = "https://www.freepikcompany.com/"
 logo = "freepik-company.png"
 
 [[params.users]]
 url = "https://www.grafana.com"
 logo = "grafana.png"
+
+[[params.users]]
+url = "https://www.grab.com"
+logo = "grab.svg"
 
 [[params.users]]
 url = "https://github.com/hmcts/"
@@ -605,3 +613,8 @@ logo = "vendors/red-hat.png"
 name = "KEDA Add-On for Azure Kubernetes Service"
 url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
 logo = "vendors/azure-kubernetes-service.png"
+
+[[params.vendors]]
+name = "Kedify"
+url = "https://kedify.io"
+logo = "vendors/kedify.png"
