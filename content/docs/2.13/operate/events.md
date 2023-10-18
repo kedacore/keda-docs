@@ -38,8 +38,8 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 [`cloudeventsource_types.go`](https://github.com/kedacore/keda/blob/v2.13.0/pkg/apis/keda/v1alpha1/cloudeventsource_types.go)
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
-kind: EventSource
+apiVersion: eventing.keda.k8s.io/v1alpha1
+kind: CloudEventSource
 metadata:
   name: {cloud-event-name}
 spec:
