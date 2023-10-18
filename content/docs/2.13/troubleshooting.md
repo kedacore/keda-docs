@@ -33,7 +33,7 @@ following argument in the respective container
 ```
 and it will be exposed on the port you specified.
 
-after enabling it you can port-forward or expose the service and use tool like go tool pprof in order to get profiling data.
+After enabling it you can port-forward or expose the service and use tool like go tool pprof in order to get profiling data.
 
 For more info look at this document https://go.dev/blog/pprof.
 
