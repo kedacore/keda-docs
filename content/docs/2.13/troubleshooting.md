@@ -15,10 +15,10 @@ the Helm chart and providing a port (if not enabled then it won't work).
 
 ```yaml
 profiling:
-  keda:
+  operator:
     enabled: false
     port: 8082
-  metricsApiServer:
+  metricsServer:
     enabled: false
     port: 8083
   webhooks:
