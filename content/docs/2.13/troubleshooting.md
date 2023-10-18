@@ -31,7 +31,7 @@ following argument in the respective container
 ```bash
 --profiling-bind-address=":8082"
 ```
-and it will be expose on the port you specify.
+and it will be exposed on the port you specified.
 
 after enabling it you can port-forward or expose the service and use tool like go tool pprof in order to get profiling data.
 
