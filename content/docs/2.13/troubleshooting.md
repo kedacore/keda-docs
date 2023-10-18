@@ -3,7 +3,7 @@ title = "Troubleshooting"
 description = "How to address commonly encountered KEDA issues"
 +++
 
-## Troubleshoot keda errors using profiling
+## Troubleshoot KEDA errors using profiling
 
 in golang we have the possibility to profile specific actions in order to determine what causes an issue.
 For example, if our keda-operator pod is keeps getting OOM after a specific time, using profilig we can profile the heap and see what operatios taking all of this space.
