@@ -26,8 +26,8 @@ profiling:
     port: 8084
 ```
 
-If not using the helm chart then you can enabling the profiling on each on of the components by specifying
-this argument:
+If not using the Helm chart then you can enable the profiling on each on of components by specifying the
+following argument in the respective container
 ```bash
 --profiling-bind-address=":8082"
 ```
