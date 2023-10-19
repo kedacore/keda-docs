@@ -284,7 +284,7 @@ The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and u
 
 Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
 
-To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition. 
+To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition.
 
 
 ### Scaling Modifiers (Experimental)
@@ -348,7 +348,7 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
+    formula: "float(trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0)"
 ```
 
 Conditions can be used within another condition as well.
