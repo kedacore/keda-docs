@@ -19,7 +19,7 @@ This can be done for you during deployment with Helm with the following flags:
 1. `--set podIdentity.aws.irsa.enabled=true`
 2. `--set podIdentity.aws.irsa.roleArn={aws-arn-role}`
 
-You can override the role that was assigned to KEDA during installation, by specifying an `roleArn` parameter under the `podIdentity` field. This allows end-users to use different roles to access various resources which is more secure than using a single identity that has access to multiple resources.
+You can override the default KEDA operator IAM role by specifying an `roleArn` parameter under the `podIdentity` field. This allows end-users to use different roles to access various resources which allows for more granular access than having a single IAM role that has access to multiple resources.
 
 To reduce the managing overhead, `podIdentity.roleArn` can be set with the value `workload` and KEDA will check the workload service account to check if IRSA annotation is there and KEDA will assume that role.
 
