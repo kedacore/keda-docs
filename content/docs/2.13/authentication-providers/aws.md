@@ -35,7 +35,7 @@ This is the easiest case and you just need to attach to KEDA's role the desired 
 
 In this case, KEDA will use its own role to assume the workload role (and to use workload's role attached policies). This scenario is a bit more complex because we need to establish a trusted relationship between both roles and we need to grant to KEDA's role the permission to assume other roles.
 
-This is how KEDA's role policy could look:
+This is an example of how KEDA's role policy could look like:
 
 ```json
 {
