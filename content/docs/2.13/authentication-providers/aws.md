@@ -21,11 +21,11 @@ This can be done for you during deployment with Helm with the following flags:
 
 You can override the default KEDA operator IAM role by specifying an `roleArn` parameter under the `podIdentity` field. This allows end-users to use different roles to access various resources which allows for more granular access than having a single IAM role that has access to multiple resources.
 
-To reduce the managing overhead, `podIdentity.roleArn` can be set with the value `workload` and KEDA will check the workload service account to check if IRSA annotation is there and KEDA will assume that role.
+If you would like to use the same IAM credentials as your workload is currently using, `podIdentity.roleArn` can be set with the value `workload` and KEDA will inspect the workload service account to check if IRSA annotation is there and KEDA will assume that role.
 
 ## Setting up KEDA role and policy
 
-The [official docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a a basic configuration for an IRSA role but the policy changes depending if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `workload`).
+The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a a basic configuration for an IRSA role. The policy changes depend if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `workload`).
 
 ### Using KEDA role to access infrastructure
 
@@ -45,14 +45,21 @@ This is an example of how KEDA's role policy could look like:
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "arn:aws:iam::ACCOUNT:role/ROLE_NAME"
+        "arn:aws:iam::ACCOUNT_1:role/ROLE_NAME"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": [
+        "arn:aws:iam::ACCOUNT_2:role/*"
       ]
     }
   ]
 }
 ```
-
-This policy attached to KEDA's role will allow KEDA to assume other roles, now you have to allow other roles to being assumed by KEDA's role. To achieve this, you have to add a trusted relation to the workload role:
+This can be extended so that KEDA can assume multiple workload roles, either as an explicit array of role ARNs, or with a wildcard.
+This policy attached to KEDA's role will allow KEDA to assume other roles, now you have to allow the workload roles you want to use all allow to being assumed by the KEDA operator role. To achieve this, you have to add a trusted relation to the workload role:
 
 ```json
 {
