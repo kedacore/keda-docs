@@ -9,7 +9,7 @@ You can tell KEDA to use AWS Pod Identity Webhook via `podIdentity.provider`.
 ```yaml
 podIdentity:
   provider: aws # Optional. Default: none
-  roleArn: <role-arn|workload> # Optional. Default: RoleArn from annotation on service-account.
+  roleArn: <role-arn|workload> # Optional. If not set the IAM role which the KEDA operator uses will be used
 ```
 
 AWS IRSA will give access to pods with service accounts having appropriate annotations. ([official docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) You can set these annotations on the KEDA Operator service account.
