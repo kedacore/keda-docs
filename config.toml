@@ -556,6 +556,7 @@ logo = "vitc.png"
 url = "https://www.wingie.com"
 logo = "wingie-enuygun.png"
 
+
 [[params.users]]
 url = "https://www.workiva.com"
 logo = "workiva.png"
