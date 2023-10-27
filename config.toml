@@ -564,6 +564,10 @@ logo = "xbox.png"
 url = "https://zapier.com"
 logo = "zapier.png"
 
+[[params.users]]
+url = "https://www.wingie.com"
+logo = "wingie-enuygun.png"
+
 # "Partners" section on the Community page
 [[params.partners]]
 url = "https://kedify.io"
