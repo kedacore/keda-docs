@@ -43,7 +43,7 @@ kind: CloudEventSource
 metadata:
   name: {cloud-event-name}
 spec:
-  clusterName: {cluster-name} #Optional. Will be used in source/subject. And a "default" value will be set if this value is empty 
+  clusterName: {cluster-name} #Optional. Will be used in the source/subject to specify where the event comes from. The default value is 'kubernetes-default' and it can also be set during the installation of KEDA with --k8sClusterName. This one will overwrite others if set.
   destination:
     http:
       uri: http://foo.bar
