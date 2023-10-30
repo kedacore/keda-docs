@@ -32,8 +32,9 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 
 ## CloudEvent Support (Experimental)
 
-### CloudEventSource Resource
-`CloudEventSource` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Event will be emitted to both Kubernetes Events and CloudEvents Destination if CloudEventSource resource is created. This specification describes the `CloudEventSource` Custom Resource definition:
+### Subscribing to CloudEvents with our CloudEventSource CRD
+
+`CloudEventSource` allows you to subscribe to one or more events in KEDA and let it emit them to user's event sink and use payloads that are compliant with the [CloudEvent specification](https://cloudevents.io/).
 
 Here is a the schema of the `CloudEventSource` CRD:
 
