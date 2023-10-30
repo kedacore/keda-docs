@@ -67,9 +67,13 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 }
 ```
 
-### Destination
-There will be multiple type of destination to emit KEDA events. Nowadays an HTTP CloudEvent destination is supported.
-#### CloudEvent HTTP
+### Event Destinations
+
+Here is an overview of the event destinations that KEDA supports:
+
+- [HTTP endpoint](#http-endpoint)
+
+#### HTTP endpoint
 ```yaml
   destination:
     http:
