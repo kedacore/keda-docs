@@ -3,4 +3,5 @@ IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
-IgnoreInternalURLs: []
+IgnoreInternalURLs:
+  - /docs/2.12/authentication-providers/configmap/
