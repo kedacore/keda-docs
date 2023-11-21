@@ -13,14 +13,14 @@ You can pull one or more Hashicorp Vault secrets into the trigger by defining th
 
 ```yaml
 hashiCorpVault:                                               # Optional.
-  address: {hashicorp-vault-address}                          # Required.
-  namespace: {hashicorp-vault-namespace}                      # Optional. Default is root namespace. Useful for Vault Enterprise
-  authentication: token | kubernetes                          # Required.
-  role: {hashicorp-vault-role}                                # Optional.
-  mount: {hashicorp-vault-mount}                              # Optional.
+  address: {hashicorp-vault-address}                          # Optional. (env: $VAULT_ADDR)
+  namespace: {hashicorp-vault-namespace}                      # Optional. Default is root namespace. Useful for Vault Enterprise (env: $VAULT_NAMESPACE)
+  authentication: token | kubernetes                          # Optional. (env: $VAULT_AUTH)
+  role: {hashicorp-vault-role}                                # Optional. (env: $VAULT_ROLE)
+  mount: {hashicorp-vault-mount}                              # Optional. (env: $VAULT_MOUNT)
   credential:                                                 # Optional.
-    token: {hashicorp-vault-token}                            # Optional.
-    serviceAccount: {path-to-service-account-file}            # Optional.
+    token: {hashicorp-vault-token}                            # Optional. (env: $VAULT_TOKEN)
+    serviceAccount: {path-to-service-account-file}            # Optional. (env: $VAULT_JWT_PATH)
   secrets:                                                    # Required.
   - parameter: {scaledObject-parameter-name}                  # Required.
     key: {hashicorp-vault-secret-key-name}                    # Required.
