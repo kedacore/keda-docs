@@ -32,8 +32,12 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 
 ## CloudEvent Support (Experimental)
 
-### CloudEventSource Resource
-`CloudEventSource` resource now can be created in KEDA for emitting events to user's custom CloudEvent sink. Event will be emitted to both Kubernetes Events and CloudEvents Destination if CloudEventSource resource is created. Here is a the schema of the `CloudEventSource` CRD:
+### Subscribing to events with `CloudEventSource`
+`CloudEventSource` resource can be used in KEDA for subscribing to events that are emitted to the user's defined CloudEvent sink.
+
+> 📝 Event will be emitted to both Kubernetes Events and CloudEvents Destination if CloudEventSource resource is created.
+
+Here is a the schema of the `CloudEventSource` CRD:
 
 ```yaml
 apiVersion: eventing.keda.k8s.io/v1alpha1
@@ -64,9 +68,15 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 }
 ```
 
-### Destination
-There will be multiple type of destination to emit KEDA events. Nowadays an HTTP CloudEvent destination is supported.
-#### CloudEvent HTTP
+### Event Sinks
+
+There will be multiple types of destination to emit KEDA events to.
+
+Here is an overview of the supported destinations:
+
+- [HTTP endpoint](#http-endpoint).
+
+#### HTTP endpoint
 ```yaml
   destination:
     http:
