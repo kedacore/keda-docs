@@ -40,6 +40,7 @@ The following metrics are being gathered:
 | `keda.scaler.errors` | The number of errors that have occurred for each scaler. |
 | `keda.scaler.errors.total` | The total number of errors encountered for all scalers. |
 | `keda.scaled.object.errors` | The number of errors that have occurred for each ScaledObject. |
+| `keda.scaled.job.errors` | The number of errors that have occurred for each ScaledJob. |
 | `keda.resource.totals` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
 | `keda.trigger.totals` | Total number of triggers per trigger type. |
 | `keda.internal.scale.loop.latency` | Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
