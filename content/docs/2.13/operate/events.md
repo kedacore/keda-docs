@@ -40,7 +40,7 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 Here is a the schema of the `CloudEventSource` CRD:
 
 ```yaml
-apiVersion: eventing.keda.k8s.io/v1alpha1
+apiVersion: eventing.keda.sh/v1alpha1
 kind: CloudEventSource
 metadata:
   name: {cloud-event-name}
