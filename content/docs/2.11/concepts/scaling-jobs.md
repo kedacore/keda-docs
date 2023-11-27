@@ -28,7 +28,7 @@ kind: ScaledJob
 metadata:
   name: {scaled-job-name}
   annotations:
-    autoscaling.keda.sh/paused: any-value          # Optional. Use to pause autoscaling of Jobs.
+    autoscaling.keda.sh/paused: any-value          # Optional. Use to pause autoscaling of Jobs
 spec:
   jobTargetRef:
     parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
