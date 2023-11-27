@@ -30,7 +30,7 @@ metadata:
   labels:
     my-label: {my-label-value}                # Optional. ScaledJob labels are applied to child Jobs
   annotations:
-    autoscaling.keda.sh/paused: true          # Optional. Use to pause autoscaling of Jobs
+    autoscaling.keda.sh/paused: any-value          # Optional. Use to pause autoscaling of Jobs
     my-annotation: {my-annotation-value}      # Optional. ScaledJob annotations are applied to child Jobs
 spec:
   jobTargetRef:
@@ -254,7 +254,7 @@ You can enable this by adding the below annotation to your `ScaledJob` definitio
 ```yaml
 metadata:
   annotations:
-    autoscaling.keda.sh/paused: true
+    autoscaling.keda.sh/paused: any-value
 ```
 
 The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition.

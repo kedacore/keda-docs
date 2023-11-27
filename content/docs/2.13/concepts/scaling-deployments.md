@@ -41,7 +41,7 @@ metadata:
   annotations:
     scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
     autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
-    autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
+    autoscaling.keda.sh/paused: "any-value"                      # Optional. Use to pause autoscaling of objects explicitly
 spec:
   scaleTargetRef:
     apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
@@ -275,7 +275,7 @@ It can be useful to instruct KEDA to pause autoscaling of objects, if you want t
 metadata:
   annotations:
     autoscaling.keda.sh/paused-replicas: "0"
-    autoscaling.keda.sh/paused: "true"
+    autoscaling.keda.sh/paused: "any-value"
 ```
 
 The presence of these annotations will pause autoscaling no matter what number of replicas is provided.
