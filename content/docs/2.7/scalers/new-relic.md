@@ -23,7 +23,7 @@ triggers:
       # Optional: noDataError - If the query returns no data should this be treated as an error. Default value is false.
       noDataError: "true"
       # Required: nrql
-      nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
+      nrql: "SELECT average(duration) from Transaction where appName='SITE'"
       # Required: threshold
       threshold: '100'
 ```
@@ -93,7 +93,7 @@ spec:
   triggers:
     - type: new-relic
       metadata:
-        nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
+        nrql: "SELECT average(duration) from Transaction where appName='SITE'"
         noDataError: "true"
         threshold: '1000'
       authenticationRef:
