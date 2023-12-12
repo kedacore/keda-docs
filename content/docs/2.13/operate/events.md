@@ -56,8 +56,8 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 {
     "specversion" : "1.0",
     "type" : "com.cloudeventsource.keda",
-    "source" : "/{cluster-name}/{namespace}/keda",
-    "subject" : "/{cluster-name}/{namespace}/workload/{scaledobject-name}",
+    "source" : "/{cluster-name}/{keda-namespace}/keda",
+    "subject" : "/{cluster-name}/{namespace}/{object-type}/{object-name}",
     "id" : "<guid>",
     "time" : "2018-04-05T17:31:00Z",
     "datacontenttype" : "application/json",
