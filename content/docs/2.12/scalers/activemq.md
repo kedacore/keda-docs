@@ -76,7 +76,7 @@ metadata:
   name: activemq-scaledobject
 spec:
   scaleTargetRef:
-    name: nginx-deployment
+    name: activemq-deployment
   triggers:
   - type: activemq
     metadata:
