@@ -352,13 +352,13 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
+    formula: "float(trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0)"
 ```
 
 Conditions can be used within another condition as well.
 If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
-Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
+Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
 ### Activating and Scaling thresholds
 
 To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.
