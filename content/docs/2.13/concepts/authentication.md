@@ -209,7 +209,7 @@ secretTargetRef:                          # Optional.
 ### Hashicorp Vault secret(s)
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (the default value is /var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (the default value is `/var/run/secrets/kubernetes.io/serviceaccount/token`) and for token auth method provide the token.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
 
