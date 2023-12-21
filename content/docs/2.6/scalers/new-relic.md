@@ -23,7 +23,7 @@ triggers:
       # Optional: noDataError - If the query returns no data should this be treated as an error. Default value is false.
       noDataError: "true"
       # Required: nrql
-      nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
+      nrql: "SELECT average(duration) from Transaction where appName='SITE'"
       # Required: threshold
       threshold: '100'
 ```
@@ -34,7 +34,10 @@ triggers:
 - `queryKey` - The API key that will be leveraged to connect to New Relic and make requests. [official documentation](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/)
 - `region` - The region to connect to for the New Relic apis. (Values: `LOCAL`, `EU`, `STAGING`, `US`, Default: `US`, Optional)
 - `noDataError` - Should queries that return nodata be treated as an error, if set to false and a query returns nodata, the result be `0`. (Values: `true`, `false`, Default: `false`, Optional)
-- `nrql` - The New Relic query that will be run to get the data requested. [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
+- `nrql` - The New Relic query that will be run to get the data requested.
+
+  NOTE: The default New Relic time range for a query is last 30 minutes, which can produce unexpected responses. To mimic the behavior of a TIMESERIES query, you need to reduce the scope to 1 minute, this can be achieved by adding `SINCE 1 MINUTE AGO` to the query.
+ [official documentation](https://docs.newrelic.com/docs/query-your-data/nrql-new-relic-query-language/get-started/introduction-nrql-new-relics-query-language/)
 - `threshold` - A threshold that is used as the `targetAverageValue` in the HPA configuration.
 
 ### Authentication Parameters
@@ -83,7 +86,7 @@ spec:
       metadata:
         account: '1234567'
         region: "US"
-        nrql: "SELECT average(duration) from Transaction where appName='SITE' TIMESERIES"
+        nrql: "SELECT average(duration) from Transaction where appName='SITE'"
         noDataError: "true"
         threshold: '1000'
       authenticationRef:
