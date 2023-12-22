@@ -43,5 +43,5 @@ The following metrics are being gathered:
 | `keda.resource.totals` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
 | `keda.trigger.totals` | Total number of triggers per trigger type. |
 | `keda.internal.scale.loop.latency` | Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
-| `keda.cloudeventsource.events.emitted` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
+| `keda.cloudeventsource.events.emitted.count` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
