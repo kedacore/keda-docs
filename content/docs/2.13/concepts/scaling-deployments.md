@@ -288,7 +288,7 @@ The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and u
 
 Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
 
-To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition.
+To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can also set the annotation to `false` to unpause.
 
 
 ### Scaling Modifiers (Experimental)
@@ -332,10 +332,10 @@ If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "float(trig_one > 2 ? trig_one + trig_two : 1)"
+    formula: "trig_one > 2 ? trig_one + trig_two : 1"
 ```
 
-If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1. Result of a ternary operator is of type `any` therefore cast to `float` at the end.
+If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1.
 
 **Example: count function**
 
@@ -352,13 +352,13 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "float(trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0)"
+    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
 ```
 
 Conditions can be used within another condition as well.
-If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0. Result of a ternary operator is `any` therefore cast to `float` before returing the result.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
-Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
+Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
 ### Activating and Scaling thresholds
 
 To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.

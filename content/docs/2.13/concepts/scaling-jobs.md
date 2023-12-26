@@ -257,7 +257,7 @@ metadata:
     autoscaling.keda.sh/paused: true
 ```
 
-The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition.
+The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition or set the value to `false`.
 
 # Sample
 
