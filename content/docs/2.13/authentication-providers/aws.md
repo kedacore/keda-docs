@@ -8,9 +8,19 @@ You can tell KEDA to use AWS Pod Identity Webhook via `podIdentity.provider`.
 
 ```yaml
 podIdentity:
-  provider: aws # Optional. Default: none
-  roleArn: <role-arn|workload> # Optional. If not set the IAM role which the KEDA operator uses will be used
+  provider: aws
+  roleArn: <role-arn> # Optional. 
+  identityOwner: keda|workload # Optional. If not set, 'keda' is default value. Mutually exclusive with 'roleArn'
 ```
+
+**Parameter list:**
+
+- `roleArn` - Role ARN no be used by KEDA. If not set the IAM role which the KEDA operator uses will be used. Mutually exclusive with 'identityOwner: workload'
+- `identityOwner` - Owner of the identity to be used. (Values: `keda`, `workload`, Default: `keda`, Optional)
+
+> ⚠️ **NOTE:** `podIdentity.roleArn` and `podIdentity.identityOwner` are mutually exclusive.
+
+## How to use 
 
 AWS IRSA will give access to pods with service accounts having appropriate annotations. ([official docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) You can set these annotations on the KEDA Operator service account.
 
@@ -21,17 +31,38 @@ This can be done for you during deployment with Helm with the following flags:
 
 You can override the default KEDA operator IAM role by specifying an `roleArn` parameter under the `podIdentity` field. This allows end-users to use different roles to access various resources which allows for more granular access than having a single IAM role that has access to multiple resources.
 
-If you would like to use the same IAM credentials as your workload is currently using, `podIdentity.roleArn` can be set with the value `workload` and KEDA will inspect the workload service account to check if IRSA annotation is there and KEDA will assume that role.
+If you would like to use the same IAM credentials as your workload is currently using, `podIdentity.identityOwner` can be set with the value `workload` and KEDA will inspect the workload service account to check if IRSA annotation is there and KEDA will assume that role.
+
+## AssumeRole or AssumeRoleWithWebIdentity?
+
+This authentication uses automatically both, doing a fallback from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need sts:AssumeRole permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html), you just need to add KEDA service account to the string conditions
 
 ## Setting up KEDA role and policy
 
-The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a a basic configuration for an IRSA role. The policy changes depend if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `workload`).
+The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a a basic configuration for an IRSA role. The policy changes depend if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `podIdentity.identityOwner` sets to `workload`).
 
 ### Using KEDA role to access infrastructure
 
-This is the easiest case and you just need to attach to KEDA's role the desired policy/policies, granting the access permissions that you want to provide.
+This is the easiest case and you just need to attach to KEDA's role the desired policy/policies, granting the access permissions that you want to provide. For example, this could be a policy to use with SQS:
 
-### Using KEDA role to assume workload role
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sqs:GetQueueAttributes",
+            "Resource": "arn:aws:sqs:*:YOUR_ACCOUNT:YOUR_QUEUE"
+        }
+    ]
+}
+```
+
+### Using KEDA role to assume workload role using AssumeRoleWithWebIdentity
+
+TODO
+
+### Using KEDA role to assume workload role using AssumeRole
 
 In this case, KEDA will use its own role to assume the workload role (and to use workload's role attached policies). This scenario is a bit more complex because we need to establish a trusted relationship between both roles and we need to grant to KEDA's role the permission to assume other roles.
 
