@@ -38,12 +38,6 @@ The entire metadata object is passed to the external scaler in `ScaledObjectRef.
 - `tlsClientCert` - Client certificate to use for the GRPC connection to authenticate with. (Optional)
 - `tlsClientKey` - Client private key to use for the GRPC connection to authenticate with. (Optional)
 
-### Authentication Parameters
-
-- `caCert` - Certificate Authority (CA) certificate to use for the GRPC connection to authenticate with. (Optional)
-- `tlsClientCert` - Client certificate to use for the GRPC connection to authenticate with. (Optional)
-- `tlsClientKey` - Client private key to use for the GRPC connection to authenticate with. (Optional)
-
 ### Example
 
 ```yaml

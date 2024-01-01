@@ -27,8 +27,11 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
   name: {scaled-job-name}
+  labels:
+    my-label: {my-label-value}                # Optional. ScaledJob labels are applied to child Jobs
   annotations:
     autoscaling.keda.sh/paused: true          # Optional. Use to pause autoscaling of Jobs
+    my-annotation: {my-annotation-value}      # Optional. ScaledJob annotations are applied to child Jobs
 spec:
   jobTargetRef:
     parallelism: 1                            # [max number of desired pods](https://kubernetes.io/docs/concepts/workloads/controllers/job/#controlling-parallelism)
@@ -254,7 +257,7 @@ metadata:
     autoscaling.keda.sh/paused: true
 ```
 
-The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition.
+The above annotation will pause autoscaling. To enable autoscaling again, simply remove the annotation from the `ScaledJob` definition or set the value to `false`.
 
 # Sample
 

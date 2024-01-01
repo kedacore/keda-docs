@@ -5,3 +5,4 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreInternalURLs:
   - /docs/2.12/authentication-providers/aws/
+  - /docs/2.12/authentication-providers/configmap/

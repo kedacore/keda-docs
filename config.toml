@@ -549,8 +549,16 @@ url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
 [[params.users]]
+url = "https://www.unitary.ai/"
+logo = "unitary.png"
+
+[[params.users]]
 url = "https://vitc.gmbh"
 logo = "vitc.png"
+
+[[params.users]]
+url = "https://www.wingie.com"
+logo = "wingie-enuygun.png"
 
 [[params.users]]
 url = "https://www.workiva.com"
@@ -563,6 +571,7 @@ logo = "xbox.png"
 [[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
+
 
 # "Partners" section on the Community page
 [[params.partners]]
