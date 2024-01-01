@@ -10,7 +10,7 @@ You can tell KEDA to use AWS Pod Identity Webhook via `podIdentity.provider`.
 podIdentity:
   provider: aws
   roleArn: <role-arn> # Optional. 
-  identityOwner: keda|workload # Optional. If not set, 'keda' is default value. Mutually exclusive with 'roleArn'
+  identityOwner: keda|workload # Optional. If not set, 'keda' is default value. Mutually exclusive with 'roleArn' (if set)
 ```
 
 **Parameter list:**
@@ -18,7 +18,7 @@ podIdentity:
 - `roleArn` - Role ARN no be used by KEDA. If not set the IAM role which the KEDA operator uses will be used. Mutually exclusive with 'identityOwner: workload'
 - `identityOwner` - Owner of the identity to be used. (Values: `keda`, `workload`, Default: `keda`, Optional)
 
-> ⚠️ **NOTE:** `podIdentity.roleArn` and `podIdentity.identityOwner` are mutually exclusive.
+> ⚠️ **NOTE:** `podIdentity.roleArn` and `podIdentity.identityOwner` are mutually exclusive, setting both is not supported.
 
 ## How to use 
 
@@ -35,7 +35,7 @@ If you would like to use the same IAM credentials as your workload is currently 
 
 ## AssumeRole or AssumeRoleWithWebIdentity?
 
-This authentication uses automatically both, doing a fallback from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need sts:AssumeRole permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html), you just need to add KEDA service account to the string conditions
+This authentication uses automatically both, doing a fallback from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need sts:AssumeRole permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html), you just need to add KEDA service account to the trusted relations of the role.
 
 ## Setting up KEDA role and policy
 
@@ -60,7 +60,33 @@ This is the easiest case and you just need to attach to KEDA's role the desired 
 
 ### Using KEDA role to assume workload role using AssumeRoleWithWebIdentity
 
-TODO
+In this case, KEDA will use its own (k8s) service account to assume workload role (and to use workload's role attached policies). This scenario requires that KEDA service account is trusted for requesting the role using AssumeRoleWithWebIdentity.
+
+This is an example of how role policy could look like:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            ... YOUR WORKLOAD TRUSTED RELATION ...
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "YOUR_OIDC_ARN"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "YOUR_OIDC:sub": "system:serviceaccount:keda:keda-operator",
+                    "YOUR_OIDC:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
 
 ### Using KEDA role to assume workload role using AssumeRole
 
@@ -113,5 +139,3 @@ This policy attached to KEDA's role will allow KEDA to assume other roles, now y
   ]
 }
 ```
-
-After these actions, you are ready to use KEDA's role to assume the workload role, providing it explictitly `podIdentity.roleArn: AWS_ROLE_AWS` or using the workload role (if the workload has IRSA enabled) `podIdentity.roleArn: workload`.
