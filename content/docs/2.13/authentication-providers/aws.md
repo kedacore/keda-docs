@@ -15,7 +15,7 @@ podIdentity:
 
 **Parameter list:**
 
-- `roleArn` - Role ARN no be used by KEDA. If not set the IAM role which the KEDA operator uses will be used. Mutually exclusive with 'identityOwner: workload'
+- `roleArn` - Role ARN to be used by KEDA. If not set the IAM role which the KEDA operator uses will be used. Mutually exclusive with 'identityOwner: workload'
 - `identityOwner` - Owner of the identity to be used. (Values: `keda`, `workload`, Default: `keda`, Optional)
 
 > ⚠️ **NOTE:** `podIdentity.roleArn` and `podIdentity.identityOwner` are mutually exclusive, setting both is not supported.
@@ -59,7 +59,6 @@ This is the easiest case and you just need to attach to KEDA's role the desired 
 ```
 
 ### Using KEDA role to assume workload role using AssumeRoleWithWebIdentity
-
 In this case, KEDA will use its own (k8s) service account to assume workload role (and to use workload's role attached policies). This scenario requires that KEDA service account is trusted for requesting the role using AssumeRoleWithWebIdentity.
 
 This is an example of how role policy could look like:
