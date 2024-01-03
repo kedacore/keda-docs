@@ -1,5 +1,5 @@
 +++
-title = "IRSA Role assumtion Webhook for AWS"
+title = "AWS (IRSA) Pod Identity Webhook"
 +++
 
 [**AWS IAM Roles for Service Accounts (IRSA) Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook) ([details](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) allows you to provide the role name using an annotation on a service account associated with your pod.
