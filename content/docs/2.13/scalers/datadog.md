@@ -97,11 +97,15 @@ The Datadog scaler with Cluster Agent supports one type of authentication - Bear
 You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
  along with secret credentials in `TriggerAuthentication` as mentioned below:
 
-**Bearer authentication:**
+**Common to all authentication types**
 - `authMode` - The authentication mode to connect to the Cluster Agent. (Values: bearer, Default: bearer, Optional)
-- `token` - Token that should be placed in the `Authorization` header. The header will be `Authorization: Bearer {token}`. The service account needs to have permissions to `get`, `watch`, and `list` all `external.metrics.k8s.io` resources.
 - `datadogNamespace` - The namespace where the Datadog Cluster Agent is deployed.
+- `datadogMetricsService` - The service name for the Cluster Agent Metrics API. (Default: datadog-cluster-agent-metrics-api, Optional)
+- `datadogMetricsServicePort` - The port of the service for the Cluster Agent Metrics API. (Default: 8080, Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: true, false, Default: false, Optional)
+
+**Bearer authentication:**
+- `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs to have permissions to `get`, `watch`, and `list` all `external.metrics.k8s.io` resources.
 
 ### Example
 
