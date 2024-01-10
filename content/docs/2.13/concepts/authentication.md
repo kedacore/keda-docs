@@ -92,8 +92,10 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | azure-workload | aws-eks | aws-kiam | gcp  # Optional. Default: none
+      provider: none | azure | azure-workload | aws | aws-eks | aws-kiam | gcp  # Optional. Default: none
       identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+      roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
+      identityOwner: keda|workload                                        # Optional. Only used by aws provider.
   secretTargetRef:                                                        # Optional.
   - parameter: {scaledObject-parameter-name}                              # Required.
     name: {secret-name}                                                   # Required.
@@ -274,11 +276,13 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
-  identityId: <identity-id>                                     # Optional. Only used by azure & azure-workload providers.
+  provider: none | azure | azure-workload | aws | aws-eks | aws-kiam  # Optional. Default: none
+  identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+  roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
+  identityOwner: keda|workload                                        # Optional. Only used by aws provider.
 ```
 
-#### Azure Pod Identity
+#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5362)) Azure Pod Identity
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
 
@@ -320,7 +324,20 @@ Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload i
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
-#### EKS Pod Identity Webhook for AWS
+#### AWS Pod Identity Webhook for AWS
+
+[**AWS IAM Roles for Service Accounts (IRSA) Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook) ([documentation](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) allows you to provide the role name using an annotation on a service account associated with your pod.
+
+You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
+
+```yaml
+podIdentity:
+  provider: aws # Optional. Default: none
+  roleArn: <role-arn> # Optional. 
+  identityOwner: keda|workload # Optional.
+```
+
+#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5343)) AWS EKS Pod Identity Webhook
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -331,7 +348,7 @@ podIdentity:
   provider: aws-eks # Optional. Default: none
 ```
 
-#### Kiam Pod Identity for AWS
+#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5342)) AWS Kiam Pod Identity
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 
