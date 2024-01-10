@@ -180,7 +180,7 @@ spec:
 
 ## Authentication parameters
 
-Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
+Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler. You can find the all the available authentications [here](./../authentication-providers/).
 
 ### Environment variable(s)
 
