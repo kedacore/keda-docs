@@ -1,4 +1,6 @@
-+++ title = "AWS Secret Manager Pod Identity" +++
++++ 
+title = "AWS Secret Manager Pod Identity" 
++++
 
 Configure AWS Secret Manager integration with pod identity in your KEDA trigger by using the `awsSecretManager` key within the `TriggerAuthentication` resource.
 

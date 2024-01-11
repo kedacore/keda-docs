@@ -1,4 +1,6 @@
-+++ title = "AWS Secret Manager" +++
++++ 
+title = "AWS Secret Manager" 
++++
 
 You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
 
