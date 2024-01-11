@@ -23,6 +23,7 @@ spec:
 **podIdentity:** Configuration for using AWS pod identity.
 
 - **provider:** Provider for pod identity, in this case, set to aws.
+
 **secrets:** The list of mappings between AWS Secret Manager secrets and authentication parameters used in your application.
 
 - **parameter:** The parameter name used for authentication in your application.
