@@ -282,7 +282,9 @@ podIdentity:
   identityOwner: keda|workload                                        # Optional. Only used by aws provider.
 ```
 
-#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5362)) Azure Pod Identity
+#### Azure Pod Identity
+
+> [DEPRECATED: This will be removed on KEDA v2.15](https://github.com/kedacore/keda/discussions/5362)
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
 
@@ -337,7 +339,9 @@ podIdentity:
   identityOwner: keda|workload # Optional.
 ```
 
-#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5343)) AWS EKS Pod Identity Webhook
+#### AWS EKS Pod Identity Webhook
+
+> [DEPRECATED: This will be removed on KEDA v3](https://github.com/kedacore/keda/discussions/5343)
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -348,7 +352,9 @@ podIdentity:
   provider: aws-eks # Optional. Default: none
 ```
 
-#### ([DEPRECATED](https://github.com/kedacore/keda/discussions/5342)) AWS Kiam Pod Identity
+#### AWS Kiam Pod Identity
+
+> [DEPRECATED: This will be removed on KEDA v2.15](https://github.com/kedacore/keda/discussions/5342)
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 
