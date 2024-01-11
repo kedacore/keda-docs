@@ -54,3 +54,7 @@ In this case, you are overriding the default identity set during installation th
 
 - TriggerAuthentications without overrides will use KEDA's identity (for tasks such as accessing the Key Vault).
 - TriggerAuthentications with overrides will use the identity specified in the TriggerAuthentication (requiring KEDA's service account to be federated with them).
+
+> Note, that you must "federate" the Azure AD Managed Identity (that the TriggerAuthentication `podIdentity.identityId` points to) with the 'subject' of the KEDA Operator service account. This will be similar to `system:serviceaccount:keda:keda-operator`. 
+> 📝 The service account for the target deployment is not used here.
+

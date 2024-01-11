@@ -36,6 +36,7 @@ triggers:
 - `oauthTokenURI` - The OAuth Access Token URI for the OAuth provider, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
 - `scope` - A comma separated lists of OAuth scopes, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
 - `clientID` - Client ID for the OAuth provider, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
+- `endpointParams` - Additional parameters as URL-encoded query string for requests to the token endpoint for the OAuth provider, used when `authModes` is set to `oauth`. Ignored if provided from `authenticationRef`. (Optional)
 
 ### Authentication Parameters
 
@@ -68,6 +69,7 @@ When configuring OAuth Authentication, configure the following:
 - `scope` -  A comma separated lists of OAuth scopes. (Optional)
 - `clientID`: Client ID for the OAuth provider. (Optional)
 - `clientSecret`: Client secret for the OAuth provider. (Optional)
+- `endpointParams`: Additional parameters as URL-encoded query string for requests to the token endpoint for the OAuth provider. (Optional)
 
 These can also be configured in the trigger metadata except the `clientSecret`
 
@@ -268,6 +270,7 @@ data:
   scope: <your Scope>
   clientID: <your clientID>
   clientSecret: <your clientSecret>
+  endpointParams: <your endpointParams>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -288,6 +291,9 @@ spec:
   - parameter: clientSecret
     name: keda-pulsar-secrets
     key: clientSecret
+  - parameter: endpointParams
+    name: keda-pulsar-secrets
+    key: endpointParams
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -332,4 +338,5 @@ spec:
       oauthTokenURI: http://oauth.com/oauth2/token
       scope: <your scope>
       clientID: <your clientID>
+      endpointParams: <your endpointParams>
 ```

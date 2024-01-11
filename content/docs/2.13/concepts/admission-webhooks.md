@@ -15,6 +15,7 @@ KEDA will block all incoming changes to `ScaledObject` that don't match these ru
 - The scaled workload (`scaledobject.spec.scaleTargetRef`) is already autoscaled by another other sources (other ScaledObject or HPA).
 - CPU and/or Memory trigger are used and the scaled workload doesn't have the requests defined. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
 - CPU and/or Memory trigger are **the only used triggers** and the ScaledObject defines `minReplicaCount:0`. **This rule doesn't apply to all the workload types, only to `Deployment` and `StatefulSet`.**
+- In the case of multiple triggers where a `name` is **specified**, the name must be **unique** (it is not allowed to have multiple triggers with the same name)
 
 KEDA will block all incoming changes to `TriggerAuthentication`/`ClusterTriggerAuthentication` that don't match these rules:
 

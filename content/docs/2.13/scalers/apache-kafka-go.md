@@ -2,7 +2,7 @@
 title = "Apache Kafka (Experimental)"
 availability = "v2.12+"
 maintainer = "Community"
-description = "Experimental scaler based on [kafka-go](https://github.com/segmentio/kafka-go) library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
+description = "Experimental scaler based on 'segmentio/kafka-go' library. Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
 go_file = "apache_kafka_scaler"
 +++
 
@@ -15,6 +15,7 @@ go_file = "apache_kafka_scaler"
 >   - The number of partitions on a topic when a topic is specified;
 >   - The number of partitions of *all topics* in the consumer group when no topic is specified;
 >   - `maxReplicaCount` specified in `ScaledObject`/`ScaledJob`. If not specified, then the default value of `maxReplicaCount` is taken into account;
+>   - The number of partitions with non-zero lag if `limitToPartitionsWithLag` is set to `true`
 >
 >   That is, if `maxReplicaCount` is set more than number of partitions, the scaler won't scale up to target maxReplicaCount. See `allowIdleConsumers` below to disable this default behavior.
 > - This is so because if there are more number of consumers than the number of partitions in a topic, then extra consumer will have to sit idle.
@@ -36,6 +37,7 @@ triggers:
     allowIdleConsumers: false
     scaleToZeroOnInvalidOffset: false
     excludePersistentLag: false
+    limitToPartitionsWithLag: false
     partitionLimitation: '1,2,10-20,31'
     tls: enable
     sasl: plaintext
@@ -55,6 +57,7 @@ partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
 If 'false' (the default), the scaler will keep a single consumer for that partition. Otherwise ('true'), the consumers for that
 partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
+- `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be speicied when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication

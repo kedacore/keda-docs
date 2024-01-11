@@ -35,6 +35,7 @@ triggers:
     activationLagCount: "3" # required if lagCount is provided - lag count at which scaler triggers
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
+    databaseIndex: "0" # optional
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
     addressesFromEnv: REDIS_ADDRESSES # Optional. You can use this instead of `addresses` parameter
@@ -72,6 +73,7 @@ triggers:
 - `activationLagCount` - Lag count threshold at which to start scaling. Any average lag count below this value will not trigger the scaler. (Default: `0`, Optional)
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
+- `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 

@@ -22,7 +22,8 @@ triggers:
     awsEndpoint: ""
     # Optional: Default: 2
     shardCount: "2"
-    identityOwner: pod | operator # Optional. Default: pod
+    # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
+    identityOwner: pod | operator
 ```
 
 **Parameter list:**
@@ -32,13 +33,11 @@ triggers:
 - `activationShardCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 - `awsRegion` - AWS Region for the Kinesis Stream.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
-- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
+- `identityOwner` - Receive permissions on the Kinesis Stream via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the Kinesis Stream. Additional Authentication Parameters are not required.
 
 ### Authentication Parameters
-
-> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/concepts/authentication).
 
@@ -46,7 +45,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated only applies for `aws-eks` and `aws-kiam` authentications, for `aws` is set in the auth)
 
 **Credential based authentication:**
 

@@ -184,9 +184,9 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 

@@ -30,7 +30,7 @@ triggers:
     keyConditionExpression: "#k = :key"
     # Required: expressionAttributeValues
     expressionAttributeValues: '{ ":key" : {"S":"partition_key_target_value"}}'
-    # Optional. Default: pod
+    # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
     identityOwner: pod | operator
 ```
 
@@ -45,13 +45,11 @@ triggers:
 - `expressionAttributeNames` - one or more substitution tokens for attribute names in an expression. Defined as JSON.
 - `keyConditionExpression` - the condition that specifies the key values for items to be retrieved by the Query action.
 - `expressionAttributeValues` - one or more values that can be substituted in an expression. Defined as JSON.
-- `identityOwner` - Receive permissions on the DynamoDB Table via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)
+- `identityOwner` - Receive permissions on the DynamoDB Table via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the DynamoDB Table. Additional Authentication Parameters are not required.
 
 ### Authentication Parameters
-
-> These parameters are relevant only when `identityOwner` is set to `pod`.
 
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials.
 
@@ -61,7 +59,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated only applies for `aws-eks` and `aws-kiam` authentications, for `aws` is set in the auth)
 
 **Credential based authentication:**
 
