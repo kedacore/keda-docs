@@ -354,7 +354,7 @@ podIdentity:
 
 #### AWS Kiam Pod Identity
 
-> [DEPRECATED: This will be removed on KEDA v2.15](https://github.com/kedacore/keda/discussions/5342)
+> [DEPRECATED: This will be removed in KEDA v2.15](https://github.com/kedacore/keda/discussions/5342)
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 
