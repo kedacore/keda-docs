@@ -138,6 +138,25 @@ spec:
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {key-vault-secret-name}                                       # Required.
       version: {key-vault-secret-version}                                 # Optional.
+  awsSecretManager:
+    podIdentity:                                                          # Optional.
+      provider: aws                                                       # Required.
+    credentials:                                                          # Optional.
+      accessKey:                                                          # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_ACCESS_KEY_ID                                        # Required.
+      accessSecretKey:                                                    # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_SECRET_ACCESS_KEY                                    # Required.
+    region: {aws-region}                                                  # Optional.
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      name: {aws-secret-name}                                             # Required.
+      version: {aws-secret-version}                                       # Optional.  
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.

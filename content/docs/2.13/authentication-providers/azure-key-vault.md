@@ -39,3 +39,21 @@ azureKeyVault:                                          # Optional.
     name: {key-vault-secret-name}                       # Required.
     version: {key-vault-secret-version}                 # Optional.
 ```
+### Configuration Details
+secretName: The name of the AWS Secret Manager secret containing the sensitive information.
+
+secretVersion: (Optional) The version of the AWS Secret Manager secret. If not specified, the latest version is used.
+
+awsRegion: (Optional) The AWS region where the secret resides. If not specified, the default region is used.
+
+podIdentity: (Optional) Pod identity configuration. The provider must be set to aws.
+
+credentialsSecretName: The name of the Kubernetes secret containing AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY).
+
+secrets: The list of mappings between AWS Secret Manager secrets and authentication parameters used in your application.
+
+parameter: The parameter name used for authentication in your application.
+
+name: The name of the AWS Secret Manager secret.
+
+version: (Optional) The version of the AWS Secret Manager secret. If not specified, the latest version is used.
