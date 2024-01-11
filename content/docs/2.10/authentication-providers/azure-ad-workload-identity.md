@@ -26,7 +26,9 @@ You can override the identity that was assigned to KEDA during installation, by 
 
 ## Considerations about Federations and Overrides
 
-The concept of "overrides" can be somewhat confusing in certain scenarios, as it may not always be clear which service account needs to be federated with a specific Azure Identity to ensure proper functionality. Let's clarify this with two examples:
+The concept of "overrides" can be somewhat confusing in certain scenarios, as it may not always be clear which service account needs to be federated with a specific Azure identity to ensure proper functionality.
+
+Let's clarify this with two examples:
 
 ### Case 1
 
