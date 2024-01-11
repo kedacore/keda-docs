@@ -345,6 +345,57 @@ Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload i
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
+### Aws Secret Manager(s)
+
+You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
+
+The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
+
+- **accessKey:** Configuration for the AWS access key.
+- **secretAccessKey:** Configuration for the AWS secret access key.
+
+The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
+
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
+
+```yaml
+awsSecretManager:
+  credentials:                                     # Optional.
+    accessKey:                                     # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_ACCESS_KEY_ID                   # Required.
+    accessSecretKey:                               # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_SECRET_ACCESS_KEY               # Required.
+  region: {aws-region}                             # Optional.
+  secrets:                                         # Required.
+  - parameter: {param-name-used-for-auth}          # Required.
+    name: {aws-secret-name}                        # Required.
+    version: {aws-secret-version}                  # Optional.
+```
+
+### AWS Secret Manager Pod Identity
+
+Configure AWS Secret Manager integration with pod identity in your KEDA trigger by using the `awsSecretManager` key within the `TriggerAuthentication` resource.
+
+The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
+
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
+
+```yaml
+awsSecretManager:
+  podIdentity:                             # Optional.
+    provider: aws                          # Required.
+  secrets:                                 # Required.
+  - parameter: {param-name-used-for-auth}  # Required.
+    name: {aws-secret-name}                # Required.
+    version: {aws-secret-version}          # Optional.
+```
+
 #### AWS Pod Identity Webhook for AWS
 
 [**AWS IAM Roles for Service Accounts (IRSA) Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook) ([documentation](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) allows you to provide the role name using an annotation on a service account associated with your pod.

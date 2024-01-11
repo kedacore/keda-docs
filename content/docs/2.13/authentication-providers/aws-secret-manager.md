@@ -1,8 +1,15 @@
-+++ title = "AWS Secret Manager Integration" +++
++++ title = "AWS Secret Manager" +++
 
 You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
 
-The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application.
+The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
+
+- **accessKey:** Configuration for the AWS access key.
+- **secretAccessKey:** Configuration for the AWS secret access key.
+
+The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
+
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
 
 ### Prerequisites
 
@@ -33,20 +40,3 @@ awsSecretManager:
     name: {aws-secret-name}                        # Required.
     version: {aws-secret-version}                  # Optional.
 ```
-
-### Configuration Details
-**credentials:** AWS credentials configuration.
-
-- **accessKey:** Configuration for the AWS access key.
-
-- **accessSecretKey:** Configuration for the AWS secret access key.
-
-**region:** (Optional) The AWS region where the secret resides. If not specified, the default region is used.
-
-**secrets:** The list of mappings between AWS Secret Manager secrets and authentication parameters used in your application.
-
-- **parameter:** The parameter name used for authentication in your application.
-
-- **name:** The name of the AWS Secret Manager secret.
-
-- **version:** (Optional) The version of the AWS Secret Manager secret. If not specified, the latest version is used.
