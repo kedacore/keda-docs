@@ -284,7 +284,7 @@ podIdentity:
 
 #### Azure Pod Identity
 
-> [DEPRECATED: This will be removed on KEDA v2.15](https://github.com/kedacore/keda/discussions/5362)
+> [DEPRECATED: This will be removed in KEDA v2.15](https://github.com/kedacore/keda/discussions/5362)
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
 
