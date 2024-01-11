@@ -4,6 +4,8 @@ title = "AWS Secret Manager"
 
 You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
 
+The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
+
 The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
 
 - **accessKey:** Configuration for the AWS access key.
@@ -25,6 +27,8 @@ The `secrets` list within `awsSecretManager` defines the mapping between the AWS
 
 ```yaml
 awsSecretManager:
+  podIdentity:                                     # Optional.
+    provider: aws                                  # Required.
   credentials:                                     # Optional.
     accessKey:                                     # Required.
       valueFrom:                                   # Required.
