@@ -349,6 +349,8 @@ You can override the identity that was assigned to KEDA during installation, by 
 
 You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
 
+The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
+
 The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
 
 - **accessKey:** Configuration for the AWS access key.
@@ -360,6 +362,8 @@ The `secrets` list within `awsSecretManager` defines the mapping between the AWS
 
 ```yaml
 awsSecretManager:
+  podIdentity:                                     # Optional.
+    provider: aws                                  # Required.
   credentials:                                     # Optional.
     accessKey:                                     # Required.
       valueFrom:                                   # Required.
@@ -376,16 +380,6 @@ awsSecretManager:
   - parameter: {param-name-used-for-auth}          # Required.
     name: {aws-secret-name}                        # Required.
     version: {aws-secret-version}                  # Optional.
-```
-
-### AWS Secret Manager with Pod Identity
-
-The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
-
-```yaml
-...
-  podIdentity:                             # Optional.
-    provider: aws                          # Required.
 ```
 
 #### AWS Pod Identity Webhook for AWS

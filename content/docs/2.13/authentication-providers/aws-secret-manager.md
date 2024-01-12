@@ -15,14 +15,6 @@ The `region` parameter is optional and represents the AWS region where the secre
 
 The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
 
-### Prerequisites
-
-1. **AWS Credentials:**
-   - Ensure that AWS credentials with sufficient permissions are available. This can be achieved by setting the `TF_AWS_ACCESS_KEY` and `TF_AWS_SECRET_KEY` environment variables.
-
-2. **AWS Secret Manager Secret:**
-   - Create a secret in AWS Secret Manager containing the necessary sensitive information, such as database connection strings.
-
 ### Configuration
 
 ```yaml
