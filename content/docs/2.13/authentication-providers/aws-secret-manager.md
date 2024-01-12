@@ -39,7 +39,7 @@ awsSecretManager:
       valueFrom:                                   # Required.
         secretKeyRef:                              # Required.
           name: {k8s-secret-with-aws-credentials}  # Required.
-          key: AWS_SECRET_ACCESS_KEY               # Required.
+          key: {key-in-k8s-secret}               # Required.
   region: {aws-region}                             # Optional.
   secrets:                                         # Required.
   - parameter: {param-name-used-for-auth}          # Required.
