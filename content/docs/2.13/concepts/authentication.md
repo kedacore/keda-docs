@@ -138,6 +138,25 @@ spec:
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {key-vault-secret-name}                                       # Required.
       version: {key-vault-secret-version}                                 # Optional.
+  awsSecretManager:
+    podIdentity:                                                          # Optional.
+      provider: aws                                                       # Required.
+    credentials:                                                          # Optional.
+      accessKey:                                                          # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_ACCESS_KEY_ID                                        # Required.
+      accessSecretKey:                                                    # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_SECRET_ACCESS_KEY                                    # Required.
+    region: {aws-region}                                                  # Optional.
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      name: {aws-secret-name}                                             # Required.
+      version: {aws-secret-version}                                       # Optional.  
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -325,6 +344,43 @@ following flags -
 Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload identity authentication to work. For KEDA to get access to the provided client id federated credential has to be configured on the target Managed Identity / Azure AD application. Refer to these [docs](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html). Federated credential should use this subject (if KEDA is installed in `keda` namespace): `system:serviceaccount:keda:keda-operator`.
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
+
+### Aws Secret Manager(s)
+
+You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
+
+The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
+
+The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
+
+- **accessKey:** Configuration for the AWS access key.
+- **secretAccessKey:** Configuration for the AWS secret access key.
+
+The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
+
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
+
+```yaml
+awsSecretManager:
+  podIdentity:                                     # Optional.
+    provider: aws                                  # Required.
+  credentials:                                     # Optional.
+    accessKey:                                     # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_ACCESS_KEY_ID                   # Required.
+    accessSecretKey:                               # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_SECRET_ACCESS_KEY               # Required.
+  region: {aws-region}                             # Optional.
+  secrets:                                         # Required.
+  - parameter: {param-name-used-for-auth}          # Required.
+    name: {aws-secret-name}                        # Required.
+    version: {aws-secret-version}                  # Optional.
+```
 
 #### AWS Pod Identity Webhook for AWS
 
