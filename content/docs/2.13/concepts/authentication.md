@@ -156,7 +156,20 @@ spec:
     secrets:                                                              # Required.
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {aws-secret-name}                                             # Required.
-      version: {aws-secret-version}                                       # Optional.  
+      version: {aws-secret-version}                                       # Optional.
+  gcpSecretManager:                                                       # Optional.
+    secrets:                                                              # Required.
+      - parameter: {param-name-used-for-auth}                             # Required.
+        id: {secret-manager-secret-name}                                  # Required.
+        version: {secret-manager-secret-name}                             # Optional.
+    podIdentity:                                                          # Optional.
+      provider: gcp                                                       # Required.
+    credentials:                                                          # Optional.
+      clientSecret:                                                       # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-gcp-iam-sa-secret}                     # Required.
+            key: {key-within-the-secret}                                  # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -285,6 +298,30 @@ azureKeyVault:                                          # Optional.
   - parameter: {param-name-used-for-auth}               # Required.
     name: {key-vault-secret-name}                       # Required.
     version: {key-vault-secret-version}                 # Optional.
+```
+
+### GCP Secret Manager secret(s)
+
+You can pull secrets from GCP Secret Manager into the trigger by using the `gcpSecretManager` key.
+
+The `secrets` list defines the mapping between the secret and the authentication parameter.
+
+GCP IAM Service Account credentials can be used for authenticating with the Secret Manager service, which can be provided using a Kubernetes secret. Alternatively, `gcp` pod identity provider is also supported for GCP Secret Manager using `podIdentity` inside `gcpSecretManager`.
+
+```yaml
+gcpSecretManager:                                     # Optional.
+  secrets:                                            # Required.
+    - parameter: {param-name-used-for-auth}           # Required.
+      id: {secret-manager-secret-name}                # Required.
+      version: {secret-manager-secret-name}           # Optional.
+  podIdentity:                                        # Optional.
+    provider: gcp                                     # Required.
+  credentials:                                        # Optional.
+    clientSecret:                                     # Required.
+      valueFrom:                                      # Required.
+        secretKeyRef:                                 # Required.
+          name: {k8s-secret-with-gcp-iam-sa-secret}   # Required.
+          key: {key-within-the-secret}                # Required.
 ```
 
 ### Pod Authentication Providers

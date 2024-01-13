@@ -8,17 +8,15 @@ The `secrets` list defines the mapping between the secret and the authentication
 
 GCP IAM Service Account credentials can be used for authenticating with the Secret Manager service, which can be provided using a Kubernetes secret. Alternatively, `gcp` pod identity provider is also supported for GCP Secret Manager using `podIdentity` inside `gcpSecretManager`.
 
-
 ```yaml
-gcpSecretManager:                                       # Optional.
-  gcpProjectID: {gcp-project-id}                      # Required.
+gcpSecretManager:                                     # Optional.
   secrets:                                            # Required.
     - parameter: {param-name-used-for-auth}           # Required.
       id: {secret-manager-secret-name}                # Required.
       version: {secret-manager-secret-name}           # Optional.
   podIdentity:                                        # Optional.
     provider: gcp                                     # Required.
-  gcpCredentials:                                     # Optional.
+  credentials:                                        # Optional.
     clientSecret:                                     # Required.
       valueFrom:                                      # Required.
         secretKeyRef:                                 # Required.
@@ -54,7 +52,7 @@ gcpSecretManager:                                       # Optional.
   GSA_PROJECT: the project ID of the Google Cloud project of your IAM service account. \
   ROLE_NAME: the IAM role to assign to your service account, like roles/secretmanager.secretaccessor.
 
-- Create a JSON key credential for authenticating with the service account:
+- Either setup [GCP workload identity](./gcp-workload-identity) or create a JSON key credential for authenticating with the service account:
 
   ```shell
   gcloud iam service-accounts keys create KEY_FILE \
