@@ -34,8 +34,9 @@ triggers:
     excludePersistentLag: false
     version: 1.0.0
     partitionLimitation: '1,2,10-20,31'
-    tls: enable
     sasl: plaintext
+    tls: enable
+    unsafeSsl: false
 ```
 
 **Parameter list:**
@@ -56,6 +57,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `oauthbearer` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 > **Note:**
 >

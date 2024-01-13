@@ -1,6 +1,6 @@
 {{ $faq20 := site.Data.faq20.qna }}
 
-<h2>General</h2>
+<h2 id="general">General</h2>
 
 {{ range where $faq20 ".type" "==" "General" }}
 {{ $question := .q | markdownify }}
@@ -20,7 +20,7 @@
 </div>
 {{ end }}
 
-<h2>Best Practices</h2>
+<h2 id="best-practices">Best Practices</h2>
 
 {{ range where $faq20 ".type" "==" "Best Practices" }}
 {{ $question := .q | markdownify }}
@@ -40,7 +40,7 @@
 </div>
 {{ end }}
 
-<h2>Features</h2>
+<h2 id="features">Features</h2>
 
 {{ range where $faq20 ".type" "==" "Features" }}
 {{ $question := .q | markdownify }}
@@ -60,7 +60,7 @@
 </div>
 {{ end }}
 
-<h2>Kubernetes</h2>
+<h2 id="kubernetes">Kubernetes</h2>
 
 {{ range where $faq20 ".type" "==" "Kubernetes" }}
 {{ $question := .q | markdownify }}
@@ -80,7 +80,7 @@
 </div>
 {{ end }}
 
-<h2>Community</h2>
+<h2 id="community">Community</h2>
 
 {{ range where $faq20 ".type" "==" "Community" }}
 {{ $question := .q | markdownify }}
@@ -100,7 +100,7 @@
 </div>
 {{ end }}
 
-<h2>Website</h2>
+<h2 id="website">Website</h2>
 
 {{ range where $faq20 ".type" "==" "Website" }}
 {{ $question := .q | markdownify }}
@@ -120,7 +120,7 @@
 </div>
 {{ end }}
 
-<h2>Integrations</h2>
+<h2 id="integrations">Integrations</h2>
 
 <h3>Microsoft Azure</h3>
 

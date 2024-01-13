@@ -117,6 +117,10 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 ```
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
+>
+> In some cases, you always need at least `n` pod running. Thus, you can omit this property and set `minReplicaCount` to `n`.
+>
+> **Example** You set `minReplicaCount` to 1 and `maxReplicaCount` to 10. If there’s no activity on triggers, the target resource is scaled down to `minReplicaCount` (1). Once there are activities, the target resource will scale base on the HPA rule. If there’s no activity on triggers, the resource is again scaled down to `minReplicaCount` (1).
 
 If this property is set, KEDA will scale the resource down to this number of replicas. If there's some activity on target triggers KEDA will scale the target resource immediately to `minReplicaCount` and then will be scaling handled by HPA. When there is no activity, the target resource is again scaled down to `idleReplicaCount`. This setting must be less than `minReplicaCount`.
 
@@ -189,13 +193,13 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig`
 
-**`horizontalPodAutoscalerConfig.name`:**
+###### `horizontalPodAutoscalerConfig.name`
 
 The name of the HPA resource KEDA will create. By default it's `keda-hpa-{scaled-object-name}`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
