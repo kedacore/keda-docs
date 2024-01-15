@@ -7,3 +7,4 @@ IgnoreInternalURLs:
   - /docs/2.12/authentication-providers/aws/
   - /docs/2.12/authentication-providers/aws-secret-manager/
   - /docs/2.12/authentication-providers/configmap/
+  - /docs/2.12/authentication-providers/gcp-secret-manager/
