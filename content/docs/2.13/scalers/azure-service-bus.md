@@ -107,3 +107,15 @@ spec:
     authenticationRef:
         name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
 ```
+
+### Troubleshooting
+
+#### KEDA is unable to get queue information due to "invalid queue runtime properties: no CountDetails element"
+
+When KEDA logs show errors similar to `invalid queue runtime properties: no CountDetails element` it usually is caused because of throttling by Azure Service Bus.
+
+Consider applying one of the following mitigations:
+- Scaling the Azure Service Bus namespace to a higher SKU, or use premium
+- Increase the polling interval of the ScaledObject/ScaledJob
+- Use [caching of metrics](./../concepts/scaling-deployments/#caching-metrics)
+
