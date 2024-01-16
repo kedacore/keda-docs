@@ -321,7 +321,7 @@ Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload i
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
-#### EKS Pod Identity Webhook for AWS
+#### AWS EKS Pod Identity Webhook
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -332,7 +332,7 @@ podIdentity:
   provider: aws-eks # Optional. Default: none
 ```
 
-#### Kiam Pod Identity for AWS
+#### AWS Kiam Pod Identity
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 

@@ -92,8 +92,10 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure | azure-workload | aws-eks | aws-kiam | gcp  # Optional. Default: none
+      provider: none | azure | azure-workload | aws | aws-eks | aws-kiam | gcp  # Optional. Default: none
       identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+      roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
+      identityOwner: keda|workload                                        # Optional. Only used by aws provider.
   secretTargetRef:                                                        # Optional.
   - parameter: {scaledObject-parameter-name}                              # Required.
     name: {secret-name}                                                   # Required.
@@ -136,6 +138,38 @@ spec:
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {key-vault-secret-name}                                       # Required.
       version: {key-vault-secret-version}                                 # Optional.
+  awsSecretManager:
+    podIdentity:                                                          # Optional.
+      provider: aws                                                       # Required.
+    credentials:                                                          # Optional.
+      accessKey:                                                          # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_ACCESS_KEY_ID                                        # Required.
+      accessSecretKey:                                                    # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-aws-credentials}                       # Required.
+            key: AWS_SECRET_ACCESS_KEY                                    # Required.
+    region: {aws-region}                                                  # Optional.
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      name: {aws-secret-name}                                             # Required.
+      version: {aws-secret-version}                                       # Optional.
+  gcpSecretManager:                                                       # Optional.
+    secrets:                                                              # Required.
+      - parameter: {param-name-used-for-auth}                             # Required.
+        id: {secret-manager-secret-name}                                  # Required.
+        version: {secret-manager-secret-name}                             # Optional.
+    podIdentity:                                                          # Optional.
+      provider: gcp                                                       # Required.
+    credentials:                                                          # Optional.
+      clientSecret:                                                       # Required.
+        valueFrom:                                                        # Required.
+          secretKeyRef:                                                   # Required.
+            name: {k8s-secret-with-gcp-iam-sa-secret}                     # Required.
+            key: {key-within-the-secret}                                  # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -178,7 +212,7 @@ spec:
 
 ## Authentication parameters
 
-Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler.
+Authentication parameters can be pulled in from many sources. All of these values are merged together to make the authentication data for the scaler. You can find the all the available authentications [here](./../authentication-providers/).
 
 ### Environment variable(s)
 
@@ -209,7 +243,7 @@ secretTargetRef:                          # Optional.
 ### Hashicorp Vault secret(s)
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (the default value is `/var/run/secrets/kubernetes.io/serviceaccount/token`) and for token auth method provide the token.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
 
@@ -222,7 +256,7 @@ hashiCorpVault:                                     # Optional.
   mount: {hashicorp-vault-mount}                    # Optional.
   credential:                                       # Optional.
     token: {hashicorp-vault-token}                  # Optional.
-    serviceAccount: {path-to-service-account-file}  # Optional.
+    serviceAccount: {path-to-service-account-file}  # Optional. Default is /var/run/secrets/kubernetes.io/serviceaccount/token
   secrets:                                          # Required.
   - parameter: {scaledObject-parameter-name}        # Required.
     key: {hasicorp-vault-secret-key-name}           # Required.
@@ -266,6 +300,30 @@ azureKeyVault:                                          # Optional.
     version: {key-vault-secret-version}                 # Optional.
 ```
 
+### GCP Secret Manager secret(s)
+
+You can pull secrets from GCP Secret Manager into the trigger by using the `gcpSecretManager` key.
+
+The `secrets` list defines the mapping between the secret and the authentication parameter.
+
+GCP IAM Service Account credentials can be used for authenticating with the Secret Manager service, which can be provided using a Kubernetes secret. Alternatively, `gcp` pod identity provider is also supported for GCP Secret Manager using `podIdentity` inside `gcpSecretManager`.
+
+```yaml
+gcpSecretManager:                                     # Optional.
+  secrets:                                            # Required.
+    - parameter: {param-name-used-for-auth}           # Required.
+      id: {secret-manager-secret-name}                # Required.
+      version: {secret-manager-secret-name}           # Optional.
+  podIdentity:                                        # Optional.
+    provider: gcp                                     # Required.
+  credentials:                                        # Optional.
+    clientSecret:                                     # Required.
+      valueFrom:                                      # Required.
+        secretKeyRef:                                 # Required.
+          name: {k8s-secret-with-gcp-iam-sa-secret}   # Required.
+          key: {key-within-the-secret}                # Required.
+```
+
 ### Pod Authentication Providers
 
 Several service providers allow you to assign an identity to a pod. By using that identity, you can defer authentication to the pod & the service provider, rather than configuring secrets.
@@ -274,11 +332,15 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure | azure-workload | aws-eks | aws-kiam  # Optional. Default: none
-  identityId: <identity-id>                                     # Optional. Only used by azure & azure-workload providers.
+  provider: none | azure | azure-workload | aws | aws-eks | aws-kiam  # Optional. Default: none
+  identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
+  roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
+  identityOwner: keda|workload                                        # Optional. Only used by aws provider.
 ```
 
 #### Azure Pod Identity
+
+> [DEPRECATED: This will be removed in KEDA v2.15](https://github.com/kedacore/keda/discussions/5362)
 
 Azure Pod Identity is an implementation of [**Azure AD Pod Identity**](https://github.com/Azure/aad-pod-identity) which lets you bind an [**Azure Managed Identity**](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/) to a Pod in a Kubernetes cluster as delegated access - *Don't manage secrets, let Azure AD do the hard work*.
 
@@ -320,7 +382,59 @@ Setting `podIdentity.azureWorkload.enabled` to `true` is required for workload i
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources. In the case of override federated credentials should be configured for each of the used identities.
 
-#### EKS Pod Identity Webhook for AWS
+### Aws Secret Manager(s)
+
+You can integrate AWS Secret Manager secrets into your trigger by configuring the `awsSecretManager` key in your KEDA scaling specification.
+
+The `podIdentity` section configures the usage of AWS pod identity with the provider set to AWS.
+
+The `credentials` section specifies AWS credentials, including the `accessKey` and `secretAccessKey`.
+
+- **accessKey:** Configuration for the AWS access key.
+- **secretAccessKey:** Configuration for the AWS secret access key.
+
+The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
+
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
+
+```yaml
+awsSecretManager:
+  podIdentity:                                     # Optional.
+    provider: aws                                  # Required.
+  credentials:                                     # Optional.
+    accessKey:                                     # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_ACCESS_KEY_ID                   # Required.
+    accessSecretKey:                               # Required.
+      valueFrom:                                   # Required.
+        secretKeyRef:                              # Required.
+          name: {k8s-secret-with-aws-credentials}  # Required.
+          key: AWS_SECRET_ACCESS_KEY               # Required.
+  region: {aws-region}                             # Optional.
+  secrets:                                         # Required.
+  - parameter: {param-name-used-for-auth}          # Required.
+    name: {aws-secret-name}                        # Required.
+    version: {aws-secret-version}                  # Optional.
+```
+
+#### AWS Pod Identity Webhook for AWS
+
+[**AWS IAM Roles for Service Accounts (IRSA) Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook) ([documentation](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) allows you to provide the role name using an annotation on a service account associated with your pod.
+
+You can tell KEDA to use EKS Pod Identity Webhook via `podIdentity.provider`.
+
+```yaml
+podIdentity:
+  provider: aws # Optional. Default: none
+  roleArn: <role-arn> # Optional. 
+  identityOwner: keda|workload # Optional.
+```
+
+#### AWS EKS Pod Identity Webhook
+
+> [DEPRECATED: This will be removed in KEDA v3](https://github.com/kedacore/keda/discussions/5343)
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -331,7 +445,9 @@ podIdentity:
   provider: aws-eks # Optional. Default: none
 ```
 
-#### Kiam Pod Identity for AWS
+#### AWS Kiam Pod Identity
+
+> [DEPRECATED: This will be removed in KEDA v2.15](https://github.com/kedacore/keda/discussions/5342)
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 

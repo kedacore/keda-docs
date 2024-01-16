@@ -194,13 +194,13 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig:`
 
-**`horizontalPodAutoscalerConfig.name`:**
+###### `horizontalPodAutoscalerConfig.name`
 
 The name of the HPA resource KEDA will create. By default, it's `keda-hpa-{scaled-object-name}`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
@@ -217,23 +217,23 @@ advanced:
     formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```
 
-**`scalingModifiers`**
+##### `scalingModifiers`
 
 The `scalingModifiers` is optional and **experimental**. If defined, both `target` and `formula` are mandatory. Using this structure creates `composite-metric` for the HPA that will replace all requests for external metrics and handle them internally. With `scalingModifiers` each trigger used in the `formula` **must** have a name defined.
 
-**`scalingModifiers.target`**
+###### `scalingModifiers.target`
 
 `target` defines new target value to scale on for the composed metric.
 
-**`scalingModifiers.activationTarget`**
+###### `scalingModifiers.activationTarget`
 
 `activationTarget` defines new [activation target value](./scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional)
 
-**`scalingModifiers.metricType`**
+###### `scalingModifiers.metricType`
 
 `metricType` defines metric type used for this new `composite-metric`. (Values: `AverageValue`, `Value`, Default: `AverageValue`, Optional)
 
-**`scalingModifiers.formula`**
+###### `scalingModifiers.formula`
 
   `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
 
@@ -288,7 +288,7 @@ The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and u
 
 Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
 
-To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition.
+To enable/unpause autoscaling again, simply remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can also set the annotation to `false` to unpause.
 
 
 ### Scaling Modifiers (Experimental)
@@ -332,10 +332,10 @@ If the calculated value is <=2, the ScaledObject is not `Active` and it'll scale
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "float(trig_one > 2 ? trig_one + trig_two : 1)"
+    formula: "trig_one > 2 ? trig_one + trig_two : 1"
 ```
 
-If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1. Result of a ternary operator is of type `any` therefore cast to `float` at the end.
+If metric value of trigger `trig_one` is more than 2, then return `trig_one` + `trig_two` otherwise return 1.
 
 **Example: count function**
 
@@ -352,13 +352,13 @@ If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have val
 ```yaml
 advanced:
   scalingModifiers:
-    formula: "float(trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0)"
+    formula: "trig_one < 2 ? trig_one+trig_two >= 2 ? 5 : 10 : 0"
 ```
 
 Conditions can be used within another condition as well.
-If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0. Result of a ternary operator is `any` therefore cast to `float` before returing the result.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
-Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean)
+Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
 ### Activating and Scaling thresholds
 
 To give a consistent solution to this problem, KEDA has 2 different phases during the autoscaling process.
