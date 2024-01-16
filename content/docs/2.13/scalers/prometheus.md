@@ -103,9 +103,7 @@ See the follwowing steps to configure the scaler integration.
 - Prometheus server address should follow the Google's Monitoring API for [Prometheus HTTP API](https://cloud.google.com/stackdriver/docs/managed-prometheus/query#api-prometheus):
   - Example: `https://monitoring.googleapis.com/v1/projects/GOOGLE_PROJECT_ID/location/global/prometheus` - where `GOOGLE_PROJECT_ID` should be replaced by your Google project ID.
 
-To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example]
-
-(#example-google-managed-prometheus).
+To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example](#example-google-managed-prometheus).
 
 ### Examples
 
