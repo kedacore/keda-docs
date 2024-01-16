@@ -41,6 +41,11 @@ You can authenticate by using pod identity or connection string authentication.
 
 - `connection` - Connection string for Azure Storage Account.
 
+  The following formats are supported.
+
+  - **Shared Key authentication** - `DefaultEndpointsProtocol=https;AccountName=<accountName>;AccountKey=<accountKey>;EndpointSuffix=<endpointSuffix>`
+  - **Shared access signature** (SAS) - `QueueEndpoint=<queueEndpoint>;SharedAccessSignature=<sasToken>`
+
 **Pod identity based authentication:**
 
 [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
