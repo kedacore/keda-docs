@@ -418,6 +418,71 @@ spec:
       name: azure-managed-prometheus-trigger-auth
 ```
 
+
+#### Example: Amazon Managed Service for Prometheus (AMP)
+
+Below is an example showcasing the use of Prometheus scaler with AWS EKS Pod Identity. Please note that in this particular example, the Deployment is named as `keda-deploy`. Also replace the AwsRegion and AMP WorkspaceId for your requirements.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+spec:
+  podIdentity:
+    provider: aws
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-deploy
+  labels:
+    app: keda-deploy
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: keda-deploy
+  template:
+    metadata:
+      labels:
+        app: keda-deploy
+    spec:
+      containers:
+      - name: nginx
+        image: nginxinc/nginx-unprivileged
+        ports:
+        - containerPort: 80
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: keda-so
+  labels:
+    app: keda-deploy
+spec:
+  scaleTargetRef:
+    name: keda-deploy
+  maxReplicaCount: 2
+  minReplicaCount: 0
+  cooldownPeriod: 1
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 15
+  triggers:
+    - type: prometheus
+      authenticationRef:
+        name: keda-trigger-auth-aws-credentials
+      metadata:
+        awsRegion: {{.AwsRegion}}
+        serverAddress: "https://aps-workspaces.{{.AwsRegion}}.amazonaws.com/workspaces/{{.WorkspaceID}}"
+        query: "vector(100)"
+        threshold: "50.0"
+        identityOwner: operator
+```
+
 #### Example: Google Managed Prometheus
 
 Below is an example showcasing the use of Prometheus scaler with GCP Workload Identity. Please note that in this particular example, the Google project ID has been set as `my-google-project`.
