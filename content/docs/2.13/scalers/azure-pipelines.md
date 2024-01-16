@@ -232,7 +232,7 @@ spec:
           
 ```
 
-### Example for PodIdentity authentication
+### Example for using pod identity authentication
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
