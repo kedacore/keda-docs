@@ -33,10 +33,10 @@ triggers:
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
 
-> For the purposes of scaling, the default formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing. If you wish to only scale on `ApproximateNumberOfMessages` set `scaleOnInFlight` to `false`.
+> For the purposes of scaling, the default formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing. If you wish to only scale on `ApproximateNumberOfMessages` set `scaleOnInFlight` to `false`. You can also include the number of delayed messages when calculating "actual messages" by setting `scaleOnDelayed` to `true`. With `scaleOnInFlight` and `scaleOnDelayed` set to `true` the formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible` + `ApproximateNumberOfMessagesDelayed`.
 
-- `scaleOnInFlight` - Indication whether or not to scale on queued messages or to include in-flight messages as well.
-  - When set to `false` "actual messages" is equal to `ApproximateNumberOfMessages`. When set to `true` "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing. (default: true)
+- `scaleOnInFlight` - Indication of whether or not to include in-flight messages when calculating the number of SQS messages. (default: true, Optional)
+- `scaleOfDelayed` - Indication of whether or not to include delayed messages when calculating the number of SQS messages. (default: false, Optional)
 - `awsRegion` - AWS Region for the SQS Queue.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (Values: `pod`, `operator`, Default: `pod`, Optional)

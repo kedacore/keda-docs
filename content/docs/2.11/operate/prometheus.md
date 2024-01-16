@@ -35,6 +35,7 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
+
 ## Premade Grafana dashboard
 
 A premade [Grafana dashboard](https://github.com/kedacore/keda/tree/main/config/grafana/keda-dashboard.json) is available to visualize metrics exposed by the KEDA Metrics Adapter.

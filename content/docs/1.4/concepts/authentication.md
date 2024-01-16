@@ -167,7 +167,7 @@ podIdentity:
 
 Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set aadPodIdentity={your-label-name}`.
 
-#### EKS Pod Identity Webhook for AWS
+#### AWS EKS Pod Identity Webhook
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -178,7 +178,7 @@ podIdentity:
   provider: aws-eks # Optional. Default: false
 ```
 
-#### Kiam Pod Identity for AWS
+#### AWS Kiam Pod Identity
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 

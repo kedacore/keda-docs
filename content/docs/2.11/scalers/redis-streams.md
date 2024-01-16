@@ -64,7 +64,7 @@ triggers:
 - `streamLength` - Threshold for stream length, alternative average target value to scale workload. (Default: `5`, Optional)
 - `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
