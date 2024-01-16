@@ -360,7 +360,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://<prometheus-host>:9090
-        metricName: http_requests_total
         threshold: '100'
         query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
         authModes: "custom"
@@ -393,7 +392,6 @@ spec:
   - type: prometheus
     metadata:
       serverAddress: https://test-azure-monitor-workspace-name-9ksc.eastus.prometheus.monitor.azure.com
-      metricName: http_requests_total
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
       threshold: '100.50'
       activationThreshold: '5.5'
