@@ -118,4 +118,3 @@ Consider applying one of the following mitigations:
 - Scaling the Azure Service Bus namespace to a higher SKU, or use premium
 - Increase the polling interval of the ScaledObject/ScaledJob
 - Use [caching of metrics](./../concepts/scaling-deployments/#caching-metrics)
-
