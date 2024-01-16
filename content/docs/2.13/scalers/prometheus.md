@@ -93,7 +93,7 @@ See the follwowing steps to configure the scaler integration.
 To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example]
 
 
-**Amazon Managed Service for Prometheus:**
+### Amazon Managed Service for Prometheus
 
 Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
 
