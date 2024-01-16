@@ -77,6 +77,19 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
+
+### Amazon Managed Service for Prometheus
+
+Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
+
+- [EKS Pod Identity](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-eks-pod-identity/) provider can be used in `authenticationRef` - see later in example. TriggerAuthentication and Secret are also supported authentication methods.
+- Create Amazon Managed Service for Prometheus [workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html) in your AWS account
+- Retrieve the Prometheus query endpoint URL from the [AWS managed Prometheus Workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html). This endpoint will be used to send queries.
+- Configure Prometheus scaler to use the workspace endpoint and an authentication method like EKS Pod Identity.
+
+Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
+
+
 **Google Managed for Prometheus:**
 
 Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
@@ -91,19 +104,6 @@ See the follwowing steps to configure the scaler integration.
   - Example: `https://monitoring.googleapis.com/v1/projects/GOOGLE_PROJECT_ID/location/global/prometheus` - where `GOOGLE_PROJECT_ID` should be replaced by your Google project ID.
 
 To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example]
-
-
-### Amazon Managed Service for Prometheus
-
-Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
-
-- [EKS Pod Identity](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-eks-pod-identity/) provider can be used in `authenticationRef` - see later in example. TriggerAuthentication and Secret are also supported authentication methods.
-- Create Amazon Managed Service for Prometheus [workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html) in your AWS account
-- Retrieve the Prometheus query endpoint URL from the [AWS managed Prometheus Workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html). This endpoint will be used to send queries.
-- Configure Prometheus scaler to use the workspace endpoint and an authentication method like EKS Pod Identity.
-
-Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
-
 
 (#example-google-managed-prometheus).
 
