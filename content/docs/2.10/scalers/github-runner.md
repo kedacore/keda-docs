@@ -15,7 +15,7 @@ triggers:
   - type: github-runner
     metadata:
       # Optional: The URL of the GitHub API, defaults to https://api.github.com
-      githubAPIURL: "https://api.github.com"
+      githubApiURL: "https://api.github.com"
       # Required: The owner of the GitHub repository, or the organization that owns the repository
       owner: "{owner}"
       # Required: The scope of the runner, can be either "org" (organisation), "ent" (enterprise) or "repo" (repository)
@@ -32,7 +32,7 @@ triggers:
 
 **Parameter list:**
 
-- `githubAPIURL` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
+- `githubApiURL` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
 - `owner` - The owner of the GitHub repository, or the organization that owns the repository. (Required)
 - `runnerScope` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
@@ -44,7 +44,7 @@ triggers:
 You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
 the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `labelsFromEnv: "RUNNER_LABELS"` will use the environment variable `RUNNER_LABELS` as the source fo the `labels` parameter.
 
-- `githubAPIURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
+- `githubApiURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
 - `ownerFromEnv` - The owner of the GitHub repository, or the organization that owns the repository. (Required)
 - `runnerScopeFromEnv` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
 - `reposFromEnv` - The list of repositories to scale, separated by comma. (Optional)
@@ -129,7 +129,7 @@ spec:
   triggers:
   - type: github-runner
     metadata:
-      githubAPIURL: "https://api.github.com"
+      githubApiURL: "https://api.github.com"
       owner: "kedacore"
       runnerScope: "repo"
       repos: "keda,keda-docs"
