@@ -70,7 +70,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
-**Azure Monitor managed service for Prometheus**
+### Azure Monitor managed service for Prometheus
 Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
 - `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
