@@ -81,7 +81,7 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
 
-### Amazon Managed Service for Prometheus
+#### Amazon Managed Service for Prometheus
 
 Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
 
