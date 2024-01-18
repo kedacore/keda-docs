@@ -92,7 +92,7 @@ Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.
 
 Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
 
-### Google Managed for Prometheus
+#### Google Managed for Prometheus
 
 Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
 By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP managed service and handle authentication using the GCP workload identity mechanism.
