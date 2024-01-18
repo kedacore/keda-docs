@@ -13,10 +13,10 @@ go_file = "cpu_memory_scaler"
 
 ### Prerequisites
 
-KEDA uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server, which is not installed by default on certain Kubernetes deployments such as EKS on AWS. Additionally, the `resources` section of the relevant Kubernetes Pods must include `requests` (at a minimum).
+KEDA uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server, which is not installed by default on certain Kubernetes deployments such as EKS on AWS. Additionally, the `resources` section of the relevant Kubernetes Pods must include at least one of `requests` or `limits`.
 
 - The Kubernetes Metrics Server must be installed. Installation instructions vary based on your Kubernetes provider.
-- The configuration for your Kubernetes Pods must include a `resources` section with specified `requests`. See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar) the error `missing request for {cpu/memory}` occurs.
+- The configuration for your Kubernetes Pods must include a `resources` section with specified `requests` (or `limits`). See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar), KEDA checks if the `defaultRequest` (or `default` for limits) is set in `LimitRange` for the `Container` type in the same namespace. If `defaultRequest` (or `default` for limits) is missing too, the error `missing request for {cpu/memory}` occurs.
 
 ```yaml
 # a working example of resources with specified requests
