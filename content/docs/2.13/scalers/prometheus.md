@@ -83,6 +83,8 @@ Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.
 
 Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
 
+To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example](#example-amazon-managed-service-for-prometheus-amp).
+
 #### Azure Monitor Managed Service for Prometheus
 
 Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
@@ -90,6 +92,8 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
+
+To gain a better understanding of creating a Prometheus trigger for Azure Monitor Managed Service for Prometheus, refer to [this example](#example-azure-monitor-managed-service-for-prometheus).
 
 #### Google Managed for Prometheus
 
@@ -124,6 +128,8 @@ spec:
       threshold: '100'
       query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
 ```
+
+#### Example: Bearer Authentication
 
 Here is an example of a prometheus scaler with Bearer Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
@@ -174,6 +180,8 @@ spec:
         name: keda-prom-creds
 ```
 
+#### Example: Basic Authentication
+
 Here is an example of a prometheus scaler with Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
@@ -222,6 +230,7 @@ spec:
         name: keda-prom-creds
 ```
 
+#### Example: TLS Authentication
 
 Here is an example of a prometheus scaler with TLS Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
@@ -274,6 +283,8 @@ spec:
       authenticationRef:
         name: keda-prom-creds
 ```
+
+#### Example: TLS & Basic Authentication
 
 Here is an example of a prometheus scaler with TLS and Basic Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
@@ -335,6 +346,8 @@ spec:
         name: keda-prom-creds
 ```
 
+#### Example: Custom Authentication
+
 Here is an example of a prometheus scaler with Custom Authentication, define the `Secret` and `TriggerAuthentication` as follows
 
 ```yaml
@@ -384,6 +397,8 @@ spec:
         name: keda-prom-creds
 ```
 
+#### Example: Azure Monitor Managed Service for Prometheus
+
 Here is an example of a prometheus scaler with Azure Pod Identity and Azure Workload Identity, define the `TriggerAuthentication` and `ScaledObject` as follows
 
 ```yaml
@@ -416,8 +431,6 @@ spec:
     authenticationRef:
       name: azure-managed-prometheus-trigger-auth
 ```
-
-
 #### Example: Amazon Managed Service for Prometheus (AMP)
 
 Below is an example showcasing the use of Prometheus scaler with AWS EKS Pod Identity. Please note that in this particular example, the Deployment is named as `keda-deploy`. Also replace the AwsRegion and AMP WorkspaceId for your requirements.
