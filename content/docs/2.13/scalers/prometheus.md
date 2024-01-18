@@ -95,7 +95,7 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 
 To gain a better understanding of creating a Prometheus trigger for Azure Monitor Managed Service for Prometheus, refer to [this example](#example-azure-monitor-managed-service-for-prometheus).
 
-#### Google Managed for Prometheus
+#### Google Managed Service for Prometheus
 
 Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
 By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP managed service and handle authentication using the GCP workload identity mechanism.
