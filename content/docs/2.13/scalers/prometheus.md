@@ -70,14 +70,29 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 > 💡 **NOTE:**It's also possible to set the CA certificate regardless of the selected `authModes` (also without any authentication). This might be useful if you are using an enterprise CA.
 
-**Azure Monitor managed service for Prometheus**
+### Integrating Cloud offerings
+
+#### Azure Monitor Managed Service for Prometheus
+
 Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
 - `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
 - Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
-**Google Managed for Prometheus:**
+
+#### Amazon Managed Service for Prometheus
+
+Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
+
+- [EKS Pod Identity](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-eks-pod-identity/) provider can be used in `authenticationRef` - see later in example. TriggerAuthentication and Secret are also supported authentication methods.
+- Create Amazon Managed Service for Prometheus [workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html) in your AWS account
+- Retrieve the Prometheus query endpoint URL from the [AWS managed Prometheus Workspace](https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-create-workspace.html). This endpoint will be used to send queries.
+- Configure Prometheus scaler to use the workspace endpoint and an authentication method like EKS Pod Identity.
+
+Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
+
+#### Google Managed for Prometheus
 
 Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
 By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP managed service and handle authentication using the GCP workload identity mechanism.
@@ -401,6 +416,71 @@ spec:
       activationThreshold: '5.5'
     authenticationRef:
       name: azure-managed-prometheus-trigger-auth
+```
+
+
+#### Example: Amazon Managed Service for Prometheus (AMP)
+
+Below is an example showcasing the use of Prometheus scaler with AWS EKS Pod Identity. Please note that in this particular example, the Deployment is named as `keda-deploy`. Also replace the AwsRegion and AMP WorkspaceId for your requirements.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+spec:
+  podIdentity:
+    provider: aws
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-deploy
+  labels:
+    app: keda-deploy
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: keda-deploy
+  template:
+    metadata:
+      labels:
+        app: keda-deploy
+    spec:
+      containers:
+      - name: nginx
+        image: nginxinc/nginx-unprivileged
+        ports:
+        - containerPort: 80
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: keda-so
+  labels:
+    app: keda-deploy
+spec:
+  scaleTargetRef:
+    name: keda-deploy
+  maxReplicaCount: 2
+  minReplicaCount: 0
+  cooldownPeriod: 1
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 15
+  triggers:
+    - type: prometheus
+      authenticationRef:
+        name: keda-trigger-auth-aws-credentials
+      metadata:
+        awsRegion: {{.AwsRegion}}
+        serverAddress: "https://aps-workspaces.{{.AwsRegion}}.amazonaws.com/workspaces/{{.WorkspaceID}}"
+        query: "vector(100)"
+        threshold: "50.0"
+        identityOwner: operator
 ```
 
 #### Example: Google Managed Prometheus
