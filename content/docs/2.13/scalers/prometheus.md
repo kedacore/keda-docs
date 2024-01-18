@@ -72,15 +72,6 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 
 ### Integrating Cloud offerings
 
-#### Azure Monitor Managed Service for Prometheus
-
-Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
-- [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
-- `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
-- No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
-- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
-
-
 #### Amazon Managed Service for Prometheus
 
 Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.amazon.com/prometheus/) that provides a scalable and secure Prometheus deployment. The Prometheus scaler can be used to run Prometheus queries against this managed service.
@@ -91,6 +82,14 @@ Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.
 - Configure Prometheus scaler to use the workspace endpoint and an authentication method like EKS Pod Identity.
 
 Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
+
+#### Azure Monitor Managed Service for Prometheus
+
+Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/prometheus-metrics-overview) and Prometheus scaler can be used to run prometheus query against that.
+- [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
+- `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
+- No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
+- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
 #### Google Managed for Prometheus
 
