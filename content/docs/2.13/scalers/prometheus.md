@@ -83,7 +83,7 @@ Amazon Web Services (AWS) offers a [managed service for Prometheus](https://aws.
 
 Using the managed service eliminates the operational burden of running your own Prometheus servers. Queries can be executed against a fully managed, auto-scaling Prometheus deployment on AWS. Costs scale linearly with usage.
 
-To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example](#example-amazon-managed-service-for-prometheus-amp).
+To gain a better understanding of creating a Prometheus trigger for Amazon Managed Service for Prometheus, refer to [this example](#example-amazon-managed-service-for-prometheus-amp).
 
 #### Azure Monitor Managed Service for Prometheus
 
