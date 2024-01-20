@@ -86,7 +86,7 @@ spec:
         searchTemplateName: "my-search-template"
         valueLocation: "hits.total.value"
         targetValue: "10"
-        params: "dummy_value:1"
+        parameters: "dummy_value:1"
       authenticationRef:
         name: keda-trigger-auth-elasticsearch-secret
 ```

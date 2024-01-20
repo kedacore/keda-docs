@@ -186,13 +186,13 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig`
 
-**`horizontalPodAutoscalerConfig.name`:**
+###### `horizontalPodAutoscalerConfig.name`
 
 The name of the HPA resource KEDA will create. By default, it's `keda-hpa-{scaled-object-name}`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
@@ -253,6 +253,8 @@ Each scaler defines parameters for their use-cases, but the activation will alwa
 There are some important topics to take into account:
 
 - Opposite to scaling value, the activation value is always optional and the default value is 0.
+- Activation only occurs when this value is greater than the set value; not greater than or equal to.
+  - ie, in the default case: `activationThreshold: 0` will only activate when the metric value is 1 or more
 - The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.
