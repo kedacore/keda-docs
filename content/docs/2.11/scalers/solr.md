@@ -27,7 +27,7 @@ triggers:
 - `query`- A Solr query that should return single numeric value. (Default: `*:*`, Optional)
 - `collection` - Your collection name on Solr.
 - `targetQueryValue` - A threshold that is used as targetValue or targetAverageValue (depending on the trigger metric type) in HPA. (This value can be a float)
-- `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
 ### Authentication Parameters
 

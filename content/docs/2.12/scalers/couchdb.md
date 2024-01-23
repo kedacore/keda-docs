@@ -30,7 +30,7 @@ triggers:
 - `queryValue` - A threshold that will define when scaling should occur. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
 - `port` - The port number of the CouchDB service. (Optional, Required if `connectionString` and `connectionStringFromEnv` is not set)
 - `query` - A CouchDB query that should return single numeric value. (Optional)
-- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `connectionStringFromEnv` - Environment variable from workload with the connection string. (Optional, Required if `connectionString` and connection parameters aren't set)
 
 ### Authentication Parameters
