@@ -35,7 +35,7 @@ triggers:
 - `keyspace` - The name of the keyspace used in Cassandra.
 - `query` - A Cassandra query that should return single numeric value.
 - `targetQueryValue` - The threshold value that is provided by the user and used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA).
-- `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
 ### Authentication Parameters
 
