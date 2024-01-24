@@ -28,7 +28,7 @@ triggers:
 
 - `bucketName` - Name of the bucket in GCS.
 - `targetObjectCount` - Average target value to trigger scaling actions. (Default: `100`, Optional)
-- `activationTargetObjectCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationTargetObjectCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `maxBucketItemsToScan` - When to stop counting how many objects are in the bucket. (Default: `1000`, Optional)
 - `blobPrefix` - Prefix for the Blob. Use this to specify sub path for the blobs if required. (Default: `""`, Optional)
 - `blobDelimiter` - Delimiter for identifying the blob prefix. (Default: `""`, Optional)

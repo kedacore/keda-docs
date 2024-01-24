@@ -38,7 +38,7 @@ triggers:
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `tableName` - The target table where the scaler execute the query.
 - `targetValue` - The target value for the number of items retrieved by the query.
-- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `expressionAttributeNames` - one or more substitution tokens for attribute names in an expression. Defined as JSON.
 - `keyConditionExpression` - the condition that specifies the key values for items to be retrieved by the Query action.
 - `expressionAttributeValues` - one or more values that can be substituted in an expression. Defined as JSON.

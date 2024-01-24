@@ -31,7 +31,7 @@ triggers:
 - `stream` - Name of the JS stream within the account.
 - `consumer` - Name of the consumer for a given stream.
 - `lagThreshold` - Average target value to trigger scaling actions.
-- `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `useHttps` - Specifies if the NATS server monitoring endpoint is using HTTPS. (Default: `false`, Optional)
 
 ### Authentication Parameters
