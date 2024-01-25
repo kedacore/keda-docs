@@ -67,7 +67,7 @@ metadata:
 spec:
   maxReplicaCount: 12
   scaleTargetRef:
-    name: nginx
+    name: arangodb-deployment
   triggers:
     - type: arangodb
       metadata:
