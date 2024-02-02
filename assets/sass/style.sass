@@ -264,6 +264,41 @@ hr
 .section 
 	padding: 4rem 1.5rem
 
+.copyBtn 
+  padding: 10px
+  background: #5784f5
+  color: #ffffff
+  font-size: 18px
+  border: none
+  outline: none
+  border-radius: 10px
+  cursor: pointer
+  &:active
+      background: #809ce2
+  &:before
+      content: "Copied"
+      position: absolute
+      top: -45px
+      right: 0px
+      background: #5c81dc
+      padding: 8px 10px
+      border-radius: 20px
+      font-size: 15px
+      display: none
+  &:after
+      content: ""
+      position: absolute
+      top: -20px
+      right: 25px
+      width: 10px
+      height: 10px
+      background: #5c81dc
+      transform: rotate(45deg)
+      display: none
+
+.copy-text-active .copyBtn:before, .copy-text-active .copyBtn:after,
+  display: block
+
 @media screen and (max-width: 1024px)
   .section
     width: 100vw
