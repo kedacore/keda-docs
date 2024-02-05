@@ -333,53 +333,61 @@
 {{/* FAQ Copy to clipboard */}}
 
 <script>
+  // As of today, The document.execCommand() method is deprecated. 
+  // The new clipboard API is the preferred method for accessing the clipboard. 
+  // To maintain backward compatibility, I creted a fallbackCopyTextToClipboard function 
+  // to enable support in old browser versions.
+
   function fallbackCopyTextToClipboard(text) {
-  let copyTextHeader = document.getElementById(text);
-  let textArea = document.createElement("textarea");
-  textArea.value = `${window.location.origin}${window.location.pathname}#${text}`;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
+    const faqURL = `${window.location.origin}${window.location.pathname}#${text}`;
+    let copyTextContainer = document.getElementById(text);
+    let textArea = document.createElement("textarea");
+    textArea.value = faqURL;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
 
-  try {
-    const successful = document.execCommand("copy");
-    const msg = successful ? "copied!" : "action unsuccessful";
-    copyTextHeader.classList.add("copy-text-active");
-    console.log(msg);
-    setTimeout(function () {
-		copyTextHeader.classList.remove("copy-text-active");
-	}, 2500);
-  } catch (err) {
-    console.error("Fallback: Oops, unable to copy", err);
-  }
-  document.body.removeChild(textArea);
-}
-function copyTextToClipboard(text) {
-  var copyTextHeader = document.getElementById(text);
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#${text}`).then(
-    function() {
-      copyTextHeader.classList.add("copy-text-active");
-      console.log("Async: Copying to clipboard was successful!");
+    try {
+      const successful = document.execCommand("copy");
+      const msg = successful ? "copied!" : "action unsuccessful";
+      copyTextContainer.classList.add("copy-text-active");
+      console.log(msg);
       setTimeout(function () {
-        copyTextHeader.classList.remove("copy-text-active");
+        copyTextContainer.classList.remove("copy-text-active");
       }, 2500);
-    },
-    function(err) {
-      console.error("Async: Could not copy text: ", err);
+    } catch (err) {
+      console.error("Fallback: Oops, unable to copy", err);
     }
-  );
-}
+    document.body.removeChild(textArea);
+  }
+  
+  function copyTextToClipboard(text) {
+    const faqURL = `${window.location.origin}${window.location.pathname}#${text}`;
+    let copyTextContainer = document.getElementById(text);
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(faqURL).then(
+      function() {
+        copyTextContainer.classList.add("copy-text-active");
+        console.log("Async: Copying to clipboard was successful!");
+        setTimeout(function () {
+          copyTextContainer.classList.remove("copy-text-active");
+        }, 2500);
+      },
+      function(err) {
+        console.error("Async: Could not copy text: ", err);
+      }
+    );
+  }
 
-const copyBtns = document.querySelectorAll(".copyBtn");
-copyBtns.forEach((btn) => {
-  const id = btn.getAttribute("id");
-  btn.addEventListener("click", function name(event) {
-    event.stopPropagation();
-    copyTextToClipboard(id)
+  const copyBtns = document.querySelectorAll(".copyBtn");
+  copyBtns.forEach((btn) => {
+    const id = btn.getAttribute("id");
+    btn.addEventListener("click", function name(event) {
+      event.stopPropagation();
+      copyTextToClipboard(id)
+    });
   });
-});
 </script>
