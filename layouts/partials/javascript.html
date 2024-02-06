@@ -391,3 +391,22 @@
     });
   });
 </script>
+
+{{/* This logic expands collapsed FAQ section when FAQ URL is loaded in browser*/}}
+<script>
+  window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      "use strict";
+      const hash = (window.location.hash).slice(1);
+      const cardContents = document.querySelectorAll(".card-content");
+      cardContents.forEach((item) => {
+        const id = item.getAttribute("id");
+        if (hash === id) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+</script>
