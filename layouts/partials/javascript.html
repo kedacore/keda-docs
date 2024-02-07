@@ -338,11 +338,11 @@
   // To maintain backward compatibility, I creted a fallbackCopyTextToClipboard function 
   // to enable support in old browser versions.
 
-  function fallbackCopyTextToClipboard(text) {
-    const faqURL = `${window.location.origin}${window.location.pathname}#${text}`;
+  function fallbackCopyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
     let copyTextContainer = document.getElementById(text);
     let textArea = document.createElement("textarea");
-    textArea.value = faqURL;
+    textArea.value = textURL;
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
@@ -360,15 +360,19 @@
     }
     document.body.removeChild(textArea);
   }
+
+  function generateTextURL(text) {
+    return `${window.location.origin}${window.location.pathname}#${text}`;
+  }
   
-  function copyTextToClipboard(text) {
-    const faqURL = `${window.location.origin}${window.location.pathname}#${text}`;
+  function copyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
     let copyTextContainer = document.getElementById(text);
     if (!navigator.clipboard) {
       fallbackCopyTextToClipboard(text);
       return;
     }
-    navigator.clipboard.writeText(faqURL).then(
+    navigator.clipboard.writeText(textURL).then(
       function() {
         copyTextContainer.classList.add("copy-text-active");
         console.log("Async: Copying to clipboard was successful!");
@@ -387,12 +391,12 @@
     const id = btn.getAttribute("id");
     btn.addEventListener("click", function name(event) {
       event.stopPropagation();
-      copyTextToClipboard(id)
+      copyTextToClipboard(id, generateTextURL)
     });
   });
 </script>
 
-{{/* This logic expands collapsed FAQ section when FAQ URL is loaded in browser*/}}
+{{/* This logic expands collapsed section when URL is loaded in browser*/}}
 <script>
   window.addEventListener(
     "DOMContentLoaded",
