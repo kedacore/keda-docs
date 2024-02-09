@@ -17,7 +17,7 @@ There are two ways to poll Datadog for a query value using the Datadog scaler: u
 
 ## Using the Datadog Cluster Agent
 
-With this method, the Datadog scaler will be connecting to the Datadog Cluster Agent to retrieve the query values that will be used to drive the KEDA scaling events. This reduces the risk of reaching rate limits for the Datadog API.
+With this method, the Datadog scaler will be connecting to the Datadog Cluster Agent to retrieve the query values that will be used to drive the KEDA scaling events. This reduces the risk of reaching rate limits for the Datadog API, as the Cluster Agent retrieves metric values in batches.
 
 ### Deploy the Datadog Cluster Agent with enabled external metrics
 
@@ -27,6 +27,7 @@ If you are using Helm to deploy the Cluster Agent, set:
 
 * `clusterAgent.metricsProvider.enabled` to `true`
 * `clusterAgent.metricsProvider.registerAPIService` to `false`
+* `clusterAgent.metricsProvider.useDatadogMetrics` to `true`
 
 If you are using the Datadog Operator, add the following options to your `DatadogAgent` object:
 
