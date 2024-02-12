@@ -199,13 +199,13 @@ spec:
     template:
       spec:
         containers:
-        - name: rabbitmq-client
-          image: tsuyoshiushio/rabbitmq-client:dev3
+        - name: demo-rabbitmq-client
+          image: demo-rabbitmq-client:1
           imagePullPolicy: Always
-          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "job"]
+          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672"]
           envFrom:
             - secretRef:
-                name: rabbitmq-consumer
+                name: rabbitmq-consumer-secrets
         restartPolicy: Never
     backoffLimit: 4  
   pollingInterval: 10             # Optional. Default: 30 seconds
