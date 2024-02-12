@@ -83,7 +83,7 @@ All applicable scalers will use this timeout. Setting a per-scaler timeout is cu
 
 ## HTTP connection disable keep alive
 
-Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios. 
+Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios.
 
 You can disable keep alive for every HTTP connection by adding the relevant environment variable to both the KEDA Operator, and KEDA Metrics Server deployments:
 
@@ -128,6 +128,15 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-qps        | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
 | kube-api-burst      | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
 | disable-compression | cfg.DisableCompression  | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
+
+## gRPC Metrics Service Parameters
+
+The gRPC Metrics Service is part of the KEDA Operator deployment and serves scaling events and metrics from the scalers over gRPC to the Metrics API Service, that in turn serves them to the Kubernetes API Server. The gRPC Metrics Service config used by the KEDA Metrics Adapter to connect to the KEDA Operator can be adjusted by passing the following command-line flags to the Adapter binary:
+
+|     Adapter Flag                    | Default Value                                     | Description                                    |
+| ----------------------------------- | ------------------------------------------------- | ---------------------------------------------- |
+| metrics-service-address             | keda-operator.keda.svc.cluster.local:9666         | The address of the gRPC Metrics Service Server |
+| metrics-service-grpc-authority      | ""                                                | Host Authority override for the Metrics Service if the Host Authority is not the same as the address used for the gRPC Metrics Service Server. This is required for mutual TLS when the identity of the adapter server as presented in its TLS certificate is not the same as the metrics-service-address |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
