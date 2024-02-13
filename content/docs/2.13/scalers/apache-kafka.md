@@ -61,6 +61,17 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
+*Parameters from Environment Variables*
+
+You can access some of the above parameters using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
+the scaler will use the value from the environment variable. The environment variable must be available to the manifest.
+These take precedence over the direct parameters - `bootstrapServersFromEnv` will override `bootstrapServers`, for example.
+If you have multiple containers you may need to specify the `envSourceContainerName` parameter in the `ScaledObject`'s `scaleTargetRef`.
+
+- `bootstrapServersFromEnv` - The name of the environment variable listing the Kafka boostrap servers.
+- `consumerGroup` - The name of the environment variable set with consumer group name.
+- `topicFromEnv` - The name of the environment variable set with topic name.
+
 > **Note:**
 >
 > When `topic` is unspecified, total offset lag will be calculated with all topics within the consumer group.
