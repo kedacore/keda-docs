@@ -329,3 +329,88 @@
     false
   );
 </script>
+
+{{/* FAQ Copy to clipboard */}}
+
+<script>
+  // As of today, The document.execCommand() method is deprecated. 
+  // The new clipboard API is the preferred method for accessing the clipboard. 
+  // To maintain backward compatibility, I creted a fallbackCopyTextToClipboard function 
+  // to enable support in old browser versions.
+
+  function fallbackCopyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
+    let copyTextContainer = document.getElementById(text);
+    let textArea = document.createElement("textarea");
+    textArea.value = textURL;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      const msg = successful ? "copied!" : "action unsuccessful";
+      copyTextContainer.classList.add("copy-text-active");
+      console.log(msg);
+      setTimeout(function () {
+        copyTextContainer.classList.remove("copy-text-active");
+      }, 2500);
+    } catch (err) {
+      console.error("Fallback: Oops, unable to copy", err);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function generateTextURL(text) {
+    return `${window.location.origin}${window.location.pathname}#${text}`;
+  }
+  
+  function copyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
+    let copyTextContainer = document.getElementById(text);
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(textURL).then(
+      function() {
+        copyTextContainer.classList.add("copy-text-active");
+        console.log("Async: Copying to clipboard was successful!");
+        setTimeout(function () {
+          copyTextContainer.classList.remove("copy-text-active");
+        }, 2500);
+      },
+      function(err) {
+        console.error("Async: Could not copy text: ", err);
+      }
+    );
+  }
+
+  const copyBtns = document.querySelectorAll(".copyBtn");
+  copyBtns.forEach((btn) => {
+    const id = btn.getAttribute("id");
+    btn.addEventListener("click", function name(event) {
+      event.stopPropagation();
+      copyTextToClipboard(id, generateTextURL)
+    });
+  });
+</script>
+
+{{/* This logic expands collapsed section when URL is loaded in browser*/}}
+<script>
+  window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      "use strict";
+      const hash = (window.location.hash).slice(1);
+      const cardContents = document.querySelectorAll(".card-content");
+      cardContents.forEach((item) => {
+        const id = item.getAttribute("id");
+        if (hash === id) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+</script>
