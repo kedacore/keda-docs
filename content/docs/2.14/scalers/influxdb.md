@@ -23,8 +23,8 @@ triggers:
         from(bucket: "bucket-of-interest")
         |> range(start: -12h)
         |> filter(fn: (r) => r._measurement == "stat")
-      metricKey: 'mymetric' # Required for Influx v3. See details in "Parameter List" section
-      queryType: 'InfluxQL' # Only used for Influx v3. See details in "Parameter List" section
+      metricKey: 'mymetric' # Required for Influx v3. Ignored for v2. See details in "Parameter List" section
+      queryType: 'InfluxQL' # Required for Influx v3. Ignored for v2. See details in "Parameter List" section
       influxVersion: '3' # Optional: Defaults to 2.
       database: 'some-influx-db' # Required for Influx v3
       authToken: some-auth-token
