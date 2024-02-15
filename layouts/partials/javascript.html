@@ -403,7 +403,7 @@
     () => {
       "use strict";
       const hash = (window.location.hash).slice(1);
-      const cardContents = document.querySelectorAll(".card-content");
+      const cardContents = document.querySelectorAll(".card-content-dropdown");
       cardContents.forEach((item) => {
         const id = item.getAttribute("id");
         if (hash === id) {
