@@ -22,7 +22,6 @@ triggers:
     activationThreshold: '5.5'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
-    cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
@@ -37,7 +36,6 @@ triggers:
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
-- `cortexOrgID` - DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of `customHeaders` and will be removed in version 2.12. Use `customHeaders: X-Scope-OrgID=##` instead to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
