@@ -92,5 +92,5 @@ spec:
     metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
     metadata:
       value: "50"
-      containerName: "api"
+      containerName: "foo"
 ```

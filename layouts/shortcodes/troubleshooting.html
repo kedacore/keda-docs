@@ -9,8 +9,9 @@
     <p class="card-header-title title is-size-4 is-size-4-mobile">
       {{ $problem }}
     </p>
+    <button class="copyBtn" id="{{ $id }}"><i class="fas fa-link" style="color: #0c0d0d;"></i></button>
   </header>
-  <div class="card-content" x-show="open">
+  <div class="card-content card-content-dropdown" x-show="open" id="{{ $id }}">
     <div class="content is-medium has-text-grey-dark">
       {{ $solution }}
     </div>
