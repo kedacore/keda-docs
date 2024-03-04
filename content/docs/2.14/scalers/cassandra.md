@@ -102,7 +102,7 @@ data:
   tls.key: <STRICTLY DO NOT MODIFY THIS>
   cassandra-server1-cert.pem: <add cassandra server 1 cert content>
   cassndra-server1-key.pem: <add cassandra server 1 key content>
-  #Similarly we can any number of certs and keys based on no of differnt cassandra server connections
+  #Similarly we can add any number of certs and keys based on no of differnt cassandra server connections
   cassandra-server2-cert.pem: <add cassandra server 2 cert content>
   cassndra-server2-key.pem: <add cassandra server 2 key content>
   ...
