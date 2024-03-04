@@ -45,8 +45,8 @@ You can authenticate by using a password via `TriggerAuthentication` configurati
 
 - `password` - Password for configured user to log in to the Cassandra instance.
 - `tls` - To enable SSL auth for Cassandra session, set this to enable. If not set, TLS for Cassandra is not used. (Values: enable, disable, Default: disable, Optional).
-- `cert` - Certificate path for client authentication. Mandatory is tls enabled. (Optional)
-- `key` - Key path for client authentication. Mandatory is tls enabled. (Optional)
+- `cert` - Certificate path for client authentication. Mandatory if tls enabled. (Optional)
+- `key` - Key path for client authentication. Mandatory if tls enabled. (Optional)
 
 ### Example with no TLS auth
 
