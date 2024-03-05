@@ -102,6 +102,7 @@ data:
   tls.key: <STRICTLY DO NOT MODIFY THIS>
   cassandra-server1-cert.pem: <add cassandra server 1 cert content>
   cassndra-server1-key.pem: <add cassandra server 1 key content>
+  cassndra-server1-ca.pem: <add cassandra server 1 ca content> # Optional caPath
   #Similarly we can add any number of certs and keys based on number of differnt cassandra server connections
   cassandra-server2-cert.pem: <add cassandra server 2 cert content>
   cassndra-server2-key.pem: <add cassandra server 2 key content>
@@ -140,6 +141,10 @@ spec:
   - parameter: key
     name: cassandra-secrets
     key: key
+  ## Optional parameter caPath ##
+  - parameter: ca
+    name: cassandra-secrets
+    key: ca
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
