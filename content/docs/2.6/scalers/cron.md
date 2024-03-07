@@ -16,8 +16,8 @@ triggers:
   metadata:
     # Required
     timezone: Asia/Kolkata  # The acceptable values would be a value from the IANA Time Zone Database.
-    start: 30 * * * *       # Every hour on the 30th minute
-    end: 45 * * * *         # Every hour on the 45th minute
+    start: 0 6 * * *        # At 6:00 AM
+    end: 0 20 * * *         # At 8:00 PM
     desiredReplicas: "10"
 ```
 
@@ -35,8 +35,8 @@ triggers:
 >
 > For example, the following schedule is not valid:
 > ```yaml
-> start: 30 * * * *
-> end: 30 * * * *
+> start: 0 6 * * *        # At 6:00 AM
+> end: 0 6 * * *          # also at 6:00 AM
 >```
 
 ### How does it work?
@@ -64,7 +64,7 @@ spec:
   - type: cron
     metadata:
       timezone: Asia/Kolkata
-      start: 30 * * * *
-      end: 45 * * * *
+      start: 0 6 * * *
+      end: 0 20 * * *
       desiredReplicas: "10"
 ```
