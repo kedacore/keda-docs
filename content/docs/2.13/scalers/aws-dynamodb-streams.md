@@ -32,7 +32,7 @@ triggers:
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `tableName` - The target DynamoDB table to which the stream belongs.
 - `shardCount` - The target value that a DynamoDB streams consumer can handle. (Default: `2`, Optional)
-- `activationShardCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationShardCount` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `identityOwner` - Receive permissions on the DynamoDB and DynamoDB Streams via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the DynamoDB and Dynamodb Streams. Additional Authentication Parameters are not required.

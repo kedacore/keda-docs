@@ -27,7 +27,7 @@ triggers:
 - `destinationName` - Name of the queue to check for the message count.
 - `brokerName` - Name of the broker as defined in ActiveMQ.
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `10`, Optional)
-- `activationTargetQueueSize` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationTargetQueueSize` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize"`, Optional)
 - `corsHeader` - Value to populate the Origin header field for CORS filtering. (Default: `"http://<<managmentEndpoint>>"`, Optional)
 

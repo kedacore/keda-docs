@@ -33,7 +33,7 @@ triggers:
 - `dbName` - Name of the database. It can also be provided as an authentication parameter.
 - `collection` - Name of the collection.
 - `threshold` - A threshold that will define when scaling should occur.
-- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `serverID` - The unique ArangoDB server ID. Only required if bearer JWT is being used. (Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional)
 - `connectionLimit` - Specify the max size of the active connection pool. (Optional)
@@ -67,7 +67,7 @@ metadata:
 spec:
   maxReplicaCount: 12
   scaleTargetRef:
-    name: nginx
+    name: arangodb-deployment
   triggers:
     - type: arangodb
       metadata:
