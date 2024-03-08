@@ -49,7 +49,6 @@ When the time window starts, it will scale from the minimum number of replicas t
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
-
 ### Scale to 0 during off hours
 
 If you want to scale you deployment to 0 outside office hours / working hours,

@@ -49,7 +49,15 @@ When the time window starts, it will scale from the minimum number of replicas t
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
-### Example
+### Scale to 0 during off hours
+
+If you want to scale you deployment to 0 outside office hours / working hours,
+you need to set `minReplicaCount: 0` in the ScaledObject, and increase the
+replicas during work hours. That way the Deployment will be scaled to 0 ouside
+that time window. It's almost always an error to try to do the other way
+around, i.e. set `desiredReplicas: 0` in the cron trigger.
+
+#### Example that scales to 10 from 6AM to 8PM and to 0 otherwise
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -60,6 +68,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: my-deployment
+  minReplicaCount: 0,
   triggers:
   - type: cron
     metadata:

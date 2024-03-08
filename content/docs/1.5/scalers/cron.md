@@ -28,6 +28,8 @@ triggers:
 - `end` - Cron expression indicating the end of the cron schedule.
 - `desiredReplicas` - Number of replicas to which the resource has to be scaled between the start and end of the cron schedule.
 
+> 💡 **Note:** `start`/`end` support ["Linux format cron"](https://en.wikipedia.org/wiki/Cron) (Minute Hour Dom Month Dow).
+
 > **Notice:**
 > **Start and end should not be same.**
 >
@@ -47,17 +49,26 @@ When the time window starts, it will scale from the minimum number of replicas t
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
-### Example
+### Scale to 0 during off hours
+
+If you want to scale you deployment to 0 outside office hours / working hours,
+you need to set `minReplicaCount: 0` in the ScaledObject, and increase the
+replicas during work hours. That way the Deployment will be scaled to 0 ouside
+that time window. It's almost always an error to try to do the other way
+around, i.e. set `desiredReplicas: 0` in the cron trigger.
+
+#### Example that scales to 10 from 6AM to 8PM and to 0 otherwise
 
 ```yaml
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: cron-scaledobject
   namespace: default
 spec:
   scaleTargetRef:
-    deploymentName: my-deployment
+    name: my-deployment
+  minReplicaCount: 0,
   triggers:
   - type: cron
     metadata:
