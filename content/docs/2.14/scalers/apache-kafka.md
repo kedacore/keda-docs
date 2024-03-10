@@ -94,6 +94,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `keytab` - Kerberos keytab.  Either `password` or `keytab` is required in case of `gssapi`.  (Optional)
 - `realm` - Kerberos realm.  (Optional unless sasl mode is `gssapi`)
 - `kerberosConfig` - Kerberos configuration file. (Optional unless sasl mode is `gssapi`)
+- `kerberosServiceName` - Kerberos service name. (Optional takes default value of `kafka` if not provided)
 - `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
 - `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
 - `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
