@@ -34,6 +34,8 @@ Alternatively, you can configure connection parameters explicitly instead of pro
 triggers:
   - type: mongodb
     metadata:
+      # scheme of the MongoDB server. if using MongoDB Altas, you can set it to "mongodb+srv"
+      scheme: "mongodb"
       # host name of the MongoDB server. Example of mongodb service: "mongodb-svc.<namespace>.svc.cluster.local"
       host: mongodb-svc.default.svc.cluster.local
       # port number of the MongoDB server.
@@ -70,6 +72,7 @@ To connect to the MongoDB server, you can provide either:
 
 Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
 
+- `scheme` - The scheme of the MongoDB server, if using MongoDB Atlas, you can set it to `mongodb+srv`. (Default: `mongodb`, Optional)
 - `host` - The host name of the MongoDB server.
 - `port` - The port number of the MongoDB server.
 - `username` - Username to authenticate with to MongoDB database.
@@ -78,7 +81,7 @@ Or provide more detailed connection parameters explicitly (a connection string w
 When configuring with a connection string, you can use this URL format:
 
 ```
-mongodb://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
+mongodb[+srv]://<username>:<password>@mongodb-svc.<namespace>.svc.cluster.local:27017/<database_name>
 ```
 
 
@@ -92,6 +95,7 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **Password Authentication:**
 
+- `scheme` - The scheme of the MongoDB server, if using MongoDB Atlas, you can set it to `mongodb+srv`. (Default: `mongodb`, Optional)
 - `host` - The host name of the MongoDB server.
 - `port` - The port number of the MongoDB server.
 - `username` - Username to authenticate with to MongoDB database.
