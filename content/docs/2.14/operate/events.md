@@ -49,6 +49,9 @@ spec:
   destination:
     http:
       uri: http://foo.bar
+    azureEventGrid:
+      endPoint: Endpoint:foo.bar
+      key: ***
 ```
 
 In general, an event emitted by KEDA would fundamentally come down to the following structure:
@@ -75,6 +78,7 @@ There will be multiple types of destination to emit KEDA events to.
 Here is an overview of the supported destinations:
 
 - [HTTP endpoint](#http-endpoint).
+- [Azure Event Grid endpoint](#azure-event-grid).
 
 #### HTTP endpoint
 ```yaml
@@ -82,6 +86,14 @@ Here is an overview of the supported destinations:
     http:
       uri: http://foo.bar  #An http endpoint that can receive cloudevent
 ```
+#### Azure Event Grid
+```yaml
+  destination:
+    azureEventGrid:
+      endPoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
+      key: *** #accesskey to  AzureEventGrid Topic
+```
+
 ### Supported Event List
 | Event Type                                | Scenario Description                                                                                                                 | 
 | ------------------------------------- |  --------------------------------------------------------------------------------------------------------------------------- | 
