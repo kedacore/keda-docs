@@ -50,7 +50,7 @@ spec:
     http:
       uri: http://foo.bar
     azureEventGrid:
-      endPoint: Endpoint:foo.bar
+      endpoint: https://my-topic.eastus-1.eventgrid.azure.net/api/events
       key: ***
 ```
 
