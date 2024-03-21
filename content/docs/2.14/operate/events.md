@@ -89,7 +89,9 @@ Here is an overview of the supported destinations:
 ```
 
 ### Event Filter
-KEDA also has the capability to filter CloudEvents by user. CloudEvents that are configured by type in ```includedEventTypes/excludedEventTypes``` will be included/excluded during emitting events to the sink.
+
+You can include filter(s) to define what event types you are interested in, or want to ignore. This is done by using `includedEventTypes` or `excludedEventTypes` respectively for a given sink.
+
 ```yaml
 eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
   includedEventTypes: #Optional. Only events in this section will be emitted.
