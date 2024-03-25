@@ -17,6 +17,10 @@
     </div>
     <div class="columns is-vcentered">
       <div class="column">
+        {{ partial "youtube-embed.html" (dict "youtube_id" "vDMLswzc9tI") }}
+      </div>
+
+      <div class="column">
         <p class="title has-text-white-bis is-spaced">
           An overview of Kubernetes Event-Driven Autoscaling (KEDA)
         </p>
@@ -24,10 +28,6 @@
         <p class="subtitle has-text-light">
           From KubeCon Europe 2022
         </p>
-      </div>
-
-      <div class="column">
-        {{ partial "youtube-embed.html" (dict "youtube_id" "vDMLswzc9tI") }}
       </div>
     </div>
   </div>
