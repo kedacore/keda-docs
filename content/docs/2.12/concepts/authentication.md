@@ -113,8 +113,8 @@ spec:
       serviceAccount: {path-to-service-account-file}                      # Optional.
     secrets:                                                              # Required.
     - parameter: {scaledObject-parameter-name}                            # Required.
-      key: {hasicorp-vault-secret-key-name}                               # Required.
-      path: {hasicorp-vault-secret-path}                                  # Required.
+      key: {hashicorp-vault-secret-key-name}                               # Required.
+      path: {hashicorp-vault-secret-path}                                  # Required.
   azureKeyVault:                                                          # Optional.
     vaultUri: {key-vault-address}                                         # Required.
     podIdentity:                                                          # Optional. Required when using pod identity.
@@ -225,8 +225,8 @@ hashiCorpVault:                                     # Optional.
     serviceAccount: {path-to-service-account-file}  # Optional.
   secrets:                                          # Required.
   - parameter: {scaledObject-parameter-name}        # Required.
-    key: {hasicorp-vault-secret-key-name}           # Required.
-    path: {hasicorp-vault-secret-path}              # Required.
+    key: {hashicorp-vault-secret-key-name}           # Required.
+    path: {hashicorp-vault-secret-path}              # Required.
 ```
 
 ### Azure Key Vault secret(s)
