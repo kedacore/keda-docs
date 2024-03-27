@@ -49,6 +49,11 @@ spec:
   destination:
     http:
       uri: http://foo.bar
+  eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
+    includedEventTypes: #Optional. Only events in this section will be emitted.
+    - keda.scaledobject.failed.v1
+    excludedEventTypes: #Optional. Events in this section will not be emitted.       
+    - keda.scaledobject.ready.v1
 ```
 
 In general, an event emitted by KEDA would fundamentally come down to the following structure:
@@ -82,6 +87,19 @@ Here is an overview of the supported destinations:
     http:
       uri: http://foo.bar  #An http endpoint that can receive cloudevent
 ```
+
+### Event Filter
+
+You can include filter(s) to define what event types you are interested in, or want to ignore. This is done by using `includedEventTypes` or `excludedEventTypes` respectively for a given sink.
+
+```yaml
+eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
+  includedEventTypes: #Optional. Only events in this section will be emitted.
+  - keda.scaledobject.failed.v1
+  excludedEventTypes: #Optional. Events in this section will not be emitted.       
+  - keda.scaledobject.ready.v1
+```
+
 ### Supported Event List
 | Event Type                                | Scenario Description                                                                                                                 | 
 | ------------------------------------- |  --------------------------------------------------------------------------------------------------------------------------- | 
