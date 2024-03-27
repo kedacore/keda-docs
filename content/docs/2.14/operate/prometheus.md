@@ -24,6 +24,11 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_internal_scale_loop_latency` - Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
 - `keda_cloudeventsource_events_emitted_total` - Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state.
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
+- `keda_grpc_server_started_total` - Total number of RPCs started on the server.
+- `keda_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
+- `keda_grpc_server_msg_received_total` - Total number of RPC stream messages received on the server.
+- `keda_grpc_server_msg_sent_total` - Total number of gRPC stream messages sent by the server.
+- `keda_grpc_server_handling_seconds` - Histogram of response latency (seconds) of gRPC that had been application-level handled by the server.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
 ### Admission Webhooks
@@ -37,6 +42,11 @@ The KEDA Webhooks expose Prometheus metrics which can be scraped on port `8080` 
 
 The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port `8080` at `/metrics`. The following metrics are being gathered:
 
+- `keda_grpc_client_started_total` - Total number of RPCs started on the client.
+- `keda_grpc_client_handled_total` - Total number of RPCs completed by the client, regardless of success or failure.
+- `keda_grpc_client_msg_received_total` - Total number of RPC stream messages received by the client.
+- `keda_grpc_client_msg_sent_total` - Total number of gRPC stream messages sent by the client.
+- `keda_grpc_client_handling_seconds` - Histogram of response latency (seconds) of the gRPC until it is finished by the application.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 - Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
 
