@@ -12,40 +12,40 @@ This specification describes the `aws-cloudwatch` trigger that scales based on a
 
 ```yaml
 triggers:
-  - type: aws-cloudwatch
-    metadata:
-      # Optional: namespace
-      namespace: AWS/SQS
-      # Optional: Dimension Name
-      dimensionName: QueueName
-      # Optional: Dimension Value
-      dimensionValue: keda
-      # Optional: Expression query
-      expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
-      # Optional: metricName
-      metricName: ApproximateNumberOfMessagesVisible
-      targetMetricValue: "2.1"
-      minMetricValue: "1.5"
-      # Required: region
-      awsRegion: "eu-west-1"
-      # Optional: AWS endpoint url
-      awsEndpoint: ""
-      # Optional: AWS Access Key ID, can use TriggerAuthentication as well
-      awsAccessKeyIDFromEnv: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
-      # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
-      awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
-      # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
-      identityOwner: pod | operator
-      # Optional: Collection Time
-      metricCollectionTime: "300" # default 300
-      # Optional: Metric Statistic
-      metricStat: "Average" # default "Average"
-      # Optional: Metric Statistic Period
-      metricStatPeriod: "300" # default 300
-      # Optional: Metric Unit
-      metricUnit: "Count" # default ""
-      # Optional: Metric EndTime Offset
-      metricEndTimeOffset: "60" # default 0
+- type: aws-cloudwatch
+  metadata:
+    # Optional: namespace
+    namespace: AWS/SQS
+    # Optional: Dimension Name
+    dimensionName: QueueName
+    # Optional: Dimension Value
+    dimensionValue: keda
+    # Optional: Expression query
+    expression: SELECT MAX("ApproximateNumberOfMessagesVisible") FROM "AWS/SQS" WHERE QueueName = 'keda'
+    # Optional: metricName
+    metricName: ApproximateNumberOfMessagesVisible
+    targetMetricValue: "2.1"
+    minMetricValue: "1.5"
+    # Required: region
+    awsRegion: "eu-west-1"
+    # Optional: AWS endpoint url
+    awsEndpoint: ""
+    # Optional: AWS Access Key ID, can use TriggerAuthentication as well
+    awsAccessKeyIDFromEnv: AWS_ACCESS_KEY_ID # default AWS_ACCESS_KEY_ID
+    # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
+    awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
+    # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
+    identityOwner: pod | operator
+    # Optional: Collection Time
+    metricCollectionTime: "300" # default 300
+    # Optional: Metric Statistic
+    metricStat: "Average" # default "Average"
+    # Optional: Metric Statistic Period
+    metricStatPeriod: "300" # default 300
+    # Optional: Metric Unit
+    metricUnit: "Count" # default ""
+    # Optional: Metric EndTime Offset
+    metricEndTimeOffset: "60" # default 0
 ```
 
 **Parameter list:**
@@ -60,7 +60,7 @@ triggers:
 
 - `identityOwner` - Receive permissions for CloudWatch via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
 
-  > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
+> When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
 - `metricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). The value of `metricCollectionTime` must be greater than the `metricStatPeriod`, providing a value which is a multiple of the `metricStatPeriod` can improve performance on fetching data from Cloudwatch. In practice setting `metricCollectionTime` 2-to-3 times more than the `metricStatPeriod` value can make sure the scaler is able to get data points back from Cloudwatch, the scaler will always use the most up-to-date datapoint if more datapoints are returned. (Default: `300`, Optional)
 - `metricStat` - Which statistics metric to be used by the query. Used to define **Stat** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Statistic)). (Default: `Average`, Optional)
