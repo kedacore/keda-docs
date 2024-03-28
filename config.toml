@@ -240,10 +240,16 @@ parent = "community"
 weight = 5
 
 [[menu.main]]
+url = "/videos/"
+name = "Videos"
+parent = "community"
+weight = 6
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 6
+weight = 7
 
 [[menu.main]]
 name = "Project"
