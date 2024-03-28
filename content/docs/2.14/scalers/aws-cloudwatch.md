@@ -26,6 +26,8 @@ triggers:
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2.1"
     minMetricValue: "1.5"
+    # Optional: errorWhenMetricValuesEmpty
+    errorWhenMetricValuesEmpty: false
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS endpoint url
@@ -67,6 +69,8 @@ triggers:
 - `metricUnit` - Which unit to be used by the query. Used to define **Unit** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit)). (Default: `none`, Optional)
 - `metricEndTimeOffset` - How long in seconds to offset the **EndTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). Due to the eventual consistency model which is used by Cloudwatch, the latest datapoint one can get from Cloudwatch might not be accurate. The `metricEndTimeOffset` config provides a way to skip the most recent datapoint if needed. (Default: `0`, Optional)
 - `minMetricValue`- Returned value in case of empty response from cloudwatch. (Default: 0, This value can be a float)
+- `errorWhenMetricValuesEmpty`- If set to `true`, the scaler will return an error when the metric query is empty. This is to avoid any scaling activity if
+no metrics are available in the query window, as opposed to scaling the workload based on the minMetricValue above. If set to `true`, takes precedence over `minMetricValue`. (Default: `false`, Optional)
 - `targetMetricValue`- Target value for the metric. (Default: 0, This value can be a float)
 - `activationTargetMetricValue`- Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
