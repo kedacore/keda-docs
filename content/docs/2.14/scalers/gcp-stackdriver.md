@@ -31,7 +31,7 @@ triggers:
 - `filter` - The stackdriver query filter for obtaining the metric. The metric is for the last minute and if multiple values are returned, the first one is used.
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional, This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `valueIfNull` - Value return if request return no timeseries.(Default: `""`, Optional, This value can be a float) 
+- `valueIfNull` - Value return if request return no timeseries.(Default: `""`, Optional, This value can be a float)
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 
@@ -41,8 +41,8 @@ The `alignmentPeriodSeconds`, `alignmentAligner` and `alignmentReducer` properti
 It is much better to aggregate the time series values before they are returned from stackdriver instead of getting the raw values.
 For that, you must specify a value of 60 or more for the `alignmentPeriodSeconds` property as well as an alignment operation in the `alignmentAligner` property and/or a reducer in the `alignmentReducer` property.
 
-Valid values for the `alignmentAligner` property are: none, delta, interpolate, next_older, min, max, mean, count, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50, percentile_05 and percent_change.
-Valid values for the `alignmentReducer` property are: none, mean, min, max, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50 and percentile_05.
+Valid values for the `alignmentAligner` property are: none, delta, rate, interpolate, next_older, min, max, mean, count, sum, stddev, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50, percentile_05 and percent_change.
+Valid values for the `alignmentReducer` property are: none, mean, min, max, sum, stddev, count, count_true, count_false, fraction_true, percentile_99, percentile_95, percentile_50 and percentile_05.
 
 For more information on aggregation, see [here](https://cloud.google.com/monitoring/api/v3/aggregation#aggr-intro).
 
