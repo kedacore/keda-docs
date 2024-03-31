@@ -130,6 +130,8 @@ This can be further scoped to specific namespaces, by using the `cloudwatch:name
 }
 ```
 
+For more information, see the [AWS CloudWatch IAM documentation](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazoncloudwatch.html).
+
 ### Example
 
 ```yaml
