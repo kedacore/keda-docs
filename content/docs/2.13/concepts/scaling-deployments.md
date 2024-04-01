@@ -397,7 +397,7 @@ metadata:
 spec:
    advanced:
       horizontalPodAutoscalerConfig:
-      name: {name-of-hpa-resource}
+        name: {name-of-hpa-resource}
 ```
 
 > ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.
