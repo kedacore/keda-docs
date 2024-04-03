@@ -551,6 +551,10 @@ url = "https://www.swisslife.ch/"
 logo = "swisslife.jpg"
 
 [[params.users]]
+url = "https://www.taotesting.com"
+logo = "taotesting.png"
+
+[[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
