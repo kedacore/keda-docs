@@ -90,8 +90,26 @@ Here is an overview of the supported destinations:
 ```yaml
   destination:
     azureEventGrid:
-      endPoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
-      key: *** #accesskey to  AzureEventGrid Topic
+      endpoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
+```
+```TriggerAuthentication``` is needed to provide accesskey or identity for Azure Evnet Grid authentication.
+
+**Connection String Authentication:**
+
+- `key` - accesskey string for the Azure Event Grid auth.
+
+**Pod identity based authentication:**
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: nameOfTriggerAuth
+  namespace: default
+spec:
+  podIdentity:
+    provider: azure-workload
 ```
 
 ### Supported Event List
