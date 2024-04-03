@@ -555,6 +555,10 @@ url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
 [[params.users]]
+url = "https://www.taotesting.com"
+logo = "taotesting.png"
+
+[[params.users]]
 url = "https://www.unitary.ai/"
 logo = "unitary.png"
 
