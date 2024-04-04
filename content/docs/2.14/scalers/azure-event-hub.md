@@ -56,6 +56,8 @@ triggers:
 - `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`).
 - `storageEndpointSuffix` - Blob Storage endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `airgap.example`. Do not include the `blob` part of the endpoint.)
 
+> When using pod identity, Microsoft Entra ID endpoint is recovered via `AZURE_AUTHORITY_HOST` env var provided by https://azure.github.io/azure-workload-identity/docs/installation/mutating-admission-webhook.html
+
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
 > 💡 The Azure Storage connection string is not compatible with connection string created from a Shared Access Signature.
