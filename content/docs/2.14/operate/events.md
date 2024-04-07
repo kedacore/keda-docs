@@ -19,7 +19,7 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 | `KEDAScalersStarted`                  | `Normal`  | When Scalers watch loop have started for a ScaledObject or ScaledJob |                                                           |
 | `KEDAScalersStopped`                  | `Normal`  | When Scalers watch loop have stopped for a ScaledObject or a ScaledJob |                                                         |
 | `KEDAScalerFailed`                    | `Warning` | When a Scaler fails to create or check its event source|                                                                       |
-| `KEDAScaleTargetActivated`            | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 1|                                         |
+| `KEDAScaleTargetActivated`            | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 1, triggered by {scalers1;scalers2;...}|                                         |
 | `KEDAScaleTargetDeactivated`          | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 0 |                                        |
 | `KEDAScaleTargetActivationFailed`     | `Warning` | When KEDA fails to scale the scale target of a ScaledObject to 1|                                                              |
 | `KEDAScaleTargetDeactivationFailed`   | `Warning` | When KEDA fails to scale the scale target of a ScaledObject to 0|                                                              |
