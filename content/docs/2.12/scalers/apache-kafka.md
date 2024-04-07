@@ -36,7 +36,7 @@ triggers:
     partitionLimitation: '1,2,10-20,31'
     sasl: plaintext
     tls: enable
-    unsafeSsl: false
+    unsafeSsl: 'false'
 ```
 
 **Parameter list:**
