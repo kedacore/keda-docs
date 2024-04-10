@@ -18,27 +18,33 @@ This document describes the external scaler interfaces and how to implement them
 Since external scalers mirror the interface of built-in scalers, it's worth becoming familiar with the Go `interface` that the built-in scalers implement:
 
 ```go
+// Scaler interface
 type Scaler interface {
-	GetMetrics(ctx context.Context, metricName string) ([]external_metrics.ExternalMetricValue, error)
-	GetMetricSpecForScaling() []v2beta2.MetricSpec
-	IsActive(ctx context.Context) (bool, error)
-	Close() error
+	// GetMetricsAndActivity returns the metric values and activity for a metric Name
+	GetMetricsAndActivity(ctx context.Context, metricName string) ([]external_metrics.ExternalMetricValue, bool, error)
+	// GetMetricSpecForScaling returns the metrics based on which this scaler determines that the ScaleTarget scales. This is used to construct the HPA spec that is created for
+	// this scaled object. The labels used should match the selectors used in GetMetrics
+	GetMetricSpecForScaling(ctx context.Context) []v2.MetricSpec
+	// Close any resources that need disposing when scaler is no longer used or destroyed
+	Close(ctx context.Context) error
 }
 
+// PushScaler interface
 type PushScaler interface {
 	Scaler
 
+	// Run is the only writer to the active channel and must close it once done.
 	Run(ctx context.Context, active chan<- bool)
 }
+
 ```
 
-The `Scaler` interface defines 4 methods:
+The `Scaler` interface defines 3 methods:
 
-- `IsActive` is called on `pollingInterval`. When `isActive` returns `true`, KEDA will scale to what is returned by `GetMetricSpec` limited by `maxReplicaCount` on the ScaledObject/ScaledJob.
-  When `false` is returned, KEDA will scale to `minReplicaCount` or optionally `idleReplicaCount`. More details around the defaults and how these options work together can be found on the [ScaledObjectSpec](https://keda.sh/docs/2.6/concepts/scaling-deployments/#scaledobject-spec).
 - `Close` is called to allow the scaler to clean up connections or other resources.
-- `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
-- `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
+- `GetMetricSpecForScaling` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
+- `GetMetricsAndActivity` is called on `pollingInterval` and. When activity returns `true`, KEDA will scale to what is returned by the metric limited by `maxReplicaCount` on the ScaledObject/ScaledJob.
+  When `false` is returned, KEDA will scale to `minReplicaCount` or optionally `idleReplicaCount`. More details around the defaults and how these options work together can be found on the [ScaledObjectSpec](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec).
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA supports both `AverageValue` and `Value` metric target types for external metrics. When `AverageValue` (the default metric type) is used, the metric value returned by the external scaler will be divided by the number of replicas.
 
 The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
@@ -60,8 +66,8 @@ service ExternalScaler {
 
 Much of this contract is similar to the built-in scalers:
 
-- `GetMetrics` and `GetMetricsSpec` mirror their counterparts in the `Scaler` interface for creating HPA definition.
-- `IsActive` maps to the `IsActive` method on the `Scaler` interface.
+- `GetMetricsSpec` mirrors its counterpart in the `Scaler` interface for creating HPA definition.
+- `IsActive` and `GetMetrics` map to the `GetMetricsAndActivity` method on the `Scaler` interface.
 - `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
 There are, however, some notable differences:
