@@ -180,6 +180,13 @@ It accepts either a single namespace, list of namespaces separated by comma or a
 
 When a certain namespace is configured, and then a `ScaledObject` or `ScaledJob` is created in a different namespaces, it will be ignored by the operator.
 
+Example:
+
+```yaml
+- env:
+    WATCH_NAMESPACE: keda,production
+```
+
 ## Certificates used by KEDA Metrics Server
 
 To learn more please refer to [security section](./security#use-your-own-tls-certificates)
