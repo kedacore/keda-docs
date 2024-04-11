@@ -39,8 +39,7 @@ kind: ScaledObject
 metadata:
   name: {scaled-object-name}
   annotations:
-    scaledobject.keda.sh/transfer-hpa-ownership: "true"     # Optional. Use to transfer an existing HPA ownership to this ScaledObject
-    validations.keda.sh/hpa-ownership: "true"               # Optional. Use to disable HPA ownership validation on this ScaledObject
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
     autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
     autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
 spec:
@@ -403,15 +402,6 @@ spec:
 
 > ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.
 
-## Disable validations on an existing HPA
-
-You are allowed to disable admission webhooks validations with the following snippet. It grants you better flexibility but also brings vulnerabilities. Do it **at your own risk**.
-
-```yaml
-metadata:
-  annotations:
-    validations.keda.sh/hpa-ownership: "true"
-```
 
 ## Long-running executions
 
