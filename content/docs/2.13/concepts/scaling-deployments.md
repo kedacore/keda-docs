@@ -405,7 +405,7 @@ spec:
 
 ## Disable validations on an existing HPA
 
-You are allowed to disable validations with the following snippet. It grants you better flexibility but also brings vulnerabilities. Do it **at your own risk**.
+You are allowed to disable admission webhooks validations with the following snippet. It grants you better flexibility but also brings vulnerabilities. Do it **at your own risk**.
 
 ```yaml
 metadata:
