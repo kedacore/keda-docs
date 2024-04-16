@@ -51,7 +51,6 @@ spec:
       uri: http://foo.bar
     azureEventGridTopic:
       endpoint: https://my-topic.eastus-1.eventgrid.azure.net/api/events
-      key: ***
 ```
 
 In general, an event emitted by KEDA would fundamentally come down to the following structure:
