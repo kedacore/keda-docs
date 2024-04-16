@@ -46,6 +46,9 @@ metadata:
   name: {cloud-event-name}
 spec:
   clusterName: {cluster-name} #Optional. Will be used in the source/subject to specify where the event comes from. The default value is 'kubernetes-default' and it can also be set during the installation of KEDA with --k8sClusterName. This one will overwrite others if set.
+  authenticationRef: 
+    name: {trigger-authentication-name} #Optional. Used to reference a `TriggerAuthentication` for authentication. 
+    kind: ClusterTriggerAuthentication #Optional. Used to choose the authenticatio scopes. https://keda.sh/docs/2.13/concepts/authentication/#authentication-scopes-namespace-vs-cluster
   destination:
     http:
       uri: http://foo.bar
@@ -98,11 +101,11 @@ Here is an overview of the supported destinations:
     azureEventGrid:
       endpoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
 ```
-```TriggerAuthentication``` is needed to provide accesskey or identity for Azure Evnet Grid authentication.
+```TriggerAuthentication``` is needed to provide accesskey or identity for Azure Event Grid authentication. ```authenticationRef``` should be configured when sinking to Azure Event Grid
 
 **Connection String Authentication:**
 
-- `azureEventGridAcceessKey` - Access key string for the Azure Event Grid auth.
+- `accessKey` - Access key string for the Azure Event Grid connection auth.
 
 **Pod identity based authentication:**
 [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
