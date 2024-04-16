@@ -35,7 +35,7 @@ triggers:
     # Optional: AWS Secret Access Key, can use TriggerAuthentication as well
     awsSecretAccessKeyFromEnv: AWS_SECRET_ACCESS_KEY # default AWS_SECRET_ACCESS_KEY
     # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
-    identityOwner: pod | operator 
+    identityOwner: pod | operator
     # Optional: Collection Time
     metricCollectionTime: "300" # default 300
     # Optional: Metric Statistic
@@ -59,6 +59,7 @@ triggers:
 - `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
 
 - `identityOwner` - Receive permissions for CloudWatch via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
+
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
 - `metricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). The value of `metricCollectionTime` must be greater than the `metricStatPeriod`, providing a value which is a multiple of the `metricStatPeriod` can improve performance on fetching data from Cloudwatch. In practice setting `metricCollectionTime` 2-to-3 times more than the `metricStatPeriod` value can make sure the scaler is able to get data points back from Cloudwatch, the scaler will always use the most up-to-date datapoint if more datapoints are returned. (Default: `300`, Optional)
@@ -89,6 +90,47 @@ You can use `TriggerAuthentication` CRD to configure authentication by providing
 - `awsSessionToken` - Session token, only required when using [temporary credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html).
 
 The user will need access to read data from AWS CloudWatch.
+
+### IAM Permissions
+
+The user or role used to authenticate with AWS CloudWatch must have the `cloudwatch:GetMetricData` permissions. The following is an example IAM policy that grants the necessary permissions to read data from CloudWatch:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCloudWatchGetMetricData",
+      "Effect": "Allow",
+      "Action": "cloudwatch:GetMetricData",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+This can be further scoped to specific namespaces, by using the `cloudwatch:namespace` condition key. For example, to only allow access to the `AWS/EC2` metric namespace:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCloudWatchGetMetricData",
+      "Effect": "Allow",
+      "Action": "cloudwatch:GetMetricData",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "cloudwatch:namespace": "AWS/EC2"
+        }
+      }
+    }
+  ]
+}
+```
+
+For more information, see the [AWS CloudWatch IAM documentation](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazoncloudwatch.html).
 
 ### Example
 

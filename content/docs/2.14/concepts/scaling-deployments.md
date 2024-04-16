@@ -39,8 +39,8 @@ kind: ScaledObject
 metadata:
   name: {scaled-object-name}
   annotations:
-    scaledobject.keda.sh/transfer-hpa-ownership: "true"      # Optional. Use to transfer an existing HPA ownership to this ScaledObject
-    autoscaling.keda.sh/paused-replicas: "0"                # Optional. Use to pause autoscaling of objects
+    scaledobject.keda.sh/transfer-hpa-ownership: "true"     # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+    validations.keda.sh/hpa-ownership: "true"               # Optional. Use to disable HPA ownership validation on this ScaledObject
     autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
 spec:
   scaleTargetRef:
@@ -109,6 +109,17 @@ The period to wait after the last trigger reported active before scaling the res
 The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
+
+---
+#### initialCooldownPeriod
+```yaml
+   InitialCooldownPeriod:  120 # Optional. Default: 0 seconds
+```
+The delay before the `cooldownPeriod` starts after the initial creation of the `ScaledObject`. By default, this is 0 seconds, meaning the `cooldownPeriod` begins immediately upon creation. If set to a value such as 120 seconds, the `cooldownPeriod` will only start after the `ScaledObject` has been active for that duration.
+
+This parameter is particularly useful for managing the scale-down behavior during the initial phase of a `ScaledObject`. For instance, if `InitialCooldownPeriod` is set to 120 seconds, KEDA will not scale the resource back to 0 until 120 seconds have passed since the `ScaledObject` creation, regardless of the activity triggers. This allows for a grace period in situations where immediate scaling down after creation is not desirable.
+
+**Example:** Wait 120 seconds after the `ScaledObject` is created before starting the `cooldownPeriod`. For instance, if the `InitialCooldownPeriod` is set to 120 seconds, KEDA will not initiate the cooldown process until 120 seconds have passed since the `ScaledObject` was first created, regardless of the triggers' activity. This ensures a buffer period where the resource won’t be scaled down immediately after creation. (Note: This setting is independent of the `pollingInterval`.)
 
 ---
 #### idleReplicaCount
@@ -397,11 +408,20 @@ metadata:
 spec:
    advanced:
       horizontalPodAutoscalerConfig:
-      name: {name-of-hpa-resource}
+        name: {name-of-hpa-resource}
 ```
 
 > ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.
 
+## Disable validations on an existing HPA
+
+You are allowed to disable admission webhooks validations with the following snippet. It grants you better flexibility but also brings vulnerabilities. Do it **at your own risk**.
+
+```yaml
+metadata:
+  annotations:
+    validations.keda.sh/hpa-ownership: "true"
+```
 
 ## Long-running executions
 

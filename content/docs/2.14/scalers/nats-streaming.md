@@ -39,7 +39,14 @@ You can authenticate with the NATS streaming server by using connection string a
 
 - `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
 
-### Example
+**TLS Authentication**
+
+- `tls` - To enable SSL auth for nats-streaming, set this to `enable`. If not set, TLS for nats-streaming is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS client authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+
+### Example without any TriggerAuthentication
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -64,7 +71,7 @@ spec:
       lagThreshold: "10"
       useHttps: "false"
 ```
-#### Example with TriggerAuthentication:
+#### Example with no TLS
 
 ```yaml
 apiVersion: v1
@@ -106,6 +113,64 @@ spec:
       durableName: "ImDurable"
       subject: "Test"
       lagThreshold: "10"
+    authenticationRef:
+      name: keda-trigger-auth-stan-secret
+```
+
+#### Example with TLS
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-stan-secrets
+  namespace: default
+data:
+  tls: enable
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-stan-secret
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: tls
+      name: keda-stan-secrets
+      key: tls
+    - parameter: ca
+      name: keda-stan-secrets
+      key: ca
+    - parameter: cert
+      name: keda-stan-secrets
+      key: cert
+    - parameter: key
+      name: keda-stan-secrets
+      key: key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: stan-scaledobject
+  namespace: example
+spec:
+  pollingInterval: 10   # Optional. Default: 30 seconds
+  cooldownPeriod: 30   # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 30  # Optional. Default: 100
+  scaleTargetRef:
+    name: gonuts-sub
+  triggers:
+  - type: stan
+    metadata:
+      queueGroup: "grp1"
+      durableName: "ImDurable"
+      subject: "Test"
+      lagThreshold: "10"
+      useHttps: "true"
     authenticationRef:
       name: keda-trigger-auth-stan-secret
 ```

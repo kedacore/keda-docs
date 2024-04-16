@@ -19,6 +19,7 @@ triggers:
 - type: metrics-api
   metadata:
     targetValue: "8.8"
+    format: "json"
     activationTargetValue: "3.8"
     url: "http://api:3232/api/v1/stats"
     valueLocation: "components.worker.tasks"
@@ -27,7 +28,14 @@ triggers:
 **Parameter list:**
 
 - `url` - Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
-- `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
+- `format` - One of the following formats: `json`, `xml`, `yaml`, `prometheus`. (Default: `json`, Optional)
+- `valueLocation` - The location of the metric value in the response payload. The value is format specific.
+  * `json` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
+  * `yaml`, `xml`, `prometheus` - implemented as dot-separated path algorithm for value parsing.
+    * `{foo: {bar: 42}}` - `foo.bar` will return 42
+    * `{foo: [{bar: 42}]}` - `foo.0.bar` will return 42
+    * same syntax is used for `yaml`, `xml` and `prometheus` formats.
+
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
@@ -35,8 +43,8 @@ triggers:
 
 ### Authentication Parameters
 
-Metrics Scaler API supported three types of authentication - API Key based authentication, basic authentication and TLS
-authentication.
+Metrics Scaler API supported four types of authentication - API Key based authentication, basic authentication, TLS
+authentication, and Bearer authentication.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
  along with secret credentials in `TriggerAuthentication` as mentioned below:

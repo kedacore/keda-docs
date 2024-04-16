@@ -240,10 +240,16 @@ parent = "community"
 weight = 5
 
 [[menu.main]]
+url = "/videos/"
+name = "Videos"
+parent = "community"
+weight = 6
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 6
+weight = 7
 
 [[menu.main]]
 name = "Project"
@@ -543,6 +549,10 @@ logo = "stilingue.png"
 [[params.users]]
 url = "https://www.swisslife.ch/"
 logo = "swisslife.jpg"
+
+[[params.users]]
+url = "https://www.taotesting.com"
+logo = "taotesting.svg"
 
 [[params.users]]
 url = "https://www.teamleader.eu"

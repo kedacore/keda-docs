@@ -19,7 +19,7 @@ KEDA emits the following [Kubernetes Events](https://kubernetes.io/docs/referenc
 | `KEDAScalersStarted`                  | `Normal`  | When Scalers watch loop have started for a ScaledObject or ScaledJob |                                                           |
 | `KEDAScalersStopped`                  | `Normal`  | When Scalers watch loop have stopped for a ScaledObject or a ScaledJob |                                                         |
 | `KEDAScalerFailed`                    | `Warning` | When a Scaler fails to create or check its event source|                                                                       |
-| `KEDAScaleTargetActivated`            | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 1|                                         |
+| `KEDAScaleTargetActivated`            | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 1, triggered by {scalers1;scalers2;...}|                                         |
 | `KEDAScaleTargetDeactivated`          | `Normal`  | When the scale target (Deployment, StatefulSet, etc) of a ScaledObject is scaled to 0 |                                        |
 | `KEDAScaleTargetActivationFailed`     | `Warning` | When KEDA fails to scale the scale target of a ScaledObject to 1|                                                              |
 | `KEDAScaleTargetDeactivationFailed`   | `Warning` | When KEDA fails to scale the scale target of a ScaledObject to 0|                                                              |
@@ -51,6 +51,12 @@ spec:
       uri: http://foo.bar
     azureEventGridTopic:
       endpoint: https://my-topic.eastus-1.eventgrid.azure.net/api/events
+
+  eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
+    includedEventTypes: #Optional. Only events in this section will be emitted.
+    - keda.scaledobject.failed.v1
+    excludedEventTypes: #Optional. Events in this section will not be emitted.       
+    - keda.scaledobject.ready.v1
 ```
 
 In general, an event emitted by KEDA would fundamentally come down to the following structure:
@@ -85,6 +91,7 @@ Here is an overview of the supported destinations:
     http:
       uri: http://foo.bar  #An http endpoint that can receive cloudevent
 ```
+
 #### Azure Event Grid
 ```yaml
   destination:
@@ -109,6 +116,17 @@ metadata:
 spec:
   podIdentity:
     provider: azure-workload
+
+### Event Filter
+
+You can include filter(s) to define what event types you are interested in, or want to ignore. This is done by using `includedEventTypes` or `excludedEventTypes` respectively for a given sink.
+
+```yaml
+eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
+  includedEventTypes: #Optional. Only events in this section will be emitted.
+  - keda.scaledobject.failed.v1
+  excludedEventTypes: #Optional. Events in this section will not be emitted.       
+  - keda.scaledobject.ready.v1
 ```
 
 ### Supported Event List
