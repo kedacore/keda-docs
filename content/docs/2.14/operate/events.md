@@ -95,7 +95,7 @@ Here is an overview of the supported destinations:
 
 **Connection String Authentication:**
 
-- `key` - accesskey string for the Azure Event Grid auth.
+- `key` - Access key string for the Azure Event Grid auth.
 
 **Pod identity based authentication:**
 [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
