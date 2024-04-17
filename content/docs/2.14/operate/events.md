@@ -123,6 +123,7 @@ metadata:
 spec:
   podIdentity:
     provider: azure-workload
+```
 
 ### Event Filter
 
