@@ -107,7 +107,7 @@ Authentication information must be provided by using `authenticationRef` which a
 
 Here is an overview of the supported authentication types:
 
-**Connection String Authentication:**
+##### Connection String Authentication
 
 - `accessKey` - Access key string for the Azure Event Grid connection auth.
 
