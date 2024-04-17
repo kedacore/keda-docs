@@ -96,6 +96,7 @@ Here is an overview of the supported destinations:
 ```
 
 #### Azure Event Grid
+
 ```yaml
   destination:
     azureEventGrid:
