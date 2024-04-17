@@ -102,7 +102,10 @@ Here is an overview of the supported destinations:
     azureEventGrid:
       endpoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
 ```
-```TriggerAuthentication``` is needed to provide accesskey or identity for Azure Event Grid authentication. ```authenticationRef``` should be configured when sinking to Azure Event Grid
+
+Authentication information must be provided by using `authenticationRef` which allows you to provide the access key or managed identity for Azure Event Grid authentication by providing a `TriggerAuthentication`.
+
+Here is an overview of the supported authentication types:
 
 **Connection String Authentication:**
 
