@@ -32,7 +32,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 
 #### Deprecated metrics
 
-The following metrics are exposed as well, but are deprecated and will be removed in a future release.
+The following metrics are exposed as well, but are deprecated and will be removed in KEDA v2.16.
 
 - `keda_scaler_metrics_latency` - Replaced by `keda_scaler_metrics_latency_seconds`. The latency of retrieving current metric from each scaler.
 - `keda_scaler_errors` - Replaced by `keda_scaler_detail_errors_total`. The number of errors that have occurred for each scaler.
