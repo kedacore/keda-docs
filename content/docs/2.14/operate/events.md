@@ -46,9 +46,15 @@ metadata:
   name: {cloud-event-name}
 spec:
   clusterName: {cluster-name} #Optional. Will be used in the source/subject to specify where the event comes from. The default value is 'kubernetes-default' and it can also be set during the installation of KEDA with --k8sClusterName. This one will overwrite others if set.
+  authenticationRef: 
+    name: {trigger-authentication-name} #Optional. Used to reference a `TriggerAuthentication` for authentication. 
+    kind: TriggerAuthentication # Optional. Used to choose the authentication scopes. https://keda.sh/docs/latest/concepts/authentication/#authentication-scopes-namespace-vs-cluster
   destination:
     http:
       uri: http://foo.bar
+    azureEventGridTopic:
+      endpoint: https://my-topic.eastus-1.eventgrid.azure.net/api/events
+
   eventSubscription: #Optional. Submit included/excluded event types will filter events when emitting events. 
     includedEventTypes: #Optional. Only events in this section will be emitted.
     - keda.scaledobject.failed.v1
@@ -80,12 +86,43 @@ There will be multiple types of destination to emit KEDA events to.
 Here is an overview of the supported destinations:
 
 - [HTTP endpoint](#http-endpoint).
+- [Azure Event Grid endpoint](#azure-event-grid).
 
 #### HTTP endpoint
 ```yaml
   destination:
     http:
       uri: http://foo.bar  #An http endpoint that can receive cloudevent
+```
+
+#### Azure Event Grid
+
+```yaml
+  destination:
+    azureEventGrid:
+      endpoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
+```
+
+Authentication information must be provided by using `authenticationRef` which allows you to provide the access key or managed identity for Azure Event Grid authentication by providing a `TriggerAuthentication`.
+
+Here is an overview of the supported authentication types:
+
+##### Connection String Authentication
+
+- `accessKey` - Access key string for the Azure Event Grid connection auth.
+
+##### Pod identity based authentication
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: nameOfTriggerAuth
+  namespace: default
+spec:
+  podIdentity:
+    provider: azure-workload
 ```
 
 ### Event Filter
