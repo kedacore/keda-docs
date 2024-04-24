@@ -100,7 +100,7 @@ Here is an overview of the supported destinations:
 ```yaml
   destination:
     azureEventGrid:
-      endpoint: Endpoint:foo.bar #endpoint from AzureEventGrid Topic
+      endpoint: foo.bar #endpoint from AzureEventGrid Topic
 ```
 
 Authentication information must be provided by using `authenticationRef` which allows you to provide the access key or managed identity for Azure Event Grid authentication by providing a `TriggerAuthentication`.
