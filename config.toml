@@ -479,6 +479,10 @@ url = "https://www.leanix.net/"
 logo = "leanix.png"
 
 [[params.users]]
+url = "https://maus.technology/"
+logo = "maus.technology.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
