@@ -58,8 +58,10 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
+- `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `awsRegion` - AWS region of your MSK cluster. (Optional, required for AWS MSK IAM authentication)
 
 > **Note:**
 >
@@ -82,13 +84,15 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
  You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, password or keytab, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
- Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively.
+ Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively. For AWS MSK IAM authentication, you only need to set `awsRegion` in ScaledObject and you also need to enable TLS by setting `tls` to enable.
+
 
 **Credential based authentication:**
 
 **SASL:**
 
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer` or `none`, Default: `none`, Optional)
+- `saslTokenProvider` - Kafka SASL token provider. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional).
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
 - `keytab` - Kerberos keytab.  Either `password` or `keytab` is required in case of `gssapi`.  (Optional)
@@ -106,6 +110,19 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
 - `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
+
+**AWS MSK IAM Specific Configuration:**
+
+For authentication, you must use `TriggerAuthentication` CRD to configure the authenticate by providing `awsAccessKeyID` and `awsSecretAccessKey` or `awsRoleArn` or a pod identity configuration.
+
+**Role based authentication:**
+
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource.
+
+**Credential based authentication:**
+
+- `awsAccessKeyID` - Id of the user.
+- `awsSecretAccessKey` - Access key for the user to authenticate with.
 
 ### New Consumers and Offset Reset Policy
 
@@ -518,6 +535,67 @@ spec:
       bootstrapServers: localhost:9092
       consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
       topic: test-topic
+      # Optional
+      lagThreshold: "50"
+      offsetResetPolicy: latest
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+```
+
+#### Your AWS MSK has IAM auth:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-kafka-secrets
+  namespace: default
+data:
+  sasl: "oauthbearer"
+  saslTokenProvider: "aws_msk_iam"
+  tls: "enable"
+  awsAccessKeyID: <your awsAccessKeyID>
+  awsSecretAccessKey: <your awsSecretAccessKey>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secrets
+    key: sasl
+  - parameter: saslTokenProvider
+    name: keda-kafka-secrets
+    key: saslTokenProvider
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
+  - parameter: awsAccessKeyID
+    name: keda-kafka-secrets
+    key: awsAccessKeyID
+  - parameter: awsSecretAccessKey
+    name: keda-kafka-secrets
+    key: awsSecretAccessKey
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-functions-deployment
+  pollingInterval: 30
+  triggers:
+  - type: apache-kafka
+    metadata:
+      bootstrapServers: localhost:9092
+      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: test-topic
+      awsRegion: us-east-1         # AWS region of your MSK cluster
       # Optional
       lagThreshold: "50"
       offsetResetPolicy: latest
