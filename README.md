@@ -171,7 +171,7 @@ Remember to create the folder for next version with already existing docs in
 current version.
 
 Make sure that the version on `content/docs/{next-version}/deploy.md` is updated
-and uses the next version, instead of the current one.
+and uses the next version, instead of the current one. Ensure that Kubernetes cluster version is updated as well.
 
 Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster.md` is updated with the compatibilities for the incoming version.
 
