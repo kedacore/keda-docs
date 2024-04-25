@@ -45,7 +45,6 @@ You can use `TriggerAuthentication` CRD to configure authentication the `host` a
 **Authentication:**
 
 - `host` - The Dynatrace instance to query against
-
 - `token` - The API key that will be leveraged to connect to Dynatrace and make requests ([official documentation](https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication)). Requires the `metrics.read` scope
 
 ### Example
