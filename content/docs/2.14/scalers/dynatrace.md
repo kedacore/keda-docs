@@ -15,7 +15,6 @@ triggers:
   - type: dynatrace
     metadata:
       host: https://dummy-instance.live.dynatrace.com/
-      token: "NRAK-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
       metricSelector: 'MyCustomEvent:filter(eq("someProperty","someValue")):count:splitBy("dt.entity.process_group"):fold'
       # Optional
       from: now-2d
@@ -27,7 +26,7 @@ triggers:
 **Parameter list:**
 
 - `host` - The Dynatrace instance to query against
-- `token` - The API key that will be leveraged to connect to Dynatrace and make requests ([official documentation](https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication)). Requires the `metrics.read` scope
+- `token` - The API key that will be leveraged to connect to Dynatrace and make requests ([official documentation](https://docs.dynatrace.com/docs/dynatrace-api/basics/dynatrace-api-authentication)). Requires the `metrics.read` scope. Must be provided via Trigger Authentication (see [Authentication Parameters](#authentication-parameters))
 - `metricSelector` - The metric selector query and any transformations that should be applied to it ([transformations docs](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/metric-v2/metric-selector)).
 
   Some relevant aspects:
