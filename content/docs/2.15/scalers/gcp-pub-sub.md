@@ -19,6 +19,7 @@ triggers:
     aggregation: "sum" # Optional - Only meaningful for distribution-valued metrics
     value: "5.5" # Optional - Default is 10
     activationValue: "10.5" # Optional - Default is 0
+    timeHorizon: "1m" # Optional - Default is 2m and with aggregation 5m
     # Exactly one of the subscription or topic name options is required
     subscriptionName: "mysubscription"
     subscriptionNameFromEnv: "MY_SUBSCRIPTION_FROM_ENV"
@@ -37,6 +38,8 @@ The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on 
 
 
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+
+- `timeHorizon` - Time range for which you want to retrieve the matrics. (Default: `2m` and Default with aggregation field: `5m`)
 
 - `subscriptionName` defines the subscription that should be monitored. You can use different formulas:
   - Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.
