@@ -30,7 +30,7 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional, This value can be a float)
 - `queueName` defines the queue that should be monitored.
 - `projectID` defines the GCP project where the queue that should be monitored resides.
-- `filterDuration` - Duration(in minutes) for filtering metrics. (Default: `2`)
+- `filterDuration` - Duration (in minutes) for filtering metrics. (Default: `2`)
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
