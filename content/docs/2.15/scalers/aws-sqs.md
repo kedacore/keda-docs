@@ -40,7 +40,7 @@ triggers:
 - `scaleOfDelayed` - Indication of whether or not to include delayed messages when calculating the number of SQS messages. (default: false, Optional)
 - `awsRegion` - AWS Region for the SQS Queue.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
-- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
+- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` authentication)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.
 
@@ -50,11 +50,11 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Pod identity based authentication:**
 
-- `podIdentity.provider` - Needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
+- `podIdentity.provider` - Needs to be set on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated only applies for `aws-eks` and `aws-kiam` authentications, for `aws` is set in the auth)
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated and only applies for `aws-eks` authentication, for `aws` is set in the auth)
 
 **Credential based authentication:**
 
@@ -76,7 +76,7 @@ metadata:
   namespace: keda-test
 spec:
   podIdentity:
-    provider: aws-kiam # or aws-eks when using IRSA
+    provider: aws
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
