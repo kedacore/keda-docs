@@ -63,7 +63,7 @@ triggers:
 - `sentinelUsernameFromEnv` - Name of the environment variable your deployment uses to get the Redis Sentinel username. (Optional)
 - `sentinelPasswordFromEnv` - Name of the environment variable your deployment uses to get the Redis Sentinel password. (Optional)
 
-- `sentinelMaster` - The name of the master in Sentinel to get the Redis server address for.
+- `sentinelMaster` - The name of the primary (still referred to as the 'master' in Sentinel) in Sentinel to get the Redis server address for.
 - `stream` - Name of the Redis Stream.
 - `consumerGroup` - Name of the Consumer group associated with Redis Stream.
 > Setting the `consumerGroup` causes the scaler to operate on `pendingEntriesCount`. Lack of `consumerGroup` will cause the scaler to be based on `streamLength`
@@ -80,7 +80,7 @@ Some parameters could be provided using environmental variables, instead of sett
 - `addressesFromEnv` - The hosts and corresponding ports of Redis Sentinel nodes, similar to `addresses`, but reads it from an environment variable on the scale target. Name of the environment variable your deployment uses to get the URLs of Redis Sentinel nodes. The resolved hosts should follow a format like `node1:26379, node2:26379, node3:26379 ...`.
 - `hostsFromEnv` - The hosts of the Redis Sentinel nodes, similar to `hosts`, but reads it from an environment variable on the scale target.
 - `portsFromEnv` - The corresponding ports for the hosts of Redis Sentinel nodes, similar to `ports`, but reads it from an environment variable on the scale target.
-- `sentinelMasterFromEnv` - The name of the master in Sentinel to get the Redis server address for, similar to `sentinelMaster`, but reads it from an environment variable on the scale target.
+- `sentinelMasterFromEnv` - The name of the primary (still referred to as the 'master' in Sentinel) in Sentinel to get the Redis server address for, similar to `sentinelMaster`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 
@@ -116,7 +116,7 @@ spec:
         stream: my-stream
         consumerGroup: consumer-group-1
         pendingEntriesCount: "10"
-        sentinelMaster: "mymaster"
+        sentinelMaster: "myprimary"
 ```
 
 #### Using `TriggerAuthentication`
@@ -196,7 +196,7 @@ spec:
         stream: my-stream
         consumerGroup: consumer-group-1
         pendingEntriesCount: "10"
-        sentinelMaster: "mymaster"
+        sentinelMaster: "myprimary"
       authenticationRef:
         name: keda-redis-stream-triggerauth # name of the TriggerAuthentication resource
 ```
@@ -226,7 +226,7 @@ spec:
         passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
         stream: my-stream
         streamLength: "50"
-        sentinelMaster: "mymaster"
+        sentinelMaster: "myprimary"
 ```
 
 #### Using `lagCount`
