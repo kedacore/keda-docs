@@ -35,7 +35,7 @@ If you would like to use the same IAM credentials as your workload is currently 
 
 ## AssumeRole or AssumeRoleWithWebIdentity?
 
-This authentication uses automatically both, doing a fallback from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need `sts:AssumeRole` permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html), you just need to add KEDA service account to the trusted relations of the role.
+This authentication automatically uses both, falling back from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need `sts:AssumeRole` permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html); in this case, you can add a KEDA service account to the trusted relations of the role.
 
 ## Setting up KEDA role and policy
 
@@ -43,7 +43,7 @@ The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-f
 
 ### Using KEDA role to access infrastructure
 
-This is the easiest case and you just need to attach to KEDA's role the desired policy/policies, granting the access permissions that you want to provide. For example, this could be a policy to use with SQS:
+Attach the desired policies to KEDA's role, granting the access permissions that you want to provide. For example, this could be a policy to use with SQS:
 
 ```json
 {

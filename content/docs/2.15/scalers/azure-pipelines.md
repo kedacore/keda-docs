@@ -78,7 +78,7 @@ Finally, it is also possible get the pool ID from the response of a HTTP request
 
 ### Supporting demands in agents
 
-By default, if you do not wish to use demands in your agent scaler then it will scale based simply on the pool's queue length.
+By default, if you do not use demands in your agent scaler then it scales based on the pool's queue length.
 
 Demands (Capabilities) are useful when you have multiple agents with different capabilities existing within the same pool,
 for instance in a kube cluster you may have an agent supporting dotnet5, dotnet6, java or maven;

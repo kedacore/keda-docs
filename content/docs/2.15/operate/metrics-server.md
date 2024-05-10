@@ -11,7 +11,7 @@ The metrics exposed by KEDA Metrics Server can be queried directly using `kubect
 kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1"
 ```
 
-This will return a json with the list of metrics exposed by KEDA (just an external metric):
+This will return a json with the list of metrics exposed by KEDA (external metrics only):
 ```json
 {
   "kind": "APIResourceList",

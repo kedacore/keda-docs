@@ -41,7 +41,7 @@ triggers:
   - Both the hostname, username and password fields need to be set to the names of the environment variables in the target deployment that contain the host name, username and password respectively.
 - `sentinelUsernameFromEnv` - Environment variable to read the authentication username from to authenticate with the Redis Sentinel server.
 - `sentinelPasswordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis Sentinel server.
-- `sentinelMaster` - The name of the master in Sentinel to get the Redis server address for.
+- sentinelMaster - The name of the primary (still referred to as the 'master' in Sentinel) to get the Redis server address for.
 - `listName` - Name of the Redis List that you want to monitor.
 - `listLength` - Average target value to trigger scaling actions.
 - `activationListLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
@@ -54,7 +54,7 @@ Some parameters could be provided using environmental variables, instead of sett
 - `addressesFromEnv` - The hosts and their respective ports of the Redis Sentinel nodes, similar to `addresses`, but reads it from an environment variable on the scale target.
 - `hostsFromEnv` - The hosts of the Redis Sentinel nodes, similar to `hosts`, but reads it from an environment variable on the scale target.
 - `portsFromEnv` - The corresponding ports for the hosts of the Redis Sentinel nodes, similar to `ports`, but reads it from an environment variable on the scale target.
-- `sentinelMasterFromEnv` - The name of the master in Sentinel to get the Redis server address for, similar to `sentinelMaster`, but reads it from an environment variable on the scale target.
+- `sentinelMasterFromEnv` - The name of the primary (still referred to as the 'master' in Sentinel) to get the Redis server address for; similar to `sentinelMaster`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 
@@ -65,7 +65,7 @@ You can authenticate by using a password.
 - `addresses` - Comma separated list of host:port format.
 - `hosts` - Comma separated list of hostname of the Redis Sentinel nodes. If specified, the `ports` should also be specified.
 - `ports` - Comma separated list of ports of the Redis Sentinel nodes. If specified, the `hosts` should also be specified.
-- `sentinelMaster` - The name of the master in Sentinel to get the Redis server address for.
+- `sentinelMaster` - The name of the primary (still referred to as the 'master' in Sentinel) to get the Redis server address for.
 
 **Authentication:**
 
@@ -133,7 +133,7 @@ spec:
       addresses: node1:26379, node2:26379, node3:26379
       listName: mylist
       listLength: "10"
-      sentinelMaster: "mymaster"
+      sentinelMaster: "myprimary"
     authenticationRef:
       name: keda-trigger-auth-redis-secret
 ```
