@@ -37,7 +37,7 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by tls. It
 
 **TLS:**
 
-- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `tls` - To enable SSL auth for etcd, set this to `enable`. If not set, TLS for etcd is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
 - `ca` - Certificate authority file for TLS client authentication. (Optional)
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)

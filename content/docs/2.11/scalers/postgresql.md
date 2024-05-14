@@ -42,7 +42,7 @@ triggers:
 - type: postgresql
   metadata:
     connectionFromEnv: AIRFLOW_CONN_AIRFLOW_DB
-    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
     targetQueryValue: "1.1"
     activationTargetQueryValue: "5"
     metricName: backlog_process_count # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version 2.12. optional. Generated value would be `postgresql-postgresql---test@localhost`
@@ -61,7 +61,7 @@ triggers:
     port: "5432"
     dbName: test_db_name
     sslmode: disable
-    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
     targetQueryValue: "2.2"
     metricName: backlog_process_count # DEPRECATED: This parameter is deprecated as of KEDA v2.10 and will be removed in version `2.12`. optional. Generated value would be `postgresql-test_db_name`
 ```
@@ -100,6 +100,6 @@ spec:
     - type: postgresql
       metadata:
         connectionFromEnv: AIRFLOW_CONN_AIRFLOW_DB
-        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
         targetQueryValue: 1
 ```

@@ -40,7 +40,7 @@ triggers:
 - type: postgresql
   metadata:
     connection: AIRFLOW_CONN_AIRFLOW_DB
-    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
     targetQueryValue: 1
 ```
 
@@ -57,7 +57,7 @@ triggers:
     port: "5432"
     dbName: postgresql
     sslmode: disable
-    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+    query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
     targetQueryValue: 1
 ```
 
@@ -90,6 +90,6 @@ spec:
     - type: postgresql
       metadata:
         connection: AIRFLOW_CONN_AIRFLOW_DB
-        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued'"
+        query: "SELECT ceil(COUNT(*)::decimal / 16) FROM task_instance WHERE state='running' OR state='queued';"
         targetQueryValue: 1
 ```

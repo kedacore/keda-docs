@@ -231,7 +231,7 @@ Trigger fields:
 
 ### Caching Metrics
 
-This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
+This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then this request is routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
 
 Enabling this feature can significantly reduce the load on the scaler service.
 
@@ -287,7 +287,7 @@ metadata:
 spec:
    advanced:
       horizontalPodAutoscalerConfig:
-      name: {name-of-hpa-resource}
+        name: {name-of-hpa-resource}
 ```
 
 > ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.

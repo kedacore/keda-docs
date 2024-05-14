@@ -16,7 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 |   KEDA    |   Kubernetes  |
 |-----------|---------------|
-|   v2.14   | v1.28 - v1.30 |
+|   v2.14   | v1.27 - v1.29 |
 |   v2.13   | v1.27 - v1.29 |
 |   v2.12   | v1.26 - v1.28 |
 |   v2.11   | v1.25 - v1.27 |
@@ -81,7 +81,7 @@ $env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
 
 All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
 
-## HTTP connection disable keep alive
+## HTTP Connection: Disable Keep Alive
 
 Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios.
 
@@ -172,6 +172,20 @@ To specify values other than their defaults, you can set the following environme
 | KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | 15s           | LeaseDuration    |
 | KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | 10s           | RenewDeadline    |
 | KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | 2s            | RetryPeriod      |
+
+## Restrict the Namespaces KEDA is Watching
+
+By default, KEDA controller watches for events in all namespaces in Kubernetes cluster. However, this can be restricted by environment variable `WATCH_NAMESPACE`.
+It accepts either a single namespace, list of namespaces separated by comma or an empty string that denotes all namespaces.
+
+When a certain namespace is configured, and then a `ScaledObject` or `ScaledJob` is created in a different namespaces, it will be ignored by the operator.
+
+Example:
+
+```yaml
+- env:
+    WATCH_NAMESPACE: keda,production
+```
 
 ## Certificates used by KEDA Metrics Server
 
