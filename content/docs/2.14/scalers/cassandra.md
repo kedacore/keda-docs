@@ -92,24 +92,41 @@ spec:
 
 ### Example with TLS auth
 
-Since we are passing Cert and Key Path as inputs to the scaler, we have to mount cert and key to a path in keda operator. Update secret 'kedaorg-certs' which is in keda namespace to add new cert and key as below.
+Since we are passing Cert and Key content as inputs to the scaler, we have to supply writable location for required GSSAPI configurations for the `keda-operator` container. 
 
-```yaml
-data:
-  ca.crt: <STRICTLY DO NOT MODIFY THIS>
-  ca.key: <STRICTLY DO NOT MODIFY THIS>
-  tls.crt: <STRICTLY DO NOT MODIFY THIS>
-  tls.key: <STRICTLY DO NOT MODIFY THIS>
-  cassandra-server1-cert.pem: <add cassandra server 1 cert content>
-  cassndra-server1-key.pem: <add cassandra server 1 key content>
-  cassndra-server1-ca.pem: <add cassandra server 1 ca content> # Optional caPath
-  #Similarly we can add any number of certs and keys based on number of differnt cassandra server connections
-  cassandra-server2-cert.pem: <add cassandra server 2 cert content>
-  cassndra-server2-key.pem: <add cassandra server 2 key content>
-  ...
+##### `sasl/gssapi` in manager.yaml
+
+If you use YAML declarations to deploy KEDA, add below volume mount and volume to supply writable location for required GSSAPI configurations for the `keda-operator` container.
+
+```
+          volumeMounts:
+          - mountPath: /tmp/cassandra
+            name: temp-cassandra-vol
+            readOnly: false
+
+      volumes:
+      - name: temp-cassandra-vol
+        emptyDir:
+          medium: Memory
 ```
 
-Once we add the certs to the above secret. Upon restart of keda-operator. New certs are mounted to /certs/ path. 
+##### `sasl/gssapi` in keda-charts
+
+If you use Helm Charts to deploy KEDA, add below volume mount and volume to supply writable location for required gssapi configurations.
+
+```
+volumes.keda.extraVolumeMounts
+- mountPath: /tmp/cassandra
+  name: temp-cassandra-vol
+  readOnly: false
+
+volumes.keda.extraVolumes
+- name: temp-cassandra-vol
+  emptyDir:
+    medium: Memory
+```
+
+Once we have the writable mount path set up for the certificates and keys.
 
 ```yaml
 apiVersion: v1
@@ -120,8 +137,10 @@ type: Opaque
 data:
   cassandra_password: CASSANDRA_PASSWORD
   tls: enable
-  cert: </certs/cassandra-server1-cert.pem | base64encoded>
-  key: </certs/cassandra-server1-key.pem | base64encoded>
+  cert: <cert content | base64encoded>
+  key: <key content | base64encoded>
+  ## Optional parameter ca ##
+  ca: <ca cert content | base64encoded>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -141,7 +160,7 @@ spec:
   - parameter: key
     name: cassandra-secrets
     key: key
-  ## Optional parameter caPath ##
+  ## Optional parameter ca ##
   - parameter: ca
     name: cassandra-secrets
     key: ca
