@@ -50,7 +50,7 @@
   });
 </script>
 
-{{/* Scalers filter */}}
+{{/* Scaler tabs */}}
 <script type="text/javascript">
   const builtInScalers = document.querySelectorAll("#built-in-scalers");
   const externalScalers = document.getElementById("external-scalers");
@@ -79,7 +79,7 @@
   }
 </script>
 
-{{/* In-built Scalers Search */}}
+{{/* Scaler Search and filter */}}
 <script src="https://unpkg.com/lunr/lunr.js"></script>
 <script>
   window.addEventListener(
@@ -110,6 +110,10 @@
       const interval = 500;
       let query = input.value.trim();
       let parse = {};
+      let searchQueue = [];
+      let checkboxes = document.querySelectorAll(
+        'input[name="resource_filter"]'
+      );
 
       // fetch all scalers on inital load
       if (!query) {
@@ -117,6 +121,7 @@
         externalScalersIndex();
       }
 
+      // logic for input search
       input.addEventListener(
         "input",
         function (event) {
@@ -136,19 +141,7 @@
 
           query = keywords;
           if (isExternalScalers.style.display === "inline") {
-            // hide banner during scaler search
-            externalBanner.style.display = "none";
-            if (query === "") {
-              externalBanner.style.display = "block";
-            }
-            let externalSearchUrl = new URL(
-              "https://artifacthub.io/api/v1/packages/search"
-            );
-            externalSearchUrl.search = new URLSearchParams({
-              kind: "8",
-              sort: "relevance",
-              ts_query_web: query !== "" ? query : "",
-            });
+            const externalSearchUrl = getExternalScalerUrlUsingQuery(query);
             debounceTimer = setTimeout(() => {
               groups[0].dataset.url = externalSearchUrl;
               externalScalersIndex();
@@ -173,6 +166,62 @@
         },
         false
       );
+
+      // logic for category filter
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function (event) {
+          if (checkbox.checked) {
+            searchQueue.push(event.target.value);
+            query = searchQueue.join(" ");
+            // Build and search index for external scalers otherwise perform same action for built-in scalers
+            if (isExternalScalers.style.display === "inline") {
+              const externalSearchUrl = getExternalScalerUrlUsingQuery(query);
+              groups[0].dataset.url = externalSearchUrl;
+              externalScalersIndex();
+
+              // clear out all the scaler item card when external scalers are being searched
+              while (externalTarget.firstChild.nextSibling) {
+                externalTarget.removeChild(
+                  externalTarget.firstChild.nextSibling.nextSibling
+                    .nextElementSibling
+                );
+              }
+              return;
+            } else {
+              initSearchIndex();
+            }
+          }  
+          
+          if (!checkbox.checked){
+            searchQueue = searchQueue.filter(
+              (word) => word != event.target.value
+            );
+            query = searchQueue.join(" ");
+            // Build and search index for external scalers otherwise perform same action for built-in scalers
+            if (isExternalScalers.style.display === "inline") {
+              const externalSearchUrl = getExternalScalerUrlUsingQuery(query);
+              groups[0].dataset.url = externalSearchUrl;
+              externalScalersIndex();
+
+              // clear out all the scaler item card when external scalers are being searched
+              while (externalTarget.firstChild.nextSibling) {
+                externalTarget.removeChild(
+                  externalTarget.firstChild.nextSibling.nextSibling
+                    .nextElementSibling
+                );
+              }
+              return;
+            } else {
+              initSearchIndex();
+            }
+          }
+
+          // clear out all the scaler item card when in-built scalers are being searched
+          while (target.firstChild.nextSibling) {
+            target.removeChild(template.nextSibling.nextElementSibling);
+          }
+        });
+      });
 
       async function externalScalersIndex() {
         const externalScalerUrl = groups[0].dataset.url;
@@ -270,6 +319,41 @@
         });
 
         search(query);
+      }
+
+      function getExternalScalerUrlUsingQuery(term){
+        let externalSearchUrl = new URL("https://artifacthub.io/api/v1/packages/search");
+        // hide banner during scaler search
+        externalBanner.style.display = "none";
+        if (term === "") {
+          externalBanner.style.display = "block";
+        }
+        const scalerSearchParams = generateScalerSearchParam(term);
+        externalSearchUrl.search = new URLSearchParams(scalerSearchParams);
+        return externalSearchUrl;
+      };
+
+      function generateScalerSearchParam (term){
+        if (searchQueue.length === 1 && term === "keda"){
+          return { sort: "relevance", org: term, ts_query_web: term !== "" ? term : ""};
+        };
+
+        if (searchQueue.length === 1 && term !== "keda"){
+          return {
+            sort: "relevance",
+            user: term,
+            ts_query_web: term !== "" ? term : "",
+          };
+        }
+
+        // show result for multiple search and filter query
+        if (searchQueue.length === 0 || searchQueue.length > 0){
+          return {
+            kind: "8",
+            sort: "relevance",
+            ts_query_web: term !== "" ? term : "",
+          };
+        }
       }
 
       function search(keywords) {
