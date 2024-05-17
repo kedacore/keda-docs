@@ -26,8 +26,6 @@ triggers:
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2.1"
     minMetricValue: "1.5"
-    # Optional: ignoreNullValues
-    ignoreNullValues: false
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS endpoint url
@@ -61,7 +59,6 @@ triggers:
 - `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
 
 - `identityOwner` - Receive permissions for CloudWatch via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
-
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
 - `metricCollectionTime` - How long in the past (seconds) should the scaler check AWS Cloudwatch. Used to define **StartTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). The value of `metricCollectionTime` must be greater than the `metricStatPeriod`, providing a value which is a multiple of the `metricStatPeriod` can improve performance on fetching data from Cloudwatch. In practice setting `metricCollectionTime` 2-to-3 times more than the `metricStatPeriod` value can make sure the scaler is able to get data points back from Cloudwatch, the scaler will always use the most up-to-date datapoint if more datapoints are returned. (Default: `300`, Optional)
@@ -70,10 +67,6 @@ triggers:
 - `metricUnit` - Which unit to be used by the query. Used to define **Unit** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit)). (Default: `none`, Optional)
 - `metricEndTimeOffset` - How long in seconds to offset the **EndTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). Due to the eventual consistency model which is used by Cloudwatch, the latest datapoint one can get from Cloudwatch might not be accurate. The `metricEndTimeOffset` config provides a way to skip the most recent datapoint if needed. (Default: `0`, Optional)
 - `minMetricValue`- Returned value in case of empty response from cloudwatch. (Default: 0, This value can be a float)
-- `ignoreNullValues`- Describes the behaviour when the metric query returns no metric values in the response.  If set to `true`, the scaler will scale the workload based on the `minMetricValue` provided. If set to `false`, the scaler will return an error and not adjust the scale of the workload. When set to `false` this will take precedence over `minMetricValue`. (Default: `true`, Optional)
-
-> Both `minMetricValue` and `ignoreNullValues` are used to handle the case when the metric query returns no metric values in the response. `minMetricValue` will scale the workload based on the value provided, while `ignoreNullValues`, if false, will return an error and not adjust the scale of the workload.
-
 - `targetMetricValue`- Target value for the metric. (Default: 0, This value can be a float)
 - `activationTargetMetricValue`- Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
