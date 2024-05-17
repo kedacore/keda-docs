@@ -33,6 +33,8 @@ Finally, a user inserts a query that returns the desired value.
 - `query` - What query to poll postgresql with. Query must return an integer.
 - `targetQueryValue` - A threshold that is used as `targetAverageValue` in HPA.
 
+> Note that the query must return a single integer value. If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [PostgreSQL documentation](https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL) for more information on the `COALESCE` function.
+
 This is an example of using a full connection string:
 
 ```yaml
