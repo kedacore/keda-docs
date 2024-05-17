@@ -19,9 +19,11 @@ triggers:
     aggregation: "sum" # Optional - Only meaningful for distribution-valued metrics
     value: "5.5" # Optional - Default is 10
     activationValue: "10.5" # Optional - Default is 0
-    # Either one of subscriptionName or topicName is required
+    # Exactly one of the subscription or topic name options is required
     subscriptionName: "mysubscription"
+    subscriptionNameFromEnv: "MY_SUBSCRIPTION_FROM_ENV"
     topicName: "mytopic"
+    topicNameFromEnv: "MY_TOPIC_FROM_ENV"
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
@@ -40,9 +42,13 @@ The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on 
   - Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.
   - Use the full link provided by Google, so that you can reference a subscription that is hosted in another project Eg: `projects/myproject/subscriptions/mysubscription`.
 
+- `subscriptionNameFromEnv` - The name of an environment variable on the scale target that holds the subscription name. The resolved name is processed the same as `subscriptionName`.
+
 - `topicName` defines the topic that should be monitored. Similar to `susbcriptionName`, you can use different formulas:
   - Just the topic name, in which case you will reference a topic from the current project or the one specified in the credentials file used.
   - Use the full link provided by Google, so that you can reference a topic that is hosted in another project Eg: `projects/myproject/topics/mytopic`.
+
+- `topicNameFromEnv` - The name of an environment variable on the scale target that holds the topic name. The resolved name is processed the same as `topicName`.
 
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 

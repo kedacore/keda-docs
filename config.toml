@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.14", "2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -399,6 +399,10 @@ url = "https://chattermill.com"
 logo = "chattermill.png"
 
 [[params.users]]
+url = "https://cap.energy"
+logo = "capenergy.png"
+
+[[params.users]]
 url = "https://cisco.com"
 logo = "cisco.svg"
 
@@ -475,6 +479,10 @@ url = "https://www.leanix.net/"
 logo = "leanix.png"
 
 [[params.users]]
+url = "https://maus.technology/"
+logo = "maus-technology.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
@@ -549,6 +557,10 @@ logo = "stilingue.png"
 [[params.users]]
 url = "https://www.swisslife.ch/"
 logo = "swisslife.jpg"
+
+[[params.users]]
+url = "https://www.taotesting.com"
+logo = "taotesting.svg"
 
 [[params.users]]
 url = "https://www.teamleader.eu"
