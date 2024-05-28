@@ -79,6 +79,21 @@ In general, an event emitted by KEDA would fundamentally come down to the follow
 }
 ```
 
+### Scopes: Namespace vs. Cluster
+
+Each `CloudEventSource` is defined in one namespace. For cases where you want to share a single sink among many namespaces, you can instead create a `ClusterCloudEventSource`. As a global object, this can be used from any namespace. 
+
+Defining a `ClusterCloudEventSource` works almost identically to a `CloudEventSource`, except there is no `metadata.namespace` value:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ClusterCloudEventSource
+metadata:
+  name: {cluster-cloudeventsource-name}
+spec:
+  # As before ...
+```
+
 ### Event Sinks
 
 There will be multiple types of destination to emit KEDA events to.
