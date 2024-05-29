@@ -97,6 +97,8 @@
       const externalTarget = document.querySelector(
         ".is-external-search-result"
       );
+      const filterIcon = document.querySelector(".filter-icon");
+      const filterOptions = document.querySelector(".filter-options");
       const searchResultCount = document.querySelector(".results");
       const externalSearchResultCount =
         document.querySelector(".external-results");
@@ -221,6 +223,19 @@
             target.removeChild(template.nextSibling.nextElementSibling);
           }
         });
+      });
+
+      // show filter options on mobile
+      filterIcon.addEventListener("click", function () {
+        if (filterOptions.style.display === "") {
+          filterOptions.style.display = "none";
+        } 
+        
+        if (filterOptions.style.display === "none") {
+          filterOptions.style.display = "flex";
+        }else {
+          filterOptions.style.display = "none";
+        }
       });
 
       async function externalScalersIndex() {

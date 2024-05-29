@@ -26,34 +26,36 @@
 </div>
 <div class="columns">
   <div class="filter-pane column is-one-quarter">
-    <h5>FILTERS</h5>      
-    <div class="has-extra-top-margin">
-      <h6>Maintainer</h6>
-      {{ $maintainers := slice }}
-      {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-          {{ $maintainers = $maintainers | append ($scalers.Params.maintainer) }}
-          {{ $maintainers = uniq $maintainers }}
-      {{ end }}
-      {{ range $maintainers }}
-      {{ $maintainer := . }}
-      <div>
-          <input id="{{ . }}" type="checkbox" name="resource_filter" value="{{ . }}">
-          <label for="{{ . }}">{{ . }}</label>
-      </div>
-      {{ end }}
-      <div>
-        <input id="keda" type="checkbox" name="resource_filter" value="keda">
-        <label for="keda">Keda</label>
-      </div>
-      <div>
-        <input id="wsugarman" type="checkbox" name="resource_filter" value="wsugarman">
-        <label for="wsugarman">Wsugarman</label>
-      </div>
-      <div>
-        <input id="JensWalter" type="checkbox" name="resource_filter" value="JensWalter">
-        <label for="JensWalter">JensWalter</label>
-      </div>
-    </div>  
+    <h5>FILTER <span class="filter-icon"><i class="fas fa-filter"></i></span></h5>
+    <div class="filter-options">
+      <div class="has-extra-top-margin">
+        <h6>Maintainer</h6>
+        {{ $maintainers := slice }}
+        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+            {{ $maintainers = $maintainers | append ($scalers.Params.maintainer) }}
+            {{ $maintainers = uniq $maintainers }}
+        {{ end }}
+        {{ range $maintainers }}
+        {{ $maintainer := . }}
+        <div>
+            <input id="{{ . }}" type="checkbox" name="resource_filter" value="{{ . }}">
+            <label for="{{ . }}">{{ . }}</label>
+        </div>
+        {{ end }}
+        <div>
+          <input id="keda" type="checkbox" name="resource_filter" value="keda">
+          <label for="keda">Keda</label>
+        </div>
+        <div>
+          <input id="wsugarman" type="checkbox" name="resource_filter" value="wsugarman">
+          <label for="wsugarman">Wsugarman</label>
+        </div>
+        <div>
+          <input id="JensWalter" type="checkbox" name="resource_filter" value="JensWalter">
+          <label for="JensWalter">JensWalter</label>
+        </div>
+      </div>  
+    </div>   
   </div>
   <div class="results-pane column">
     <div class="results"></div>
