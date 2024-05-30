@@ -36,7 +36,7 @@ triggers:
 
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
-- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./reference/scaledobject-spec.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
