@@ -129,7 +129,7 @@ advanced:
 ```
 
 Conditions can be used within another condition as well.
-If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is at least 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
 Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
 
