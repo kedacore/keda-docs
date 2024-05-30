@@ -200,4 +200,4 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 
 #### Run as jobs
 
-The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](../scaling-jobs).
+The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](./scaling-jobs).

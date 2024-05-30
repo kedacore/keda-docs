@@ -39,7 +39,7 @@ This authentication automatically uses both, falling back from [AssumeRoleWithWe
 
 ## Setting up KEDA role and policy
 
-The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a a basic configuration for an IRSA role. The policy changes depend if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `podIdentity.identityOwner` sets to `workload`).
+The [official AWS docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) explain how to set up a basic configuration for an IRSA role. The policy changes depending on if you are using the KEDA role (`podIdentity.roleArn` is not set) or workload role (`podIdentity.roleArn` sets a RoleArn or `podIdentity.identityOwner` sets to `workload`).
 
 ### Using KEDA role to access infrastructure
 

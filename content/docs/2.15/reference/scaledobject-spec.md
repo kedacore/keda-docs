@@ -236,7 +236,7 @@ For examples of this feature see section [Scaling Modifiers](../concepts/scaling
   # {list of triggers to activate scaling of the target resource}
 ```
 
-> 💡 **NOTE:** You can find all supported triggers [here](/scalers).
+> 💡 **NOTE:** You can find all supported triggers [here](../scalers).
 
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
@@ -244,7 +244,7 @@ Trigger fields:
 - **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default, the name is generated from the trigger type. (Optional)
 - **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](../concepts/scaling-deployments.md#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
-  - More details can be found [here](./authentication). (Optional)
+  - More details can be found [here](../concepts/authentication). (Optional)
 - **metricType**: The type of metric that should be used. (Values: `AverageValue`, `Value`, `Utilization`, Default: `AverageValue`, Optional)
   - Learn more about how the [Horizontal Pod Autoscaler (HPA) calculates `replicaCount`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) based on metric type and value.
   - To show the differences between the metric types, let's assume we want to scale a deployment with 3 running replicas based on a queue of messages:

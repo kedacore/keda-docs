@@ -110,7 +110,7 @@ eventSubscription: #Optional. Submit included/excluded event types will filter e
 ```
 
 ## Supported Event List
-| Event Type                                | Scenario Description                                                                                                                 | 
-| ------------------------------------- |  --------------------------------------------------------------------------------------------------------------------------- | 
-| `keda.scaledobject.ready.v1`                   | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
-| `keda.scaledobject.failed.v1`             | If the check validation for a ScaledObject fails |      
+| Event Type                    | Scenario Description                                                                                                        | 
+|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------| 
+| `keda.scaledobject.ready.v1`  | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
+| `keda.scaledobject.failed.v1` | If the check validation for a ScaledObject fails                                                                            |      

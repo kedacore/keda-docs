@@ -116,12 +116,12 @@ New messages may create new jobs - within the limits imposed by maxReplicaCount 
 The max number of pods that is created within a single polling period. If there are running jobs, the number of running jobs will be deducted. This table is an example of the scaling logic.
 
 | Queue Length | Max Replica Count | Target Average Value | Running Job Count | Number of the Scale |
-| ------- | ------ | ------- | ------ | ----- |
-| 10 | 3 | 1 | 0 | 3 |
-| 10 | 3 | 2 | 0 | 3 |
-| 10 | 3 | 1 | 1 | 2 |
-| 10 | 100 | 1 | 0 | 10 | 
-| 4 | 3 | 5 | 0 | 1 |
+|--------------|-------------------|----------------------|-------------------|---------------------|
+| 10           | 3                 | 1                    | 0                 | 3                   |
+| 10           | 3                 | 2                    | 0                 | 3                   |
+| 10           | 3                 | 1                    | 1                 | 2                   |
+| 10           | 100               | 1                    | 0                 | 10                  | 
+| 4            | 3                 | 5                    | 0                 | 1                   |
 
 * **Queue Length:** The number of items in the queue.
 * **Target Average Value:** The number of messages that will be consumed on a job. It is defined on the scaler side. e.g. `queueLength` on `Azure Storage Queue` scaler.
