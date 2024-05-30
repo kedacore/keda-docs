@@ -4,9 +4,9 @@ title = "Deploying KEDA"
 
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
-- [Helm charts](#helm)
-- [Operator Hub](#operatorhub)
-- [YAML declarations](#yaml)
+- Helm charts
+- Operator Hub
+- YAML declarations
 
 > 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.27 and higher
 
