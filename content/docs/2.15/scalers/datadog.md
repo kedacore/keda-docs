@@ -132,7 +132,7 @@ often (per `ScaledObject`) we query Datadog for a metric.
 
 When scaling from 0 to 1, the polling interval is controlled by KEDA, using [the
 `spec.pollingInterval` parameter in the `ScaledObject`
-definition](../concepts/scaling-deployments/#pollinginterval). For example, if
+definition](../reference/scaledobject-spec/#pollinginterval). For example, if
 this parameter is set to `60`, KEDA will poll Datadog for a metric value every
 60 seconds while the number of replicas is 0.
 
