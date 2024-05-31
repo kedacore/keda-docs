@@ -35,7 +35,7 @@ triggers:
 **Parameter list:**
 
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
-- `activationMessageCount` - Target value for activating the scaler. Learn more about activation [here](./concepts/scaling-deployments#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `activationMessageCount` - Target value for activating the scaler. Learn more about activation [here](../concepts/scaling-deployments#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
@@ -117,4 +117,4 @@ When KEDA logs show errors similar to `invalid queue runtime properties: no Coun
 Consider applying one of the following mitigations:
 - Scaling the Azure Service Bus namespace to a higher SKU, or use premium
 - Increase the polling interval of the ScaledObject/ScaledJob
-- Use [caching of metrics](./../concepts/scaling-deployments/#caching-metrics)
+- Use [caching of metrics](../concepts/scaling-deployments/#caching-metrics)
