@@ -40,7 +40,7 @@ metadata:
   name: {scaled-object-name}
   annotations:
     scaledobject.keda.sh/transfer-hpa-ownership: "true"     # Optional. Use to transfer an existing HPA ownership to this ScaledObject
-    validations.keda.sh/hpa-ownership: "false"               # Optional. Use to disable HPA ownership validation on this ScaledObject
+    validations.keda.sh/hpa-ownership: "false"              # Optional. Use to disable HPA ownership validation on this ScaledObject
     autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
 spec:
   scaleTargetRef:
@@ -420,7 +420,7 @@ You are allowed to disable admission webhooks validations with the following sni
 ```yaml
 metadata:
   annotations:
-    validations.keda.sh/hpa-ownership: "true"
+    validations.keda.sh/hpa-ownership: "false"
 ```
 
 ## Long-running executions

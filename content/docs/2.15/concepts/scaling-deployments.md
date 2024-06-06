@@ -420,7 +420,7 @@ You are allowed to disable admission webhooks validations with the following sni
 ```yaml
 metadata:
   annotations:
-    validations.keda.sh/hpa-ownership: "true"
+    validations.keda.sh/hpa-ownership: "false"
 ```
 
 ## Long-running executions
