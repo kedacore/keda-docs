@@ -8,11 +8,24 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 - [Operator Hub](#operatorhub)
 - [YAML declarations](#yaml)
 
-> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.27 and higher
+**Prerequisites**
+
+Before installing KEDA, ensure you have the following prerequisites:
+
+- [Kubernetes cluster version 1.27 or higher](https://kubernetes.io/docs/setup/)
+- [`kubectl`](https://kubernetes.io/docs/tasks/tools/) configured to connect to the Kubernetes cluster
+- For Helm installation:
+  - [Helm v3](https://helm.sh/docs/intro/install/) installed on your machine
+- For Operator Hub installation:
+  - Access to the [Operator Hub](https://operatorhub.io/) in your Kubernetes cluster
+- For YAML installation:
+   - No additional prerequisites
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
 ## Deploying with Helm {#helm}
+
+Using [Helm Charts](https://helm.sh/) is the recommended method for most users. Helm simplifies the installation process and makes it easier to manage and upgrade KEDA. Helm handles deploying all the necessary components, including Custom Resource Definitions (CRDs).
 
 ### Install
 
@@ -68,6 +81,8 @@ done
 
 ## Deploying with Operator Hub {#operatorhub}
 
+This method utilizes the Operator Hub, a centralized repository for Kubernetes Operators. An Operator extends the functionality of Kubernetes. With this approach, you install the KEDA Operator from the Operator Hub and then create a `KedaController` resource to manage the deployment of KEDA components.
+
 ### Install
 
 1. On Operator Hub Marketplace locate and install KEDA operator to namespace `keda`
@@ -80,6 +95,8 @@ done
 Locate installed KEDA Operator in `keda` namespace, then remove created `KedaController` resource and uninstall KEDA operator.
 
 ## Deploying using the deployment YAML files {#yaml}
+
+If Helm or Operator Hub is not available or preferred in your environment, you can deploy KEDA manually by applying YAML files containing the necessary resource definitions. The YAML files are available in the KEDA GitHub releases or can be generated from the KEDA repository.
 
 ### Install
 
