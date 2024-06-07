@@ -2,6 +2,7 @@
 title = "PostgreSQL"
 availability = "v1.2+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on a PostgreSQL query."
 go_file = "postgresql_scaler"
 +++

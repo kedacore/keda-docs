@@ -2,6 +2,7 @@
 title = "IBM MQ"
 availability = "v2.0+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on IBM MQ Queue"
 go_file = "ibmmq_scaler"
 +++
