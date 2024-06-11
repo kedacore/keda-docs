@@ -2,6 +2,7 @@
 title = "Solr"
 availability = "v2.11+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on Solr query results."
 go_file = "solr_scaler"
 +++

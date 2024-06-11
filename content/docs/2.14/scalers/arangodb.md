@@ -2,6 +2,7 @@
 title = "ArangoDB"
 availability = "v2.10+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on ArangoDB query result."
 go_file = "arangodb_scaler"
 +++

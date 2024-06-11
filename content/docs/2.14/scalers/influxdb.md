@@ -2,6 +2,7 @@
 title = "InfluxDB"
 availability = "v2.1+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on InfluxDB queries"
 go_file = "influxdb_scaler"
 +++

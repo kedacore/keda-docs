@@ -2,6 +2,7 @@
 title = "Google Cloud Platform Storage"
 availability = "2.7+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on the count of objects in a given Google Cloud Storage (GCS) bucket."
 go_file = "gcp_storage_scaler"
 +++

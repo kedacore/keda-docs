@@ -2,6 +2,7 @@
 title = "Redis Streams (supports Redis Sentinel)"
 availability = "v2.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Redis Streams scaler with support for Redis Sentinel topology"
 go_file = "redis_streams_scaler"
 +++
