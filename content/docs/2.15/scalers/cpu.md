@@ -2,6 +2,7 @@
 title = "CPU"
 availability = "v2.0+"
 maintainer = "Community"
+category = "Apps"
 description = "Scale applications based on cpu metrics."
 go_file = "cpu_memory_scaler"
 +++

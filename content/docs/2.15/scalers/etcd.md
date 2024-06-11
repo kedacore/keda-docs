@@ -2,6 +2,7 @@
 title = "Etcd"
 availability = "v2.9+"
 maintainer = "Huawei Cloud"
+category = "Data & Storage"
 description = "Scale applications based on an etcd key-value pair. By watching an etcd key, a passively received push mode, the scaler can activate applications with lower load usage than frequent pull mode"
 go_file = "etcd_scaler"
 +++

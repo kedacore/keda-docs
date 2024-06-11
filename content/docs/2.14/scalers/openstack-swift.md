@@ -2,6 +2,7 @@
 title = "OpenStack Swift"
 availability = "v2.1+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on the count of objects in a given OpenStack Swift container."
 go_file = "openstack_swift_scaler"
 +++

@@ -2,6 +2,7 @@
 title = "ActiveMQ"
 availability = "v2.6+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on ActiveMQ Queue."
 go_file = "activemq_scaler"
 +++

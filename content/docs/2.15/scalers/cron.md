@@ -2,6 +2,7 @@
 title = "Cron"
 availability = "v1.5+"
 maintainer = "Community"
+category = "Scheduling"
 description = "Scale applications based on a cron schedule."
 go_file = "cron_scaler"
 +++

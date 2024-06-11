@@ -2,6 +2,7 @@
 title = "Elasticsearch"
 availability = "v2.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on elasticsearch search template query result."
 go_file = "elasticsearch_scaler"
 +++

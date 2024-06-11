@@ -2,6 +2,7 @@
 title = "Prometheus"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on Prometheus."
 go_file = "prometheus_scaler"
 +++

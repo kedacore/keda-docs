@@ -2,6 +2,7 @@
 title = "AWS Kinesis Stream"
 availability = "v1.1+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on AWS Kinesis Stream."
 go_file = "aws_kinesis_stream_scaler"
 +++

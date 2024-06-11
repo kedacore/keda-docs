@@ -2,6 +2,7 @@
 title = "OpenStack Metric"
 availability = "v2.3+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on a threshold reached by a specific measure from OpenStack Metric API."
 go_file = "openstack_metrics_scaler"
 +++

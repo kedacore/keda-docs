@@ -2,6 +2,7 @@
 title = "Azure Pipelines"
 availability = "v2.3+"
 maintainer = "Microsoft"
+category = "CI/CD"
 description = "Scale applications based on agent pool queues for Azure Pipelines."
 go_file = "azure_pipelines_scaler"
 +++
