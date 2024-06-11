@@ -1,14 +1,14 @@
 +++
-title = "Google Cloud Platform‎ Cloud Tasks"
+title = "Google Cloud Platform Cloud Tasks"
 availability = "v2.12+"
 maintainer = "Community"
-description = "Scale applications based on Google Cloud Platform‎ Cloud Tasks."
+description = "Scale applications based on Google Cloud Platform Cloud Tasks."
 go_file = "gcp_cloud_tasks_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `gcp-cloudtasks` trigger for Google Cloud Platform‎ Cloud Tasks.
+This specification describes the `gcp-cloudtasks` trigger for Google Cloud Platform Cloud Tasks.
 
 ```yaml
 triggers:
@@ -22,7 +22,7 @@ triggers:
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Cloud Tasks trigger allows you to scale based on the number of tasks queued in you queue.
+The Google Cloud Platform (GCP) Cloud Tasks trigger allows you to scale based on the number of tasks queued in you queue.
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Cloud Task queue.
 

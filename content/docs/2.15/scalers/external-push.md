@@ -2,6 +2,7 @@
 title = "External Push"
 availability = "v2.0+"
 maintainer = "Microsoft"
+category = "Extensibility"
 description = "Scale applications based on an external push scaler."
 go_file = "external_scaler"
 +++

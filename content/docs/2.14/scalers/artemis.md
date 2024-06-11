@@ -2,6 +2,7 @@
 title = "ActiveMQ Artemis"
 availability = "v1.5+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on ActiveMQ Artemis queues"
 go_file = "artemis_scaler"
 +++

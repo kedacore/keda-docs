@@ -1,14 +1,15 @@
 +++
-title = "Google Cloud Platform‎ Pub/Sub"
+title = "Google Cloud Platform Pub/Sub"
 availability = "v1.0+"
 maintainer = "Community"
-description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
+category = "Messaging"
+description = "Scale applications based on Google Cloud Platform Pub/Sub."
 go_file = "gcp_pubsub_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `gcp-pubsub` trigger for Google Cloud Platform‎ Pub/Sub.
+This specification describes the `gcp-pubsub` trigger for Google Cloud Platform Pub/Sub.
 
 ```yaml
 triggers:
@@ -28,7 +29,7 @@ triggers:
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on any metrics from your Pub/Sub subscription or topic, such as number of messages or oldest unacked message age, etc.
+The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on any metrics from your Pub/Sub subscription or topic, such as number of messages or oldest unacked message age, etc.
 
 - `credentialsFromEnv` - This property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 

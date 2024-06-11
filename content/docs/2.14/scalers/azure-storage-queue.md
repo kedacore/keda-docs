@@ -2,6 +2,7 @@
 title = "Azure Storage Queue"
 availability = "v1.0+"
 maintainer = "Microsoft"
+category = "Messaging"
 description = "Scale applications based on Azure Storage Queues."
 go_file = "azure_queue_scaler"
 +++

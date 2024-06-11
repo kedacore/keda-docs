@@ -2,6 +2,7 @@
 title = "MySQL"
 availability = "v1.2+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on MySQL query result."
 go_file = "mysql_scaler"
 +++

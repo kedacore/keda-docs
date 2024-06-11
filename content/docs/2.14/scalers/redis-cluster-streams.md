@@ -2,6 +2,7 @@
 title = "Redis Streams (supports Redis Cluster)"
 availability = "v2.1+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Redis Streams scaler with support for Redis Cluster topology"
 go_file = "redis_streams_scaler"
 +++
