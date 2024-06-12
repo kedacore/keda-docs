@@ -2,6 +2,7 @@
 title = "Cassandra"
 availability = "v2.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on Cassandra query results."
 go_file = "cassandra_scaler"
 +++

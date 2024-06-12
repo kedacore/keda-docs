@@ -2,6 +2,7 @@
 title = "Google Cloud Platform Stackdriver"
 availability = "2.7+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on a metric obtained from Stackdriver."
 go_file = "gcp_stackdriver_scaler"
 +++

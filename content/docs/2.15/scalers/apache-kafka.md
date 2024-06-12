@@ -2,6 +2,7 @@
 title = "Apache Kafka"
 availability = "v1.0+"
 maintainer = "Microsoft"
+category = "Messaging"
 description = "Scale applications based on an Apache Kafka topic or other services that support Kafka protocol."
 go_file = "kafka_scaler"
 +++

@@ -2,6 +2,7 @@
 title = "MSSQL"
 availability = "v2.2+"
 maintainer = "Microsoft"
+category = "Data & Storage"
 description = "Scale applications based on Microsoft SQL Server (MSSQL) query results."
 go_file = "mssql_scaler"
 +++
