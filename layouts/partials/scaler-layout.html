@@ -30,6 +30,23 @@
           <input id="external" type="checkbox" name="resource_filter" value="type:external">
           <label for="external">External</label>
         </div>
+      </div>
+      <div class="has-extra-top-margin">
+        <h6>Category</h6>
+        {{ $categories := slice }}
+        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+          {{ with $scalers.Params.category }}
+              {{ $categories = $categories | append ($scalers.Params.category) }}
+              {{ $categories = uniq $categories }}
+          {{ end }}
+        {{ end }}
+        {{ range $categories }}
+        {{ $category := . }}
+        <div>
+            <input id="{{ . }}" type="checkbox" name="resource_filter" value="category:{{ . }}">
+            <label for="{{ . }}">{{ . }}</label>
+        </div>
+        {{ end }}
       </div>    
       <div class="has-extra-top-margin">
         <h6>Maintainer</h6>
@@ -58,23 +75,6 @@
           <label for="JensWalter">JensWalter</label>
         </div>
       </div>
-      <div class="has-extra-top-margin">
-        <h6>Category</h6>
-        {{ $categories := slice }}
-        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-          {{ with $scalers.Params.category }}
-              {{ $categories = $categories | append ($scalers.Params.category) }}
-              {{ $categories = uniq $categories }}
-          {{ end }}
-        {{ end }}
-        {{ range $categories }}
-        {{ $category := . }}
-        <div>
-            <input id="{{ . }}" type="checkbox" name="resource_filter" value="category:{{ . }}">
-            <label for="{{ . }}">{{ . }}</label>
-        </div>
-        {{ end }}
-      </div>    
     </div>   
   </div>
   <div class="results-pane column">
