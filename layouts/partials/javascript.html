@@ -107,7 +107,7 @@
         checkbox.addEventListener("change", function (event) {
           if (checkbox.checked) {
             const inputValue = event.target.value.split(" ");
-            // for queries with spacing, use the first word
+            // for single queries with spacing, use the first word
             const inputQuery = inputValue[0];
             searchQueue.push(inputQuery);
             query = searchQueue.join(" ");
@@ -116,7 +116,7 @@
           
           if (!checkbox.checked){
             const inputValue = event.target.value.split(" ");
-            // for queries with spacing, use the first word
+            // for single queries with spacing, use the first word
             const inputQuery = inputValue[0];
             searchQueue = searchQueue.filter(
               (word) => word != inputQuery
