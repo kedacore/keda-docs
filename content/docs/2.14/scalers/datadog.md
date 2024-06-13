@@ -28,7 +28,7 @@ If you are using Helm to deploy the Cluster Agent, set:
 * `clusterAgent.metricsProvider.enabled` to `true`
 * `clusterAgent.metricsProvider.registerAPIService` to `false`
 * `clusterAgent.metricsProvider.useDatadogMetrics` to `true`
-* `clusterAgent.env` to `[{name: DD_EXTERNAL_METRICS_PROVIDER_ENABLE_DATADOGMETRIC_AUTOGEN, value: false}]`
+* `clusterAgent.env` to `[{name: DD_EXTERNAL_METRICS_PROVIDER_ENABLE_DATADOGMETRIC_AUTOGEN, value: "false"}]`
 
 If you are using the Datadog Operator, add the following options to your `DatadogAgent` object:
 
@@ -45,7 +45,7 @@ spec:
       registerAPIService: false
   override:
     clusterAgent:
-      env: [{name: DD_EXTERNAL_METRICS_PROVIDER_ENABLE_DATADOGMETRIC_AUTOGEN, value: false}]
+      env: [{name: DD_EXTERNAL_METRICS_PROVIDER_ENABLE_DATADOGMETRIC_AUTOGEN, value: "false"}]
 [...]
 ```
 
