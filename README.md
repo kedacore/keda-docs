@@ -149,7 +149,14 @@ Replace FILTER_NAME with any desired name of your choice. Same applies to the va
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
-5. Navigate to `javascript.html` and scroll down to where the `lunr()` function is being called. You will notice a callback function is being passed to the `lunr()` function. Within the callback function, you will also notice `this.field` being called with some values passed in. Append this block of code right after the last `this.field` function call:
+5. Head over to `config.toml` file. In the `params.lunr` section, you will see two arrays named `vars` and `params`. Add your new filter option's name to each of the arrays:
+
+```toml
+vars = ["title", "maintainer", "description", "availability", "category", "type", "FILTER_NAME"]
+params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
+```
+
+6. Navigate to `javascript.html` and scroll down to where the `lunr()` function is being called. You will notice a callback function is being passed to the `lunr()` function. Within the callback function, you will also notice `this.field` being called with some values passed in. Append this block of code right after the last `this.field` function call:
 
 ```javascript
 this.field("FILTER_NAME", {
@@ -174,7 +181,7 @@ parse[doc.title] = {
 };
 ```
 
-6. Navigate to `layouts/partials/scaler-layout.html`. Locate the div with a class name of `filter-options`. Within the div, add this new block:
+7. Navigate to `layouts/partials/scaler-layout.html`. Locate the div with a class name of `filter-options`. Within the div, add this new block:
 
 ```html
 <div class="has-extra-top-margin">
@@ -198,7 +205,7 @@ parse[doc.title] = {
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
-7. Save your changes and rebuild your frontend.
+8. Save your changes and rebuild your frontend.
 
 ## Add new Frequently Asked Question (FAQ)
 
