@@ -66,8 +66,8 @@ notAlternative = true
 
 # parameters for lunr search
 [params.lunr]
-vars = ["title", "maintainer", "description", "availability"]
-params = ["availability", "maintainer"]
+vars = ["title", "maintainer", "description", "availability", "category", "type"]
+params = ["availability", "maintainer", "category", "type"]
 
 # "Highlighted Samples" section on the main page
 [[params.samples]]
