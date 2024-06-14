@@ -129,6 +129,77 @@ Here are a few examples:
 > - `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
 > - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
 
+## Adding a new filter option
+
+To add a new filter option, simply follow these steps:
+
+1. Navigate to the doc file you want to annotate.
+2. In the frontmatter, add your new filter option.
+
+```
++++
+FILTER_NAME = "filter_value"
++++
+```
+
+Replace FILTER_NAME with any desired name of your choice. Same applies to the value.
+
+3. Navigate to the `list.lunr.json` file to edit: `cd layouts/_default/list.lunr.json`.
+4. Open the file and go down to line 3. You will notice the format of the data represented in a key/value pair. Just before the closing parenthesis, append your new option like this: `"FILTER_NAME" $scalers.Params.FILTER_NAME`. 
+
+Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
+
+5. Navigate to `javascript.html` and scroll down to where the `lunr()` function is being called. You will notice a callback function is being passed to the `lunr()` function. Within the callback function, you will also notice `this.field` being called with some values passed in. Append this block of code right after the last `this.field` function call:
+
+```javascript
+this.field("FILTER_NAME", {
+  boost: 5,
+});
+``` 
+
+Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
+
+Right after the `lunr()` function block, You will find where the `parse` object is being modified. Append your new filter option to the object:
+
+```javascript
+parse[doc.title] = {
+  href: doc.href,
+  title: doc.title,
+  maintainer: doc.maintainer,
+  description: doc.description,
+  availability: doc.availability,
+  category: doc.category,
+  type: doc.type,
+  FILTER_NAME: doc.FILTER_NAME
+};
+```
+
+6. Navigate to `layouts/partials/scaler-layout.html`. Locate the div with a class name of `filter-options`. Within the div, add this new block:
+
+```html
+<div class="has-extra-top-margin">
+  <h6>FILTER_NAME</h6>
+  {{ $FILTER_NAME := slice }}
+  {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+    {{ with $scalers.Params.FILTER_NAME }}
+        {{ $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }}
+        {{ $FILTER_NAME = uniq $FILTER_NAME }}
+    {{ end }}
+  {{ end }}
+  {{ range $FILTER_NAME }}
+  {{ $item := . }}
+  <div>
+      <input id="{{ . }}" type="checkbox" name="resource_filter" value="category:{{ . }}">
+      <label for="{{ . }}">{{ . }}</label>
+  </div>
+  {{ end }}
+</div>    
+```
+
+Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
+
+7. Save your changes and rebuild your frontend.
+
 ## Add new Frequently Asked Question (FAQ)
 
 To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at
