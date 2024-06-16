@@ -196,7 +196,7 @@ parse[doc.title] = {
   {{ range $FILTER_NAME }}
   {{ $item := . }}
   <div>
-      <input id="{{ . }}" type="checkbox" name="resource_filter" value="category:{{ . }}">
+      <input id="{{ . }}" type="checkbox" name="resource_filter" value="FILTER_NAME:{{ . }}">
       <label for="{{ . }}">{{ . }}</label>
   </div>
   {{ end }}
