@@ -1,4 +1,8 @@
-# Setting up a Scaler for KEDA (Kubernetes-based Event Driven Autoscaler)
++++
+title = "Setting up a Scaler"
+maintainer = "Community"
+category = "Messaging"
++++
 
 ## Prerequisites
 
