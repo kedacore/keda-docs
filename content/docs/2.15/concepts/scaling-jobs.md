@@ -159,7 +159,7 @@ scalingStrategy:
   strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
 ```
 
-Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
+Select a Scaling Strategy. Possible values are `default`, `custom`, `accurate`, or `eager`. The default value is `default`.
 
 > 💡 **NOTE:**
 >
@@ -229,6 +229,11 @@ if (maxScale + runningJobCount) > maxReplicaCount {
 	return maxScale - pendingJobCount
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
+
+**eager**
+When adopting the **default** strategy, you are likely to come into a subtle case where messages need to be consumed by spawning jobs but remain in the queue, even when there are available slots between `runningJobCount` and `maxReplicaCount`. The **eager** strategy comes to the rescue. It addresses this issue by utilizing all available slots up to the maxReplicaCount, ensuring that waiting messages are processed as quickly as possible.
+
+To better understand the scenario, you may refer to [this issue](https://github.com/kedacore/keda/issues/5114).
 
 ---
 
