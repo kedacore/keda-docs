@@ -2,6 +2,7 @@
 title = "AWS SQS Queue"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on AWS SQS Queue."
 go_file = "aws_sqs_queue_scaler"
 +++

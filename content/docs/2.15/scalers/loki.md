@@ -2,6 +2,7 @@
 title = "Loki"
 availability = "v2.9+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on Loki query result."
 go_file = "loki_scaler"
 +++

@@ -2,6 +2,7 @@
 title = "Redis Streams"
 availability = "v1.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on Redis Streams."
 go_file = "redis_streams_scaler"
 +++

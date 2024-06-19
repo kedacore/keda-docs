@@ -2,6 +2,7 @@
 title = "Redis Lists (supports Redis Sentinel)"
 availability = "v2.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Redis Lists scaler with support for Redis Sentinel topology"
 go_file = "redis_scaler"
 +++

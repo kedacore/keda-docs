@@ -2,6 +2,7 @@
 title = "Memory"
 availability = "v2.0+"
 maintainer = "Community"
+category = "Apps"
 description = "Scale applications based on memory metrics."
 go_file = "cpu_memory_scaler"
 +++

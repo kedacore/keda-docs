@@ -2,6 +2,7 @@
 title = "Apache Pulsar"
 availability = "v2.8"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on an Apache Pulsar topic subscription."
 go_file = "pulsar_scaler"
 layout = "scaler"

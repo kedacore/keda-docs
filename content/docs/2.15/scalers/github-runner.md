@@ -2,6 +2,7 @@
 title = "Github Runner Scaler"
 availability = "v2.10+"
 maintainer = "GitHub"
+category = "CI/CD"
 description = "Scale GitHub Runners based on the number of queued jobs in GitHub Actions"
 go_file = "github_runner_scaler"
 +++

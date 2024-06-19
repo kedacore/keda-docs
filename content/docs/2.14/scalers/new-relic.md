@@ -2,6 +2,7 @@
 title = "New Relic"
 availability = "2.6+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on New Relic NRQL"
 go_file = "newrelic_scaler"
 +++
