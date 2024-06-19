@@ -25,6 +25,7 @@ spec:
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval:  30                                      # Optional. Default: 30 seconds
   cooldownPeriod:   300                                     # Optional. Default: 300 seconds
+  initialCooldownPeriod:  0                                 # Optional. Default: 0 seconds
   idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
   minReplicaCount:  1                                       # Optional. Default: 0
   maxReplicaCount:  100                                     # Optional. Default: 100
