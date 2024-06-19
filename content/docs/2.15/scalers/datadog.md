@@ -13,9 +13,9 @@ polling interval. For more detailed information about polling intervals check
 [the Polling intervals and Datadog rate limiting
 section](#polling-intervals-and-datadog-rate-limiting).
 
-There are two ways to poll Datadog for a query value using the Datadog scaler: using the REST API endpoints, or using the [Datadog Cluster Agent](https://docs.datadoghq.com/containers/cluster_agent/) as proxy. It is recommended to use the Datadog Cluster Agent as proxy, as it will reduce the chance of reaching rate limits. As both types are different in terms of usage and authentication, this documentation handles them separately.
+There are two ways to poll Datadog for a query value using the Datadog scaler: using the REST API endpoints, or using the [Datadog Cluster Agent](https://docs.datadoghq.com/containers/cluster_agent/) as proxy. Using the Datadog Cluster Agent as proxy reduces the chance of reaching rate limits. As both types are different in terms of usage and authentication, this documentation handles them separately.
 
-## Using the Datadog Cluster Agent
+## Using the Datadog Cluster Agent (Experimental)
 
 With this method, the Datadog scaler will be connecting to the Datadog Cluster Agent to retrieve the query values that will be used to drive the KEDA scaling events. This reduces the risk of reaching rate limits for the Datadog API, as the Cluster Agent retrieves metric values in batches.
 
