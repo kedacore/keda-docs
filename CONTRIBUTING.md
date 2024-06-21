@@ -18,8 +18,8 @@ We provide easy ways to introduce new content:
 - [Adding new Frequently Asked Question (FAQ)](#add-new-frequently-asked-question-faq)
 - [Adding new scaler documentation](#adding-scaler-documentation)
 - [Adding new troubleshooting guidance](#add-new-troubleshooting-guidance)
-- [Become a listed KEDA user!](CONTRIBUTING.md#become-a-listed-KEDA-user)
-- [Become a listed KEDA commercial offering!](CONTRIBUTING.md#become-a-listed-KEDA-commercial-offering)
+- [Become a listed KEDA user!](#become-a-listed-KEDA-user)
+- [Become a listed KEDA commercial offering!](#become-a-listed-KEDA-commercial-offering)
 - [Writing documentation for a scaler](#writing-documentation-for-a-new-authentication-provider)
 - [Writing documentation for a scaler](#writing-documentation-for-a-scaler)
 
