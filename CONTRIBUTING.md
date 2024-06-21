@@ -22,7 +22,27 @@ We provide easy ways to introduce new content:
 
 ## Creating and building a local environment
 
-[Details on setup of a development environment are found on the README](https://github.com/kedacore/keda-docs#running-the-site-locally)
+To build or serve the site locally, follow these steps:
+
+- Fork and clone this repository (for local development only).
+- Install the latest [LTS release][] of **Node**, using **[nvm][]** for example:
+  ```console
+  $ nvm install --lts
+  ```
+  **Note:** on Windows, the argument to install is `lts`.
+- Get npm packages and other prerequisites:
+  ```console
+  $ npm install
+  ```
+- To build the site, run:
+  ```console
+  $ npm run build
+  ```
+  You'll find the generated site files under `public`.
+- Serve the site locally at [localhost:8888][] using:
+  ```console
+  $ npm run serve
+  ```
 
 ## Developer Certificate of Origin: Signing your work
 
