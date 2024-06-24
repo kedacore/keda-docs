@@ -44,7 +44,7 @@ The `Scaler` interface defines 3 methods:
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpecForScaling` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
 - `GetMetricsAndActivity` is called on `pollingInterval` and. When activity returns `true`, KEDA will scale to what is returned by the metric limited by `maxReplicaCount` on the ScaledObject/ScaledJob.
-  When `false` is returned, KEDA will scale to `minReplicaCount` or optionally `idleReplicaCount`. More details around the defaults and how these options work together can be found on the [ScaledObjectSpec](https://keda.sh/docs/latest/reference/scaledobject-spec).
+  When `false` is returned, KEDA will scale to `minReplicaCount` or optionally `idleReplicaCount`. More details around the defaults and how these options work together can be found on the [ScaledObjectSpec](../reference/scaledobject-spec).
 > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA supports both `AverageValue` and `Value` metric target types for external metrics. When `AverageValue` (the default metric type) is used, the metric value returned by the external scaler will be divided by the number of replicas.
 
 The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
