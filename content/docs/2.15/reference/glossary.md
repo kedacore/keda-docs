@@ -33,7 +33,7 @@ An external system like Kafka, RabbitMQ, that generates events that KEDA can mon
 
 An open-source monitoring platform that can visualize metrics collected by KEDA.
 
-## GRPC
+## gRPC Remote Procedure Calls (gRPC)
 
 Go Remote Procedure Call. An open-source remote procedure call framework used by KEDA components to communicate.
 
