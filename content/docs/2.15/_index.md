@@ -7,8 +7,7 @@ Welcome to the documentation for **KEDA**, the Kubernetes Event-driven Autoscale
 
 Use the navigation bar on the left to learn more about KEDA's architecture  and how to deploy and use KEDA.
 
-Where to go
-===========
+## Where to go
 
 What is your involvement with KEDA?
 
