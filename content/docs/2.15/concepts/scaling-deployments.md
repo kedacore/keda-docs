@@ -3,7 +3,11 @@ title = "Scaling Deployments, StatefulSets & Custom Resources"
 weight = 200
 +++
 
-This page describes the deployment scaling behavior of KEDA. See the [Scaled Object specification](../reference/scaledobject-spec.md) for details on how to set the behaviors described below.
+This page describes the deployment scaling behavior of KEDA. 
+
+# Specification
+
+See the [Scaled Object specification](../reference/scaledobject-spec.md) for details on how to set the behaviors described below.
 
 # Scaling objects
 
