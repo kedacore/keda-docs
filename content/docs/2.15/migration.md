@@ -76,7 +76,7 @@ In order to scale `Jobs` with KEDA v2, you need to do only a few modifications t
 
 You can configure `successfulJobsHistoryLimit` and `failedJobsHistoryLimit`. They will remove the old job histories automatically.
 
-Please see the examples below or refer to the full [v2 ScaledJob Specification](../reference/scaledjob-spec/)
+Please see the examples below or refer to the full [v2 ScaledJob Specification](./reference/scaledjob-spec/)
 
 **Example of v1 ScaledObject for Jobs scaling**
 ```yaml
