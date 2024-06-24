@@ -35,7 +35,7 @@ An open-source monitoring platform that can visualize metrics collected by KEDA.
 
 ## gRPC Remote Procedure Calls (gRPC)
 
-Go Remote Procedure Call. An open-source remote procedure call framework used by KEDA components to communicate.
+gRPC Remote Procedure Calls (gRPC). An open-source remote procedure call framework used by KEDA components to communicate.
 
 ## HPA 
 
