@@ -25,7 +25,7 @@ In order to scale `Deployments` with KEDA v2, you need to do only a few modifica
 - Rename property `spec.scaleTargetRef.containerName` to `spec.scaleTargetRef.envSourceContainerName`
 - Label `deploymentName` (in `metadata.labels.`) is no longer needed to be specified on v2 ScaledObject (it was mandatory on older versions of v1)
 
-Please see the examples below or refer to the full [v2 ScaledObject Specification](../reference/scaledobject-spec)
+Please see the examples below or refer to the full [v2 ScaledObject Specification](./reference/scaledobject-spec)
 
  **Example of v1 ScaledObject**
 ```yaml
