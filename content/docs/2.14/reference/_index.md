@@ -6,7 +6,7 @@ weight = 2
 Reference information for the KEDA autoscaler.
 
 - [ScaledObject specification](./scaledobject-spec)
-- [ScaledJob specification](./scaledjob-spec.md)
+- [ScaledJob specification](./scaledjob-spec)
 - [Events](./events)
 - [Firewall requirements]
 - [FAQ](./faq.md)
