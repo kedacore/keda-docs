@@ -8,6 +8,6 @@ Reference information for the KEDA autoscaler.
 - [ScaledObject specification](./scaledobject-spec)
 - [ScaledJob specification](./scaledjob-spec)
 - [Events](./events)
-- [Firewall requirements]
+- [Firewall requirements](../operate/cluster#firewall)
 - [FAQ](./faq.md)
 - [Glossary](./glossary.md)
