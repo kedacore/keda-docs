@@ -2,6 +2,7 @@
 title = "RabbitMQ Queue"
 availability = "v1.0+"
 maintainer = "Microsoft"
+category = "Messaging"
 description = "Scale applications based on RabbitMQ Queue."
 go_file = "rabbitmq_scaler"
 +++

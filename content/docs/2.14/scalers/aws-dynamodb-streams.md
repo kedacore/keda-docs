@@ -2,6 +2,7 @@
 title = "AWS DynamoDB Streams"
 availability = "v2.8+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on AWS DynamoDB Streams"
 go_file = "aws_dynamodb_streams_scaler"
 +++

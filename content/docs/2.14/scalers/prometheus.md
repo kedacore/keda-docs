@@ -2,6 +2,7 @@
 title = "Prometheus"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on Prometheus."
 go_file = "prometheus_scaler"
 +++
@@ -17,7 +18,6 @@ triggers:
     # Required fields:
     serverAddress: http://<prometheus-host>:9090
     query: sum(rate(http_requests_total{deployment="my-deployment"}[2m])) # Note: query must return a vector/scalar single element response
-    queryParameters: key-1=value-1,key-2=value-2
     threshold: '100.50'
     activationThreshold: '5.5'
     # Optional fields:
@@ -25,6 +25,7 @@ triggers:
     cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
+    queryParameters: key-1=value-1,key-2=value-2
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
 
 ```
@@ -33,13 +34,13 @@ triggers:
 
 - `serverAddress` - Address of Prometheus server. If using VictoriaMetrics cluster version, set full URL to Prometheus querying API, e.g. `http://<vmselect>:8481/select/0/prometheus`
 - `query` - Query to run.
-- `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint.
 - `threshold` - Value to start scaling for. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 - `cortexOrgID` - DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of `customHeaders` and will be removed in version 2.12. Use `customHeaders: X-Scope-OrgID=##` instead to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
+- `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint. (Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
 
 ### Authentication Parameters

@@ -2,6 +2,7 @@
 title = "AWS DynamoDB"
 availability = "v2.7+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on the records count in AWS DynamoDB"
 go_file = "aws_dynamodb_scaler"
 +++

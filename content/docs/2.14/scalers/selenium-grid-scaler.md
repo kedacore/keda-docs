@@ -2,6 +2,7 @@
 title = "Selenium Grid Scaler"
 availability = "v2.4+"
 maintainer = "Volvo Cars"
+category = "Testing"
 description = "Scales Selenium browser nodes based on number of requests waiting in session queue"
 go_file = "selenium_grid_scaler"
 +++

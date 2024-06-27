@@ -2,6 +2,7 @@
 title = "Azure Monitor"
 availability = "v1.3+"
 maintainer = "Microsoft"
+category = "Metrics"
 description = "Scale applications based on Azure Monitor metrics."
 go_file = "azure_monitor_scaler"
 +++

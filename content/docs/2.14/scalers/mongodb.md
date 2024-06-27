@@ -1,6 +1,7 @@
 +++
 title = "MongoDB"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on MongoDB queries."
 availability = "v2.1+"
 go_file = "mongo_scaler"

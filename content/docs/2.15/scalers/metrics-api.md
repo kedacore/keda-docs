@@ -2,6 +2,7 @@
 title = "Metrics API"
 availability = "v2.0+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on a metric provided by an API"
 go_file = "metrics_api_scaler"
 +++
