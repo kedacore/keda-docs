@@ -188,7 +188,7 @@ parent = "docs"
 weight = 5
 
 [[menu.docs]]
-url = "/docs/faq/"
+url = "/docs/reference/faq/"
 name = "FAQ"
 parent = "docs"
 weight = 6
