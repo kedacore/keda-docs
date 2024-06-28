@@ -1,8 +1,6 @@
 +++
-title = "Setting up a Scaler"
-availability = "v2.6+"
-maintainer = "Community"
-category = "Messaging"
+title = "Setupscaler"
+weight = 500
 description = "Procedure to Setup a Scaler in KEDA"
 +++
 
