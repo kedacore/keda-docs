@@ -29,12 +29,10 @@ KEDA requires to be accessible inside the cluster to be able to autoscale.
 
 Here is an overview of the required ports that need to be accessible for KEDA to work:
 
-<!-- markdownlint-disable no-inline-html -->
 | Port   | Why?                                         | Remarks                                                                                                                                                   |
 | ------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms because it uses Control Plane &#8594; port 443 on the Service IP range communication.<br /><br /> This is not applicable for Google Cloud. |
+| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms because it uses Control Plane &#8594; port 443 on the Service IP range communication. This is not applicable for Google Cloud. |
 | `6443` | Used by Kubernetes API server to get metrics | Only required for Google Cloud because it uses Control Plane &#8594; port 6443 on the Pod IP range for communication                                      |
-<!-- markdownlint-enable no-inline-html -->
 
 ## High Availability
 
@@ -42,10 +40,10 @@ KEDA does not provide full support for high-availability due to upstream limitat
 
 Here is an overview of all KEDA deployments and the HA notes:
 
-| Deployment     | Support Replicas | Note                                                                                                                                                                                                                   |
-| -------------- | ---------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deployment     | Support Replicas | Note                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Metrics Server | 1                | You can run multiple replicas of our metrics sever, and it is recommended to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to our metrics servers are load balanced. However, [you can only run one active metric server in a Kubernetes cluster serving external.metrics.k8s.io](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) which has to be the KEDA metric server. |
-| Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.<br /><br />This is only supported as of KEDA v2.6 if you are using our Helm chart. |
+| Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.This is only supported as of KEDA v2.6 if you are using our Helm chart.                                                                                    |
 
 ## HTTP Timeouts
 
