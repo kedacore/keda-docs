@@ -233,7 +233,7 @@ For more details,  you can refer to [this PR](https://github.com/kedacore/keda/p
 **eager**
 When adopting the **default** strategy, you are likely to come into a subtle case where messages need to be consumed by spawning jobs but remain in the queue, even when there are available slots between `runningJobCount` and `maxReplicaCount`. The **eager** strategy comes to the rescue. It addresses this issue by utilizing all available slots up to the maxReplicaCount, ensuring that waiting messages are processed as quickly as possible.
 
-For example, let's assume we configure a ScaleJob in a cluster as below:
+For example, let's assume we configure a ScaledJob in a cluster as below:
 ```yaml
   ###
   # A job that runs for a minimum of 3 hours.
