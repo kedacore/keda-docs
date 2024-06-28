@@ -8,20 +8,32 @@ Our documentation is versioned so it's important to make the changes for the cor
 
 ## Getting Help
 
-If you have a question about KEDA or how best to contribute, the [#KEDA](https://kubernetes.slack.com/archives/CKZJ36A5D) channel on the Kubernetes slack channel ([get an invite if you don't have one already](https://slack.k8s.io/)) is a good place to start.  We also have regular [community stand-ups](https://github.com/kedacore/keda#community) to track ongoing work and discuss areas of contribution.  For any issues with the product you can [create an issue](https://github.com/kedacore/keda/issues/new) in this repo.
+If you have a question about KEDA or how best to contribute, the [#KEDA](https://kubernetes.slack.com/archives/CKZJ36A5D) channel on the Kubernetes slack channel ([get an invite if you don't have one already](https://slack.k8s.io/)) is a good place to start. We also have regular [community stand-ups](https://github.com/kedacore/keda#community) to track ongoing work and discuss areas of contribution. For any issues with the product you can [create an issue](https://github.com/kedacore/keda/issues/new) in this repo.
 
 ## Contributing New Documentation
 
 We provide easy ways to introduce new content:
 
-- [Adding new blog post](#adding-blog-post)
-- [Adding new Frequently Asked Question (FAQ)](#add-new-frequently-asked-question-faq)
-- [Adding new scaler documentation](#adding-scaler-documentation)
-- [Adding new troubleshooting guidance](#add-new-troubleshooting-guidance)
-- [Become a listed KEDA user!](#become-a-listed-KEDA-user)
-- [Become a listed KEDA commercial offering!](#become-a-listed-KEDA-commercial-offering)
-- [Writing documentation for a scaler](#writing-documentation-for-a-new-authentication-provider)
-- [Writing documentation for a scaler](#writing-documentation-for-a-scaler)
+- [Contributing to KEDA](#contributing-to-keda)
+  - [Getting Help](#getting-help)
+  - [Contributing New Documentation](#contributing-new-documentation)
+    - [Become a listed KEDA user!](#become-a-listed-keda-user)
+    - [Become a listed KEDA commercial offering!](#become-a-listed-keda-commercial-offering)
+    - [Adding blog post](#adding-blog-post)
+    - [Adding scaler documentation](#adding-scaler-documentation)
+    - [Writing documentation for a new authentication provider](#writing-documentation-for-a-new-authentication-provider)
+    - [Add new Frequently Asked Question (FAQ)](#add-new-frequently-asked-question-faq)
+    - [Add new troubleshooting guidance](#add-new-troubleshooting-guidance)
+    - [Writing documentation for a scaler](#writing-documentation-for-a-scaler)
+  - [Working with documentation versions](#working-with-documentation-versions)
+    - [Preparing a new version](#preparing-a-new-version)
+    - [Publishing a new version](#publishing-a-new-version)
+  - [Developer Certificate of Origin: Signing your work](#developer-certificate-of-origin-signing-your-work)
+    - [Every commit needs to be signed](#every-commit-needs-to-be-signed)
+    - [I didn't sign my commit, now what?!](#i-didnt-sign-my-commit-now-what)
+  - [Changing the website](#changing-the-website)
+    - [Creating and building a local environment](#creating-and-building-a-local-environment)
+    - [Adding a new filter option](#adding-a-new-filter-option)
 
 Learn more how to [create and build a local environment](#creating-and-building-a-local-environment).
 
@@ -30,6 +42,7 @@ Learn more how to [create and build a local environment](#creating-and-building-
 Are you using KEDA in production? Do you want to become a [listed user](https://keda.sh/community/#users)? Say no more!
 
 You can easily get listed by following these steps:
+
 1. Upload your logo to `static/img/logos/` _(350x180)_
 2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
 
@@ -46,6 +59,7 @@ Here's a good example of [Coralogix becoming a listed user](https://github.com/k
 Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/support/#commercial-support)? Say no more!
 
 You can easily get listed by following these steps:
+
 1. Upload your logo to `static/img/logos/` _(350x180)_
 2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
 
@@ -66,9 +80,9 @@ $ hugo new blog/my-new-post.md
 This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose
 contents you can modify. The following fields are required:
 
-* `title`
-* `date` (in `YYYY-MM-DD` format)
-* `author`
+- `title`
+- `date` (in `YYYY-MM-DD` format)
+- `author`
 
 ### Adding scaler documentation
 
@@ -82,10 +96,10 @@ This creates a boilerplate Markdown file in
 `content/docs/<VERSION>/scalers/my-new-scaler.md` whose contents you can modify.
 Make sure to update the following metadata fields:
 
-* `title`
-* `availability`
-* `maintainer`
-* `description`
+- `title`
+- `availability`
+- `maintainer`
+- `description`
 
 ### Writing documentation for a new authentication provider
 
@@ -99,7 +113,7 @@ This creates a boilerplate Markdown file in
 `content/docs/<VERSION>/providers/my-new-provider.md` whose contents you can modify.
 Make sure to update the following metadata fields:
 
-* `title`
+- `title`
 
 ### Add new Frequently Asked Question (FAQ)
 
@@ -143,12 +157,33 @@ Here are a few examples:
 ## Working with documentation versions
 
 The KEDA documentation is versioned. Each version has its own subdirectory under
-[content/docs](content/docs). To add a new version, copy the directory for
-the most recent version. Here's an example:
+[content/docs](content/docs). To add a new version, follow these steps:
+
+1. copy the directory for the most recent version. Here's an example:
 
 ```console
 $ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 ```
+
+2. copy the file for the most recent faq data in the `data` directory. Here's an example:
+
+```console
+$ cp -rf data/faq<CurrentVersion> data/faq<NewVersion>
+```
+
+3. navigate to the new faq file:
+
+```console
+$ cd content/docs/<NewVersion>/reference/faq.md
+```
+
+4. update the versionData option
+
+```
+{{< faq20 versionData="NEW_FAQ_FILE_NAME" >}}
+```
+
+Replace `NEW_FAQ_FILE_NAME` with the file name of the faq data for the new version.
 
 By default, new documentation versions are not listed as available version so
 it's safe to make changes to them. After every release, the version will be
@@ -169,7 +204,7 @@ Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster
 Once a version is ready to be published, we must add the version to the
 `params.versions.docs` list in [config.toml](config.toml).
 
-More recent versions should be placed first in the list (ordering *does* matter
+More recent versions should be placed first in the list (ordering _does_ matter
 because the first element in that list is considered the latest version).
 
 > Note: Remember to [prepare the next version](#preparing-a-new-version).
@@ -179,6 +214,7 @@ because the first element in that list is considered the latest version).
 ### Every commit needs to be signed
 
 The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project. Here is the full text of the DCO, reformatted for readability:
+
 ```
 By making a contribution to this project, I certify that:
 
@@ -198,12 +234,14 @@ This is my commit message
 
 Signed-off-by: Random J Developer <random@developer.example.org>
 ```
+
 Git even has a `-s` command line option to append this automatically to your commit message:
+
 ```
 $ git commit -s -m 'This is my commit message'
 ```
 
-Each Pull Request is checked  whether or not commits in a Pull Request do contain a valid Signed-off-by line.
+Each Pull Request is checked whether or not commits in a Pull Request do contain a valid Signed-off-by line.
 
 ### I didn't sign my commit, now what?!
 
@@ -259,7 +297,7 @@ FILTER_NAME = "filter_value"
 Replace FILTER_NAME with any desired name of your choice. Same applies to the value.
 
 3. Navigate to the `list.lunr.json` file to edit: `cd layouts/_default/list.lunr.json`.
-4. Open the file and go down to line 3. You will notice the format of the data represented in a key/value pair. Just before the closing parenthesis, append your new option like this: `"FILTER_NAME" $scalers.Params.FILTER_NAME`. 
+4. Open the file and go down to line 3. You will notice the format of the data represented in a key/value pair. Just before the closing parenthesis, append your new option like this: `"FILTER_NAME" $scalers.Params.FILTER_NAME`.
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
@@ -276,7 +314,7 @@ params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
 this.field("FILTER_NAME", {
   boost: 5,
 });
-``` 
+```
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
@@ -291,7 +329,7 @@ parse[doc.title] = {
   availability: doc.availability,
   category: doc.category,
   type: doc.type,
-  FILTER_NAME: doc.FILTER_NAME
+  FILTER_NAME: doc.FILTER_NAME,
 };
 ```
 
@@ -300,21 +338,22 @@ parse[doc.title] = {
 ```html
 <div class="has-extra-top-margin">
   <h6>FILTER_NAME</h6>
-  {{ $FILTER_NAME := slice }}
-  {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-    {{ with $scalers.Params.FILTER_NAME }}
-        {{ $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }}
-        {{ $FILTER_NAME = uniq $FILTER_NAME }}
-    {{ end }}
-  {{ end }}
-  {{ range $FILTER_NAME }}
-  {{ $item := . }}
+  {{ $FILTER_NAME := slice }} {{ range $scalers := where site.RegularPages
+  ".CurrentSection.Title" "Scalers" }} {{ with $scalers.Params.FILTER_NAME }} {{
+  $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }} {{
+  $FILTER_NAME = uniq $FILTER_NAME }} {{ end }} {{ end }} {{ range $FILTER_NAME
+  }} {{ $item := . }}
   <div>
-      <input id="{{ . }}" type="checkbox" name="resource_filter" value="FILTER_NAME:{{ . }}">
-      <label for="{{ . }}">{{ . }}</label>
+    <input
+      id="{{ . }}"
+      type="checkbox"
+      name="resource_filter"
+      value="FILTER_NAME:{{ . }}"
+    />
+    <label for="{{ . }}">{{ . }}</label>
   </div>
   {{ end }}
-</div>    
+</div>
 ```
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).

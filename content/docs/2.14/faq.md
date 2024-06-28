@@ -2,4 +2,4 @@
 title = "FAQ"
 +++
 
-{{< faq20 >}}
+{{< faq20 versionData="faq2_14" >}}
