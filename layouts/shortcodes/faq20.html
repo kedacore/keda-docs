@@ -1,4 +1,10 @@
-{{ $faq20 := site.Data.faq20.qna }}
+{{ $filename := .Get "versionData" }}
+{{ range index .Site.Data $filename }}
+  {{ $.Scratch.Add "faq20" . }}
+{{ end }}
+
+{{ $faq20 := $.Scratch.Get "faq20" }}
+
 
 <h2 id="general">General</h2>
 
