@@ -159,25 +159,25 @@ Here are a few examples:
 The KEDA documentation is versioned. Each version has its own subdirectory under
 [content/docs](content/docs). To add a new version, follow these steps:
 
-1. copy the directory for the most recent version. Here's an example:
+1. Copy the directory for the most recent version. Here's an example:
 
 ```console
 $ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 ```
 
-2. copy the file for the most recent faq data in the `data` directory. Here's an example:
+2. Copy the file for the most recent faq data in the `data` directory. Here's an example:
 
 ```console
 $ cp -rf data/faq<CurrentVersion> data/faq<NewVersion>
 ```
 
-3. navigate to the new faq file:
+3. Navigate to the new faq file:
 
 ```console
 $ cd content/docs/<NewVersion>/reference/faq.md
 ```
 
-4. update the versionData option
+4. Update the versionData option
 
 ```
 {{< faq20 versionData="NEW_FAQ_FILE_NAME" >}}
