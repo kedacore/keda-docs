@@ -100,14 +100,13 @@ triggers:
 
 The Datadog scaler with Cluster Agent supports one type of authentication - Bearer authentication.
 
-You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
- along with secret credentials in `TriggerAuthentication` as mentioned below:
+You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
 
 **Common to all authentication types**
 - `authMode` - The authentication mode to connect to the Cluster Agent. (Values: bearer, Default: bearer, Optional)
 - `datadogNamespace` - The namespace where the Datadog Cluster Agent is deployed.
-- `datadogMetricsService` - The service name for the Cluster Agent Metrics API. (Default: datadog-cluster-agent-metrics-api, Optional)
-- `datadogMetricsServicePort` - The port of the service for the Cluster Agent Metrics API. (Default: 8080, Optional)
+- `datadogMetricsService` - The service name for the Cluster Agent metrics server. To find the name of the service, check the available services in the Datadog namespace and look for the `*-cluster-agent-metrics*` name pattern.
+- `datadogMetricsServicePort` - The port of the service for the Cluster Agent Metrics API. (Default: 8443, Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: true, false, Default: false, Optional)
 
 **Bearer authentication:**
@@ -124,6 +123,7 @@ metadata:
 type: Opaque
 data:
   datadogNamespace: # Required: base64 encoded value of the namespace where the Datadog Cluster Agent is deployed
+  datadogMetricsService: # Required: base64 encoded value of the Cluster Agent metrics server service
   unsafeSsl: # Optional: base64 encoded value of `true` or `false`
   authMode: # Required: base64 encoded value of the authentication mode (in this case, bearer)
 ---
