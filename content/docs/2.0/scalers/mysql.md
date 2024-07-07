@@ -34,6 +34,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 - `hostFromEnv` - The host of the MySQL server, similar to `host`, but reads it from an environment variable on the scale target.
 - `portFromEnv` - The port of the MySQL server, similar to `port`, but reads it from an environment variable on the scale target.
+- `usernameFromEnv` - The usename for connecting with host the MySQL server, similar to `username`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 
