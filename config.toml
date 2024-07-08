@@ -643,5 +643,5 @@ logo = "vendors/azure-kubernetes-service.png"
 
 [[params.vendors]]
 name = "Kedify"
-url = "https://kedify.io"
+url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "vendors/kedify.png"
