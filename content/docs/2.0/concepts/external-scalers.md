@@ -33,14 +33,14 @@ type PushScaler interface {
 ```
 
 The `Scaler` interface defines 4 methods:
+
 - `IsActive` is called on `pollingInterval` defined in the ScaledObject/ScaledJob CRDs and scaling to 1 happens if this returns true.
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
 - `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
-> Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
+  > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA uses the metric target type `AverageValue` for external metrics. This will cause the metric value returned by the external scaler to be divided by the number of replicas.
 
 The `PushScaler` interface adds `Run` method. The `Run` method receives a push channel (`active`), that the scaler can push `true` to any time to force scaling action independently from `pollingInterval`.
-
 
 ### External Scaler GRPC interface
 
@@ -62,6 +62,7 @@ service ExternalScaler {
 - `StreamIsActive` maps to the `Run` method on the `PushScaler` interface.
 
 Few things to notice:
+
 - Lack of `Close` method as the GRPC connection defines the lifetime of the scaler
 - `IsActive`, `StreamIsActive`, and `GetMetricsSpec` are called with a `ScaledObjectRef` that contains the scaledObject name/namespace as well as the content of `metadata` defined in the trigger.
 
@@ -125,6 +126,7 @@ go mod init example.com/external-scaler/sample
 mkdir externalscaler
 protoc externalscaler.proto --go_out=plugins=grpc:externalscaler
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
@@ -161,9 +163,8 @@ mkdir Services
 ```bash
 npm install --save grpc request
 ```
-{{< /collapsible >}}
 
-<br />
+{{< /collapsible >}}
 
 #### 3. Implementing `IsActive`
 
@@ -193,6 +194,7 @@ spec:
 Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
 
 `main.go`
+
 ```golang
 func (e *ExternalScaler) IsActive(ctx context.Context, scaledObject *pb.ScaledObjectRef) (*pb.IsActiveResponse, error) {
 	// request.Scalermetadata contains the `metadata` defined in the ScaledObject
@@ -239,12 +241,14 @@ func (e *ExternalScaler) IsActive(ctx context.Context, scaledObject *pb.ScaledOb
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
 Full implementation can be found here: https://github.com/kedacore/external-scaler-samples
 
 `Services/ExternalScalerService.cs`
+
 ```csharp
 public class ExternalScalerService : ExternalScaler.ExternalScalerBase
 {
@@ -277,73 +281,77 @@ public class ExternalScalerService : ExternalScaler.ExternalScalerBase
   }
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
 `index.js`
-```js
-const grpc = require('grpc')
-const request = require('request')
-const externalScalerProto = grpc.load('externalscaler.proto')
 
-const server = new grpc.Server()
+```js
+const grpc = require("grpc");
+const request = require("request");
+const externalScalerProto = grpc.load("externalscaler.proto");
+
+const server = new grpc.Server();
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   isActive: (call, callback) => {
-    const longitude = call.request.scalerMetadata.longitude
-    const latitude = call.request.scalerMetadata.latitude
+    const longitude = call.request.scalerMetadata.longitude;
+    const latitude = call.request.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
-      const now = new Date()
-      const yesterday = new Date(new Date().setDate(new Date().getDate()-1));
+      const now = new Date();
+      const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
-      const startTime = `${yesterday.getUTCFullYear()}-${yesterday.getUTCMonth()}-${yesterday.getUTCDay()}`
-      const endTime = `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDay()}`
-      const radiusKm = 500
-      const query = `format=geojson&starttime=${startTime}&endtime=${endTime}&longitude=${longitude}&latitude=${latitude}&maxradiuskm=${radiusKm}`
+      const startTime = `${yesterday.getUTCFullYear()}-${yesterday.getUTCMonth()}-${yesterday.getUTCDay()}`;
+      const endTime = `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDay()}`;
+      const radiusKm = 500;
+      const query = `format=geojson&starttime=${startTime}&endtime=${endTime}&longitude=${longitude}&latitude=${latitude}&maxradiuskm=${radiusKm}`;
 
-      request.get({
-        url: `https://earthquake.usgs.gov/fdsnws/event/1/query?${query}`,
-        json: true,
-      }, (err, resp, data) => {
-        if (err) {
-          callback({
-            code: grpc.status.INTERNAL,
-            details: err,
-          })
-        } else if (resp.statusCode !== 200) {
-          callback({
-            code: grpc.status.INTERNAL,
-            details: `expected status 200, got ${resp.statusCode}`
-          })
-        } else {
-          // count how many earthquakes with mag > 1.0
-          let count = 0
-          data.features.forEach(i => {
-            if (i.properties.mag > 1.0) {
-              count++
-            }
-          })
-          callback(null, {
-            result: count > 2,
-          })
+      request.get(
+        {
+          url: `https://earthquake.usgs.gov/fdsnws/event/1/query?${query}`,
+          json: true,
+        },
+        (err, resp, data) => {
+          if (err) {
+            callback({
+              code: grpc.status.INTERNAL,
+              details: err,
+            });
+          } else if (resp.statusCode !== 200) {
+            callback({
+              code: grpc.status.INTERNAL,
+              details: `expected status 200, got ${resp.statusCode}`,
+            });
+          } else {
+            // count how many earthquakes with mag > 1.0
+            let count = 0;
+            data.features.forEach((i) => {
+              if (i.properties.mag > 1.0) {
+                count++;
+              }
+            });
+            callback(null, {
+              result: count > 2,
+            });
+          }
         }
-      })
+      );
     }
-  }
-})
+  },
+});
 
-server.bind('127.0.0.1:9090', grpc.ServerCredentials.createInsecure())
-console.log('Server listening on 127.0.0.1:9090')
+server.bind("127.0.0.1:9090", grpc.ServerCredentials.createInsecure());
+console.log("Server listening on 127.0.0.1:9090");
 
-server.start()
+server.start();
 ```
-{{< /collapsible >}}
 
-<br />
+{{< /collapsible >}}
 
 #### 4. Implementing `StreamIsActive`
 
@@ -351,8 +359,8 @@ Unlike `IsActive`, `StreamIsActive` is called once when KEDA reconciles the `Sca
 
 This implementation creates a timer and queries USGS APIs on that timer, effectively ignoring `pollingInterval` set in the scaledObject. Alternatively any other asynchronous event can be used instead of a timer, like an HTTP request, or a network connection.
 
-
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) StreamIsActive(scaledObject *pb.ScaledObjectRef, epsServer pb.ExternalScaler_StreamIsActiveServer) error {
 	longitude := scaledObject.ScalerMetadata["longitude"]
@@ -380,9 +388,11 @@ func (e *ExternalScaler) StreamIsActive(scaledObject *pb.ScaledObjectRef, epsSer
 	}
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override async Task StreamIsActive(ScaledObjectRef request, IServerStreamWriter<IsActiveResponse> responseStream, ServerCallContext context)
 {
@@ -410,49 +420,51 @@ public override async Task StreamIsActive(ScaledObjectRef request, IServerStream
   }
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   streamIsActive: (call, callback) => {
-    const longitude = call.request.scalerMetadata.longitude
-    const latitude = call.request.scalerMetadata.latitude
+    const longitude = call.request.scalerMetadata.longitude;
+    const latitude = call.request.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
       const interval = setInterval(() => {
         getEarthquakeCount((err, count) => {
           if (err) {
-            console.error(err)
+            console.error(err);
           } else if (count > 2) {
             call.write({
               result: true,
-            })
+            });
           }
-        })
+        });
       }, 1000 * 60 * 60);
 
-      call.on('end', () => {
-        clearInterval(interval)
-      })
+      call.on("end", () => {
+        clearInterval(interval);
+      });
     }
-  }
-})
+  },
+});
 ```
-{{< /collapsible >}}
 
-<br />
+{{< /collapsible >}}
 
 #### 5. Implementing `GetMetricSpec`
 
 `GetMetricSpec` returns the `target` value for [the HPA definition for the scaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/). This scaler will define a static target of 10, but the threshold value is often specified in the metadata for other scalers.
 
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*pb.GetMetricSpecResponse, error) {
 	return &pb.GetMetricSpecResponse{
@@ -463,9 +475,11 @@ func (e *ExternalScaler) GetMetricSpec(context.Context, *pb.ScaledObjectRef) (*p
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override async Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef request, ServerCallContext context)
 {
@@ -480,31 +494,35 @@ public override async Task<GetMetricSpecResponse> GetMetricSpec(ScaledObjectRef 
   return Task.FromResult(resp);
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   getMetricSpec: (call, callback) => {
     callback(null, {
-      metricSpecs: [{
-        metricName: 'earthquakeThreshold',
-        targetSize: 10,
-      }]
-    })
-  }
-})
+      metricSpecs: [
+        {
+          metricName: "earthquakeThreshold",
+          targetSize: 10,
+        },
+      ],
+    });
+  },
+});
 ```
-{{< /collapsible >}}
 
-<br />
+{{< /collapsible >}}
 
 #### 6. Implementing `GetMetrics`
 
 `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`, in this example it's `earthquakeThreshold`.
 
 {{< collapsible "Golang" >}}
+
 ```golang
 func (e *ExternalScaler) GetMetrics(_ context.Context, metricRequest *pb.GetMetricsRequest) (*pb.GetMetricsResponse, error) {
 	longitude := metricRequest.ScaledObjectRef.ScalerMetadata["longitude"]
@@ -527,9 +545,11 @@ func (e *ExternalScaler) GetMetrics(_ context.Context, metricRequest *pb.GetMetr
 	}, nil
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "C#" >}}
+
 ```csharp
 public override async Task<GetMetricsResponse> GetMetrics(GetMetricsRequest request, ServerCallContext context)
 {
@@ -554,38 +574,43 @@ public override async Task<GetMetricsResponse> GetMetrics(GetMetricsRequest requ
   return resp;
 }
 ```
+
 {{< /collapsible >}}
 
 {{< collapsible "Javascript" >}}
+
 ```js
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   getMetrics: (call, callback) => {
-    const longitude = call.request.scaledObjectRef.scalerMetadata.longitude
-    const latitude = call.request.scaledObjectRef.scalerMetadata.latitude
+    const longitude = call.request.scaledObjectRef.scalerMetadata.longitude;
+    const latitude = call.request.scaledObjectRef.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
       getEarthquakeCount((err, count) => {
         if (err) {
           callback({
             code: grpc.status.INTERNAL,
             details: err,
-          })
+          });
         } else {
           callback(null, {
-            metricValues: [{
-              metricName: 'earthquakeThreshold',
-              metricValue: count,
-            }]
-          })
+            metricValues: [
+              {
+                metricName: "earthquakeThreshold",
+                metricValue: count,
+              },
+            ],
+          });
         }
-      })
+      });
     }
-  }
-})
+  },
+});
 ```
+
 {{< /collapsible >}}
