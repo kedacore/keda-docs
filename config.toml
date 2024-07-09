@@ -593,7 +593,7 @@ logo = "zapier.png"
 
 # "Partners" section on the Community page
 [[params.partners]]
-url = "https://kedify.io"
+url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "kedify.png"
 
 [[params.partners]]
