@@ -49,6 +49,8 @@ spec:
 [...]
 ```
 
+NOTE: Using the Datadog Operator for this purpose requires version 1.8.0 of the operator or later.
+
 ### Create a DatadogMetric object for each scaling query
 
 To use the Datadog Cluster Agent to retrieve the query values from Datadog, first, create a [`DatadogMetric`](https://docs.datadoghq.com/containers/guide/cluster_agent_autoscaling_metrics/?tab=helm#create-the-datadogmetric-object) object with the query to drive your scaling events. You will need to add the `external-metrics.datadoghq.com/always-active: "true"` annotation, to ensure the Cluster Agent retrieves the query value. Example:
