@@ -524,7 +524,7 @@ url = "https://opsworks.co"
 logo = "opsworks.png"
 
 [[params.users]]
-url = "https://www.playstudios.com/"
+url = "https://www.playstudios.com"
 logo = "playstudios.jpg"
 
 [[params.users]]
