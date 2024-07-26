@@ -1,14 +1,15 @@
 +++
-title = "Google Cloud Platform‎ Pub/Sub"
+title = "Google Cloud Platform Pub/Sub"
 availability = "v1.0+"
 maintainer = "Community"
-description = "Scale applications based on Google Cloud Platform‎ Pub/Sub."
+category = "Messaging"
+description = "Scale applications based on Google Cloud Platform Pub/Sub."
 go_file = "gcp_pubsub_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `gcp-pubsub` trigger for Google Cloud Platform‎ Pub/Sub.
+This specification describes the `gcp-pubsub` trigger for Google Cloud Platform Pub/Sub.
 
 ```yaml
 triggers:
@@ -18,7 +19,9 @@ triggers:
     mode: "SubscriptionSize" # Optional - Default is SubscriptionSize - SubscriptionSize or OldestUnackedMessageAge
     aggregation: "sum" # Optional - Only meaningful for distribution-valued metrics
     value: "5.5" # Optional - Default is 10
+    valueIfNull: '0.0' # Optional - Default is ""
     activationValue: "10.5" # Optional - Default is 0
+    timeHorizon: "1m" # Optional - Default is 2m and with aggregation 5m
     # Exactly one of the subscription or topic name options is required
     subscriptionName: "mysubscription"
     subscriptionNameFromEnv: "MY_SUBSCRIPTION_FROM_ENV"
@@ -27,7 +30,7 @@ triggers:
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on any metrics from your Pub/Sub subscription or topic, such as number of messages or oldest unacked message age, etc.
+The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on any metrics from your Pub/Sub subscription or topic, such as number of messages or oldest unacked message age, etc.
 
 - `credentialsFromEnv` - This property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Pub/Sub subscription.
 
@@ -37,6 +40,10 @@ The Google Cloud Platform‎ (GCP) Pub/Sub trigger allows you to scale based on 
 
 
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+
+- `timeHorizon` - Time range for which you want to retrieve the matrics. (Default: `2m` and Default with aggregation field: `5m`)
+
+- `valueIfNull` - Value returned if request returns no timeseries.(Default: `""`, Optional, This value can be a float) 
 
 - `subscriptionName` defines the subscription that should be monitored. You can use different formulas:
   - Just the subscription name, in which case you will reference a subscription from the current project or the one specified in the credentials file used.

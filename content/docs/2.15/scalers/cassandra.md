@@ -2,6 +2,7 @@
 title = "Cassandra"
 availability = "v2.5+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on Cassandra query results."
 go_file = "cassandra_scaler"
 +++
@@ -44,8 +45,11 @@ You can authenticate by using a password via `TriggerAuthentication` configurati
 **Password Authentication:**
 
 - `password` - Password for configured user to log in to the Cassandra instance.
+- `tls` - To enable SSL auth for Cassandra session, set this to enable. If not set, TLS for Cassandra is not used. (Values: enable, disable, Default: disable, Optional).
+- `cert` - Certificate path for client authentication. Mandatory if tls enabled. (Optional)
+- `key` - Key path for client authentication. Mandatory if tls enabled. (Optional)
 
-### Example
+### Example with no TLS auth
 
 ```yaml
 apiVersion: v1
@@ -65,6 +69,102 @@ spec:
   - parameter: password
     name: cassandra-secrets
     key: cassandra_password
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cassandra-scaledobject
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  triggers:
+  - type: cassandra
+    metadata:
+      username: "cassandra"
+      port: "9042"
+      clusterIPAddress: "cassandra.default"
+      consistency: "Quorum"
+      protocolVersion: "4"
+      query: "SELECT COUNT(*) FROM test_keyspace.test_table;"
+      targetQueryValue: "1"
+    authenticationRef:
+      name: keda-trigger-auth-cassandra-secret
+```
+
+### Example with TLS auth
+
+Since we are passing Cert and Key content as inputs to the scaler, we have to supply writable location for required GSSAPI configurations for the `keda-operator` container. 
+
+##### `sasl/gssapi` in manager.yaml
+
+If you use YAML declarations to deploy KEDA, add below volume mount and volume to supply writable location for required GSSAPI configurations for the `keda-operator` container.
+
+```
+          volumeMounts:
+          - mountPath: /tmp/cassandra
+            name: temp-cassandra-vol
+            readOnly: false
+
+      volumes:
+      - name: temp-cassandra-vol
+        emptyDir:
+          medium: Memory
+```
+
+##### `sasl/gssapi` in keda-charts
+
+If you use Helm Charts to deploy KEDA, add below volume mount and volume to supply writable location for required gssapi configurations.
+
+```
+volumes.keda.extraVolumeMounts
+- mountPath: /tmp/cassandra
+  name: temp-cassandra-vol
+  readOnly: false
+
+volumes.keda.extraVolumes
+- name: temp-cassandra-vol
+  emptyDir:
+    medium: Memory
+```
+
+Once we have the writable mount path set up for the certificates and keys.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cassandra-secrets
+type: Opaque
+data:
+  cassandra_password: CASSANDRA_PASSWORD
+  tls: enable
+  cert: <cert content | base64encoded>
+  key: <key content | base64encoded>
+  ## Optional parameter ca ##
+  ca: <ca cert content | base64encoded>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-cassandra-secret
+spec:
+  secretTargetRef:
+  - parameter: password
+    name: cassandra-secrets
+    key: cassandra_password
+  - parameter: tls
+    name: cassandra-secrets
+    key: tls
+  - parameter: cert
+    name: cassandra-secrets
+    key: cert
+  - parameter: key
+    name: cassandra-secrets
+    key: key
+  ## Optional parameter ca ##
+  - parameter: ca
+    name: cassandra-secrets
+    key: ca
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

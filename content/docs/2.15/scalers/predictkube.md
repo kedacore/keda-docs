@@ -2,6 +2,7 @@
 title = "Predictkube"
 availability = "v2.6+"
 maintainer = "Dysnix"
+category = "Metrics"
 description = "AI-based predictive scaling based on Prometheus metrics & PredictKube SaaS."
 go_file = "predictkube_scaler"
 +++

@@ -2,6 +2,7 @@
 title = "AWS SQS Queue"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on AWS SQS Queue."
 go_file = "aws_sqs_queue_scaler"
 +++
@@ -29,8 +30,8 @@ triggers:
 
 **Parameter list:**
 
-- `queueURL` - Full URL for the SQS Queue. The simple name of the queue can be used in case there's no ambiguity. (Optional, You can use this instead of `queueURLFromEnv` parameter)
-- `queueURLFromEnv` - Name of the environment variable on the scale target to read the queue URL from. (Optional, You can use this instead of `queueURL` parameter)
+- `queueURL` - Full URL for the SQS Queue. The short name of the queue can be used if there's no ambiguity. (Optional. Only one of `queueURL` and `queueURLFromEnv` is required. If both are provided, `queueURL` is used.)
+- `queueURLFromEnv` - Name of the environment variable on the scale target to read the queue URL from. (Optional. Only one of `queueURL` and `queueURLFromEnv` is required.)
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual messages in the SQS Queue is 30, the scaler scales to 3 pods. (default: 5)
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
@@ -40,7 +41,7 @@ triggers:
 - `scaleOfDelayed` - Indication of whether or not to include delayed messages when calculating the number of SQS messages. (default: false, Optional)
 - `awsRegion` - AWS Region for the SQS Queue.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
-- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
+- `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` authentication)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the SQS queue. Additional Authentication Parameters are not required.
 
@@ -50,11 +51,11 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 **Pod identity based authentication:**
 
-- `podIdentity.provider` - Needs to be set to either `aws-kiam` or `aws-eks` on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
+- `podIdentity.provider` - Needs to be set on the `TriggerAuthentication` and the pod/service account must be configured correctly for your pod identity provider.
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated only applies for `aws-eks` and `aws-kiam` authentications, for `aws` is set in the auth)
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated and only applies for `aws-eks` authentication, for `aws` is set in the auth)
 
 **Credential based authentication:**
 
@@ -76,7 +77,7 @@ metadata:
   namespace: keda-test
 spec:
   podIdentity:
-    provider: aws-kiam # or aws-eks when using IRSA
+    provider: aws
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

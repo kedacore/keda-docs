@@ -18,8 +18,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaler_detail_errors_total` - The number of errors encountered for each scaler.
 - `keda_scaled_object_errors_total` - The number of errors that have occurred for each ScaledObject.
 - `keda_scaled_job_errors` - The number of errors that have occurred for each ScaledJob.
-- `keda_resource_handled_total` - Total number of KEDA custom resources per namespace for each custom resource type (CRD) handled by the operator.
-- `keda_trigger_handled_total` - Total number of triggers per trigger type handled by the operator.
+- `keda_resource_registered_total` - Total number of KEDA custom resources per namespace for each custom resource type (CRD) handled by the operator.
+- `keda_trigger_registered_total` - Total number of triggers per trigger type handled by the operator.
 - `keda_internal_scale_loop_latency_seconds` - Total deviation (in seconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
 - `keda_cloudeventsource_events_emitted_total` - Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state.
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
@@ -38,8 +38,8 @@ The following metrics are exposed as well, but are deprecated and will be remove
 - `keda_scaler_errors` - The number of errors that have occurred for each scaler. Replaced by `keda_scaler_detail_errors_total`.
 - `keda_scaler_errors_total` - The total number of errors encountered for all scalers. Replaced by `keda_scaler_detail_errors_total`.
 - `keda_scaled_object_errors` - The number of errors that have occurred for each ScaledObject. Replaced by `keda_scaled_object_errors_total`.
-- `keda_resource_totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD). Replaced by `keda_resource_handled_total`.
-- `keda_trigger_totals` - Total number of triggers per trigger type. Replaced by `keda_trigger_handled_total`.
+- `keda_resource_totals` - Total number of KEDA custom resources per namespace for each custom resource type (CRD). Replaced by `keda_resource_registered_total`.
+- `keda_trigger_totals` - Total number of triggers per trigger type. Replaced by `keda_trigger_registered_total`.
 - `keda_internal_scale_loop_latency` - Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. Replaced by `keda_internal_scale_loop_latency_seconds`.
 
 ### Admission Webhooks

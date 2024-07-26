@@ -2,6 +2,7 @@
 title = "Datadog"
 availability = "v2.6+"
 maintainer = "Datadog"
+category = "Metrics"
 description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"
 +++
@@ -36,7 +37,7 @@ triggers:
 
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
-- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](../concepts/scaling-deployments#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
@@ -132,7 +133,7 @@ often (per `ScaledObject`) we query Datadog for a metric.
 
 When scaling from 0 to 1, the polling interval is controlled by KEDA, using [the
 `spec.pollingInterval` parameter in the `ScaledObject`
-definition](../concepts/scaling-deployments/#pollinginterval). For example, if
+definition](../reference/scaledobject-spec/#pollinginterval). For example, if
 this parameter is set to `60`, KEDA will poll Datadog for a metric value every
 60 seconds while the number of replicas is 0.
 

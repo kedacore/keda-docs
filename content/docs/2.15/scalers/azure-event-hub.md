@@ -2,6 +2,7 @@
 title = "Azure Event Hubs"
 availability = "v1.0+"
 maintainer = "Microsoft"
+category = "Messaging"
 description = "Scale applications based on Azure Event Hubs."
 go_file = "azure_eventhub_scaler"
 +++

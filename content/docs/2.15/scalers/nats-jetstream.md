@@ -3,6 +3,7 @@ title = "NATS JetStream"
 layout = "scaler"
 availability = "v2.8+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on NATS JetStream."
 go_file = "nats_jetstream_scaler"
 +++

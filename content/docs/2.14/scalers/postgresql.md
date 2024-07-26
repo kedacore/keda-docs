@@ -2,6 +2,7 @@
 title = "PostgreSQL"
 availability = "v1.2+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on a PostgreSQL query."
 go_file = "postgresql_scaler"
 +++
@@ -33,6 +34,8 @@ Finally, a user inserts a query that returns the desired value.
 - `query` - What query to poll postgresql with. Query must return an integer.
 - `targetQueryValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in HPA. (This value can be a float)
 - `activationTargetQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+
+> Note that the query must return a single integer value. If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [PostgreSQL documentation](https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL) for more information on the `COALESCE` function.
 
 This is an example of using a full connection string with `AIRFLOW_CONN_AIRFLOW_DB` set as `postgresql://test@localhost`:
 

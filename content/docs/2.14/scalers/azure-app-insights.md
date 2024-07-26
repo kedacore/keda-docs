@@ -2,6 +2,7 @@
 title = "Azure Application Insights"
 availability = "v2.6+"
 maintainer = "Microsoft"
+category = "Metrics"
 description = "Scale applications based on Azure Application Insights metrics."
 go_file = "azure_app_insights_scaler"
 +++

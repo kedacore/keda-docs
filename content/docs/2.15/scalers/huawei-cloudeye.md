@@ -2,6 +2,7 @@
 title = "Huawei Cloudeye"
 availability = "v1.1+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on a Huawei Cloudeye."
 go_file = "huawei_cloudeye_scaler"
 +++

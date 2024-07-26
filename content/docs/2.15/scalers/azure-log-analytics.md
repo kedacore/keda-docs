@@ -2,6 +2,7 @@
 title = "Azure Log Analytics"
 availability = "v2.0+"
 maintainer = "Microsoft"
+category = "Data & Storage"
 description = "Scale applications based on Azure Log Analytics query result"
 go_file = "azure_log_analytics_scaler"
 +++
@@ -297,88 +298,8 @@ spec:
 
 ### Guides
 
-#### Enabling managed identity authentication for Log Analytics scaler
-
-Use the following commands to create user defined identity, role assignment to Azure Log Analytics and deploy\update KEDA:
-
-```sh
-export SUBSCRIPTION_ID="<SubscriptionID>"
-export RESOURCE_GROUP="<AKSResourceGroup>"
-export CLUSTER_NAME="<AKSClusterName>"
-export CLUSTER_LOCATION="<AKSClusterLocation>" # "westeurope", "northeurope"...
-export IDENTITY_NAME="<SomeName>" #Any name
-export LOG_ANALYTICS_RESOURCE_ID="<LAResourceID>"
-
-# Login to Azure, set subscription, get AKS credentials
-az login
-az account set -s "${SUBSCRIPTION_ID}"
-az aks get-credentials -n ${CLUSTER_NAME} -g ${RESOURCE_GROUP}
-
-# ------- Cluster preparation. Run this block only once for fresh cluster.
-# Clone repo and run initial role assignment
-git clone https://github.com/Azure/aad-pod-identity.git
-./aad-pod-identity/hack/role-assignment.sh
-
-#Deploy aad-pod-identity using Helm 3
-helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
-helm repo update
-helm install aad-pod-identity aad-pod-identity/aad-pod-identity --namespace=kube-system
-# -------------------------------------------------------------------------------------------
-
-#Create identity
-az identity create -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME}
-export IDENTITY_CLIENT_ID="$(az identity show -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME} --query clientId -otsv)"
-export IDENTITY_RESOURCE_ID="$(az identity show -g ${RESOURCE_GROUP} -n ${IDENTITY_NAME} --query id -otsv)"
-
-#Assign reader permissions for your identity to Log Analytics workspace
-#WARNING: It can take some time while identity will be provisioned.
-#If you see an error: "Principal SOME_ID does not exist in the directory SOME_ID", just wait couple of minutes and then retry.
-az role assignment create --role "Log Analytics Reader" --assignee ${IDENTITY_CLIENT_ID} --scope ${LOG_ANALYTICS_RESOURCE_ID}
-
-# Allow cluster to control identity created earlier.
-ID="$(az aks show -g ${RESOURCE_GROUP} -n ${CLUSTER_NAME} --query servicePrincipalProfile.clientId -otsv)"
-if [[ "${ID:-}" == "msi" ]]; then
-  ID="$(az aks show -g ${RESOURCE_GROUP} -n ${CLUSTER_NAME} --query identityProfile.kubeletidentity.clientId -otsv)"
-fi
-az role assignment create --role "Managed Identity Operator" --assignee "${ID}" --scope "${IDENTITY_RESOURCE_ID}"
-
-# Create AzureIdentity and AzureIdentityBinding
-cat <<EOF | kubectl apply -f -
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentity
-metadata:
-  name: ${IDENTITY_NAME}
-spec:
-  type: 0
-  resourceID: ${IDENTITY_RESOURCE_ID}
-  clientID: ${IDENTITY_CLIENT_ID}
-EOF
-
-cat <<EOF | kubectl apply -f -
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentityBinding
-metadata:
-  name: ${IDENTITY_NAME}-binding
-spec:
-  azureIdentity: ${IDENTITY_NAME}
-  selector: ${IDENTITY_NAME}
-EOF
-
-# APPLY LABELS: OPTION 1
-#deploy KEDA using helm chart and specify aadPodIdentity label.
-helm repo add kedacore https://kedacore.github.io/charts
-helm repo update
-helm install keda kedacore/keda --namespace keda --create-namespace --set podIdentity.activeDirectory.identity=${IDENTITY_NAME}
-
-# APPLY LABELS: OPTION 2
-#Instead of redeploying KEDA, you can update existing deployment:
-kubectl patch deployment keda-operator -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
-kubectl patch deployment keda-metrics-apiserver -n keda --type json -p='[{"op": "add", "path": "/spec/template/metadata/labels/aadpodidbinding", "value": "'${IDENTITY_NAME}'"}]'
-```
-
 ### Links
 
-- [AAD Pod Identity](https://github.com/Azure/aad-pod-identity)
 - [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
 - [Azure Pod Identity on keda.sh](https://keda.sh/docs/2.0/concepts/authentication/#azure-pod-identity)
 - [Best practices for authentication and authorization in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-identity)

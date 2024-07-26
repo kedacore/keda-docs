@@ -2,6 +2,7 @@
 title = "Google Cloud Platform Stackdriver"
 availability = "2.7+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on a metric obtained from Stackdriver."
 go_file = "gcp_stackdriver_scaler"
 +++
@@ -18,6 +19,7 @@ triggers:
     filter: 'metric.type="storage.googleapis.com/network/received_bytes_count" AND resource.type="gcs_bucket" AND metric.label.method="WriteObject" AND resource.label.bucket_name="my-gcp-bucket"'
     targetValue: '100.50'
     valueIfNull: '0.0' #Optional - Default is ""
+    filterDuration: '1' # Optional - Default is 2
     activationTargetValue: "10.5" # Optional - Default is 0
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
     alignmentPeriodSeconds: '60'
@@ -32,6 +34,7 @@ triggers:
 - `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional, This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `valueIfNull` - Value return if request return no timeseries.(Default: `""`, Optional, This value can be a float)
+- `filterDuration` - Duration (in minutes) for filtering metrics. (Default: `2`)
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the configured stack driver metrics.
 

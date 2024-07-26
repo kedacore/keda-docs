@@ -2,6 +2,7 @@
 title = "MySQL"
 availability = "v1.2+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on MySQL query result."
 go_file = "mysql_scaler"
 +++
@@ -15,6 +16,8 @@ The trigger always requires the following information:
 - `query` - A MySQL query that should return single numeric value.
 - `queryValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in HPA. (This value can be a float)
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+
+> Note that the query must return a single integer value. If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [MySQL documentation](https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#function_coalesce) for more information on the `COALESCE` function.
 
 To provide information about how to connect to MySQL you can provide:
 
@@ -32,6 +35,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 - `hostFromEnv` - The host of the MySQL server, similar to `host`, but reads it from an environment variable on the scale target.
 - `portFromEnv` - The port of the MySQL server, similar to `port`, but reads it from an environment variable on the scale target.
+- `usernameFromEnv` - The username for connecting with host of the MySQL server, similar to `username`, but reads it from an environment variable on the scale target.
 
 ### Authentication Parameters
 

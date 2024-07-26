@@ -4,9 +4,9 @@ title = "Deploying KEDA"
 
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
-- [Helm charts](#helm)
-- [Operator Hub](#operatorhub)
-- [YAML declarations](#yaml)
+- Helm charts
+- Operator Hub
+- YAML declarations
 
 > 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.27 and higher
 
@@ -16,7 +16,7 @@ Don't see what you need? Feel free to [create an issue](https://github.com/kedac
 
 ### Install
 
-Deploying KEDA with Helm is very simple:
+To deploy KEDA with Helm:
 
 1. Add Helm repo
 
@@ -147,7 +147,7 @@ VERSION=2.15.0 make undeploy
 
 ### Install
 
-If you want to try KEDA v2 on [MicroK8s](https://microk8s.io/) from `1.20` channel, KEDA is included into MicroK8s addons.
+If you want to try KEDA v2 on [MicroK8s](https://microk8s.io/) from `1.20` channel, KEDA is included into MicroK8s add-ons.
 
 ```sh
 microk8s enable keda
@@ -155,7 +155,7 @@ microk8s enable keda
 
 ### Uninstall
 
-To uninstall KEDA in MicroK8s, simply disable the addon as shown below.
+To uninstall KEDA in MicroK8s, disable the add-on as shown below.
 
 ```sh
 microk8s disable keda

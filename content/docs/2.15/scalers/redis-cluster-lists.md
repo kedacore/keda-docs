@@ -2,6 +2,7 @@
 title = "Redis Lists (supports Redis Cluster)"
 availability = "v2.1+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Redis Lists scaler with support for Redis Cluster topology"
 go_file = "redis_scaler"
 +++

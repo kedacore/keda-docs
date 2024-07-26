@@ -1,14 +1,14 @@
 +++
-title = "Google Cloud Platform‎ Cloud Tasks"
+title = "Google Cloud Platform Cloud Tasks"
 availability = "v2.12+"
 maintainer = "Community"
-description = "Scale applications based on Google Cloud Platform‎ Cloud Tasks."
+description = "Scale applications based on Google Cloud Platform Cloud Tasks."
 go_file = "gcp_cloud_tasks_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `gcp-cloudtasks` trigger for Google Cloud Platform‎ Cloud Tasks.
+This specification describes the `gcp-cloudtasks` trigger for Google Cloud Platform Cloud Tasks.
 
 ```yaml
 triggers:
@@ -16,12 +16,13 @@ triggers:
   metadata:
     value: "5" # Optional - Default is 100
     activationValue: "10.5" # Optional - Default is 0
+    filterDuration: '1' # Optional - Default is 2
     queueName: "myqueue" # Required
     projectID: "myproject" # Required, the project where the queue resides
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON # Required
 ```
 
-The Google Cloud Platform‎ (GCP) Cloud Tasks trigger allows you to scale based on the number of tasks queued in you queue.
+The Google Cloud Platform (GCP) Cloud Tasks trigger allows you to scale based on the number of tasks queued in you queue.
 
 The `credentialsFromEnv` property maps to the name of an environment variable in the scale target (`scaleTargetRef`) that contains the service account credentials (JSON). KEDA will use those to connect to Google Cloud Platform and collect the required stack driver metrics in order to read the number of messages in the Cloud Task queue.
 
@@ -29,6 +30,7 @@ The `credentialsFromEnv` property maps to the name of an environment variable in
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional, This value can be a float)
 - `queueName` defines the queue that should be monitored.
 - `projectID` defines the GCP project where the queue that should be monitored resides.
+- `filterDuration` - Duration (in minutes) for filtering metrics. (Default: `2`)
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing the service account credentials in JSON.
