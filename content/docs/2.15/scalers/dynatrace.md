@@ -1,6 +1,6 @@
 +++
 title = "Dynatrace"
-availability = "2.14+"
+availability = "2.15+"
 maintainer = "Community"
 description = "Scale applications based on Dynatrace metric data points"
 go_file = "dynatrace_scaler"
