@@ -122,9 +122,9 @@ This can be achieved by:
 Next, a user can specify individual arguments (host, userName, password, etc.), and the scaler will form a connection string internally. An access token, which will act as a password, will be retrieved each time KEDA performs its process.
   - `host` - FQDN of the Azure Postgres Flexible Server.
   - `userName` - Name of the UAMI Azure identity (`<AZURE_UAMI_NAME>`).
-  - `port` - Postgresql port. The default value is `"5432"`. Please be aware that this feature does not work when using the `PGBouncer` port (although other applications can use PGBouncer, but KEDA should use the default port).
+  - `port` - Postgresql port (the default value is `"5432"`, please have a look at the `Remarks` down below).
   - `dbName` - Postgresql Database name.
-  - `sslmode` - SSL policy for communicating with database. The value should be `require`.
+  - `sslmode` - SSL policy for communicating with database (the value should be `require`).
 
 
 #### Remarks
