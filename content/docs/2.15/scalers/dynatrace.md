@@ -2,6 +2,7 @@
 title = "Dynatrace"
 availability = "2.15+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on Dynatrace metric data points"
 go_file = "dynatrace_scaler"
 +++
