@@ -5,3 +5,4 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreInternalURLs:
   - /docs/2.14/scalers/splunk/
+  - /docs/2.14/scalers/dynatrace/
