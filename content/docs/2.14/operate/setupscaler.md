@@ -26,7 +26,11 @@ KEDA supports various scalers that correspond to different event sources or trig
 
 1. Visit the [KEDA Scalers documentation](https://keda.sh/docs/2.14/scalers/) and browse through the list of available scalers.
 2. Identify the scaler that matches the event source you want to use for scaling your application. For example:
-   - If you want to scale based on incoming HTTP traffic, you would need the **HTTP scaler**.
+   - If you want to scale based on incoming HTTP traffic, you would need the **HTTP Add-on**.
+
+     > **Note:**
+     > The HTTP Add-on is still in beta stage and may not provide the full functionality or stability expected in a production environment.
+
    - If you want to scale based on messages in a RabbitMQ queue, you would need the **RabbitMQ scaler**.
    - If you want to scale based on a cron schedule, you would need the **Cron scaler**.
 3. Open the documentation page for your chosen scaler and familiarize yourself with its specific requirements and configuration options.
