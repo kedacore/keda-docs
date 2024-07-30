@@ -4,3 +4,4 @@ CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreInternalURLs:
+  - /docs/2.14/scalers/splunk/
