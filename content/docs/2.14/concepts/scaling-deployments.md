@@ -48,11 +48,12 @@ spec:
     kind:          {kind-of-target-resource}                # Optional. Default: Deployment
     name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval:  30                                      # Optional. Default: 30 seconds
-  cooldownPeriod:   300                                     # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
-  minReplicaCount:  1                                       # Optional. Default: 0
-  maxReplicaCount:  100                                     # Optional. Default: 100
+  pollingInterval:        30                                # Optional. Default: 30 seconds
+  initialCooldownPeriod:  0                                 # Optional. Default: 0 seconds
+  cooldownPeriod:         300                               # Optional. Default: 300 seconds
+  idleReplicaCount:       0                                 # Optional. Default: ignored, must be less than minReplicaCount
+  minReplicaCount:        1                                 # Optional. Default: 0
+  maxReplicaCount:        100                               # Optional. Default: 100
   fallback:                                                 # Optional. Section to specify fallback options
     failureThreshold: 3                                     # Mandatory if fallback section is included
     replicas: 6                                             # Mandatory if fallback section is included
