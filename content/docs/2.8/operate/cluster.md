@@ -29,12 +29,10 @@ KEDA requires to be accessible inside the cluster to be able to autoscale.
 
 Here is an overview of the required ports that need to be accessible for KEDA to work:
 
-<!-- markdownlint-disable no-inline-html -->
 | Port   | Why?                                         | Remarks                                                                                                                                                   |
 | ------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms because it uses Control Plane &#8594; port 443 on the Service IP range communication.<br /><br /> This is not applicable for Google Cloud. |
+| `443`  | Used by Kubernetes API server to get metrics | Required for all platforms because it uses Control Plane &#8594; port 443 on the Service IP range communication. This is not applicable for Google Cloud. |
 | `6443` | Used by Kubernetes API server to get metrics | Only required for Google Cloud because it uses Control Plane &#8594; port 6443 on the Pod IP range for communication                                      |
-<!-- markdownlint-enable no-inline-html -->
 
 ## High Availability
 
@@ -42,10 +40,10 @@ KEDA does not provide full support for high-availability due to upstream limitat
 
 Here is an overview of all KEDA deployments and the HA notes:
 
-| Deployment     | Support Replicas | Note                                                                                                                                                                                                                   |
-| -------------- | ---------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deployment     | Support Replicas | Note                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Metrics Server | 1                | You can run multiple replicas of our metrics sever, and it is recommended to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to our metrics servers are load balanced. However, [you can only run one active metric server in a Kubernetes cluster serving external.metrics.k8s.io](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) which has to be the KEDA metric server. |
-| Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover. |
+| Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.                                                                                                                                                           |
 
 ## HTTP Timeouts
 
@@ -80,16 +78,17 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). As c
 
 The Kubernetes client config used within KEDA Metrics Adapter can be adjusted by passing the following command-line flags to the binary:
 
-| Adapter Flag   | Client Config Setting   | Default Value | Description                                                    |
-| -------------- | ----------------------- | ------------- | -------------------------------------------------------------- |
-| kube-api-qps   | cfg.QPS                 | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
-| kube-api-burst | cfg.Burst               | 30            | Set the burst for throttling requests sent to the apiserver    |
+| Adapter Flag   | Client Config Setting | Default Value | Description                                                    |
+| -------------- | --------------------- | ------------- | -------------------------------------------------------------- |
+| kube-api-qps   | cfg.QPS               | 20.0          | Set the QPS rate for throttling requests sent to the apiserver |
+| kube-api-burst | cfg.Burst             | 30            | Set the burst for throttling requests sent to the apiserver    |
 
 ## Configure `MaxConcurrentReconciles` for Controllers
 
 To implement internal controllers KEDA uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime), that enables configuration of [MaxConcurrentReconciles property](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/controller#Options), ie. the maximum number of concurrent reconciles which can be run for a controller.
 
 KEDA Operator exposes properties for specifying `MaxConcurrentReconciles` for following controllers/reconcilers:
+
 - `ScaledObjectReconciler` - responsible for watching and managing `ScaledObjects`, ie. validates input trigger specification, starts scaling logic and manages dependent HPA.
 - `ScaledJobReconciler` - responsible for watching and managing `ScaledJobs` and dependent Kubernetes Jobs
 
@@ -97,15 +96,16 @@ KEDA Metrics Server exposes property for specifying `MaxConcurrentReconciles` fo
 
 To modify this properties you can set environment variables on both KEDA Operator and Metrics Server Deployments:
 
-| Environment variable name             | Deployment     | Default Value | Affected reconciler                                            |
-| ------------------------------------- | -------------- | ------------- | -------------------------------------------------------------- |
-| KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler                                         |
-| KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler                                            |
-| KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler                                  |
+| Environment variable name             | Deployment     | Default Value | Affected reconciler           |
+| ------------------------------------- | -------------- | ------------- | ----------------------------- |
+| KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES | Operator       | 5             | ScaledObjectReconciler        |
+| KEDA_SCALEDJOB_CTRL_MAX_RECONCILES    | Operator       | 1             | ScaledJobReconciler           |
+| KEDA_METRICS_CTRL_MAX_RECONCILES      | Metrics Server | 1             | MetricsScaledObjectReconciler |
 
 ## Configure Leader Election
 
 Like reconciliation, KEDA also uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime) for electing the leader replica. The following properties can be configured for either the Operator and Metrics Server Deployment:
+
 - [`LeaseDuration`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.LeaseDuration)
 - [`RenewDeadline`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.RenewDeadline)
 - [`RetryPeriod`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.RetryPeriod)
@@ -128,20 +128,19 @@ By default, KEDA Metrics Server uses self-signed certificates while communicatin
 Certificates and CA bundle can be referenced in `args` section in KEDA Metrics Server Deployment:
 
 ```yaml
-...
+---
 args:
-  - '--client-ca-file=/cabundle/service-ca.crt'
-  - '--tls-cert-file=/certs/tls.crt'
-  - '--tls-private-key-file=/certs/tls.key'
-...
+  - "--client-ca-file=/cabundle/service-ca.crt"
+  - "--tls-cert-file=/certs/tls.crt"
+  - "--tls-private-key-file=/certs/tls.key"
 ```
 
-The custom CA bundle should be also referenced in the `v1beta1.external.metrics.k8s.io` [APIService](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/api-service-v1/#APIServiceSpec) resource (which is created during the installation of KEDA). 
+The custom CA bundle should be also referenced in the `v1beta1.external.metrics.k8s.io` [APIService](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/api-service-v1/#APIServiceSpec) resource (which is created during the installation of KEDA).
 
 You should also make sure that `insecureSkipTLSVerify` is not set to `true`.
 
 ```yaml
-...
+---
 spec:
   service:
     namespace: keda
@@ -153,5 +152,4 @@ spec:
     YOURCABUNDLE...
   groupPriorityMinimum: 100
   versionPriority: 100
-...
 ```
