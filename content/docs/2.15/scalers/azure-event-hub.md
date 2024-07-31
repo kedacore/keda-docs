@@ -27,10 +27,6 @@ triggers:
     endpointSuffix: servicebus.airgap.example
     # Required when cloud = Private
     storageEndpointSuffix: airgap.example
-    # Required when cloud = Private.
-    activeDirectoryEndpoint: https://login.airgap.example/
-    # Required when cloud = Private.
-    eventHubResourceURL: https://eventhubs.airgap.example/
     # Required when using pod identity authentication with blob storage
     storageAccountName: 'name_of_account'
 ```
@@ -59,8 +55,8 @@ triggers:
 - `cloud` - Name of the cloud environment that the Event Hub belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `endpointSuffix` - Service Bus endpoint suffix of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `servicebus.cloudapi.de` for `AzureGermanCloud`).
 - `storageEndpointSuffix` - Blob Storage endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `airgap.example`. Do not include the `blob` part of the endpoint.)
-- `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.microsoftonline.de/` for `AzureGermanCloud`).
-- `eventHubResourceURL` - Event Hub resource URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://eventhubs.azure.net/` for known Azure Clouds).
+
+> When using [pod identity](../authentication-providers/azure-ad-workload-identity.md), Microsoft Entra ID endpoint is recovered via `AZURE_AUTHORITY_HOST` env var provided by https://azure.github.io/azure-workload-identity/docs/installation/mutating-admission-webhook.html
 
 > 💡 Learn more about the checkpointing behaviour in this [section](#checkpointing-behaviour).
 
