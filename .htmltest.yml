@@ -7,34 +7,7 @@ IgnoreInternalURLs:
   # Temporal ignores
 
   # Deprecated and removed resources
-  - /docs/2.5/authentication-providers/aws-kiam/index.html
-  - /docs/2.5/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.6/authentication-providers/aws-kiam/index.html
-  - /docs/2.6/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.7/authentication-providers/aws-kiam/index.html
-  - /docs/2.7/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.8/authentication-providers/aws-kiam/index.html
-  - /docs/2.8/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.9/authentication-providers/aws-kiam/index.html
-  - /docs/2.9/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.10/authentication-providers/aws-kiam/index.html
-  - /docs/2.10/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.11/authentication-providers/aws-kiam/index.html
-  - /docs/2.11/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.12/authentication-providers/aws-kiam/index.html
-  - /docs/2.12/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.13/authentication-providers/aws-kiam/index.html
-  - /docs/2.13/authentication-providers/azure-ad-pod-identity/index.html
-  - /docs/2.14/authentication-providers/aws-kiam/index.html
-  - /docs/2.14/authentication-providers/azure-ad-pod-identity/index.html
+  - /docs/2.15/authentication-providers/azure-ad-pod-identity/
+  - /docs/2.15/authentication-providers/aws-kiam/
   # Renamed pages
-  - /docs/2.5/operate/events/index.html
-  - /docs/2.6/operate/events/index.html
-  - /docs/2.7/operate/events/index.html
-  - /docs/2.8/operate/events/index.html
-  - /docs/2.9/operate/events/index.html
-  - /docs/2.10/operate/events/index.html
-  - /docs/2.11/operate/events/index.html
-  - /docs/2.12/operate/events/index.html
-  - /docs/2.13/operate/events/index.html
-  - /docs/2.14/operate/events/index.html
+  - /docs/2.15/operate/events/
