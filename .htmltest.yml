@@ -11,3 +11,4 @@ IgnoreInternalURLs:
   - /docs/2.15/authentication-providers/aws-kiam/
   # Renamed pages
   - /docs/2.15/operate/events/
+  - /docs/2.15/faq/
