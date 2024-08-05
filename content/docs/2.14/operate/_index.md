@@ -13,3 +13,4 @@ We provide guidance & requirements around various areas to operate KEDA:
 - Integrate with Prometheus ([link](./prometheus))
 - Integrate with OpenTelemetry Collector (Experimental) ([link](./opentelemetry))
 - Security ([link](./security))
+- Setup Autoscaling with KEDA ([link](./setupscaler))
