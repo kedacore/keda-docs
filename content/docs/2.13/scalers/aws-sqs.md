@@ -37,7 +37,7 @@ triggers:
 > For the purposes of scaling, the default formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible`, since `NotVisible` in SQS terms means the message is still in-flight/processing. If you wish to only scale on `ApproximateNumberOfMessages` set `scaleOnInFlight` to `false`. You can also include the number of delayed messages when calculating "actual messages" by setting `scaleOnDelayed` to `true`. With `scaleOnInFlight` and `scaleOnDelayed` set to `true` the formula for "actual messages" is equal to `ApproximateNumberOfMessages` + `ApproximateNumberOfMessagesNotVisible` + `ApproximateNumberOfMessagesDelayed`.
 
 - `scaleOnInFlight` - Indication of whether or not to include in-flight messages when calculating the number of SQS messages. (default: true, Optional)
-- `scaleOfDelayed` - Indication of whether or not to include delayed messages when calculating the number of SQS messages. (default: false, Optional)
+- `scaleOnDelayed` - Indication of whether or not to include delayed messages when calculating the number of SQS messages. (default: false, Optional)
 - `awsRegion` - AWS Region for the SQS Queue.
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `identityOwner` - Receive permissions on the SQS Queue via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
