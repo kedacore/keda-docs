@@ -1,7 +1,7 @@
 +++
 title = "Setupscaler"
 weight = 500
-description = "Procedure to Setup a Scaler in KEDA"
+description = "Procedure to Setup a Autoscaling with KEDA"
 +++
 
 ## Prerequisites
