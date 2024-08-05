@@ -26,7 +26,7 @@ KEDA supports various scalers that correspond to different event sources or trig
 
 1. Visit the [KEDA Scalers documentation](https://keda.sh/docs/2.14/scalers/) and browse through the list of available scalers.
 2. Identify the scaler that matches the event source you want to use for scaling your application. For example:
-   - If you want to scale based on incoming HTTP traffic, you would need the **HTTP Add-on**.
+   - If you want to scale based on incoming HTTP traffic, you would need the [HTTP Add-on](https://kedacore.github.io/http-add-on/).
 
      > **Note:**
      > The HTTP Add-on is still in beta stage and may not provide the full functionality or stability expected in a production environment.
