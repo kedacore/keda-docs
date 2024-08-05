@@ -1,5 +1,5 @@
 +++
-title = "Setupscaler"
+title = "Setup Autoscaling with KEDA"
 weight = 500
 description = "Procedure to Setup a Scaler in KEDA"
 +++
