@@ -4,9 +4,9 @@ title = "Deploying KEDA"
 
 We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
-- [Helm charts](#helm)
-- [Operator Hub](#operatorhub)
-- [YAML declarations](#yaml)
+- Helm charts
+- Operator Hub
+- YAML declarations
 
 > 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.27 and higher
 
@@ -16,7 +16,7 @@ Don't see what you need? Feel free to [create an issue](https://github.com/kedac
 
 ### Install
 
-Deploying KEDA with Helm is very simple:
+To deploy KEDA with Helm:
 
 1. Add Helm repo
 
@@ -90,21 +90,21 @@ If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a differe
     - Use `keda-2.xx.x.yaml` that includes all features, including [admission webhooks](./concepts/admission-webhooks.md) (recommended)
     - Use `keda-2.xx.x-core.yaml` that installs the minimal required KEDA components, without admission webhooks
 
-Run the following command (if needed, replace the version, in this case `2.14.1`, with the one you are using):
+Run the following command (if needed, replace the version, in this case `2.15.0`, with the one you are using):
 
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.14.1/keda-2.14.1.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.15.0/keda-2.15.0.yaml
 # Without admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.14.1/keda-2.14.1-core.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.15.0/keda-2.15.0-core.yaml
 ```
 
 - Alternatively you can download the file and deploy it from the local path:
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f keda-2.14.1.yaml
+kubectl apply --server-side -f keda-2.15.0.yaml
 # Without admission webhooks
-kubectl apply --server-side -f keda-2.14.1-core.yaml
+kubectl apply --server-side -f keda-2.15.0-core.yaml
 ```
 
 > 💡 **NOTE:** `--server-side` option is needed because the ScaledJob CRD is too long to process, see [this issue](https://github.com/kedacore/keda/issues/4740) for details.
@@ -114,40 +114,40 @@ kubectl apply --server-side -f keda-2.14.1-core.yaml
 ```sh
 git clone https://github.com/kedacore/keda && cd keda
 
-VERSION=2.14.1 make deploy
+VERSION=2.15.0 make deploy
 ```
 
 ### Uninstall
 
-- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.14.1`, with the one you are using):
+- In case of installing from released YAML file just run the following command (if needed, replace the version, in this case `2.15.0`, with the one you are using):
 
 ```sh
 # Including admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.14.1/keda-2.14.1.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.15.0/keda-2.15.0.yaml
 # Without admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.14.1/keda-2.14.1-core.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.15.0/keda-2.15.0-core.yaml
 ```
 
 - If you have downloaded the file locally, you can run:
 
 ```sh
 # Including admission webhooks
-kubectl delete -f keda-2.14.1.yaml
+kubectl delete -f keda-2.15.0.yaml
 # Without admission webhooks
-kubectl delete -f keda-2.14.1-core.yaml
+kubectl delete -f keda-2.15.0-core.yaml
 ```
 
 - You would need to run these commands from within the directory of the cloned [GitHub repo](https://github.com/kedacore/keda):
 
 ```sh
-VERSION=2.14.1 make undeploy
+VERSION=2.15.0 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}
 
 ### Install
 
-If you want to try KEDA v2 on [MicroK8s](https://microk8s.io/) from `1.20` channel, KEDA is included into MicroK8s addons.
+If you want to try KEDA v2 on [MicroK8s](https://microk8s.io/) from `1.20` channel, KEDA is included into MicroK8s add-ons.
 
 ```sh
 microk8s enable keda
@@ -155,7 +155,7 @@ microk8s enable keda
 
 ### Uninstall
 
-To uninstall KEDA in MicroK8s, simply disable the addon as shown below.
+To uninstall KEDA in MicroK8s, disable the add-on as shown below.
 
 ```sh
 microk8s disable keda
