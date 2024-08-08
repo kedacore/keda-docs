@@ -1,5 +1,5 @@
 +++
-title = "Operate"
+title = "Operator Guide"
 description = "Guidance and requirements for operating KEDA"
 weight = 1
 +++

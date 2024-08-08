@@ -22,3 +22,7 @@ kubectl logs -n keda {keda-pod-name} -c keda-operator
 ## Reporting issues
 
 If you are having issues or hitting a potential bug, please file an issue [in the KEDA GitHub repo](https://github.com/kedacore/keda/issues/new/choose) with details, logs, and steps to reproduce the behavior.
+
+## Common issue and their Solutions
+
+{{< troubleshooting >}}
