@@ -36,6 +36,8 @@ triggers:
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `platformName` - Name of the browser platform. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Default: `Linux`, Optional)
+- `setSessionsFromHub` - When set, count number of browser node slots and sessions from existing nodes, use this data for scaling. (Default: `false`, Optional)
+- `sessionsPerNode` - Use as default number of sessions per browser node, when none are found existing on selenium grid. (Default: `1`, Optional)
 
 ### Example
 
@@ -103,6 +105,29 @@ spec:
         url: 'http://selenium-hub:4444/graphql'
         browserName: 'MicrosoftEdge'
         sessionBrowserName: 'msedge'
+```
+
+If your selenium browser nodes are not exactly same and you wanna to scale them based on real `slots` settings, set `setSessionsFromHub` to `true` and `setSessionsFromHub` to real number of slots, if you wanna scale from 0.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: selenium-grid-chrome-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: selenium-chrome-node
+spec:
+  maxReplicaCount: 8
+  scaleTargetRef:
+    name: selenium-chrome-node
+  triggers:
+    - type: selenium-grid
+      metadata:
+        url: 'http://selenium-hub:4444/graphql'
+        browserName: 'chrome'
+        setSessionsFromHub: 'true'
+        sessionsPerNode: 4
 ```
 
 If you are supporting multiple versions of browser capability in your Selenium Grid, You should create one scaler for every browser version and pass the `browserVersion` in the metadata.
