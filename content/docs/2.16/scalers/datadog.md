@@ -148,6 +148,9 @@ spec:
     - parameter: authMode
       name: datadog-config
       key: authMode
+    - parameter: datadogMetricsService
+      name: datadog-config
+      key: datadogMetricsService
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
