@@ -341,6 +341,12 @@ parent = "project"
 weight = 12
 
 [[menu.main]]
+url = "/integrations/"
+name = "Integrations"
+parent = "project"
+weight = 12
+
+[[menu.main]]
 url = "/support/"
 name = "Support"
 weight = 5
