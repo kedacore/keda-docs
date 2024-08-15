@@ -3,6 +3,7 @@ title = "Beanstalkd"
 availability = "v2.15+"
 maintainer = "Community"
 description = "Scale applications based on beanstalkd queues"
+go_file = "beanstalkd_scaler"
 +++
 
 ### Trigger Specification
@@ -26,7 +27,7 @@ triggers:
 - `server` - Address of beanstalkd server `<host>:<port>`. If no port is specified then the scaler will default to `11300`.
 - `includeDelayed` - Whether to include delayed jobs in the count used for scaling. Defaults to false so only `ready` and `reserved` jobs are counted.
 - `tube` - Name of the tube to scale on.
-- `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+- `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional, This value can be a float)
 - `value` - Number of jobs in the queue to trigger on. Defaults to `ready`+`reserved` jobs if `includeDelayed` isn't set.
 
 ### Authentication Parameters
