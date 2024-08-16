@@ -61,7 +61,7 @@ triggers:
 - `dimensionValue` - Supports specifying multiple dimension values by using ";" as a separator i.e. dimensionValue: queue1;queue2 (Optional, Required when `expression` is not specified)
 - `expression` - Supports query with [expression](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-metrics-insights-querylanguage.html) (Optional, Required when `dimensionName` & `dimensionValue` are not specified)
 
-- `identityOwner` - Receive permissions for CloudWatch via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` and `aws-kiam` authentications)
+- `identityOwner` - Receive permissions for CloudWatch via Pod Identity or from the KEDA operator itself (see below). (DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in version `3`, Values: `pod`, `operator`, Default: `pod`, Optional, This field only applies for `aws-eks` authentication)
 
 > When `identityOwner` set to `operator` - the only requirement is that the KEDA operator has the correct IAM permissions on the CloudWatch. Additional Authentication Parameters are not required.
 
@@ -88,7 +88,7 @@ You can use `TriggerAuthentication` CRD to configure authentication by providing
 
 **Role based authentication:**
 
-- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated only applies for `aws-eks` and `aws-kiam` authentications, for `aws` is set in the auth)
+- `awsRoleArn` - Amazon Resource Names (ARNs) uniquely identify AWS resource. (This field is deprecated and only applies for `aws-eks` authentication, for `aws` is set in the auth)
 
 **Credential based authentication:**
 
