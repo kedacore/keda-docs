@@ -264,6 +264,13 @@ hr
 .section 
 	padding: 4rem 1.5rem
 
+.badge
+  border: 1px solid #dbdbdb
+  border-radius: 20px
+  padding: 3px 6px
+  color: blue
+  font-size: 1rem
+
 .copyBtn 
   padding: 10px
   background: none
@@ -367,3 +374,31 @@ hr
 @media screen and (min-width: 769px)
   .md-height-desktop
       height: 9rem
+
+  .filter-icon
+    display: none
+
+  .filter-options
+    display: inline-block
+
+  .filter-pane
+    padding-left: 0
+    padding-top: 20px
+
+@media screen and (max-width: 769px)
+  .filter-icon
+      padding: 0.5rem
+      cursor: pointer
+      border: 1px solid #DBDBDB
+      font-size: 18px
+      border-radius: 0.4rem
+      display: inline-block
+      &:hover
+        border: 1px solid #000000
+
+  .filter-options
+    display: none
+
+  .filter-pane
+    padding-left: 20px
+    padding-top: 10px

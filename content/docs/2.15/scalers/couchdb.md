@@ -2,6 +2,7 @@
 title = "CouchDB"
 availability = "v2.9+"
 maintainer = "Community"
+category = "Data & Storage"
 description = "Scale applications based on CouchDB query results."
 go_file = "couchdb_scaler"
 +++

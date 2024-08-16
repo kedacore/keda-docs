@@ -2,6 +2,7 @@
 title = "Liiklus Topic"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Messaging"
 description = "Scale applications based on Liiklus Topic."
 go_file = "liiklus_scaler"
 +++

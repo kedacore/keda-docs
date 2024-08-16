@@ -2,6 +2,7 @@
 title = "AWS CloudWatch"
 availability = "v1.0+"
 maintainer = "Community"
+category = "Metrics"
 description = "Scale applications based on AWS CloudWatch."
 go_file = "aws_cloudwatch_scaler"
 +++

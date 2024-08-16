@@ -1,5 +1,5 @@
 <h2 id="available-scalers">Currently available scalers for KEDA</h2>
-<div class="buttons" style="display: flex; justify-content: flex-end">
+<div style="display: flex; justify-content: flex-end">
   <form
     class="control has-icons-left has-extra-sm-right-margin"
     id="search"
@@ -15,37 +15,76 @@
       <i class="fas fa-search"></i>
     </span>
   </form>
-  <button
-    id="btn-focus-on-mount"
-    class="button filterBtn is-focused"
-    value="built-in-scalers"
-  >
-    Built-in
-  </button>
-  <button class="button filterBtn" value="external-scalers">External</button>
 </div>
-<div class="results"></div>
-<div class="external-results" style="display: none;"></div>
-<div
-  id="built-in-scalers"
-  style="margin-top: 20px"
-  class="columns is-multiline is-search-result"
->
-  {{ partial "scaler-template" . }}
-</div>
-<div id="external-scalers" style="display: none">
-  <p id="external-banner">
-    External scaler information is pulled from Artifact Hub. External scaler
-    maintainers can learn more on
-    <a
-      href="https://artifacthub.io/docs/topics/repositories/#keda-scalers-repositories"
-      >Artifact Hub docs</a
+<div class="columns">
+  <div class="filter-pane">
+    <h5>FILTER <span class="filter-icon"><i class="fas fa-filter"></i></span></h5>
+    <div class="filter-options">
+      <div class="has-extra-top-margin">
+        <h6>Type</h6>
+        <div>
+          <input id="built-in" type="checkbox" name="resource_filter" value="type:built-in">
+          <label for="built-in">Built-in</label>
+        </div>
+        <div>
+          <input id="external" type="checkbox" name="resource_filter" value="type:external">
+          <label for="external">External</label>
+        </div>
+      </div>
+      <div class="has-extra-top-margin">
+        <h6>Category</h6>
+        {{ $categories := slice }}
+        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+          {{ with $scalers.Params.category }}
+              {{ $categories = $categories | append ($scalers.Params.category) }}
+              {{ $categories = uniq $categories }}
+          {{ end }}
+        {{ end }}
+        {{ range $categories }}
+        {{ $category := . }}
+        <div>
+            <input id="{{ . }}" type="checkbox" name="resource_filter" value="category:{{ . }}">
+            <label for="{{ . }}">{{ . }}</label>
+        </div>
+        {{ end }}
+      </div>    
+      <div class="has-extra-top-margin">
+        <h6>Maintainer</h6>
+        {{ $maintainers := slice }}
+        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+            {{ $maintainers = $maintainers | append ($scalers.Params.maintainer) }}
+            {{ $maintainers = uniq $maintainers }}
+        {{ end }}
+        {{ range $maintainers }}
+        {{ $maintainer := . }}
+        <div>
+            <input id="{{ . }}" type="checkbox" name="resource_filter" value="maintainer:{{ . }}">
+            <label for="{{ . }}">{{ . }}</label>
+        </div>
+        {{ end }}
+        <div>
+          <input id="keda" type="checkbox" name="resource_filter" value="maintainer:keda">
+          <label for="keda">Keda</label>
+        </div>
+        <div>
+          <input id="wsugarman" type="checkbox" name="resource_filter" value="maintainer:wsugarman">
+          <label for="wsugarman">Wsugarman</label>
+        </div>
+        <div>
+          <input id="JensWalter" type="checkbox" name="resource_filter" value="maintainer:JensWalter">
+          <label for="JensWalter">JensWalter</label>
+        </div>
+      </div>
+    </div>   
+  </div>
+  <div class="results-pane column">
+    <div class="results"></div>
+    <div
+      id="scalers"
+      style="margin-top: 20px"
+      class="columns is-multiline is-search-result"
     >
-  </p>
-  <div
-    class="artifacthub-widget-group columns is-multiline is-external-search-result"
-    data-url="https://artifacthub.io/api/v1/packages/search?offset=0&limit=20&facets=false&kind=8&deprecated=false&sort=relevance"
-  >
-  {{ partial "scaler-template" . }}
-</div>
+      {{ partial "scaler-template" . }}
+    </div>
+  </div>
 </div>

@@ -48,11 +48,12 @@ spec:
     kind:          {kind-of-target-resource}                # Optional. Default: Deployment
     name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
-  pollingInterval:  30                                      # Optional. Default: 30 seconds
-  cooldownPeriod:   300                                     # Optional. Default: 300 seconds
-  idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
-  minReplicaCount:  1                                       # Optional. Default: 0
-  maxReplicaCount:  100                                     # Optional. Default: 100
+  pollingInterval:        30                                # Optional. Default: 30 seconds
+  initialCooldownPeriod:  0                                 # Optional. Default: 0 seconds
+  cooldownPeriod:         300                               # Optional. Default: 300 seconds
+  idleReplicaCount:       0                                 # Optional. Default: ignored, must be less than minReplicaCount
+  minReplicaCount:        1                                 # Optional. Default: 0
+  maxReplicaCount:        100                               # Optional. Default: 100
   fallback:                                                 # Optional. Section to specify fallback options
     failureThreshold: 3                                     # Mandatory if fallback section is included
     replicas: 6                                             # Mandatory if fallback section is included
@@ -356,7 +357,7 @@ advanced:
     formula: "count([trig_one,trig_two,trig_three],{#>1}) > 1 ? 5 : 0"
 ```
 
-If atleast 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
+If at least 2 metrics (from the list `trig_one`,`trig_two`,`trig_three`) have value of more than 1, then return 5, otherwise return 0
 
 **Example: nested conditions and operators**
 
@@ -367,7 +368,7 @@ advanced:
 ```
 
 Conditions can be used within another condition as well.
-If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is atleast 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
+If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is at least 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
 Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
 ### Activating and Scaling thresholds
