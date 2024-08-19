@@ -19,6 +19,7 @@ triggers:
       tube: "default"
       activationValue: "10"
       value: "15"
+      timeout: "30"
 
 ```
 
