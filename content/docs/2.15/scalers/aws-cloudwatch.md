@@ -27,8 +27,6 @@ triggers:
     metricName: ApproximateNumberOfMessagesVisible
     targetMetricValue: "2.1"
     minMetricValue: "1.5"
-    # Optional: ignoreNullValues
-    ignoreNullValues: false
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS endpoint url
@@ -71,10 +69,6 @@ triggers:
 - `metricUnit` - Which unit to be used by the query. Used to define **Unit** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Unit)). (Default: `none`, Optional)
 - `metricEndTimeOffset` - How long in seconds to offset the **EndTime** ([official documentation](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html)). Due to the eventual consistency model which is used by Cloudwatch, the latest datapoint one can get from Cloudwatch might not be accurate. The `metricEndTimeOffset` config provides a way to skip the most recent datapoint if needed. (Default: `0`, Optional)
 - `minMetricValue`- Returned value in case of empty response from cloudwatch. (Default: 0, This value can be a float)
-- `ignoreNullValues`- Describes the behaviour when the metric query returns no metric values in the response.  If set to `true`, the scaler will scale the workload based on the `minMetricValue` provided. If set to `false`, the scaler will return an error and not adjust the scale of the workload. When set to `false` this will take precedence over `minMetricValue`. (Default: `true`, Optional)
-
-> Both `minMetricValue` and `ignoreNullValues` are used to handle the case when the metric query returns no metric values in the response from AWS CloudWatch. `minMetricValue` will scale the workload based on the value provided, while `ignoreNullValues`, if false, will return an error and not adjust the scale of the workload.
-
 - `targetMetricValue`- Target value for the metric. (Default: 0, This value can be a float)
 - `activationTargetMetricValue`- Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
@@ -97,47 +91,6 @@ You can use `TriggerAuthentication` CRD to configure authentication by providing
 - `awsSessionToken` - Session token, only required when using [temporary credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html).
 
 The user will need access to read data from AWS CloudWatch.
-
-### IAM Permissions
-
-The user or role used to authenticate with AWS CloudWatch must have the `cloudwatch:GetMetricData` permissions. The following is an example IAM policy that grants the necessary permissions to read data from CloudWatch:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowCloudWatchGetMetricData",
-      "Effect": "Allow",
-      "Action": "cloudwatch:GetMetricData",
-      "Resource": "*"
-    }
-  ]
-}
-```
-
-This can be further scoped to specific namespaces, by using the `cloudwatch:namespace` condition key. For example, to only allow access to the `AWS/EC2` metric namespace:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowCloudWatchGetMetricData",
-      "Effect": "Allow",
-      "Action": "cloudwatch:GetMetricData",
-      "Resource": "*",
-      "Condition": {
-        "StringEquals": {
-          "cloudwatch:namespace": "AWS/EC2"
-        }
-      }
-    }
-  ]
-}
-```
-
-For more information, see the [AWS CloudWatch IAM documentation](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazoncloudwatch.html).
 
 ### IAM Permissions
 
