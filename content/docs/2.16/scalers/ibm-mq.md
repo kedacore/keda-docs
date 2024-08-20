@@ -17,7 +17,7 @@ triggers:
   metadata:
     host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
     queueName: <queue-name> # REQUIRED - Your queue name
-    tlsDisabled: <TLS enabled/disabled> # DEPRECATED: This parameter is deprecated as of KEDA v2.16 in favor of unsafeSsl and will be removed in version v2.17
+    tlsDisabled: <TLS enabled/disabled> # DEPRECATED: This parameter is deprecated as of KEDA v2.16 in favor of unsafeSsl and will be removed in version v2.18
     queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 20 messages
     activationQueueDepth: <activation-queue-depth> # OPTIONAL - Activation queue depth target. Default: 0 messages
     usernameFromEnv: <admin-user> # OPTIONAL - Provide admin username from env instead of as a secret
