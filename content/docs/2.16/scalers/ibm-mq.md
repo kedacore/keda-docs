@@ -16,27 +16,25 @@ triggers:
 - type: ibmmq
   metadata:
     host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
-    queueManager: <queue-manager> # REQUIRED - Your queue manager
     queueName: <queue-name> # REQUIRED - Your queue name
-    tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
-    queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
+    tlsDisabled: <TLS enabled/disabled> # DEPRECATED: This parameter is deprecated as of KEDA v2.16 in favor of unsafeSsl and will be removed in version v2.18
+    queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 20 messages
     activationQueueDepth: <activation-queue-depth> # OPTIONAL - Activation queue depth target. Default: 0 messages
-    usernameFromEnv: <admin-user> # Optional: Provide admin username from env instead of as a secret
-    passwordFromEnv: <admin-password> # Optional: Provide admin password from env instead of as a secret
-    unsafeSsl: <SSL enabled/disabled> # OPTIONAL - Set 'true' for unsafe SSL. Default: false
+    usernameFromEnv: <admin-user> # OPTIONAL - Provide admin username from env instead of as a secret
+    passwordFromEnv: <admin-password> # OPTIONAL - Provide admin password from env instead of as a secret
+    unsafeSsl: "false" # OPTIONAL - Used for skipping certificate check when having self-signed certs 'true'. Default: false
 ```
 
 **Parameter list:**
 
 - `host` - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`.
-- `queueManager` - Name of the queue manager from which messages will be consumed.
-- `queueName` - Name of the Queue within the Queue Manager defined from which messages will be consumed.
-- `tlsDisabled` - Can be set to 'true' to disable TLS. (Values: `true`, `false` , Default: `false`, Optional)
-- `queueDepth` - Queue depth Target for HPA. (Default: `5`, Optional)
+- `queueName` - Name of the Queue defined from which messages will be consumed.
+- `tlsDisabled` - Can be set to 'true' to disable TLS. (DEPRECATED: This parameter is deprecated as of KEDA v2.16 in favor of unsafeSsl and will be removed in version v2.18, Values: `true`, `false` , Default: `false`, Optional)
+- `queueDepth` - Queue depth Target for HPA. (Default: `20`, Optional)
 - `activationQueueDepth` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `usernameFromEnv` - Provide admin username from env instead of as a secret. (Optional)
 - `passwordFromEnv` - Provide admin password from env instead of as a secret. (Optional)
-- `unsafeSsl` - Whether to allow unsafe SSL (Values: `true`, `false`, Default: `false` )
+- `unsafeSsl` - Whether to allow unsafe SSL (Values: `true`, `false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
@@ -83,12 +81,10 @@ spec:
     - type: ibmmq
       metadata:
         host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
-        queueManager: <queue-manager> # REQUIRED - Your queue manager
         queueName: <queue-name> # REQUIRED - Your queue name
-        tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
-        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
-        usernameFromEnv: <admin-user> # Optional: Provide admin username from env instead of as a secret
-        passwordFromEnv: <admin-password> # Optional: Provide admin password from env instead of as a secret
+        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 20 messages
+        usernameFromEnv: <admin-user> # OPTIONAL - Provide admin username from env instead of as a secret
+        passwordFromEnv: <admin-password> # OPTIONAL - Provide admin password from env instead of as a secret
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---
@@ -106,8 +102,6 @@ spec:
       name: keda-ibmmq-secret
       key: ADMIN_PASSWORD
 ```
-
-### Example
 
 Example with Basic Auth and TLS
 
@@ -139,10 +133,8 @@ spec:
     - type: ibmmq
       metadata:
         host: <ibm-host> # REQUIRED - IBM MQ Queue Manager Admin REST Endpoint
-        queueManager: <queue-manager> # REQUIRED - Your queue manager
         queueName: <queue-name> # REQUIRED - Your queue name
-        tlsDisabled: <TLS enabled/disabled> # OPTIONAL - Set 'true' to disable TLS. Default: false
-        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 5 messages
+        queueDepth: <queue-depth> # OPTIONAL - Queue depth target for HPA. Default: 20 messages
       authenticationRef:
         name: keda-ibmmq-trigger-auth
 ---
@@ -166,4 +158,3 @@ spec:
       name: keda-ibmmq-secret
       key: key
 ```
-
