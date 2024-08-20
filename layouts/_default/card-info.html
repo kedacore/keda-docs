@@ -1,6 +1,7 @@
 {{ $desc         := .Description | markdownify }}
 {{ $availability := .Params.availability }}
 {{ $maintainer   := .Params.maintainer }}
+{{ $project   := .Params.project }}
 <div class="column is-one-third">
   <div class="card">
     <div class="card-content">
@@ -28,6 +29,12 @@
       {{ with $maintainer }}
       <div class="card-footer-item card-is-wrapped">
         Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
+      </div>
+      {{ end }}
+
+      {{ with $project }}
+      <div class="card-footer-item card-is-wrapped">
+        Project:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
       </div>
       {{ end }}
     </footer>

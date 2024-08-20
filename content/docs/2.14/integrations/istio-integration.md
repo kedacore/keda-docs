@@ -1,7 +1,8 @@
 +++
 title = "KEDA Integration with Istio"
 description = "Guidance for running KEDA along with Istio in your cluster"
-weight = 100
+availability = "v2.14+"
+project = "Istio"
 +++
 
 ## Overview
