@@ -1,6 +1,6 @@
 +++
 title = "Beanstalkd"
-availability = "v2.15+"
+availability = "v2.16+"
 maintainer = "Community"
 description = "Scale applications based on beanstalkd queues"
 go_file = "beanstalkd_scaler"
