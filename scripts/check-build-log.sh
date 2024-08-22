@@ -2,6 +2,8 @@
 #
 # NOTE: add warning skip patterns, one per line to WARNINGS_SKIP_LIST to
 # temporarily skip known warnings or errors.
+#
+# Adapted from @chalin & @cartermp's work in https://github.com/open-telemetry/opentelemetry.io/blob/main/scripts/check-build-log.sh
 
 BUILD_LOG=tmp/build-log.txt
 WARNINGS_SKIP_LIST=.warnings-skip-list.txt
