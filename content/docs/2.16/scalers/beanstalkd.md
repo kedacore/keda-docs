@@ -30,7 +30,7 @@ triggers:
 - `tube` - Name of the tube to scale on.
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional, This value can be a float)
 - `value` - Number of jobs in the queue to trigger on. Defaults to `ready`+`reserved` jobs if `includeDelayed` isn't set.
-- `timeout` - Timeout in seconds for establishing a connection to the beanstalkd server. Defaults to 30.
+- `timeout` - Timeout in seconds for establishing a connection to the beanstalkd server. (Default: `30`, Optional)
 
 ### Authentication Parameters
 
