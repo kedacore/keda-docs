@@ -71,5 +71,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with: { name: build-log-etc }
-      - run: cat tmp/build-log.txt
-      - run: scripts/check-build-log.sh
+      - run: |
+          cat tmp/build-log.txt
+          scripts/check-build-log.sh
