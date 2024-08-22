@@ -34,8 +34,9 @@ jobs:
           cache: npm
           cache-dependency-path: tmp/package-ci.json
 
-      - run: npm install --omit=optional
-      - run: npm run log:check:links
+      - run: |
+          npm install --omit=optional
+          npm run log:check:links
         continue-on-error: true
       - uses: actions/upload-artifact@v4
         with:
