@@ -1,3 +1,6 @@
+# Adapted from @chalin's work on opentelemetry.io
+# https://github.com/open-telemetry/opentelemetry.io/blob/main/.github/workflows/check-links.yml
+
 name: Links
 
 on:
