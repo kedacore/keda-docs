@@ -10,6 +10,7 @@
     "check-links:all": "HTMLTEST_ARGS= npm run _check-links",
     "check-links": "npm run _check-links",
     "clean": "make clean",
+    "log:check:links": "npm run check-links | tee tmp/build-log.txt",
     "postbuild:preview": "npm run _check-links",
     "postbuild:production": "npm run _check-links",
     "precheck-links:all": "npm run build",
