@@ -68,7 +68,7 @@ Typically, either one or the other is being used given they serve a different pu
 To unpause (reenable) autoscaling again, remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can unpause by setting the annotation to `false`.
 
 
-## Scaling Modifiers (Experimental)
+## Scaling Modifiers
 
 **Example: compose average value**
 
