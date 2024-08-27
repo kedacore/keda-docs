@@ -227,7 +227,7 @@ The `scalingModifiers` is optional and **experimental**. If defined, both `targe
 
   `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
 
-For examples of this feature see section [Scaling Modifiers](../concepts/scaling-deployments.md#scaling-modifiers-experimental).
+For examples of this feature see section [Scaling Modifiers](../concepts/scaling-deployments.md).
 
 
 ## triggers
