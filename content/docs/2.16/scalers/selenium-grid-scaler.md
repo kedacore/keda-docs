@@ -108,7 +108,7 @@ spec:
         sessionBrowserName: 'msedge'
 ```
 
-If your selenium browser nodes are not exactly same and you wanna to scale them based on real `slots` settings, set `setSessionsFromHub` to `true` and `setSessionsFromHub` to real number of slots, if you wanna scale from 0.
+If your selenium browser nodes are not exactly same and you wanna to scale them based on real `slots` settings, set `setSessionsFromHub` to `true` and `sessionsPerNode` to real number of slots, if you wanna scale from 0.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
