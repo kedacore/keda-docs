@@ -118,3 +118,9 @@ eventSubscription: #Optional. Submit included/excluded event types will filter e
 | `keda.scaledjob.ready.v1`| On the first time a ScaledJob is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
 | `keda.scaledjob.failed.v1`| If the check validation for a ScaledJob fails                                    
 | `keda.scaledjob.removed.v1`| When a ScaledJob is deleted |  
+| `keda.authentication.triggerauthentication.created.v1` | On the first time a TriggerAuthentication is created |
+| `keda.authentication.triggerauthentication.updated.v1` | When a TriggerAuthentication is updated | 
+| `keda.authentication.triggerauthentication.removed.v1` | When a TriggerAuthentication is deleted |  
+| `keda.authentication.clustertriggerauthentication.created.v1`|  On the first time a ClusterTriggerAuthentication is created |
+| `keda.authentication.clustertriggerauthentication.updated.v1`| When a ClusterTriggerAuthentication is updated | 
+| `keda.authentication.clustertriggerauthentication.removed.v1`| When a ClusterTriggerAuthentication is deleted |  
