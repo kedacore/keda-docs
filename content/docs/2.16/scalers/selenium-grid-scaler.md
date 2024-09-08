@@ -153,6 +153,11 @@ It is possible to specify the Graphql url of your Selenium Grid using authentica
 
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) for more info.
 
+As an alternative you can also authenticate by using username and password via `TriggerAuthentication` configuration instead of using url.
+
+- `username` - Username for connect to the Selenium Grid graphql endpoint.
+- `password` - Password for connect to the Selenium Grid graphql endpoint.
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -162,6 +167,9 @@ metadata:
 type: Opaque
 data:
   graphql-url: base64 encoded value of GraphQL URL
+  # or use username and password separately
+  grid-username: GRID_USERNAME
+  grid-password: GRID_PASSWORD
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -173,6 +181,12 @@ spec:
   - parameter: url
     name: selenium-grid-secret
     key: graphql-url
+  - parameter: username
+    name: selenium-grid-secret
+    key: grid-username
+  - parameter: password
+    name: selenium-grid-secret
+    key: grid-password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
