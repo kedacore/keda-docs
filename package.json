@@ -3,7 +3,6 @@
     "_build": "hugo --cleanDestinationDir -e dev -DFE",
     "_check-links": "make check-links",
     "_diff:check": "git diff --name-only --exit-code",
-    "_diff:fail": "git diff --name-only --exit-code || exit 1",
     "_serve:hugo": "hugo serve -DFE --minify",
     "_serve": "netlify dev -c \"npm run _serve:hugo\" --framework hugo",
     "build:preview": "set -x && npm run _build -- --minify --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
