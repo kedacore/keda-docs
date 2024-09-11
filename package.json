@@ -14,7 +14,7 @@
     "clean": "make clean",
     "diff:check": "npm run _diff:check || (echo; echo 'WARNING: the files above have not been committed'; echo)",
     "diff:fail": "npm run _diff:check || (echo; echo 'ERROR: the files above have changed. Locally rerun `npm run test-and-fix` and commit changes'; echo; exit 1)",
-    "log:check:links": "npm run check-links--warn | tee tmp/build-log.txt",
+    "log:check:links": "npm run _check-links--warn | tee tmp/build-log.txt",
     "postbuild:preview": "npm run _check-links--warn",
     "postbuild:production": "npm run _check-links--warn",
     "precheck-links:all": "npm run build",
