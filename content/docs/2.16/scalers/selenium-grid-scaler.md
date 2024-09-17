@@ -1,7 +1,7 @@
 +++
 title = "Selenium Grid Scaler"
 availability = "v2.4+"
-maintainer = "Volvo Cars"
+maintainer = "Volvo Cars, SeleniumHQ"
 category = "Testing"
 description = "Scales Selenium browser nodes based on number of requests waiting in session queue"
 go_file = "selenium_grid_scaler"
@@ -29,16 +29,20 @@ triggers:
 
 **Parameter list:**
 
-- `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
-- `browserName` - Name of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
+- `url` - Graphql url of your Selenium Grid (Required). Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info. If endpoint requires authentication, you can use `TriggerAuthentication` to provide the credentials instead of embedding in the URL.
+- `browserName` - Name of browser that usually gets passed in the browser capability (Required). Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
 - `sessionBrowserName` -  Name of the browser when it is an active session, only set if `BrowserName` changes between the queue and the active session. See the Edge example below for further detail. (Optional)
 - `browserVersion` - Version of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Optional)
-- `sessionBrowserVersion` - Version of the browser when it is an active session, only set, when scaling without defined exact `browserVersion`.
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `platformName` - Name of the browser platform. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Default: `Linux`, Optional)
-- `setSessionsFromHub` - When set, count number of browser node slots and sessions from existing nodes, use this data for scaling. (Default: `false`, Optional)
-- `sessionsPerNode` - Use as default number of sessions per browser node, when none are found existing on selenium grid. (Default: `1`, Optional)
+- `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. (Default: `1`, Optional). Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior.
+
+**Trigger Authentication**
+- `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
+- `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
+- `authType` - Type of authentication to be used. (Optional). This can be set to `Bearer` or `OAuth2` in case Selenium Grid behind an Ingress proxy with other authentication types.
+- `accessToken` - Access token (Optional). This is required when `authType` is set a value.
 
 ### Example
 
@@ -108,7 +112,7 @@ spec:
         sessionBrowserName: 'msedge'
 ```
 
-If your selenium browser nodes are not exactly same and you wanna to scale them based on real `slots` settings, set `setSessionsFromHub` to `true` and `sessionsPerNode` to real number of slots, if you wanna scale from 0.
+In case you want to scale from 0 (`minReplicaCount: 0`), and browser nodes are configured different `--max-sessions` greater than 1, you can set `nodeMaxSessions` for scaler align with number of slots available per node to have the correct scaling behavior.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -127,8 +131,7 @@ spec:
       metadata:
         url: 'http://selenium-hub:4444/graphql'
         browserName: 'chrome'
-        setSessionsFromHub: 'true'
-        sessionsPerNode: 4
+        nodeMaxSessions: 4
 ```
 
 If you are supporting multiple versions of browser capability in your Selenium Grid, You should create one scaler for every browser version and pass the `browserVersion` in the metadata.
@@ -178,11 +181,8 @@ spec:
 It is possible to specify the Graphql url of your Selenium Grid using authentication parameters. This useful if you have enabled Selenium Grid's Basic HTTP Authentication and would like to keep your credentials secure.
 
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) for more info.
-
-As an alternative you can also authenticate by using username and password via `TriggerAuthentication` configuration instead of using url.
-
-- `username` - Username for connect to the Selenium Grid graphql endpoint.
-- `password` - Password for connect to the Selenium Grid graphql endpoint.
+- `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
+- `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 
 ```yaml
 apiVersion: v1
@@ -193,9 +193,8 @@ metadata:
 type: Opaque
 data:
   graphql-url: base64 encoded value of GraphQL URL
-  # or use username and password separately
-  grid-username: GRID_USERNAME
-  grid-password: GRID_PASSWORD
+  graphql-username: base64 encoded value of GraphQL Username
+  graphql-password: base64 encoded value of GraphQL Password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -209,10 +208,10 @@ spec:
     key: graphql-url
   - parameter: username
     name: selenium-grid-secret
-    key: grid-username
+    key: graphql-username
   - parameter: password
     name: selenium-grid-secret
-    key: grid-password
+    key: graphql-password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
