@@ -51,6 +51,9 @@ triggers:
 - `value` - Value to trigger scaling actions for:
 	- When using `Utilization`, the target value is the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 	- When using `AverageValue`, the target value is the target value of the average of the metric across all relevant pods (quantity).
+- `activationValue` - Target value for activating the scaler. Learn more about activation [here](https://keda.sh/docs/2.15/concepts/scaling-deployments/#activating-and-scaling-thresholds). (Default: 0, Optional)
+  - When using `Utilization`, the target value is `Utilization`
+  - When using `AverageValue`, the target value is `AverageValue`
 - `containerName` - Name of the specific container to scale based on its CPU, rather than the entire pod. Defaults to empty if not specified.
 
 > 💡 **NOTE:** `containerName` parameter requires Kubernetes cluster version 1.20 or higher with `HPAContainerMetrics` feature enabled. Please see [container resource metrics](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#container-resource-metrics) for more information.
@@ -75,6 +78,7 @@ spec:
     metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
     metadata:
       value: "50"
+      activationValue: "30"
 ```
 
 The following example targets CPU utilization of a specific container (`foo`) in a pod.
@@ -93,5 +97,6 @@ spec:
     metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
     metadata:
       value: "50"
+      activationValue: "30"
       containerName: "foo"
 ```
