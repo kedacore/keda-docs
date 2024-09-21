@@ -142,9 +142,6 @@ spec:
     - parameter: datadogNamespace
       name: datadog-config
       key: datadogNamespace
-    - parameter: datadogMetricsService
-      name: datadog-config
-      key: datadogMetricsService
     - parameter: unsafeSsl
       name: datadog-config
       key: unsafeSsl
