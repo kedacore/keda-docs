@@ -10,7 +10,13 @@ By default, the admission webhooks are registered with `failurePolicy: Ignore`, 
 
 In particular, the admission webhooks for HPA ownership validation can be skipped by setting the annotation `validations.keda.sh/hpa-ownership` to `"false"`. Be cautious when doing so as it exposes the system to potential risks.
 
-Here is an example of a `ValidatingAdmissionPolicy` and its corresponding `ValidatingAdmissionPolicyBinding` to fail/deny `ScaledObject`s with more than 10 replicas in the `default` namespace:
+## Custom Validations using Kubernetes ValidatingAdmissionPolicy
+
+> ⚠️ FEATURE STATE: Kubernetes v1.30 [stable]
+
+Kubernetes `ValidatingAdmissionPolicy` allows you to create custom validation policies using the [Common Expression Language (CEL)](https://cel.dev). This provides a declarative way to define and enforce validation rules directly within the cluster, helping ensure resource configurations meet your specified requirements. For more details, refer to the Kubernetes `ValidatingAdmissionPolicy` [documentation](https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/).
+
+Here is an example of a `ValidatingAdmissionPolicy` and its corresponding `ValidatingAdmissionPolicyBinding` to fail/deny `ScaledObject`s with more than 10 replicas in the `default` namespace (i.e., limiting the maximum number of pod replicas to 10):
 
 ```yaml
 apiVersion: admissionregistration.k8s.io/v1
