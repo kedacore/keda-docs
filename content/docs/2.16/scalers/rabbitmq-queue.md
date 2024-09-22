@@ -25,6 +25,8 @@ triggers:
     # Alternatively, you can use existing environment variables to read configuration from:
     # See details in "Parameter list" section
     hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
+    usernameFromEnv: RABBITMQ_USERNAME # Optional. You can use this instead of TriggerAuthentication
+    passwordFromEnv: RABBITMQ_PASSWORD # Optional. You can use this instead of TriggerAuthentication
     unsafeSsl: true
 ```
 
@@ -48,6 +50,8 @@ triggers:
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
 - `hostFromEnv` - The host and port of the RabbitMQ server, similar to `host`, but reads it from an environment variable on the scale target.
+- `usernameFromEnv` - The username to use to connect to the broker's management endpoint.
+- `passwordFromEnv` - The password to use to connect to the broker's management endpoint.
 
 > 💡 **Note:** `host`/`hostFromEnv` has an optional vhost name after the host slash which will be used to scope API request.
 
@@ -69,6 +73,15 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 - For HTTP, the URI should look similar to `http://guest:password@localhost:15672/path/vhost`.
 
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
+
+**Username and Password based authentication:**
+
+This allows sensitive credentials to be stored and managed separately from the connection string.
+
+- `username` - The username to use to connect to the broker's management endpoint.
+- `password` - The password to use to connect to the broker's management endpoint.
+
+> 💡 **Note:** If username or password are set in TriggerAuthentication or environment variables, they will override any credentials provided in the host.
 
 **TLS authentication:**
 
@@ -105,6 +118,54 @@ spec:
     - parameter: host
       name: keda-rabbitmq-secret
       key: host
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: rabbitmq-deployment
+  triggers:
+  - type: rabbitmq
+    metadata:
+      protocol: amqp
+      queueName: testqueue
+      mode: QueueLength
+      value: "20"
+    authenticationRef:
+      name: keda-trigger-auth-rabbitmq-conn
+```
+
+#### AMQP protocol with user/password auth:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-rabbitmq-secret
+data:
+  host: <AMQP URI connection string> # base64 encoded value of format amqp://localhost:5672/vhost (no username/password)
+  username: <username> # base64 encoded value of username
+  password: <password> # base64 encoded value of password
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-rabbitmq-conn
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: host
+      name: keda-rabbitmq-secret
+      key: host
+    - parameter: username
+      name: keda-rabbitmq-secret
+      key: username
+    - parameter: password
+      name: keda-rabbitmq-secret
+      key: password 
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
