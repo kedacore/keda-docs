@@ -61,4 +61,4 @@ Existing troubleshooting guide for KEDA with Istio.
 ### Conclusion
 By applying these annotations, you can ensure that KEDA integrates seamlessly with Istio while adhering to security requirements. This configuration allows KEDA to maintain internal mTLS communication and interact properly with other mesh services.
 
-If you encounter any issues or have further questions, please refer to the KEDA and Istio documentation or reach out to the community for support.
+If you encounter any issues or have further questions, please refer to the KEDA and Istio documentation or reach out to our friendly community for support.
