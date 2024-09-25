@@ -624,10 +624,6 @@ url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "kedify.png"
 
 [[params.partners]]
-url = "https://microsoft.com"
-logo = "microsoft.png"
-
-[[params.partners]]
 url = "https://scrm.lidl"
 logo = "SCRM.png"
 
