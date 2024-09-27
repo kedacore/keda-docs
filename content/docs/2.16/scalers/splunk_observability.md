@@ -1,6 +1,6 @@
 +++
 title = "Splunk Observability"
-availability = "v2.15+"
+availability = "v2.6+"
 maintainer = "Community"
 category = "Data & Storage"
 description = "Scale applications based on Splunk Observability Cloud metrics."
@@ -84,8 +84,8 @@ kind: Secret
 metadata:
   name: splunk-secrets
 data:
-  accessToken: dGVzdF9hY2Nlc3NfdG9rZW4= # base64-encrypted example access token
-  realm: dGVzdF9yZWFsbQ== # base64-encrypted example realm
+  accessToken: dGVzdF9hY2Nlc3NfdG9rZW4= # base64-encoded example access token
+  realm: dGVzdF9yZWFsbQ== # base64-encoded example realm
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
