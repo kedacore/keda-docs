@@ -16,7 +16,7 @@ When validation enforcement is enabled, it's possible to run into a race conditi
 ```
 --cache-miss-to-direct-client=true
 ```
-This will ensure that if getting the `scaleTargetRef` from the cached client returns `IsNotFound` error, webhook will attempt to getting the object directly from Kubernetes API.
+This will ensure that if getting the `scaleTargetRef` from the cached client returns `IsNotFound` error, the webhook will attempt to get the object directly from Kubernetes API.
 
 
 ## Custom Validations using Kubernetes ValidatingAdmissionPolicy
