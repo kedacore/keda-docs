@@ -10,6 +10,15 @@ By default, the admission webhooks are registered with `failurePolicy: Ignore`, 
 
 In particular, the admission webhooks for HPA ownership validation can be skipped by setting the annotation `validations.keda.sh/hpa-ownership` to `"false"`. Be cautious when doing so as it exposes the system to potential risks.
 
+### Cache Miss with Fallback to Direct Client for ScaledObject
+
+When validation enforcement is enabled, it's possible to run into a race condition when `ScaledObject` is part of the same deployment artifact as the `scaleTargetRef` (see also issue: [#5973](https://github.com/kedacore/keda/issues/5973)). For this purpose it's possible to configure additional argument for the webhook `Deployment`:
+```
+--cache-miss-to-direct-client=true
+```
+This will ensure that if getting the `scaleTargetRef` from the cached client returns `IsNotFound` error, the webhook will attempt to get the object directly from Kubernetes API.
+
+
 ## Custom Validations using Kubernetes ValidatingAdmissionPolicy
 
 > ⚠️ FEATURE STATE: Kubernetes v1.30 [stable]
