@@ -5,6 +5,8 @@ weight = 1
 
 Welcome to the documentation for **KEDA**, the Kubernetes Event-driven Autoscaler. 
 
+*** [testing bad link for link checker CI](./that_there-file.md.txt) ***
+
 Use the navigation bar on the left to learn more about KEDA's architecture  and how to deploy and use KEDA.
 
 ## Where to go
