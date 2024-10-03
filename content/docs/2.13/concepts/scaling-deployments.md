@@ -251,7 +251,7 @@ For examples of this feature see section [Scaling Modifiers](#scaling-modifiers-
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
-- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default, the name is generated from the trigger type. (Optional)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../integrations/prometheus.md). By default, the name is generated from the trigger type. (Optional)
 - **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)

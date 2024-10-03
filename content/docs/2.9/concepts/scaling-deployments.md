@@ -214,7 +214,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
-- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default the name is generated from the trigger type. (Optional)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../integrations/prometheus.md). By default the name is generated from the trigger type. (Optional)
 - **useCachedMetrics**: ([Experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features)) Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics (Experimental)"](#caching-metrics-experimental). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)

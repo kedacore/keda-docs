@@ -188,28 +188,34 @@ parent = "docs"
 weight = 5
 
 [[menu.docs]]
+url = "/docs/integrations/"
+name = "Integrations"
+parent = "docs"
+weight = 6
+
+[[menu.docs]]
 url = "/docs/authentication-providers"
 name = "Auth providers"
 parent = "docs"
-weight = 6
+weight = 7
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 7
+weight = 8
 
 [[menu.docs]]
 url = "/docs/reference/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 8
+weight = 9
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 9
+weight = 10
 
 [[menu.main]]
 url = "/blog"
@@ -616,10 +622,6 @@ logo = "zapier.png"
 [[params.partners]]
 url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "kedify.png"
-
-[[params.partners]]
-url = "https://microsoft.com"
-logo = "microsoft.png"
 
 [[params.partners]]
 url = "https://scrm.lidl"
