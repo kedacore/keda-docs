@@ -115,12 +115,12 @@ spec:
       serviceAccount: {path-to-service-account-file}                      # Optional.
     secrets:                                                              # Required.
     - parameter: {scaledObject-parameter-name}                            # Required.
-      key: {hashicorp-vault-secret-key-name}                               # Required.
-      path: {hashicorp-vault-secret-path}                                  # Required.
+      key: {hashicorp-vault-secret-key-name}                              # Required.
+      path: {hashicorp-vault-secret-path}                                 # Required.
   azureKeyVault:                                                          # Optional.
     vaultUri: {key-vault-address}                                         # Required.
     podIdentity:                                                          # Optional. Required when using pod identity.
-      provider: azure | azure-workload                                    # Required.
+      provider: azure-workload                                            # Required.
       identityId: <identity-id>                                           # Optional
     credentials:                                                          # Optional. Required when not using pod identity.
       clientId: {azure-ad-client-id}                                      # Required.

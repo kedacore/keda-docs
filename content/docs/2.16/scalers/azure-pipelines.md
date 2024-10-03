@@ -64,7 +64,7 @@ As an alternative to using environment variables, you can authenticate with Azur
 
 **Pod Identity Authentication**
 
-[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ### How to determine your pool ID
 

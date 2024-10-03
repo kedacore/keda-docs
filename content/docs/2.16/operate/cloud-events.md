@@ -84,7 +84,7 @@ Here is an overview of the supported authentication types:
 - `accessKey` - Access key string for the Azure Event Grid connection auth.
 
 #### Pod identity based authentication
-[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
