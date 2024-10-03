@@ -1,7 +1,7 @@
 +++
 title = "Selenium Grid Scaler"
 availability = "v2.4+"
-maintainer = "Volvo Cars"
+maintainer = "Volvo Cars, SeleniumHQ"
 category = "Testing"
 description = "Scales Selenium browser nodes based on number of requests waiting in session queue"
 go_file = "selenium_grid_scaler"
@@ -30,12 +30,15 @@ triggers:
 **Parameter list:**
 
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) to for more info.
+- `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
+- `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 - `browserName` - Name of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info.
 - `sessionBrowserName` -  Name of the browser when it is an active session, only set if `BrowserName` changes between the queue and the active session. See the Edge example below for further detail. (Optional)
 - `browserVersion` - Version of browser that usually gets passed in the browser capability. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `platformName` - Name of the browser platform. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Default: `Linux`, Optional)
+- `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. (Default: `1`, Optional). Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior.
 
 ### Example
 
@@ -152,6 +155,8 @@ spec:
 It is possible to specify the Graphql url of your Selenium Grid using authentication parameters. This useful if you have enabled Selenium Grid's Basic HTTP Authentication and would like to keep your credentials secure.
 
 - `url` - Graphql url of your Selenium Grid. Refer to the Selenium Grid's documentation [here](https://www.selenium.dev/documentation/en/grid/grid_4/graphql_support/) for more info.
+- `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
+- `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 
 ```yaml
 apiVersion: v1
@@ -162,6 +167,8 @@ metadata:
 type: Opaque
 data:
   graphql-url: base64 encoded value of GraphQL URL
+  graphql-username: base64 encoded value of GraphQL Username
+  graphql-password: base64 encoded value of GraphQL Password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -173,6 +180,12 @@ spec:
   - parameter: url
     name: selenium-grid-secret
     key: graphql-url
+  - parameter: username
+    name: selenium-grid-secret
+    key: graphql-username
+  - parameter: password
+    name: selenium-grid-secret
+    key: graphql-password
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
