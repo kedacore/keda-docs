@@ -77,7 +77,7 @@ The AD identity that will be used requires `DatabaseViewer` role to query metric
 
 **Pod identity based authentication:**
 
-[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ### Examples
 
@@ -144,7 +144,7 @@ metadata:
   name: azure-data-explorer-trigger-auth
 spec:
   podIdentity:
-      provider: azure | azure-workload
+      provider: azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

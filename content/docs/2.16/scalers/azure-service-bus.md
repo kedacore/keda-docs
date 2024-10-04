@@ -69,7 +69,7 @@ You can authenticate by using pod identity or connection string authentication.
 
 **Pod identity based authentication:**
 
-[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ### Example
 
@@ -82,7 +82,7 @@ metadata:
   name: azure-servicebus-auth
 spec:
   podIdentity:
-    provider: azure | azure-workload
+    provider: azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
