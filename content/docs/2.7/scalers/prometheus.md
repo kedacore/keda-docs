@@ -21,7 +21,6 @@ triggers:
     threshold: '100'
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
-    cortexOrgID: my-org # Optional. X-Scope-OrgID header for Cortex.
 ```
 
 **Parameter list:**
@@ -31,7 +30,6 @@ triggers:
 - `query` - Query to run.
 - `threshold` - Value to start scaling for.
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
-- `cortexOrgID` - The `X-Scope-OrgID` header to query multi tenant [Cortex](https://cortexmetrics.io/) or [Mimir](https://grafana.com/oss/mimir/). (Optional)
 
 ### Authentication Parameters
 
