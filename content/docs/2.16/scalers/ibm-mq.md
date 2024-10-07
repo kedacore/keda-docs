@@ -29,6 +29,7 @@ triggers:
 
 - `host` - IBM MQ Queue Manager Admin REST Endpoint. Example URI endpoint structure on IBM cloud `https://example.mq.appdomain.cloud/ibmmq/rest/v2/admin/action/qmgr/QM/mqsc`.
 - `queueName` (or `queueNames`) - Name of the queue. It supports multiple queues separated by a comma character ( `,` ).
+- `operation` - Operation that will be applied to compute the number of messages. Either `max` (default), `sum`, or `avg`. (Optional)
 - `tlsDisabled` - Can be set to 'true' to disable TLS. (DEPRECATED: This parameter is deprecated as of KEDA v2.16 in favor of unsafeSsl and will be removed in version v2.18, Values: `true`, `false` , Default: `false`, Optional)
 - `queueDepth` - Queue depth Target for HPA. (Default: `20`, Optional)
 - `activationQueueDepth` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
