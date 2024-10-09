@@ -5,9 +5,7 @@ weight = 4000
 
 ## Overview
 
-This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA 
-
-to scale jobs. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
+This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA to scale `Job` resources. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
