@@ -5,7 +5,7 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreInternalURLs:
   # Temporal ignores
-
+  - /docs/2.15/scalers/nsq/
   # Deprecated and removed resources
   - /docs/2.15/authentication-providers/azure-ad-pod-identity/
   - /docs/2.15/authentication-providers/aws-kiam/
