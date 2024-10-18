@@ -70,11 +70,15 @@ To scale Kubernetes Deployments only `name` need be specified. To scale a differ
 ```yaml
   pollingInterval: 30  # Optional. Default: 30 seconds
 ```
-
 This is the interval to check each trigger on. By default, KEDA will check each trigger source on every ScaledObject every 30 seconds.
 
-**Example:** in a queue scenario, KEDA will check the queueLength every `pollingInterval`, and scale the resource up or down accordingly.
+When scaling from 0 to 1, the polling interval is controlled by KEDA. For example, if this parameter is set to `60`, KEDA will poll for a metric value every 60 seconds while the number of replicas is 0.
 
+While scaling from 1 to N, on top of KEDA, the HPA will also poll regularly for metrics, based on the [`--horizontal-pod-autoscaler-sync-period`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/#options) parameter to the `kube-controller-manager`, which by default is 15 seconds. For example, if the `kube-controller-manager` was started with `--horizontal-pod-autoscaler-sync-period=30`, the HPA will poll for a metric value every 30 seconds while the number of replicas is between 1 and N.
+
+If you want respect the polling interval, the feature [`caching metrics`](../concepts/scaling-deployments/#caching-metrics) enables caching of metric values during polling interval.
+
+**Example:** in a queue scenario, KEDA will check the queueLength every `pollingInterval` while the number of replicas is 0, and scale the resource up an down accordingly.
 
 ## cooldownPeriod
 ```yaml
