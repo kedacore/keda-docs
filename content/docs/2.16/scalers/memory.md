@@ -40,7 +40,7 @@ triggers:
 - type: memory
   metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
   metadata:
-    type: Utilization # Deprecated in favor of trigger.metricType; allowed types are 'Utilization' or 'AverageValue'
+    type: Utilization # DEPRECATED: This parameter is deprecated in favor of trigger.metricType and will be removed in version v2.18; allowed types are 'Utilization' or 'AverageValue'
     value: "60"
     containerName: "" # Optional. You can use this to target a specific container in a pod
 ```
