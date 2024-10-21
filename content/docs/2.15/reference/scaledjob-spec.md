@@ -5,9 +5,7 @@ weight = 4000
 
 ## Overview
 
-This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA 
-
-to scale jobs. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
+This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA to scale `Job` resources. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -140,7 +138,7 @@ The max number of pods that is created within a single polling period. If there 
 The optional property rollout.strategy specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
 Possible values are `default` or `gradual`. \
 When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default, the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
-On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
+On the `gradual` rolloutStrategy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 
 ## scalingStrategy
