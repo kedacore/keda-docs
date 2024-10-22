@@ -6,8 +6,8 @@ weight = 1
 
 We provide guidance & requirements around various areas to operate KEDA:
 
-- Admission Webhooks ([link](./admission-webhooks))
-- Cluster ([link](./cluster))
-- Kubernetes Events ([link](./events))
-- KEDA Metrics Server ([link](./metrics-server))
-- Security ([link](./security))
+- [Admission Webhooks](./admission-webhooks)
+- [Cluster](./cluster)
+- [Kubernetes Events](./events)
+- [KEDA Metrics Server](./metrics-server)
+- [Security](./security)
