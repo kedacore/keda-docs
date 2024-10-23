@@ -1,22 +1,24 @@
 {
   "scripts": {
     "_build": "hugo --cleanDestinationDir -e dev -DFE",
-    "_check-links": "make check-links",
+    "__check:links": "make --keep-going check-links",
+    "_check:links": "HTMLTEST_ARGS='--log-level 1 --skip-external' npm run __check:links",
+    "_check:links--warn": "npm run _check:links || (echo; echo 'WARNING: see link-checker output for issues.'; echo)",
     "_serve:hugo": "hugo serve -DFE --minify",
     "_serve": "netlify dev -c \"npm run _serve:hugo\" --framework hugo",
     "build:preview": "set -x && npm run _build -- --minify --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
     "build:production": "hugo --cleanDestinationDir --minify",
     "build": "npm run _build",
-    "check-links:all": "HTMLTEST_ARGS= npm run _check-links",
-    "check-links": "npm run _check-links",
+    "check:links:all": "HTMLTEST_ARGS= npm run _check:links",
+    "check:links": "npm run _check:links",
     "clean": "make clean",
-    "postbuild:preview": "npm run _check-links",
-    "postbuild:production": "npm run _check-links",
-    "precheck-links:all": "npm run build",
-    "precheck-links": "npm run build",
+    "postbuild:preview": "npm run _check:links--warn",
+    "postbuild:production": "npm run _check:links--warn",
+    "precheck:links:all": "npm run build",
+    "precheck:links": "npm run build",
     "serve:hugo": "npm run _serve:hugo",
     "serve": "npm run _serve",
-    "test": "npm run check-links"
+    "test": "npm run check:links"
   },
   "devDependencies": {
     "bulma": "^0.8.2",
