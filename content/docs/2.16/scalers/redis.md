@@ -1,15 +1,15 @@
 +++
-title = "Redis Lists"
+title = "Redis Lists Or Strings"
 availability = "v1.0+"
 maintainer = "Community"
 category = "Data & Storage"
-description = "Scale applications based on Redis Lists."
+description = "Scale applications based on Redis Lists Or Strings."
 go_file = "redis_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `redis` trigger that scales based on the length of a list in Redis.
+This specification describes the `redis` trigger that scales based on the length of a list or string in Redis.
 
 ```yaml
 triggers:
@@ -18,9 +18,12 @@ triggers:
     address: localhost:6379 # Format must be host:port
     usernameFromEnv: REDIS_USERNAME # optional
     passwordFromEnv: REDIS_PASSWORD
-    listName: mylist # Required
-    listLength: "5" # Required
+    listName: mylist # optional
+    listLength: "5" # optional
     activationListLength: "5" # optional
+    keyName: mykey # optional
+    keyValue: "1.5" # optional
+    activationValue: "5" # optional
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     databaseIndex: "0" # optional
@@ -37,9 +40,12 @@ triggers:
 - `usernameFromEnv` - Environment variable to read the authentication username from to authenticate with the Redis server.
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis server.
   - Both the hostname, username and password fields need to be set to the names of the environment variables in the target deployment that contain the host name, username and password respectively.
-- `listName` - Name of the Redis List that you want to monitor.
-- `listLength` - Average target value to trigger scaling actions.
-- `activationListLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `listName` - Name of the Redis List that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
+- `listLength` - Average target value to trigger scaling actions, make sense only when using with `listName`.
+- `activationListLength` - Target value for activating the scaler, make sense only when using with `listName`. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `keyName` - Name of the Redis Key that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
+- `keyValue` - Average target value to trigger scaling actions, make sense only when using with `keyName`.
+- `activationValue` - Target value for activating the scaler, make sense only when using with `keyName`. Learn more about activation [here](./../concepts/scaling-deployments.md#)
 - `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 - `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
@@ -77,7 +83,7 @@ Parameters used for configuring TLS authentication. Note this can not be used to
 
 ### Example
 
-Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`.
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`, and monitor a Redis List named `mylist`.
 
 You can also provide the `usernameFromEnv` and `passwordFromEnv` on the `ScaledObject` directly.
 
@@ -120,6 +126,51 @@ spec:
       address: localhost:6379
       listName: mylist
       listLength: "10"
+    authenticationRef:
+      name: keda-trigger-auth-redis-secret
+```
+
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `Key` instead of `List`.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: votes-db-secret
+  namespace: my-project
+type: Opaque
+data:
+  redis_username: YWRtaW4=
+  redis_password: YWRtaW4=
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-redis-secret
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: username
+    name: votes-db-secret
+    key: redis_username
+  - parameter: password
+    name: votes-db-secret
+    key: redis_password
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-scaledobject
+  namespace: my-project
+spec:
+  scaleTargetRef:
+    name: votes
+  triggers:
+  - type: redis
+    metadata:
+      address: localhost:6379
+      keyName: mykey
+      keyValue: "10"
     authenticationRef:
       name: keda-trigger-auth-redis-secret
 ```

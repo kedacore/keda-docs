@@ -1,15 +1,15 @@
 +++
-title = "Redis Lists (supports Redis Sentinel)"
+title = "Redis Lists Or Strings (supports Redis Sentinel)"
 availability = "v2.5+"
 maintainer = "Community"
 category = "Data & Storage"
-description = "Redis Lists scaler with support for Redis Sentinel topology"
+description = "Redis Lists or Strings scaler with support for Redis Sentinel topology"
 go_file = "redis_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `redis-sentinel` trigger that scales based on the length of a list in a Redis Sentinel setup.
+This specification describes the `redis-sentinel` trigger that scales based on the length of a list or string in a Redis Sentinel setup.
 
 ```yaml
 triggers:
@@ -21,9 +21,12 @@ triggers:
     sentinelUsernameFromEnv: REDIS_SENTINEL_USERNAME # optional
     sentinelPasswordFromEnv: REDIS_SENTINEL_PASSWORD # optional
     sentinelMasterFromEnv: REDIS_SENTINEL_MASTER # optional
-    listName: mylist # Required
-    listLength: "5" # Required
+    listName: mylist # optional
+    listLength: "5" # optional
     activationListLength: "5" # optional
+    keyName: mykey # optional
+    keyValue: "1.5" # optional
+    activationValue: "5" # optional
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     databaseIndex: "0" # optional
@@ -43,9 +46,12 @@ triggers:
 - `sentinelUsernameFromEnv` - Environment variable to read the authentication username from to authenticate with the Redis Sentinel server.
 - `sentinelPasswordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis Sentinel server.
 - sentinelMaster - The name of the primary (still referred to as the 'master' in Sentinel) to get the Redis server address for.
-- `listName` - Name of the Redis List that you want to monitor.
-- `listLength` - Average target value to trigger scaling actions.
-- `activationListLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `listName` - Name of the Redis List that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
+- `listLength` - Average target value to trigger scaling actions, make sense only when using with `listName`.
+- `activationListLength` - Target value for activating the scaler, make sense only when using with `listName`. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `keyName` - Name of the Redis Key that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
+- `keyValue` - Average target value to trigger scaling actions, make sense only when using with `keyName`.
+- `activationValue` - Target value for activating the scaler, make sense only when using with `keyName`. Learn more about activation [here](./../concepts/scaling-deployments.md#)
 - `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
 - `databaseIndex` - Index of Redis database to use. If not specified, the default value is 0.
@@ -91,7 +97,7 @@ Parameters used for configuring TLS authentication. Note this can not be used to
 
 ### Example
 
-Here is an example of how to deploy a scaled object with the `redis-sentinel` scale trigger which uses `TriggerAuthentication`.
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `TriggerAuthentication`, and monitor a Redis List named `mylist`.
 
 You can also provide the `usernameFromEnv` and `passwordFromEnv` on the `ScaledObject` directly.
 
@@ -134,6 +140,51 @@ spec:
       addresses: node1:26379, node2:26379, node3:26379
       listName: mylist
       listLength: "10"
+      sentinelMaster: "myprimary"
+    authenticationRef:
+      name: keda-trigger-auth-redis-secret
+```
+
+Here is an example of how to deploy a scaled object with the `redis` scale trigger which uses `Key` instead of `List`.
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: votes-db-secret
+  namespace: my-project
+type: Opaque
+data:
+  redis_username: YWRtaW4=
+  redis_password: YWRtaW4=
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-redis-secret
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: username
+    name: votes-db-secret
+    key: redis_username
+  - parameter: password
+    name: votes-db-secret
+    key: redis_password
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-scaledobject
+  namespace: my-project
+spec:
+  scaleTargetRef:
+    name: votes
+  triggers:
+  - type: redis-sentinel
+    metadata:
+      addresses: node1:26379, node2:26379, node3:26379
+      keyName: mykey
+      keyValue: "10"
       sentinelMaster: "myprimary"
     authenticationRef:
       name: keda-trigger-auth-redis-secret
