@@ -20,7 +20,7 @@ The `cloud` parameter can be used to specify cloud environments besides `Azure P
 azureKeyVault:                                          # Optional.
   vaultUri: {key-vault-address}                         # Required.
   podIdentity:                                          # Optional.
-    provider: azure | azure-workload                    # Required.
+    provider: azure-workload                    # Required.
     identityId: <identity-id>                           # Optional
   credentials:                                          # Optional.
     clientId: {azure-ad-client-id}                      # Required.

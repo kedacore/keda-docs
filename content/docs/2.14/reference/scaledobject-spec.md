@@ -82,20 +82,20 @@ This is the interval to check each trigger on. By default, KEDA will check each 
 
 The period to wait after the last trigger reported active before scaling the resource back to 0, in seconds. By default, it's 300 (5 minutes).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/../concepts/scaling-deployments.md#support-for-cooldowndelay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
 
 
 ## initialCooldownPeriod
 ```yaml
-   InitialCooldownPeriod:  120 # Optional. Default: 0 seconds
+   initialCooldownPeriod:  120 # Optional. Default: 0 seconds
 ```
 The delay before the `cooldownPeriod` starts after the initial creation of the `ScaledObject`, in seconds. By default, it's 0, meaning the `cooldownPeriod` begins immediately upon creation. If set to a value such as 120 seconds, the `cooldownPeriod` will only start after the `ScaledObject` has been active for that duration.
 
-This parameter is particularly useful for managing the scale-down behavior during the initial phase of a `ScaledObject`. For instance, if `InitialCooldownPeriod` is set to 120 seconds, KEDA will not scale the resource back to 0 until 120 seconds have passed since the `ScaledObject` creation, regardless of the activity triggers. This allows for a grace period in situations where immediate scaling down after creation is not desirable.
+This parameter is particularly useful for managing the scale-down behavior during the initial phase of a `ScaledObject`. For instance, if `initialCooldownPeriod` is set to 120 seconds, KEDA will not scale the resource back to 0 until 120 seconds have passed since the `ScaledObject` creation, regardless of the activity triggers. This allows for a grace period in situations where immediate scaling down after creation is not desirable.
 
-**Example:** Wait 120 seconds after the `ScaledObject` is created before starting the `cooldownPeriod`. For instance, if the `InitialCooldownPeriod` is set to 120 seconds, KEDA will not initiate the cooldown process until 120 seconds have passed since the `ScaledObject` was first created, regardless of the triggers' activity. This ensures a buffer period where the resource won’t be scaled down immediately after creation. (Note: This setting is independent of the `pollingInterval`.)
+**Example:** Wait 120 seconds after the `ScaledObject` is created before starting the `cooldownPeriod`. For instance, if the `initialCooldownPeriod` is set to 120 seconds, KEDA will not initiate the cooldown process until 120 seconds have passed since the `ScaledObject` was first created, regardless of the triggers' activity. This ensures a buffer period where the resource won’t be scaled down immediately after creation. (Note: This setting is independent of the `pollingInterval`.)
 
 
 ## idleReplicaCount

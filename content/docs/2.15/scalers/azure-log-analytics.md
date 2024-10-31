@@ -152,7 +152,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication by provi
 
 You can use managed identity to request access token for Log Analytics API. The advantage of this approach is that there is no need to store secrets in Kubernetes. Read [more](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity) about managed identities in Azure Kubernetes Service.
 
-[Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ### Example
 
@@ -248,7 +248,7 @@ metadata:
   namespace: kedaloganalytics
 spec:
   podIdentity:
-    provider: azure | azure-workload
+    provider: azure-workload
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
