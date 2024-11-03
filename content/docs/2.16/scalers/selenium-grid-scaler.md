@@ -36,7 +36,7 @@ triggers:
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `platformName` - Name of the browser platform. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Default: `Linux`, Optional)
-- `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. (Default: `1`, Optional). Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior.
+- `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior. (Default: `1`, Optional).
 
 **Trigger Authentication**
 - `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
