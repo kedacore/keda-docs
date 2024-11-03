@@ -41,8 +41,8 @@ triggers:
 **Trigger Authentication**
 - `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 - `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
-- `authType` - Type of authentication to be used. (Optional). This can be set to `Bearer` or `OAuth2` in case Selenium Grid behind an Ingress proxy with other authentication types.
-- `accessToken` - Access token (Optional). This is required when `authType` is set a value.
+- `authType` - Type of authentication to be used. This can be set to `Bearer` or `OAuth2` in case Selenium Grid behind an Ingress proxy with other authentication types. (Optional)
+- `accessToken` - Access token. This is required when `authType` is set a value. (Optional)
 
 ### Example
 
