@@ -40,11 +40,11 @@ triggers:
 - `usernameFromEnv` - Environment variable to read the authentication username from to authenticate with the Redis server.
 - `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the Redis server.
   - Both the hostname, username and password fields need to be set to the names of the environment variables in the target deployment that contain the host name, username and password respectively.
-- `listName` - Name of the Redis List that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
-- `listLength` - Average target value to trigger scaling actions, make sense only when using with `listName`.
+- `listName` - Name of the Redis List that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time. (Optional, Mutually exclusive with `keyName`)
+- `listLength` - Average target value to trigger scaling actions, make sense only when using with `listName`.(Optional, Mutually exclusive with `keyValue`)
 - `activationListLength` - Target value for activating the scaler, make sense only when using with `listName`. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-- `keyName` - Name of the Redis Key that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time.
-- `keyValue` - Average target value to trigger scaling actions, make sense only when using with `keyName`.
+- `keyName` - Name of the Redis Key that you want to monitor. One of `listName` or `keyName` must be set, and cannot be set at the same time. (Optional, Mutually exclusive with `listName`)
+- `keyValue` - Average target value to trigger scaling actions, make sense only when using with `keyName`. (Optional, Mutually exclusive with `listLength`)
 - `activationValue` - Target value for activating the scaler, make sense only when using with `keyName`. Learn more about activation [here](./../concepts/scaling-deployments.md#)
 - `enableTLS` - Allow a connection to a redis queue using tls. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
