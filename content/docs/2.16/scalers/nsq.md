@@ -20,6 +20,8 @@ triggers:
     channel: "example_channel"
     depthThreshold: "10"
     activationDepthThreshold: "0"
+    useHttps: "false"
+    unsafeSsl: "false"
 ```
 
 **Parameter list:**
@@ -29,6 +31,9 @@ triggers:
 - `channel` - Name of the channel used to calculate depth.
 - `depthThreshold` - Target value for depth to trigger scaling actions. (Default `10`, Optional)
 - `activationDepthThreshold` - Target value for depth to activate the scaler. (Default `0`, Optional)
+- `useHttps` - Use HTTPS instead of HTTP when communicating with NSQ. (Values: `true`, `false`, Default: `false`, Optional)
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+
 
 > **Notice:**
 > - Since ["channels are created on first use by subscribing to the named channel"](https://nsq.io/overview/design.html#simplifying-configuration-and-administration), the topic depth is used instead of the channel depth when the channel does not yet exist on an [nsqd](https://nsq.io/components/nsqd.html) instance. This allows KEDA to effectively bootstrap new channels when the `idleReplicaCount` is 0.
