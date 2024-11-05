@@ -20,7 +20,6 @@ triggers:
       activationValue: "10"
       value: "15"
       timeout: "30"
-
 ```
 
 **Parameter list:**
