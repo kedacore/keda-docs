@@ -25,6 +25,8 @@ triggers:
       repos: "{repos}"
       # Optional: The list of runner labels to scale on, separated by comma
       labels: "{labels}"
+      # Optional: Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false", defaults to "false" (scale on default runner labels)
+      noDefaultLabels: "{noDefaultLabels}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
       # Optional: The name of the application ID from the GitHub App
@@ -42,6 +44,7 @@ triggers:
 - `runnerScope` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
+- `noDefaultLabels` - Not scale on default runner labels ("self-hosted", "linux", "x64"). (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
 - `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
@@ -56,6 +59,7 @@ the scaler will use the value from the environment variable. The environment var
 - `runnerScopeFromEnv` - The scope of the runner, can be either "org", "ent" or "repo". (Required)
 - `reposFromEnv` - The list of repositories to scale, separated by comma. (Optional)
 - `labelsFromEnv` - The list of runner labels to scale on, separated by comma. (Optional)
+- `noDefaultLabelsFromEnv` - Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false". (Optional)
 - `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationIDFromEnv` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
 - `installationIDFromEnv` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
@@ -95,7 +99,7 @@ The scaler will query the GitHub API to get the number of queued jobs in the spe
 
 We provide various options to have granular control over what runners to scale:
 - **Repository Filtering** - If no `repos` are specified, the scaler will query all repositories in the specified `owner`. This is useful if you want to scale on all repositories in an organization, but will result in a lot of API calls and affect the Rate Limit.
-- **Label-based Filtering** - The `labels` parameter is used to filter the runners that the scaler will scale. It uses the minimum applicable label for the runner. For example, if you have a runner with the labels `golang` and `helm`, and you specify `helm` in the `labels` field on the GitHub Action, the scaler will scale up that runner.
+- **Label-based Filtering** - The `labels` parameter is used to filter the runners that the scaler will scale. It uses the minimum applicable label for the runner. For example, if you have a runner with the labels `golang` and `helm`, and you specify `helm` in the `labels` field on the GitHub Action, the scaler will scale up that runner. By default the scaler will always scale on default labels (`self-hosted`, `linux`, `x64`) in addition to the ones defined in `labels` parameter, scaling on default labels can be disabled by setting `noDefaultLabels` parameter to `true`.
 
 **API Query Chain**
 
