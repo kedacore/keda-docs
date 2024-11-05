@@ -6,6 +6,6 @@ weight = 1
 
 We provide guidance & requirements around various areas to operate KEDA:
 
-- Cluster ([link](./cluster))
-- Kubernetes Events ([link](./events))
-- KEDA Metrics Server ([link](./metrics-server))
+- [Cluster](./cluster)
+- [Kubernetes Events](./events)
+- [KEDA Metrics Server](./metrics-server)

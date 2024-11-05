@@ -141,7 +141,7 @@ spec:
       key: token
     - parameter: datadogNamespace
       name: datadog-config
-      key: namespace
+      key: datadogNamespace
     - parameter: unsafeSsl
       name: datadog-config
       key: unsafeSsl
