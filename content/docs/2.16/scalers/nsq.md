@@ -36,7 +36,7 @@ triggers:
 
 
 > **Notice:**
-> - Since ["channels are created on first use by subscribing to the named channel"](https://nsq.io/overview/design.html#simplifying-configuration-and-administration), the topic depth is used instead of the channel depth when the channel does not yet exist on an [nsqd](https://nsq.io/components/nsqd.html) instance. This allows KEDA to effectively bootstrap new channels when the `idleReplicaCount` is 0.
+> - Since ["channels are created on first use by subscribing to the named channel"](https://nsq.io/overview/design.html#simplifying-configuration-and-administration), the topic depth is used instead of the channel depth when the channel does not yet exist on an [nsqd](https://nsq.io/components/nsqd.html) instance. This allows KEDA to effectively bootstrap new channels when the `minReplicaCount` is 0.
 > - If the message flow for a channel is paused, KEDA will not scale up consumers of the channel, regardless of the depth.
 
 ### Example
