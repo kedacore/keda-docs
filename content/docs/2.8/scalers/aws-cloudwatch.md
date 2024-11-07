@@ -103,27 +103,6 @@ The user or role used to authenticate with AWS CloudWatch must have the `cloudwa
 }
 ```
 
-This can be further scoped to specific namespaces, by using the `cloudwatch:namespace` condition key. For example, to only allow access to the `AWS/EC2` metric namespace:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowCloudWatchGetMetricData",
-      "Effect": "Allow",
-      "Action": "cloudwatch:GetMetricData",
-      "Resource": "*",
-      "Condition": {
-        "StringEquals": {
-          "cloudwatch:namespace": "AWS/EC2"
-        }
-      }
-    }
-  ]
-}
-```
-
 For more information, see the [AWS CloudWatch IAM documentation](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazoncloudwatch.html).
 
 ### Example
