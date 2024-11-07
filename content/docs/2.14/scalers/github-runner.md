@@ -190,7 +190,7 @@ spec:
           env:
           - name: EPHEMERAL
             value: "true"
-          - name: DISABLE_RUNNER_UPDATE
+          - name: DISABLE_AUTO_UPDATE
             value: "true"
           - name: REPO_URL
             value: "https://github.com/OWNER/REPONAME"
@@ -257,7 +257,7 @@ spec:
           env:
           - name: EPHEMERAL
             value: "true"
-          - name: DISABLE_RUNNER_UPDATE
+          - name: DISABLE_AUTO_UPDATE
             value: "true"
           - name: REPO_URL
             value: "https://github.com/OWNER/REPONAME"
