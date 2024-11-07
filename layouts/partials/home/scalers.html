@@ -19,7 +19,7 @@
       {{ range $scalers }}
       {{ $version := index (split .File.Path "/") 1 }}
       {{ if eq $version $latest }}
-      {{ .Render "scaler-info" }}
+      {{ .Render "card-info" }}
       {{ end }}
       {{ end }}
     </div>

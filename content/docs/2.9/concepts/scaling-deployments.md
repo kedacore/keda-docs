@@ -102,7 +102,7 @@ This is the interval to check each trigger on. By default KEDA will check each t
 
 The period to wait after the last trigger reported active before scaling the resource back to 0. By default, it's 5 minutes (300 seconds).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
 
@@ -214,7 +214,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
-- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default the name is generated from the trigger type. (Optional)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../integrations/prometheus.md). By default the name is generated from the trigger type. (Optional)
 - **useCachedMetrics**: ([Experimental feature](https://github.com/kedacore/governance/blob/main/DEPRECATIONS.md#experimental-features)) Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics (Experimental)"](#caching-metrics-experimental). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)

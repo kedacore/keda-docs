@@ -61,24 +61,13 @@ Here is an overview of all KEDA deployments and the HA notes:
 | -------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Metrics Server | 1                | You can run multiple replicas of our metrics sever, and it is recommended to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to our metrics servers are load balanced. However, [you can only run one active metric server in a Kubernetes cluster serving external.metrics.k8s.io](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) which has to be the KEDA metric server. |
 | Operator       | 2                | While you can run multiple replicas of our operator, only one operator instance will be active. The rest will be standing by, which may reduce downtime during a failure. Multiple replicas will not improve the performance of KEDA, it could only reduce a downtime during a failover.                                                                                                                                                           |
-
 ## HTTP Timeouts
 
 Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses its own dedicated HTTP client with its own connection pool, and by default each client is set to time out any HTTP request after 3 seconds.
 
-You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable to your desired timeout in milliseconds. For example, on Linux/Mac/Windows WSL2 operating systems, you'd use this command to set to 1 second:
+You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable on the KEDA operator deployment to your desired timeout in milliseconds.
 
-```shell
-export KEDA_HTTP_DEFAULT_TIMEOUT=1000
-```
-
-And on Windows Powershell, you'd use this command:
-
-```shell
-$env:KEDA_HTTP_DEFAULT_TIMEOUT=1000
-```
-
-All applicable scalers will use this timeout. Setting a per-scaler timeout is currently unsupported.
+> ⚠️ All applicable scalers will use this timeout and setting this on a per-scaler is currently not supported.
 
 ## HTTP Connection: Disable Keep Alive
 
@@ -158,7 +147,7 @@ To modify this properties you can set environment variables on both KEDA Operato
 
 ## Configure Leader Election
 
-Like reconciliation, KEDA also uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime) for electing the leader replica. The following properties can be configured for either the Operator and Metrics Server Deployment:
+Like reconciliation, KEDA Operator also uses the [controller-runtime project](https://github.com/kubernetes-sigs/controller-runtime) for electing the leader replica. The following properties can be configured for the Operator Deployment:
 
 - [`LeaseDuration`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.LeaseDuration)
 - [`RenewDeadline`](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/manager#Options.RenewDeadline)
@@ -171,9 +160,6 @@ To specify values other than their defaults, you can set the following environme
 | KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator       | 15s           | LeaseDuration    |
 | KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator       | 10s           | RenewDeadline    |
 | KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator       | 2s            | RetryPeriod      |
-| KEDA_METRICS_LEADER_ELECTION_LEASE_DURATION  | Metrics Server | 15s           | LeaseDuration    |
-| KEDA_METRICS_LEADER_ELECTION_RENEW_DEADLINE  | Metrics Server | 10s           | RenewDeadline    |
-| KEDA_METRICS_LEADER_ELECTION_RETRY_PERIOD    | Metrics Server | 2s            | RetryPeriod      |
 
 ## Restrict the Namespaces KEDA is Watching
 

@@ -258,10 +258,14 @@
           results.forEach(function (result) {
             const doc = parse[result.ref];
             const element = template.content.cloneNode(true);
+              element.querySelector(".badge").textContent = doc.type;
               element.querySelector(".scaler-title").textContent = doc.title;
               element
                 .querySelector(".scaler-title")
                 .setAttribute("href", doc.href);
+              doc.type === 'external' &&
+              (element.querySelector(".badge").style.color =
+                'purple');
               doc.description &&
                 (element.querySelector(".description").textContent =
                   doc.description);

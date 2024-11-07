@@ -5,9 +5,7 @@ weight = 4000
 
 ## Overview
 
-This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA 
-
-to scale jobs. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
+This specification describes the `ScaledJob` custom resource definition that defines the triggers and scaling behaviors use by KEDA to scale `Job` resources. The `.spec.ScaleTargetRef` section holds the reference to the job, defined in [_scaledjob_types.go_](https://github.com/kedacore/keda/blob/main/apis/keda/v1alpha1/scaledjob_types.go).
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -140,7 +138,7 @@ The max number of pods that is created within a single polling period. If there 
 The optional property rollout.strategy specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
 Possible values are `default` or `gradual`. \
 When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default, the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
-On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
+On the `gradual` rolloutStrategy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 
 ## scalingStrategy
@@ -150,7 +148,7 @@ scalingStrategy:
   strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
 ```
 
-Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate`. The default value is `default`.
+Select a Scaling Strategy. Possible values are `default`, `custom`, `accurate`, or `eager`. The default value is `default`.
 
 > 💡 **NOTE:**
 >
@@ -220,6 +218,59 @@ if (maxScale + runningJobCount) > maxReplicaCount {
 	return maxScale - pendingJobCount
 ```
 For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
+
+**eager**
+When adopting the **default** strategy, you are likely to come into a subtle case where messages need to be consumed by spawning jobs but remain in the queue, even when there are available slots between `runningJobCount` and `maxReplicaCount`. The **eager** strategy comes to the rescue. It addresses this issue by utilizing all available slots up to the maxReplicaCount, ensuring that waiting messages are processed as quickly as possible.
+
+For example, let's assume we configure a ScaledJob in a cluster as below:
+```yaml
+  ###
+  # A job that runs for a minimum of 3 hours.
+  ###
+  pollingInterval: 10 # Optional. Default: 30 seconds
+  maxReplicaCount: 10 # Optional. Default: 100
+  triggers:
+    - type: rabbitmq
+      metadata:
+        queueName: woker_queue
+        hostFromEnv: RABBITMQ_URL
+        mode: QueueLength
+        value: "1"
+```
+We send 3 messages to the Rabbitmq and wait longer enough than the `pollingInterval`, then send another 3.
+
+With the `default` scaling strategy, we are supposed to see the metrics changes in the following table:
+
+|             | initial | incoming 3 messages | after poll | incoming 3 messages | after poll |
+|-------------|---------|---------------------|------------|---------------------|------------|
+| queueLength | 0       | 3                   | 3          | 6                   | 6          |
+| runningJobs | 0       | 0                   | 3          | 3                   | 3          |
+
+
+If we switch to `eager`, the result becomes: 
+
+|             | initial | incoming 3 messages | after poll | incoming 3 messages | after poll |
+|-------------|---------|---------------------|------------|---------------------|------------|
+| queueLength | 0       | 3                   | 3          | 6                   | 6          |
+| runningJobs | 0       | 0                   | 3          | 3                   | 6          |
+
+We can identify the difference in their final states.
+
+
+You may also refer to [this original issue](https://github.com/kedacore/keda/issues/5114) for more information.
+
+---
+
+```yaml
+scalingStrategy:
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxScale`) when multiple scalers are defined.
+```
+Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
+
+* **max:** - Use metrics from the scaler that has the max number of `queueLength`. (default)
+* **min:** - Use metrics from the scaler that has the min number of `queueLength`.
+* **avg:** - Sum up all the active scalers metrics and divide by the number of active scalers.
+* **sum:** - Sum up all the active scalers metrics.
 
 
 ### multipleScalersCalculation

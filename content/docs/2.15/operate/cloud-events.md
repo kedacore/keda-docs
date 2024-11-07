@@ -98,7 +98,7 @@ Here is an overview of the supported authentication types:
 - `accessKey` - Access key string for the Azure Event Grid connection auth.
 
 #### Pod identity based authentication
-[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used.
+[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -127,4 +127,5 @@ eventSubscription: #Optional. Submit included/excluded event types will filter e
 | Event Type                    | Scenario Description                                                                                                        | 
 |-------------------------------|-----------------------------------------------------------------------------------------------------------------------------| 
 | `keda.scaledobject.ready.v1`  | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
-| `keda.scaledobject.failed.v1` | If the check validation for a ScaledObject fails                                                                            |      
+| `keda.scaledobject.failed.v1` | If the check validation for a ScaledObject fails                                                                            |  
+| `keda.scaledobject.removed.v1`| When a ScaledObject is deleted |       
