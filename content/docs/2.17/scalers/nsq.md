@@ -1,6 +1,6 @@
 +++
 title = "NSQ"
-availability = "v2.16+"
+availability = "v2.17+"
 maintainer = "Community"
 category = "Messaging"
 description = "Scale applications based on NSQ topic/channel depth."
