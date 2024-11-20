@@ -12,7 +12,7 @@ description = "Procedure to Setup a Scaler in KEDA"
 
 2. **KEDA Installation**:
    - KEDA needs to be installed on your Kubernetes cluster before you can use it.
-   - Follow the [KEDA installation guide](https://keda.sh/docs/2.14/deploy/) carefully, including any prerequisites specific to your Kubernetes setup.
+   - Follow the [KEDA installation guide](../deploy/) carefully, including any prerequisites specific to your Kubernetes setup.
    - The installation guide provides instructions for different installation methods (e.g., YAML, Helm charts, etc.). Choose the method that suits your needs.
 
 3. **kubectl**:
@@ -24,7 +24,7 @@ description = "Procedure to Setup a Scaler in KEDA"
 
 KEDA supports various scalers that correspond to different event sources or triggers. Determining the right scaler is crucial for scaling your application based on the desired event source.
 
-1. Visit the [KEDA Scalers documentation](https://keda.sh/docs/2.14/scalers/) and browse through the list of available scalers.
+1. Visit the [KEDA Scalers documentation](../scalers/) and browse through the list of available scalers.
 2. Identify the scaler that matches the event source you want to use for scaling your application. For example:
    - If you want to scale based on incoming HTTP traffic, you would need the [HTTP Add-on](https://kedacore.github.io/http-add-on/).
 
