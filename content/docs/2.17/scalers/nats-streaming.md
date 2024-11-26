@@ -7,6 +7,11 @@ description = "Scale applications based on NATS Streaming."
 go_file = "stan_scaler"
 +++
 
+> **Notice:**
+> The Stan scaler (NATS Streaming) is DEPRECATED and will be removed in v2.19 - Use scaler [nats-jetstream](./nats-jetstream.md) instead.
+> See also the deprecation notice [here](https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan).
+
+
 ### Trigger Specification
 
 This specification describes the `stan` trigger for NATS Streaming.
