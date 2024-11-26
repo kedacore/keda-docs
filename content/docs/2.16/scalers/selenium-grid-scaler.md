@@ -37,12 +37,17 @@ triggers:
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `platformName` - Name of the browser platform. Refer to the [Selenium Grid's](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/browsers/) and [WebdriverIO's](https://webdriver.io/docs/options/#capabilities) documentation for more info. (Default: `Linux`, Optional)
 - `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior. (Default: `1`, Optional).
+- `targetQueueLength` - The target number of queued sessions to scale on. (Default: `1`, Optional).
 
 **Trigger Authentication**
 - `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 - `password` - Password for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
 - `authType` - Type of authentication to be used. This can be set to `Bearer` or `OAuth2` in case Selenium Grid behind an Ingress proxy with other authentication types. (Optional)
 - `accessToken` - Access token. This is required when `authType` is set a value. (Optional)
+
+### How does it work?
+
+The scaler will query the Hub GraphQL response to get the number of queued sessions in the specified combination of browser name, version, and platform. If the number of queued sessions is **equal to or greater than** the `targetQueueLength`, the scaler will scale up.
 
 ### Example
 
