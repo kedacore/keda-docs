@@ -8,7 +8,7 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 - [Operator Hub](#operatorhub)
 - [YAML declarations](#yaml)
 
-> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.27 and higher
+> 💡 **NOTE:** KEDA requires Kubernetes cluster version v1.27 to v1.29
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
@@ -85,7 +85,7 @@ Locate installed KEDA Operator in `keda` namespace, then remove created `KedaCon
 
 If you want to try KEDA on [Minikube](https://minikube.sigs.k8s.io) or a different Kubernetes deployment without using Helm you can still deploy it with `kubectl`.
 
-- We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page. 
+- We provide sample YAML declaration which includes our CRDs and all other resources in a file which is available on the [GitHub releases](https://github.com/kedacore/keda/releases) page.
   - We offer two options to deploy KEDA:
     - Use `keda-2.xx.x.yaml` that includes all features, including [admission webhooks](./concepts/admission-webhooks.md) (recommended)
     - Use `keda-2.xx.x-core.yaml` that installs the minimal required KEDA components, without admission webhooks
