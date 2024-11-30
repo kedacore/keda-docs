@@ -240,6 +240,19 @@ secretTargetRef:                          # Optional.
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
 
+### Bound service account token
+
+You can pull a service account token into the trigger by defining the `serviceAccountName` of the Kubernetes ServiceAccount and token `expiry` duration.
+
+```yaml
+boundServiceAccountToken:                        # Optional.
+  - parameter: connectionString                  # Required - Defined by the scale trigger
+    serviceAccountName: my-keda-service-account  # Required.
+    expiry: 1h                                   # Required.
+```
+
+**Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
+
 ### Hashicorp Vault secret(s)
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
