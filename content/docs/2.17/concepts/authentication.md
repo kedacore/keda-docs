@@ -157,6 +157,7 @@ spec:
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {aws-secret-name}                                             # Required.
       version: {aws-secret-version}                                       # Optional.
+      secretKey: {aws-secret-key}                                         # Optional.
   gcpSecretManager:                                                       # Optional.
     secrets:                                                              # Required.
       - parameter: {param-name-used-for-auth}                             # Required.
