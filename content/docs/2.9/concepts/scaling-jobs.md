@@ -160,7 +160,7 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 >
 >`maxScale` is not the running Job count. It is measured as follows:
  >```go
- >maxValue = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
+ >maxScale = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
  >```
  >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
 >
@@ -229,7 +229,7 @@ For more details,  you can refer to [this PR](https://github.com/kedacore/keda/p
 
 ```yaml
 scalingStrategy:
-    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxValue`) when multiple scalers are defined.
+    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxScale`) when multiple scalers are defined.
 ```
 Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
 
@@ -258,13 +258,13 @@ spec:
     template:
       spec:
         containers:
-        - name: rabbitmq-client
-          image: tsuyoshiushio/rabbitmq-client:dev3
+        - name: demo-rabbitmq-client
+          image: demo-rabbitmq-client:1
           imagePullPolicy: Always
-          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "job"]
+          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672"]
           envFrom:
             - secretRef:
-                name: rabbitmq-consumer
+                name: rabbitmq-consumer-secrets
         restartPolicy: Never
     backoffLimit: 4  
   pollingInterval: 10             # Optional. Default: 30 seconds

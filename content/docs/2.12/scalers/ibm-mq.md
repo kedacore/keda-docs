@@ -31,7 +31,7 @@ triggers:
 - `queueName` - Name of the Queue within the Queue Manager defined from which messages will be consumed.
 - `tlsDisabled` - Can be set to 'true' to disable TLS. (Values: `true`, `false` , Default: `false`, Optional)
 - `queueDepth` - Queue depth Target for HPA. (Default: `5`, Optional)
-- `activationQueueDepth` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationQueueDepth` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `usernameFromEnv` - Provide admin username from env instead of as a secret. (Optional)
 - `passwordFromEnv` - Provide admin password from env instead of as a secret. (Optional)
 

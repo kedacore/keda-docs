@@ -105,7 +105,7 @@ This is the interval to check each trigger on. By default KEDA will check each t
 
 The period to wait after the last trigger reported active before scaling the resource back to 0. By default it's 5 minutes (300 seconds).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
 
@@ -117,6 +117,10 @@ The `cooldownPeriod` only applies after a trigger occurs; when you first create 
 ```
 
 > 💡 **NOTE:** Due to limitations in HPA controller the only supported value for this property is 0, it will not work correctly otherwise. See this [issue](https://github.com/kedacore/keda/issues/2314) for more details.
+>
+> In some cases, you always need at least `n` pod running. Thus, you can omit this property and set `minReplicaCount` to `n`.
+>
+> **Example** You set `minReplicaCount` to 1 and `maxReplicaCount` to 10. If there’s no activity on triggers, the target resource is scaled down to `minReplicaCount` (1). Once there are activities, the target resource will scale base on the HPA rule. If there’s no activity on triggers, the resource is again scaled down to `minReplicaCount` (1).
 
 If this property is set, KEDA will scale the resource down to this number of replicas. If there's some activity on target triggers KEDA will scale the target resource immediately to `minReplicaCount` and then will be scaling handled by HPA. When there is no activity, the target resource is again scaled down to `idleReplicaCount`. This setting must be less than `minReplicaCount`.
 
@@ -189,13 +193,13 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig`
 
-**`horizontalPodAutoscalerConfig.name`:**
+###### `horizontalPodAutoscalerConfig.name`
 
 The name of the HPA resource KEDA will create. By default it's `keda-hpa-{scaled-object-name}`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
@@ -213,7 +217,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 Trigger fields:
 - **type**: The type of trigger to use. (Mandatory)
 - **metadata**: The configuration parameters that the trigger requires. (Mandatory)
-- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../operate/prometheus.md). By default the name is generated from the trigger type. (Optional)
+- **name**: Name for this trigger. This value can be used to easily distinguish this specific trigger and its metrics when consuming [Prometheus metrics](../integrations/prometheus.md). By default the name is generated from the trigger type. (Optional)
 - **useCachedMetrics**: Enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). For more information, see ["Caching Metrics"](#caching-metrics). (Values: `false`, `true`, Default: `false`, Optional)
 - **authenticationRef**: A reference to the `TriggerAuthentication` or `ClusterTriggerAuthentication` object that is used to authenticate the scaler with the environment.
   - More details can be found [here](./authentication). (Optional)
@@ -227,7 +231,7 @@ Trigger fields:
 
 ### Caching Metrics
 
-This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then is this request routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
+This feature enables caching of metric values during polling interval (as specified in `.spec.pollingInterval`). Kubernetes (HPA controller) asks for a metric every few seconds (as defined by `--horizontal-pod-autoscaler-sync-period`, usually 15s), then this request is routed to KEDA Metrics Server, that by default queries the scaler and reads the metric values. Enabling this feature changes this behavior, KEDA Metrics Server tries to read metric from the cache first. This cache is being updated periodically during the polling interval.
 
 Enabling this feature can significantly reduce the load on the scaler service.
 
@@ -266,6 +270,8 @@ Each scaler defines parameters for their use-cases, but the activation will alwa
 There are some important topics to take into account:
 
 - Opposite to scaling value, the activation value is always optional and the default value is 0.
+- Activation only occurs when this value is greater than the set value; not greater than or equal to.
+  - ie, in the default case: `activationThreshold: 0` will only activate when the metric value is 1 or more
 - The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.
@@ -281,7 +287,7 @@ metadata:
 spec:
    advanced:
       horizontalPodAutoscalerConfig:
-      name: {name-of-hpa-resource}
+        name: {name-of-hpa-resource}
 ```
 
 > ⚠️ **NOTE:** You need to specify a custom HPA name in your ScaledObject matching the existing HPA name you want it to manage.

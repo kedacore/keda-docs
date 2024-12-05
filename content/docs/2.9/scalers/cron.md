@@ -16,8 +16,8 @@ triggers:
   metadata:
     # Required
     timezone: Asia/Kolkata  # The acceptable values would be a value from the IANA Time Zone Database.
-    start: 30 * * * *       # Every hour on the 30th minute
-    end: 45 * * * *         # Every hour on the 45th minute
+    start: 0 6 * * *        # At 6:00 AM
+    end: 0 20 * * *         # At 8:00 PM
     desiredReplicas: "10"
 ```
 
@@ -35,8 +35,8 @@ triggers:
 >
 > For example, the following schedule is not valid:
 > ```yaml
-> start: 30 * * * *
-> end: 30 * * * *
+> start: 0 6 * * *        # At 6:00 AM
+> end: 0 6 * * *          # also at 6:00 AM
 >```
 
 ### How does it work?
@@ -49,7 +49,18 @@ When the time window starts, it will scale from the minimum number of replicas t
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
-### Example
+### Scale to 0 during off hours
+
+If you want to scale you deployment to 0 outside office hours / working hours,
+you need to set `minReplicaCount: 0` in the ScaledObject, and increase the
+replicas during work hours. That way the Deployment will be scaled to 0 ouside
+that time window. By default the ScaledObject `cooldownPeriod` is 5 minutes, so the actual
+scaling down will happen 5 minutes after the cron schedule `end` parameter.
+
+It's almost always an error to try to do the other way
+around, i.e. set `desiredReplicas: 0` in the cron trigger.
+
+#### Example: scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -60,11 +71,13 @@ metadata:
 spec:
   scaleTargetRef:
     name: my-deployment
+  minReplicaCount: 0
+  cooldownPeriod: 300
   triggers:
   - type: cron
     metadata:
       timezone: Asia/Kolkata
-      start: 30 * * * *
-      end: 45 * * * *
+      start: 0 6 * * *
+      end: 0 20 * * *
       desiredReplicas: "10"
 ```

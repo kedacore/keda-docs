@@ -110,8 +110,8 @@ spec:
       serviceAccount: {path-to-service-account-file} # Optional.
     secrets: # Required.
     - parameter: {scaledObject-parameter-name} # Required.
-      key: {hasicorp-vault-secret-key-name} # Required.
-      path: {hasicorp-vault-secret-path} # Required.
+      key: {hashicorp-vault-secret-key-name} # Required.
+      path: {hashicorp-vault-secret-path} # Required.
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -172,8 +172,8 @@ hashiCorpVault: # Optional.
     serviceAccount: {path-to-service-account-file} # Optional.
   secrets: # Required.
   - parameter: {scaledObject-parameter-name} # Required.
-    key: {hasicorp-vault-secret-key-name} # Required.
-    path: {hasicorp-vault-secret-path} # Required.
+    key: {hashicorp-vault-secret-key-name} # Required.
+    path: {hashicorp-vault-secret-path} # Required.
 ```
 
 ### Pod Authentication Providers
@@ -200,7 +200,7 @@ podIdentity:
 
 Azure AD Pod Identity will give access to containers with a defined label for `aadpodidbinding`.  You can set this label on the KEDA operator deployment.  This can be done for you during deployment with Helm with `--set aadPodIdentity={your-label-name}`.
 
-#### EKS Pod Identity Webhook for AWS
+#### AWS EKS Pod Identity Webhook
 
 [**EKS Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook), which is described more in depth [here](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/), allows you to provide the role name using an annotation on a service account associated with your pod.
 
@@ -211,7 +211,7 @@ podIdentity:
   provider: aws-eks # Optional. Default: false
 ```
 
-#### Kiam Pod Identity for AWS
+#### AWS Kiam Pod Identity
 
 [**Kiam**](https://github.com/uswitch/kiam/) lets you bind an AWS IAM Role to a pod using an annotation on the pod.
 

@@ -128,7 +128,7 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
 >
 >`maxScale` is not the running Job count. It is measured as follows:
  >```go
- >maxValue = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
+ >maxScale = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
  >```
  >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
 >
@@ -213,13 +213,13 @@ spec:
     template:
       spec:
         containers:
-        - name: rabbitmq-client
-          image: tsuyoshiushio/rabbitmq-client:dev3
+        - name: demo-rabbitmq-client
+          image: demo-rabbitmq-client:1
           imagePullPolicy: Always
-          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "job"]
+          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672"]
           envFrom:
             - secretRef:
-                name: rabbitmq-consumer
+                name: rabbitmq-consumer-secrets
         restartPolicy: Never
     backoffLimit: 4  
   pollingInterval: 10             # Optional. Default: 30 seconds

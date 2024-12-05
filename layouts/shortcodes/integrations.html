@@ -1,0 +1,14 @@
+{{ $latest  := index site.Params.versions.docs 0 }}
+{{ $integrations := where site.RegularPages ".CurrentSection.Title" "Integrations" }}
+
+<div class="container">
+  <div style="margin-top:20px" class="columns is-variable is-multiline">
+    {{ range $integrations }}
+      {{ $version := index (split .File.Path "/") 1 }}
+      {{ if eq $version $latest }}
+        {{ .Render "card-info" }}
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
+

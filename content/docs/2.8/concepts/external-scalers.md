@@ -9,7 +9,7 @@ Built-in scalers run in the KEDA process/pod, while external scalers require an 
 
 This document describes the external scaler interfaces and how to implement them in Go, Node, and .NET; however for more details on GRPC refer to [the official GRPC documentation](https://grpc.io/docs/)
 
->Want to learn about existing external scalers? Explore our [external scaler community](https://github.com/kedacore/external-scalers).
+> Want to learn about existing external scalers? Explore our [external scaler community](https://github.com/kedacore/external-scalers).
 
 ## Overview
 
@@ -39,7 +39,7 @@ The `Scaler` interface defines 4 methods:
 - `Close` is called to allow the scaler to clean up connections or other resources.
 - `GetMetricSpec` returns the target value for the HPA definition for the scaler. For more details refer to [Implementing `GetMetricSpec`](#5-implementing-getmetricspec).
 - `GetMetrics` returns the value of the metric referred to from `GetMetricSpec`. For more details refer to [Implementing `GetMetrics`](#6-implementing-getmetrics).
-> Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA supports both `AverageValue` and `Value` metric target types for external metrics. When `AverageValue` (the default metric type) is used, the metric value returned by the external scaler will be divided by the number of replicas.
+  > Refer to the [HPA docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) for how HPA calculates `replicaCount` based on metric value and target value. KEDA supports both `AverageValue` and `Value` metric target types for external metrics. When `AverageValue` (the default metric type) is used, the metric value returned by the external scaler will be divided by the number of replicas.
 
 The `PushScaler` interface adds a `Run` method. This method receives a push channel (`active`), on which the scaler can send `true` at any time. The purpose of this mechanism is to initiate a scaling operation independently from `pollingInterval`.
 
@@ -109,7 +109,7 @@ KEDA will attempt a GRPC connection to `service-address.svc.local:9090` immediat
 }
 ```
 
->**Note**: KEDA will issue all of the above RPC calls except `StreamIsActive` if `spec.triggers.type` is `external`. It _must_ be `external-push` for `StreamIsActive` to be called.
+> **Note**: KEDA will issue all of the above RPC calls except `StreamIsActive` if `spec.triggers.type` is `external`. It _must_ be `external-push` for `StreamIsActive` to be called.
 
 ## Implementing KEDA external scaler GRPC interface
 
@@ -175,8 +175,6 @@ npm install --save grpc request
 ```
 
 {{< /collapsible >}}
-
-<br />
 
 #### 3. Implementing `IsActive`
 
@@ -304,69 +302,70 @@ public class ExternalScalerService : ExternalScaler.ExternalScalerBase
 Put the following code into your `index.js` file:
 
 ```js
-const grpc = require('grpc')
-const request = require('request')
-const externalScalerProto = grpc.load('externalscaler.proto')
+const grpc = require("grpc");
+const request = require("request");
+const externalScalerProto = grpc.load("externalscaler.proto");
 
-const server = new grpc.Server()
+const server = new grpc.Server();
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   isActive: (call, callback) => {
-    const longitude = call.request.scalerMetadata.longitude
-    const latitude = call.request.scalerMetadata.latitude
+    const longitude = call.request.scalerMetadata.longitude;
+    const latitude = call.request.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
-      const now = new Date()
-      const yesterday = new Date(new Date().setDate(new Date().getDate()-1));
+      const now = new Date();
+      const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
-      const startTime = `${yesterday.getUTCFullYear()}-${yesterday.getUTCMonth()}-${yesterday.getUTCDay()}`
-      const endTime = `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDay()}`
-      const radiusKm = 500
-      const query = `format=geojson&starttime=${startTime}&endtime=${endTime}&longitude=${longitude}&latitude=${latitude}&maxradiuskm=${radiusKm}`
+      const startTime = `${yesterday.getUTCFullYear()}-${yesterday.getUTCMonth()}-${yesterday.getUTCDay()}`;
+      const endTime = `${now.getUTCFullYear()}-${now.getUTCMonth()}-${now.getUTCDay()}`;
+      const radiusKm = 500;
+      const query = `format=geojson&starttime=${startTime}&endtime=${endTime}&longitude=${longitude}&latitude=${latitude}&maxradiuskm=${radiusKm}`;
 
-      request.get({
-        url: `https://earthquake.usgs.gov/fdsnws/event/1/query?${query}`,
-        json: true,
-      }, (err, resp, data) => {
-        if (err) {
-          callback({
-            code: grpc.status.INTERNAL,
-            details: err,
-          })
-        } else if (resp.statusCode !== 200) {
-          callback({
-            code: grpc.status.INTERNAL,
-            details: `expected status 200, got ${resp.statusCode}`
-          })
-        } else {
-          // count how many earthquakes with mag > 1.0
-          let count = 0
-          data.features.forEach(i => {
-            if (i.properties.mag > 1.0) {
-              count++
-            }
-          })
-          callback(null, {
-            result: count > 2,
-          })
+      request.get(
+        {
+          url: `https://earthquake.usgs.gov/fdsnws/event/1/query?${query}`,
+          json: true,
+        },
+        (err, resp, data) => {
+          if (err) {
+            callback({
+              code: grpc.status.INTERNAL,
+              details: err,
+            });
+          } else if (resp.statusCode !== 200) {
+            callback({
+              code: grpc.status.INTERNAL,
+              details: `expected status 200, got ${resp.statusCode}`,
+            });
+          } else {
+            // count how many earthquakes with mag > 1.0
+            let count = 0;
+            data.features.forEach((i) => {
+              if (i.properties.mag > 1.0) {
+                count++;
+              }
+            });
+            callback(null, {
+              result: count > 2,
+            });
+          }
         }
-      })
+      );
     }
-  }
-})
+  },
+});
 
-server.bind('127.0.0.1:9090', grpc.ServerCredentials.createInsecure())
-console.log('Server listening on 127.0.0.1:9090')
+server.bind("127.0.0.1:9090", grpc.ServerCredentials.createInsecure());
+console.log("Server listening on 127.0.0.1:9090");
 
-server.start()
+server.start();
 ```
 
 {{< /collapsible >}}
-
-<br />
 
 #### 4. Implementing `StreamIsActive`
 
@@ -444,37 +443,35 @@ public override async Task StreamIsActive(ScaledObjectRef request, IServerStream
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   streamIsActive: (call, callback) => {
-    const longitude = call.request.scalerMetadata.longitude
-    const latitude = call.request.scalerMetadata.latitude
+    const longitude = call.request.scalerMetadata.longitude;
+    const latitude = call.request.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
       const interval = setInterval(() => {
         getEarthquakeCount((err, count) => {
           if (err) {
-            console.error(err)
+            console.error(err);
           } else if (count > 2) {
             call.write({
               result: true,
-            })
+            });
           }
-        })
+        });
       }, 1000 * 60 * 60);
 
-      call.on('end', () => {
-        clearInterval(interval)
-      })
+      call.on("end", () => {
+        clearInterval(interval);
+      });
     }
-  }
-})
+  },
+});
 ```
 
 {{< /collapsible >}}
-
-<br />
 
 #### 5. Implementing `GetMetricSpec`
 
@@ -521,18 +518,18 @@ server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   getMetricSpec: (call, callback) => {
     callback(null, {
-      metricSpecs: [{
-        metricName: 'earthquakeThreshold',
-        targetSize: 10,
-      }]
-    })
-  }
-})
+      metricSpecs: [
+        {
+          metricName: "earthquakeThreshold",
+          targetSize: 10,
+        },
+      ],
+    });
+  },
+});
 ```
 
 {{< /collapsible >}}
-
-<br />
 
 #### 6. Implementing `GetMetrics`
 
@@ -600,32 +597,34 @@ public override async Task<GetMetricsResponse> GetMetrics(GetMetricsRequest requ
 server.addService(externalScalerProto.externalscaler.ExternalScaler.service, {
   // ...
   getMetrics: (call, callback) => {
-    const longitude = call.request.scaledObjectRef.scalerMetadata.longitude
-    const latitude = call.request.scaledObjectRef.scalerMetadata.latitude
+    const longitude = call.request.scaledObjectRef.scalerMetadata.longitude;
+    const latitude = call.request.scaledObjectRef.scalerMetadata.latitude;
     if (!longitude || !latitude) {
       callback({
         code: grpc.status.INVALID_ARGUMENT,
-        details: 'longitude and latitude must be specified',
-      })
+        details: "longitude and latitude must be specified",
+      });
     } else {
       getEarthquakeCount((err, count) => {
         if (err) {
           callback({
             code: grpc.status.INTERNAL,
             details: err,
-          })
+          });
         } else {
           callback(null, {
-            metricValues: [{
-              metricName: 'earthquakeThreshold',
-              metricValue: count,
-            }]
-          })
+            metricValues: [
+              {
+                metricName: "earthquakeThreshold",
+                metricValue: count,
+              },
+            ],
+          });
         }
-      })
+      });
     }
-  }
-})
+  },
+});
 ```
 
 {{< /collapsible >}}

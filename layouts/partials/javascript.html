@@ -50,36 +50,7 @@
   });
 </script>
 
-{{/* Scalers filter */}}
-<script type="text/javascript">
-  const builtInScalers = document.querySelectorAll("#built-in-scalers");
-  const externalScalers = document.getElementById("external-scalers");
-  const btnFocusOnMount = document.getElementById("btn-focus-on-mount");
-  const builtInSearchResultCount = document.querySelector(".results");
-  const externalSearchResultCount = document.querySelector(".external-results");
-  let btns = document.getElementsByClassName("filterBtn");
-
-  for (let i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function () {
-      let filterValue = btns[i].value.toLowerCase();
-      if (filterValue === "built-in-scalers") {
-        builtInScalers.forEach((node) => (node.style.display = "flex"));
-        externalScalers.style.display = "none";
-        builtInSearchResultCount.style.display = "block";
-        externalSearchResultCount.style.display = "none";
-      } else if (filterValue === "external-scalers") {
-        // remove focus when changed
-        btnFocusOnMount.classList.remove("is-focused");
-        builtInScalers.forEach((node) => (node.style.display = "none"));
-        externalScalers.style.display = "inline";
-        builtInSearchResultCount.style.display = "none";
-        externalSearchResultCount.style.display = "block";
-      }
-    });
-  }
-</script>
-
-{{/* In-built Scalers Search */}}
+{{/* Scaler Search and filter */}}
 <script src="https://unpkg.com/lunr/lunr.js"></script>
 <script>
   window.addEventListener(
@@ -94,29 +65,24 @@
       const form = document.getElementById("search");
       const input = document.getElementById("search-input");
       const target = document.querySelector(".is-search-result");
-      const externalTarget = document.querySelector(
-        ".is-external-search-result"
-      );
+      const filterIcon = document.querySelector(".filter-icon");
+      const filterOptions = document.querySelector(".filter-options");
       const searchResultCount = document.querySelector(".results");
-      const externalSearchResultCount =
-        document.querySelector(".external-results");
       const template = document.getElementById("is-search-template");
-      const isExternalScalers = document.getElementById("external-scalers");
-      const isBuiltInScalers = document.getElementById("built-in-scalers");
-      const externalBanner = document.getElementById("external-banner");
-      const groups = document.getElementsByClassName(
-        "artifacthub-widget-group"
-      );
       const interval = 500;
       let query = input.value.trim();
       let parse = {};
+      let searchQueue = [];
+      let checkboxes = document.querySelectorAll(
+        'input[name="resource_filter"]'
+      );
 
       // fetch all scalers on inital load
       if (!query) {
         initSearchIndex();
-        externalScalersIndex();
       }
 
+      // logic for input search
       input.addEventListener(
         "input",
         function (event) {
@@ -124,49 +90,11 @@
           clearTimeout(debounceTimer);
           const keywords = input.value.trim();
 
-          // disable all buttons during search by default
-          const filterBtns = document.querySelectorAll(".filterBtn");
-          filterBtns.forEach((btn) => (btn.disabled = true));
-
-          if (!keywords) {
-            // enable all buttons when input search is empty
-            const filterBtns = document.querySelectorAll(".filterBtn");
-            filterBtns.forEach((btn) => (btn.disabled = false));
-          }
-
           query = keywords;
-          if (isExternalScalers.style.display === "inline") {
-            // hide banner during scaler search
-            externalBanner.style.display = "none";
-            if (query === "") {
-              externalBanner.style.display = "block";
-            }
-            let externalSearchUrl = new URL(
-              "https://artifacthub.io/api/v1/packages/search"
-            );
-            externalSearchUrl.search = new URLSearchParams({
-              kind: "8",
-              sort: "relevance",
-              ts_query_web: query !== "" ? query : "",
-            });
-            debounceTimer = setTimeout(() => {
-              groups[0].dataset.url = externalSearchUrl;
-              externalScalersIndex();
-            }, interval);
-
-            // clear out all the scaler item card when external scalers are being searched
-            while (externalTarget.firstChild.nextSibling) {
-              externalTarget.removeChild(
-                externalTarget.firstChild.nextSibling.nextSibling
-                  .nextElementSibling
-              );
-            }
-            return;
-          }
 
           debounceTimer = setTimeout(initSearchIndex, interval);
 
-          // clear out all the scaler item card when in-built scalers are being searched
+          // clear out all the scaler item card during search
           while (target.firstChild.nextSibling) {
             target.removeChild(template.nextSibling.nextElementSibling);
           }
@@ -174,64 +102,78 @@
         false
       );
 
-      async function externalScalersIndex() {
-        const externalScalerUrl = groups[0].dataset.url;
-        const results = await fetch(externalScalerUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            return data.packages;
-          })
-          .catch((err) => console.error("error:", err));
+      // logic for category filter
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function (event) {
+          if (checkbox.checked) {
+            const inputValue = event.target.value.split(" ");
+            // for single queries with spacing, use the first word
+            const inputQuery = inputValue[0];
+            searchQueue.push(inputQuery);
+            query = searchQueue.join(" ");
+            initSearchIndex();
+          }  
+          
+          if (!checkbox.checked){
+            const inputValue = event.target.value.split(" ");
+            // for single queries with spacing, use the first word
+            const inputQuery = inputValue[0];
+            searchQueue = searchQueue.filter(
+              (word) => word != inputQuery
+            );
+            query = searchQueue.join(" ");
+            initSearchIndex();
+          }
 
-        if ("content" in template) {
-          // show result count
-          const title = document.createElement("h3");
-          title.id = "external-search-results";
-          title.className = "subtitle is-size-3 external-search-results";
+          // clear out all the scaler item card during search
+          while (target.firstChild.nextSibling) {
+            target.removeChild(template.nextSibling.nextElementSibling);
+          }
+        });
+      });
 
-          if (results.length == 0)
-            title.textContent = `No results found for "${query}"`;
-          else if (results.length == 1)
-            title.textContent = `Found one result for "${query}"`;
-          else if (results.length > 1 && query === "")
-            title.textContent = `${results.length} scalers available`;
-          else
-            title.textContent = `Found ${results.length} results for "${query}"`;
-          externalSearchResultCount.replaceChildren(title);
-
-          // show the matched result
-          results.forEach(function (result) {
-            const element = template.content.cloneNode(true);
-            element.querySelector(".scaler-title").textContent =
-              result.display_name;
-            element
-              .querySelector(".scaler-title")
-              .setAttribute("href", "https://artifacthub.io/packages/keda-scaler/" + result.repository.name + "/" + result.normalized_name);
-            result.description &&
-              (element.querySelector(".description").textContent =
-                result.description);
-            result.repository.organization_name &&
-              (element.querySelector(".maintainer").textContent =
-                result.repository.organization_name);
-            result.repository.user_alias &&
-              (element.querySelector(".maintainer").textContent =
-                result.repository.user_alias);
-            result.version &&
-              (element.querySelector(
-                ".availability"
-              ).textContent = `v${result.version}`);
-            externalTarget.appendChild(element);
-          }, this);
+      // show filter options on mobile
+      filterIcon.addEventListener("click", function () {
+        if (filterOptions.style.display === "") {
+          filterOptions.style.display = "none";
+        } 
+        
+        if (filterOptions.style.display === "none") {
+          filterOptions.style.display = "flex";
+        }else {
+          filterOptions.style.display = "none";
         }
-      }
+      });
 
       async function initSearchIndex() {
-        const scalers = await fetch("/index.json", { method: "GET" })
+        const builtInScalers = await fetch("/index.json", { method: "GET" })
           .then((response) => response.json())
           .then((data) => {
             return data;
           })
           .catch((err) => console.error("error:", err));
+        
+        const externalScalerUrl = "https://artifacthub.io/api/v1/packages/search?offset=0&limit=20&facets=false&kind=8&deprecated=false&sort=relevance";
+        const externalScalersData = await fetch(externalScalerUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            return data.packages;
+          })
+          .catch((err) => console.error("error:", err));
+        
+        const externalScalers = externalScalersData.map(scaler => ({
+          type: 'external',
+          availability: `v${scaler.version}+`,
+          title: scaler.display_name,
+          maintainer: scaler.repository.organization_name ?? scaler.repository.user_alias,
+          href: "https://artifacthub.io/packages/keda-scaler/" + scaler.repository.name + "/" + scaler.normalized_name,
+          version: currentVersion,
+          description: scaler.description,
+          category: null,
+        }));
+
+        const scalers = [...builtInScalers, ...externalScalers];
+
         index = lunr(function () {
           const documents = scalers;
 
@@ -254,6 +196,12 @@
           this.field("availability", {
             boost: 5,
           });
+          this.field("category", {
+            boost: 10,
+          });
+          this.field("type", {
+            boost: 20,
+          });
 
           documents.forEach(function (doc) {
             if (doc.version === currentVersion) {
@@ -264,6 +212,8 @@
                 maintainer: doc.maintainer,
                 description: doc.description,
                 availability: doc.availability,
+                category: doc.category,
+                type: doc.type,
               };
             }
           }, this);
@@ -308,19 +258,23 @@
           results.forEach(function (result) {
             const doc = parse[result.ref];
             const element = template.content.cloneNode(true);
-            element.querySelector(".scaler-title").textContent = doc.title;
-            element
-              .querySelector(".scaler-title")
-              .setAttribute("href", doc.href);
-            doc.description &&
-              (element.querySelector(".description").textContent =
-                doc.description);
-            doc.maintainer &&
-              (element.querySelector(".maintainer").textContent =
-                doc.maintainer);
-            doc.availability &&
-              (element.querySelector(".availability").textContent =
-                doc.availability);
+              element.querySelector(".badge").textContent = doc.type;
+              element.querySelector(".scaler-title").textContent = doc.title;
+              element
+                .querySelector(".scaler-title")
+                .setAttribute("href", doc.href);
+              doc.type === 'external' &&
+              (element.querySelector(".badge").style.color =
+                'purple');
+              doc.description &&
+                (element.querySelector(".description").textContent =
+                  doc.description);
+              doc.maintainer &&
+                (element.querySelector(".maintainer").textContent =
+                  doc.maintainer);
+              doc.availability &&
+                (element.querySelector(".availability").textContent =
+                  doc.availability);
             target.appendChild(element);
           }, this);
         }
@@ -328,4 +282,89 @@
     },
     false
   );
+</script>
+
+{{/* FAQ Copy to clipboard */}}
+
+<script>
+  // As of today, The document.execCommand() method is deprecated. 
+  // The new clipboard API is the preferred method for accessing the clipboard. 
+  // To maintain backward compatibility, I creted a fallbackCopyTextToClipboard function 
+  // to enable support in old browser versions.
+
+  function fallbackCopyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
+    let copyTextContainer = document.getElementById(text);
+    let textArea = document.createElement("textarea");
+    textArea.value = textURL;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      const msg = successful ? "copied!" : "action unsuccessful";
+      copyTextContainer.classList.add("copy-text-active");
+      console.log(msg);
+      setTimeout(function () {
+        copyTextContainer.classList.remove("copy-text-active");
+      }, 2500);
+    } catch (err) {
+      console.error("Fallback: Oops, unable to copy", err);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function generateTextURL(text) {
+    return `${window.location.origin}${window.location.pathname}#${text}`;
+  }
+  
+  function copyTextToClipboard(text, textUrlGenerator) {
+    const textURL = textUrlGenerator(text);
+    let copyTextContainer = document.getElementById(text);
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(text);
+      return;
+    }
+    navigator.clipboard.writeText(textURL).then(
+      function() {
+        copyTextContainer.classList.add("copy-text-active");
+        console.log("Async: Copying to clipboard was successful!");
+        setTimeout(function () {
+          copyTextContainer.classList.remove("copy-text-active");
+        }, 2500);
+      },
+      function(err) {
+        console.error("Async: Could not copy text: ", err);
+      }
+    );
+  }
+
+  const copyBtns = document.querySelectorAll(".copyBtn");
+  copyBtns.forEach((btn) => {
+    const id = btn.getAttribute("id");
+    btn.addEventListener("click", function name(event) {
+      event.stopPropagation();
+      copyTextToClipboard(id, generateTextURL)
+    });
+  });
+</script>
+
+{{/* This logic expands collapsed section when URL is loaded in browser*/}}
+<script>
+  window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      "use strict";
+      const hash = (window.location.hash).slice(1);
+      const cardContents = document.querySelectorAll(".card-content-dropdown");
+      cardContents.forEach((item) => {
+        const id = item.getAttribute("id");
+        if (hash === id) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
 </script>

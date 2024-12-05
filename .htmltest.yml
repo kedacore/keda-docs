@@ -3,3 +3,9 @@ IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
+IgnoreInternalURLs:
+  # Temporal ignores
+  - /docs/2.16/scalers/nsq/
+  # Deprecated and removed resources
+
+  # Renamed pages

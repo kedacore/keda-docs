@@ -18,7 +18,7 @@ KEDA uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server
 - The Kubernetes Metrics Server must be installed. Installation instructions vary based on your Kubernetes provider.
 - The configuration for your Kubernetes Pods must include a `resources` section with specified `requests`. See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar) the error `missing request for {cpu/memory}` occurs.
 
-```
+```yaml
 # a working example of resources with specified requests
 spec:
   containers:
@@ -92,5 +92,5 @@ spec:
     metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
     metadata:
       value: "50"
-      containerName: "api"
+      containerName: "foo"
 ```

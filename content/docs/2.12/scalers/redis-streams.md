@@ -12,9 +12,10 @@ Redis 5.0 introduced [Redis Streams](https://redis.io/topics/streams-intro) whic
 
 One of its features includes [`Consumer Groups`](https://redis.io/topics/streams-intro#consumer-groups), that allows a group of clients to co-operate consuming a different portion of the same stream of messages.
 
-There are two ways to configure `redis-streams` trigger:
+There are three ways to configure `redis-streams` trigger:
 1. Based on the *Pending Entries List* (see [`XPENDING`](https://redis.io/commands/xpending)) for a specific Consumer Group of a Redis Stream
 2. Based on the *Stream Length* (see [`XLEN`](https://redis.io/commands/xlen))
+3. Based on the *Consumer Group Lag* (see [`XINFO GROUPS`](https://redis.io/commands/xinfo-groups/)). This is the only configuration that supports scaling down to 0. IMPORTANT: Redis 7+ is required for this feature to run.
 
 
 ```yaml
@@ -30,6 +31,8 @@ triggers:
     consumerGroup: my-consumer-group # optional - name of consumer group associated with Redis Stream
     pendingEntriesCount: "10" # optional - number of entries in the Pending Entries List for the specified consumer group in the Redis Stream
     streamLength: "50" # optional - Redis stream length, alternative to pendingEntriesCount scaler trigger
+    lagCount: "5" # optional - number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
+    activationLagCount: "3" # required if lagCount is provided - lag count at which scaler triggers
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
     databaseIndex: "0" # optional
@@ -62,9 +65,11 @@ triggers:
 > Setting the `consumerGroup` causes the scaler to operate on `pendingEntriesCount`. Lack of `consumerGroup` will cause the scaler to be based on `streamLength`
 - `pendingEntriesCount` - Threshold for the number of `Pending Entries List`. This is the average target value to scale the workload. (Default: `5`, Optional)
 - `streamLength` - Threshold for stream length, alternative average target value to scale workload. (Default: `5`, Optional)
-- `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
+- `lagCount` - Threshold for the consumer group lag number, alternative average target value to scale workload. (Default: `5`, Optional)
+- `activationLagCount` - Lag count threshold at which to start scaling. Any average lag count below this value will not trigger the scaler. (Default: `0`, Optional)
 - `enableTLS` - Allow a connection to Redis using tls. (Values: `true`, `false`, Default: `false`, Optional)
-- `unsafeSsl` - Used for skipping certificate check e.g: using self signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
+- `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional, This requires `enableTLS: true`)
+- `databaseIndex` - The Redis database index. Defaults to `0` if not specified.
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -110,6 +115,21 @@ spec:
 
 #### Using `TriggerAuthentication`
 
+**TLS:**
+
+Parameters used for configuring TLS authentication. Note this can not be used together with `enableTLS` and `unsafeSsl` on the `ScaledObject`, which is used to define using insecure TLS with skipping certificate check.
+
+- `tls` - To enable SSL auth for Redis, set this to `enable`. If not set, TLS for Redis is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+- `keyPassword` - If set the `keyPassword` is used to decrypt the provided `key`. (Optional)
+
+**Authentication:**
+
+- `username` - Redis username to authenticate with.
+- `password` - Redis password to authenticate with.
+
 You can use `TriggerAuthentication` CRD to configure the authentication. For example:
 
 ```yaml
@@ -121,6 +141,10 @@ type: Opaque
 data:
   redis_username: <encoded redis username>
   redis_password: <encoded redis password>
+  tls: "enable"
+  ca: <your ca>
+  cert: <your cert>
+  key: <your key>
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -134,6 +158,18 @@ spec:
     - parameter: password
       name: redis-streams-auth # name of the Secret
       key: redis_password # name of the key in the Secret
+    - parameter: tls
+      name: redis-streams-auth
+      key: tls
+    - parameter: ca
+      name: redis-streams-auth
+      key: ca
+    - parameter: cert
+      name: redis-streams-auth
+      key: cert
+    - parameter: key
+      name: redis-streams-auth
+      key: key
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -183,4 +219,33 @@ spec:
         passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
         stream: my-stream
         streamLength: "50"
+```
+
+#### Using `lagCount`
+
+To scale based on redis stream `XINFO GROUPS`, be sure to set `activationLagCount`. Example:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-streams-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: redis-streams-consumer
+  pollingInterval: 15
+  cooldownPeriod: 200
+  maxReplicaCount: 25
+  minReplicaCount: 1
+  triggers:
+    - type: redis-streams
+      metadata:
+        addressFromEnv: REDIS_HOST
+        usernameFromEnv: REDIS_USERNAME # name of the environment variable in the Deployment
+        passwordFromEnv: REDIS_PASSWORD # name of the environment variable in the Deployment
+        stream: my-stream
+        consumerGroup: consumer-group-1
+        lagCount: "10"
+        activationLagCount: "3"
 ```

@@ -264,6 +264,55 @@ hr
 .section 
 	padding: 4rem 1.5rem
 
+.badge
+  border: 1px solid #dbdbdb
+  border-radius: 20px
+  padding: 3px 6px
+  color: blue
+  font-size: 1rem
+
+.copyBtn 
+  padding: 10px
+  background: none
+  height: 50%
+  margin-right: 10px
+  margin-top: 5px
+  color: #ffffff
+  font-size: 18px
+  border: none
+  outline: none
+  border-radius: 10px
+  cursor: pointer
+  &:focus
+      outline: 2px solid #5784f5
+  &:hover
+      outline: 2px solid #5784f5
+  &:active
+      background: #809ce2
+  &:before
+      content: "Copied"
+      position: absolute
+      top: -45px
+      right: 0px
+      background: #5c81dc
+      padding: 8px 10px
+      border-radius: 20px
+      font-size: 15px
+      display: none
+  &:after
+      content: ""
+      position: absolute
+      top: -20px
+      right: 25px
+      width: 10px
+      height: 10px
+      background: #5c81dc
+      transform: rotate(45deg)
+      display: none
+
+.copy-text-active .copyBtn:before, .copy-text-active .copyBtn:after,
+  display: block
+
 @media screen and (max-width: 1024px)
   .section
     width: 100vw
@@ -325,3 +374,31 @@ hr
 @media screen and (min-width: 769px)
   .md-height-desktop
       height: 9rem
+
+  .filter-icon
+    display: none
+
+  .filter-options
+    display: inline-block
+
+  .filter-pane
+    padding-left: 0
+    padding-top: 20px
+
+@media screen and (max-width: 769px)
+  .filter-icon
+      padding: 0.5rem
+      cursor: pointer
+      border: 1px solid #DBDBDB
+      font-size: 18px
+      border-radius: 0.4rem
+      display: inline-block
+      &:hover
+        border: 1px solid #000000
+
+  .filter-options
+    display: none
+
+  .filter-pane
+    padding-left: 20px
+    padding-top: 10px

@@ -65,6 +65,32 @@ In managed Kubernetes services you might solve the issue by updating firewall ru
 
 E.g. in GKE private cluster [add](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules) port 6443 (kube-apiserver) to allowed ports in master node firewall rules.
 
+Also, if you are using Network Policies in your `kube-system` namespace, make sure they don't block access for the konnectivity agent via port 6443. You can read more about [konnectivity service](https://kubernetes.io/docs/concepts/architecture/control-plane-node-communication/#konnectivity-service).
+
+In that case, you need to add a similar NetworkPolicy in the `kube-system` namespace:
+
+```yaml
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-from-konnectivity-agent-to-keda
+  namespace: kube-system
+spec:
+  egress:
+  - ports:
+    - port: 6443
+      protocol: TCP
+    to:
+    - ipBlock:
+        cidr: ${KUBE_POD_IP_CIDR}
+  podSelector:
+    matchLabels:
+      k8s-app: konnectivity-agent
+  policyTypes:
+  - Egress
+```
+
 #### Amazon Elastic Kubernetes Service (EKS)
 
 E.g. Make sure the Cluster Security group can reach the Nodegroups on TCP 6443. For example, using the [terraform eks module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest), this is achievable through the addtional nodegroup rules

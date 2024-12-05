@@ -102,7 +102,7 @@ This is the interval to check each trigger on. By default, KEDA will check each 
 
 The period to wait after the last trigger reported active before scaling the resource back to 0. By default, it's 5 minutes (300 seconds).
 
-The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-cooldowndelay).
+The `cooldownPeriod` only applies after a trigger occurs; when you first create your `Deployment` (or `StatefulSet`/`CustomResource`), KEDA will immediately scale it to `minReplicaCount`.  Additionally, the KEDA `cooldownPeriod` only applies when scaling to 0; scaling from 1 to N replicas is handled by the [Kubernetes Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
 
 **Example:** wait 5 minutes after the last time KEDA checked the queue and it was empty. (this is obviously dependent on `pollingInterval`)
 
@@ -186,13 +186,13 @@ advanced:
           periodSeconds: 15
 ```
 
-**`horizontalPodAutoscalerConfig:`**
+##### `horizontalPodAutoscalerConfig`
 
-**`horizontalPodAutoscalerConfig.name`:**
+###### `horizontalPodAutoscalerConfig.name`
 
 The name of the HPA resource KEDA will create. By default, it's `keda-hpa-{scaled-object-name}`
 
-**`horizontalPodAutoscalerConfig.behavior`:**
+###### `horizontalPodAutoscalerConfig.behavior`
 
 Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be configured through the HPA behavior field. This way one can directly affect scaling of 1<->N replicas, which is internally being handled by HPA. KEDA would feed values from this section directly to the HPA's `behavior` field. Please follow [Kubernetes documentation](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) for details.
 
@@ -253,6 +253,8 @@ Each scaler defines parameters for their use-cases, but the activation will alwa
 There are some important topics to take into account:
 
 - Opposite to scaling value, the activation value is always optional and the default value is 0.
+- Activation only occurs when this value is greater than the set value; not greater than or equal to.
+  - ie, in the default case: `activationThreshold: 0` will only activate when the metric value is 1 or more
 - The activation value has more priority than the scaling value in case of different decisions for each. ie: `threshold: 10` and `activationThreshold: 50`, in case of 40 messages the scaler is not active and it'll be scaled to zero even the HPA requires 4 instances.
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.

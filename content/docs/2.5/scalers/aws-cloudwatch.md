@@ -76,6 +76,26 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 The user will need access to read data from AWS CloudWatch.
 
+### IAM Permissions
+
+The user or role used to authenticate with AWS CloudWatch must have the `cloudwatch:GetMetricData` permissions. The following is an example IAM policy that grants the necessary permissions to read data from CloudWatch:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCloudWatchGetMetricData",
+      "Effect": "Allow",
+      "Action": "cloudwatch:GetMetricData",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+For more information, see the [AWS CloudWatch IAM documentation](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazoncloudwatch.html).
+
 ### Example
 
 ```yaml

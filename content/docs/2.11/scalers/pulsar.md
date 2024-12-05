@@ -31,7 +31,7 @@ triggers:
 - `isPartitionedTopic` - Whether the `topic` is partitioned. When `true`, the `msgBacklogThreshold` will be the cumulative subscription backlog across partitions. (default: `false`, Optional)
 - `subscription` - Name of the topic subscription
 - `msgBacklogThreshold` - Average target value to trigger scaling actions. (default: 10)
-- `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional)
+- `activationMsgBacklogThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `authModes` - a comma separated list of authentication modes to use. (Values: `bearer`, `tls`,`basic`, Default: `""`, Optional, `tls,bearer` or `tls,basic` are valid combinations and would indicate mutual TLS to secure the connection and then `bearer` or `basic` headers should be added to the HTTP request)
 
 ### Authentication Parameters
@@ -153,7 +153,7 @@ metadata:
   name: keda-pulsar-secrets
   namespace: default
 data:
-  ca: <your self signed root CA>
+  ca: <your self-signed root CA>
   token: <your token>
 ---
 apiVersion: keda.sh/v1alpha1

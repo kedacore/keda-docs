@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.16", "2.15", "2.14", "2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -66,8 +66,8 @@ notAlternative = true
 
 # parameters for lunr search
 [params.lunr]
-vars = ["title", "maintainer", "description", "availability"]
-params = ["availability", "maintainer"]
+vars = ["title", "maintainer", "description", "availability", "category", "type"]
+params = ["availability", "maintainer", "category", "type"]
 
 # "Highlighted Samples" section on the main page
 [[params.samples]]
@@ -176,28 +176,46 @@ parent = "docs"
 weight = 3
 
 [[menu.docs]]
+url = "/docs/scalers"
+name = "Scalers"
+parent = "docs"
+weight = 4
+
+[[menu.docs]]
 url = "/docs/operate/"
 name = "Operate"
 parent = "docs"
-weight = 4
+weight = 5
+
+[[menu.docs]]
+url = "/docs/integrations/"
+name = "Integrations"
+parent = "docs"
+weight = 6
+
+[[menu.docs]]
+url = "/docs/authentication-providers"
+name = "Auth providers"
+parent = "docs"
+weight = 7
 
 [[menu.docs]]
 url = "/docs/migration/"
 name = "Migration Guide"
 parent = "docs"
-weight = 5
+weight = 8
 
 [[menu.docs]]
-url = "/docs/faq/"
+url = "/docs/reference/faq/"
 name = "FAQ"
 parent = "docs"
-weight = 6
+weight = 9
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
 name = "Troubleshooting"
 parent = "docs"
-weight = 7
+weight = 10
 
 [[menu.main]]
 url = "/blog"
@@ -240,10 +258,16 @@ parent = "community"
 weight = 5
 
 [[menu.main]]
+url = "/videos/"
+name = "Videos"
+parent = "community"
+weight = 6
+
+[[menu.main]]
 url = "https://github.com/kedacore/samples"
 name = "Samples"
 parent = "community"
-weight = 6
+weight = 7
 
 [[menu.main]]
 name = "Project"
@@ -322,6 +346,11 @@ name = "Merch"
 parent = "project"
 weight = 12
 
+[[menu.main]]
+url = "/support/"
+name = "Support"
+weight = 5
+
 # "Features" section on the main page
 [[params.features]]
 title = "Autoscaling Made Simple"
@@ -393,6 +422,10 @@ url = "https://chattermill.com"
 logo = "chattermill.png"
 
 [[params.users]]
+url = "https://cap.energy"
+logo = "capenergy.png"
+
+[[params.users]]
 url = "https://cisco.com"
 logo = "cisco.svg"
 
@@ -429,12 +462,20 @@ url = "https://fission.io/"
 logo = "fission.png"
 
 [[params.users]]
+url = "https://www.foresightmining.com/"
+logo = "foresight.png"
+
+[[params.users]]
 url = "https://www.freepikcompany.com/"
 logo = "freepik-company.png"
 
 [[params.users]]
 url = "https://www.grafana.com"
 logo = "grafana.png"
+
+[[params.users]]
+url = "https://www.grab.com"
+logo = "grab.svg"
 
 [[params.users]]
 url = "https://github.com/hmcts/"
@@ -461,6 +502,10 @@ url = "https://www.leanix.net/"
 logo = "leanix.png"
 
 [[params.users]]
+url = "https://maus.technology/"
+logo = "maus-technology.png"
+
+[[params.users]]
 url = "https://underthehood.meltwater.com/"
 logo = "meltwater.png"
 
@@ -483,6 +528,10 @@ logo = "nemlig.png"
 [[params.users]]
 url = "https://opsworks.co"
 logo = "opsworks.png"
+
+[[params.users]]
+url = "https://www.playstudios.com"
+logo = "playstudios.jpg"
 
 [[params.users]]
 url = "https://www.pollinate.global"
@@ -537,25 +586,42 @@ url = "https://www.swisslife.ch/"
 logo = "swisslife.jpg"
 
 [[params.users]]
+url = "https://www.taotesting.com"
+logo = "taotesting.svg"
+
+[[params.users]]
 url = "https://www.teamleader.eu"
 logo = "teamleader.png"
+
+[[params.users]]
+url = "https://www.unitary.ai/"
+logo = "unitary.png"
 
 [[params.users]]
 url = "https://vitc.gmbh"
 logo = "vitc.png"
 
 [[params.users]]
+url = "https://www.wingie.com"
+logo = "wingie-enuygun.png"
+
+[[params.users]]
 url = "https://www.workiva.com"
 logo = "workiva.png"
+
+[[params.users]]
+url = "https://www.xbox.com"
+logo = "xbox.png"
 
 [[params.users]]
 url = "https://zapier.com"
 logo = "zapier.png"
 
+
 # "Partners" section on the Community page
 [[params.partners]]
-url = "https://microsoft.com"
-logo = "microsoft.png"
+url = "https://kedify.io/?utm_source=keda_oss_site"
+logo = "kedify.png"
 
 [[params.partners]]
 url = "https://scrm.lidl"
@@ -597,3 +663,8 @@ logo = "vendors/red-hat.png"
 name = "KEDA Add-On for Azure Kubernetes Service"
 url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
 logo = "vendors/azure-kubernetes-service.png"
+
+[[params.vendors]]
+name = "Kedify"
+url = "https://kedify.io/?utm_source=keda_oss_site"
+logo = "vendors/kedify.png"
