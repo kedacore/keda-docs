@@ -58,6 +58,8 @@ You can use `TriggerAuthentication` CRD to configure the authentication with a `
 
 ### Example
 
+Autoscaling trigger based on transaction duration average metric:
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -103,6 +105,56 @@ spec:
         nrql: "SELECT average(duration) from Transaction where appName='SITE'"
         noDataError: "true"
         threshold: '1000'
+      authenticationRef:
+        name: keda-trigger-auth-new-relic
+```
+
+Autoscaling trigger based on transaction count [rate](https://docs.newrelic.com/docs/nrql/using-nrql/rate-function/) metric:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: new-relic-secret
+  namespace: my-project
+type: Opaque
+data:
+  apiKey: TlJBSy0xMjM0NTY3ODkwMTIzNDU2Nwo= # base64 encoding of the new relic api key NRAK-12345678901234567
+  account: MTIzNDU2 # base64 encoding of the new relic account number 123456
+  region: VVM= # base64 encoding of the new relic region US
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-new-relic
+  namespace: my-project
+spec:
+  secretTargetRef:
+  - parameter: queryKey
+    name: new-relic-secret
+    key: apiKey
+  - parameter: account
+    name: new-relic-secret
+    key: account
+  - parameter: region
+    name: new-relic-secret
+    key: region
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: newrelic-scaledobject
+  namespace: keda
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: new-relic
+      metadata:
+        nrql: "SELECT rate(count(*), 10 SECOND) FROM Transaction WHERE appName='SITE' SINCE 1 MINUTE AGO"
+        noDataError: "true"
+        threshold: '300'
       authenticationRef:
         name: keda-trigger-auth-new-relic
 ```
