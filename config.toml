@@ -275,32 +275,32 @@ identifier = "project"
 weight = 4
 
 [[menu.main]]
+url = "/support/"
+name = "Support"
+parent = "project"
+weight = 1
+
+[[menu.main]]
 url = "https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
 name = "Code of Conduct"
 parent = "project"
-weight = 1
+weight = 2
 
 [[menu.main]]
 url = "https://github.com/kedacore/keda/blob/main/CHANGELOG.md"
 name = "Changelog"
 parent = "project"
-weight = 2
+weight = 3
 
 [[menu.main]]
 url = "https://github.com/kedacore/governance/blob/main/GOVERNANCE.md"
 name = "Governance"
 parent = "project"
-weight = 3
+weight = 4
 
 [[menu.main]]
 url = "https://github.com/kedacore/keda/blob/main/ROADMAP.md"
 name = "Roadmap"
-parent = "project"
-weight = 4
-
-[[menu.main]]
-url = "/support/"
-name = "Support"
 parent = "project"
 weight = 5
 
@@ -347,8 +347,8 @@ parent = "project"
 weight = 12
 
 [[menu.main]]
-url = "/support/"
-name = "Support"
+url = "/enterprise/"
+name = "Enterprise"
 weight = 5
 
 # "Features" section on the main page
@@ -648,23 +648,39 @@ logo = "snyk.png"
 url = "https://vexxhost.com"
 logo = "vexxhost.png"
 
-# "Commercial support" section on the support page
-[[params.vendors]]
-name = "Azure Container Apps"
-url = "https://docs.microsoft.com/en-us/azure/container-apps/scale-app"
-logo = "vendors/azure-container-apps.png"
-
-[[params.vendors]]
-name = "Custom Metrics Autoscaler on Red Hat OpenShift"
-url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
-logo = "vendors/red-hat.png"
-
-[[params.vendors]]
-name = "KEDA Add-On for Azure Kubernetes Service"
-url = "https://docs.microsoft.com/en-us/azure/aks/keda-about"
-logo = "vendors/azure-kubernetes-service.png"
-
+# Enterprise page, sorted alphabetically by name of the vendor
 [[params.vendors]]
 name = "Kedify"
-url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "vendors/kedify.png"
+description = """
+Kedify offers an enteprise autoscaling solution on Kubernetes based on KEDA, providing:
+- Additional scalers and features including a **production grade HTTP Scaler**
+- Secure KEDA builds with upates and patches with enterprise support
+- Dashboard to support management and monitoring across multiple clusters
+"""
+urls = [
+  { text = "Visit Kedify website for more details", url = "https://kedify.io/?utm_source=keda_oss_site" }
+]
+
+[[params.vendors]]
+name = "Microsoft"
+logo = "vendors/microsoft-azure.png"
+description = """
+Microsoft provides multiple solutions integrated with KEDA:
+- **Azure Container Apps**: Allows you to deploy microservices that automatically scale based on KEDA.
+- **KEDA Add-On for Azure Kubernetes Service**: Plugin for straightforward installation on Azure Kubernetes Service.
+"""
+urls = [
+  { text = "Azure Container Apps", url = "https://docs.microsoft.com/en-us/azure/container-apps/scale-app" },
+  { text = "AKS KEDA Add-On", url = "https://docs.microsoft.com/en-us/azure/aks/keda-about" }
+]
+
+[[params.vendors]]
+name = "Red Hat"
+logo = "vendors/red-hat.png"
+description = """
+Red Hat integrates KEDA with OpenShift through the **Custom Metrics Autoscaler** (CMA) available through the OpenShift Marketplace.
+"""
+urls = [
+  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
+]
