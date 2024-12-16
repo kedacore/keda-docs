@@ -1,5 +1,5 @@
 +++
-title = "Getting Started"
+title = "Getting Started (New users start here!)"
 weight = 1
 +++
 
