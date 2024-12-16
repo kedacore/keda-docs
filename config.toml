@@ -653,10 +653,10 @@ logo = "vexxhost.png"
 name = "Kedify"
 logo = "vendors/kedify.png"
 description = """
-Kedify offers an enteprise autoscaling solution on Kubernetes based on KEDA, providing:
-- Additional scalers and features including a **production grade HTTP Scaler**
-- Secure KEDA builds with upates and patches with enterprise support
-- Dashboard to support management and monitoring across multiple clusters
+Kedify is founded by the core maintainers of KEDA and offers enterprise autoscaling solutions based on KEDA, providing:
+- State-of-the-art scalers and features, including a **production-grade HTTP Scaler**, exclusively available in Kedify.
+- **Enterprise-grade support**, ensuring secure KEDA builds with timely updates, patches, and critical fixes.
+- A comprehensive **dashboard** for streamlined management and monitoring across multiple clusters.
 """
 urls = [
   { text = "Visit Kedify website for more details", url = "https://kedify.io/?utm_source=keda_oss_site" }
