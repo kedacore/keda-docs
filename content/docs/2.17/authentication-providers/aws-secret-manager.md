@@ -37,4 +37,5 @@ awsSecretManager:
   - parameter: {param-name-used-for-auth}          # Required.
     name: {aws-secret-name}                        # Required.
     version: {aws-secret-version}                  # Optional.
+    secretKey: {aws-secret-key}                    # Optionqal
 ```
