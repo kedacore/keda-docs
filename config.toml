@@ -164,10 +164,47 @@ parent = "docs"
 weight = 1
 
 [[menu.docs]]
-url = "/docs/concepts/"
+url = "/docs/concepts"
 name = "Concepts"
+identifier = "Concepts"
 parent = "docs"
 weight = 2
+
+[[menu.docs]]
+url = "/docs/concepts/scaling-deployments/"
+name = "Scaling Deployments, StatefulSets & Custom Resources"
+parent = "Concepts"
+weight = 1
+
+[[menu.docs]]
+url = "/docs/concepts/scaling-jobs/"
+name = "Scaling Jobs"
+parent = "Concepts"
+weight = 2
+
+[[menu.docs]]
+url = "/docs/concepts/authentication/"
+name = "Authentication"
+parent = "Concepts"
+weight = 3
+
+[[menu.docs]]
+url = "/docs/concepts/external-scalers/"
+name = "External Scalers"
+parent = "Concepts"
+weight = 4
+
+[[menu.docs]]
+url = "/docs/concepts/admission-webhooks/"
+name = "Admission Webhooks"
+parent = "Concepts"
+weight = 5
+
+[[menu.docs]]
+url = "/docs/concepts/troubleshooting/"
+name = "Troubleshooting"
+parent = "Concepts"
+weight = 6
 
 [[menu.docs]]
 url = "/docs/concepts/#architecture"
@@ -213,7 +250,7 @@ weight = 9
 
 [[menu.docs]]
 url = "/docs/troubleshooting/"
-name = "Troubleshooting"
+name = "Troubleshooting Guide"
 parent = "docs"
 weight = 10
 

@@ -33,18 +33,53 @@
           </p>
         </div>
 
-        <!-- <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/scalers">Scalers</a>
+        <!-- docs menu for mobile showing nested items -->
+        <div class="docs-menu--mobile navbar-item is-size-5-desktop has-dropdown is-hoverable">
+          {{ with .Site.Menus.docs }}
+          <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+            {{ range . }}
+              {{ template "main_nav_item" . }}
+            {{ end }}
+          </div>
+          {{ end }}
         </div>
-
+        
+        {{ define "main_nav_item" }}
+        {{ $versions := site.Params.versions.docs }}
+        {{ $latest   := index $versions 0 }}
+        {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+        {{ $isExternal := hasPrefix .URL "http" }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless" href="/docs/{{ $latest }}/authentication-providers">Auth providers</a>
-        </div> -->
+          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ $url }}"{{ end }} {{ if $isExternal }} target="_blank"{{ end }}>
+            <span>
+              {{ .Name }}
+            </span>
+            {{ if $isExternal }}
+              <span class="icon">
+                <i class="fas fa-xs fa-external-link-alt"></i>
+              </span>
+              {{ end }}
+              {{ if .HasChildren }}
+            <span class="icon">
+              <i class="fas fa-md fa-caret-down"></i>
+            </span>
+            {{ end }}
+          </a>
+          {{ if .HasChildren }}
+            <div class="navbar-dropdown is-radiusless">
+              {{ range .Children }}
+                {{ template "main_nav_item" . }}
+              {{ end }}
+            </div>
+          {{ end }}
+          </div>
+        {{ end }}
 
+        <!-- docs menu for desktop hiding nested items   -->
         {{ range $docs }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
-        <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
+        <div class="docs-menu--desktop navbar-item is-size-5-desktop has-dropdown is-hoverable">
           <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
             <span>
               {{ .Name }}
