@@ -130,6 +130,8 @@ The gRPC Metrics Service is part of the KEDA Operator deployment and serves scal
 | metrics-service-address        | keda-operator.keda.svc.cluster.local:9666 | The address of the gRPC Metrics Service Server                                                                                                                                                                                                                                                            |
 | metrics-service-grpc-authority | ""                                        | Host Authority override for the Metrics Service if the Host Authority is not the same as the address used for the gRPC Metrics Service Server. This is required for mutual TLS when the identity of the adapter server as presented in its TLS certificate is not the same as the metrics-service-address |
 
+# gRPC TLS min version
+
 By default, KEDA uses TLS1.3 as a minimum TLS version for GRPC client/server. However, if you need to support another version you can configure it by using the environment variable `KEDA_GRPC_MIN_TLS_VERSION`.
 
 For example:
