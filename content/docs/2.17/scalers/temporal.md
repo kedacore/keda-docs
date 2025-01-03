@@ -35,11 +35,10 @@ triggers:
 - `activationTargetQueueSize` - This sets the target value for activating the scaler. More information about activation thresholds can be found  [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `5`, Optional)
 - `taskQueue` - This parameter specifies the task queue name. (Required)
-- `queueTypes` - Task Queue type can be set to either workflow, activity, or both. By default, the type is set to `workflow`. This field is optional.
+- `queueTypes` - Task Queue type can be configured as `workflow`, `activity`, or both, separated by a comma (,) if multiple types are needed. The default type is `workflow`. This field is optional.
 - `buildId` - Build IDs identify Worker versions for Workflow versioning and task compatibility (Optional)
 - `selectAllActive` - Include all active versions (Default:`false`, Optional)
 - `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
-- `apiKey` - API key for authentication with temporal cloud (Optional)
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
