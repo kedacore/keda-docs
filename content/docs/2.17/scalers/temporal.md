@@ -36,7 +36,7 @@ triggers:
 - `apiKey` - API key for authentication with temporal cloud (Optional)
 - `apiKeyFromEnv` - API key for authentication similer to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
-- `UnsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
+- `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
 
 **Authentication Parameters:**
 
