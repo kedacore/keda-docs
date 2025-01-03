@@ -19,6 +19,12 @@ triggers:
       targetQueueSize: "2"
       activationTargetQueueSize: "0"
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
+      queueTypes: workflow # optional
+      buildId: 1.0.0 # optional
+      selectAllActive: false # optional
+      selectUnversioned: false optional
+      minConnectTimeout: 5 # optional
+      unsafeSsl: false # optional
 ```
 
 **Parameter list:**
@@ -29,7 +35,7 @@ triggers:
 - `activationTargetQueueSize` - This sets the target value for activating the scaler. More information about activation thresholds can be found  [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `5`, Optional)
 - `taskQueue` - This parameter specifies the task queue name. (Required)
-- `queueTypes` - Task Queue type, which can be either workflow or activity. The default type is workflow (Optional)
+- `queueTypes` - Task Queue type can be set to either workflow, activity, or both. By default, the type is set to `workflow`. This field is optional.
 - `buildId` - Build IDs identify Worker versions for Workflow versioning and task compatibility (Optional)
 - `selectAllActive` - Include all active versions (Default:`false`, Optional)
 - `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
@@ -37,6 +43,14 @@ triggers:
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
+
+> 💡 **NOTE:** Activation based on backlog may not be reliable when scaling to zero.
+  This approach fails to account for in-flight tasks or workloads with throughput too low to trigger a backlog.
+  Consequently, scaling to zero could result in undesirable behavior,
+  such as terminating resources and subsequently having to scale back up to handle queued tasks. To address these challenges, consider customizing the cooldownPeriod or scale-down behavior of the Horizontal Pod Autoscaler (HPA).
+  By fine-tuning the configurations, you can prevent premature scaling to zero,
+  ensuring that resources remain available for in-flight tasks or workloads with minimal throughput.
+
 
 **Authentication Parameters:**
 
@@ -47,13 +61,6 @@ Temporal supports `apiKey` and `mTLS` for authentication. You can use the follow
 - `cert` - Certificate for client authentication. (Optional)
 - `key` - Key for client authentication. (Optional)
 - `keyPassword` - If set the keyPassword is used to decrypt the provided key. (Optional)
-
-> 💡 **NOTE:** Activation based on backlog may not be reliable when scaling to zero.
-  This approach fails to account for in-flight tasks or workloads with throughput too low to trigger a backlog.
-  Consequently, scaling to zero could result in undesirable behavior,
-  such as terminating resources and subsequently having to scale back up to handle queued tasks. To address these challenges, consider customizing the scale-down behavior of the Horizontal Pod Autoscaler (HPA).
-  By fine-tuning the configurations, you can prevent premature scaling to zero,
-  ensuring that resources remain available for in-flight tasks or workloads with minimal throughput.
 
 ### Example
 
