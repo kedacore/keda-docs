@@ -1,0 +1,36 @@
+{{ $vendors := site.Params.vendors }}
+<div class="columns is-multiline is-centered">
+  {{ range $vendors }}
+  <div class="column is-12">
+    <div class="card">
+      <div class="card-content">
+        <!-- Logo Section -->
+        <div style="text-align: left; margin-bottom: 1rem;">
+          <img src="{{ printf "img/logos/%s" .logo | relURL }}" alt="{{ .name }}" style="max-width: 200px; height: auto;">
+        </div>
+        <!-- Description Section -->
+        <div class="content" style="text-align: left; margin-bottom: 1rem;">
+          {{ .description | markdownify }}
+        </div>
+        <hr />
+        <!-- Buttons Section -->
+        <div class="buttons" style="text-align: left;">
+          {{ range .urls }}
+          <a href="{{ .url }}" target="_blank" class="button has-background-info has-text-white has-text-weight-bold">{{ .text }}</a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<!-- Add Your Solution Button -->
+<br/>
+<div class="columns is-centered is-8">
+  <a class="button column is-one-quarter has-background-info has-text-white has-text-weight-bold" 
+     href="https://github.com/kedacore/keda-docs#become-a-listed-keda-commercial-offering" 
+     target="_blank" role="button">
+      Add your solution
+  </a>
+</div>
