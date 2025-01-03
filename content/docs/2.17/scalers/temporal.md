@@ -34,7 +34,7 @@ triggers:
 - `selectAllActive` - Include all active versions (Default:`false`, Optional)
 - `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
 - `apiKey` - API key for authentication with temporal cloud (Optional)
-- `apiKeyFromEnv` - API key for authentication similer to `apiKey`, but read from an environment variable (Optional)
+- `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
 
