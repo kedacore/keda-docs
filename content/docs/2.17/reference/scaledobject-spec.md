@@ -32,6 +32,7 @@ spec:
   fallback:                                                 # Optional. Section to specify fallback options
     failureThreshold: 3                                     # Mandatory if fallback section is included
     replicas: 6                                             # Mandatory if fallback section is included
+    behavior: {kind-of-behavior}                            # Optional. Default: "static"
   advanced:                                                 # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false               # Optional. Default: false
     horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
@@ -141,6 +142,7 @@ This setting is passed to the HPA definition that KEDA will create for a given r
   fallback:                                          # Optional. Section to specify fallback options
     failureThreshold: 3                              # Mandatory if fallback section is included
     replicas: 6                                      # Mandatory if fallback section is included
+    behavior: "useCurrentReplicasAsMinimum"          # Optional. Default: "static"
 ```
 
 The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
@@ -150,6 +152,8 @@ KEDA will keep track of the number of consecutive times each scaler has failed t
 target metric value * fallback replicas
 ```
 Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the defined number of fallback replicas.
+When using `behavior` with value `useCurrentReplicasAsMinimum`, the current number of replicas is determined. If the current number of replicas is higher than `fallback.replicas`, this value is used as fallback replicas.
+When `behavior` is not specified or when `behavior` is given with value `static`, the number of replicas `fallback.replicas` will be used.
 
 **Example:** When my instance of prometheus is unavailable 3 consecutive times, KEDA will change the HPA metric such that the deployment will scale to 6 replicas.
 
