@@ -16,7 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
-| v2.16 | TBD           |
+| v2.16 | v1.29 - v1.31 |
 | v2.15 | v1.28 - v1.30 |
 | v2.14 | v1.27 - v1.29 |
 | v2.13 | v1.27 - v1.29 |
@@ -157,11 +157,11 @@ Like reconciliation, KEDA Operator also uses the [controller-runtime project](ht
 
 To specify values other than their defaults, you can set the following environment variables:
 
-| Environment variable name                    | Deployment     | Default Value | Manager Property |
-| -------------------------------------------- | -------------- | ------------- | ---------------- |
-| KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator       | 15s           | LeaseDuration    |
-| KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator       | 10s           | RenewDeadline    |
-| KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator       | 2s            | RetryPeriod      |
+| Environment variable name                    | Deployment | Default Value | Manager Property |
+| -------------------------------------------- | ---------- | ------------- | ---------------- |
+| KEDA_OPERATOR_LEADER_ELECTION_LEASE_DURATION | Operator   | 15s           | LeaseDuration    |
+| KEDA_OPERATOR_LEADER_ELECTION_RENEW_DEADLINE | Operator   | 10s           | RenewDeadline    |
+| KEDA_OPERATOR_LEADER_ELECTION_RETRY_PERIOD   | Operator   | 2s            | RetryPeriod      |
 
 ## Restrict the Namespaces KEDA is Watching
 

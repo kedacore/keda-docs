@@ -56,7 +56,7 @@ Here's a good example of [Coralogix becoming a listed user](https://github.com/k
 
 ### Become a listed KEDA commercial offering!
 
-Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/support/#commercial-support)? Say no more!
+Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/enterprise)? Say no more!
 
 You can easily get listed by following these steps:
 
@@ -65,8 +65,14 @@ You can easily get listed by following these steps:
 
 ```toml
 [[params.vendors]]
-url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift"
-logo = "red-hat.png"
+name = "Red Hat"
+logo = "vendors/red-hat.png"
+description = """
+Red Hat integrates KEDA with OpenShift through the **Custom Metrics Autoscaler** (CMA) available through the OpenShift Marketplace.
+"""
+urls = [
+  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
+]
 ```
 
 ### Adding blog post

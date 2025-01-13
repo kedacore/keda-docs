@@ -20,6 +20,11 @@ While this is a good starting point, some end-users may want to use their own ce
 
 Certificates generation in the KEDA operator can be disabled by removing the console argument `--enable-cert-rotation=true` or setting it to `false`. Once this setting is disabled, user given certs can be placed in the secret `kedaorg-certs` which is automatically mounted in all the components or they can be patched to use other secret (this can be done throught helm values too).
 
+Additionally, KEDA includes a new `--enable-webhook-patching` flag, which controls whether the operator patches webhook resources. By default, this is set to `true`, ensuring Kubernetes trusts the operator's CA. However, if webhooks are disabled or not needed in your deployment, you can set this flag to `false` to avoid errors related to missing webhook resources.
+
+Example use case:
+- When using operator-managed certificates but disabling webhooks, set `--enable-webhook-patching=false` to prevent the operator from attempting to patch non-existent webhook resources.
+
 All components inspect the folder `/certs` for any certificates inside it. Argument `--cert-dir` can be used to specify another folder to be used as a source for certificates, this argument can be patched in the manifests or using Helm values. Because these certificates are also used for internal communication between KEDA components, the CA is also required to be registered as a trusted CA inside KEDA components.
 
 ## Register your own CA in KEDA Operator Trusted Store

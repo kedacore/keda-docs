@@ -64,6 +64,12 @@
     & + &
       margin-top: 1rem
 
+.docs-menu--desktop
+  display: flex
+
+.docs-menu--mobile
+  display: none
+
 .scrolled
     background: #1d1c29 !important
     transition: background 1000ms
@@ -84,6 +90,12 @@
 
   .is-left-padded
     padding-left: 40px
+
+  .docs-menu--mobile
+    display: flex
+
+  .docs-menu--desktop
+    display: none
 
 @media screen and (max-width: 1023px)
   .navbar-link, .navbar-item
