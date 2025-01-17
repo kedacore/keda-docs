@@ -378,7 +378,7 @@ The `credentials` section specifies AWS credentials, including the `accessKey` a
 
 The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
 
-The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, and an optional version parameter, defaulting to the latest version if unspecified.
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, AWS Secret Manager secret name, an optional secret key parameter, and an optional version parameter, defaulting to the latest version if unspecified.
 
 ```yaml
 awsSecretManager:
@@ -400,6 +400,7 @@ awsSecretManager:
   - parameter: {param-name-used-for-auth}          # Required.
     name: {aws-secret-name}                        # Required.
     version: {aws-secret-version}                  # Optional.
+    secretKey: {aws-secret-key}                    # Optional.
 ```
 
 #### AWS Pod Identity Webhook for AWS
