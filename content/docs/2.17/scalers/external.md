@@ -17,7 +17,6 @@ triggers:
   metadata:
     scalerAddress: external-scaler-service:8080
     caCert : /path/to/tls/ca.pem
-    tlsCertFile: /path/to/tls/cert.pem # Deprecated. https://github.com/kedacore/keda/issues/4549
     tlsClientCert: /path/to/tls/cert.pem
     tlsClientKey: /path/to/tls/key.pem
     unsafeSsl: false
@@ -26,7 +25,6 @@ triggers:
 **Parameter list:**
 
 - `scalerAddress` - Address of the external scaler. Format must be `host:port`.
-- `tlsCertFile` - Location of a certificate to use for the GRPC connection to authenticate with. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 The entire metadata object is passed to the external scaler in `ScaledObjectRef.scalerMetadata`.
