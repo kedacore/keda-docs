@@ -240,15 +240,14 @@ secretTargetRef:                          # Optional.
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
 
-### Bound service account token
+### Bound service account token(s)
 
-You can pull a service account token into the trigger by defining the `serviceAccountName` of the Kubernetes ServiceAccount and token `expiry` duration.
+You can pull one or more service account tokens into the trigger by defining the `serviceAccountName` of the Kubernetes service account.
 
 ```yaml
-boundServiceAccountToken:                        # Optional.
-  - parameter: connectionString                  # Required - Defined by the scale trigger
-    serviceAccountName: my-keda-service-account  # Required.
-    expiry: 1h                                   # Required.
+boundServiceAccountToken:                   # Optional.
+  - parameter: connectionString             # Required - Defined by the scale trigger
+    serviceAccountName: my-service-account  # Required.
 ```
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
