@@ -1,5 +1,6 @@
 +++
-title = "Getting Started (New users start here!)"
+title = "Getting Started"
+description = "How you can start with KEDA as new user"
 weight = 1
 +++
 
