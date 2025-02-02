@@ -32,6 +32,8 @@ triggers:
       demands: "{demands}"
       # Optional: Demands of jobs must exactly match the capabilities the trigger defines
       requireAllDemands: false 
+      # Optional: Require jobs to include specified demands, ignoring any extra ones
+      requireAllDemandsAndIgnoreOthers: false
       # Optional: How many jobs to fetch for the pool in the API (default: 250)
       jobsToFetch: "{jobsToFetch}"
     authenticationRef:
@@ -87,7 +89,10 @@ particularly these would be exclusive agents where jobs would fail if run on the
 
 - **Using Parent:** Azure DevOps is able to determine which agents can match any job it is waiting for. If you specify a parent template then KEDA will further interrogate the job request to determine if the parent is able to fulfill the job. If the parent is able to complete the job it scales the workload fulfill the request. The parent template that is generally offline must stay in the Pool's Agent list.
 
-- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored). If `requireAllDemands` is set to `true` it is checked if a jobs demands are fulfilled exactly by a trigger and only scales if this is true. This means a job with demands `maven` will not match an agent with capabilities `maven,java`.
+- **Using demands:** KEDA will determine which agents can fulfill the job based on the demands provided. The demands are provided as a comma-separated list and must be a subset of the actual capabilities of the agent. (For example `maven,java,make`. Note: `Agent.Version` is ignored).
+  - If `requireAllDemands` is set to `true`, the job's demands must match exactly with the triggers demands. This means a job with demands `maven` will not match an agent with capabilities `maven,java`.
+  - If `requireAllDemandsAndIgnoreOthers` is set to `true`, the job's demands must include all specified demands exactly, but any additional demands will be ignored. For instance, a job with demands `maven` will match an agent with capabilities `maven,java`, as long as `maven` is in the demand list.
+  - **Note:** `requireAllDemands` takes precedence over `requireAllDemandsAndIgnoreOthers`. If both are set to `true`, only exact matches are accepted.
 
 Microsoft's documentation: [https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml)
 
