@@ -41,7 +41,7 @@ The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on any
 
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
-- `timeHorizon` - Time range for which you want to retrieve the matrics. (Default: `2m` and Default with aggregation field: `5m`)
+- `timeHorizon` - Time range for which you want to retrieve the metrics. (Default: `2m` and Default with aggregation field: `5m`)
 
 - `valueIfNull` - Value returned if request returns no timeseries.(Default: `""`, Optional, This value can be a float) 
 

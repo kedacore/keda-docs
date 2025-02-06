@@ -90,6 +90,8 @@ contents you can modify. The following fields are required:
 - `date` (in `YYYY-MM-DD` format)
 - `author`
 
+> Note: Please ensure the file is named correctly, as it will be used as the blog post URL slug. Avoid defining an alias to rename the URL slug, as this goes against our convention.
+
 ### Adding scaler documentation
 
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
