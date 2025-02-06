@@ -8,7 +8,7 @@ go_file = "temporal_scaler"
 
 ### Trigger Specification
 
-This specification describes the `temporal` trigger that scales based on a temporal task queue.
+This specification describes the `temporal` trigger that scales based on a Temporal task queue.
 
 ```yaml
 triggers:
