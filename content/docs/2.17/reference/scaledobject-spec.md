@@ -32,6 +32,7 @@ spec:
   fallback:                                                 # Optional. Section to specify fallback options
     failureThreshold: 3                                     # Mandatory if fallback section is included
     replicas: 6                                             # Mandatory if fallback section is included
+    behavior: {kind-of-behavior}                            # Optional. Default: "static"
   advanced:                                                 # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false               # Optional. Default: false
     horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
@@ -141,22 +142,40 @@ This setting is passed to the HPA definition that KEDA will create for a given r
   fallback:                                          # Optional. Section to specify fallback options
     failureThreshold: 3                              # Mandatory if fallback section is included
     replicas: 6                                      # Mandatory if fallback section is included
+    behavior: "static"                               # Optional. Default: "static"
 ```
 
 The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
 
-KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behaviour), the scaler will, instead, return a normalised metric using the formula:
+KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula:
 ```
 target metric value * fallback replicas
 ```
 Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the defined number of fallback replicas.
 
-**Example:** When my instance of prometheus is unavailable 3 consecutive times, KEDA will change the HPA metric such that the deployment will scale to 6 replicas.
-
 There are a few limitations to using a fallback:
  - It only supports scalers whose target is an `AverageValue` metric. Thus, it is **not** supported by the CPU & memory scalers, or by scalers whose metric target type is `Value`. In these cases, it will assume that fallback is disabled.
  - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
 
+### Behavior 'static'
+When `behavior` is not specified or when `behavior` is given with value `static`, the number of replicas `fallback.replicas` will be used.
+
+**Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when I have `fallback.replicas` set to 6 with a `behavior` 'static'.
+
+### Behavior 'currentReplicas'
+When using `behavior` with value `currentReplicas`, the current number of replicas is determined. This value will be used as fallback replicas.
+
+**Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when the current replicas are 6, with a `behavior` 'currentReplicas'.
+
+### Behavior 'currentReplicasIfHigher'
+When using `behavior` with value `currentReplicasIfHigher`, the current number of replicas is determined. If the current number of replicas is higher than `fallback.replicas`, this value will be used as fallback replicas. If the current number of replicas is lower, the value of `fallback.replicas` will be used.
+
+**Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when I have `fallback.replicas` set to 3, but the current replicas are 6, with a `behavior` 'currentReplicasIfHigher'.
+
+### Behavior 'currentReplicasIfLower'
+When using `behavior` with value `currentReplicasIfLower`, the current number of replicas is determined. If the current number of replicas is lower than `fallback.replicas`, this value will be used as fallback replicas. If the current number of replicas is higher, the value of `fallback.replicas` will be used.
+
+**Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 3 replicas when I have `fallback.replicas` set to 6, but the current replicas are 3, with a `behavior` 'currentReplicasILower'.
 
 ## advanced
 
