@@ -25,6 +25,8 @@ triggers:
       platformName: '' # Optional.
       unsafeSsl: 'false' # Optional.
       activationThreshold: 0 # Optional.
+      nodeMaxSessions: 1 # Optional.
+      capabilities: '' # Optional.
 ```
 
 **Parameter list:**
@@ -47,6 +49,7 @@ triggers:
 
 ### Example
 
+---
 #### Selenium Grid scaler trigger metadata for Chrome browser with `platformNane` and empty `browserVersion`
 
 Here is a full example of scaled object definition using Selenium Grid trigger:
@@ -163,6 +166,7 @@ When the request capabilities match with scaler trigger metadata, the scaler wil
 
 Now, the request can be picked up by the Node and the session is created. Session queue will be cleared and the scaler will not create a new Node until the next request comes in.
 
+---
 #### Selenium Grid scaler trigger metadata for Chrome browser with `browserVersion` and `platformName`
 
 Moreover, at the same time, you can create one more scaled object for Chrome browser request with specific `browserVersion`. For example
@@ -220,6 +224,7 @@ options.set_capability('browserVersion', '131.0')
 driver = webdriver.Remote(options=options, command_executor=SELENIUM_GRID_URL)
 ```
 
+---
 #### Selenium Grid scaler trigger metadata with extra `capabilities`
 
 For an advanced use case, you also can set custom capabilities for matching specific Nodes in the scaler trigger metadata. For example
@@ -285,6 +290,7 @@ options.set_capability('myApp:publish', 'public')
 driver = webdriver.Remote(options=options, command_executor=SELENIUM_GRID_URL)
 ```
 
+---
 #### Selenium Grid scaler trigger metadata for Firefox browser
 
 ```yaml
@@ -338,6 +344,7 @@ options.set_capability('platformName', 'Linux')
 driver = webdriver.Remote(options=options, command_executor=SELENIUM_GRID_URL)
 ```
 
+---
 #### Selenium Grid scaler trigger metadata for Edge browser
 
 Similarly, for Edge. Note that for Edge you must set the `sessionBrowserName` to `msedge` inorder for scaling to work properly.
@@ -394,6 +401,7 @@ options.set_capability('platformName', 'Linux')
 driver = webdriver.Remote(options=options, command_executor=SELENIUM_GRID_URL)
 ```
 
+---
 #### Selenium Grid scaler trigger metadata for Chrome browser with `nodeMaxSessions`
 
 In case you want to scale from 0 (`minReplicaCount: 0`), and browser nodes are configured different `--max-sessions` greater than 1, you can set `nodeMaxSessions` for scaler align with number of slots available per node to have the correct scaling behavior.
