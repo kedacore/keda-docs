@@ -129,7 +129,7 @@ The current GitHub API design does not facilitate determining the number of pend
 
 For example, the scaler response time and bandwidth can be fine-tuned by adjusting the `pollingInterval` parameter. In theory, setting `pollingInterval` to `1` second, could result in starting up to 600,000 (100 runs x 100 jobs x 60 seconds) runners per minute for each repository (assuming eligible pending jobs are found). However, having so many pending jobs and setting `pollingInterval` to `1` results in at least 6,000 calls (100 runs * 60 seconds), reaching the API rate limit very quickly.
 
-*Older versions of this scaler can fetch only 30 workflow runs and 30 jobs per run during each polling cycle. More details available on this [thread](https://github.com/kedacore/keda/pull/6519).*
+*Starting KEDA version 2.17, this scaler can fetch up to 100 workflow runs per repository and 100 jobs per run during each polling cycle. Previous versions can fetch only 30 workflow runs per repository and 30 jobs per run during each polling cycle. More details are available on this [thread](https://github.com/kedacore/keda/pull/6519).*
 
 At the moment, there's no elegant way to overcome this limit for this particular scaler, unless GitHub introduces a new API or enhances existing ones to allow fetching pending jobs filtered by labels and status in a single call.
 
