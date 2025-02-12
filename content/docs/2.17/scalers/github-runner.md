@@ -123,6 +123,16 @@ Note: This does not apply to a hosted appliance as there are no rate limits.
 
 Additional Note: The GitHub App authentication method has a rate limit of 15000 rather than 5000 per hour.
 
+**Fine-Tuning**
+
+The current GitHub API design does not facilitate determining the number of pending jobs efficiently because it requires making many API calls to get an accurate estimate which increases the risk of reaching rate limits. So, there will be a trade off between lower scaler response times and staying within API rate limits. However, users have the flexibility to configure this scaler based on their specific uses cases by changing certain parameters.
+
+For example, the scaler response time and bandwidth can be fine-tuned by adjusting the `pollingInterval` parameter. In theory, setting `pollingInterval` to `1` second, could result in starting up to 600,000 (100 runs x 100 jobs x 60 seconds) runners per minute for each repository (assuming eligible pending jobs are found). However, having so many pending jobs and setting `pollingInterval` to `1` results in at least 6,000 calls (100 runs * 60 seconds), reaching the API rate limit very quickly.
+
+*Older versions of this scaler can fetch only 30 workflow runs and 30 jobs per run during each polling cycle. More details available on this [thread](https://github.com/kedacore/keda/pull/6519).*
+
+At the moment, there's no elegant way to overcome this limit for this particular scaler, unless GitHub introduces a new API or enhances existing ones to allow fetching pending jobs filtered by labels and status in a single call.
+
 **References**
 
 GitHub's self-hosted runner documentation: [https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
