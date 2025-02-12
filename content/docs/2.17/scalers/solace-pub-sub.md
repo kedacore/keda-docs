@@ -32,7 +32,7 @@ triggers:
 
 **Parameter list:**
 
-- `solaceSempBaseURL` - Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`.
+- `solaceSempBaseURL` - Solace SEMP Endpoint comma-separated host list in format: `<protocol>://<host-or-service>:<port>`.
 - `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored.
 - `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
@@ -49,6 +49,7 @@ triggers:
 **Parameter Requirements:**
 
 - Parameters resolving the target queue are all **required:** `solaceSempBaseURL`, `messageVpn`, `queueName`
+- **solaceSempBaseURL** can contain either a single URL or a comma-separated list of URLs.  If multiple URLs are provided, the scaler will iterate over the list until it is both able to connect the broker successfully AND the broker's messageVpn is in the **UP** state.  All brokers in the list will share the same authentication configuration.  This feature was primarily added to support Solace's Disaster Recovery Replication feature.
 - **At least** one of `messageCountTarget`, `messageSpoolUsageTarget`, or `messageReceiveRateTarget` is **required.** If one or more values are present, the metric value resulting in the highest desired replicas will be used. (Standard KEDA/HPA behavior)
 - The Solace PubSub+ Scaler polls the Solace SEMP REST API to monitor target queues. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the `solace-event-queue` trigger to function. These values can be set in several different ways:
     - `username` and `password` may be set directly in the trigger metadata
