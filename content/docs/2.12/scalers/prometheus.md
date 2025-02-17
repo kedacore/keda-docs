@@ -413,6 +413,7 @@ spec:
     provider: gcp
 ---
 apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
 metadata:
   name: google-managed-prometheus-scaler
 spec:
