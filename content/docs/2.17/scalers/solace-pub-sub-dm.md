@@ -55,7 +55,7 @@ This specification describes the `solace-direct-messaging` trigger that scales b
 
 - Parameters resolving the target host and shared subscription are all **required:** `hostUrl`, `messageVpn`, `clientNamePrefix`
 
-- **At least** one of `aggregatedClientTxMsgRateTarget`, `aggregatedClientTxByteRateTarget`, `aggregatedClientAverageTxByteRateTarget` or  `aggregatedClientAverageTxMsgRateTarget` is **required.**.
+- **At least** one of `aggregatedClientTxMsgRateTarget`, `aggregatedClientTxByteRateTarget`, `aggregatedClientAverageTxByteRateTarget` or  `aggregatedClientAverageTxMsgRateTarget` is **required**.
 
 If one or more values are present, the metric value resulting in the highest desired replicas will be used. (Standard KEDA/HPA behavior)
 
