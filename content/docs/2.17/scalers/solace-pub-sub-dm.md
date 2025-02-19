@@ -19,7 +19,7 @@ This specification describes the `solace-direct-messaging` trigger that scales b
     metricType: Value
     metadata:
       hostUrl:  "https://solace_broker1:943,https://solace_broker2:943"
-      messageVpn: "message-vpm"
+      messageVpn: "message-vpn"
       clientNamePrefix: "client-name-prefix"
       unsafeSSL: "true"
       queuedMessagesFactor: '3'
