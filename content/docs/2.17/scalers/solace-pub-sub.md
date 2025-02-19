@@ -11,6 +11,12 @@ go_file = "solace_scaler"
 
 This specification describes the `solace-event-queue` trigger that scales based on a Solace PubSub+ Event Broker queue.
 
+**Note:**
+This trigger is for **Guaranteed messaging** (Solace PubSub+ Event Broker queue) only, it provides the ability to scale the number of client instances automatically based upon metrics for a Solace PubSub+ Event Broker queue.
+
+If you need to use **Direct messaging**, shared subscriptions (transmitted message rate, transmitted bytes rate, D-1 queue length) you should use the `solace-direct-messaging` trigger.
+
+
 ```yaml
 triggers:
 - type: solace-event-queue

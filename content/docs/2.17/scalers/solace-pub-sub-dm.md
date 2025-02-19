@@ -11,7 +11,10 @@ go_file = "solace_dm_scaler"
 
 This specification describes the `solace-direct-messaging` trigger that scales based on a Solace PubSub+ Event Broker direct messaging rates for all the clients in a message vpn that matches a common client name prefix.
 
+**Note:**
+This trigger is for **Direct messaging** only, it provides the ability to scale the number of client instances automatically based upon transient metrics for shared subscriptions (transmitted message rate, transmitted bytes rate, D-1 queue length), all this metrics exists as long as the clients are connected.
 
+If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) you should use the `solace-event-queue` trigger.
 
 ```yaml
   triggers:
