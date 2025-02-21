@@ -60,7 +60,10 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 - **At least** one of `aggregatedClientTxMsgRateTarget`, `aggregatedClientTxByteRateTarget`, `aggregatedClientAverageTxByteRateTarget` or  `aggregatedClientAverageTxMsgRateTarget` is **required**.
 
-If one or more values are present, the metric value resulting in the highest desired replicas will be used. (Standard KEDA/HPA behavior)
+If more than one target values are present, calculation is done for each metric and the metric value resulting in the highest desired replicas will be used. (Standard KEDA/HPA behavior)
+
+For more details please see [Horizontal Pod Autoscaling - Algorithm details](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details)
+
 
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing a set of IAM credentials.
