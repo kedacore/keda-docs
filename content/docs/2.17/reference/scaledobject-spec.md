@@ -166,7 +166,7 @@ When `behavior` is not specified or when `behavior` is given with value `static`
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when I have `fallback.replicas` set to 6 with a `behavior` 'static'.
 
-### Behavior 'currentReplicas'
+#### `currentReplicas` behavior
 When using `behavior` with value `currentReplicas`, the current number of replicas is determined. This value will be used as fallback replicas.
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when the current replicas are 6, with a `behavior` 'currentReplicas'.
