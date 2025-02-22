@@ -176,7 +176,7 @@ When using `behavior` with value `currentReplicasIfHigher`, the current number o
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when I have `fallback.replicas` set to 3, but the current replicas are 6, with a `behavior` 'currentReplicasIfHigher'.
 
-### Behavior 'currentReplicasIfLower'
+#### `currentReplicasIfLower` behavior
 When using `behavior` with value `currentReplicasIfLower`, the current number of replicas is determined. If the current number of replicas is lower than `fallback.replicas`, this value will be used as fallback replicas. If the current number of replicas is higher, the value of `fallback.replicas` will be used.
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 3 replicas when I have `fallback.replicas` set to 6, but the current replicas are 3, with a `behavior` 'currentReplicasILower'.
