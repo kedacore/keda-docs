@@ -157,7 +157,11 @@ There are a few limitations to using a fallback:
  - It only supports scalers whose target is an `AverageValue` metric. Thus, it is **not** supported by the CPU & memory scalers, or by scalers whose metric target type is `Value`. In these cases, it will assume that fallback is disabled.
  - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
 
-### Behavior 'static'
+## fallback.behavior
+
+The `behavior` option can be used to configure the final replica count calculation on the target deployment when fallback is used.
+
+#### `static` behavior
 When `behavior` is not specified or when `behavior` is given with value `static`, the number of replicas `fallback.replicas` will be used.
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 6 replicas when I have `fallback.replicas` set to 6 with a `behavior` 'static'.
