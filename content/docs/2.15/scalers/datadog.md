@@ -358,7 +358,7 @@ This works particularly well when scaling against the same metric, but with slig
 
 When wanting to scale on non-similar metrics, whilst still benefiting from reduced API calls with multi-query support, the easiest way to do this is to make each query directly return the desired scale (eg: number of pods), and then `max` or `average` the results to get the desired target scale.
 
-This can be done by adding arthmetic to the queries, which makes them directly return the number of pods that should be running.
+This can be done by adding arithmetic to the queries, which makes them directly return the number of pods that should be running.
 
 Following this pattern, and then setting `queryValue: 1` and `metricType: AverageValue` results in the desired number of pods being spawned directly from the results of the metric queries.
 

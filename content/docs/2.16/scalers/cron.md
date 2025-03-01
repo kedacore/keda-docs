@@ -54,7 +54,7 @@ What the CRON scaler does **not** do, is scale your workloads based on a recurri
 
 If you want to scale you deployment to 0 outside office hours / working hours,
 you need to set `minReplicaCount: 0` in the ScaledObject, and increase the
-replicas during work hours. That way the Deployment will be scaled to 0 ouside
+replicas during work hours. That way the Deployment will be scaled to 0 outside
 that time window. By default the ScaledObject `cooldownPeriod` is 5 minutes, so the actual
 scaling down will happen 5 minutes after the cron schedule `end` parameter.
 

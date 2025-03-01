@@ -18,7 +18,7 @@ To change the default cluster domain (`cluster.local`), parameter `--k8s-cluster
 
 While this is a good starting point, some end-users may want to use their own certificates which are generated from their own CA in order to improve security. This can be done by disabling the certificate generation/rotation in the operator and updating default values in other components (if required). 
 
-Certificates generation in the KEDA operator can be disabled by removing the console argument `--enable-cert-rotation=true` or setting it to `false`. Once this setting is disabled, user given certs can be placed in the secret `kedaorg-certs` which is automatically mounted in all the components or they can be patched to use other secret (this can be done throught helm values too).
+Certificates generation in the KEDA operator can be disabled by removing the console argument `--enable-cert-rotation=true` or setting it to `false`. Once this setting is disabled, user given certs can be placed in the secret `kedaorg-certs` which is automatically mounted in all the components or they can be patched to use other secret (this can be done throughout helm values too).
 
 All components inspect the folder `/certs` for any certificates inside it. Argument `--cert-dir` can be used to specify another folder to be used as a source for certificates, this argument can be patched in the manifests or using Helm values. Because these certificates are also used for internal communication between KEDA components, the CA is also required to be registered as a trusted CA inside KEDA components.
 
