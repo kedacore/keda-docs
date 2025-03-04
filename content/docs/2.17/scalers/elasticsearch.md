@@ -42,6 +42,7 @@ triggers:
 - `parameters` - Parameters that will be used by the search template. It supports multiple params separated by a semicolon character ( `;` ).
 - `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `ignoreNullValues` - Set to `true` to ignore error when Null values are discovered. Set to `false`, the scaler will return error when Null values are discovered. (Values: `true`,`false`, Default: `false`, Optional)
 
 ### Authentication Parameters
 
