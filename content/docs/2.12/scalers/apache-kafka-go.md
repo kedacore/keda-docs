@@ -73,7 +73,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
  If TLS is required you should set tls to enable. If required for your Kafka configuration, you may also provide a ca, cert, key and keyPassword. cert and key must be specified together. Another alternative is to specify tls and sasl in ScaledObject instead of tls and sasl in TriggerAuthentication, respectively.
 
- In case of SASL based authetication provide the `username` and `password`.
+ In case of SASL based authentication provide the `username` and `password`.
  
  For AWS MSK IAM authentication provide `aws_msk_iam` as `sasl`. You don't need to set `username` and `password` in this case. However, you need to enable TLS by setting `tls` to `enable`.
 

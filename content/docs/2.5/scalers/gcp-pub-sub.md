@@ -75,7 +75,7 @@ spec:
       name: gcp-pubsub-credentials
 ```
 
-Alternatively, you can configure the credentials in a secet, via the `TriggerAuthentication`:
+Alternatively, you can configure the credentials in a secret, via the `TriggerAuthentication`:
 ```yaml
 apiVersion: v1
 kind: Secret

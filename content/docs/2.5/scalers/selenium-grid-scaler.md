@@ -56,7 +56,7 @@ spec:
 
 The above example will create Chrome browser nodes equal to the requests pending in session queue for Chrome browser.
 
-Similary for Firefox
+Similarly, for Firefox
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
