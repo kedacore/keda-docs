@@ -40,7 +40,7 @@ triggers:
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint. (Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
-- `timeout` - Timeout in miliseconds **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
+- `timeout` - Timeout in milliseconds **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 ### Authentication Parameters
 
