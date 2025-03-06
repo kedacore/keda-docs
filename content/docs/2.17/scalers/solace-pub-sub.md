@@ -42,10 +42,10 @@ triggers:
 - `messageVpn` - Message VPN hosted on the Solace broker.
 - `queueName` - Message Queue to be monitored.
 - `messageCountTarget` - The target number of messages manageable by a pod. The scaler will cause the replicas to increase if the queue message backlog is greater than the target value per active replica.
-- `activationMessageCountTarget` - Target message count oberved on a queue for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `activationMessageCountTarget` - Target message count observed on a queue for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `messageSpoolUsageTarget` - Integer value expressed in Megabytes (MB). The target spool usage manageable by a pod. The scaler will cause the replicas to increase if the queue spool usage is greater than the target value per active replica.
 - `activationMessageSpoolUsageTarget` - Target message spool backlog (data stored in a queue expressed in Megabytes) for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-- `messageReceiveRateTarget` - Target number of messages/second managable by a replica.
+- `messageReceiveRateTarget` - Target number of messages/second manageable by a replica.
 - `activationMessageReceiveRateTarget` - Target number of messages per second delivered to a queue for activating the scaler (scaling from 0->1 or 1->0 replicas). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `username` - User account with access to Solace SEMP RESTful endpoint.
 - `password` - Password for the user account.
@@ -86,7 +86,7 @@ You can use TriggerAuthentication CRD to configure the username and password to 
 
 ### Example
 
-The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be delcared in the same namespace.
+The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be declared in the same namespace.
 
 ```yaml
 apiVersion: v1

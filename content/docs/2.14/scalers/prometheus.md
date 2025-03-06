@@ -92,7 +92,7 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
 - `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
-- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
+- Prometheus query endpoint can be retrieved from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
 To gain a better understanding of creating a Prometheus trigger for Azure Monitor Managed Service for Prometheus, refer to [this example](#example-azure-monitor-managed-service-for-prometheus).
 
@@ -101,7 +101,7 @@ To gain a better understanding of creating a Prometheus trigger for Azure Monito
 Google Cloud Platform provides a comprehensive [managed service for Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus), enabling you to effortlessly export and query Prometheus metrics.
 By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP managed service and handle authentication using the GCP workload identity mechanism.
 
-See the follwowing steps to configure the scaler integration.
+See the following steps to configure the scaler integration.
 
 - Setup [GCP Workload Identity](./../authentication-providers/gcp-workload-identity) on KEDA operator;
 - Assign the [Monitoring Viewer](https://cloud.google.com/iam/docs/understanding-roles#monitoring.viewer) role (namely `roles/monitoring.viewer`) to the Google Service Account on Identity Access and Management (IAM).

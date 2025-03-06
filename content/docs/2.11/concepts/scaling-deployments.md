@@ -247,7 +247,7 @@ metadata:
     autoscaling.keda.sh/paused-replicas: "0"
 ```
 
-The presensce of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
+The presence of this annotation will pause autoscaling no matter what number of replicas is provided. The above annotation will scale your current workload to 0 replicas and pause autoscaling. You can set the value of replicas for an object to be paused at to any arbitrary number. To enable autoscaling again, simply remove the annotation from the `ScaledObject` definition.
 
 ### Activating and Scaling thresholds
 
