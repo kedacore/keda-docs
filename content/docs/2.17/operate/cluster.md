@@ -70,7 +70,7 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). Each
 
 You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable on the KEDA operator deployment to your desired timeout in milliseconds.
 
-> ⚠️ All applicable scalers will use this timeout and setting this on a per-scaler is currently not supported.
+> ⚠️ All applicable scalers will use this timeout, although some scalers allow you to override this global setting via the `timeout` parameter in the trigger metadata.
 
 ## HTTP Connection: Disable Keep Alive
 
