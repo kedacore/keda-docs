@@ -26,7 +26,7 @@ triggers:
     ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     queryParameters: key-1=value-1,key-2=value-2
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
-
+    timeout: 1000 # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**
@@ -40,6 +40,7 @@ triggers:
 - `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
 - `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint. (Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
+- `timeout` - Timeout in miliseconds **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 ### Authentication Parameters
 
