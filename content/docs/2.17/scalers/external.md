@@ -19,12 +19,14 @@ triggers:
     caCert : /path/to/tls/ca.pem
     tlsClientCert: /path/to/tls/cert.pem
     tlsClientKey: /path/to/tls/key.pem
+    enableTLS: false
     unsafeSsl: false
 ```
 
 **Parameter list:**
 
 - `scalerAddress` - Address of the external scaler. Format must be `host:port`.
+- `enableTLS` - Allow a connection using TLS and use CAs already loaded by the Operator for validation. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 The entire metadata object is passed to the external scaler in `ScaledObjectRef.scalerMetadata`.
