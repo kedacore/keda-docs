@@ -401,7 +401,7 @@ icon = "fas fa-bolt"
 
 [[params.features]]
 title = "Built-in Scalers"
-content = "Catalog of 50+ built-in scalers for various cloud platforms, databases, messaging systems, telemetry systems, CI/CD, and more"
+content = "Catalog of 70+ built-in scalers for various cloud platforms, databases, messaging systems, telemetry systems, CI/CD, and more"
 icon = "fas fa-cubes"
 
 [[params.features]]
