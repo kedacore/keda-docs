@@ -43,6 +43,7 @@ Some parameters of the JetStream details can be pulled from `TriggerAuthenticati
 
 - `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
 - `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `accountID` - ID of the NATS account. Uses the value of `account` when not set.
 
 ### Example
 
