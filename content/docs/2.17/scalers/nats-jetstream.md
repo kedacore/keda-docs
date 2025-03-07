@@ -18,6 +18,7 @@ triggers:
   metadata:
     natsServerMonitoringEndpoint: "nats.nats.svc.cluster.local:8222"
     account: "$G"
+    accountID: "$G"
     stream: "mystream"
     consumer: "pull_consumer"
     lagThreshold: "10"
@@ -29,6 +30,7 @@ triggers:
 
 - `natsServerMonitoringEndpoint` - Location of the NATS server monitoring endpoint.
 - `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `accountID` - ID of the NATS account. Uses the value of `account` when not set. 
 - `stream` - Name of the JS stream within the account.
 - `consumer` - Name of the consumer for a given stream.
 - `lagThreshold` - Average target value to trigger scaling actions.
