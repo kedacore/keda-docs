@@ -599,6 +599,10 @@ url = "https://www.reddit.com/"
 logo = "reddit.svg"
 
 [[params.users]]
+url = "https://www.rewe-digital.com/"
+logo = "rewe-digital.svg"
+
+[[params.users]]
 url = "https://roadwork.io"
 logo = "roadwork.png"
 
