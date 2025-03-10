@@ -21,9 +21,9 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
   - type: solace-direct-messaging
     metricType: Value
     metadata:
-      hostUrl:  "https://solace_broker1:943,https://solace_broker2:943"
+      solaceSempBaseURL:  "https://solace_broker1:943,https://solace_broker2:943"
       messageVpn: "message-vpn"
-      clientNamePrefix: "client-name-prefix"
+      clientNamePattern: "client-name-pattern"
       unsafeSSL: "true"
       queuedMessagesFactor: '3'
       aggregatedClientTxMsgRateTarget: '600'      
@@ -36,11 +36,11 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 **Parameter list:**
 
-- `hostUrl` - Comma separated list of Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`. (Required)
+- `solaceSempBaseURL` - Comma separated list of Solace SEMP Endpoint in format: `<protocol>://<host-or-service>:<port>`. (Required)
 
 - `messageVpn` - Message VPN hosted on the Solace broker from which the metrics will be collected. (Required)
 
-- `clientNamePrefix` - Client prefix that will be used to identify the clients that are consuming from a shared subscription. (Required)
+- `clientNamePattern` - Client name pattern that will be used to identify the clients that are consuming from a shared subscription. (Required). It will be used to match all the client names that match the expression: **' \*client-name-pattern\* '**
 
 - `unsafeSSL` - Flag to enable unsafe host urls (self signed certificates). (Default:  `false`, Optional)
 
@@ -81,20 +81,6 @@ type: Opaque
 data:
   SEMP_USER:         YWRtaW4=
   SEMP_PASSWORD:     S2VkYUxhYkFkbWluUHdkMQ==
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: solace-trigger-auth
-  namespace: solace
-spec:
-  secretTargetRef:
-    - parameter:   username
-      name:        solace-secret
-      key:         SEMP_USER
-    - parameter:   password
-      name:        solace-secret
-      key:         SEMP_PASSWORD
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -139,10 +125,10 @@ spec:
     #we don’t want to take the average of the given metric across all replicas, just the value
     metricType: Value
     metadata:
-      hostUrl:  "https://broker1.messaging.solace.cloud:943,https://broker2.messaging.solace.cloud:943"
+      solaceSempBaseURL:  "https://broker1.messaging.solace.cloud:943,https://broker2.messaging.solace.cloud:943"
       messageVpn: "consumer_vpn"
-      #all the clients that match this client name prefix will be considered for metric gathering
-      clientNamePrefix: "direct-messaging-simple"
+      #all the clients that match this client name pattern will be considered for metric gathering
+      clientNamePattern: "direct-messaging-simple"
       #to be able to use self signed certs
       unsafeSSL: "false"
       #to increase weight on queued messages and scale faster
@@ -155,4 +141,18 @@ spec:
       aggregatedClientAverageTxMsgRateTarget: '0'
     authenticationRef:
       name: solace-trigger-auth
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: solace-trigger-auth
+  namespace: solace
+spec:
+  secretTargetRef:
+    - parameter:   username
+      name:        solace-secret
+      key:         SEMP_USER
+    - parameter:   password
+      name:        solace-secret
+      key:         SEMP_PASSWORD      
 ```
