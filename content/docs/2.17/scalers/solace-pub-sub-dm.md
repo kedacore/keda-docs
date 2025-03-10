@@ -11,7 +11,7 @@ go_file = "solace_dm_scaler"
 
 This specification describes the `solace-direct-messaging` trigger that scales based on a Solace PubSub+ Event Broker direct messaging rates for all the clients in a message vpn that matches a common client name prefix.
 
-**Note:**
+> &#128161; **Note:**
 This trigger is for **Direct messaging** only, it provides the ability to scale the number of client instances automatically based upon transient metrics for shared subscriptions (transmitted message rate, transmitted bytes rate, D-1 queue length), all this metrics exists as long as the clients are connected.
 
 If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) you should use the `solace-event-queue` trigger.
@@ -30,6 +30,8 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
       aggregatedClientTxByteRateTarget: '0'
       aggregatedClientAverageTxByteRateTarget: '0'
       aggregatedClientAverageTxMsgRateTarget: '0'
+      usernameFromEnv: 'ENV_VAR_USER'
+      passwordFromEnv: 'ENV_VAR_PWD'
     authenticationRef:
       name: trigger-authentication-ref
 ```
@@ -54,13 +56,13 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 - `aggregatedClientAverageTxMsgRateTarget` - Target average number bytes per minute the clients in the shared subscription are expected to consume, if the actual aggregated bytes per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `usernameFromEnv` - Environment variable set with SEMP user account.
+- `usernameFromEnv` - Environment variable set with SEMP user account. (Optional)
 
-- `passwordFromEnv` - Environment variable set with password for the user account.
+- `passwordFromEnv` - Environment variable set with password for the user account. (Optional)
 
 **Parameter Requirements:**
 
-- Parameters resolving the target host and shared subscription are all **required:** `hostUrl`, `messageVpn`, `clientNamePrefix`
+- Parameters resolving the target host and shared subscription are all **required:** `solaceSempBaseURL`, `messageVpn`, `clientNamePrefix`
 
 - **At least** one of `aggregatedClientTxMsgRateTarget`, `aggregatedClientTxByteRateTarget`, `aggregatedClientAverageTxByteRateTarget` or  `aggregatedClientAverageTxMsgRateTarget` is **required**.
 
@@ -68,7 +70,7 @@ If more than one target values are present, calculation is done for each metric 
 
 For more details please see [Horizontal Pod Autoscaling - Algorithm details](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details)
 
-The `solace-direct-messaging` polls the Solace SEMP REST API to get transient metrics from connected clients. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the  trigger to function. 
+The `solace-direct-messaging` Scaler polls the Solace SEMP REST API to get transient metrics from connected clients. Currently, the scaler supports basic authentication. `username` and `password` are **required** for the  trigger to function. 
 
 These values can be set in several different ways:
   - Use TriggerAuthentication record. See [Authentication Parameters](#authentication-parameters) below.
@@ -77,10 +79,14 @@ These values can be set in several different ways:
 ### Authentication Parameters
 You can use `TriggerAuthentication` CRD to configure the authenticate by providing a set of IAM credentials.
 
-
+**Username and Password based authentication:**
+- `username` - Required. The username to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
+- `password` - Required. The password to use to connect to the Solace PubSub+ Event Broker's SEMP endpoint.
 
 ### Example
-The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be declared in the same namespace.
+The objects in the example below are declared in `namespace=solace`. It is not required to 
+do so. If you do define a namespace for the configuration objects, then they should all be declared 
+in the same namespace.
 
 ```yaml
 apiVersion: v1
