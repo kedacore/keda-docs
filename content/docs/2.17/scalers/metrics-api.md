@@ -29,6 +29,8 @@ triggers:
 **Parameter list:**
 
 - `url` - Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
+  If `aggregateFromKubeServiceEndpoints` is set to `true` then the port from this URL must be the pod port 
+  which is targeted by the service
 - `format` - One of the following formats: `json`, `xml`, `yaml`, `prometheus`. (Default: `json`, Optional)
 - `valueLocation` - The location of the metric value in the response payload. The value is format specific.
   * `json` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
@@ -40,6 +42,8 @@ triggers:
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `aggregateFromKubeServiceEndpoints` - Whether to treat `url` as a kubernetes service and scrape/aggregate metrics for all of this service's endpoints. (Values: `true`, `false`, Default: `false`, Optional)
+- `aggregationType` - How to aggregate metrics when `aggregateFromKubeServiceEndpoints` is set to `true`, ignored otherwise. (Values: `average`, `sum`, `max`, `min`, Default: `average`, Optional)
 
 
 ### Authentication Parameters
