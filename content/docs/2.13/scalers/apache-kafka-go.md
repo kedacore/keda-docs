@@ -59,7 +59,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
 - `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be specified when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `aws_msk_iam` or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
 
 > **Note:**
@@ -84,7 +84,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
 **SASL:**
 
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `aws_msk_iam` or `none`, Default: `none`, Optional)
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `aws_msk_iam` or `none`, Default: `none`, Optional)
 - `username` - Username used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
 - `password` - Password used for sasl authentication. (Required if `sasl` is not `none` or `aws_msk_iam`)
 
