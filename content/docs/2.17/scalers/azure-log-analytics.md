@@ -57,6 +57,8 @@ triggers:
       activeDirectoryEndpoint: https://login.airgap.example/
       # Optional (Default: false)
       unsafeSsl: "false"
+      # Optional. Custom timeout for the HTTP client used in this scaler
+      timeout: 1000
 ```
 
 **Parameter list:**
@@ -72,6 +74,7 @@ triggers:
 - `logAnalyticsResourceURL` - Log Analytics REST API URL of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://api.loganalytics.azure.cn/` for `AzureChinaCloud`).
 - `activeDirectoryEndpoint` - Active Directory endpoint of the cloud environment. (Required when `cloud` is set to `Private`, e.g. `https://login.chinacloudapi.cn/` for `AzureChinaCloud`).
 - `unsafeSsl` - Determines whether or not KEDA will verify the server certificate's chain and host name. (Default: `false`, Optional, This value can be a bool)
+- `timeout` - Timeout in milliseconds **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 
 The authentication parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
