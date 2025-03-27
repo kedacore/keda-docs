@@ -38,7 +38,7 @@ triggers:
 - `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag. (Optional, see note below)
-- `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+- `lagThreshold` - Average target value to trigger scaling actions. (Default: `10`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
