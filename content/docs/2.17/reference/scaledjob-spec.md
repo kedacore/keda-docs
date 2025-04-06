@@ -168,7 +168,7 @@ A `ScaledJob` setup is different, as there is no **HPA** involved, the jobs are 
 
 This is where the **scaling strategy** comes in. This allows a `ScaledJob` to translate the value from the scaler into the required number of new jobs.
 
-#### Initial value
+#### Scaling strategies
 
 The scaling strategy currently imposes a _maximum_ on the number of new jobs created. _Note: support for strategies that increase the value is planned for a future version._
 
@@ -183,7 +183,7 @@ targetMetric := min(scalersMetric, maxReplicaCount)
 Then the scaling strategy is applied to `targetMetric` as follows.
 
 
-#### `default`
+##### `default`
 
 The default strategy would be appropriate for the RabbitMQ queue described above. On each poll, the `default` strategy will create jobs equal to:
 
@@ -199,7 +199,7 @@ If 3 more jobs are submitted, making the queue length 6, and 3 jobs running, the
 
 Once the first 3 jobs finish, the workers acknowledge the messages. The queue length drops to 3, as does the number of running workers. A poll now will create no new jobs, as expected.
 
-#### `accurate`
+##### `accurate`
 
 The `accurate` strategy is designed for a scaler that returns the number of items in the queue _not including_ the number of running jobs. [Azure Storage Queue](../scalers/azure-storage-queue.md) is one example. 
 
@@ -231,7 +231,7 @@ scalingStategy:
 
 There are more details and explanation in the issue [here](https://github.com/kedacore/keda/issues/1963) and its linked PR.
 
-#### `eager`
+##### `eager`
 
 _Note: this documentation for this strategy did not match its behavior in previous versions. Its implementation may change in a future version. See the following [issue](https://github.com/kedacore/keda/issues/6416)._
 
@@ -245,7 +245,7 @@ min(maxReplicaCount-runningJobCount-pendingJobCount, targetMetric)
 ```
 
 
-#### `custom`
+##### `custom`
 
 The `custom` strategy allows you to customize the scale logic. You need to configure the following parameters, otherwise the strategy will be the same as `default`.
 
