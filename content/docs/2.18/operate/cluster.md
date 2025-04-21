@@ -217,8 +217,8 @@ This allows you to omit `secrets` from the cluster role, which will disallow `Tr
 
 KEDA uses zap to emit logs. The following flags can be used to configure logging behavior in both the metrics-apiserver and operator:
 
-- zap-encoder: Zap log encoding (one of 'json' or 'console'). Default is 'console'
-- zap-log-level: Zap Level to configure the verbosity of logging. Can be one of 'debug', 'info', 'error',
-  or any integer value > 0 which corresponds to custom debug levels of increasing verbosity"). Default is 'info'.
-- zap-time-encoding: Zap time encoding (one of 'epoch', 'millis', 'nano', 'iso8601', 'rfc3339' or 'rfc3339nano'),
-  Defaults is 'rfc3339'.
+- zap-encoder: Zap log encoding (one of `json` or `console`). Default is `console`
+- zap-log-level: Zap Level to configure the verbosity of logging. Can be one of `debug`, `info`, `error`,
+  or any integer value > 0 which corresponds to custom debug levels of increasing verbosity"). Default is `info`.
+- zap-time-encoding: Zap time encoding (one of `epoch`, `millis`, `nano`, `iso8601`, `rfc3339` or `rfc3339nano`),
+  Defaults is `rfc3339`.
