@@ -16,7 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
-| v2.17 | v1.30 - v1.32 |
+| v2.17 | TBD           |
 | v2.16 | v1.29 - v1.31 |
 | v2.15 | v1.28 - v1.30 |
 | v2.14 | v1.27 - v1.29 |
@@ -70,7 +70,7 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). Each
 
 You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable on the KEDA operator deployment to your desired timeout in milliseconds.
 
-> ⚠️ All applicable scalers will use this timeout, although some scalers allow you to override this global setting via the `timeout` parameter in the trigger metadata.
+> ⚠️ All applicable scalers will use this timeout and setting this on a per-scaler is currently not supported.
 
 ## HTTP Connection: Disable Keep Alive
 
@@ -211,13 +211,3 @@ env:
 ```
 
 This allows you to omit `secrets` from the cluster role, which will disallow `TriggerAuthentication` to be used for your triggers if the `TriggerAuthentication` is using secrets. You can, however, still use `ClusterTriggerAuthentication`.
-
-## Logs
-
-KEDA uses zap to emit logs. The following flags can be used to configure logging behavior in both the metrics-apiserver and operator:
-
-- zap-encoder: Zap log encoding (one of 'json' or 'console'). Default is 'console'
-- zap-log-level: Zap Level to configure the verbosity of logging. Can be one of 'debug', 'info', 'error',
-  or any integer value > 0 which corresponds to custom debug levels of increasing verbosity"). Default is 'info'.
-- zap-time-encoding: Zap time encoding (one of 'epoch', 'millis', 'nano', 'iso8601', 'rfc3339' or 'rfc3339nano'),
-  Defaults is 'rfc3339'.
