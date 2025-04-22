@@ -1,6 +1,6 @@
 +++
 title = "Solace PubSub+ Event Broker - Direct Messaging"
-availability = "2.17+"
+availability = "2.18+"
 maintainer = "Community"
 category = "Messaging"
 description = "Scale applications based on Solace PubSub+ Event Broker - Direct Messaging"
