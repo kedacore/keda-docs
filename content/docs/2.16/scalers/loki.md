@@ -35,7 +35,7 @@ triggers:
 - `tenantName` - The `X-Scope-OrgID` header for specifying the tenant name in a multi-tenant setup. (Optional)
 - `ignoreNullValues` - Value to reporting error when Loki target is lost. (Values: `true`,`false`, Default: `true`, Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs. (Values: `true`,`false`, Default: `false`, Optional)
-- `authModes` - Authentaication mode to be used. (Values: `bearer`,`basic`, Optional)
+- `authModes` - Authentication mode to be used. (Values: `bearer`,`basic`, Optional)
 
 ### Authentication Parameters
 
