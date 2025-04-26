@@ -647,6 +647,10 @@ url = "https://vitc.gmbh"
 logo = "vitc.png"
 
 [[params.users]]
+url = "https://www.wakacje.pl/"
+logo = "wakacje.png"
+
+[[params.users]]
 url = "https://www.wingie.com"
 logo = "wingie-enuygun.png"
 
