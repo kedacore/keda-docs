@@ -45,6 +45,11 @@ triggers:
 - `aggregateFromKubeServiceEndpoints` - Whether to treat `url` as a kubernetes service and scrape/aggregate metrics for all of this service's endpoints. (Values: `true`, `false`, Default: `false`, Optional)
 - `aggregationType` - How to aggregate metrics when `aggregateFromKubeServiceEndpoints` is set to `true`, ignored otherwise. (Values: `average`, `sum`, `max`, `min`, Default: `average`, Optional)
 
+### Note on aggregation from kubernetes service
+
+when setting `aggregateFromKubeServiceEndpoints: true` in metadata, Metrics API Scaler is able to compute basic `average`, `sum`, `min` or `max` aggregation asked by `aggregationType` metadata from all endpoint targets of a kubernetes API service, which is a handy feature in an environment where one didn't set up a metric aggregator/scraping stack (i.e prometheus), or simply doesn't want to use their monitoring stack to fetch and serve metrics from customers workload in their own kubernetes clusters, and leave the metrics API's responsibility up to the customer
+
+This specific behavior comes from the fact that querying a kubernetes service directly (= setting `aggregateFromKubeServiceEndpoints: false`) would return the metric from a single replica randomly, depending on the load-balancing configuration for the service, and lead to inconsistent HPA average metric computation and eventually to scaling issues as metrics from all replicas won't be taken into account
 
 ### Authentication Parameters
 
