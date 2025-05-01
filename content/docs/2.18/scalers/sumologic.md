@@ -60,7 +60,7 @@ triggers:
     queryType: "logs"                   # Type must be "logs"
     query: "_view=my_view | count"      # Your Sumo Logic logs query
     resultField: "_count"               # Field to extract value from
-    timerange: "15"                     # Lookback window in minutes
+    timerange: "15m"                    # Lookback window
     timezone: "Asia/Kolkata"            # Timezone (e.g., Asia/Kolkata)
     queryAggregator: "Max"              # Aggregation method: Latest, Avg, Sum, Count, Min, Max
     threshold: "1000"                   # Threshold for scaling
@@ -75,8 +75,8 @@ triggers:
 | `queryType`        | Type of query.                                                     | Yes                        | `logs`                                    |
 | `query`            |Sumo Logic query.                                                     | Yes                        | `_view=my_view \| count`                         |
 | `resultField`      | Field from query results to extract the scaling metric.            | Yes (`logs` only)                       | `_count`                                  |
-| `timerange`        | Time range in minutes to evaluate the query.                        | Yes                        | `15`                                      |
-| `timezone`         | Timezone for query execution.                                       | Yes                        | `Asia/Kolkata`                            |
+| `timerange`        | Time range to evaluate the query.                        | Yes                        | `15m`                                      |
+| `timezone`         | Timezone for query execution.                                       | Optional (`UTC` default)                        | `Asia/Kolkata`                            |
 | `queryAggregator`  | Aggregation method (`Latest`, `Avg`, `Sum`, `Count`, `Min`, `Max`).                             | Optional (`Avg` default)     | `Max`                                     |
 | `threshold`        | Target value for scaling.                                           | Yes                        | `1000`                                    |
 
@@ -92,9 +92,9 @@ triggers:
     host: "https://api.sumologic.com"
     queryType: "metrics"
     query: "metric=cpu.usage | avg"
-    quantization: "15"
+    quantization: "15s"
     rollup: "Max"
-    timerange: "15"
+    timerange: "15m"
     timezone: "Asia/Kolkata"
     queryAggregator: "Max"
     threshold: "50"
@@ -108,8 +108,8 @@ triggers:
 
 | Name           | Description                                                        | Required | Example |
 |----------------|--------------------------------------------------------------------|----------|---------|
-| `quantization`   | Granularity of data points in minutes.                             | Yes (`metrics` only)     | `15`      |
-| `rollup`         | Metrics rollup type (`Avg`, `Sum`, `Min`, `Max`, `Count`).                          | No (`metrics` only, defaults `Avg`)      | `Max`     |
+| `quantization`   | Granularity of data points.                             | Yes (`metrics` only)     | `15s`      |
+| `rollup`         | Metrics rollup type (`Avg`, `Sum`, `Min`, `Max`, `Count`).                          | Optional (`metrics` only, `Avg` default)      | `Max`     |
 
 ### Multi-Metrics Query Trigger
 
@@ -125,9 +125,9 @@ triggers:
     query.B: "metric=request_capacity"
     query.C: "(#A / #B) * 100 along service"
     resultQueryRowID: "C"          # Which query result to extract
-    quantization: "15"
+    quantization: "15s"
     rollup: "Max"
-    timerange: "15"
+    timerange: "15m"
     timezone: "Asia/Kolkata"
     queryAggregator: "Max"
     threshold: "75"
