@@ -10,6 +10,12 @@ We provide a few approaches to deploy KEDA runtime in your Kubernetes clusters:
 
 > 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.24 and higher
 
+> 💡 **NOTE:** Kubernetes currently only supports one metric server serving external.metrics.k8s.io metrics per cluster. This is because only one API Service can be registered to handle external metrics.
+>
+> After installing KEDA, any other metric servers that you have installed will no longer be able to serve external metrics.
+>
+> There is an [open proposal](https://github.com/kubernetes-sigs/custom-metrics-apiserver/issues/70) to allow multiple metric servers in the same cluster, but it's not implemented yet.
+
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
 ## Deploying with Helm {#helm}
