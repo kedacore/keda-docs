@@ -34,6 +34,7 @@ triggers:
     scaleToZeroOnInvalidOffset: false
     excludePersistentLag: false
     limitToPartitionsWithLag: false
+    useMessageCountOnInvalidOffset: false
     version: 1.0.0
     partitionLimitation: '1,2,10-20,31'
     sasl: plaintext
@@ -56,6 +57,7 @@ If 'false' (the default), the scaler will keep a single consumer for that partit
 partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
 - `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be specified when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
+- `useMessageCountOnInvalidOffset` - When set to `true`, if offsetResetPolicy is earliest and consumer group doesn't have a valid offset in partition, uses difference between `latestOffset` and `earliestOffset` in partition as scaling metric. Useful when both group and topic have same retention, and when it passes we both have no valid offset and no messages in topic - in such case, enabling flag will allow consumers to be scaled down until new message arrives
 - `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
