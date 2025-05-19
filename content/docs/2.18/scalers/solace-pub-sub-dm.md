@@ -62,7 +62,7 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 **Parameter Requirements:**
 
-- Parameters resolving the target host and shared subscription are all **required:** `solaceSempBaseURL`, `messageVpn`, `clientNamePrefix`
+- Parameters resolving the target host and shared subscription are all **required:** `solaceSempBaseURL`, `messageVpn`, `clientNamePattern`
 
 - **At least** one of `aggregatedClientTxMsgRateTarget`, `aggregatedClientTxByteRateTarget`, `aggregatedClientAverageTxByteRateTarget` or  `aggregatedClientAverageTxMsgRateTarget` is **required**.
 
