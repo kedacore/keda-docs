@@ -47,7 +47,8 @@ triggers:
 Metrics Scaler API supported four types of authentication - API Key based authentication, basic authentication, TLS
 authentication, and Bearer authentication.
 
-You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below. Multiple authentication methods can be used simultaneously by providing a comma-separated list in the `authMode` parameter, for example `authMode: "apiKey,tls"` enables both API key and TLS certificate authentication in a single request.
+You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
+ along with secret credentials in `TriggerAuthentication` as mentioned below:
 
 **API Key based authentication:**
 - `authMode`: It must be set to `apiKey` in case of API key Authentication. Specify this in trigger configuration.
