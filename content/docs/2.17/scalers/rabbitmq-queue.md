@@ -76,6 +76,7 @@ TriggerAuthentication CRD is used to connect and authenticate to RabbitMQ:
 > See the [RabbitMQ Ports](https://www.rabbitmq.com/networking.html#ports) section for more details on how to configure the ports.
 
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional / Required if Azure AD Workload Identity authorization is used)
+
 **Username and Password based authentication:**
 
 This allows sensitive credentials to be stored and managed separately from the connection string.
