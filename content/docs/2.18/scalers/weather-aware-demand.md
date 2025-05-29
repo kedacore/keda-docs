@@ -34,20 +34,27 @@ triggers:
     metricName: "weather-aware-demand"                                       # Optional: Custom metric name (default: weather-aware-ride-demand)
 ```
 
-**Parameter list:**
+**Parameters:**
 
-- `weatherApiEndpoint` - Weather API endpoint URL. If not provided, weather conditions are not considered.
-- `weatherApiKeyFromEnv` - Environment variable name containing the weather API key for authentication.
-- `weatherLocation` - Location for weather data in format "city,country" or "latitude,longitude".
-- `weatherUnits` - Units for weather measurements. Options: `metric` (Celsius, km/h, mm) or `imperial` (Fahrenheit, mph, inches). (Default: `metric`)
-- `badWeatherConditions` - Comma-separated conditions that trigger increased scaling. Format: `condition_type:threshold`. Examples: `temp_below:0`, `rain_above:5`, `wind_above:10`.
-- `demandApiEndpoint` - API endpoint that provides current demand metrics. If not provided, demand defaults to 0.
-- `demandApiKeyFromEnv` - Environment variable name containing the demand API key for authentication.
-- `demandJsonPath` - JSONPath expression to extract demand value from API response. Examples: `{.current_demand}`, `{.metrics.active_requests}`.
-- `targetDemandPerReplica` - Target demand value per replica. Higher values result in fewer replicas. (Default: `100`)
-- `activationDemandLevel` - Minimum demand level to activate scaling. Below this threshold, the scaler is inactive. (Default: `10`)
-- `weatherEffectScaleFactor` - Multiplier applied to demand during bad weather conditions. Values > 1.0 increase perceived demand. (Default: `1.0`)
-- `metricName` - Custom name for the metric. Useful when multiple weather-aware scalers are used. (Default: `weather-aware-ride-demand`)
+**Weather API Configuration:**
+- `weatherApiEndpoint` - Weather API endpoint URL. (Optional)
+- `weatherApiKeyFromEnv` - Environment variable name containing the weather API key for authentication. (Optional)
+- `weatherLocation` - Location for weather data (e.g., "New York,US" or "lat,lon"). (Required when `weatherApiEndpoint` is provided)
+- `weatherUnits` - Units for weather measurements. (Values: `metric`, `imperial`, Default: `metric`, Optional)
+- `badWeatherConditions` - Comma-separated conditions that trigger increased scaling. Format: `condition_type:threshold`. Examples: `temp_below:0`, `rain_above:5`, `wind_above:10`. (Optional)
+
+**Demand API Configuration:**
+- `demandApiEndpoint` - API endpoint that provides current demand metrics. (Optional)
+- `demandApiKeyFromEnv` - Environment variable name containing the demand API key for authentication. (Optional)
+- `demandJsonPath` - JSONPath expression to extract demand value from API response. Examples: `{.current_demand}`, `{.metrics.active_requests}`. (Optional)
+
+**Scaling Configuration:**
+- `targetDemandPerReplica` - Target demand value per replica. Higher values result in fewer replicas. (Default: `100`, Optional)
+- `activationDemandLevel` - Minimum demand level to activate scaling. Below this threshold, the scaler is inactive. (Default: `10`, Optional)
+- `weatherEffectScaleFactor` - Multiplier applied to demand during bad weather conditions. Values > 1.0 increase perceived demand. (Default: `1.0`, Optional)
+- `metricName` - Custom name for the metric. Useful when multiple weather-aware scalers are used. (Default: `weather-aware-ride-demand`, Optional)
+
+> **Note:** At least one of `weatherApiEndpoint` or `demandApiEndpoint` must be provided.
 
 ### Authentication Parameters
 
