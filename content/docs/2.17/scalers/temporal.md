@@ -3,7 +3,7 @@ title = "Temporal"
 availability = "v2.17+"
 maintainer = "Community"
 description = "Scale applications based on Temporal task queue."
-go_file = "temporal_scaler"
+go_file = "temporal"
 +++
 
 ### Trigger Specification
