@@ -55,7 +55,7 @@ data:
       "token": "xxx",
       "address": "http://host.docker.internal:3000",
       "labels": [
-        "ubuntu-latest:host://node:20-bookworm"
+        "ubuntu-latest:docker://node:20-bookworm"
       ]
     }
 
