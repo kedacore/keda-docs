@@ -142,136 +142,130 @@ On the `gradual` rolloutStrategy, whenever a ScaledJob is being updated, KEDA wi
 
 
 ## scalingStrategy
-
+### Strategy
 ```yaml
 scalingStrategy:
   strategy: "default"                 # Optional. Default: default. Which Scaling Strategy to use. 
 ```
 
-Select a Scaling Strategy. Possible values are `default`, `custom`, `accurate`, or `eager`. The default value is `default`.
+Select a scaling strategy. Possible values are `default`, `accurate`, `eager`, or `custom`.
 
-> 💡 **NOTE:**
->
->`maxScale` is not the running Job count. It is measured as follows:
- >```go
- >maxScale = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
- >```
- >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
->
->`RunningJobCount` represents the number of jobs that are currently running or have not finished yet.
->
->It is measured as follows:
->```go
->if !e.isJobFinished(&job) {
->		runningJobs++
->}
->```
->`PendingJobCount` provides an indication of the amount of jobs that are in pending state. Pending jobs can be calculated in two ways:
-> - Default behavior - Job that have not finished yet **and** the underlying pod is either not running or has not been completed yet
-> - Setting `pendingPodConditions` - Job that has not finished yet **and** all specified pod conditions of the underlying pod mark as `true` by kubernetes.
->
->It is measured as follows:
->```go
->if !e.isJobFinished(&job) {
->   if len(scaledJob.Spec.ScalingStrategy.PendingPodConditions) > 0 {
->       if !e.areAllPendingPodConditionsFulfilled(&job, scaledJob.Spec.ScalingStrategy.PendingPodConditions) {
->           pendingJobs++
->       }
->   } else {
->       if !e.isAnyPodRunningOrCompleted(&job) {
->           pendingJobs++
->       }
->   }
->}
->```
+The scaling strategy modifies the raw value from the scaler to determine how many jobs to create on each poll, which is required for correct behavior.
 
-**default**
-This logic is the same as Job for V1.  The number of the scale will be calculated as follows. 
+For most use cases, where the scaler reports the number of outstanding jobs _including_ those in progress, the `default` scaling strategy is appropriate. 
 
-_The number of the scale_
+For more details, see the following sections.
+
+#### Background Explanation
+
+The `ScaledJob` resource is designed to support the same scalers as [`ScaledObject`](./scaledobject-spec.md). However, the underlying mechanism must work differently.
+
+When a `ScaledObject` controls a `Deployment`, the **Horizontal Pod Autoscaler** will manage the scaling from 1 to N replicas, using the metrics KEDA exposes from the scaler configuration. Because of this, in a workflow that uses a queue of jobs, the scaler will normally report the total number of jobs _including_ those that are currently in progress. If the metric did not include jobs in progress, then when the job is accepted from the queue (and the metric goes down), the **HPA** will reduce the `replicas` value of the `Deployment`, and those in progress pods would be terminated.
+
+So when using a queue-based scaler (e.g. [**RabbitMQ**](../scalers/rabbitmq-queue.md)), the standard setup is as follows: each posted message represents an outstanding job, the queue length is used to scale, workers will accept messages and start working, and workers acknowledge messages (removing them from the queue) only when the job is done.
+
+A `ScaledJob` setup is different, as there is no **HPA** involved, the jobs are created individually by KEDA. Once a job has been created there is no need to “sustain” it – it will run until it finishes.
+
+This is where the **scaling strategy** comes in. This allows a `ScaledJob` to translate the value from the scaler into the required number of new jobs.
+
+#### Scaling strategies
+
+The scaling strategy currently imposes a _maximum_ on the number of new jobs created. _Note: support for strategies that increase the value is planned for a future version._
+
+First the metric is calculated from the scalers: this starts with the `queueLength` modified by the scaler, accounts for multiple scalers (see [`multipleScalersCalculation`](#multiplescalerscalculation)), and then applies the [`maxReplicaCount`](#maxreplicacount).
 
 ```go
-maxScale - runningJobCount
+targetMetric := min(scalersMetric, maxReplicaCount)
 ```
 
-**custom**
-You can customize the default scale logic. You need to configure the following parameters. If you don't configure it, then the strategy will be `default.`
+(If a single simple scaler is used with no maximum, then `targetMetric := queueLength`)
+
+Then the scaling strategy is applied to `targetMetric` as follows.
+
+
+##### `default`
+
+The default strategy would be appropriate for the RabbitMQ queue described above. On each poll, the `default` strategy will create jobs equal to:
+
+```go
+targetMetric - runningJobCount
+```
+
+For example: if there are 3 messages on the queue and 0 jobs running, then 3 jobs are created. 
+
+On the next poll, if the queue length is still 3, and there are 3 jobs running, then no new jobs are created.
+
+If 3 more jobs are submitted, making the queue length 6, and 3 jobs running, then 3 more jobs are created.
+
+Once the first 3 jobs finish, the workers acknowledge the messages. The queue length drops to 3, as does the number of running workers. A poll now will create no new jobs, as expected.
+
+##### `accurate`
+
+The `accurate` strategy is designed for a scaler that returns the number of items in the queue _not including_ the number of running jobs. [Azure Storage Queue](../scalers/azure-storage-queue.md) is one example. 
+
+You should also use this strategy if you delete/acknowledge a message as soon as you worker consumes it, rather than when work is done, when using a scaler like RabbitMQ.
+
+For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
+
+The number of jobs created on each poll is calculated as follows:
+
+```go
+if (targetMetric + runningJobCount) > maxReplicaCount {
+  return maxReplicaCount - runningJobCount
+}
+return targetMetric - pendingJobCount
+```
+  
+As it can take some time for a Job to be created and consume the message from the queue, pending jobs need to be deducted from the queue length. Even still, it is possible that short polling times will lead to over-scaling.
+
+By default, any unfinished jobs with pods that aren't running are considered pending. It is possible to customize this to include pod conditions by specifying `customPendingPodConditions`
+
+```yaml
+scalingStategy:
+  strategy: "accurate"
+  customPendingPodConditions: 
+    - "Ready"
+    - "PodScheduled"
+    - "AnyOtherCustomPodCondition"
+```
+
+There are more details and explanation in the issue [here](https://github.com/kedacore/keda/issues/1963) and its linked PR.
+
+##### `eager`
+
+_Note: this documentation for this strategy did not match its behavior in previous versions. Its implementation may change in a future version. See the following [issue](https://github.com/kedacore/keda/issues/6416)._
+
+If a scaler reports one or more jobs on the queue, the `eager` strategy will create new jobs until it hits the `maxReplicaCount`. 
+
+This behavior might be desirable if your Jobs have a slow start-up time, and you want to create as many jobs as possible, e.g. on a GPU node which can scale down when there are zero jobs.
+
+The number of jobs created on each poll is calculated as follows:
+```go
+min(maxReplicaCount-runningJobCount-pendingJobCount, targetMetric)
+```
+
+
+##### `custom`
+
+The `custom` strategy allows you to customize the scale logic. You need to configure the following parameters, otherwise the strategy will be the same as `default`.
 
 ```yaml
 customScalingQueueLengthDeduction: 1      # Optional. A parameter to optimize custom ScalingStrategy.
 customScalingRunningJobPercentage: "0.5"  # Optional. A parameter to optimize custom ScalingStrategy.
 ```
 
-_The number of the scale_
+The number of jobs created on each poll is calculated as follows:
 
 ```go
-min(maxScale-int64(*s.CustomScalingQueueLengthDeduction)-int64(float64(runningJobCount)*(*s.CustomScalingRunningJobPercentage)), maxReplicaCount)
+min(
+  maxReplicaCount,
+  (
+     targetMetric 
+   - customScalingQueueLengthDeduction 
+   - (runningJobCount*customScalingRunningJobPercentage)
+  )
+)
 ```
-
-**accurate** 
-If the scaler returns `queueLength` (number of items in the queue) that does not include the number of locked messages, this strategy is recommended. `Azure Storage Queue` is one example. You can use this strategy if you delete a message once your app consumes it.
-
-```go
-if (maxScale + runningJobCount) > maxReplicaCount {
-		return maxReplicaCount - runningJobCount
-	}
-	return maxScale - pendingJobCount
-```
-For more details,  you can refer to [this PR](https://github.com/kedacore/keda/pull/1227).
-
-**eager**
-When adopting the **default** strategy, you are likely to come into a subtle case where messages need to be consumed by spawning jobs but remain in the queue, even when there are available slots between `runningJobCount` and `maxReplicaCount`. The **eager** strategy comes to the rescue. It addresses this issue by utilizing all available slots up to the maxReplicaCount, ensuring that waiting messages are processed as quickly as possible.
-
-For example, let's assume we configure a ScaledJob in a cluster as below:
-```yaml
-  ###
-  # A job that runs for a minimum of 3 hours.
-  ###
-  pollingInterval: 10 # Optional. Default: 30 seconds
-  maxReplicaCount: 10 # Optional. Default: 100
-  triggers:
-    - type: rabbitmq
-      metadata:
-        queueName: woker_queue
-        hostFromEnv: RABBITMQ_URL
-        mode: QueueLength
-        value: "1"
-```
-We send 3 messages to the Rabbitmq and wait longer enough than the `pollingInterval`, then send another 3.
-
-With the `default` scaling strategy, we are supposed to see the metrics changes in the following table:
-
-|             | initial | incoming 3 messages | after poll | incoming 3 messages | after poll |
-|-------------|---------|---------------------|------------|---------------------|------------|
-| queueLength | 0       | 3                   | 3          | 6                   | 6          |
-| runningJobs | 0       | 0                   | 3          | 3                   | 3          |
-
-
-If we switch to `eager`, the result becomes: 
-
-|             | initial | incoming 3 messages | after poll | incoming 3 messages | after poll |
-|-------------|---------|---------------------|------------|---------------------|------------|
-| queueLength | 0       | 3                   | 3          | 6                   | 6          |
-| runningJobs | 0       | 0                   | 3          | 3                   | 6          |
-
-We can identify the difference in their final states.
-
-
-You may also refer to [this original issue](https://github.com/kedacore/keda/issues/5114) for more information.
-
----
-
-```yaml
-scalingStrategy:
-    multipleScalersCalculation : "max" # Optional. Default: max. Specifies how to calculate the target metrics (`queueLength` and `maxScale`) when multiple scalers are defined.
-```
-Select a behavior if you have multiple triggers. Possible values are `max`, `min`, `avg`, or `sum`. The default value is `max`. 
-
-* **max:** - Use metrics from the scaler that has the max number of `queueLength`. (default)
-* **min:** - Use metrics from the scaler that has the min number of `queueLength`.
-* **avg:** - Sum up all the active scalers metrics and divide by the number of active scalers.
-* **sum:** - Sum up all the active scalers metrics.
-
 
 ### multipleScalersCalculation
 
