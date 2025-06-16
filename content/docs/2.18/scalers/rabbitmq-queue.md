@@ -40,6 +40,8 @@ triggers:
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
 - `vhostName` - Vhost to use for the connection, overrides any vhost set in the connection string from `host`/`hostFromEnv`. (Optional / Required if Azure AD Workload Identity authorization is used)
+- `tls` - To enable SSL auth for RabbitMQ. If not set, TLS for RabbitMQ is not used. (Values: `enable`, `disable`, Default: `disable`, Optional)
+  > You can set the `tls` parameter either in the TriggerAuthentication resource or directly in the trigger's `metadata` section, depending on your configuration preference.
 - `queueLength` - DEPRECATED! Use `mode: QueueLength` and `value: ##` instead. Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. Default is 20 unless `publishRate` is specified, in which case `queueLength` is disabled for this trigger.
 - `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
