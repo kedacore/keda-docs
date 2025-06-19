@@ -88,3 +88,17 @@ spec:
       host: RabbitMqHost
       queueLength  : '5'
 ```
+
+# Excluding labels from being propagated to the Job
+
+You can exclude specific labels from being propagated to the generated Job object by using the `scaledjob.keda.sh/job-excluded-labels` annotation. This annotation accepts a comma-separated list of label keys that should be excluded.
+
+```yaml
+metadata:
+  annotations:
+￼   scaledjob.keda.sh/job-excluded-labels: "foo.bar/environment,foo.bar/version"
+￼ labels:
+￼   team: backend
+￼   foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
+￼   foo.bar/version: "1"
+```
