@@ -9,7 +9,7 @@ go_file = "forgejo_scaler"
 
 ### Trigger Specification
 
-This specification describes the `azure-pipelines` trigger for Azure Pipelines. It scales based on the amount of pipeline runs pending in a given agent pool.
+This specification describes the `forgejo-runner` trigger for Forgejo Actions. It scales based on the amount of jobs pending in given runner labels.
 
 ```yaml
 triggers:
