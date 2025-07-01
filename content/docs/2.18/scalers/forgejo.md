@@ -35,7 +35,7 @@ triggers:
 
 ### Registering runners and binding config with autoscalers
 
-To match job endpoints with job execution, we need to pre-register a runner, save the generated JSON file as a ConfigMap, and share it with the autoscaler. review the different ways to register a runner [here](https://forgejo.org/docs/latest/admin/runner-installation/#standard-registration),  select the desired scope (user, repository or global) and create the corresponding JSON file. 
+To match job endpoints with job execution, we need to pre-register a runner, save the generated JSON file as a ConfigMap, and share it with the autoscaler. review the different ways to register a runner [here](https://forgejo.org/docs/latest/admin/runner-installation/#standard-registration), select the desired scope (user, repository or global) and create the corresponding JSON file. 
 
 Autoscaler definition and runner registration should match to work as expected.
 
