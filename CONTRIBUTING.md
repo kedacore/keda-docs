@@ -17,14 +17,12 @@ We provide easy ways to introduce new content:
 - [Contributing to KEDA](#contributing-to-keda)
   - [Getting Help](#getting-help)
   - [Contributing New Documentation](#contributing-new-documentation)
-    - [Become a listed KEDA user!](#become-a-listed-keda-user)
-    - [Become a listed KEDA commercial offering!](#become-a-listed-keda-commercial-offering)
     - [Adding blog post](#adding-blog-post)
     - [Adding scaler documentation](#adding-scaler-documentation)
+    - [Writing documentation for a scaler](#writing-documentation-for-a-scaler)
     - [Writing documentation for a new authentication provider](#writing-documentation-for-a-new-authentication-provider)
     - [Add new Frequently Asked Question (FAQ)](#add-new-frequently-asked-question-faq)
     - [Add new troubleshooting guidance](#add-new-troubleshooting-guidance)
-    - [Writing documentation for a scaler](#writing-documentation-for-a-scaler)
   - [Working with documentation versions](#working-with-documentation-versions)
     - [Preparing a new version](#preparing-a-new-version)
     - [Publishing a new version](#publishing-a-new-version)
@@ -34,46 +32,13 @@ We provide easy ways to introduce new content:
   - [Changing the website](#changing-the-website)
     - [Creating and building a local environment](#creating-and-building-a-local-environment)
     - [Adding a new filter option](#adding-a-new-filter-option)
+  - [Listing KEDA Users and Commercial Offerings](#listing-keda-users-and-commercial-offerings)
+    - [Become a listed KEDA user](#become-a-listed-keda-user)
+    - [Become a listed KEDA commercial offering](#become-a-listed-keda-commercial-offering)
+
 
 Learn more how to [create and build a local environment](#creating-and-building-a-local-environment).
 
-### Become a listed KEDA user!
-
-Are you using KEDA in production? Do you want to become a [listed user](https://keda.sh/community/#users)? Say no more!
-
-You can easily get listed by following these steps:
-
-1. Upload your logo to `static/img/logos/` _(350x180)_
-2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
-
-```toml
-[[params.users]]
-url = "https://coralogix.com/"
-logo = "coralogix.gif"
-```
-
-Here's a good example of [Coralogix becoming a listed user](https://github.com/kedacore/keda-docs/pull/182)!
-
-### Become a listed KEDA commercial offering!
-
-Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/enterprise)? Say no more!
-
-You can easily get listed by following these steps:
-
-1. Upload your logo to `static/img/logos/` _(350x180)_
-2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
-
-```toml
-[[params.vendors]]
-name = "Red Hat"
-logo = "vendors/red-hat.png"
-description = """
-Red Hat integrates KEDA with OpenShift through the **Custom Metrics Autoscaler** (CMA) available through the OpenShift Marketplace.
-"""
-urls = [
-  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
-]
-```
 
 ### Adding blog post
 
@@ -89,6 +54,8 @@ contents you can modify. The following fields are required:
 - `title`
 - `date` (in `YYYY-MM-DD` format)
 - `author`
+
+> Note: Please ensure the file is named correctly, as it will be used as the blog post URL slug. Avoid defining an alias to rename the URL slug, as this goes against our convention.
 
 ### Adding scaler documentation
 
@@ -106,6 +73,23 @@ Make sure to update the following metadata fields:
 - `availability`
 - `maintainer`
 - `description`
+
+### Writing documentation for a scaler
+
+In order to maintain the style consistency across different scalers, all the
+parameters which are listed have to be written using this convention:
+
+- name - Description. (Values: x, y, z, Default: y, Optional, Extra Info)
+
+If a parameter is required or doesn't have defined/default values, the missing
+info should be removed from the pattern.
+
+Here are a few examples:
+
+> - `targetMetricValue` - Target value for your metric.
+> - `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
+> - `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
+> - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
 
 ### Writing documentation for a new authentication provider
 
@@ -142,23 +126,6 @@ $ hugo new troubleshooting/<VERSION>/my-new-issue.md
 
 To adjust the order in which the troubleshooting tiles appear, use the `weight`
 parameter in each page's metadata.
-
-### Writing documentation for a scaler
-
-In order to maintain the style consistency across different scalers, all the
-parameters which are listed have to be written using this convention:
-
-- name - Description. (Values: x, y, z, Default: y, Optional, Extra Info)
-
-If a parameter is required or doesn't have defined/default values, the missing
-info should be removed from the pattern.
-
-Here are a few examples:
-
-> - `targetMetricValue` - Target value for your metric.
-> - `metricFilter` - Aggregation method of the metric. (Values: `max`, `min`, `average`, `sum`, `variance`, Default: `average`, Optional)
-> - `metricPeriod` - Granularity of the metric. (Default: `300`, Optional)
-> - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional, Required when `topicName` is specified)
 
 ## Working with documentation versions
 
@@ -365,6 +332,46 @@ parse[doc.title] = {
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
 8. Save your changes and rebuild your frontend.
+
+## Listing KEDA Users and Commercial Offerings
+
+### Become a listed KEDA user!
+
+Are you using KEDA in production? Do you want to become a [listed user](https://keda.sh/community/#users)? Say no more!
+
+You can easily get listed by following these steps:
+
+1. Upload your logo to `static/img/logos/` _(350x180)_
+2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+
+```toml
+[[params.users]]
+url = "https://coralogix.com/"
+logo = "coralogix.gif"
+```
+
+Here's a good example of [Coralogix becoming a listed user](https://github.com/kedacore/keda-docs/pull/182)!
+
+### Become a listed KEDA commercial offering!
+
+Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/enterprise)? Say no more!
+
+You can easily get listed by following these steps:
+
+1. Upload your logo to `static/img/logos/` _(350x180)_
+2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+
+```toml
+[[params.vendors]]
+name = "Red Hat"
+logo = "vendors/red-hat.png"
+description = """
+Red Hat integrates KEDA with OpenShift through the **Custom Metrics Autoscaler** (CMA) available through the OpenShift Marketplace.
+"""
+urls = [
+  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
+]
+```
 
 [localhost:8888]: http://localhost:8888
 [LTS release]: https://nodejs.org/en/about/releases/

@@ -54,7 +54,7 @@ You can use TriggerAuthentication CRD to configure the username and password to 
 
 ### Example
 
-The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be delcared in the same namespace.
+The objects in the example below are declared in `namespace=solace`. It is not required to do so. If you do define a namespace for the configuration objects, then they should all be declared in the same namespace.
 
 ```yaml
 apiVersion: v1
