@@ -1,11 +1,15 @@
 DirectoryPath: public
+EnforceHTTPS: true
+EnforceHTML5: true
 IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
-IgnoreInternalURLs:
+IgnoreURLs:
   # Temporal ignores
 
   # Deprecated and removed resources
-
+  - /docs/\d+.\d+/authentication-providers/aws-kiam/
+  - /docs/\d+.\d+/authentication-providers/azure-ad-pod-identity/
+  - /docs/\d+.\d+/operate/events/
   # Renamed pages
