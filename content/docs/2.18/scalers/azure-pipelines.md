@@ -130,7 +130,7 @@ Once it finds it, it will scale the workload that matched the definition and Azu
 
 However, as this an undocumented API, it possesses some unique quirks when calling it with different query parameters. For example, if the `$top` query parameter is given, the format of the returned JSON is changed in such a way that it is no longer possible for the scaler to find the matched agents; making it impossible to use with the `parent` property from the trigger metadata. Therefore making `jobsToFetch` mutually exclusive with `parent` in the trigger metadata. 
 
-Additionally, the `$top` query parameter takes precedence over some other parameters like `completedRequestCount`. If the `$top` query parameter is given, even finished jobs are included in the response even if `completedRequestCount=0` is given and thus only pending and running jobs should be returned. Thus, `jobsToFetch` is also mutually exclusive with `fetchUnfinishedJobsOnly` in the trigger metadata.
+Additionally, the `$top` query parameter takes precedence over some other parameters like `completedRequestCount`. If the `$top` query parameter is given, finished jobs are included in the response even if `completedRequestCount=0` is given, although `completedRequestCount=0` would indicate that only pending and running jobs should be returned. Thus, `jobsToFetch` is also mutually exclusive with `fetchUnfinishedJobsOnly` in the trigger metadata.
 
 ### Configuring the agent container
 
