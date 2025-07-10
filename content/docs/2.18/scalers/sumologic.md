@@ -77,35 +77,27 @@ triggers:
 
 **Common Parameters:**
 
-| Name             | Description                                                        | Required                   | Example                                 |
-|------------------|--------------------------------------------------------------------|----------------------------|-----------------------------------------|
-| `host`             | Sumo Logic API endpoint URL (Based on your Geo).                                        | Yes                        | `https://api.sumologic.com`               |
-| `queryType`        | Type of query (`logs` or `metrics`).                                                     | Yes                        | `logs`                                    |
-| `query`            | Sumo Logic query (for single queries).                                                     | Yes (for single queries)                        | `_view=my_view \| count`                         |
-| `timerange`        | Time range to evaluate the query.                        | Yes                        | `15m`                                      |
-| `timezone`         | Timezone for query execution.                                       | Optional (`UTC` default)                        | `Asia/Kolkata`                            |
-| `queryAggregator`  | Aggregation method (`Latest`, `Avg`, `Sum`, `Count`, `Min`, `Max`).                             | Optional (`Avg` default)     | `Max`                                     |
-| `threshold`        | Target value for scaling.                                           | Yes                        | `1000`                                    |
+- `host` - Sumo Logic API endpoint URL (Based on your Geo).
+- `queryType` - Type of query. (Values: `logs`, `metrics`)
+- `query` - Sumo Logic query (for single queries).
+- `timerange` - Time range to evaluate the query.
+- `timezone` - Timezone for query execution. (Default: `UTC`, Optional)
+- `queryAggregator` - Aggregation method. (Values: `Latest`, `Avg`, `Sum`, `Count`, `Min`, `Max`, Default: `Avg`, Optional)
+- `threshold` - Target value for scaling.
 
 **Logs Query Specific Parameters:**
 
-| Name             | Description                                                        | Required                   | Example                                 |
-|------------------|--------------------------------------------------------------------|----------------------------|-----------------------------------------|
-| `resultField`      | Field from query results to extract the scaling metric.            | Yes (for `logs` queries only)                       | `_count`                                  |
+- `resultField` - Field from query results to extract the scaling metric. (Required when `queryType` is `logs`)
 
 **Metrics Query Specific Parameters:**
 
-| Name           | Description                                                        | Required | Example |
-|----------------|--------------------------------------------------------------------|----------|---------|
-| `quantization`   | Granularity of data points.                             | Yes (for `metrics` queries only)     | `15s`      |
-| `rollup`         | Metrics rollup type (`Avg`, `Sum`, `Min`, `Max`, `Count`).                          | Optional (for `metrics` queries only, `Avg` default)      | `Max`     |
+- `quantization` - Granularity of data points. (Required when `queryType` is `metrics`)
+- `rollup` - Metrics rollup type. (Values: `Avg`, `Sum`, `Min`, `Max`, `Count`, Default: `Avg`, Optional)
 
 **Multi-Metrics Query Specific Parameters:**
 
-| Name               | Description                                                              | Required | Example |
-|--------------------|--------------------------------------------------------------------------|----------|---------|
-| `query.A`, `query.B`, `query.C` etc | Multi-stage queries, where later queries can refer to earlier ones.    | Yes (for multi-metrics queries)      | `-` |
-| `resultQueryRowID`   | Which final query (`A`, `B`, `C`, etc.) to use for scaling.                   | Yes (for multi-metrics queries)     | `C`       |
+- `query.A`, `query.B`, `query.C` etc - Multi-stage queries, where later queries can refer to earlier ones. (Required for multi-metrics queries)
+- `resultQueryRowID` - Which final query (`A`, `B`, `C`, etc.) to use for scaling. (Required for multi-metrics queries)
 
 ## Authentication Parameters
 
