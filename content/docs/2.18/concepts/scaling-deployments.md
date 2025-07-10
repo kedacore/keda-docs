@@ -213,9 +213,8 @@ You can exclude specific labels from being propagated to the generated HPA objec
 ```yaml
 metadata:
   annotations:
-￼   scaledobject.keda.sh/hpa-excluded-labels: "foo.bar/environment,foo.bar/version"
-￼ labels:
- ￼  team: backend
- ￼  foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
- ￼  foo.bar/version: "1"
-```
+    scaledobject.keda.sh/hpa-excluded-labels: "foo.bar/environment,foo.bar/version"
+  labels:
+    team: backend
+    foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
+    foo.bar/version: "1"
