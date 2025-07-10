@@ -27,4 +27,8 @@ jobs:
 
       - run: npm install --omit=optional
 
+      - run: |
+          sed -i -e "s/docs = \[/docs = [\"$(ls content/docs | grep -oe '[0-9][0-9]*.[0-9][0-9]' | tail -1)\", /" config.toml
+        name: Fake version to include incoming version as current
+
       - run: npm run check:links
