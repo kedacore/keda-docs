@@ -9,11 +9,14 @@ description = "Scale workloads based on Honeycomb query results, allowing for ev
 
 The Honeycomb scaler for KEDA enables Kubernetes workloads to scale based on the results of queries executed against [Honeycomb](https://www.honeycomb.io/) datasets. This allows for event-driven autoscaling based on observability metrics, giving you dynamic scaling capabilities tied to real-time application performance or event data.
 
+> **Note:** The Honeycomb Scaler requires a [Honeycomb Enterprise](https://www.honeycomb.io/pricing/) plan, as it leverages features available only to Enterprise customers.
+
 ---
 
 ## Trigger Specification
 
 This specification describes the `honeycomb` trigger that scales based on Honeycomb query results.
+**An Enterprise Honeycomb account is required to use this scaler.**
 
 ```yaml
 triggers:
@@ -109,6 +112,28 @@ spec:
       authenticationRef:
         name: honeycomb-auth
 ```
+
+---
+
+## API Restrictions & Licensing
+
+> **Important:**  
+> - **Enterprise License Required:** The Honeycomb scaler requires a Honeycomb Enterprise plan. This scaler will not work with free or non-Enterprise Honeycomb accounts. Further details available in Honeycomb's [API documentation](https://api-docs.honeycomb.io/api/query-data).
+> - **API Rate & Query Restrictions:**  
+>   - **Data Availability:** Query Results can only be created for events with timestamps within the past 7 days.
+>   - **Time Range Truncation:**  
+>     - Queries ≤ 6 hours: results truncated to the nearest 1 minute.  
+>     - > 6 hours and ≤ 2 days: results truncated to the nearest 5 minutes.  
+>     - > 2 days and ≤ 7 days: results truncated to the nearest 30 minutes.
+>   - **Rate Limiting:** Creating a Query Result is rate limited to **10 requests per minute** per dataset. If rate limited, the API will return status code 429.
+>   - **Query Timeout:** Each Query Result must return within **10 seconds**, or the API call will fail.
+
+**Query Results Workflow:**  
+1. **Create a Query** (validates parameters, does not execute).
+2. **Run Query Asynchronously** (creates a Query Result and returns a Query Result ID).
+3. **Poll Query Result Endpoint** with the Query Result ID until data is ready.
+
+You can re-run queries with a relative `time_range` for rolling windows (e.g., last 2 hours) as needed for autoscaling logic.
 
 ---
 
