@@ -7,6 +7,7 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreURLs:
   # Temporal ignores
+  - /docs/2.17/scalers/sumologic/
 
   # Deprecated and removed resources
   - /docs/\d+.\d+/authentication-providers/aws-kiam/
