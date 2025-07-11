@@ -15,7 +15,7 @@ This specification describes the `gcp-pubsub` trigger for Google Cloud Platform 
 triggers:
 - type: gcp-pubsub
   metadata:
-    subscriptionSize: "5" # Deprecated, use mode and value fields instead
+    subscriptionSize: "5" # The 'subscriptionSize' setting is DEPRECATED and will be removed in v2.20 - Use 'mode' and 'value' instead" 
     mode: "SubscriptionSize" # Optional - Default is SubscriptionSize - SubscriptionSize or OldestUnackedMessageAge
     aggregation: "sum" # Optional - Only meaningful for distribution-valued metrics
     value: "5.5" # Optional - Default is 10
