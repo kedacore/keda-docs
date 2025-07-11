@@ -205,3 +205,16 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 #### Run as jobs
 
 The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](./scaling-jobs).
+
+## Excluding labels from being propagated to the HPA
+
+You can exclude specific labels from being propagated to the generated HPA object by using the `scaledobject.keda.sh/hpa-excluded-labels` annotation. This annotation accepts a comma-separated list of label keys that should be excluded.
+
+```yaml
+metadata:
+  annotations:
+    scaledobject.keda.sh/hpa-excluded-labels: "foo.bar/environment,foo.bar/version"
+  labels:
+    team: backend
+    foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
+    foo.bar/version: "1"
