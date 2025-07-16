@@ -366,7 +366,7 @@ parent = "project"
 weight = 9
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+url = "https://github.com/kedacore/governance/blob/main/MEMBERS.md"
 name = "Maintainers"
 parent = "project"
 weight = 10

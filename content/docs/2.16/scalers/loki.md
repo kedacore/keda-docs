@@ -22,7 +22,7 @@ triggers:
     # Optional fields:
     activationThreshold: '2.50'
     tenantName: Tenant1 # Optional. X-Scope-OrgID header for specifying the tenant name in a multi-tenant setup.
-    ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Loki. Set to `false` the scaler will return error when Loki target is lost
+    ignoreNullValues: "false" # Default is `true`, which means ignoring the empty value list from Loki. Set to `false` the scaler will return error when Loki target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Loki endpoint
 ```
 
