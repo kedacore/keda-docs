@@ -34,6 +34,7 @@ triggers:
     scaleToZeroOnInvalidOffset: false
     excludePersistentLag: false
     limitToPartitionsWithLag: false
+    ensureEvenDistributionOfPartitions: false
     version: 1.0.0
     partitionLimitation: '1,2,10-20,31'
     sasl: plaintext
@@ -56,6 +57,7 @@ If 'false' (the default), the scaler will keep a single consumer for that partit
 partition will be scaled to zero. See the [discussion](https://github.com/kedacore/keda/issues/2612) about this parameter.
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions which current offset is the same as the current offset of the previous polling cycle. This parameter is useful to prevent scaling due to partitions which current offset message is unable to be consumed. If `false` (the default), scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
 - `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be specified when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
+- `ensureEvenDistributionOfPartitions` - When set to `true`, the scaler will ensure that the number of replicas is even across the topic partitions. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [sarama](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
@@ -132,6 +134,19 @@ When a new Kafka consumer is created, it must determine its consumer group initi
 
 - If the policy is set to `earliest` (a new consumer wants to replay everything in the topic from its beginning) and no offset is committed, the scaler will return a lag value equal to the last offset in the topic. In the case of a new topic the last offset will be 0, so it will scale the deployment to 0 replicas. If a new message is produced to the topic, KEDA will return the new value of the offset (1), and will scale the deployments to consume the message.
 - If the policy is set to `latest` (so the new consumer will only consume new messages) and no offset is committed, the scaler will return a negative lag value, and will also tell the HPA to remain `active`, hence the deployment should have the minimum number of replicas running. This is to allow the consumer to read any new message on the topic, and commit its offset.
+
+### New `ensureEvenDistributionOfPartitions` property support
+
+When scaling a Kafka consumers, you would want to ensure that all partitions are consumed equally. Otherwise some partition would start building up higher lag than others. Prior to introduction of this parameter the Kafka scaler did not factor in the number of partitions on the Kafka topic in its scaling decisions. This is a problem because we could end up in a situation where your consumers would have uneven distribution of partitions. When you have `ensureEvenDistributionOfPartitions` configuration enabled the scaler would always ensure that the number of partitions are always balanced between the number of consumers that we would be scaling to.
+
+Consider for example a topic with `10` partitions. In this case the idea consumer count should always be `1,2,5,10`. Running any other number of consumers than this set would cause an uneven distribution.
+
+Below are some examples of what the scaling decision would look like. Consider `10` partitions and a lag threshold of `10` as the configuration default.
+
+- For lag between `1 -> 10` we would be running `1` consumer
+- For lag between `11 -> 20` we would be running `2` consumer
+- For lag between `21 -> 50` we would be running `5` consumers
+- For lag higher than `51` we would be running `10` consumers
 
 ### Example
 
