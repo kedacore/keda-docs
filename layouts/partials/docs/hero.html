@@ -8,7 +8,17 @@
 {{ $version       := index (split .File.Path "/") 1 }}
 {{ $latest        := index (index site.Params.versions .Section) 0 }}
 {{ $isLatest      := eq $version $latest }}
-{{ $isNextVersion := not (in (index site.Params.versions .Section) $version) -}}
+{{ $isNextVersion := not (in (index site.Params.versions .Section) $version) }}
+
+<!-- Check if latest version of this page exists -->
+{{ $latestUrl := replaceRE $version $latest .RelPermalink }}
+{{ $latestPageExists := false }}
+{{ range site.Pages }}
+  {{ if eq .RelPermalink $latestUrl }}
+    {{ $latestPageExists = true }}
+  {{ end }}
+{{ end }}
+
 <section class="hero">
   <div class="hero-body">
     <div class="container">
@@ -17,9 +27,8 @@
         <sup>
           {{ if $isLatest }}
           <span class="tag is-success">Latest</span>
-          {{ else if not $isNextVersion }}
-          {{ $url := replaceRE $version $latest .RelPermalink }}
-          <a href="{{ $url }}">
+          {{ else if and (not $isNextVersion) $latestPageExists }}
+          <a href="{{ $latestUrl }}">
             <span class="tag is-warning">Click here for latest</span>
           </a>
           {{ end }}
@@ -74,14 +83,23 @@
           </span>
         </a>
       </div>
-      {{ if not $isLatest }}
-      {{ $url := replaceRE $version $latest .RelPermalink }}
+      
+      {{ if and (not $isLatest) $latestPageExists }}
       <article class="message is-warning">
         <div class="message-header">
           <p>Warning</p>  
         </div>
         <div class="message-body">
-          You are currently viewing v"{{ $version }}" of the documentation and it is not the latest. For the most recent documentation, kindly <a href="{{ $url }}"> click here.</a>
+          You are currently viewing v{{ $version }} of the documentation and it is not the latest. For the most recent documentation, kindly <a href="{{ $latestUrl }}"> click here.</a>
+        </div>
+      </article>
+      {{ else if and (not $isLatest) (not $isNextVersion) }}
+      <article class="message is-info">
+        <div class="message-header">
+          <p>Notice</p>  
+        </div>
+        <div class="message-body">
+          This page does not exist in the latest version ({{ $latest }}). It may have been deprecated or replaced. Check the <a href="/{{ .Section }}/{{ $latest }}/">{{ $latest }} documentation</a> for alternatives.
         </div>
       </article>
       {{ end }}
