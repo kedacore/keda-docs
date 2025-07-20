@@ -7,9 +7,5 @@ IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreURLs:
   # Temporal ignores
-
   # Deprecated and removed resources
-  - /docs/\d+.\d+/authentication-providers/aws-kiam/
-  - /docs/\d+.\d+/authentication-providers/azure-ad-pod-identity/
-  - /docs/\d+.\d+/operate/events/
   # Renamed pages
