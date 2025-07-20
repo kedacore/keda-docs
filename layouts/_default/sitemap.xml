@@ -1,6 +1,6 @@
 {{- /*  sitemap.xml should only contain canonical urls. */ -}}
-{{- /*  For versioned pages, the canonical is the current version and it's the only version we should include*/ -}}
-{{- /*  For blog and other pages, we can include all of them as they aren't versioned*/ -}}
+{{- /*  For versioned pages, the canonical is the current version and it's the only version we should include */ -}}
+{{- /*  For blog and other pages, we can include all of them as they aren't versioned */ -}}
 {{ $docsLatest := index site.Params.versions.docs 0 -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
