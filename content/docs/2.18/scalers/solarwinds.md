@@ -1,6 +1,6 @@
 +++
 title = "Solarwinds"
-availability = "v2.17+"
+availability = "v2.18+"
 maintainer = "Community"
 description = "Scale applications based on metrics from Solarwinds."
 go_file = "solarwinds_scaler"
@@ -31,7 +31,7 @@ triggers:
 - `metricName` - The name of the metric to monitor.
 - `aggregation` - The aggregation method to use (`COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `LAST`).
 - `intervalS` - The interval in seconds for the metric collection.
-- `filter` - The filter to apply to the metric data. Examples:
+- `filter` - The filter to apply to the metric data (Optional). Examples:
   - `key1:value1 key2:value2` - Search using key values pairs with a delimiting space for an implicit AND
   - `key:[value1,value2]` - Search using IN operator (key equals value1 or value2)
   - `key:~value` - Search using CONTAINS operator
