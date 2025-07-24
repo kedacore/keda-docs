@@ -48,6 +48,7 @@ triggers:
     timezone: "Asia/Kolkata"
     queryAggregator: "Max"
     threshold: "50"
+    maxRetries: "3"                     # Optional: Maximum retry attempts
   authenticationRef:
     name: keda-trigger-auth-sumologic
 ```
@@ -84,10 +85,12 @@ triggers:
 - `timezone` - Timezone for query execution. (Default: `UTC`, Optional)
 - `queryAggregator` - Aggregation method. (Values: `Latest`, `Avg`, `Sum`, `Count`, `Min`, `Max`, Default: `Avg`, Optional)
 - `threshold` - Target value for scaling.
+- `maxRetries` - Maximum number of retry attempts for API requests. (Default: `3`, Optional)
 
 **Logs Query Specific Parameters:**
 
 - `resultField` - Field from query results to extract the scaling metric. (Required when `queryType` is `logs`)
+- `logsPollingInterval` - Polling interval for log search job. (Default: `1s`, Optional)
 
 **Metrics Query Specific Parameters:**
 
