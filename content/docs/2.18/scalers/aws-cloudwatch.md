@@ -28,7 +28,7 @@ triggers:
     targetMetricValue: "2.1"
     minMetricValue: "1.5"
     # Optional: ignoreNullValues
-    ignoreNullValues: false
+    ignoreNullValues: "false"
     # Required: region
     awsRegion: "eu-west-1"
     # Optional: AWS endpoint url
