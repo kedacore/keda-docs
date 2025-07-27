@@ -245,13 +245,13 @@
           title.className = "subtitle is-size-3";
 
           if (results.length == 0)
-            title.textContent = `No results found for "${keywords}"`;
+            title.textContent = `No results found`;
           else if (results.length == 1)
-            title.textContent = `Found one result for "${keywords}"`;
+            title.textContent = `Found 1 result`;
           else if (results.length > 1 && keywords === "")
             title.textContent = `${results.length} scalers available`;
           else
-            title.textContent = `Found ${results.length} results for "${keywords}"`;
+            title.textContent = `Found ${results.length} results`;
           searchResultCount.replaceChildren(title);
 
           // show the matched result
