@@ -114,7 +114,7 @@ For example, these scalers are equivalent:
 - type: prometheus
   metadata:
     serverAddress: https://monitoring.googleapis.com/v1/projects/my-keda-project/location/global/prometheus
-    query: 'count(increase({"__name__"="pubsub.googleapis.com:topic_message_sizes","monitored_resource"="pubsub_topic","topic_id"="my-topic"}[1m]))'
+    query: 'count(increase({"__name__"="pubsub.googleapis.com/topic/message_sizes","monitored_resource"="pubsub_topic","topic_id"="my-topic"}[1m]))'
     threshold: "5"
     activationThreshold: "0"
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON
