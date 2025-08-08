@@ -7,6 +7,8 @@ description = "Scale applications based on Google Cloud Platform Pub/Sub."
 go_file = "gcp_pubsub_scaler"
 +++
 
+> 💡 **WARNING:** This is scaler is deprecated and won't recevie any modification. [Read more about it here](../../../blog/2025-08-15-gcp-deprecations.md).
+
 ### Trigger Specification
 
 This specification describes the `gcp-pubsub` trigger for Google Cloud Platform Pub/Sub.
