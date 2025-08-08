@@ -72,10 +72,10 @@ Additionally, we provide the ability to temporarily pause scale down on a scale 
 ```yaml
 metadata:
   annotations:
-    autoscaling.keda.sh/paused-scale-down: "true"
+    autoscaling.keda.sh/paused-scale-in: "true"
 ```
 
-When the annotation is set, KEDA will update the generated HPA to disable Scale Down and if the service has scale to zero configured, will block scale to zero. When the annotation is unset, the Scale down behavior on the HPA will be restored to its original configuration and, if configured, scale to zero will be unblocked. 
+When the annotation is set, KEDA will update the generated HPA to disable scale in (via setting the HPA's Scale Down Select Policy to Disabled) and if the service has scale to zero configured, will block scale to zero. When the annotation is unset, the scale down behavior on the HPA will be restored to its original configuration and, if configured, scale to zero will be unblocked. 
 
 ## Scaling Modifiers
 
