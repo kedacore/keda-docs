@@ -160,7 +160,6 @@ for `AverageValue` metrics, and using the formula:
 ```
 target metric value * fallback replicas / current ready replicas
 ```
-for `Value` metrics.
 
 These formulas offset the HPA's calculations and will cause it to scale the deployment to the specified number of fallback replicas.
 
