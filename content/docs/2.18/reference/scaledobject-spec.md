@@ -150,7 +150,7 @@ The `fallback` section is optional. It defines a number of replicas to fall back
 Starting KEDA version 2.18, fallback is supported for both `Value` and `AverageValue` metric types. However, two limitations to consider:
   - It supports all native Kubernetes workloads (`Deployment`, `StatefulSet`, and `ReplicaSet`). Any non-native workload would need to have its controller implement `.status.readyReplicas` field on the workload resource. An example of non-native workloads that implement this is Argo Rollouts.
 
- - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
+ - It is only supported by `ScaledObjects`, **not** `ScaledJobs`.
 
 KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula:
 ```
