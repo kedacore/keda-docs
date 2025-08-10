@@ -162,7 +162,7 @@ target metric value * fallback replicas / current ready replicas
 ```
 for `Value` metrics.
 
-These formulas offset HPA's calculations, and will have the effect of the HPA scaling the deployment to the defined number of fallback replicas.
+These formulas offset the HPA's calculations and will cause it to scale the deployment to the specified number of fallback replicas.
 
 ## fallback.behavior
 
