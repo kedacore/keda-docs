@@ -156,7 +156,7 @@ KEDA will keep track of the number of consecutive times each scaler has failed t
 ```
 target metric value * fallback replicas
 ```
-for `AverageValue` metrics, and using the formula:
+For `Value` metrics it's using the formula:
 ```
 target metric value * fallback replicas / current ready replicas
 ```
