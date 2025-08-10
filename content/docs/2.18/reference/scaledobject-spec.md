@@ -152,7 +152,7 @@ Fallback is supported for both `Value` and `AverageValue` metric types, but ther
 
  - It is only supported by `ScaledObjects`, **not** `ScaledJobs`.
 
-KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula:
+KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula for `AverageValue` metrics:
 ```
 target metric value * fallback replicas
 ```
