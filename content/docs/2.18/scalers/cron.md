@@ -61,7 +61,9 @@ scaling down will happen 5 minutes after the cron schedule `end` parameter.
 It's almost always an error to try to do it the other way
 around, i.e. set `desiredReplicas: 0` in the cron trigger.
 
-#### Example: scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise
+> 💡 **NOTE**: When you set `desiredReplicas` in a `cron` trigger, you are defining the **minimum number of replicas** that should run between `start` and `end`. If you also configure other triggers (e.g., `cpu`), the number of replicas during that time can grow from `desiredReplicas` up to `maxReplicaCount` based on those triggers.
+
+#### Example: fixed number of replicas (scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise)
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -75,10 +77,38 @@ spec:
   minReplicaCount: 0
   cooldownPeriod: 300
   triggers:
-  - type: cron
-    metadata:
-      timezone: Asia/Kolkata
-      start: 0 6 * * *
-      end: 0 20 * * *
-      desiredReplicas: "10"
+    - type: cron
+      metadata:
+        timezone: Asia/Kolkata
+        start: 0 6 * * *
+        end: 0 20 * * *
+        desiredReplicas: "10"
 ```
+
+#### Example: dynamic number of replicas (0 during night, between 1 and 4 during day)
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cron-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  minReplicaCount: 0
+  maxReplicaCount: 4
+  cooldownPeriod: 300
+  triggers:
+    - type: cron
+      metadata:
+        timezone: Asia/Kolkata
+        start: 0 6 * * *
+        end: 0 20 * * *
+        desiredReplicas: "1"
+    - type: cpu
+      metricType: Utilization
+      metadata:
+        value: "80"
+```
+The deployment will scale to 0 between 20:00 and 06:00, and will have between 1 and 4 replicas between 06:00 and 20:00.
