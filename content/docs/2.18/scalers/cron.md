@@ -63,6 +63,12 @@ around, i.e. set `desiredReplicas: 0` in the cron trigger.
 
 > 💡 **NOTE**: When you set `desiredReplicas` in a `cron` trigger, you are defining the **minimum number of replicas** that should run between `start` and `end`. If you also configure other triggers (e.g., `cpu`), the number of replicas during that time can grow from `desiredReplicas` up to `maxReplicaCount` based on those triggers.
 
+**TL;DR**:
+- Set `minReplicaCount` to 0
+- Create your `cron` trigger: define `start`, `end` and `timezone`, and set `desiredReplicas` to the previous value of `minReplicaCount`
+- If you also want to use other criteria to scale your deployment, just add other triggers to your `ScaledObject`
+
+
 #### Example: fixed number of replicas (scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise)
 
 ```yaml
