@@ -6,7 +6,7 @@ description = "Scale applications based on Google Cloud Platform Cloud Tasks."
 go_file = "gcp_cloud_tasks_scaler"
 +++
 
-> 💡 **WARNING:** This is scaler is deprecated and won't recevie any modification. [Read more about it here](../../../blog/2025-08-15-gcp-deprecations.md).
+> 💡 **WARNING:** This scaler is deprecated and won't receive any modification. [Read more about it here](../../../blog/2025-08-15-gcp-deprecations.md).
 
 ### Trigger Specification
 
