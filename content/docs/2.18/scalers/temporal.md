@@ -25,6 +25,7 @@ triggers:
       selectUnversioned: false optional
       minConnectTimeout: 5 # optional
       unsafeSsl: false # optional
+      tlsServerName: "custom-tls-servername" # optional
 ```
 
 **Parameter list:**
@@ -42,6 +43,7 @@ triggers:
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
+- `tlsServerName` - The custom tls server name (Optional)
 
 > 💡 **NOTE:** Activation based on backlog may not be reliable when scaling to zero.
   This approach fails to account for in-flight tasks or workloads with throughput too low to trigger a backlog.
