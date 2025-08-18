@@ -61,9 +61,12 @@ scaling down will happen 5 minutes after the cron schedule `end` parameter.
 It's almost always an error to try to do it the other way
 around, i.e. set `desiredReplicas: 0` in the cron trigger.
 
-> 💡 **NOTE**: When you set `desiredReplicas` in a `cron` trigger, you are defining the **minimum number of replicas** that should run between `start` and `end`. If you also configure other triggers (e.g., `cpu`), the number of replicas during that time can grow from `desiredReplicas` up to `maxReplicaCount` based on those triggers.
+> 💡 **NOTE**: As the HPA Controller will evaluate all the metrics at once and will take the one which requires more instances (`max(metrics)`), the value set for `desiredReplicas` technically acts as a "dynamic" minimum replicas. For example, if you have other trigger like CPU, during the time between `start` and `end` you will have AT LEAST `desiredReplicas` because of that `max(metrics)`.
 
-**TL;DR**:
+
+> Once a deployment is scaled down to 0 replicas, the checks relying on pod-related metrics are **ignored**, given that no pods are currently running and these metrics are therefore impossible to retrieve. For this reason, **pod-related metrics are also ignored** for scaling to zero and this process is done only considering external metrics.
+
+#### TL;DR
 - Set `minReplicaCount` to 0
 - Create your `cron` trigger: define `start`, `end` and `timezone`, and set `desiredReplicas` to the previous value of `minReplicaCount`
 - If you also want to use other criteria to scale your deployment, just add other triggers to your `ScaledObject`
