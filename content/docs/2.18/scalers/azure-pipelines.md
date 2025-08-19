@@ -36,6 +36,8 @@ triggers:
       requireAllDemandsAndIgnoreOthers: false
       # Optional: How many jobs to fetch for the pool in the API (default: 250)
       jobsToFetch: "{jobsToFetch}"
+      # Optional: Whether to only fetch unfinished jobs from the API (default: false)
+      fetchUnfinishedJobsOnly: false
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -49,9 +51,10 @@ triggers:
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
 - `activationTargetPipelinesQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-- `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME"
+- `parent` - Put the name of the ADO agent that matched the ScaledObject. e.g. mavenagent-scaledobject may have an initial deployment called "mavenagent-keda-template"; this is the deployment that is made offline. This name is provided to the initial deployment as the environment variable "AZP_NAME". Mutually exclusive with `jobsToFetch`.
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
-- `jobsToFetch` - The number of the jobs that KEDA will fetch for the pool from Azure Pipeline API (Default: `250`, Optional)
+- `jobsToFetch` - The number of the jobs that KEDA will fetch for the pool from Azure Pipeline API. Mutually exclusive with `parent` and `fetchUnfinishedJobsOnly`. (Default: `250`, Optional)
+- `fetchUnfinishedJobsOnly` - Whether to fetch only unfinished jobs from the Azure Pipeline API. Normally both finished, running and pending jobs are returned by the API. When this parameter is set to `true`, the API call is modified so that only running and pending jobs are returned from the API, which reduces the amount of returned jobs considerably. Mutually exclusive with `jobsToFetch`. (Default: `false`, Optional)
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
@@ -124,6 +127,10 @@ Azure DevOps has a Job Request API with returns a list of all jobs, and the agen
 KEDA will interpret this request to find any matching template from the defined parent in the scaling definition, or any agent that can satisfy the demands specified in the scaling definition.
 
 Once it finds it, it will scale the workload that matched the definition and Azure DevOps will assign it to that agent.
+
+However, as this an undocumented API, it possesses some unique quirks when calling it with different query parameters. For example, if the `$top` query parameter is given, the format of the returned JSON is changed in such a way that it is no longer possible for the scaler to find the matched agents; making it impossible to use with the `parent` property from the trigger metadata. Therefore making `jobsToFetch` mutually exclusive with `parent` in the trigger metadata. 
+
+Additionally, the `$top` query parameter takes precedence over some other parameters like `completedRequestCount`. If the `$top` query parameter is given, finished jobs are included in the response even if `completedRequestCount=0` is given, although `completedRequestCount=0` would indicate that only pending and running jobs should be returned. Thus, `jobsToFetch` is also mutually exclusive with `fetchUnfinishedJobsOnly` in the trigger metadata.
 
 ### Configuring the agent container
 
