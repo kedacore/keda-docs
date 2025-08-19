@@ -12,6 +12,84 @@ Each method balances convenience, control, and compatibility differently: Helm i
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
+## Namespace Governance and Best Practices {#namespace-governance}
+
+### Installing KEDA in a Dedicated Namespace
+
+For production environments and better governance, **it's strongly recommended to install KEDA in a dedicated namespace** rather than the default namespace. This approach provides several benefits:
+
+- **Isolation**: Separates KEDA components from application workloads
+- **Resource Management**: Enables fine-grained resource quotas and limits
+- **Security**: Allows specific RBAC policies and network policies
+- **Monitoring**: Simplifies observability and troubleshooting
+- **Lifecycle Management**: Independent upgrade and maintenance cycles
+
+All installation methods in this guide demonstrate installing KEDA in a dedicated `keda` namespace using the `--namespace keda --create-namespace` flags.
+
+### Service Mesh Considerations
+
+When using service mesh technologies like **Istio**, additional configuration may be required:
+
+#### Istio Integration
+
+If you have Istio installed, you **must disable sidecar injection** for the KEDA namespace to prevent API discovery issues:
+
+```sh
+kubectl label namespace keda istio-injection=disabled
+```
+
+This prevents Istio's sidecar injection from interfering with KEDA's metrics API server. For more details, see the [Istio troubleshooting guide](https://keda.sh/docs/latest/troubleshooting/#why-is-keda-api-metrics-server-failing-when-istio-is-installed).
+
+#### Other Service Meshes
+
+Similar considerations may apply to other service mesh solutions. Consult your service mesh documentation for guidance on excluding system namespaces from mesh injection.
+
+### Additional Namespace Configuration
+
+Consider these additional configurations for enhanced governance:
+
+#### Resource Quotas
+Apply resource quotas to prevent resource exhaustion:
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: keda-quota
+  namespace: keda
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "4"
+    limits.memory: "8Gi"
+```
+
+#### Network Policies
+Implement network policies to control traffic flow:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: keda-network-policy
+  namespace: keda
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+  egress:
+  - to: []
+```
+
+> 💡 **TIP:** Always create the namespace before installing KEDA to apply any pre-configuration like labels, resource quotas, or network policies.
+
 ## Deploying with Helm {#helm}
 
 ### Prerequisites
@@ -34,7 +112,22 @@ If you’re new to Helm, start by familiarizing yourself with basic Helm command
     **Helm 3**
 
     ```sh
+    # Recommended: Install in dedicated namespace with governance considerations
     helm install keda kedacore/keda --namespace keda --create-namespace
+    ```
+
+    **For enhanced governance and service mesh environments:**
+
+    ```sh
+    # 1. Create namespace with proper labels (especially important for Istio)
+    kubectl create namespace keda
+    kubectl label namespace keda istio-injection=disabled
+
+    # 2. Apply resource quotas and policies (optional)
+    kubectl apply -f keda-namespace-config.yaml
+
+    # 3. Install KEDA
+    helm install keda kedacore/keda --namespace keda
     ```
 
     This command installs KEDA in a dedicated namespace (keda). You can customize the installation by passing additional configuration values with `--set`, allowing you to adjust parameters like replica counts, scaling metrics, or logging levels. Once installed, verify the deployment by checking the KEDA namespace for running pods:
@@ -131,7 +224,23 @@ Before deploying KEDA with YAML files, ensure you have `kubectl` installed and c
 
 ### Installing
 
-Once the KEDA YAML manifests are downloaded, apply the files to your cluster with the following command:
+Once the KEDA YAML manifests are downloaded, apply the files to your cluster. For governance and service mesh environments, prepare the namespace first:
+
+**For service mesh environments (recommended approach):**
+
+```sh
+# 1. Create and configure the namespace
+kubectl create namespace keda
+kubectl label namespace keda istio-injection=disabled
+
+# 2. Apply KEDA manifests
+# Including admission webhooks
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.18.0/keda-2.18.0.yaml
+# Without admission webhooks
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.18.0/keda-2.18.0-core.yaml
+```
+
+**Standard installation:**
 
 ```sh
 # Including admission webhooks
@@ -226,10 +335,20 @@ To install KEDA on MicroK8s, start by enabling necessary add-ons and then deploy
 
 3. Install KEDA Using Helm.
 
-   Deploy KEDA into your MicroK8s cluster by running:
+   Deploy KEDA into your MicroK8s cluster in a dedicated namespace:
 
    ```sh
+   # Standard installation
    microk8s helm3 install keda kedacore/keda --namespace keda --create-namespace
+   ```
+
+   **For testing service mesh integration:**
+
+   ```sh
+   # Create namespace with proper labels if testing with Istio
+   microk8s kubectl create namespace keda
+   microk8s kubectl label namespace keda istio-injection=disabled
+   microk8s helm3 install keda kedacore/keda --namespace keda
    ```
 
 4. Verify the Installation.
