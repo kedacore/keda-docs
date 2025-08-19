@@ -147,15 +147,21 @@ This setting is passed to the HPA definition that KEDA will create for a given r
 
 The `fallback` section is optional. It defines a number of replicas to fall back to if a scaler is in an error state.
 
-KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula:
+Fallback is supported for both `Value` and `AverageValue` metric types, but there are two limitations to consider:
+  - It supports all native Kubernetes workloads (`Deployment`, `StatefulSet`, and `ReplicaSet`). Any non-native workload would need to have its controller implement `.status.readyReplicas` field on the workload resource. An example of non-native workloads that implement this is Argo Rollouts.
+
+ - It is only supported by `ScaledObjects`, **not** `ScaledJobs`.
+
+KEDA will keep track of the number of consecutive times each scaler has failed to get metrics from its source. Once that value passes the `failureThreshold`, instead of not propagating a metric to the HPA (the default error behavior), the scaler will, instead, return a normalised metric using the formula for `AverageValue` metrics:
 ```
 target metric value * fallback replicas
 ```
-Due to the HPA metric being of type `AverageValue` (see below), this will have the effect of the HPA scaling the deployment to the defined number of fallback replicas.
+For `Value` metrics it's using the formula:
+```
+target metric value * fallback replicas / current ready replicas
+```
 
-There are a few limitations to using a fallback:
- - It only supports scalers whose target is an `AverageValue` metric. Thus, it is **not** supported by the CPU & memory scalers, or by scalers whose metric target type is `Value`. In these cases, it will assume that fallback is disabled.
- - It is only supported by `ScaledObjects` **not** `ScaledJobs`.
+These formulas offset the HPA's calculations and will cause it to scale the deployment to the specified number of fallback replicas.
 
 ## fallback.behavior
 
