@@ -4,7 +4,7 @@ title = "Hashicorp Vault secret"
 
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method. There's multiple methods for authentication; For kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) or provide the serviceAccountName that can authenticate to kubernetes in the namespace of the ScaledObject/ScaledJob resource (usually `default`). If using serviceAccountName make sure to grant KEDA Operator `create serviceaccounts/token` permissions. This is set in the helm chart via `permissions.operator.restrict.allowAllServiceAccountTokenCreation=true` For token auth method provide the token.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method, for kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) and for token auth method provide the token.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
 
@@ -19,9 +19,8 @@ hashiCorpVault:                                               # Optional.
   role: {hashicorp-vault-role}                                # Optional.
   mount: {hashicorp-vault-mount}                              # Optional.
   credential:                                                 # Optional.
-    token: {hashicorp-vault-token}                            # Optional. Authenticate to vault via a supplied token
-    serviceAccount: {path-to-service-account-file}            # Optional. Authenticate to vault via JWT token in keda operator pod
-    serviceAccountName: {service-account-name-for-auth}       # Optional. Requires serviceaccounts/token create permissions. Authenticate to vault via JWT token from service account in ScaledObject/ScaledJob's namespace
+    token: {hashicorp-vault-token}                            # Optional.
+    serviceAccount: {path-to-service-account-file}            # Optional.
   secrets:                                                    # Required.
   - parameter: {scaledObject-parameter-name}                  # Required.
     key: {hashicorp-vault-secret-key-name}                    # Required.
