@@ -19,7 +19,10 @@ hashiCorpVault:                                               # Optional.
   role: {hashicorp-vault-role}                                # Optional.
   mount: {hashicorp-vault-mount}                              # Optional.
   credential:                                                 # Optional.
-    token: {hashicorp-vault-token}                            # Optional.
+    token: {hashicorp-vault-token}                            # Optional. Fallback from `tokenSecretRef`
+    tokenSecretRef:                                           # Optional.
+      name: {hashicorp-vault-token-secret-name}               # Optional.
+      key: {hashicorp-vault-token-secret-key-name}            # Optional.
     serviceAccount: {path-to-service-account-file}            # Optional.
   secrets:                                                    # Required.
   - parameter: {scaledObject-parameter-name}                  # Required.
@@ -49,7 +52,9 @@ spec:
     address: {hashicorp-vault-address}
     authentication: token
     credential:
-      token: {hashicorp-vault-token}
+      tokenSecretRef: 
+        name: {hashicorp-vault-token-secret-name}
+        key: {hashicorp-vault-token-secret-key-name}
     secrets:
       - key: "ca_chain"
         parameter: "ca"
