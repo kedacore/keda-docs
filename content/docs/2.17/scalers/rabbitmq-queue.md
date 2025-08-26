@@ -28,7 +28,7 @@ triggers:
     usernameFromEnv: RABBITMQ_USERNAME # Optional. You can use this instead of TriggerAuthentication
     passwordFromEnv: RABBITMQ_PASSWORD # Optional. You can use this instead of TriggerAuthentication
     unsafeSsl: true
-    timeout: 1000 # Optional. Custom timeout for the HTTP client used in this scaler
+    timeout: "1000" # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**

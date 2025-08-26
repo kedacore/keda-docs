@@ -58,7 +58,7 @@ triggers:
       # Optional (Default: false)
       unsafeSsl: "false"
       # Optional. Custom timeout for the HTTP client used in this scaler
-      timeout: 1000
+      timeout: "1000"
 ```
 
 **Parameter list:**

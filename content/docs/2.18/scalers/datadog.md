@@ -1,7 +1,7 @@
 +++
 title = "Datadog"
 availability = "v2.6+"
-maintainer = "Datadog"
+maintainer = "Community"
 category = "Metrics"
 description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"
@@ -82,6 +82,7 @@ triggers:
     activationQueryValue: "1.1"
     type: "global" # Deprecated in favor of trigger.metricType
     metricUnavailableValue: "1.5"
+    timeout: "10s" # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**
@@ -95,6 +96,7 @@ triggers:
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate [because of the implicit rollup function](https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom), try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
+- `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
@@ -171,6 +173,7 @@ spec:
       datadogMetricNamespace: "default"
       targetValue: "2"
       type: "global"
+      timeout: "10s"
     authenticationRef:
       name: datadog-cluster-agent-creds
 ```
@@ -196,6 +199,7 @@ triggers:
     timeWindowOffset: "30"
     lastAvailablePointOffset: "1"
     metricUnavailableValue: "1.5"
+    timeout: "10s"
 ```
 
 **Parameter list:**
@@ -210,6 +214,7 @@ triggers:
 - `timeWindowOffset`: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust `timeWindowOffset` if you encounter this issue. (Default: `0`, Optional)
 - `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate [because of the implicit rollup function](https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom), try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
+- `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
@@ -286,6 +291,8 @@ spec:
       age: "120"
       # Optional: The metric value to return to the HPA if a metric value wasn't found for the specified time window
       metricUnavailableValue: "0"
+      # Optional: the HTTP timeout for this trigger
+      timeout: "10s"
     authenticationRef:
       name: keda-trigger-auth-datadog-secret
 ```
