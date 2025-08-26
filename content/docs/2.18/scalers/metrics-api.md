@@ -17,18 +17,20 @@ Here is an example of trigger configuration using metrics-api scaler:
 
 ```yaml
 triggers:
-- type: metrics-api
-  metadata:
-    targetValue: "8.8"
-    format: "json"
-    activationTargetValue: "3.8"
-    url: "http://api:3232/api/v1/stats"
-    valueLocation: "components.worker.tasks"
+  - type: metrics-api
+    metadata:
+      targetValue: "8.8"
+      format: "json"
+      activationTargetValue: "3.8"
+      url: "http://api:3232/api/v1/stats"
+      valueLocation: "components.worker.tasks"
 ```
 
 **Parameter list:**
 
 - `url` - Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
+  If `aggregateFromKubeServiceEndpoints` is set to `true` then the port from this URL must be the pod port
+  which is targeted by the service
 - `format` - One of the following formats: `json`, `xml`, `yaml`, `prometheus`. (Default: `json`, Optional)
 - `valueLocation` - The location of the metric value in the response payload. The value is format specific.
   * `json` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
@@ -40,15 +42,21 @@ triggers:
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `aggregateFromKubeServiceEndpoints` - Whether to treat `url` as a kubernetes service and scrape/aggregate metrics for all of this service's endpoints. (Values: `true`, `false`, Default: `false`, Optional)
+- `aggregationType` - How to aggregate metrics when `aggregateFromKubeServiceEndpoints` is set to `true`, ignored otherwise. (Values: `average`, `sum`, `max`, `min`, Default: `average`, Optional)
 
+### Note on aggregation from kubernetes service
+
+when setting `aggregateFromKubeServiceEndpoints: true` in metadata, Metrics API Scaler is able to compute basic `average`, `sum`, `min` or `max` aggregation asked by `aggregationType` metadata from all endpoint targets of a kubernetes API service, which is a handy feature in an environment where one didn't set up a metric aggregator/scraping stack (i.e prometheus), or simply doesn't want to use their monitoring stack to fetch and serve metrics from customers workload in their own kubernetes clusters, and leave the metrics API's responsibility up to the customer
+
+This specific behavior comes from the fact that querying a kubernetes service directly (= setting `aggregateFromKubeServiceEndpoints: false`) would return the metric from a single replica randomly, depending on the load-balancing configuration for the service, and lead to inconsistent HPA average metric computation and eventually to scaling issues as metrics from all replicas won't be taken into account
 
 ### Authentication Parameters
 
 Metrics Scaler API supported four types of authentication - API Key based authentication, basic authentication, TLS
 authentication, and Bearer authentication.
 
-You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters
- along with secret credentials in `TriggerAuthentication` as mentioned below:
+You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below. Multiple authentication methods can be used simultaneously by providing a comma-separated list in the `authMode` parameter, for example `authMode: "apiKey,tls"` enables both API key and TLS certificate authentication in a single request.
 
 **API Key based authentication:**
 - `authMode`: It must be set to `apiKey` in case of API key Authentication. Specify this in trigger configuration.
