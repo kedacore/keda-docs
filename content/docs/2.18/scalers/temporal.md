@@ -112,5 +112,5 @@ spec:
       activationTargetQueueSize: "0"
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
     authenticationRef:
-    name: keda-trigger-auth-temporal
+      name: keda-trigger-auth-temporal
 ```
