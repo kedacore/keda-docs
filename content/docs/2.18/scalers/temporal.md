@@ -21,10 +21,10 @@ triggers:
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
       queueTypes: workflow # optional
       buildId: 1.0.0 # optional
-      selectAllActive: false # optional
-      selectUnversioned: false # optional
-      minConnectTimeout: 5 # optional
-      unsafeSsl: false # optional
+      selectAllActive: "false" # optional
+      selectUnversioned: "false" # optional
+      minConnectTimeout: "5" # optional
+      unsafeSsl: "false" # optional
       tlsServerName: "custom-tls-servername" # optional
 ```
 
