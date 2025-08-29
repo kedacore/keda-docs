@@ -27,6 +27,8 @@ triggers:
       labels: "{labels}"
       # Optional: Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false", defaults to "false" (scale on default runner labels)
       noDefaultLabels: "{noDefaultLabels}"
+      # Optional: When enabled unlabeled jobs will not match unlabeled runners. Can be either "true" or "false", defaults to "false"
+      matchUnlabeledJobsWithUnlabeledRunners: "{matchUnlabeledJobsWithUnlabeledRunners}"
       # Optional: Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. Can be either "true" or "false", defaults to "false"
       enableEtags: "{enableEtags}"
       # Optional: The target number of queued jobs to scale on
@@ -47,6 +49,7 @@ triggers:
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `noDefaultLabels` - Not scale on default runner labels ("self-hosted", "linux", "x64"). (Values: `true`,`false`, Default: "false", Optional)
+- `matchUnlabeledJobsWithUnlabeledRunners` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `enableEtags` -  Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
@@ -63,6 +66,7 @@ the scaler will use the value from the environment variable. The environment var
 - `reposFromEnv` - The list of repositories to scale, separated by comma. (Optional)
 - `labelsFromEnv` - The list of runner labels to scale on, separated by comma. (Optional)
 - `noDefaultLabelsFromEnv` - Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false". (Optional)
+- `matchUnlabeledJobsWithUnlabeledRunnersFromEnv` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationIDFromEnv` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
 - `installationIDFromEnv` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
