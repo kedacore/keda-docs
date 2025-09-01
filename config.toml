@@ -127,7 +127,7 @@ pre = "fas fa-play-circle"
 weight = 2
 
 [[menu.buttons]]
-url = "/docs/concepts/#architecture"
+url = "/docs/concepts/#keda-architecture"
 name = "Architecture"
 pre = "fas fa-project-diagram"
 weight = 3
@@ -207,7 +207,7 @@ parent = "Concepts"
 weight = 6
 
 [[menu.docs]]
-url = "/docs/concepts/#architecture"
+url = "/docs/concepts/#keda-architecture"
 name = "Architecture"
 parent = "docs"
 weight = 3
@@ -366,7 +366,7 @@ parent = "project"
 weight = 9
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+url = "https://github.com/kedacore/governance/blob/main/MEMBERS.md"
 name = "Maintainers"
 parent = "project"
 weight = 10

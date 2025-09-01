@@ -33,6 +33,43 @@ You can override the default KEDA operator IAM role by specifying an `roleArn` p
 
 If you would like to use the same IAM credentials as your workload is currently using, `podIdentity.identityOwner` can be set with the value `workload` and KEDA will inspect the workload service account to check if IRSA annotation is there and KEDA will assume that role.
 
+**Regional STS endpoints**
+
+- If you’re using **`identityOwner: keda`** (the operator’s IRSA role), annotate the **`keda-operator`** ServiceAccount in the `keda` namespace.  
+- If you’re using **`identityOwner: workload`** (the default), annotate **your workload’s** ServiceAccount (the one your Deployment uses).
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: <SERVICE_ACCOUNT_NAME>
+  namespace: <NAMESPACE>
+  annotations:
+    eks.amazonaws.com/role-arn: <YOUR_IRSA_ROLE_ARN>
+    # Required for regional STS endpoints (e.g. eu-west-1)
+    eks.amazonaws.com/sts-regional-endpoints: "true"
+ ```
+
+### When do you need regional STS endpoints?
+
+By default, AWS STS calls go to the global endpoint (`sts.amazonaws.com`).  
+Some regions (for example **eu-west-1**, **ap-northeast-1**, **ap-southeast-2**) require or strongly recommend using their **regional STS endpoint** (e.g. `sts.eu-west-1.amazonaws.com`).  
+
+If you see errors like:
+
+```
+AccessDenied: Not authorized to perform sts:AssumeRoleWithWebIdentity
+```
+
+while your IAM trust policy looks correct, you likely need to enable regional endpoints with:
+
+```yaml
+annotations:
+  eks.amazonaws.com/sts-regional-endpoints: "true"
+```
+
+👉 Use this setting whenever you are running in a region that does **not** support the global STS endpoint or where AWS recommends regional STS for latency and availability.
+
 ## AssumeRole or AssumeRoleWithWebIdentity?
 
 This authentication automatically uses both, falling back from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need `sts:AssumeRole` permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html); in this case, you can add a KEDA service account to the trusted relations of the role.

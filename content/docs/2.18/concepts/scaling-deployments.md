@@ -67,6 +67,15 @@ Typically, either one or the other is being used given they serve a different pu
 
 To unpause (reenable) autoscaling again, remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can unpause by setting the annotation to `false`.
 
+Additionally, we provide the ability to temporarily pause scale in on a scale target:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused-scale-in: "true"
+```
+
+When the annotation is set, KEDA will update the generated HPA to disable scale in (via setting the HPA's Scale Down Select Policy to Disabled) and if the service has scale to zero configured, will block scale to zero. When the annotation is unset, the scale down behavior on the HPA will be restored to its original configuration and, if configured, scale to zero will be unblocked. 
 
 ## Scaling Modifiers
 
@@ -205,3 +214,16 @@ Using this method can preserve a replica and enable long-running executions.  Ho
 #### Run as jobs
 
 The other alternative to handling long-running executions is by running the event driven code in Kubernetes Jobs instead of Deployments or Custom Resources.  This approach is discussed [in the next section](./scaling-jobs).
+
+## Excluding labels from being propagated to the HPA
+
+You can exclude specific labels from being propagated to the generated HPA object by using the `scaledobject.keda.sh/hpa-excluded-labels` annotation. This annotation accepts a comma-separated list of label keys that should be excluded.
+
+```yaml
+metadata:
+  annotations:
+    scaledobject.keda.sh/hpa-excluded-labels: "foo.bar/environment,foo.bar/version"
+  labels:
+    team: backend
+    foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
+    foo.bar/version: "1"
