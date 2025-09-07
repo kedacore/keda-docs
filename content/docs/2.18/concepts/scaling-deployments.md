@@ -77,6 +77,18 @@ metadata:
 
 When the annotation is set, KEDA will update the generated HPA to disable scale in (via setting the HPA's Scale Down Select Policy to Disabled) and if the service has scale to zero configured, will block scale to zero. When the annotation is unset, the scale down behavior on the HPA will be restored to its original configuration and, if configured, scale to zero will be unblocked. 
 
+Conversely, we provide the ability to temporarily pause scale out on a scale target:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused-scale-out: "true"
+```
+
+When the annotation is set, KEDA will update the generated HPA to disable scale out (via setting the HPA's Scale Up Select Policy to Disabled) and if the service has scale to zero configured, will block scale from zero. When the annotation is unset, the scale up behavior on the HPA will be restored to its original configuration and, if configured, scale up from zero will be unblocked. 
+
+If you want disable scaling in both directions, we recommend you use the `autoscaling.keda.sh/paused` as that will stop the scale loop and paused queries against the ScaledObject's configured scaler.
+
 ## Scaling Modifiers
 
 **Example: compose average value**
