@@ -17,7 +17,7 @@ triggers:
   metadata:
     host: amqp://localhost:5672/vhost # Optional. If not specified, it must be done by using TriggerAuthentication.
     protocol: auto # Optional. Specifies protocol to use, either amqp or http, or auto to autodetect based on the `host` value. Default value is auto.
-    mode: QueueLength # QueueLength, MessageRate, DeliverGetRate or PublishedToDeliveredRatio
+    mode: QueueLength # QueueLength or MessageRate
     value: "100.50" # message backlog or publish/sec. target per instance
     activationValue: "10.5" # Optional. Activation threshold
     queueName: testqueue
@@ -35,11 +35,7 @@ triggers:
 
 - `host` - Host of RabbitMQ with format `<protocol>://<host>:<port>/vhost`. If the protocol is HTTP than the host may follow this format `http://<host>:<port>/<path>/<vhost>`. In example the resolved host value could be `amqp://guest:password@localhost:5672/vhost` or `http://guest:password@localhost:15672/path/vhost`. If the host doesn't contain vhost than the trailing slash is required in this case like `http://guest:password@localhost:5672/`. When using a username/password consider using `hostFromEnv` or a TriggerAuthentication.
 - `queueName` - Name of the queue to read message from.
-- `mode` - Trigger mode. Can be one of following:
-  - `QueueLength` - trigger on number of messages in the queue
-  - `MessageRate` - trigger on the published rate into the queue
-  - `DeliverGetRate` - trigger on the rate of delivered messages (to consumers or in response to `basic.get`, both acknowledged and not)
-  - `PublishedToDeliveredRatio` - trigger on the ratio of `MessageRate` to `DeliverGetRate` (see exmaple below)
+- `mode` - QueueLength to trigger on number of messages in the queue. MessageRate to trigger on the published rate into the queue. (Values: `QueueLength`, `MessageRate`)
 - `value` - Message backlog or Publish/sec. rate to trigger on. (This value can be a float when `mode: MessageRate`)
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `protocol` - Protocol to be used for communication. (Values: `auto`, `http`, `amqp`, Default: `auto`, Optional)
@@ -68,7 +64,7 @@ Some parameters could be provided using environmental variables, instead of sett
 
 > ⚠ **Important:** if you have unacknowledged messages and want to have these counted for the scaling to happen, make sure to utilize the `http` REST API interface which allows for these to be counted.
 
-> ⚠ **Important:** If scaling against many is desired, then the `ScaledObject` should have all desired triggers defined. HPA will scale based on the largest result considering each of triggers independently.
+> ⚠ **Important:** If scaling against both is desired then the `ScaledObject` should have two triggers, one for `mode: QueueLength` and the other for `mode: MessageRate`. HPA will scale based on the largest result considering each of the two triggers independently.
 
 ### Authentication Parameters
 
@@ -427,143 +423,4 @@ spec:
       value: "20"
     authenticationRef:
       name: keda-trigger-auth-rabbitmq-conn
-```
-
-#### HTTP protocol (`DeliverGetRate`)
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keda-rabbitmq-secret
-data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-rabbitmq-conn
-  namespace: default
-spec:
-  secretTargetRef:
-    - parameter: host
-      name: keda-rabbitmq-secret
-      key: host
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: rabbitmq-scaledobject
-  namespace: default
-spec:
-  scaleTargetRef:
-    name: rabbitmq-deployment
-  triggers:
-  - type: rabbitmq
-    metadata:
-      protocol: http
-      queueName: testqueue
-      mode: DeliverGetRate
-      value: "30"
-    authenticationRef:
-      name: rabbitmq-trigger-auth
-```
-
-#### HTTP protocol (`PublishedToDeliveredRatio`)
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keda-rabbitmq-secret
-data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-rabbitmq-conn
-  namespace: default
-spec:
-  secretTargetRef:
-    - parameter: host
-      name: keda-rabbitmq-secret
-      key: host
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: rabbitmq-scaledobject
-  namespace: default
-spec:
-  scaleTargetRef:
-    name: rabbitmq-deployment
-  triggers:
-  - type: rabbitmq
-    metadata:
-      protocol: http
-      queueName: testqueue
-      mode: PublishedToDeliveredRatio
-      value: "1.1"
-    authenticationRef:
-      name: rabbitmq-trigger-auth
-```
-
-#### HTTP protocol (`PublishedToDeliveredRatio` with `scalingModifiers`)
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keda-rabbitmq-secret
-data:
-  host: <HTTP API endpoint> # base64 encoded value of format http://guest:password@localhost:15672/path/vhost
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-rabbitmq-conn
-  namespace: default
-spec:
-  secretTargetRef:
-    - parameter: host
-      name: keda-rabbitmq-secret
-      key: host
----
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: rabbitmq-scaledobject
-  namespace: default
-spec:
-  scaleTargetRef:
-    name: rabbitmq-deployment
-  triggers:
-  - type: rabbitmq
-    name: p2d_ratio
-    metadata:
-      protocol: http
-      queueName: testqueue
-      mode: PublishedToDeliveredRatio
-      value: "1"
-    authenticationRef:
-      name: rabbitmq-trigger-auth
-  - type: rabbitmq
-    name: qlen
-    metadata:
-      protocol: http
-      queueName: testqueue
-      mode: QueueLength
-      value: "100"
-    authenticationRef:
-      name: rabbitmq-trigger-auth
-  advanced:
-    # Bind QueueLength and PublishedToDeliveredRatio together to control trigger value
-    scalingModifiers:
-      metricType: "Value"
-      # Trigger if either one of conditions is met:
-      # - publishing to delivery rate exceeds factor of 1.2
-      # - queue lenght contains more than 1.2K messages
-      formula: "max(p2d_ratio, qlen/1000)"
-      target: 1.2
 ```
