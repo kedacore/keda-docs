@@ -1,7 +1,7 @@
 +++
 title = "Datadog"
 availability = "v2.6+"
-maintainer = "Datadog"
+maintainer = "Community"
 category = "Metrics"
 description = "Scale applications based on Datadog."
 go_file = "datadog_scaler"

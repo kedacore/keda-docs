@@ -67,6 +67,15 @@ Typically, either one or the other is being used given they serve a different pu
 
 To unpause (reenable) autoscaling again, remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can unpause by setting the annotation to `false`.
 
+Additionally, we provide the ability to temporarily pause scale in on a scale target:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/paused-scale-in: "true"
+```
+
+When the annotation is set, KEDA will update the generated HPA to disable scale in (via setting the HPA's Scale Down Select Policy to Disabled) and if the service has scale to zero configured, will block scale to zero. When the annotation is unset, the scale down behavior on the HPA will be restored to its original configuration and, if configured, scale to zero will be unblocked. 
 
 ## Scaling Modifiers
 
