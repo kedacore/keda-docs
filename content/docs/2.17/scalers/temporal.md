@@ -21,10 +21,10 @@ triggers:
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
       queueTypes: workflow # optional
       buildId: 1.0.0 # optional
-      selectAllActive: false # optional
-      selectUnversioned: false optional
-      minConnectTimeout: 5 # optional
-      unsafeSsl: false # optional
+      selectAllActive: "false" # optional
+      selectUnversioned: "false" # optional
+      minConnectTimeout: "5" # optional
+      unsafeSsl: "false" # optional
 ```
 
 **Parameter list:**
@@ -35,7 +35,7 @@ triggers:
 - `activationTargetQueueSize` - This sets the target value for activating the scaler. More information about activation thresholds can be found  [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `5`, Optional)
 - `taskQueue` - This parameter specifies the task queue name. (Required)
-- `queueTypes` - Task Queue type can be configured as `workflow`, `activity`, or both, separated by a comma (,) if multiple types are needed. The default type is `workflow`. This field is optional.
+- `queueTypes` - Task Queue type can be configured as `workflow`, `activity`, or both, separated by a comma (,) if multiple types are needed. (Default: `workflow`, Optional)
 - `buildId` - Build IDs identify Worker versions for Workflow versioning and task compatibility (Optional)
 - `selectAllActive` - Include all active versions (Default:`false`, Optional)
 - `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
@@ -110,5 +110,5 @@ spec:
       activationTargetQueueSize: "0"
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
     authenticationRef:
-    name: keda-trigger-auth-temporal
+      name: keda-trigger-auth-temporal
 ```
