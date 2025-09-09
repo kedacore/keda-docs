@@ -102,7 +102,7 @@ This allows sensitive credentials to be stored and managed separately from the c
 
 #### TLS authentication
 
-- `tls` - To enable SSL auth for RabbitMQ, set this to `enable`. If not set, TLS for RabbitMQ will not be used. Valid values are `enable` ir `disable` (optional; the default is `disable`).
+- `tls` - To enable SSL auth for RabbitMQ, set this to `enable`. If not set, TLS for RabbitMQ will not be used. Valid values are `enable` or `disable` (optional; the default is `disable`).
 - `ca` - Certificate authority file for TLS client authentication (optional).
 - `cert` - Certificate for client authentication (optional).
 - `key` - Certificate Key for client authentication (optional).
