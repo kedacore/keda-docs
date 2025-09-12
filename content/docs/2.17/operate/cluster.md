@@ -16,7 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
-| v2.17 | TBD           |
+| v2.17 | v1.30 - v1.32 |
 | v2.16 | v1.29 - v1.31 |
 | v2.15 | v1.28 - v1.30 |
 | v2.14 | v1.27 - v1.29 |
@@ -70,7 +70,7 @@ Some scalers issue HTTP requests to external servers (i.e. cloud services). Each
 
 You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable on the KEDA operator deployment to your desired timeout in milliseconds.
 
-> ⚠️ All applicable scalers will use this timeout and setting this on a per-scaler is currently not supported.
+> ⚠️ All applicable scalers will use this timeout, although some scalers allow you to override this global setting via the `timeout` parameter in the trigger metadata.
 
 ## HTTP Connection: Disable Keep Alive
 

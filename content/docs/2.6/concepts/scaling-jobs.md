@@ -127,7 +127,7 @@ The max number of pods that is created within a single polling period. If there 
 This optional property specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
 Possible values are `default` or `gradual`. \
 When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. \
-On the `gradual` rolloutStartegy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
+On the `gradual` rolloutStrategy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 
 ---

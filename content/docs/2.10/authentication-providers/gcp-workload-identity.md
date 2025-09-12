@@ -14,7 +14,7 @@ podIdentity:
 ### Steps to setup Workload Identity
 If you are using podIdentity provider as `gcp`, you need to setup workload identity as below and your GKE cluster must have Workload Identity enabled.
 
-* You need to create a GCP IAM service account with proper permissions to retrive metrics for particular scalers.
+* You need to create a GCP IAM service account with proper permissions to retrieve metrics for particular scalers.
 
   ```shell
   gcloud iam service-accounts create GSA_NAME \

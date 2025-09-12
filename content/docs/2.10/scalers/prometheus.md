@@ -24,7 +24,7 @@ triggers:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     cortexOrgID: my-org # DEPRECATED: This parameter is deprecated as of KEDA v2.10 in favor of customHeaders and will be removed in version 2.12. Use custom headers instead to set X-Scope-OrgID header for Cortex. (see below)
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
-    ignoreNullValues: false # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
+    ignoreNullValues: "false" # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
 
 ```
@@ -75,7 +75,7 @@ Azure has a [managed service for Prometheus](https://learn.microsoft.com/en-us/a
 - [Azure AD Pod Identity](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity) or [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) providers can be used in `authenticationRef` - see later in example.
 - `Monitoring Data Reader` role needs to be assigned to workload identity (or pod identity) on the `Azure Monitor Workspace`.
 - No other auth (via `authModes`) can be provided with Azure Pod/Workload Identity Auth.
-- Prometheus query endpoint can be retreived from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
+- Prometheus query endpoint can be retrieved from [Azure Monitor Workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/azure-monitor-workspace-overview) that was configured to ingest prometheus metrics.
 
 ### Examples
 
