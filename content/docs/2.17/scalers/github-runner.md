@@ -29,6 +29,8 @@ triggers:
       noDefaultLabels: "{noDefaultLabels}"
       # Optional: Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. Can be either "true" or "false", defaults to "false"
       enableEtags: "{enableEtags}"
+      # Optional: Enable backoff so that when requests have reached the rate limit, no more requests are made until the reset or retry-after time. Can be either "true" or "false", defaults to "false"
+      enableBackoff: "{enableBackoff}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
       # Optional: The name of the application ID from the GitHub App
@@ -48,6 +50,7 @@ triggers:
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `noDefaultLabels` - Not scale on default runner labels ("self-hosted", "linux", "x64"). (Values: `true`,`false`, Default: "false", Optional)
 - `enableEtags` -  Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. (Values: `true`,`false`, Default: "false", Optional)
+- `enableBackoff` - Enable backoff so that when requests have reached the rate limit, no more requests are made until the reset or retry-after time. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
 - `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
@@ -124,6 +127,7 @@ Careful design of how you design your repository request layout and configure th
 
 - Using the `repos` parameter as opposed to just `owner` means that the Github API isn't queried to get a list of repositories.
 - Setting `enableEtags` to `true` can reduce the rate limit consumption, as this makes [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API by passing the Etag of the last request to the URL, if a `304: Not modified` response is returned, this will not count against the rate limit. In this case the scaler will use the results from the last query to the URL where the response was `200: Success`.
+- Setting `enableBackoff` to `true` means that once rate limited the scaler will [handle rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#handle-rate-limit-errors-appropriately) and wait until the rate limit reset time or retry after time before attempting another request
 
 Note: This does not apply to a hosted appliance as there are no rate limits.
 
