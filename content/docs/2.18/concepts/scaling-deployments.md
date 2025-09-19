@@ -171,6 +171,20 @@ There are some important topics to take into account:
 
 > ⚠️ **NOTE:** If a scaler doesn't define "activation" parameter (a property that starts with `activation` prefix), then this specific scaler doesn't support configurable activation value and the activation value is always 0.
 
+## Forcing Activation
+
+We provide the ability to temporarily force the activation of a scale target:
+
+```yaml
+metadata:
+  annotations:
+    autoscaling.keda.sh/force-activation: "true"
+```
+
+When the annotation is set, KEDA will treat all configured scalers as active. If the scalers were previously not active, KEDA will scale the service up from 0.
+
+When the annotation is subsequently unset, the state of the scaler activation will revert to being computed from the state of the scaler metrics.
+
 ## Transferring ownership of an existing HPA
 
 If your environment already operates using kubernetes HPA, you can transfer the ownership of this resource to a new ScaledObject:
