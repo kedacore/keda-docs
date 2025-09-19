@@ -7,7 +7,7 @@ description = "Scale applications based on a metric obtained from Stackdriver."
 go_file = "gcp_stackdriver_scaler"
 +++
 
-> 💡 **WARNING:** This scaler is deprecated and won't receive any modification. [Read more about it here](../../../blog/2025-08-15-gcp-deprecations.md).
+> 💡 **WARNING:** This scaler is deprecated and won't receive any modification. [Read more about it here](../../../blog/2025-09-15-gcp-deprecations.md).
 
 ### Trigger Specification
 
