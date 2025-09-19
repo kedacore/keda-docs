@@ -1,6 +1,6 @@
 +++
 title = "Google Cloud deprecations"
-date = 2025-08-15
+date = 2025-09-15
 author = "Jorge Turrado (SCRM Lidl International Hub)"
 aliases = [
 "/blog/gcp-deprecations"
