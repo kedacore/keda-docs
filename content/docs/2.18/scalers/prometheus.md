@@ -26,7 +26,7 @@ triggers:
     ignoreNullValues: "false" # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
     queryParameters: key-1=value-1,key-2=value-2
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
-    timeout: 1000 # Optional. Custom timeout for the HTTP client used in this scaler
+    timeout: "1000" # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**
