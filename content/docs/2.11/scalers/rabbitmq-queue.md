@@ -25,6 +25,8 @@ triggers:
     # See details in "Parameter list" section
     hostFromEnv: RABBITMQ_HOST # Optional. You can use this instead of `host` parameter
     unsafeSsl: true
+    messageRatesAge: "10" # Optional. Set the `msg_rates_age` http query parameter
+    messageRatesIncrement: "2" # Optional. Set the `msg_rates_incr` http query parameter
 ```
 
 **Parameter list:**
@@ -44,6 +46,9 @@ triggers:
 - `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
 - `excludeUnacknowledged` - Set to `true` to specify that the `QueueLength` value should exclude unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `unsafeSsl` - Whether to allow unsafe SSL (Values: `true`, `false`, Default: `false` )
+- `messageRatesAge`: Sets the [`msg_rates_age`](https://rawcdn.githack.com/rabbitmq/rabbitmq-server/main/deps/rabbitmq_management/priv/www/api/index.html) http query parameter supported by the rabbitmq managegement plugin api. This parameter requires `mode: MessageRate`. Using this parameter with `messageRatesIncrement` will make keda use the `avg_rate` field returned by rabbitmq, rather than the `rate` field.
+- `messageRatesIncrement`: Sets the [`msg_rates_incr`](https://rawcdn.githack.com/rabbitmq/rabbitmq-server/main/deps/rabbitmq_management/priv/www/api/index.html) http query parameter parameter supported by the rabbitmq managegement plugin api. This parameter requires `mode: MessageRate`. Must be used in conjunction with `messageRatesAge`.
+
 
 Some parameters could be provided using environmental variables, instead of setting them directly in metadata. Here is a list of parameters you can use to retrieve values from environment variables:
 
@@ -56,6 +61,8 @@ Some parameters could be provided using environmental variables, instead of sett
 > 💡 **Note:** `mode: MessageRate` requires protocol `http`.
 
 > 💡 **Note:** `useRegex: "true"` requires protocol `http`.
+
+> 💡 **Note:** Both `messageRatesAge` and `messageRatesIncrement` must be specified together for keda to use RabbitMQ's `avg_rate` value in place of the `rate` value.
 
 > ⚠ **Important:** if you have unacknowledged messages and want to have these counted for the scaling to happen, make sure to utilize the `http` REST API interface which allows for these to be counted.
 
