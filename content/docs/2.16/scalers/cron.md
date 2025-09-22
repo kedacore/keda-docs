@@ -54,14 +54,25 @@ What the CRON scaler does **not** do, is scale your workloads based on a recurri
 
 If you want to scale you deployment to 0 outside office hours / working hours,
 you need to set `minReplicaCount: 0` in the ScaledObject, and increase the
-replicas during work hours. That way the Deployment will be scaled to 0 ouside
+replicas during work hours. That way the Deployment will be scaled to 0 outside
 that time window. By default the ScaledObject `cooldownPeriod` is 5 minutes, so the actual
 scaling down will happen 5 minutes after the cron schedule `end` parameter.
 
 It's almost always an error to try to do the other way
 around, i.e. set `desiredReplicas: 0` in the cron trigger.
 
-#### Example: scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise
+> 💡 **NOTE**: As the HPA Controller will evaluate all the metrics at once and will take the one which requires more instances (`max(metrics)`), the value set for `desiredReplicas` technically acts as a "dynamic" minimum replicas. For example, if you have other trigger like CPU, during the time between `start` and `end` you will have AT LEAST `desiredReplicas` because of that `max(metrics)`.
+
+
+> Once a deployment is scaled down to 0 replicas, the checks relying on pod-related metrics are **ignored**, given that no pods are currently running and these metrics are therefore impossible to retrieve. For this reason, **pod-related metrics are also ignored** for scaling to zero and this process is done only considering external metrics.
+
+#### TL;DR
+- Set `minReplicaCount` to 0
+- Create your `cron` trigger: define `start`, `end` and `timezone`, and set `desiredReplicas` to the previous value of `minReplicaCount`
+- If you also want to use other criteria to scale your deployment, just add other triggers to your `ScaledObject`
+
+
+#### Example: fixed number of replicas (scale up to 10 replicas from 6AM to 8PM and scale down to 0 replicas otherwise)
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -75,10 +86,38 @@ spec:
   minReplicaCount: 0
   cooldownPeriod: 300
   triggers:
-  - type: cron
-    metadata:
-      timezone: Asia/Kolkata
-      start: 0 6 * * *
-      end: 0 20 * * *
-      desiredReplicas: "10"
+    - type: cron
+      metadata:
+        timezone: Asia/Kolkata
+        start: 0 6 * * *
+        end: 0 20 * * *
+        desiredReplicas: "10"
 ```
+
+#### Example: dynamic number of replicas (0 during night, between 1 and 4 during day)
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cron-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  minReplicaCount: 0
+  maxReplicaCount: 4
+  cooldownPeriod: 300
+  triggers:
+    - type: cron
+      metadata:
+        timezone: Asia/Kolkata
+        start: 0 6 * * *
+        end: 0 20 * * *
+        desiredReplicas: "1"
+    - type: cpu
+      metricType: Utilization
+      metadata:
+        value: "80"
+```
+The deployment will scale to 0 between 20:00 and 06:00, and will have between 1 and 4 replicas between 06:00 and 20:00.

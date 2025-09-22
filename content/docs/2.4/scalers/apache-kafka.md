@@ -33,11 +33,11 @@ triggers:
 - `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag.
-- `lagThreshold` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+- `lagThreshold` - Average target value to trigger scaling actions. (Default: `10`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
 partitions on a topic, allowing for idle consumers. (Default: `false`, Optional)
-- `version` - Version of your Kafka brokers. See [samara](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
+- `version` - Version of your Kafka brokers. See [sarama](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 
 ### Authentication Parameters
 

@@ -27,6 +27,8 @@ triggers:
       labels: "{labels}"
       # Optional: Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false", defaults to "false" (scale on default runner labels)
       noDefaultLabels: "{noDefaultLabels}"
+      # Optional: Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. Can be either "true" or "false", defaults to "false"
+      enableEtags: "{enableEtags}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
       # Optional: The name of the application ID from the GitHub App
@@ -45,6 +47,7 @@ triggers:
 - `repos` - The list of repositories to scale, separated by comma. (Optional)
 - `labels` - The list of runner labels to scale on, separated by comma. (Optional)
 - `noDefaultLabels` - Not scale on default runner labels ("self-hosted", "linux", "x64"). (Values: `true`,`false`, Default: "false", Optional)
+- `enableEtags` -  Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
 - `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
@@ -98,7 +101,7 @@ You can use the GitHub App to authenticate with GitHub. This is useful if you wa
 The scaler will query the GitHub API to get the number of queued jobs in the specified repositories, subject to filters. If the number of queued jobs is equal to or greater than the `targetWorkflowQueueLength`,  the scaler will scale up.
 
 We provide various options to have granular control over what runners to scale:
-- **Repository Filtering** - If no `repos` are specified, the scaler will query all repositories in the specified `owner`. This is useful if you want to scale on all repositories in an organization, but will result in a lot of API calls and affect the Rate Limit.
+- **Repository Filtering** - If no `repos` are specified, the scaler will query all repositories in the specified `owner`. This is useful if you want to scale on all repositories in an organization, but will result in a lot of API calls which can affect the Rate Limit. By setting `enableEtags` to `true` this can reduce the impact on the rate limit as this would make [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API. In this case if the request response is `304: Not modified` this will not count against the rate limit and the previously found repositories will be used.
 - **Label-based Filtering** - The `labels` parameter is used to filter the runners that the scaler will scale. It uses the minimum applicable label for the runner. For example, if you have a runner with the labels `golang` and `helm`, and you specify `helm` in the `labels` field on the GitHub Action, the scaler will scale up that runner. By default the scaler will always scale on default labels (`self-hosted`, `linux`, `x64`) in addition to the ones defined in `labels` parameter, scaling on default labels can be disabled by setting `noDefaultLabels` parameter to `true`.
 
 **API Query Chain**
@@ -114,14 +117,27 @@ The scaler will query the GitHub API in the following order:
 
 GitHub Documentation on Rate Limiting [https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting)
 
-Example: The GitHub API has a rate limit of standard 5000 requests per hour. The scaler will make 1 request per repository to get the list of workflows, 
+Example: The GitHub API has a rate limit of standard 5000 requests per hour. By default the scaler will make 1 request per repository to get the list of workflows,
 and 1 request per queued workflow to get the list of jobs. If you have 100 repositories, and 10 queued workflows (across all those repos), the scaler will make 110 requests per scaler check (default: 30 secs). This is 3.6% of the hourly rate limit per 30 seconds.
 
-Careful design of how you design your repository request layout can help reduce the number of API calls. Usage of the `repos` parameter is recommended to reduce the number of API calls to the GitHub API.
+Careful design of how you design your repository request layout and configure the scaler can help reduce the number of API calls. Here are some recommendations:
+
+- Using the `repos` parameter as opposed to just `owner` means that the Github API isn't queried to get a list of repositories.
+- Setting `enableEtags` to `true` can reduce the rate limit consumption, as this makes [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API by passing the Etag of the last request to the URL, if a `304: Not modified` response is returned, this will not count against the rate limit. In this case the scaler will use the results from the last query to the URL where the response was `200: Success`.
 
 Note: This does not apply to a hosted appliance as there are no rate limits.
 
 Additional Note: The GitHub App authentication method has a rate limit of 15000 rather than 5000 per hour.
+
+**Fine-Tuning**
+
+The current GitHub API design does not facilitate determining the number of pending jobs efficiently because it requires making many API calls to get an accurate estimate which increases the risk of reaching rate limits. So, there will be a trade off between lower scaler response times and staying within API rate limits. However, users have the flexibility to configure this scaler based on their specific uses cases by changing certain parameters.
+
+For example, the scaler response time and bandwidth can be fine-tuned by adjusting the `pollingInterval` parameter. In theory, setting `pollingInterval` to `1` second, could result in starting up to 600,000 (100 runs x 100 jobs x 60 seconds) runners per minute for each repository (assuming eligible pending jobs are found). However, having so many pending jobs and setting `pollingInterval` to `1` results in at least 6,000 calls (100 runs * 60 seconds), reaching the API rate limit very quickly.
+
+*Starting KEDA version 2.17, this scaler can fetch up to 100 workflow runs per repository and 100 jobs per run during each polling cycle. Previous versions can fetch only 30 workflow runs per repository and 30 jobs per run during each polling cycle. More details are available on this [thread](https://github.com/kedacore/keda/pull/6519).*
+
+At the moment, there's no elegant way to overcome this limit for this particular scaler, unless GitHub introduces a new API or enhances existing ones to allow fetching pending jobs filtered by labels and status in a single call.
 
 **References**
 
