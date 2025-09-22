@@ -17,40 +17,47 @@ kedaVersion: main
 schemaVersion: 1
 scalers:
     - type: activemq
-      metadata:
+      parameters:
         - name: managementEndpoint
           type: string
           optional: true
+          metadataVariableReadable: true
         - name: destinationName
           type: string
           optional: true
+          metadataVariableReadable: true
         - name: brokerName
           type: string
           optional: true
+          metadataVariableReadable: true
         - name: username
           type: string
-          canReadFromEnv: true
-          canReadFromAuth: true
+          metadataVariableReadable: true
+          envVariableReadable: true
+          triggerAuthenticationVariableReadable: true
         - name: password
           type: string
-          canReadFromEnv: true
-          canReadFromAuth: true
+          metadataVariableReadable: true
+          envVariableReadable: true
+          triggerAuthenticationVariableReadable: true
         - name: corsHeader
           type: string
           optional: true
+          metadataVariableReadable: true
         - name: restAPITemplate
           type: string
           optional: true
+          metadataVariableReadable: true
         - name: targetQueueSize
           type: string
-          optional: true
           default: "10"
+          metadataVariableReadable: true
         - name: activationTargetQueueSize
           type: string
-          optional: true
           default: "0"
+          metadataVariableReadable: true
     - type: apache-kafka
-      metadata:
+      parameters:
         - name: bootstrapServers
         ...
 
@@ -69,8 +76,9 @@ scalers:
 | separator | separator is the symbol that separates the value of the field if the value is a list string
 | exclusiveSet | exclusiveSet is a list of fields that are exclusive with the field
 | rangeSeparator | rangeSeparator is the symbol that indicates the range of the field
-| canReadFromEnv | canReadFromEnv is a boolean that indicates if the field can be read from the environment
-| canReadFromAuth | canReadFromAuthis a boolean that indicates if the field can be read from the TriggerAuthentication
+| metadataVariableReadable | metadataVariableReadable is a boolean that indicates if the field can be read from the environment
+| envVariableReadable | envVariableReadable is a boolean that indicates if the field can be read from the environment
+| triggerAuthenticationVariableReadable | triggerAuthenticationVariableReadable is a boolean that indicates if the field can be read from the trigger authentication
 
 ## Generation
 
@@ -104,33 +112,68 @@ env variables:
 
 | Scaler  |
 | ------  |
-|activemq
-|apache-kafka
-|arangodb
-|aws-cloudwatch
-|aws-dynamodb
-|aws-dynamodb-streams
-|aws-kinesis-stream
-|aws-sqs-queue
-|etcd
-|gcp-cloudtasks
-|ibmmq
-|influxdb
-|kubernetes-workload
-|nsq
-|postgresql
-|predictkube
-|prometheus
-|rabbitmq
-|redis-sentinel
-|redis
-|redis-cluster
-|redis-cluster-streams
-|redis-sentinel-streams
-|redis-streams
-|selenium-grid
-|solace-event-queue
-|solr
-|splunk
+| activemq
+| apache-kafka
+| arangodb
+| artemis-queue
+| aws-cloudwatch
+| aws-dynamodb
+| aws-dynamodb-streams
+| aws-kinesis-stream
+| aws-sqs-queue
+| azure-eventhub
+| azure-log-analytics
+| azure-monitor
+| azure-pipelines
+| azure-queue
+| azure-servicebus
+| beanstalkd
+| cpu
+| memory
+| cassandra
+| couchdb
+| cron
+| datadog
+| dynatrace
+| elasticsearch
+| etcd
+| external-push
+| external
+| gcp-cloudtasks
+| gcp-storage
+| github-runner
+| huawei-cloudeye
+| ibmmq
+| influxdb
+| kubernetes-workload
+| liiklus
+| loki
+| mssql
+| mongodb
+| mysql
+| nats-jetstream
+| nsq
+| new-relic
+| openstack-metric
+| postgresql
+| predictkube
+| prometheus
+| gcp-pubsub
+| pulsar
+| rabbitmq
+| redis
+| redis-cluster
+| redis-sentinel
+| redis-cluster-streams
+| redis-sentinel-streams
+| redis-streams
+| selenium-grid
+| solace-direct-messaging
+| solace-event-queue
+| solr
+| splunk
+| gcp-stackdriver
+| sumologic
+| temporal
 
 
