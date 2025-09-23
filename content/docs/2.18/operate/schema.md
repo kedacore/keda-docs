@@ -6,7 +6,9 @@ weight = 100
 
 ## Scaler Schema
 
-KEDA provides a separate scaler's schema for third-party usage. The schema file will keep updating according to the scaler's refactor.
+KEDA provides a separate scaler's schema for third-party usage ([scalers-metadata-schema.yaml](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-metadata-schema.yaml)/[scalers-metadata-schema.json](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-metadata-schema.json)). The schema file will keep updating according to the scaler's refactor.
+
+*Notice: The schema file still lacks some of the scalers. It will be completed once all scalers are refactored to use the new declarative scaler config.
 
 ## Specification
 
@@ -108,72 +110,3 @@ env variables:
  SCALERS_BUILDER_FILE ?= "pkg/scaling/scalers_builder.go" 
  SCALERS_FILES_DIR ?= "pkg/scalers" 
  OUTPUT_FILE_PATH ?= "schema/"
-## Supported Scaler
-
-| Scaler  |
-| ------  |
-| activemq
-| apache-kafka
-| arangodb
-| artemis-queue
-| aws-cloudwatch
-| aws-dynamodb
-| aws-dynamodb-streams
-| aws-kinesis-stream
-| aws-sqs-queue
-| azure-eventhub
-| azure-log-analytics
-| azure-monitor
-| azure-pipelines
-| azure-queue
-| azure-servicebus
-| beanstalkd
-| cpu
-| memory
-| cassandra
-| couchdb
-| cron
-| datadog
-| dynatrace
-| elasticsearch
-| etcd
-| external-push
-| external
-| gcp-cloudtasks
-| gcp-storage
-| github-runner
-| huawei-cloudeye
-| ibmmq
-| influxdb
-| kubernetes-workload
-| liiklus
-| loki
-| mssql
-| mongodb
-| mysql
-| nats-jetstream
-| nsq
-| new-relic
-| openstack-metric
-| postgresql
-| predictkube
-| prometheus
-| gcp-pubsub
-| pulsar
-| rabbitmq
-| redis
-| redis-cluster
-| redis-sentinel
-| redis-cluster-streams
-| redis-sentinel-streams
-| redis-streams
-| selenium-grid
-| solace-direct-messaging
-| solace-event-queue
-| solr
-| splunk
-| gcp-stackdriver
-| sumologic
-| temporal
-
-
