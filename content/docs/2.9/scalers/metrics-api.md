@@ -31,6 +31,8 @@ triggers:
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `ignoreUnavaiable` - Do not error when the API is not available and instead use the default value. (Values: `true`, `false`, Default: `false`, Optional)
+- `defaultValue` - Default value when the metrics API is not available. (Default: `0`, Optional, This value can be a float)
 
 
 ### Authentication Parameters
