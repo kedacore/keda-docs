@@ -233,6 +233,25 @@ Choose the runner image you want to use (>6.1 of forgejo runner releases) or a c
 Apply the new custom resource to your cluster.
 
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: forgejo-runner-secret
+  namespace: runners
+data:
+  token: "BEARER_TOKEN"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: forgejo-runner-creds
+  namespace: runners
+spec:
+  secretTargetRef:
+    - parameter: token
+      name: forgejo-runner-secret
+      key: token
+---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledJob
 metadata:
@@ -331,8 +350,9 @@ spec:
     - type: forgejo-runner
       metadata:
         name: "runner"
-        token: "<user-access-token>"
         address: "http://localhost:3000/"
         global: "true"
         labels: "ubuntu-20,docker"
+      authenticationRef:
+        name: forgejo-runner-creds
 ```
