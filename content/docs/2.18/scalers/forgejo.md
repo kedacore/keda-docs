@@ -17,8 +17,6 @@ triggers:
     metadata:
       # Required: the name of the registered runner 
       name: "forgejo-runner-ubuntu"
-      # Required: the token to connect to forgejo
-      token: "scoped-token-from-forgejo"
       # Required: the url of the forgejo instance 
       address: "http://localhost:3000"
       # Optional: Scope of the jobs to check, global is the default one and will get all the jobs in the instance with the defined labels
@@ -30,6 +28,20 @@ triggers:
       # Required: Will get the jobs with match with this labels
       labels: "ubuntu-latest"
 ```
+
+**Parameter list:**
+
+- `name` - Name of the registered runner.
+- `address` - Url of the forgejo instance.
+- `global` - Scope of the jobs to check. (Values: `true`, `false`, Default: `true`, Optional, Mutually exclusice with `owner` and `repo`)
+- `owner` - User to set as a scope. (Optional, Mutually exclusice with `global` and `repo`)
+- `repo` - User to set as a scope. (Optional, Mutually exclusice with `global` and `owner`)
+- `labels` - Labels to match the job with.
+
+
+### Authentication Parameters
+
+- `token` - Required token to connect to forgejo instance.
 
 ### Options on how to set the scope (global, user, repo)
 
