@@ -11,7 +11,6 @@ go_file = "splunk_observability_scaler"
 
 This specification describes the `splunk-observability` trigger that scales based on the result of a metric series queried from the Splunk Observability Cloud platform with a [SignalFlow query](https://dev.splunk.com/observability/docs/signalflow/).
 
-The trigger always requires the following information (shown below with example values):
 
 ```yaml
 triggers:
