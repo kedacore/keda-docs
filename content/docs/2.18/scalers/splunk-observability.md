@@ -16,7 +16,6 @@ The trigger always requires the following information (shown below with example 
 ```yaml
 triggers:
   - type: splunk-observability
-    metricType: Value
     metadata:
       query: "data('demo.trans.latency').max().publish()"
       duration: "10"
