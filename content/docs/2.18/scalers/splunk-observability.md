@@ -100,7 +100,7 @@ spec:
       key: realm
 ```
 
-#### Keda Scaler
+#### KEDA Scaler
 
 ```yaml
 ---
