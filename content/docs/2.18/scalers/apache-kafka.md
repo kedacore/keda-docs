@@ -139,7 +139,7 @@ When a new Kafka consumer is created, it must determine its consumer group initi
 
 When scaling a Kafka consumers, you would want to ensure that all partitions are consumed equally. Otherwise some partition would start building up higher lag than others. Prior to introduction of this parameter the Kafka scaler did not factor in the number of partitions on the Kafka topic in its scaling decisions. This is a problem because we could end up in a situation where your consumers would have uneven distribution of partitions. When you have `ensureEvenDistributionOfPartitions` configuration enabled the scaler would always ensure that the number of partitions are always balanced between the number of consumers that we would be scaling to.
 
-Consider for example a topic with `10` partitions. In this case the idea consumer count should always be `1,2,5,10`. Running any other number of consumers than this set would cause an uneven distribution.
+Consider for example a topic with `10` partitions. In this case the ideal consumer count should always be `1,2,5,10`. Running any other number of consumers than this set would cause an uneven distribution.
 
 Below are some examples of what the scaling decision would look like. Consider `10` partitions and a lag threshold of `10` as the configuration default.
 
