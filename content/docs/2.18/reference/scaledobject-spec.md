@@ -247,7 +247,9 @@ If defined, both `target` and `formula` are mandatory. Using this structure crea
 
 #### scalingModifiers.activationTarget
 
-`activationTarget` defines a new [activation target value](../concepts/scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional)
+`activationTarget` defines a new [activation target value](../concepts/scaling-deployments.md#activating-and-scaling-thresholds) to scale on for the composed metric. (Default: `0`, Optional).
+
+There is one important exception to the activation target for scaling modifiers and that is [external push scalers](../concepts/external-scalers). These scalers can implement `StreamIsActive` gRPC method which pushes activation status to KEDA directly, regardless of what the metric value and activation target is.
 
 #### scalingModifiers.metricType
 
