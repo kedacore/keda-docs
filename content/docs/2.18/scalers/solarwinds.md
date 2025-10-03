@@ -25,13 +25,13 @@ triggers:
 
 **Parameter list:**
 
-- `host` - The Solarwinds API endpoint. Example: .
-- `targetValue` - Value to reach to start scaling (This value can be a integer or float).
-- `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
+- `host` - The Solarwinds API endpoint. (Example: `https://api.na-01.cloud.solarwinds.com`)
+- `targetValue` - Value to reach to start scaling. (This value can be an integer or float)
+- `activationValue` - Target value for activating the scaler. (Optional, Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds))
 - `metricName` - The name of the metric to monitor.
-- `aggregation` - The aggregation method to use (`COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `LAST`).
+- `aggregation` - The aggregation method to use. (Values: `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `LAST`)
 - `intervalS` - The interval in seconds for the metric collection.
-- `filter` - The filter to apply to the metric data (Optional). Examples:
+- `filter` - The filter to apply to the metric data. (Optional, Examples below)
   - `key1:value1 key2:value2` - Search using key values pairs with a delimiting space for an implicit AND
   - `key:[value1,value2]` - Search using IN operator (key equals value1 or value2)
   - `key:~value` - Search using CONTAINS operator
