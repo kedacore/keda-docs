@@ -31,13 +31,15 @@ triggers:
       # Optional: Demands string to read demands from ScaledObject
       demands: "{demands}"
       # Optional: Demands of jobs must exactly match the capabilities the trigger defines
-      requireAllDemands: false 
+      requireAllDemands: false
       # Optional: Require jobs to include specified demands, ignoring any extra ones
       requireAllDemandsAndIgnoreOthers: false
       # Optional: How many jobs to fetch for the pool in the API (default: 250)
       jobsToFetch: "{jobsToFetch}"
       # Optional: Whether to only fetch unfinished jobs from the API (default: false)
       fetchUnfinishedJobsOnly: false
+      # Optional: Property to enable case-insensitive comparison of pipeline job demands (default: false)
+      caseInsensitiveDemandsProcessing: false
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -55,6 +57,7 @@ triggers:
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
 - `jobsToFetch` - The number of the jobs that KEDA will fetch for the pool from Azure Pipeline API. Mutually exclusive with `parent` and `fetchUnfinishedJobsOnly`. (Default: `250`, Optional)
 - `fetchUnfinishedJobsOnly` - Whether to fetch only unfinished jobs from the Azure Pipeline API. Normally both finished, running and pending jobs are returned by the API. When this parameter is set to `true`, the API call is modified so that only running and pending jobs are returned from the API, which reduces the amount of returned jobs considerably. Mutually exclusive with `jobsToFetch`. (Default: `false`, Optional)
+- `caseInsensitiveDemandsProcessing` - Property to enable case-insensitive comparison of pipeline job demands. When this parameter is set to `true`, the demands check is case-insensitive. (Default: `false`, Optional)
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
@@ -106,7 +109,7 @@ If you wish to use demands in your agent scaler then you can do so by adding the
 ```yaml
     pool:
       - name: "{agentPoolName}"
-        demands: 
+        demands:
           - example-demands
           - another-demand -equals /bin/executable
 ```
@@ -128,7 +131,7 @@ KEDA will interpret this request to find any matching template from the defined 
 
 Once it finds it, it will scale the workload that matched the definition and Azure DevOps will assign it to that agent.
 
-However, as this an undocumented API, it possesses some unique quirks when calling it with different query parameters. For example, if the `$top` query parameter is given, the format of the returned JSON is changed in such a way that it is no longer possible for the scaler to find the matched agents; making it impossible to use with the `parent` property from the trigger metadata. Therefore making `jobsToFetch` mutually exclusive with `parent` in the trigger metadata. 
+However, as this an undocumented API, it possesses some unique quirks when calling it with different query parameters. For example, if the `$top` query parameter is given, the format of the returned JSON is changed in such a way that it is no longer possible for the scaler to find the matched agents; making it impossible to use with the `parent` property from the trigger metadata. Therefore making `jobsToFetch` mutually exclusive with `parent` in the trigger metadata.
 
 Additionally, the `$top` query parameter takes precedence over some other parameters like `completedRequestCount`. If the `$top` query parameter is given, finished jobs are included in the response even if `completedRequestCount=0` is given, although `completedRequestCount=0` would indicate that only pending and running jobs should be returned. Thus, `jobsToFetch` is also mutually exclusive with `fetchUnfinishedJobsOnly` in the trigger metadata.
 
@@ -215,7 +218,7 @@ spec:
       poolID: "1"
       organizationURLFromEnv: "AZP_URL"
       parent: "example-keda-template"
-      demands: "maven,docker"      
+      demands: "maven,docker"
     authenticationRef:
      name: pipeline-trigger-auth
 ```
@@ -242,7 +245,7 @@ spec:
         env:
           - name: AZP_AGENT_NAME
             value: example-keda-template # Matches Scaled Job Parent
-          
+
 ```
 
 ### Example for using pod identity authentication
@@ -272,7 +275,7 @@ spec:
       poolID: "1"
       organizationURLFromEnv: "AZP_URL"
       parent: "example-keda-template"
-      demands: "maven,docker"      
+      demands: "maven,docker"
     authenticationRef:
      name: pipeline-trigger-auth
 ```
