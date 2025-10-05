@@ -67,6 +67,11 @@ KEDA supports secure connections to external event sources using TriggerAuthenti
 
 KEDA connects to various services, like message queues or cloud APIs, through scalers. These fetch real-time metrics to determine when and how to scale. KEDA includes built-in scalers for popular services, but you can create custom ones if needed. This lets your workloads respond to real-world demand effortlessly.
 
+### Consuming Raw Scaler Metrics Externally
+
+KEDA also allows consuming the internal metrics (coming from internal or external scalers) to interested 3rd parties. This feature is exposed using gRPC server stream API and needs to be first enabled by setting `RAW_METRICS_GRPC_PROTOCOL` to "`enabled`". Then one can subscribe to a metric identified by ScaledObject name, namespace and trigger name using any gRPC client (example with [grpcurl](https://github.com/kedacore/keda/pull/7093#issuecomment-3333530716)).
+
+
 ### Admission Webhooks
 
 KEDA uses admission webhooks to validate your scaling setup. They ensure your configuration is correct, like preventing multiple ScaledObjects from targeting the same app. This reduces errors and makes scaling smoother.

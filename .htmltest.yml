@@ -9,3 +9,4 @@ IgnoreURLs:
   # Temporal ignores
   # Deprecated and removed resources
   # Renamed pages
+  - /docs/2.18/scalers/splunk-observability.md/
