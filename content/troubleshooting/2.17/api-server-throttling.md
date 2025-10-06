@@ -19,7 +19,7 @@ The following flags are relevant for tuning KEDA's API server interaction:
 
 The following env variable is relevant for tuning KEDA's API server interaction:
 
-*   `KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES` (Default: `5`): This flag determines the maximum number of `ScaledObject` resources that the KEDA operator will reconcile concurrently.
+*   `KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES` (Default: `5`): This environment variable determines the maximum number of `ScaledObject` resources that the KEDA operator will reconcile concurrently.
 
 ## Recommendation for Adjusting Flags
 
