@@ -10,13 +10,16 @@ If you are experiencing messages like "Waited for ... due to client-side throttl
 
 KEDA provides several command-line flags to control its interaction with the Kubernetes API server. Adjusting these flags can help alleviate client-side throttling.
 
-## Key Configuration Flags
+## Key Configuration Parameters
 
 The following flags are relevant for tuning KEDA's API server interaction:
 
 *   `--kube-api-qps` (Default: `20.0`): This flag sets the maximum queries per second (QPS) that the KEDA operator can make to the Kubernetes API server.
 *   `--kube-api-burst` (Default: `30`): This flag sets the maximum burst of requests that the KEDA operator can make to the Kubernetes API server.
-*   `--keda-scaledobject-ctrl-max-reconciles` (Default: `5`): This flag determines the maximum number of `ScaledObject` resources that the KEDA operator will reconcile concurrently.
+
+The following env variable is relevant for tuning KEDA's API server interaction:
+
+*   `KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES` (Default: `5`): This flag determines the maximum number of `ScaledObject` resources that the KEDA operator will reconcile concurrently.
 
 ## Recommendation for Adjusting Flags
 
@@ -27,7 +30,7 @@ It is recommended to experiment with increasing the values of these parameters:
 *   **`--kube-api-qps` and `--kube-api-burst`**: Increasing these values allows the KEDA operator to make more requests to the API server per unit of time.
     *   Consider starting by doubling the default values (e.g., set `--kube-api-qps=40` and `--kube-api-burst=60`).
     *   Monitor the impact on both KEDA's performance and the API server's load.
-*   **`--keda-scaledobject-ctrl-max-reconciles`**: Increasing this value allows KEDA to process more `ScaledObject` resources in parallel. However, this will also increase the overall load on the API server.
+*   **`KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES`**: Increasing this value allows KEDA to process more `ScaledObject` resources in parallel. However, this will also increase the overall load on the API server.
     *   Consider a moderate increase (e.g., to `10`).
     *   Observe the performance and API server load.
 
@@ -57,7 +60,9 @@ spec:
         args:
         - "--kube-api-qps=40"
         - "--kube-api-burst=60"
-        - "--keda-scaledobject-ctrl-max-reconciles=10"
+        env:
+        - name: KEDA_SCALEDOBJECT_CTRL_MAX_RECONCILES
+          value: "10"
         # ... other existing arguments for the KEDA operator
 ```
 
