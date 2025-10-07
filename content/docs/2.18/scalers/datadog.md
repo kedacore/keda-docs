@@ -104,7 +104,7 @@ triggers:
 
 The Datadog scaler with Cluster Agent supports one type of authentication - Bearer authentication.
 
-You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
+You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authMode` and other trigger parameters in `TriggerAuthentication` as mentioned below:
 
 **Common to all authentication types**
 - `authMode` - The authentication mode to connect to the Cluster Agent. (Values: bearer, Default: bearer, Optional)
@@ -114,22 +114,21 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: true, false, Default: false, Optional)
 
 **Bearer authentication:**
-- `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs to have permissions to `get`, `watch`, and `list` all `external.metrics.k8s.io` resources.
+- `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs to have permissions to `get`, `watch`, and `list` all `external.metrics.k8s.io` resources. Instead of manually creating long-lived tokens stored in Secrets, it is recommended to use [Bound Service Account Tokens](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#bound-service-account-tokens) via the `boundServiceAccountToken` parameter, which are more secure as they are time-bound and automatically rotated.
 
 ### Example
 
 ```yaml
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
   name: datadog-config
   namespace: my-project
-type: Opaque
 data:
-  datadogNamespace: # Required: base64 encoded value of the namespace where the Datadog Cluster Agent is deployed
-  datadogMetricsService: # Required: base64 encoded value of the Cluster Agent metrics server service
-  unsafeSsl: # Optional: base64 encoded value of `true` or `false`
-  authMode: # Required: base64 encoded value of the authentication mode (in this case, bearer)
+  datadogNamespace:  # Required: namespace where the Datadog Cluster Agent is deployed
+  datadogMetricsService: # Required: Cluster Agent metrics server service name
+  unsafeSsl: # Optional: set to "true" to skip SSL certificate validation
+  authMode:  # Required: authentication mode (bearer)
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -137,10 +136,10 @@ metadata:
   name: datadog-cluster-agent-creds
   namespace: my-project
 spec:
-  secretTargetRef:
-    - parameter: token
-      name: dd-cluster-agent-token
-      key: token
+   boundServiceAccountToken:
+     - parameter: token
+       serviceAccountName: my-service-account # Required: service account with permissions to get, watch, list external.metrics.k8s.io
+  configMapTargetRef:
     - parameter: datadogNamespace
       name: datadog-config
       key: datadogNamespace
