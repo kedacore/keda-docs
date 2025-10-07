@@ -36,6 +36,7 @@ triggers:
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `restApiTemplate` - Template to build REST API url to get queue size. (Default: `"http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"`, Optional)
 - `corsHeader` - Value to populate the Origin header field for CORS filtering. (Default: `"http://<<managmentEndpoint>>"`, Optional)
+- `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Default: `false`, Optional)
 
 ### Authentication Parameters
 
@@ -45,6 +46,13 @@ triggers:
 
 - `username` - The username to use to connect to the broker's management endpoint.
 - `password` - The password to use to connect to the broker's management endpoint.
+
+**TLS authentication:**
+
+- `ca` - Certificate authority file for TLS client authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+- `keyPassword` - Password for the client certificate private key. (Optional, Required when `key` is encrypted)
 
 ### Example
 
@@ -94,4 +102,79 @@ spec:
         restApiTemplate: # Optional. Default: "http://<<managementEndpoint>>/console/jolokia/read/org.apache.activemq.artemis:broker=\"<<brokerName>>\",component=addresses,address=\"<<brokerAddress>>\",subcomponent=queues,routing-type=\"anycast\",queue=\"<<queueName>>\"/MessageCount"
       authenticationRef:
         name: trigger-auth-kedartemis
+```
+
+### Example with TLS (HTTPS with self-signed certificates)
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kedartemis-consumer-scaled-object
+  namespace: kedartemis
+spec:
+  scaleTargetRef:
+    name: kedartemis-consumer
+  triggers:
+    - type: artemis-queue
+      metadata:
+        managementEndpoint: "artemis-activemq.artemis:8443"
+        queueName: "test"
+        queueLength: "50"
+        brokerName: "artemis-activemq"
+        brokerAddress: "test"
+        unsafeSsl: "true"  # Skip certificate validation for self-signed certificates
+      authenticationRef:
+        name: trigger-auth-kedartemis
+```
+
+### Example with mutual TLS (client certificates)
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kedartemis-tls
+  namespace: kedartemis
+type: Opaque
+data:
+  artemis-ca: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCi4uLgo="  # Base64 encoded CA certificate
+  artemis-cert: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCi4uLgo="  # Base64 encoded client certificate
+  artemis-key: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCi4uLgo="  # Base64 encoded client private key
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-kedartemis-tls
+  namespace: kedartemis
+spec:
+  secretTargetRef:
+    - parameter: ca
+      name: kedartemis-tls
+      key: artemis-ca
+    - parameter: cert
+      name: kedartemis-tls
+      key: artemis-cert
+    - parameter: key
+      name: kedartemis-tls
+      key: artemis-key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kedartemis-consumer-scaled-object
+  namespace: kedartemis
+spec:
+  scaleTargetRef:
+    name: kedartemis-consumer
+  triggers:
+    - type: artemis-queue
+      metadata:
+        managementEndpoint: "artemis-activemq.artemis:8443"
+        queueName: "test"
+        queueLength: "50"
+        brokerName: "artemis-activemq"
+        brokerAddress: "test"
+      authenticationRef:
+        name: trigger-auth-kedartemis-tls
 ```
