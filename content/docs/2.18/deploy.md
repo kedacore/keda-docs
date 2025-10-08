@@ -292,11 +292,18 @@ We'll deploy a simple application that responds to HTTP requests. For this examp
          spec:
             containers:
             - name: http-app
-              image: hashicorp/http-echo
-              args:
-                 - "-text=Hello, KEDA!"
+              image: stefanprodan/podinfo
               ports:
-                 - containerPort: 5678
+                - name: http
+                  containerPort: 8080
+                  protocol: TCP
+                - name: metrics
+                  containerPort: 9090
+                  protocol: TCP
+              command:
+                - ./podinfo
+                - --port=8080
+                - --port-metrics=9090
       ```
 
 2. **Apply the Deployment**: Run the following command to create the deployment:
@@ -320,10 +327,14 @@ To access the application, we'll create a Service.
       selector:
          app: http-app
       ports:
-         - protocol: TCP
-           port: 80
-           targetPort: 5678
-      type: LoadBalancer
+        - name: http
+          protocol: TCP
+          port: 80
+          targetPort: http
+        - name: metrics
+          protocol: TCP
+          port: 9090
+          targetPort: metrics
    ```
 
 2. **Apply the Service**: Run the following command to create the service:
@@ -378,10 +389,10 @@ To observe KEDA's scaling in action:
 1. **Generate Load**: Use a tool like curl or hey to send multiple requests to your application's external IP:
 
    ```sh
-   hey -z 1m -c 10 http://<EXTERNAL-IP>
+   kubectl port-forward svc/http-app-service 8080:80 &
+   hey -z 1m -c 10 http://localhost:8080
    ```
 
-   Replace `<EXTERNAL-IP>` with the external IP address obtained earlier.
 2. **Monitor Scaling:** Run the following command to watch the scaling behavior:
 
    ```sh
