@@ -31,7 +31,7 @@ triggers:
     keyConditionExpression: "#k = :key"
     # Required: expressionAttributeValues
     expressionAttributeValues: '{ ":key" : {"S":"partition_key_target_value"}, ":filterValue" : {"S" : "hello world"}}'
-    # Optinal: filterExpression
+    # Optional: filterExpression
     filterExpression: 'filterField = :filterValue'
     # DEPRECATED: This parameter is deprecated as of KEDA v2.13 and will be removed in v3. Optional # Optional. Default: pod
     identityOwner: pod | operator
