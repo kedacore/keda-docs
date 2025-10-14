@@ -28,7 +28,7 @@ triggers:
 
 - `queueName` - Name of the queue.
 - `queueLength` - Target value for queue length passed to the scaler. Example: if one pod can handle 10 messages, set the queue length target to 10. If the actual number of messages in the queue is 30, the scaler scales to 3 pods. (Default: `5`, Optional)
-- `queueLengthStrategy` - `all` considers both visible and invisible messages, while `visibleonly` uses Peek to count only visible messages. In `visibleonly`, if the count of messages is 32 or higher, it falls back to the default `all` strategy, counting both visible and invisible messages. (Default: `all`, Optional)
+- `queueLengthStrategy` - `all` considers both visible and invisible messages, while `visibleonly` uses Peek to count only visible messages. In `visibleonly`, if the count of visible messages is 32 or higher, it falls back to the default `all` strategy, counting both visible and invisible messages. (Default: `all`, Optional)
 - `activationQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `connectionFromEnv` - Name of the environment variable your deployment uses to get the connection string.
 - `accountName` - Name of the storage account that the queue belongs to.
