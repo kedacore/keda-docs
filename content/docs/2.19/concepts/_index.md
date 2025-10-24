@@ -69,8 +69,14 @@ KEDA connects to various services, like message queues or cloud APIs, through sc
 
 ### Consuming Raw Scaler Metrics Externally
 
-KEDA also allows consuming the internal metrics (coming from internal or external scalers) to interested 3rd parties. This feature is exposed using gRPC server stream API and needs to be first enabled by setting `RAW_METRICS_GRPC_PROTOCOL` to "`enabled`". Then one can subscribe to a metric identified by ScaledObject name, namespace and trigger name using any gRPC client (example with [grpcurl](https://github.com/kedacore/keda/pull/7093#issuecomment-3333530716)).
+KEDA also allows consuming the internal metrics (coming from internal or external scalers) to interested 3rd parties. This feature is exposed using gRPC server stream API and needs to be first enabled by setting `RAW_METRICS_GRPC_PROTOCOL` to "`enabled`". Then one can subscribe to a metric identified by ScaledObject/ScaledJob name, namespace and trigger name using any gRPC client (example with [grpcurl](https://github.com/kedacore/keda/pull/7093#issuecomment-3333530716)).
 
+You can control when raw metrics are sent using the `RAW_METRICS_MODE` environment variable:
+
+* `all` or `""` (empty): Sends all raw metrics, both when the metrics server requests them (HPA) and during the regular polling interval of each ScaledObject or ScaledJob. This is the default behavior.
+* `hpa`: Sends raw metrics only when the Kubernetes metrics server explicitly requests metrics for a ScaledObject. This means metrics are sent in response to HPA queries, not on a regular schedule.
+* `pollinginterval`: Sends raw metrics only during the polling interval of each ScaledObject or ScaledJob. In this mode, metrics are pushed out at each polling cycle, regardless of HPA requests.
+* Any unknown value will default to the `all` mode.
 
 ### Admission Webhooks
 
