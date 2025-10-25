@@ -1,14 +1,14 @@
 +++
-title = "Solarwinds"
+title = "SolarWinds"
 availability = "v2.18+"
 maintainer = "Community"
-description = "Scale applications based on metrics from Solarwinds."
+description = "Scale applications based on metrics from SolarWinds."
 go_file = "solarwinds_scaler"
 +++
 
 ### Trigger Specification
 
-This specification describes the `solarwinds` trigger that scales based on metrics from Solarwinds.
+This specification describes the `solarwinds` trigger that scales based on metrics from SolarWinds.
 
 ```yaml
 triggers:
@@ -25,7 +25,7 @@ triggers:
 
 **Parameter list:**
 
-- `host` - The Solarwinds API endpoint. (Example: `https://api.na-01.cloud.solarwinds.com`)
+- `host` - The SolarWinds API endpoint. (Example: `https://api.na-01.cloud.solarwinds.com`)
 - `targetValue` - Value to reach to start scaling. (This value can be an integer or float)
 - `activationValue` - Target value for activating the scaler. (Optional, Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds))
 - `metricName` - The name of the metric to monitor.
@@ -45,11 +45,11 @@ You can use `TriggerAuthentication` CRD to configure the authentication by provi
 
 **Credential based authentication:**
 
-- `apiToken` - The API token for accessing Solarwinds Observability. See [doc](https://documentation.solarwinds.com/en/success_center/observability/content/settings/api-tokens.htm) for more information.
+- `apiToken` - The API token for accessing SolarWinds Observability. See [doc](https://documentation.solarwinds.com/en/success_center/observability/content/settings/api-tokens.htm) for more information.
 
 ### Example
 
-Here is an example of a Solarwinds Scaler with authentication:
+Here is an example of a SolarWinds Scaler with authentication:
 
 ```yaml
 apiVersion: v1
