@@ -1,0 +1,7 @@
+# https://github.com/marketplace/actions/auto-assign-reviewer-by-files
+"**/*":
+  - team: keda-docs
+
+# Any datadog.md file
+"**/datadog.md":
+  - team: keda-core-datadog-notification
