@@ -34,7 +34,7 @@ triggers:
 - `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
 - `targetValue` - Threshold to reach to start scaling.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
-- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consiting of several datapoints. The 'queryAggregator' speicifies how this series of metrics should be "rolled up". Valid values for this field are "avg", which returnes the average, "min", which returns the minimun of the metrics in the series, and "max", which returns the maximun value.
+- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The 'queryAggregator' specifies how this series of metrics should be "rolled up". Valid values for this field are "avg", which returns the average, "min", which returns the minimum of the metrics in the series, and "max", which returns the maximum value.
 
 **Parameter list:**
 
