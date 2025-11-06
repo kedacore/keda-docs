@@ -95,7 +95,7 @@ The scaler will extract the value at `count` from the YAML data in the `metrics`
 > 💡 **NOTE:** 
 > - The `valueType` parameter controls how values are parsed. For `int64`, decimal values in JSON are truncated to integers.
 > - For `json` format, use GJSON path syntax. For `yaml` format, use dot-separated path. For `number` format, the value at the key is used directly.
-> - For YAML format, the `valueType` primarily affects string values. Numeric YAML values are automatically converted to float64.
+> - For YAML format, the `valueType` determines how the extracted value is converted, regardless of whether the value is a string or a native YAML number. For example, if `valueType` is set to `int64`, the value will be converted to an integer; if set to `quantity`, it will be parsed as a Kubernetes quantity. By default, numeric YAML values are converted to float64 unless a different `valueType` is specified.
 
 ### Additional Examples
 
