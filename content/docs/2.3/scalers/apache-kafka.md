@@ -24,7 +24,7 @@ triggers:
     topic: test-topic
     lagThreshold: '5'
     offsetResetPolicy: latest
-    allowIdleConsumers: false
+    allowIdleConsumers: 'false'
 ```
 
 **Parameter list:**
