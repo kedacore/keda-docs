@@ -28,8 +28,8 @@ triggers:
     topic: test-topic
     lagThreshold: '5'
     offsetResetPolicy: latest
-    allowIdleConsumers: false
-    scaleToZeroOnInvalidOffset: false
+    allowIdleConsumers: 'false'
+    scaleToZeroOnInvalidOffset: 'false'
     version: 1.0.0
 ```
 

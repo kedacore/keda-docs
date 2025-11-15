@@ -29,10 +29,10 @@ triggers:
     lagThreshold: '5'
     activationLagThreshold: '3'
     offsetResetPolicy: latest
-    allowIdleConsumers: false
-    scaleToZeroOnInvalidOffset: false
-    excludePersistentLag: false
-    limitToPartitionsWithLag: false
+    allowIdleConsumers: 'false'
+    scaleToZeroOnInvalidOffset: 'false'
+    excludePersistentLag: 'false'
+    limitToPartitionsWithLag: 'false'
     version: 1.0.0
     partitionLimitation: '1,2,10-20,31'
     sasl: plaintext
