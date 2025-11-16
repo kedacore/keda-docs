@@ -18,7 +18,7 @@
 
 <link rel="canonical" href="{{ $canonical }}">
 
-{{ if eq (compare $version $latestVersion) -1 }}
+{{ if ge $version $latestVersion }}
 <meta name="robots" content="noindex">
 {{ end }}
 
