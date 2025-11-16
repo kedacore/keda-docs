@@ -18,7 +18,12 @@
 
 <link rel="canonical" href="{{ $canonical }}">
 
-{{ if ge $version $latestVersion }}
+{{/*
+  When $version is lower than $latestVersion, we include
+  the extra meta "noindex" to remove the page from search engines.
+  Only current version and preview version can be indexed.
+*/}}
+{{ if lt $version $latestVersion }}
 <meta name="robots" content="noindex">
 {{ end }}
 
