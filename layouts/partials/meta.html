@@ -16,7 +16,6 @@
 {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
 {{ end -}}
 
-
 <link rel="canonical" href="{{ $canonical }}">
 
 {{ if ne $version $latestVersion }}
