@@ -1,6 +1,5 @@
 {{ $url             := .Permalink }}
 {{ $latestVersion   := index site.Params.versions.docs 0 -}}
-{{ $previousVersion := index site.Params.versions.docs 1 -}}
 {{ $canonical       := replaceRE "/docs/\\d.\\d+" (printf "/docs/%s" $latestVersion) $url }}
 {{ $title           := cond .IsHome site.Title (printf "%s | %s" site.Title .Title) }}
 {{ $type            := cond .IsHome "website" "article" }}
@@ -19,7 +18,7 @@
 
 <link rel="canonical" href="{{ $canonical }}">
 
-{{ if and (ne $version $latestVersion) (ne $version $previousVersion) }}
+{{ if eq (compare.Version $version $latestVersion) -1 }}
 <meta name="robots" content="noindex">
 {{ end }}
 
