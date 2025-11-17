@@ -13,18 +13,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 {{ with .OutputFormats.Get "rss" -}}
-{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
+{{ printf `
+<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
 {{ end -}}
 
 <link rel="canonical" href="{{ $canonical }}">
 
 {{/*
-  When $version is lower than $latestVersion, we include
-  the extra meta "noindex" to remove the page from search engines.
-  Only current version and preview version can be indexed.
+When $version is lower than $latestVersion, we include
+the extra meta "noindex" to remove the page from search engines.
+Only current version and preview version can be indexed.
 */}}
-{{ if lt $version $latestVersion }}
+{{ if and (ne $version "") (eq .Section "docs") }}
+{{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}
+{{ if $isOldVersion }}
 <meta name="robots" content="noindex">
+{{ end }}
 {{ end }}
 
 {{/* Twitter Card metadata */}}
@@ -51,5 +55,5 @@
 <meta property="og:locale" content="{{ $locale }}">
 
 {{ if hugo.IsProduction -}}
-  {{ template "_internal/google_analytics.html" . -}}
+{{ template "_internal/google_analytics.html" . -}}
 {{ end -}}
