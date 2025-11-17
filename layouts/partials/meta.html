@@ -13,8 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 {{ with .OutputFormats.Get "rss" -}}
-{{ printf `
-<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
+{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type $url site.Title | safeHTML }}
 {{ end -}}
 
 <link rel="canonical" href="{{ $canonical }}">
