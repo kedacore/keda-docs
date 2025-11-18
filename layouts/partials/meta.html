@@ -18,6 +18,18 @@
 
 <link rel="canonical" href="{{ $canonical }}">
 
+{{/*
+When $version is lower than $latestVersion, we include
+the extra meta "noindex" to remove the page from search engines.
+Only current version and preview version can be indexed.
+*/}}
+{{ if and (ne $version "") (eq .Section "docs") }}
+{{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}
+{{ if $isOldVersion }}
+<meta name="robots" content="noindex">
+{{ end }}
+{{ end }}
+
 {{/* Twitter Card metadata */}}
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="{{ $twitter }}">
