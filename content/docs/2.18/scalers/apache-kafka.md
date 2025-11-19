@@ -44,7 +44,7 @@ triggers:
 
 **Parameter list:**
 
-- `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap. (Not required if `bootstrapServersFromEnv` is provided.
+- `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap. (Not required if `bootstrapServersFromEnv` is provided.)
 - `bootstrapServersFromEnv` - Environment variable to provide comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap. (Optional, but takes priority over `bootstrapServers`).
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag. (Optional, see note below)
