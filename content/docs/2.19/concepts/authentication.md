@@ -171,6 +171,17 @@ spec:
           secretKeyRef:                                                   # Required.
             name: {k8s-secret-with-gcp-iam-sa-secret}                     # Required.
             key: {key-within-the-secret}                                  # Required.
+  akeyless:                                                              # Optional.
+    gatewayUrl: {akeyless-gateway-url}                                    # Optional. Defaults to https://api.akeyless.io
+    accessId: {akeyless-access-id}                                        # Required. Format: p-([A-Za-z0-9]{14}|[A-Za-z0-9]{12})
+    accessKey: {akeyless-access-key}                                      # Optional. Required for access_key authentication type
+    k8sAuthConfigName: {akeyless-k8s-auth-config-name}                    # Optional. Required for k8s authentication type
+    k8sServiceAccountToken: {k8s-service-account-token}                   # Optional. For k8s authentication
+    k8sGatewayUrl: {akeyless-k8s-gateway-url}                             # Optional. For k8s authentication
+    secrets:                                                              # Required.
+    - parameter: {param-name-used-for-auth}                               # Required.
+      path: {akeyless-secret-path}                                        # Required.
+      key: {akeyless-secret-key}                                          # Optional. Used to extract a specific key from JSON-formatted secrets
 ```
 
 Based on the requirements you can mix and match the reference types providers in order to configure all required parameters.
@@ -335,6 +346,41 @@ gcpSecretManager:                                     # Optional.
         secretKeyRef:                                 # Required.
           name: {k8s-secret-with-gcp-iam-sa-secret}   # Required.
           key: {key-within-the-secret}                # Required.
+```
+
+### Akeyless secret(s)
+
+You can pull secrets from Akeyless into the trigger by using the `akeyless` key.
+
+Akeyless supports multiple authentication methods that are automatically determined based on the Access ID format. The Access ID format is `p-([A-Za-z0-9]{14}|[A-Za-z0-9]{12})`, and the authentication method is determined by the second-to-last character of the Access ID:
+
+- **Access Key authentication** (`a`): Requires `accessKey` to be provided
+- **AWS IAM authentication** (`w`): Uses AWS IAM credentials from the pod's environment
+- **Kubernetes authentication** (`k`): Requires `k8sAuthConfigName` to be provided
+- **GCP authentication** (`g`): Uses GCP workload identity from the pod's environment
+- **Azure AD authentication** (`z`): Uses Azure AD credentials from the pod's environment
+
+The `gatewayUrl` parameter specifies the Akeyless Gateway URL. If not provided, it defaults to `https://api.akeyless.io`. If the URL path is empty, `/api/v2` will be automatically appended.
+
+Akeyless supports three types of secrets:
+- **Static secrets**: Standard key-value secrets stored in Akeyless
+- **Dynamic secrets**: Secrets that are dynamically generated (e.g., database credentials)
+- **Rotated secrets**: Secrets that are automatically rotated
+
+For JSON-formatted secrets, you can optionally specify a `key` to extract a specific value from the JSON object. If no `key` is provided, the entire JSON string will be returned.
+
+```yaml
+akeyless:                                             # Optional.
+  gatewayUrl: {akeyless-gateway-url}                  # Optional. Defaults to https://api.akeyless.io
+  accessId: {akeyless-access-id}                      # Required. Format: p-([A-Za-z0-9]{14}|[A-Za-z0-9]{12})
+  accessKey: {akeyless-access-key}                    # Optional. Required for access_key authentication type
+  k8sAuthConfigName: {akeyless-k8s-auth-config-name}  # Optional. Required for k8s authentication type
+  k8sServiceAccountToken: {k8s-service-account-token} # Optional. For k8s authentication. If not provided, will be read from /var/run/secrets/kubernetes.io/serviceaccount/token
+  k8sGatewayUrl: {akeyless-k8s-gateway-url}           # Optional. For k8s authentication. If not provided, uses gatewayUrl
+  secrets:                                            # Required.
+  - parameter: {param-name-used-for-auth}             # Required.
+    path: {akeyless-secret-path}                      # Required.
+    key: {akeyless-secret-key}                        # Optional. Used to extract a specific key from JSON-formatted secrets
 ```
 
 ### Pod Authentication Providers
