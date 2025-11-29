@@ -358,7 +358,6 @@ We'll create a `ScaledObject` to enable KEDA to scale our deployment based on HT
          - type: prometheus
            metadata:
               serverAddress: http://prometheus-server.default.svc.cluster.local:9090
-              metricName: http_requests_total
               threshold: '5'
               query: sum(rate(http_requests_total[1m])) 
    ```
