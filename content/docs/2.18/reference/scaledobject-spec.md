@@ -239,7 +239,7 @@ If defined, both `target` and `formula` are mandatory. Using this structure crea
 advanced:
   scalingModifiers:                                       # Optional. Section to specify scaling modifiers
     target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
-    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
     metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
     formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```

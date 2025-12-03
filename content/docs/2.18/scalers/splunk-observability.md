@@ -16,7 +16,7 @@ This specification describes the `splunk-observability` trigger that scales base
 triggers:
   - type: splunk-observability
     metadata:
-      # Required: SignalFlow query to retrieve the desired metric time series
+      # Required: SignalFlow query to retrieve the desired metric time series
       query: "data('demo.trans.latency').max().publish()"
       # Required: Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds
       duration: "10"
