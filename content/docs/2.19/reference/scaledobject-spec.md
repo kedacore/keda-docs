@@ -228,7 +228,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 
 #### horizontalPodAutoscalerConfig.behavior tolerance
 
-The `tolerance` field for HPA behavior `scaleUp` and `scaleDown` sections is an alpha release stage as of Kubernetes v1.33 and requires the `HPAConfigurableTolerance` [feature gate](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) to be cluster enabled. As of Kubernetes v1.34, this field remains in alpha and still requires the feature gate to be enabled.
+The `tolerance` field for HPA behavior `scaleUp` and `scaleDown` sections is at an alpha release stage as of Kubernetes v1.33 and requires the `HPAConfigurableTolerance` [feature gate] https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) to be enabled on targeted clusters. As of Kubernetes v1.34, this field has remained in alpha and still requires the feature gate to be enabled.
 
 ### scalingModifiers
 
