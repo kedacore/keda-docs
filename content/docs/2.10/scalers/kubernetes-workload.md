@@ -13,8 +13,8 @@ triggers:
 - type: kubernetes-workload
   metadata:
     podSelector: app=backend
-    value: 0.5
-    activationValue: 3.1
+    value: "0.5"
+    activationValue: "3.1"
 ```
 
 **Parameter list:**
@@ -44,6 +44,6 @@ spec:
   triggers:
   - type: kubernetes-workload
     metadata:
-      podSelector: app=backend,deploy notin (critical,monolith)
-      value: 3
+      podSelector: 'app=backend, deploy notin (critical, monolith)'
+      value: "3"
 ```
