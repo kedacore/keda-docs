@@ -202,8 +202,8 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 advanced:
   scalingModifiers:                                       # Optional. Section to specify scaling modifiers
     target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
-    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
-    metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    metricType:  {metric-type-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
     formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```
 

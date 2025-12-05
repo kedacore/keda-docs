@@ -229,7 +229,7 @@ Starting from Kubernetes v1.18 the autoscaling API allows scaling behavior to be
 
 #### horizontalPodAutoscalerConfig.behavior tolerance
 
-As of Kubernetes v1.34 the `tolerance` field can be specified under the HPA behavior policy `scaleUp` and `scaleDown` sections. The field applies a tolerance thresholds for scaling decisions, allowing you to specify different behivour for scale-up and scale-down operations. This field was in alpha release under Kubernetes v1.33, which can be enabled through the Kubernetes `HPAConfigurableTolerance` feature gate. As of Kubernetes v1.34, this field has graduated to beta release and is specifiable by default.
+As of Kubernetes v1.34 the `tolerance` field can be specified under the HPA behavior policy `scaleUp` and `scaleDown` sections. The field applies a tolerance thresholds for scaling decisions, allowing you to specify different behavior for scale-up and scale-down operations. This field was in alpha release under Kubernetes v1.33, which can be enabled through the Kubernetes `HPAConfigurableTolerance` feature gate. As of Kubernetes v1.34, this field has graduated to beta release and is specifiable by default.
 
 ### scalingModifiers
 
@@ -239,8 +239,8 @@ If defined, both `target` and `formula` are mandatory. Using this structure crea
 advanced:
   scalingModifiers:                                       # Optional. Section to specify scaling modifiers
     target: {target-value-to-scale-on}                        # Mandatory. New target if metrics are anyhow composed together
-    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
-    metricType:  {metric-tipe-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
+    activationTarget: {activation-target-value-to-scale-on}   # Optional. New activation target if metrics are anyhow composed together
+    metricType:  {metric-type-for-the-modifier}               # Optional. Metric type to be used if metrics are anyhow composed together
     formula: {formula-for-fetched-metrics}                    # Mandatory. Formula for calculation
 ```
 

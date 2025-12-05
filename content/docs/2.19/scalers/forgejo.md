@@ -33,9 +33,9 @@ triggers:
 
 - `name` - Name of the registered runner.
 - `address` - Url of the forgejo instance.
-- `global` - Scope of the jobs to check. (Values: `true`, `false`, Default: `true`, Optional, Mutually exclusice with `owner` and `repo`)
-- `owner` - User to set as a scope. (Optional, Mutually exclusice with `global` and `repo`)
-- `repo` - User to set as a scope. (Optional, Mutually exclusice with `global` and `owner`)
+- `global` - Scope of the jobs to check. (Values: `true`, `false`, Default: `true`, Optional, Mutually exclusive with `owner` and `repo`)
+- `owner` - User to set as a scope. (Optional, Mutually exclusive with `global` and `repo`)
+- `repo` - User to set as a scope. (Optional, Mutually exclusive with `global` and `owner`)
 - `labels` - Labels to match the job with.
 
 
