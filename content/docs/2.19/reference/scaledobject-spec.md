@@ -214,7 +214,7 @@ advanced:
         - type: Percent
           value: 100
           periodSeconds: 15
-          tolerance: 0.1                          # Kubernetes v1.34 is required to be specifiable
+          tolerance: 0.1                          # requires Kubernetes v1.33 or newer and feature gate "HPAConfigurableTolerance"
 ```
 
 #### horizontalPodAutoscalerConfig.name
