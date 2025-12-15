@@ -182,7 +182,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://prom.castai:9090
-        metricName: http_requests_total_sample_app
         threshold: '1'
         # Note: query must return a vector/scalar single element response
         query: sum(rate(http_requests_total{app="sample-app"}[2m]))
