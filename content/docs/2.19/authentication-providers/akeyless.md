@@ -37,6 +37,9 @@ akeyless:                                                      # Optional.
         name: {k8s-secret-with-service-account-token}          # Required.
         key: {key-in-k8s-secret}                               # Required.
   k8sGatewayUrl: {akeyless-k8s-gateway-url}                    # Optional. For k8s authentication. If not provided, uses gatewayUrl
+  podIdentity:                                                 # Optional. For Azure AD authentication.
+    provider: azure-workload
+    identityId: {azure-managed-identity-client-id} 
   secrets:                                                     # Required.
   - parameter: {param-name-used-for-auth}                      # Required.
     path: {akeyless-secret-path}                               # Required.
@@ -133,12 +136,19 @@ akeyless:
 
 ### Azure AD Authentication
 
-When using Azure AD authentication, the Access ID must have `z` as the second-to-last character. The authentication will use Azure AD credentials from the pod's environment:
+The authentication will use Azure AD credentials from the pod's environment.
+
+By default, Azure AD authentication uses the identity assigned to the KEDA operator pod. You can override this by specifying `podIdentity.identityId` in the TriggerAuthentication spec to use a different Azure managed identity:
+
 
 ```yaml
 akeyless:
   gatewayUrl: https://api.akeyless.io
   accessId: p-xxxxxxxxxxxxzm
+  # Optional. Overrides the default identity
+  podIdentity:
+    provider: azure-workload
+    identityId: <azure-managed-identity-client-id>
   secrets:
   - parameter: apiKey
     path: /path/to/secret
