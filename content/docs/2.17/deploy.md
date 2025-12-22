@@ -135,18 +135,18 @@ Once the KEDA YAML manifests are downloaded, apply the files to your cluster wit
 
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3.yaml
 # Without admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0-core.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3-core.yaml
 ```
 
 Alternatively you can download the file and deploy it from the local path:
 
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f keda-2.17.0.yaml
+kubectl apply --server-side -f keda-2.17.3.yaml
 # Without admission webhooks
-kubectl apply --server-side -f keda-2.17.0-core.yaml
+kubectl apply --server-side -f keda-2.17.3-core.yaml
 ```
 
 The `--server-side` flag allows Kubernetes to manage complex resources, like CRDs and admission webhooks, directly on the server. This approach reduces conflicts and ensures configurations are efficiently merged. For more information, see [this issue](https://github.com/kedacore/keda/issues/4740).
@@ -156,7 +156,7 @@ The `--server-side` flag allows Kubernetes to manage complex resources, like CRD
 > ```sh
 > git clone https://github.com/kedacore/keda && cd keda
 > 
-> VERSION=2.17.0 make deploy
+> VERSION=2.17.3 make deploy
 > ```
 >
 > This approach gives you full access to KEDA’s configuration files, allowing you to explore, modify, or tailor the YAML manifests before deploying. Using make deploy with the specified version will install KEDA directly from your local setup, offering flexibility for customization.
@@ -175,24 +175,24 @@ If you installed KEDA using the released YAML files, you can uninstall it by run
 
 ```sh
 # Including admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3.yaml
 # Without admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0-core.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3-core.yaml
 ```
 
 If you downloaded the files locally, uninstall with:
 
 ```sh
 # Including admission webhooks
-kubectl delete -f keda-2.17.0.yaml
+kubectl delete -f keda-2.17.3.yaml
 # Without admission webhooks
-kubectl delete -f keda-2.17.0-core.yaml
+kubectl delete -f keda-2.17.3-core.yaml
 ```
 
 For users who cloned the KEDA GitHub repository, navigate to the cloned directory and use:
 
 ```sh
-VERSION=2.17.0 make undeploy
+VERSION=2.17.3 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}
