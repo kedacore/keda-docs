@@ -29,6 +29,7 @@ triggers:
     # Optional
     messageCount: "5" # Optional. Count of messages to trigger scaling on. Default: 5 messages
     activationMessageCount: "2"
+    maxRetries: "3" # Optional. Number of retry attempts for transient failures. Default: 0 (no retries)
     cloud: Private # Optional. Default: AzurePublicCloud
     endpointSuffix: servicebus.airgap.example # Required when cloud=Private
 ```
@@ -37,6 +38,7 @@ triggers:
 
 - `messageCount` - Amount of active messages in your Azure Service Bus queue or topic to scale on.
 - `activationMessageCount` - Target value for activating the scaler. Learn more about activation [here](../concepts/scaling-deployments#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `maxRetries` - Number of retry attempts for transient API failures when getting queue/topic metrics. Uses exponential backoff starting at 2 seconds, doubling each retry, capped at 60 seconds. Set to `0` to disable retries. (Default: `0`, Optional)
 - `queueName` - Name of the Azure Service Bus queue to scale on. (Optional)
 - `topicName` - Name of the Azure Service Bus topic to scale on. (Optional)
 - `subscriptionName` - Name of the Azure Service Bus queue to scale on. (Optional*, Required when `topicName` is specified)
@@ -104,6 +106,7 @@ spec:
       namespace: service-bus-namespace
       # Optional
       messageCount: "5" # default 5
+      maxRetries: "3" # Optional. Retry up to 3 times on transient failures. Default: 0
       cloud: AzureGermanCloud # Optional. Default: AzurePublicCloud
     authenticationRef:
         name: azure-servicebus-auth # authenticationRef would need either podIdentity or define a connection parameter
@@ -116,6 +119,7 @@ spec:
 When KEDA logs show errors similar to `invalid queue runtime properties: no CountDetails element` it usually is caused because of throttling by Azure Service Bus.
 
 Consider applying one of the following mitigations:
+- Configure `maxRetries` to automatically retry on transient failures with exponential backoff
 - Scaling the Azure Service Bus namespace to a higher SKU, or use premium
 - Increase the polling interval of the ScaledObject/ScaledJob
 - Use [caching of metrics](../concepts/scaling-deployments/#caching-metrics)
