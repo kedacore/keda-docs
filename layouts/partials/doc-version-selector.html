@@ -1,11 +1,14 @@
-{{ $allVersions   := index site.Params.versions .Section }}
-{{ $latest        := index $allVersions 0 }}
-{{ $version       := index (split .File.Path "/") 1 }}
-{{ $isLatest      := eq $latest $version }}
-{{ $versionsOfDoc := slice }}
-{{ $here          := (delimit (after 3 (split (delimit (split .RelPermalink "/") "," "") ",")) "/") }}
-{{ $path          := .File.Path }}
-{{ $section       := .Section }}
+{{ $releasedVersions   := index site.Params.versions .Section }}
+{{ $unreleasedVersions := default slice (index site.Params.unreleased .Section) }}
+{{ $allVersions        := $unreleasedVersions | append $releasedVersions }}
+{{ $latest             := index $releasedVersions 0 }}
+{{ $version            := index (split .File.Path "/") 1 }}
+{{ $isLatest           := eq $latest $version }}
+{{ $isUnreleased       := in $unreleasedVersions $version }}
+{{ $versionsOfDoc      := slice }}
+{{ $here               := (delimit (after 3 (split (delimit (split .RelPermalink "/") "," "") ",")) "/") }}
+{{ $path               := .File.Path }}
+{{ $section            := .Section }}
 {{ range $allVersions }}
 {{ $fileToCheck := replace $path $version . }}
 {{ if fileExists $fileToCheck }}
@@ -21,7 +24,12 @@
       <span class="has-text-weight-bold">
         {{ $version }}
       </span>
-      {{ if $isLatest }}
+      {{ if $isUnreleased }}
+      &nbsp;
+      <span>
+        (unreleased)
+      </span>
+      {{ else if $isLatest }}
       &nbsp;
       <span>
         (latest)
@@ -39,11 +47,17 @@
     <div class="dropdown-content">
       {{ range $versionsOfDoc }}
       {{ $isLatest := eq . $latest }}
+      {{ $isUnreleased := in $unreleasedVersions . }}
       <a class="dropdown-item" href="/{{ $section }}/{{ . }}/{{ $here }}">
         <span>
           {{ . }}
         </span>
-        {{ if $isLatest }}
+        {{ if $isUnreleased }}
+        &nbsp;
+        <span>
+          (unreleased)
+        </span>
+        {{ else if $isLatest }}
         &nbsp;
         <span>
           (latest)
