@@ -172,6 +172,8 @@ and uses the next version, instead of the current one. Ensure that Kubernetes cl
 
 Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster.md` is updated with the compatibilities for the incoming version.
 
+Update the new version in the `params.unreleased.docs` list in [config.toml](config.toml).
+
 ### Publishing a new version
 
 Once a version is ready to be published, we must add the version to the
