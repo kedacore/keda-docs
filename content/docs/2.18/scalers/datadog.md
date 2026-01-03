@@ -95,9 +95,11 @@ triggers:
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate [because of the implicit rollup function](https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom), try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
-- `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
+- `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, KEDA returns `0` for Datadog 422 "no data" responses; other failures are still surfaced to the HPA. (Optional, This value can be a float)
 - `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
+> 💡 **NOTE:** Datadog can return HTTP 422 for empty time windows. These are treated as "no data" and use `metricUnavailableValue` if set, otherwise `0`.
+>
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
 
 ### Authentication
