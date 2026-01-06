@@ -64,7 +64,7 @@ The `mongodb` trigger always requires the following information:
 - `dbName` - Name of the database.
 - `collection` - Name of the collection.
 - `query` - A MongoDB query that should return single numeric value.
-- `queryValue` - A threshold that will define when scaling should occur.
+- `queryValue` - The divisor to apply to the query result to obtain the final number of pods / jobs.
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
 To connect to the MongoDB server, you can provide either:
