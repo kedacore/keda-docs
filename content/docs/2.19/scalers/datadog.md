@@ -216,6 +216,8 @@ triggers:
 - `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
+>
+> 💡 **NOTE:** When using the Datadog REST API, Datadog can return HTTP 422 for empty time windows ("no data points found"). These are treated as "no data" and use `metricUnavailableValue` if set, otherwise an error is returned to the HPA.
 
 ### Authentication
 

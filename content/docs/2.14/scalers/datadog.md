@@ -46,6 +46,8 @@ triggers:
 - `metricUnavailableValue`: The value of the metric to return to the HPA if Datadog doesn't find a metric value for the specified time window. If not set, an error will be returned to the HPA, which will log a warning. (Optional, This value can be a float)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
+>
+> 💡 **NOTE:** When using the Datadog REST API, Datadog can return HTTP 422 for empty time windows ("no data points found"). These are treated as "no data" and use `metricUnavailableValue` if set, otherwise an error is returned to the HPA.
 
 ### Authentication
 
