@@ -184,6 +184,13 @@ When using `behavior` with value `currentReplicasIfLower`, the current number of
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 3 replicas when I have `fallback.replicas` set to 6, but the current replicas are 3, with a `behavior` 'currentReplicasILower'.
 
+#### `cached` behavior
+When using `behavior` with value `cached`, KEDA will use the last known metric value from the cache. If cached metrics are available, those metrics will be returned instead of calculating fallback replicas. If no cached metrics are found, the value of `fallback.replicas` will be used as a fallback.
+
+This behavior is most useful when your ScaledObject has multiple scalers. For example, if you have both a Prometheus scaler and a CPU scaler, and the Prometheus instance becomes unavailable, the `cached` behavior allows the HPA to continue scaling based on CPU metrics while using the last known Prometheus metric value. Without this behavior, if one scaler becomes unavailable, the HPA stops scaling entirely.
+
+**Example:** When my Prometheus instance becomes unavailable 3 times in a row and I have `behavior` set to 'cached', KEDA will return the last known metric value from the cache. If the last cached metric would have caused the deployment to scale to 8 replicas, it will continue to target 8 replicas. If no cached metrics exist, it falls back to `fallback.replicas`.
+
 ## advanced
 
 ### restoreToOriginalReplicaCount
