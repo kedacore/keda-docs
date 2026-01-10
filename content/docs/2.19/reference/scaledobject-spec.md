@@ -288,3 +288,77 @@ Trigger fields:
     - The `Value` metric type, on the other hand, can be used when we don't want to take the average of the given metric across all replicas. For example, with the `Value` type, we can control the average time of messages in the queue. If our metric is average time in the queue, the threshold is 5 milliseconds, and the current average time is 20 milliseconds, HPA will scale the deployment to 3 * 20 / 5 = 12.
 
 > ⚠️ **NOTE:** All scalers, except CPU and Memory, support metric types `AverageValue` and `Value` while CPU and Memory scalers both support `AverageValue` and `Utilization`.
+
+### Trigger Fallback (Multi-Trigger Failover)
+
+Trigger-level fallback enables automatic failover to a secondary trigger when the primary trigger becomes unhealthy.
+
+```yaml
+fallback:
+  behavior: string              # Must be "failover" for multi-trigger failover
+  failoverThresholds:
+    failAfter: int32            # Consecutive failures before switching to secondary
+    recoverAfter: int32         # Failures below which primary is considered recovered
+```
+
+**Parameters:**
+
+| Parameter | Type | Required | Description | Example |
+|-----------|------|----------|-------------|---------|
+| `behavior` | string | Yes | Must be `"failover"` | `"failover"` |
+| `failoverThresholds.failAfter` | int32 | Yes | Number of consecutive failures before switching to secondary trigger | `3` |
+| `failoverThresholds.recoverAfter` | int32 | Yes | Number of failures below which primary trigger is considered recovered | `5` |
+
+**Requirements:**
+
+- Must be configured on the **primary trigger** (index 0)
+- Requires exactly **2 triggers** in the ScaledObject
+- Secondary trigger (index 1) provides metrics during failover
+
+**Status Fields:**
+
+The ScaledObject status includes:
+
+```yaml
+status:
+  activeTriggerIndex: 0 | 1     # Which trigger is currently active
+  health:
+    "s0-<trigger-type>-<metric>":
+      numberOfFailures: int32     # Consecutive failure count
+      status: "Happy" | "Failing" # Current health status
+```
+
+**Events:**
+
+- `KEDAScalerFailedOver`: Emitted when switching from primary (0) to secondary (1)
+- `KEDAScalerRecovered`: Emitted when recovering from secondary (1) to primary (0)
+
+**Example:**
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: my-scaledobject
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  triggers:
+    - type: metrics-api
+      name: primary-endpoint
+      metadata:
+        url: "https://primary.example.com/metrics"
+        targetValue: "10"
+      fallback:
+        behavior: "failover"
+        failoverThresholds:
+          failAfter: 3
+          recoverAfter: 5
+    - type: metrics-api
+      name: secondary-endpoint
+      metadata:
+        url: "https://secondary.example.com/metrics"
+        targetValue: "10"
+```
+
+For more details and examples, see [Multi-Trigger Failover](../concepts/scaling-deployments.md#multi-trigger-failover).
