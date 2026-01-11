@@ -56,8 +56,8 @@ metadata:
   namespace: my-project
 type: Opaque
 data:
-  host: aHR0cHM6Ly9kdW1teS1pbnN0YW5jZS5saXZlLmR5bmF0cmFjZS5jb20vCg== # base64 encoding of https://dummy-instance.live.dynatrace.com/
-  token: ZHQwczAxLlNUMkVZNzJLUUlOTUg1NzRXTU5WSTdZTi5HM0RGUEJFSllNT0RJREFFWDQ1NE03WVdCVVZFRk9XS1BSVk1XRkFTUzY0TkZINTJQWDZCTkRWRkZNNTcyUlpNCg== # base64 encoding of the dynatrace example api key dt0s01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM
+  host: aHR0cHM6Ly9kdW1teS1pbnN0YW5jZS5saXZlLmR5bmF0cmFjZS5jb20v # base64 encoding of https://dummy-instance.live.dynatrace.com/
+  token: ZHQwczAxLlNUMkVZNzJLUUlOTUg1NzRXTU5WSTdZTi5HM0RGUEJFSllNT0RJREFFWDQ1NE03WVdCVVZFRk9XS1BSVk1XRkFTUzY0TkZINTJQWDZCTkRWRkZNNTcyUlpN # base64 encoding of the dynatrace example api key dt0s01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
