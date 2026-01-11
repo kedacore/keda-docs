@@ -16,15 +16,21 @@ triggers:
   - type: dynatrace
     metadata:
       host: https://dummy-instance.live.dynatrace.com/
-      # Optional
-      metricSelector: 'MyCustomEvent:filter(eq("someProperty","someValue")):count:splitBy("dt.entity.process_group"):fold'
-      # Optional
-      query: 'timeseries { r = max(`my-metric`, scalar: true) }, from:now()-2d'
-      # Optional
-      from: now-2d
       threshold: "10"
       # Optional
       activationThreshold: "5"
+      # Optional
+      metricSelector: 'MyCustomEvent:filter(eq("someProperty","someValue")):count:splitBy("dt.entity.process_group"):fold'     
+      # Optional
+      from: now-2d
+      # Optional
+      query: 'timeseries { r = max(`my-metric`, scalar: true) }, from:now()-2d'
+      # Optional
+      queryTimeoutSeconds: "10"
+      # Optional
+      queryPollingWait: "1s"
+      # Optional
+      queryPollingTries: "5"
 ```
 
 **Parameter list:**
@@ -42,8 +48,13 @@ triggers:
   Some relevant aspects:
     - Query must return a single scalar named `r` that KEDA will use as metric, other fields will be ignored.
     - KEDA will poll 5 times the value with a second between tries, so the query needs to have a result within that window.
+- `queryTimeoutSeconds` - Timeout in seconds passed to fetch data on Dynatrace side (Default: `10`, Optional, Only applies with `query`)
+- `queryPollingWait` - Time between result polling tries (Default: `1s`, Optional, Only applies with `query`)
+- `queryPollingTries` - Total polling tries (Default: `5`, Optional, Only applies with `query`)
 - `threshold` - A threshold that is used as the `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the HPA configuration. (This value can be a float)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Optional, default `0`, can be a float)
+
+> NOTE: Modifying the values of `queryPollingWait` or `queryPollingTries` can increase the responsing time and the HPA Controller can register timeouts because of this. If your query requires longer times, you should evaluate options like [caching metrics (`useCachedMetrics`)](./../reference/scaledobject-spec.md#triggers) in addition to these parameters.
 
 ### Authentication Parameters
 
