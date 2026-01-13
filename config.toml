@@ -579,6 +579,10 @@ url = "https://www.pollinate.global"
 logo = "pollinate.gif"
 
 [[params.users]]
+url = "https://www.procore.com"
+logo = "procore.svg"
+
+[[params.users]]
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
