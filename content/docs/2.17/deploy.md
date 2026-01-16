@@ -29,23 +29,29 @@ If you’re new to Helm, start by familiarizing yourself with basic Helm command
    helm repo update
     ```
 
-3. Install `keda` by running:
+2. Install `keda` by running:
 
     **Helm 3**
 
     ```sh
     helm install keda kedacore/keda --namespace keda --create-namespace
     ```
+
     This command installs KEDA in a dedicated namespace (keda). You can customize the installation by passing additional configuration values with `--set`, allowing you to adjust parameters like replica counts, scaling metrics, or logging levels. Once installed, verify the deployment by checking the KEDA namespace for running pods:
+
     ```sh
     kubectl get pods -n keda
     ```
+
 To deploy KEDA's Custom Resource Definitions (CRDs) separately from the Helm chart, follow these steps:
+
 1. **Download the CRD YAML File**: Visit the [KEDA GitHub releases page](https://github.com/kedacore/keda/releases) and locate the `keda-2.xx.x-crds.yaml` file corresponding to your desired version.
 2. **Apply the CRDs to Your Cluster**: Use `kubectl` to apply the CRD definitions:
+
     ```sh
     kubectl apply -f keda-2.xx.x-crds.yaml
     ```
+
     Replace `2.xx.x` with the specific version number you downloaded.
 
 By deploying the CRDs separately, you can manage them independently of the Helm chart, providing flexibility in your deployment process.
@@ -60,10 +66,13 @@ To uninstall KEDA, use the following Helm command:
 ```sh
 helm uninstall keda –namespace keda
 ```
+
 This command removes KEDA from your cluster while retaining your configuration files in case you need to reinstall later. If you also want to delete the keda namespace, run:
+
 ```sh
 kubectl delete namespace keda
 ```
+
 Uninstalling with Helm is efficient and keeps your cluster clean, especially if you're testing configurations or upgrading to a new KEDA version.
 
 You can remove finalizers with the following command:
@@ -72,16 +81,19 @@ You can remove finalizers with the following command:
 kubectl patch scaledobject <resource-name> -p '{"metadata":{"finalizers":null}}' --type=merge
 kubectl patch scaledjob <resource-name> -p '{"metadata":{"finalizers":null}}' --type=merge
 ```
+
 Replace \<*resource-name*\> with the specific name of each resource. Removing finalizers ensures that these resources are fully removed, preventing any unintended orphaned resources in your cluster.
 
 ## Deploying with Operator Hub {#operatorhub}
 
 ### Prerequisites
+
 Before deploying KEDA through Operator Hub, ensure you have access to a Kubernetes marketplace that supports Operator Hub (for example, [OpenShift](https://docs.redhat.com/en) or an [Operator Lifecycle Manager](https://olm.operatorframework.io/docs/) (OLM)-enabled cluster). You'll also need the appropriate permissions to install operators in your cluster, as some environments may restrict access.
 
 If you're using OpenShift, you can access Operator Hub directly through the OpenShift Console. For other Kubernetes distributions, verify that the OLM is installed, as it manages the installation and lifecycle of operators from Operator Hub. Ensuring these prerequisites are met will allow for a smooth installation of KEDA from Operator Hub.
 
 ### Installing
+
 To deploy KEDA through Operator Hub, start by navigating to your cluster's Operator Hub interface. If you're using OpenShift, access Operator Hub directly from the OpenShift Console. For other Kubernetes environments, ensure the **Operator Lifecycle Manager (OLM)** is installed.
 
 Search for "KEDA" in Operator Hub, select the KEDA Operator, and click **Install**. Choose your preferred installation options, such as the target namespace, and confirm the installation. Once KEDA is installed, verify the deployment by checking that the KEDA Operator pod is running in the designated namespace.
@@ -123,18 +135,20 @@ Once the KEDA YAML manifests are downloaded, apply the files to your cluster wit
 
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3.yaml
 # Without admission webhooks
-kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0-core.yaml
+kubectl apply --server-side -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3-core.yaml
 ```
 
 Alternatively you can download the file and deploy it from the local path:
+
 ```sh
 # Including admission webhooks
-kubectl apply --server-side -f keda-2.17.0.yaml
+kubectl apply --server-side -f keda-2.17.3.yaml
 # Without admission webhooks
-kubectl apply --server-side -f keda-2.17.0-core.yaml
+kubectl apply --server-side -f keda-2.17.3-core.yaml
 ```
+
 The `--server-side` flag allows Kubernetes to manage complex resources, like CRDs and admission webhooks, directly on the server. This approach reduces conflicts and ensures configurations are efficiently merged. For more information, see [this issue](https://github.com/kedacore/keda/issues/4740).
 
 > 💡 **NOTE:**  If you prefer working directly from the [KEDA GitHub repository](https://github.com/kedacore/keda), you can find the necessary YAML files in the `/config` directory. Cloning the repository allows you to manage and deploy KEDA configurations locally:
@@ -142,41 +156,49 @@ The `--server-side` flag allows Kubernetes to manage complex resources, like CRD
 > ```sh
 > git clone https://github.com/kedacore/keda && cd keda
 > 
-> VERSION=2.17.0 make deploy
+> VERSION=2.17.3 make deploy
 > ```
+>
 > This approach gives you full access to KEDA’s configuration files, allowing you to explore, modify, or tailor the YAML manifests before deploying. Using make deploy with the specified version will install KEDA directly from your local setup, offering flexibility for customization.
 
 After applying the YAML, verify the deployment by checking the KEDA namespace:
+
 ```sh
 kubectl get pods -n keda
 ```
+
 Deploying KEDA this way provides control over configuration while leveraging server-side merging for smoother updates.
+
 ### Uninstalling
 
 If you installed KEDA using the released YAML files, you can uninstall it by running the following commands:
 
 ```sh
 # Including admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3.yaml
 # Without admission webhooks
-kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.0/keda-2.17.0-core.yaml
+kubectl delete -f https://github.com/kedacore/keda/releases/download/v2.17.3/keda-2.17.3-core.yaml
 ```
 
 If you downloaded the files locally, uninstall with:
 
 ```sh
 # Including admission webhooks
-kubectl delete -f keda-2.17.0.yaml
+kubectl delete -f keda-2.17.3.yaml
 # Without admission webhooks
-kubectl delete -f keda-2.17.0-core.yaml
+kubectl delete -f keda-2.17.3-core.yaml
 ```
+
 For users who cloned the KEDA GitHub repository, navigate to the cloned directory and use:
+
 ```sh
-VERSION=2.17.0 make undeploy
+VERSION=2.17.3 make undeploy
 ```
 
 ## Deploying KEDA on MicroK8s {#microk8s}
+
 ### Prerequisites
+
 Before deploying KEDA on [**MicroK8s**](https://microk8s.io/), ensure that you have MicroK8s installed and running on your local machine. MicroK8s is a lightweight Kubernetes distribution, ideal for testing and local development. You’ll need `kubectl` configured to interact with your MicroK8s cluster, which is typically included with MicroK8s but may require enabling (`microk8s kubectl`).
 
 Additionally, confirm that your MicroK8s setup includes the **Helm 3** and **DNS** add-ons:
@@ -189,15 +211,19 @@ Additionally, confirm that your MicroK8s setup includes the **Helm 3** and **DNS
 To install KEDA on MicroK8s, start by enabling necessary add-ons and then deploy KEDA using the Helm 3 add-on.
 
 1. Enable Helm and DNS Add-ons (if not already enabled):
+
    ```sh
    microk8s enable dns helm3use
    ```
+
 2. Add the KEDA Helm Repository:
+
    ```sh
    microk8s helm3 repo add kedacore https://kedacore.github.io/charts
    
    microk8s helm3 repo update
    ```
+
 3. Install KEDA Using Helm.
 
    Deploy KEDA into your MicroK8s cluster by running:
@@ -205,6 +231,7 @@ To install KEDA on MicroK8s, start by enabling necessary add-ons and then deploy
    ```sh
    microk8s helm3 install keda kedacore/keda --namespace keda --create-namespace
    ```
+
 4. Verify the Installation.
 
    Check that KEDA is running by listing the pods in the keda namespace:
@@ -212,6 +239,7 @@ To install KEDA on MicroK8s, start by enabling necessary add-ons and then deploy
    ```sh
    microk8s kubectl get pods -n keda
    ```
+
 This approach allows you to quickly set up KEDA on MicroK8s, providing a streamlined environment for local testing and development.
 
 ### Uninstalling
@@ -221,14 +249,18 @@ To uninstall KEDA from your MicroK8s environment, disable the KEDA add-on:
 ```sh
 microk8s disable keda
 ```
+
 This command removes KEDA and its associated components from your cluster, ensuring a clean uninstallation.
 If you deployed KEDA using Helm, uninstall it with:
+
 ```sh
 microk8s helm3 uninstall keda --namespace keda
 ```
+
 After running these commands, KEDA will be fully removed from your MicroK8s setup.
 
 ## Getting Started with KEDA: A Simple Example
+
 To help you begin with KEDA, we'll walk through a straightforward example that demonstrates its event-driven scaling capabilities. This "Hello KEDA" exercise will guide you through setting up a basic application that scales based on external events, providing a hands-on introduction to KEDA's functionality.
 
 Before starting, ensure you have the following:
@@ -242,7 +274,8 @@ Before starting, ensure you have the following:
 We'll deploy a simple application that responds to HTTP requests. For this example, we'll use a basic Python HTTP server.
 
 1. **Create a Deployment Manifest**: Save the following YAML as `deployment.yaml`:
-   ```sh
+
+   ```yaml
    apiVersion: apps/v1
    kind: Deployment
    metadata:
@@ -252,27 +285,33 @@ We'll deploy a simple application that responds to HTTP requests. For this examp
       selector:
          matchLabels:
             app: http-app
-   template:
-      metadata:
-         labels:
-            app: http-app
-      spec:
-         containers:
-         - name: http-app
-            image: hashicorp/http-echo
-            args:
-               - "-text=Hello, KEDA!"
-            ports:
-            - containerPort: 5678
+      template:
+         metadata:
+            labels:
+               app: http-app
+         spec:
+            containers:
+            - name: http-app
+              image: hashicorp/http-echo
+              args:
+                 - "-text=Hello, KEDA!"
+              ports:
+                 - containerPort: 5678
       ```
+
 2. **Apply the Deployment**: Run the following command to create the deployment:
+
    ```sh
    kubectl apply -f deployment.yaml
    ```
+
 ### Step 2: Expose the Application
+
 To access the application, we'll create a Service.
+
 1. **Create a Service Manifest**: Save the following YAML as service.yaml:
-   ```sh
+
+   ```yaml
    apiVersion: v1
    kind: Service
    metadata:
@@ -282,22 +321,30 @@ To access the application, we'll create a Service.
          app: http-app
       ports:
          - protocol: TCP
-         port: 80
-         targetPort: 5678
+           port: 80
+           targetPort: 5678
       type: LoadBalancer
    ```
+
 2. **Apply the Service**: Run the following command to create the service:
+
    ```sh
    kubectl apply -f service.yaml
    ```
+
 3. **Retrieve the External IP**: After a few moments, retrieve the external IP address:
+
   ```sh
   kubectl get service http-app-service
    ```
+
 ### Step 3: Create a ScaledObject
+
 We'll create a `ScaledObject` to enable KEDA to scale our deployment based on HTTP request rates.
+
 1. **Create a ScaledObject Manifest**: Save the following YAML as `scaledobject.yaml`:
-   ```SH
+
+   ```yaml
    apiVersion: keda.sh/v1alpha1
    kind: ScaledObject
    metadata:
@@ -309,44 +356,47 @@ We'll create a `ScaledObject` to enable KEDA to scale our deployment based on HT
       maxReplicaCount: 10
       triggers:
          - type: prometheus
-            metadata:
-               serverAddress: http://prometheus-server.default.svc.cluster.local
-     9090
-            metricName: http_requests_total
-            threshold: '5'
-            query: sum(rate(http_requests_total[1m])) 
+           metadata:
+              serverAddress: http://prometheus-server.default.svc.cluster.local:9090
+              threshold: '5'
+              query: sum(rate(http_requests_total[1m])) 
    ```
+
    > 💡 **NOTE:** This example assumes you have Prometheus installed in your cluster and scraping metrics from your application. Adjust the `serverAddress` and `query` as needed.
 2. **Apply the ScaledObject**: Run the following command to create the ScaledObject:
+
    ```sh
    kubectl apply -f scaledobject.yaml   
    ```
+
 ### Step 4: Test the Scaling Behavior
+
 We'll create a `ScaledObject` to enable KEDA to scale our deployment based on HTTP request rates.
 To observe KEDA's scaling in action:
+
 1. **Generate Load**: Use a tool like curl or hey to send multiple requests to your application's external IP:
+
    ```sh
    hey -z 1m -c 10 http://<EXTERNAL-IP>
    ```
+
    Replace `<EXTERNAL-IP>` with the external IP address obtained earlier.
 2. **Monitor Scaling:** Run the following command to watch the scaling behavior:
+
    ```sh
    kubectl get pods -w
    ```
+
    You should see the number of pods increase as the load increases and decrease when the load subsides.
+
 ### Cleanup
+
 After completing the exercise, clean up the resources:
- ```sh
+
+   ```sh
    kubectl delete -f scaledobject.yaml
    kubectl delete -f service.yaml
    kubectl delete -f deployment.yaml
    ```
+
 This example provides a hands-on introduction to KEDA's event-driven scaling capabilities. By following these steps, you can see how KEDA integrates with Kubernetes to scale applications based on external events.
-
-
-
-
-
-
-
-   

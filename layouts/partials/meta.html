@@ -1,13 +1,14 @@
-{{ $url         := .Permalink }}
-{{ $canonical   := replaceRE "/docs/\\d.\\d" "/docs/latest" $url }}
-{{ $title       := cond .IsHome site.Title (printf "%s | %s" site.Title .Title) }}
-{{ $type        := cond .IsHome "website" "article" }}
-{{ $desc        := cond .IsHome site.Params.description .Description }}
-{{ $twitter     := site.Params.twitter_handle }}
-{{ $img         := "img/logos/keda-icon-color.png" | absURL }}
-{{ $imgAlt      := printf "%s color logo" site.Title }}
-{{ $locale      := site.Params.locale }}
-{{ $version := index (split .File.Path "/") 1 }}
+{{ $url           := .Permalink }}
+{{ $latestVersion := index site.Params.versions.docs 0 -}}
+{{ $canonical     := replaceRE "/docs/\\d.\\d+" (printf "/docs/%s" $latestVersion) $url }}
+{{ $title         := cond .IsHome site.Title (printf "%s | %s" site.Title .Title) }}
+{{ $type          := cond .IsHome "website" "article" }}
+{{ $desc          := cond .IsHome site.Params.description .Description }}
+{{ $twitter       := site.Params.twitter_handle }}
+{{ $img           := "img/logos/keda-icon-color.png" | absURL }}
+{{ $imgAlt        := printf "%s color logo" site.Title }}
+{{ $locale        := site.Params.locale }}
+{{ $version       := index (split .File.Path "/") 1 }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,6 +17,18 @@
 {{ end -}}
 
 <link rel="canonical" href="{{ $canonical }}">
+
+{{/*
+When $version is lower than $latestVersion, we include
+the extra meta "noindex" to remove the page from search engines.
+Only current version and preview version can be indexed.
+*/}}
+{{ if and (ne $version "") (eq .Section "docs") }}
+{{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}
+{{ if $isOldVersion }}
+<meta name="robots" content="noindex">
+{{ end }}
+{{ end }}
 
 {{/* Twitter Card metadata */}}
 <meta name="twitter:card" content="summary">

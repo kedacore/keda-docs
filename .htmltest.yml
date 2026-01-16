@@ -1,11 +1,12 @@
 DirectoryPath: public
+EnforceHTTPS: true
+EnforceHTML5: true
 IgnoreDirectoryMissingTrailingSlash: true
 CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
-IgnoreInternalURLs:
-  # Temporal ignores
-  - /docs/2.16/scalers/nsq/
+IgnoreURLs:
+  # Temporal ignores
   # Deprecated and removed resources
-
   # Renamed pages
+  - /docs/2.18/scalers/splunk-observability.md/

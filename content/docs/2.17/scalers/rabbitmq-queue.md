@@ -28,6 +28,7 @@ triggers:
     usernameFromEnv: RABBITMQ_USERNAME # Optional. You can use this instead of TriggerAuthentication
     passwordFromEnv: RABBITMQ_PASSWORD # Optional. You can use this instead of TriggerAuthentication
     unsafeSsl: true
+    timeout: "1000" # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**
@@ -43,7 +44,7 @@ triggers:
 - `useRegex` - This parameter allows to use regex (in `queueName` parameter) to select queue instead of full name. (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `pageSize` - This parameter allows setting page size. (Default: `100`, Optional, Only applies when `useRegex` is `true`)
 - `operation` - Operation that will be applied to compute the number of messages in case of `useRegex` enabled. Either `sum` (default),`max`, or `avg`. (Optional)
-- `timeout` - Timeout **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
+- `timeout` - Timeout in milliseconds **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional, Only applies to hosts that use the `http` protocol)
 - `excludeUnacknowledged` - Set to `true` to specify that the `QueueLength` value should exclude unacknowledged messages (Ready messages only). (Values: `true`, `false`, Default: `false`, Optional, Only applies to hosts that use the `http` protocol)
 - `unsafeSsl` - Whether to allow unsafe SSL (Values: `true`, `false`, Default: `false` )
 

@@ -29,7 +29,7 @@ alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
 [params.versions]
-docs = ["2.16", "2.15", "2.14", "2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = ["2.18", "2.17", "2.16", "2.15", "2.14", "2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
 
 # Site fonts. For more options see https://fonts.google.com.
 [[params.fonts]]
@@ -127,7 +127,7 @@ pre = "fas fa-play-circle"
 weight = 2
 
 [[menu.buttons]]
-url = "/docs/concepts/#architecture"
+url = "/docs/concepts/#keda-architecture"
 name = "Architecture"
 pre = "fas fa-project-diagram"
 weight = 3
@@ -207,7 +207,7 @@ parent = "Concepts"
 weight = 6
 
 [[menu.docs]]
-url = "/docs/concepts/#architecture"
+url = "/docs/concepts/#keda-architecture"
 name = "Architecture"
 parent = "docs"
 weight = 3
@@ -366,7 +366,7 @@ parent = "project"
 weight = 9
 
 [[menu.main]]
-url = "https://github.com/kedacore/governance/blob/main/MAINTAINERS.md"
+url = "https://github.com/kedacore/governance/blob/main/MEMBERS.md"
 name = "Maintainers"
 parent = "project"
 weight = 10
@@ -579,6 +579,10 @@ url = "https://www.pollinate.global"
 logo = "pollinate.gif"
 
 [[params.users]]
+url = "https://www.procore.com"
+logo = "procore.svg"
+
+[[params.users]]
 url = "https://www.theproindia.com"
 logo = "pro-logo.svg"
 
@@ -645,6 +649,10 @@ logo = "unitary.png"
 [[params.users]]
 url = "https://vitc.gmbh"
 logo = "vitc.png"
+
+[[params.users]]
+url = "https://www.wakacje.pl/"
+logo = "wakacje.png"
 
 [[params.users]]
 url = "https://www.wingie.com"
