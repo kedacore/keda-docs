@@ -104,6 +104,9 @@ spec:
   - parameter: {scaledObject-parameter-name}                              # Required.
     name: {env-name}                                                      # Required.
     containerName: {container-name}                                       # Optional. Default: scaleTargetRef.envSourceContainerName of ScaledObject
+  filePath:                                                               # Optional. Define only for ClusterTriggerAuthentication; not supported for TriggerAuthentication.
+  - parameter: {scaledObject-parameter-name}                              # Required.
+    path: {relative-path-to-file}                                         # Required. Relative to --filepath-auth-root-path.
   hashiCorpVault:                                                         # Optional.
     address: {hashicorp-vault-address}                                    # Required.
     namespace: {hashicorp-vault-namespace}                                # Optional. Default is root namespace. Useful for Vault Enterprise
@@ -240,6 +243,30 @@ secretTargetRef:                          # Optional.
 ```
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
+
+### File(s)
+
+> **Note:** This feature requires the KEDA operator to be configured with `--filepath-auth-root-path`.
+
+You can read authentication parameters from files mounted in the KEDA operator pod. This is useful when credentials are provided via init containers or sidecars that write to a shared volume.
+
+The `filePath` option is only available for `ClusterTriggerAuthentication`, not for namespaced `TriggerAuthentication`.
+
+```yaml
+filePath:                                 # Optional.
+  - parameter: apiKey                     # Required - Defined by the scale trigger
+    path: credentials/api-key             # Required - Path relative to filepath-auth-root-path
+```
+
+**Security constraints:**
+- The path is validated to ensure it resolves within the configured `--filepath-auth-root-path`
+- Access to sensitive paths like `/var/run/secrets/kubernetes.io/serviceaccount/` is blocked
+- Only `ClusterTriggerAuthentication` can use this authentication method
+
+**Assumptions:**
+- The KEDA operator must be started with `--filepath-auth-root-path=/path/to/allowed/files`
+- The credential file exists at `{filepath-auth-root-path}/{path}`
+- The file contains the raw credential value
 
 ### Bound service account token(s)
 
