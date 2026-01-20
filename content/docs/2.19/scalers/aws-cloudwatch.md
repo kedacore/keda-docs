@@ -31,6 +31,8 @@ triggers:
     ignoreNullValues: "false"
     # Required: region
     awsRegion: "eu-west-1"
+    # Optional: Specify metric source AWS Account ID when using CloudWatch cross-account observability
+    awsAccountId: ""
     # Optional: AWS endpoint url
     awsEndpoint: ""
     # Optional: AWS Access Key ID, can use TriggerAuthentication as well
@@ -54,6 +56,7 @@ triggers:
 **Parameter list:**
 
 - `awsRegion` - AWS Region for the AWS Cloudwatch.
+- `awsAccountId` - Specify metric source AWS Account ID when using CloudWatch cross-account observability
 - `awsEndpoint` - Endpoint URL to override the default AWS endpoint. (Default: `""`, Optional)
 - `namespace` - AWS Cloudwatch namespace where the metric is located (Optional, Required when `expression` is not specified)
 - `metricName` - AWS Cloudwatch metric name (Optional, Required when `expression` is not specified)
