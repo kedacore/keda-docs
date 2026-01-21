@@ -99,6 +99,7 @@ triggers:
 - `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
+> 💡 **NOTE:** Datadog may return HTTP 422 (Unprocessable Entity) or empty metric series. Both scenarios are treated as "no data" and will use `metricUnavailableValue` if set, otherwise an error is returned to the HPA.
 
 ### Authentication
 
@@ -216,6 +217,7 @@ triggers:
 - `timeout` - Timeout (in a Duration string format) **for this specific trigger**. This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
 
 > 💡 **NOTE:** The `type` parameter is deprecated in favor of the global `metricType` and will be removed in a future release. Users are advised to use `metricType` instead.
+> 💡 **NOTE:** Datadog may return HTTP 422 (Unprocessable Entity) or empty metric series. Both scenarios are treated as "no data" and will use `metricUnavailableValue` if set, otherwise an error is returned to the HPA.
 
 ### Authentication
 
