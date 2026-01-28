@@ -7,7 +7,7 @@ weight = 100
 ## Subscribing to events with `CloudEventSource`
 `CloudEventSource` resource can be used in KEDA for subscribing to events that are emitted to the user's defined CloudEvent sink.
 
-> 📝 Event will be emitted to both Kubernetes Events and CloudEvents Destination if CloudEventSource resource is created.
+> 📝 When a CloudEventSource resource is created, KEDA continues to emit Kubernetes Events and will additionally emit CloudEvents for the supported event types listed in this document.
 
 Here is a the schema of the `CloudEventSource` CRD:
 
@@ -110,17 +110,24 @@ eventSubscription: #Optional. Submit included/excluded event types will filter e
 ```
 
 ## Supported Event List
-| Event Type                    | Scenario Description                                                                                                        | 
-|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------| 
-| `keda.scaledobject.ready.v1`  | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
-| `keda.scaledobject.failed.v1` | If the check validation for a ScaledObject fails                                                                            |  
-| `keda.scaledobject.removed.v1`| When a ScaledObject is deleted |       
-| `keda.scaledjob.ready.v1`| On the first time a ScaledJob is ready, or if the previous ready condition status of the object was `Unknown` or `False` |  
-| `keda.scaledjob.failed.v1`| If the check validation for a ScaledJob fails                                    
-| `keda.scaledjob.removed.v1`| When a ScaledJob is deleted |  
-| `keda.authentication.triggerauthentication.created.v1` | On the first time a TriggerAuthentication is created |
-| `keda.authentication.triggerauthentication.updated.v1` | When a TriggerAuthentication is updated | 
-| `keda.authentication.triggerauthentication.removed.v1` | When a TriggerAuthentication is deleted |  
-| `keda.authentication.clustertriggerauthentication.created.v1`|  On the first time a ClusterTriggerAuthentication is created |
-| `keda.authentication.clustertriggerauthentication.updated.v1`| When a ClusterTriggerAuthentication is updated | 
-| `keda.authentication.clustertriggerauthentication.removed.v1`| When a ClusterTriggerAuthentication is deleted |  
+| Event Type                                 | Scenario Description                                                                                                          |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `keda.scaledobject.ready.v1`               | On the first time a ScaledObject is ready, or if the previous ready condition status of the object was `Unknown` or `False`   |
+| `keda.scaledobject.failed.v1`              | If the check validation for a ScaledObject fails                                                                              |
+| `keda.scaledobject.removed.v1`             | When a ScaledObject is deleted                                                                                                |
+| `keda.scaledobject.paused.v1`              | When a ScaledObject is paused                                                                                                 |
+| `keda.scaledobject.unpaused.v1`            | When a ScaledObject is unpaused                                                                                               |
+| `keda.scaledjob.ready.v1`                  | On the first time a ScaledJob is ready, or if the previous ready condition status of the object was `Unknown` or `False`      |
+| `keda.scaledjob.failed.v1`                 | If the check validation for a ScaledJob fails                                                                                 |
+| `keda.scaledjob.removed.v1`                | When a ScaledJob is deleted                                                                                                   |
+| `keda.scaledjob.paused.v1`                 | When a ScaledJob is paused                                                                                                    |
+| `keda.scaledjob.unpaused.v1`               | When a ScaledJob is unpaused                                                                                                  |
+| `keda.scaledjob.rolloutcleanup.started.v1` | When KEDA starts cleaning up Jobs owned by the previous version of a ScaledJob                                                |
+| `keda.scaledjob.rolloutcleanup.completed.v1` | When KEDA completes cleanup of Jobs owned by the previous version of a ScaledJob                                            |
+| `keda.scaledjob.rolloutcleanup.failed.v1`  | When KEDA fails to delete a Job owned by the previous version of a ScaledJob                                                  |
+| `keda.authentication.triggerauthentication.created.v1` | On the first time a TriggerAuthentication is created                                                              |
+| `keda.authentication.triggerauthentication.updated.v1` | When a TriggerAuthentication is updated                                                                           |
+| `keda.authentication.triggerauthentication.removed.v1` | When a TriggerAuthentication is deleted                                                                           |
+| `keda.authentication.clustertriggerauthentication.created.v1` | On the first time a ClusterTriggerAuthentication is created                                                |
+| `keda.authentication.clustertriggerauthentication.updated.v1` | When a ClusterTriggerAuthentication is updated                                                             |
+| `keda.authentication.clustertriggerauthentication.removed.v1` | When a ClusterTriggerAuthentication is deleted                                                             |
