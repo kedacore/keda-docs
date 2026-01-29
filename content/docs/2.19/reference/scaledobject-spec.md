@@ -32,7 +32,7 @@ spec:
   fallback:                                                 # Optional. Section to specify fallback options
     failureThreshold: 3                                     # Mandatory if fallback section is included
     replicas: 6                                             # Mandatory if fallback section is included
-    behavior: {kind-of-behavior}                            # Optional. Default: "static"
+    behavior: {kind-of-behavior}                            # Optional. Default: "static". Options: static, currentReplicas, currentReplicasIfHigher, currentReplicasIfLower, triggerScoped
   advanced:                                                 # Optional. Section to specify advanced options
     restoreToOriginalReplicaCount: true/false               # Optional. Default: false
     horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
@@ -184,6 +184,18 @@ When using `behavior` with value `currentReplicasIfLower`, the current number of
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 3 replicas when I have `fallback.replicas` set to 6, but the current replicas are 3, with a `behavior` 'currentReplicasILower'.
 
+#### `triggerScoped` behavior
+When using `behavior` with value `triggerScoped`, individual triggers are evaluated independently and can fail over gracefully within a formula-based scaling approach. This behavior **requires** `scalingModifiers.formula` to be defined.
+
+When a trigger exceeds `failureThreshold` consecutive failures, KEDA passes `nil` to the formula for that trigger. The formula can then use the nil-coalescing operator (`??`) to fall back to alternative triggers or static values.
+
+**Example:** When using a formula `"primary ?? secondary ?? 5"`:
+- If the primary trigger becomes unavailable 3 times in a row (exceeding `failureThreshold: 3`), KEDA passes `nil` for the primary trigger
+- The formula evaluates to the secondary trigger value
+- If both triggers fail, the formula falls back to the static value of 5 replicas
+
+See the [Multi-Trigger Failover](#trigger-fallback-multi-trigger-failover) section below for detailed examples.
+
 ## advanced
 
 ### restoreToOriginalReplicaCount
@@ -291,74 +303,198 @@ Trigger fields:
 
 ### Trigger Fallback (Multi-Trigger Failover)
 
-Trigger-level fallback enables automatic failover to a secondary trigger when the primary trigger becomes unhealthy.
+Formula-based multi-trigger failover enables automatic failover between multiple triggers using the `triggerScoped` fallback behavior. When a trigger exceeds the failure threshold, KEDA passes `nil` to the scaling formula, allowing graceful failover to backup triggers or static values.
+
+#### Configuration
 
 ```yaml
 fallback:
-  behavior: string              # Must be "failover" for multi-trigger failover
-  failoverThresholds:
-    failAfter: int32            # Consecutive failures before switching to secondary
-    recoverAfter: int32         # Failures below which primary is considered recovered
+  behavior: triggerScoped       # Enable formula-based multi-trigger failover
+  failureThreshold: 3           # Number of consecutive failures before trigger returns nil
+  replicas: 5                   # Static fallback if all triggers fail
+
+advanced:
+  scalingModifiers:
+    formula: "primary ?? secondary ?? 5"  # Nil-coalescing formula
+    target: "1"                           # Target metric value
 ```
 
 **Parameters:**
 
 | Parameter | Type | Required | Description | Example |
 |-----------|------|----------|-------------|---------|
-| `behavior` | string | Yes | Must be `"failover"` | `"failover"` |
-| `failoverThresholds.failAfter` | int32 | Yes | Number of consecutive failures before switching to secondary trigger | `3` |
-| `failoverThresholds.recoverAfter` | int32 | Yes | Number of failures below which primary trigger is considered recovered | `5` |
+| `fallback.behavior` | string | Yes | Must be `triggerScoped` for formula-based failover | `triggerScoped` |
+| `fallback.failureThreshold` | int32 | Yes | Consecutive failures before trigger returns `nil` | `3` |
+| `fallback.replicas` | int32 | Yes | Static fallback replica count if all triggers fail | `5` |
+| `scalingModifiers.formula` | string | Yes | Formula using nil-coalescing (`??`) for failover logic | `"primary ?? secondary ?? 5"` |
+| `scalingModifiers.target` | string | Yes | Target metric value for scaling calculations | `"1"` |
 
 **Requirements:**
 
-- Must be configured on the **primary trigger** (index 0)
-- Requires exactly **2 triggers** in the ScaledObject
-- Secondary trigger (index 1) provides metrics during failover
+- `fallback.behavior` must be set to `triggerScoped`
+- `scalingModifiers.formula` must be defined with nil-coalescing operator (`??`)
+- Each trigger used in the formula must have a unique `name` field
+- The global `failureThreshold` applies to all triggers
 
-**Status Fields:**
+#### How It Works
 
-The ScaledObject status includes:
+**Trigger Health Tracking:**
+- KEDA tracks consecutive failures for each trigger independently
+- When failures ≥ `failureThreshold`, the trigger returns `nil` to the formula
+- When a trigger recovers, it resets to healthy and returns metric values
+
+**Formula Evaluation:**
+- The nil-coalescing operator (`??`) selects the first non-nil value
+- `trigger1 ?? trigger2 ?? N` evaluates left-to-right:
+  - If `trigger1` is healthy, use its value
+  - If `trigger1` is `nil`, try `trigger2`
+  - If `trigger2` is also `nil`, use static value `N`
+
+#### Status Fields
+
+The ScaledObject status includes health tracking for each trigger:
 
 ```yaml
 status:
-  activeTriggerIndex: 0 | 1     # Which trigger is currently active
   health:
-    "s0-<trigger-type>-<metric>":
+    "<metric-name>":
       numberOfFailures: int32     # Consecutive failure count
       status: "Happy" | "Failing" # Current health status
 ```
 
-**Events:**
+#### Events
 
-- `KEDAScalerFailedOver`: Emitted when switching from primary (0) to secondary (1)
-- `KEDAScalerRecovered`: Emitted when recovering from secondary (1) to primary (0)
+KEDA emits events for observability:
 
-**Example:**
+- `ScaledObjectTriggerExcluded`: Trigger exceeds failure threshold and returns `nil`
+- `ScaledObjectTriggerRestored`: Previously failed trigger recovers and returns values
+
+#### Basic Example: Primary + Secondary Failover
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: my-scaledobject
+  name: app-with-failover
 spec:
   scaleTargetRef:
     name: my-deployment
+
+  triggers:
+    # Primary trigger - Prometheus
+    - type: prometheus
+      name: primary
+      metadata:
+        serverAddress: http://prometheus:9090
+        query: sum(rate(http_requests_total[2m]))
+        threshold: "100"
+
+    # Secondary trigger - CPU fallback
+    - type: cpu
+      name: secondary
+      metadata:
+        type: Utilization
+        value: "80"
+
+  fallback:
+    behavior: triggerScoped
+    failureThreshold: 3
+    replicas: 5
+
+  advanced:
+    scalingModifiers:
+      formula: "primary ?? secondary ?? 5"
+      target: "1"
+```
+
+**Behavior:**
+- **Normal operation**: Uses Prometheus metrics for scaling
+- **Primary fails** (after 3 failures): Switches to CPU utilization
+- **Both fail**: Falls back to 5 replicas
+
+#### Three-Tier Failover Example
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: multi-tier-failover
+spec:
+  scaleTargetRef:
+    name: my-deployment
+
   triggers:
     - type: metrics-api
-      name: primary-endpoint
+      name: tier1
       metadata:
-        url: "https://primary.example.com/metrics"
-        targetValue: "10"
-      fallback:
-        behavior: "failover"
-        failoverThresholds:
-          failAfter: 3
-          recoverAfter: 5
-    - type: metrics-api
-      name: secondary-endpoint
+        url: http://external-metrics/api/queue-depth
+        targetValue: "50"
+
+    - type: prometheus
+      name: tier2
       metadata:
-        url: "https://secondary.example.com/metrics"
-        targetValue: "10"
+        serverAddress: http://prometheus:9090
+        query: avg(queue_depth)
+        threshold: "50"
+
+    - type: cpu
+      name: tier3
+      metadata:
+        type: Utilization
+        value: "70"
+
+  fallback:
+    behavior: triggerScoped
+    failureThreshold: 3
+    replicas: 10
+
+  advanced:
+    scalingModifiers:
+      formula: "tier1 ?? tier2 ?? tier3 ?? 10"
+      target: "1"
+```
+
+**Failover Chain:**
+1. **External API** (most accurate)
+2. **Prometheus** (reliable fallback)
+3. **CPU** (always available)
+4. **Static 10 replicas** (ultimate fallback)
+
+#### Advanced Formula Patterns
+
+**Weighted Failover:**
+```yaml
+formula: "(primary ?? 0) * 0.7 + (secondary ?? 0) * 0.3"
+```
+Blends both triggers when healthy, gracefully degrades when one fails.
+
+**Min/Max Protection:**
+```yaml
+formula: "max(min(primary ?? secondary ?? 50, 100), 10)"
+```
+Ensures replicas stay between 10-100 during failover.
+
+**Conditional Scaling:**
+```yaml
+formula: "primary > 100 ? primary : (secondary ?? 50)"
+```
+Use primary if above threshold, otherwise fall back to secondary or 50.
+
+#### Observability
+
+**Check trigger health:**
+```bash
+kubectl describe scaledobject <name>
+```
+
+**View events:**
+```bash
+kubectl get events --field-selector involvedObject.name=<scaledobject-name>
+```
+
+**Monitor logs:**
+```bash
+kubectl logs -n keda deployment/keda-operator | grep "excluded triggers"
 ```
 
 For more details and examples, see [Multi-Trigger Failover](../concepts/scaling-deployments.md#multi-trigger-failover).
