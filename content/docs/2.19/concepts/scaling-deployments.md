@@ -45,12 +45,11 @@ This feature is not supported for `cpu`, `memory` or `cron` scaler.
 
 ## Pausing autoscaling
 
-It can be useful to instruct KEDA to pause the autoscaling of objects, to do to cluster maintenance or to avoid resource starvation by removing non-mission-critical workloads.
+It can be useful to instruct KEDA to pause the autoscaling of objects, to do cluster maintenance or to avoid resource starvation by removing non-mission-critical workloads.
 
 This is preferable to deleting the resource because it removes the instances it is running from operation without touching the applications themselves. When ready, you can then reenable scaling.
 
 You can pause autoscaling by adding this annotation to your `ScaledObject` definition:
-
 
 ```yaml
 metadata:
@@ -61,9 +60,9 @@ metadata:
 
 The presence of these annotations will pause autoscaling no matter what number of replicas is provided.
 
-The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and use the current instance count while the annotation `autoscaling.keda.sh/paused-replicas: "<number>"` will scale your current workload to specified amount of replicas and pause autoscaling. You can set the value of replicas for an object to be paused to any arbitrary number.
+The annotation `autoscaling.keda.sh/paused` will pause scaling immediately and use the current instance count while the annotation `autoscaling.keda.sh/paused-replicas: "<number>"` will scale your current workload to specified amount of replicas and pause autoscaling. You can set the value of replicas for an object to be paused to any arbitrary number. Setting `autoscaling.keda.sh/paused-replicas` to an empty string (`''`) will cause the annotation to be ignored.
 
-Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified count in `paused-replicas` and then pause autoscaling.
+Typically, either one or the other is being used given they serve a different purpose/scenario. However, if both `paused` and `paused-replicas` are set, KEDA will scale your current workload to the number specified in `paused-replicas` and then pause autoscaling. If `paused-replicas` is set to an empty string, it will be ignored and only the `paused` annotation will take effect.
 
 To unpause (reenable) autoscaling again, remove all paused annotations from the `ScaledObject` definition. If you paused with `autoscaling.keda.sh/paused`, you can unpause by setting the annotation to `false`.
 
@@ -87,7 +86,7 @@ metadata:
 
 When the annotation is set, KEDA will update the generated HPA to disable scale out (via setting the HPA's Scale Up Select Policy to Disabled) and if the service has scale to zero configured, will block scale from zero. When the annotation is unset, the scale up behavior on the HPA will be restored to its original configuration and, if configured, scale up from zero will be unblocked. 
 
-If you want disable scaling in both directions, we recommend you use the `autoscaling.keda.sh/paused` as that will stop the scale loop and paused queries against the ScaledObject's configured scaler.
+If you want to disable scaling in both directions, we recommend you use `autoscaling.keda.sh/paused` as that will stop the scale loop and pause queries against the ScaledObject's configured scaler.
 
 ## Scaling Modifiers
 
