@@ -1,7 +1,7 @@
 {{ $compact  := .compact }}
 {{ $outlined := .outlined }}
 {{ range .btns }}
-<a class="button is-{{ .bg_color }}" href="{{ .url }}" target="_blank">
+<a class="button is-{{ .bg_color }}" href="{{ .url }}" target="_blank" aria-label="{{ .name }}">
   <span class="icon has-text-{{ .icon_color }}">
     <i class="{{ .icon }}"></i>
   </span>
