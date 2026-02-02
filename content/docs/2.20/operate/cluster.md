@@ -16,6 +16,7 @@ As a reference, this compatibility matrix shows supported k8s versions per KEDA 
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
+| v2.20 | TBD           |
 | v2.19 | v1.32 - v1.34 |
 | v2.18 | v1.31 - v1.33 |
 | v2.17 | v1.30 - v1.32 |
