@@ -330,7 +330,7 @@ spec:
 
                 sleep 10
 
-                echo "main continaer exited, stopping dind"
+                echo "main container exited, stopping dind"
                 exit 0
             env:
               - name: DOCKER_TLS_CERTDIR
