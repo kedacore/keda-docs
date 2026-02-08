@@ -128,6 +128,45 @@ This is an example of how role policy could look like:
 
 In this case, KEDA will use its own role to assume the workload role (and to use workload's role attached policies). This scenario is a bit more complex because we need to establish a trusted relationship between both roles and we need to grant to KEDA's role the permission to assume other roles.
 
+#### External ID Support
+
+When assuming roles across AWS accounts, you may need to provide an [External ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html) to prevent the [confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html). You can specify the external ID using an annotation on your TriggerAuthentication or ClusterTriggerAuthentication:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: aws-trigger-auth
+  annotations:
+    keda.sh/aws-role-external-id: "your-external-id-here"
+spec:
+  podIdentity:
+    provider: aws
+    roleArn: "arn:aws:iam::123456789012:role/cross-account-role"
+```
+
+When this annotation is set, KEDA will include the external ID in the `AssumeRole` API call. The target role's trust policy must include a condition requiring this external ID:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::KEDA_ACCOUNT:role/KEDA_ROLE_NAME"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "your-external-id-here"
+        }
+      }
+    }
+  ]
+}
+```
+
 This is an example of how KEDA's role policy could look like:
 
 ```json
