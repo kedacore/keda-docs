@@ -81,7 +81,7 @@ The scaler queries the GitLab API to count jobs in the configured scope:
 - **Project scope** (`projectID`): Queries the [project jobs API](https://docs.gitlab.com/api/jobs/#list-project-jobs) directly.
 - **Group scope** (`groupID`): First fetches all projects in the group (and subgroups if `includeSubgroups` is `true`), then queries each project's jobs.
 
-**Tag filtering**
+#### Tag filtering
 
 When `tagList` or `runUntagged` is configured, the scaler checks each job's tags to see if the runner could pick it up:
 
