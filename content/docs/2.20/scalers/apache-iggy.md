@@ -31,7 +31,6 @@ triggers:
     consumerGroupId: my-group
     lagThreshold: '5'
     activationLagThreshold: '3'
-    offsetResetPolicy: latest
     allowIdleConsumers: 'false'
     scaleToZeroOnInvalidOffset: 'false'
     excludePersistentLag: 'false'
@@ -48,7 +47,6 @@ triggers:
 - `consumerGroupId` - Name or numeric ID of the consumer group used for checking the offset on the topic and processing the related lag.
 - `lagThreshold` - Target value for the total lag (sum of all partition lags) to trigger scaling actions. (Default: `10`, Optional)
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-- `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of partitions on a topic, allowing for idle consumers. Cannot be `true` when `limitToPartitionsWithLag` or `ensureEvenDistributionOfPartitions` is `true`. (Default: `false`, Optional)
 - `scaleToZeroOnInvalidOffset` - This parameter controls what the scaler does when a partition doesn't have a valid offset. If `false` (the default), the scaler will keep a single consumer for that partition. If `true`, the consumers for that partition will be scaled to zero. (Default: `false`, Optional)
 - `excludePersistentLag` - When set to `true`, the scaler will exclude partition lag for partitions whose current offset has not changed since the previous polling cycle. This parameter is useful to prevent scaling due to partitions whose current offset message is unable to be consumed. If `false` (the default), the scaler will include all consumer lag in all partitions as per normal. (Default: `false`, Optional)
@@ -69,12 +67,9 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Apache 
 
 - `accessToken` - Personal access token for authentication.
 
-### New Consumers and Offset Reset Policy
+### New Consumer Groups
 
-When a new consumer group is created in Iggy, KEDA must determine how to handle the initial state where no offsets have been committed. The `offsetResetPolicy` parameter controls this behavior:
-
-- If the policy is set to `earliest` (a new consumer wants to replay everything in the topic from its beginning) and no offset is committed, the scaler will return a lag value of 1 to ensure at least one replica is running (or 0 if `scaleToZeroOnInvalidOffset` is `true`).
-- If the policy is set to `latest` (the new consumer will only consume new messages) and no offset is committed, the scaler will return a lag value of 1 to ensure the minimum number of replicas are running (or 0 if `scaleToZeroOnInvalidOffset` is `true`).
+When a new consumer group has no committed offsets, the scaler returns a lag of 1 per partition to ensure at least one replica is running. Set `scaleToZeroOnInvalidOffset` to `true` to return 0 instead.
 
 ### The `ensureEvenDistributionOfPartitions` Property
 
@@ -135,7 +130,6 @@ spec:
       consumerGroupId: my-group
       # Optional
       lagThreshold: "50"
-      offsetResetPolicy: latest
     authenticationRef:
       name: keda-trigger-auth-iggy-credential
 ```
@@ -180,7 +174,6 @@ spec:
       consumerGroupId: my-group
       # Optional
       lagThreshold: "50"
-      offsetResetPolicy: latest
     authenticationRef:
       name: keda-trigger-auth-iggy-credential
 ```
