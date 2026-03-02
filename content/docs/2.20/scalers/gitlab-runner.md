@@ -52,20 +52,6 @@ triggers:
 - `runUntagged` - Whether the runner can pick up jobs with no tags. When set to `true` without `tagList`, only untagged jobs are counted. When combined with `tagList`, both untagged jobs and tag-matching jobs are counted. (Values: `true`, `false`, Default: `false`, Optional)
 - `unsafeSsl` - Skip TLS certificate verification when connecting to the GitLab API. Useful for self-managed instances with self-signed certificates. (Values: `true`, `false`, Default: `false`, Optional)
 
-*Parameters from Environment Variables*
-
-You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`,
-the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `projectIDFromEnv: "GITLAB_PROJECT_ID"` will use the environment variable `GITLAB_PROJECT_ID` as the source for the `projectID` parameter.
-
-- `gitlabAPIURLFromEnv` - The URL of the GitLab instance API. (Default: `https://gitlab.com`, Optional)
-- `projectIDFromEnv` - The GitLab project ID to monitor for pending jobs. (Required if `groupID` is not set)
-- `groupIDFromEnv` - The GitLab group ID to monitor. (Required if `projectID` is not set)
-- `jobScopesFromEnv` - Comma-separated list of job scopes to count. (Default: `pending`, Optional)
-- `targetQueueLengthFromEnv` - The target number of queued jobs per replica. (Default: `1`, Optional)
-- `includeSubgroupsFromEnv` - Whether to include projects from subgroups when using `groupID`. (Default: `true`, Optional)
-- `tagListFromEnv` - Comma-separated list of runner tags to filter jobs by. (Optional)
-- `runUntaggedFromEnv` - Whether the runner can pick up jobs with no tags. (Default: `false`, Optional)
-
 ### Authentication Parameters
 
 You authenticate with GitLab using a Personal Access Token or a Project/Group Access Token via `TriggerAuthentication` configuration.
@@ -214,7 +200,7 @@ spec:
       name: gitlab-trigger-auth
 ```
 
-Self-managed GitLab instance using environment variables (reusing the `TriggerAuthentication` from the first example):
+Self-managed GitLab instance with self-signed certificate (reusing the `TriggerAuthentication` from the first example):
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
@@ -232,8 +218,8 @@ spec:
     metadata:
       gitlabAPIURL: "https://gitlab.example.com"
       unsafeSsl: "true"
-      projectIDFromEnv: "GITLAB_PROJECT_ID"
-      tagListFromEnv: "RUNNER_TAGS"
+      projectID: "12345"
+      tagList: "docker,linux"
       targetQueueLength: "1"
       activationTargetQueueLength: "0"
     authenticationRef:
