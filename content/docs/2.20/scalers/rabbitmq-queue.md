@@ -113,6 +113,11 @@ This allows sensitive credentials to be stored and managed separately from the c
 
 For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD with `podIdentity.provider = azure-workload` and with `workloadIdentityResource` parameter, which will hold application identifier of App Registration in Azure AD. In this case `username:password` part in host URI should be omitted and `vHostName` has to be set explicitly in `ScaledObject`. Currently, only HTTP protocol is supported for AKS Workload Identity.
 
+
+#### OAuth2 authentication
+For RabbitMQ with OIDC support you can use `TriggerAuthentication` CRD with OAuth2 spec, In this case the `username:password` should be omitted. Currently, only HTTP protocol is supported
+
+
 ### Configuration examples
 
 #### AMQP protocol:
