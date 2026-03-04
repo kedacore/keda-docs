@@ -171,7 +171,7 @@ When using the `query` parameter (DQL-based queries), your platform token must h
 
 You can test your DQL query directly as your token using the Dynatrace Swagger UI before configuring KEDA:
 ```
-https://<your-dynatrace-base-url>.apps.dynatrace.com/platform/swagger-ui/index.html?urls.primaryName=Grail+-+DQL+Query#/Query%20Execution/query%3Aexecute
+https://<your-environment-id>.apps.dynatrace.com/platform/swagger-ui/index.html?urls.primaryName=Grail+-+DQL+Query#/Query%20Execution/query%3Aexecute
 ```
 
 Click the **Authorize** button (top right) and enter your platform token to authenticate. This lets you validate your query and permissions before using them in KEDA.
