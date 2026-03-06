@@ -60,7 +60,9 @@ You can authenticate by using a username/password or apiKey/cloudID if you're us
 
 The scaler manages forecasts automatically, no manual intervention is required.
 
-When the ScaledObject is deployed, the scaler calls the [ML forecast API](https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html) to create the first forecast. The forecast duration is set to `2 × lookAhead` automatically, which keeps the target moment (`now + lookAhead`) within the covered window. The `expires_in` is set to the same value so Elasticsearch purges the forecast documents automatically when they are no longer needed.
+When the ScaledObject is deployed, the scaler calls the [ML forecast API](https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html) to create the first forecast. The forecast duration is set to `2 × lookAhead` automatically, which keeps the target moment (`now + lookAhead`) within the covered window. The `expires_in` is set to the same value so Elasticsearch cleans the forecast documents automatically when they are no longer needed.
+
+> Note that forecast documents may still be visible after the `expires_in` moment, as Elasticsearch's cleanup processes can run at intervals and do not remove expired documents instantaneously.
 
 Forecasts are renewed automatically at the halfway point of their window (when `lookAhead` time remains). At renewal time the previous forecast is retained as a fallback while Elasticsearch computes the new forecast asynchronously, so there is no gap in scaling decisions.
 
