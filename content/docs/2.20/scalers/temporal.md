@@ -23,6 +23,8 @@ triggers:
       buildId: 1.0.0 # optional
       selectAllActive: "false" # optional
       selectUnversioned: "false" # optional
+      includeRunningWorkflowCount: "true" # optional, default: true
+      workflowTaskQueueForCount: "workflow-task-queue" # optional
       minConnectTimeout: "5" # optional
       unsafeSsl: "false" # optional
       tlsServerName: "custom-tls-servername" # optional
@@ -40,17 +42,18 @@ triggers:
 - `buildId` - Build IDs identify Worker versions for Workflow versioning and task compatibility (Optional)
 - `selectAllActive` - Include all active versions (Default:`false`, Optional)
 - `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
+- `includeRunningWorkflowCount` - When `true`, the scaler uses backlog + running workflow count as the metric. This prevents premature scale-down when workers are fast and the backlog is often zero. (Default: `true`, Optional)
+- `workflowTaskQueueForCount` - Task queue name used to scope the running workflow count query. Useful when scaling activity workers where the workflow task queue differs from the activity task queue. Falls back to `taskQueue` if not set. (Optional)
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
 - `tlsServerName` - The custom tls server name (Optional)
 
-> 💡 **NOTE:** Activation based on backlog may not be reliable when scaling to zero.
+> 💡 **NOTE:** Activation based on backlog alone may not be reliable when scaling to zero.
   This approach fails to account for in-flight tasks or workloads with throughput too low to trigger a backlog.
-  Consequently, scaling to zero could result in undesirable behavior,
-  such as terminating resources and subsequently having to scale back up to handle queued tasks. To address these challenges, consider customizing the cooldownPeriod or scale-down behavior of the Horizontal Pod Autoscaler (HPA).
-  By fine-tuning the configurations, you can prevent premature scaling to zero,
-  ensuring that resources remain available for in-flight tasks or workloads with minimal throughput.
+  By default, `includeRunningWorkflowCount` is `true`, which adds the count of running workflows to the backlog metric.
+  This prevents premature scale-down when workers are fast and the backlog is often zero.
+  For additional protection, consider customizing the `cooldownPeriod` or scale-down behavior of the Horizontal Pod Autoscaler (HPA).
 
 
 **Authentication Parameters:**
