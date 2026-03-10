@@ -156,9 +156,9 @@ spec:
       authenticationRef:
         name: keda-trigger-auth-dynatrace
 ```
-## Troubleshooting & Tips
+### Troubleshooting & Tips
 
-### Required Token Permissions for `query` Parameter
+#### Required Token Permissions for `query` Parameter
 
 When using the `query` parameter (DQL-based queries), your platform token must have **both** of the following scopes:
 
@@ -167,7 +167,7 @@ When using the `query` parameter (DQL-based queries), your platform token must h
 
 > **Note:** This is different from `metricSelector`, which only requires `metrics.read`.
 
-### Testing Your Query with Dynatrace Swagger UI
+#### Testing Your Query with Dynatrace Swagger UI
 
 You can test your DQL query directly as your token using the Dynatrace Swagger UI before configuring KEDA:
 ```
@@ -176,7 +176,7 @@ https://<your-environment-id>.apps.dynatrace.com/platform/swagger-ui/index.html?
 
 Click the **Authorize** button (top right) and enter your platform token to authenticate. This lets you validate your query and permissions before using them in KEDA.
 
-### Example: Scaling Based on GCP Pub/Sub via Dynatrace
+#### Example: Scaling Based on GCP Pub/Sub via Dynatrace
 
 If your GCP project is onboarded into Dynatrace, you can scale based on Pub/Sub metrics using a DQL query like this:
 ```yaml
