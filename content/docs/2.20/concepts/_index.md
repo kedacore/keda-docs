@@ -26,9 +26,9 @@ The diagram below shows how KEDA works in conjunction with the Kubernetes Horizo
 
 KEDA runs three components inside the Kubernetes cluster, each with a distinct responsibility:
 
-* **keda-operator** watches your ScaledObjects and manages the full HPA lifecycle. It is also directly responsible for scaling a workload between zero and one replica—bringing an idle deployment back to life when events arrive, or scaling it down to zero when there is nothing to process.
+* **keda-operator** watches KEDA resources like your ScaledObjects and manages the full HPA lifecycle. It is also directly responsible for scaling a workload between zero and one replica—bringing an idle deployment back to life when events arrive, or scaling it down to zero when there is nothing to process.
 * **keda-metrics-apiserver** exposes the external metrics (polled from event sources such as Kafka, RabbitMQ, Elasticsearch, or SQS) to the Kubernetes HPA via the Kubernetes API Server. The HPA queries these metrics to decide how many replicas are needed above one.
-* **keda-admission-webhooks** validate every ScaledObject at the moment it is applied, catching configuration mistakes, such as two ScaledObjects targeting the same deployment, before they cause problems at runtime.
+* **keda-admission-webhooks** validate every KEDA resource like your ScaledObject at the moment it is applied, catching configuration mistakes, such as two ScaledObjects targeting the same deployment, before they cause problems at runtime.
 
 The scaling flow works in two complementary tracks:
 
