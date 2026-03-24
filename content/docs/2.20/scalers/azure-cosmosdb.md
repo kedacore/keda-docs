@@ -79,6 +79,17 @@ Reading the change feed is a **non-destructive** operation — it does not affec
 
 If a partition split (HTTP 410 Gone) is detected, the scaler automatically retries once with fresh lease data.
 
+### Error Handling
+
+If the scaler cannot reach Cosmos DB (e.g., invalid credentials, network issues, or service unavailability), it returns the **maximum possible metric value** to prevent under-provisioning during failures:
+
+- **With prior successful polls:** The scaler caches the last known partition count and reports `partitionCount * changeFeedLagThreshold` as the metric, scaling to max replicas.
+- **Without prior successful polls** (e.g., fresh operator restart with bad credentials): The scaler reports a large fallback value (`100 * changeFeedLagThreshold`) to ensure HPA scales to `maxReplicaCount`.
+
+In both cases, the scaler remains active (`isActive = true`) so KEDA does not scale to zero during failures.
+
+> 💡 **Note:** You can additionally configure [`fallback`](../reference/scaledobject-spec/#fallback) on the ScaledObject for more control over failure behavior.
+
 ### Example
 
 **Using connection string authentication:**
