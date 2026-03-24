@@ -81,14 +81,12 @@ If a partition split (HTTP 410 Gone) is detected, the scaler automatically retri
 
 ### Error Handling
 
-If the scaler cannot reach Cosmos DB (e.g., invalid credentials, network issues, or service unavailability), it returns the **maximum possible metric value** to prevent under-provisioning during failures:
+If the scaler cannot reach Cosmos DB (e.g., invalid credentials, network issues, or service unavailability):
 
-- **With prior successful polls:** The scaler caches the last known partition count and reports `partitionCount * changeFeedLagThreshold` as the metric, scaling to max replicas.
-- **Without prior successful polls** (e.g., fresh operator restart with bad credentials): The scaler reports a large fallback value (`100 * changeFeedLagThreshold`) to ensure HPA scales to `maxReplicaCount`.
+- **With prior successful polls:** The scaler caches the last known partition count and reports `partitionCount * changeFeedLagThreshold` as the metric, scaling to max replicas while remaining active.
+- **Without prior successful polls** (e.g., fresh operator restart with bad credentials): The scaler returns an error to KEDA, which keeps the current replica count unchanged. Configure [`fallback`](../reference/scaledobject-spec/#fallback) on the ScaledObject for explicit failure behavior.
 
-In both cases, the scaler remains active (`isActive = true`) so KEDA does not scale to zero during failures.
-
-> 💡 **Note:** You can additionally configure [`fallback`](../reference/scaledobject-spec/#fallback) on the ScaledObject for more control over failure behavior.
+> 💡 **Tip:** Configure `fallback` on the ScaledObject to control replica count during sustained failures when no cached partition count is available.
 
 ### Example
 
