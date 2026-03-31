@@ -31,7 +31,7 @@ triggers:
 - `containerId` - ID of the monitored container (the data container).
 - `leaseDatabaseId` - ID of the Cosmos DB database containing the lease container.
 - `leaseContainerId` - ID of the lease container used by the change feed processor.
-- `processorName` - Name of the change feed processor.
+- `processorName` - Name of the change feed processor. Used to filter lease documents by matching the document ID prefix, ensuring accurate lag estimation when multiple processors share the same lease container.
 - `changeFeedLagThreshold` - Target value for the total estimated change feed lag per replica. The scaler sums the estimated lag across all partitions and the HPA uses the formula `replicas = ceil(totalLag / changeFeedLagThreshold)`, capped at the number of partitions. (Default: `100`, Optional)
 - `activationChangeFeedLagThreshold` - Minimum total lag to activate the scaler (scale from zero). Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `connection` - Connection string for the Cosmos DB account containing the monitored container. (Optional, see authentication)
@@ -69,7 +69,7 @@ When using workload identity, provide `endpoint` (and optionally `leaseEndpoint`
 
 The scaler estimates change feed processor lag using the same algorithm as the .NET SDK's `ChangeFeedEstimator` and Java SDK's `IncrementalChangeFeedProcessorImpl`:
 
-1. Queries the lease container for all lease documents
+1. Queries the lease container for lease documents matching the `processorName` prefix
 2. For each lease (partition), reads the change feed with `maxItemCount=1` starting from the lease's continuation token
 3. Compares the session token LSN (latest sequence number) with the first returned item's `_lsn`
 4. Calculates lag as `sessionLSN - firstItemLSN + 1`
