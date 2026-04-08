@@ -358,10 +358,25 @@ Here's a good example of [Coralogix becoming a listed user](https://github.com/k
 
 Do you offer commercial support for KEDA and want to become a [listed commercial offering](https://keda.sh/enterprise)? Say no more!
 
-You can easily get listed by following these steps:
+To be listed as a KEDA commercial offering, organizations must meet the following criteria:
+
+- Demonstrate a commitment to KEDA's maintenance and improvement.
+  - On average, have pull requests accepted monthly into KEDA or related projects for features and/or improvements.
+  - Help triage and comment on issues across the KEDA ecosystem at least 5 times per month.
+- Demonstrate an area of expertise in the KEDA ecosystem.
+  - Example: Employing one or more KEDA maintainers.
+  - Example: Owning a specific high-impact feature or process.
+- Participate in KEDA's governance.
+  - At least 1 member of the vendor's team attends the community meetings at least 50% of the time.
+- Be active KEDA thought leaders.
+  - Example: Sponsoring staff for KEDA booths or community events.
+  - Example: Giving talks related to KEDA or its ecosystem.
+- Provide enterprise-level support and functionality for KEDA or products based directly on it.
+
+Once those requirements are met, you can get listed by following these steps:
 
 1. Upload your logo to `static/img/logos/` _(350x180)_
-2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+2. Configure your company as a new vendor in `config.toml` _(sorted alphabetically)_
 
 ```toml
 [[params.vendors]]
