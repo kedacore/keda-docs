@@ -732,6 +732,19 @@ urls = [
 ]
 
 [[params.vendors]]
+name = "Procedure"
+logo = "vendors/procedure.png"
+description = """
+Procedure provides cloud-native consulting and support for KEDA, helping engineering teams implement event-driven autoscaling on Kubernetes:
+- **KEDA implementation and configuration** for production workloads
+- **Custom scaler development** and integration with existing event sources
+- **Monitoring and observability** for autoscaled workloads with Prometheus and Grafana
+"""
+urls = [
+  { text = "Visit Procedure website", url = "https://procedure.tech" }
+]
+
+[[params.vendors]]
 name = "Red Hat"
 logo = "vendors/red-hat.png"
 description = """
