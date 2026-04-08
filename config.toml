@@ -618,8 +618,8 @@ url = "https://www.schrederhyperion.com"
 logo = "schreder-hyperion.png"
 
 [[params.users]]
-url = "https://scrm.lidl"
-logo = "SCRM.png"
+url = "https://schwarz-digits.de/en"
+logo = "schwarz-digits.png"
 
 [[params.users]]
 url = "https://seldon.io/"
@@ -680,8 +680,8 @@ url = "https://kedify.io/?utm_source=keda_oss_site"
 logo = "kedify.png"
 
 [[params.partners]]
-url = "https://scrm.lidl"
-logo = "SCRM.png"
+url = "https://schwarz-digits.de/en"
+logo = "schwarz-digits.png"
 
 # "Supported by" section on the Community page
 [[params.supportedby]]
