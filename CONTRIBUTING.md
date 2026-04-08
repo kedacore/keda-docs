@@ -362,7 +362,8 @@ To be listed as a KEDA commercial offering, organizations must meet the followin
 
 - Demonstrate a commitment to KEDA's maintenance and improvement.
   - On average, have pull requests accepted monthly into KEDA or related projects for features and/or improvements.
-  - Help triage and comment on issues across the KEDA ecosystem at least 5 times per month.
+  - Have made a substantial contribution to the development of KEDA or related projects.
+  - Help triage and comment on issues across the KEDA ecosystem at least 3 times per month.
 - Demonstrate an area of expertise in the KEDA ecosystem.
   - Example: Employing one or more KEDA maintainers.
   - Example: Owning a specific high-impact feature or process.
@@ -373,10 +374,13 @@ To be listed as a KEDA commercial offering, organizations must meet the followin
   - Example: Giving talks related to KEDA or its ecosystem.
 - Provide enterprise-level support and functionality for KEDA or products based directly on it.
 
-Once those requirements are met, you can get listed by following these steps:
+If any questions arise regarding eligibility, the KEDA maintainers will make the final decision.
 
-1. Upload your logo to `static/img/logos/` _(350x180)_
-2. Configure your company as a new vendor in `config.toml` _(sorted alphabetically)_
+If your organization meets these requirements, you can request to be listed by following these steps:
+
+1. Open a pull request and provide evidence in the PR description showing how the requirements above have been met.
+2. Upload your logo to `static/img/logos/` _(350x180)_
+3. Configure your company as a new vendor in `config.toml` _(sorted alphabetically)_
 
 ```toml
 [[params.vendors]]
