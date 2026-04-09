@@ -711,6 +711,7 @@ logo = "vendors/kedify.png"
 description = """
 Kedify is founded by the core maintainers of KEDA and offers enterprise autoscaling solutions based on KEDA, providing:
 - State-of-the-art scalers and features, including a **production-grade HTTP Scaler**, exclusively available in Kedify.
+- Support for Multi-tenant KEDA installation, Multi-Cluster scaling, Predictive and Vertical scaling, and more.
 - **Enterprise-grade support**, ensuring secure KEDA builds with timely updates, patches, and critical fixes.
 - A comprehensive **dashboard** for streamlined management and monitoring across multiple clusters.
 """
