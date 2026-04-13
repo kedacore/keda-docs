@@ -8,7 +8,8 @@
 {{ $img           := "img/logos/keda-icon-color.png" | absURL }}
 {{ $imgAlt        := printf "%s color logo" site.Title }}
 {{ $locale        := site.Params.locale }}
-{{ $version       := index (split .File.Path "/") 1 }}
+{{ $version       := "" }}
+{{ with .File }}{{ $version = index (split .Path "/") 1 }}{{ end }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -19,9 +20,9 @@
 <link rel="canonical" href="{{ $canonical }}">
 
 {{/*
-When $version is lower than $latestVersion, we include
-the extra meta "noindex" to remove the page from search engines.
-Only current version and preview version can be indexed.
+When $version is a released version that is not the latest,
+add a "noindex" meta tag to exclude it from search engines.
+Unreleased and latest versions remain indexable.
 */}}
 {{ if and (ne $version "") (eq .Section "docs") }}
 {{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}

@@ -1,19 +1,5 @@
 @charset "utf-8"
-{{ $fontAwesomeVersion := site.Params.font_awesome_version }}
-{{ $fonts := site.Params.fonts }}
-{{ if $fonts }}
-{{ $fontSlice := (slice) }}
-{{ range $fonts }}
-{{ $fontSlice = $fontSlice | append (printf "%s:%s" (replace .name " " "+") (delimit .sizes ",")) }}
-{{ end }}
-{{ $fontsUrl := printf "https://fonts.googleapis.com/css?family=%s" (delimit $fontSlice "|") }}
-@import url("{{ $fontsUrl }}")
-{{ end }}
 
-{{ with $fontAwesomeVersion }}
-{{ $fontAwesomeUrl := printf "https://use.fontawesome.com/releases/v%s/css/all.css" . }}
-@import url("{{ $fontAwesomeUrl }}")
-{{ end }}
 
 // Site-specific variables here
 $keda-blue: #326de6 
@@ -42,7 +28,7 @@ $input-icon-active-color: $primary
 $input-color: $black
 
 // Font overrides
-{{ if $fonts }}
+{{ if $fonts := site.Params.fonts }}
 // Sans-serif font
 {{ with (index (where $fonts ".type" "sans_serif") 0).name }}
 $family-sans-serif: "{{ . }}", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif

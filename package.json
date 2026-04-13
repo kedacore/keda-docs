@@ -1,28 +1,25 @@
 {
+  "name": "keda-docs",
+  "private": true,
   "scripts": {
-    "_build": "hugo --cleanDestinationDir -e dev -DFE",
-    "__check:links": "make --keep-going check-links",
-    "_check:links": "HTMLTEST_ARGS='--log-level 1 --skip-external' npm run __check:links",
-    "_check:links--warn": "npm run _check:links || (echo; echo 'WARNING: see link-checker output for issues.'; echo)",
-    "_serve:hugo": "hugo serve -DFE --minify",
-    "_serve": "netlify dev -c \"npm run _serve:hugo\" --framework hugo",
-    "build:preview": "set -x && npm run _build -- --minify --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
+    "build": "hugo --cleanDestinationDir -e dev -DFE",
+    "build:preview": "hugo --cleanDestinationDir --minify -e dev -DFE --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
     "build:production": "hugo --cleanDestinationDir --minify",
-    "build": "npm run _build",
-    "check:links:all": "HTMLTEST_ARGS= npm run _check:links",
-    "check:links": "npm run _check:links",
-    "clean": "make clean",
-    "postbuild:preview": "npm run _check:links--warn",
-    "postbuild:production": "npm run _check:links--warn",
-    "precheck:links:all": "npm run build",
+    "check:links": "HTMLTEST_ARGS='--log-level 1 --skip-external' make --keep-going check-links",
     "precheck:links": "npm run build",
-    "serve:hugo": "npm run _serve:hugo",
-    "serve": "npm run _serve",
-    "test": "npm run check:links"
+    "serve": "netlify dev -c \"hugo serve -DFE\" --framework hugo",
+    "serve:hugo": "hugo serve -DFE"
   },
   "devDependencies": {
-    "bulma": "^0.8.2",
-    "hugo-extended": "0.93.2",
-    "netlify-cli": "^9.6.5"
+    "@docsearch/css": "4.6.2",
+    "@docsearch/js": "4.6.2",
+    "@fontsource/inria-sans": "5.2.8",
+    "@fontsource/roboto-mono": "5.2.8",
+    "@fortawesome/fontawesome-free": "7.2.0",
+    "alpinejs": "3.15.11",
+    "bulma": "0.8.2",
+    "hugo-extended": "0.160.1",
+    "lunr": "2.3.9",
+    "netlify-cli": "24.11.1"
   }
 }

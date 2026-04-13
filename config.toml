@@ -2,9 +2,10 @@ baseURL = "https://keda.sh"
 languageCode = "en-us"
 title = "KEDA"
 enableGitInfo = true
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy", "term"]
 
-googleAnalytics = 'G-YSWMV22VTQ'
+[services.googleAnalytics]
+id = 'G-YSWMV22VTQ'
 
 # See other available styles here: https://xyproto.github.io/splash/docs/
 [markup.highlight]
@@ -24,20 +25,47 @@ what_is = """
 
 locale = "en_US"
 twitter_handle = "kedaorg"
-font_awesome_version = "5.12.1"
-alpine_js_version = "2.2.1"
 favicon = "favicon.png"
 
+[params.docsearch]
+appId = "3IFB1FERQT"
+apiKey = "0e8dd1123a0df5e715fc587ee0930782" # notsecret
+indexName = "keda"
+
 [params.versions]
-docs = ["2.19", "2.18", "2.17", "2.16", "2.15", "2.14", "2.13", "2.12", "2.11", "2.10", "2.9", "2.8", "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.5", "1.4"]
+docs = [
+  "2.19",
+  "2.18",
+  "2.17",
+  "2.16",
+  "2.15",
+  "2.14",
+  "2.13",
+  "2.12",
+  "2.11",
+  "2.10",
+  "2.9",
+  "2.8",
+  "2.7",
+  "2.6",
+  "2.5",
+  "2.4",
+  "2.3",
+  "2.2",
+  "2.1",
+  "2.0",
+  "1.5",
+  "1.4",
+]
 
 [params.unreleased]
 docs = ["2.20"]
 
-# Site fonts. For more options see https://fonts.google.com.
+# Site fonts served from @fontsource npm packages (see module mounts).
+# Browse available options at https://fonts.google.com.
 [[params.fonts]]
 name = "Inria Sans"
-sizes = [300, 400, 600, 700]
+sizes = [300, 400, 700]
 type = "sans_serif"
 
 [[params.fonts]]
@@ -59,7 +87,7 @@ mediaType = "text/netlify"
 baseName = "_redirects"
 
 [outputs]
-home = [ "HTML", "RSS", "REDIRECTS", "Lunr" ]
+home = ["HTML", "RSS", "REDIRECTS", "Lunr"]
 
 [outputFormats.Lunr]
 baseName = "index"
@@ -69,7 +97,14 @@ notAlternative = true
 
 # parameters for lunr search
 [params.lunr]
-vars = ["title", "maintainer", "description", "availability", "category", "type"]
+vars = [
+  "title",
+  "maintainer",
+  "description",
+  "availability",
+  "category",
+  "type",
+]
 params = ["availability", "maintainer", "category", "type"]
 
 # "Highlighted Samples" section on the main page
@@ -120,19 +155,19 @@ url = "https://kubernetes.slack.com/messages/CKZJ36A5D"
 [[menu.buttons]]
 url = "/docs/concepts"
 name = "Concepts"
-pre = "fas fa-stream"
+pre = "fas fa-bars-staggered"
 weight = 1
 
 [[menu.buttons]]
 url = "/docs/deploy"
 name = "Deploying KEDA"
-pre = "fas fa-play-circle"
+pre = "fas fa-circle-play"
 weight = 2
 
 [[menu.buttons]]
 url = "/docs/concepts/#keda-architecture"
 name = "Architecture"
-pre = "fas fa-project-diagram"
+pre = "fas fa-diagram-project"
 weight = 3
 
 [[menu.buttons]]
@@ -144,13 +179,13 @@ weight = 4
 [[menu.buttons]]
 url = "/docs/authentication-providers"
 name = "Auth providers"
-pre = "fa fa-lock"
+pre = "fas fa-lock"
 weight = 5
 
 [[menu.buttons]]
 url = "/blog"
 name = "Blog"
-pre = "fa fa-rss"
+pre = "fas fa-rss"
 weight = 6
 
 # Navbar and footer menu
@@ -420,7 +455,7 @@ icon = "fas fa-seedling"
 [[params.features]]
 title = "Extensible"
 content = "Bring-your-own or use community-maintained scalers"
-icon = "fas fa-project-diagram"
+icon = "fas fa-diagram-project"
 
 [[params.features]]
 title = "Vendor-Agnostic"
@@ -716,7 +751,7 @@ Kedify is founded by the core maintainers of KEDA and offers enterprise autoscal
 - A comprehensive **dashboard** for streamlined management and monitoring across multiple clusters.
 """
 urls = [
-  { text = "Visit Kedify website for more details", url = "https://kedify.io/?utm_source=keda_oss_site" }
+  { text = "Visit Kedify website for more details", url = "https://kedify.io/?utm_source=keda_oss_site" },
 ]
 
 [[params.vendors]]
@@ -729,7 +764,7 @@ Microsoft provides multiple solutions integrated with KEDA:
 """
 urls = [
   { text = "Azure Container Apps", url = "https://docs.microsoft.com/en-us/azure/container-apps/scale-app" },
-  { text = "AKS KEDA Add-On", url = "https://docs.microsoft.com/en-us/azure/aks/keda-about" }
+  { text = "AKS KEDA Add-On", url = "https://docs.microsoft.com/en-us/azure/aks/keda-about" },
 ]
 
 [[params.vendors]]
@@ -739,5 +774,25 @@ description = """
 Red Hat integrates KEDA with OpenShift through the **Custom Metrics Autoscaler** (CMA) available through the OpenShift Marketplace.
 """
 urls = [
-  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
+  { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" },
 ]
+
+[module]
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "node_modules/@fortawesome/fontawesome-free/css"
+target = "static/fontawesome/css"
+[[module.mounts]]
+source = "node_modules/@fortawesome/fontawesome-free/webfonts"
+target = "static/fontawesome/webfonts"
+[[module.mounts]]
+source = "node_modules/@fontsource/inria-sans"
+target = "static/fonts/inria-sans"
+[[module.mounts]]
+source = "node_modules/@fontsource/roboto-mono"
+target = "static/fonts/roboto-mono"
+[[module.mounts]]
+source = "node_modules/@docsearch/css/dist"
+target = "static/css/docsearch"

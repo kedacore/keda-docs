@@ -1,4 +1,4 @@
 ---
-_build:
+build:
   render: false
 ---
