@@ -45,12 +45,15 @@ triggers:
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `aggregateFromKubeServiceEndpoints` - Whether to treat `url` as a kubernetes service and scrape/aggregate metrics for all of this service's endpoints. (Values: `true`, `false`, Default: `false`, Optional)
 - `aggregationType` - How to aggregate metrics when `aggregateFromKubeServiceEndpoints` is set to `true`, ignored otherwise. (Values: `average`, `sum`, `max`, `min`, Default: `average`, Optional)
+- `zeroOnMissingEndpoints` - When `aggregateFromKubeServiceEndpoints` is `true` and the target Service has no ready endpoints (or none at all), return a metric value of `0` instead of an error. Useful when the backing workload can be scaled to zero. (Values: `true`, `false`, Default: `false`, Optional, Requires `aggregateFromKubeServiceEndpoints: "true"`)
 
 ### Note on aggregation from kubernetes service
 
-when setting `aggregateFromKubeServiceEndpoints: true` in metadata, Metrics API Scaler is able to compute basic `average`, `sum`, `min` or `max` aggregation asked by `aggregationType` metadata from all endpoint targets of a kubernetes API service, which is a handy feature in an environment where one didn't set up a metric aggregator/scraping stack (i.e prometheus), or simply doesn't want to use their monitoring stack to fetch and serve metrics from customers workload in their own kubernetes clusters, and leave the metrics API's responsibility up to the customer
+When setting `aggregateFromKubeServiceEndpoints: true` in metadata, Metrics API Scaler is able to compute basic `average`, `sum`, `min` or `max` aggregation asked by `aggregationType` metadata from all endpoint targets of a kubernetes API service, which is a handy feature in an environment where one didn't set up a metric aggregator/scraping stack (i.e prometheus), or simply doesn't want to use their monitoring stack to fetch and serve metrics from customers workload in their own kubernetes clusters, and leave the metrics API's responsibility up to the customer.
 
-This specific behavior comes from the fact that querying a kubernetes service directly (= setting `aggregateFromKubeServiceEndpoints: false`) would return the metric from a single replica randomly, depending on the load-balancing configuration for the service, and lead to inconsistent HPA average metric computation and eventually to scaling issues as metrics from all replicas won't be taken into account
+This specific behavior comes from the fact that querying a kubernetes service directly (= setting `aggregateFromKubeServiceEndpoints: false`) would return the metric from a single replica randomly, depending on the load-balancing configuration for the service, and lead to inconsistent HPA average metric computation and eventually to scaling issues as metrics from all replicas won't be taken into account.
+
+If the target service is scaled by KEDA and can be deactivated (ie. replicas=0), consider `zeroOnMissingEndpoints` so the scaler reports the value 0 instead of an error that could eventually trigger the ScaledObject fallback policy.
 
 Here is an example of a ScaledObject using `aggregateFromKubeServiceEndpoints`:
 
@@ -74,6 +77,7 @@ spec:
         valueLocation: "components.worker.tasks"
         aggregateFromKubeServiceEndpoints: "true"
         aggregationType: "sum"
+        zeroOnMissingEndpoints: "true"
 ```
 
 ### Authentication Parameters
