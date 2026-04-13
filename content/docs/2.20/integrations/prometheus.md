@@ -24,6 +24,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_internal_scale_loop_latency_seconds` - Total deviation (in seconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
 - `keda_cloudeventsource_events_emitted_total` - Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state.
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
+- `keda_scaler_http_requests_total` - Total number of outbound HTTP requests issued during scaler metric fetches.
+- `keda_scaler_http_request_duration_seconds` - Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric fetches.
 - `keda_internal_metricsservice_grpc_server_started_total` - Total number of RPCs started on the server.
 - `keda_internal_metricsservice_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
 - `keda_internal_metricsservice_grpc_server_msg_received_total` - Total number of RPC stream messages received on the server.
