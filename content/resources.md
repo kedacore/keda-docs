@@ -6,6 +6,7 @@ description = "Materials for learning more about KEDA"
 ## Learning Courses
 
 - ["Scale container applications in Azure Kubernetes Services using KEDA"](https://docs.microsoft.com/en-us/learn/modules/aks-app-scale-keda/) on Microsoft Learn
+- ["Kubernetes Autoscaling"](https://learn.kodekloud.com/courses/kubernetes-autoscaling) on KodeKloud
 
 ## Videos
 
