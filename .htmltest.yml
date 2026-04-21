@@ -6,6 +6,9 @@ CheckExternal: false
 IgnoreAltMissing: true
 IgnoreEmptyHref: true
 IgnoreURLs:
+  # /latest/ URLs are redirect-only paths handled by Netlify; no static page exists for them
+  - /docs/latest/
+  - /http-add-on/latest/
   # Temporal ignores
   # Deprecated and removed resources
   # Renamed pages

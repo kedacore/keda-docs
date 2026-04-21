@@ -4,18 +4,12 @@ Thanks for helping make KEDA better 😍.
 
 There are many areas we can use contributions - documenting scalers, adding FAQ, troubleshooting, samples, and more.
 
-Our documentation is versioned so it's important to make the changes for the correct KEDA version. If you need to introduce a new version, we recommend reading our documentation about it [here](https://github.com/kedacore/keda-docs#working-with-documentation-versions).
-
-## Getting Help
-
-If you have a question about KEDA or how best to contribute, the [#KEDA](https://kubernetes.slack.com/archives/CKZJ36A5D) channel on the Kubernetes slack channel ([get an invite if you don't have one already](https://slack.k8s.io/)) is a good place to start. We also have regular [community stand-ups](https://github.com/kedacore/keda#community) to track ongoing work and discuss areas of contribution. For any issues with the product you can [create an issue](https://github.com/kedacore/keda/issues/new) in this repo.
-
-## Contributing New Documentation
-
-We provide easy ways to introduce new content:
+Our documentation is versioned so it's important to make the changes for the correct KEDA version.
+If you need to introduce a new version, we recommend reading our documentation about it [here](#working-with-documentation-versions).
 
 - [Contributing to KEDA](#contributing-to-keda)
   - [Getting Help](#getting-help)
+  - [Local development](#local-development)
   - [Contributing New Documentation](#contributing-new-documentation)
     - [Adding blog post](#adding-blog-post)
     - [Adding scaler documentation](#adding-scaler-documentation)
@@ -28,24 +22,51 @@ We provide easy ways to introduce new content:
     - [Publishing a new version](#publishing-a-new-version)
   - [Developer Certificate of Origin: Signing your work](#developer-certificate-of-origin-signing-your-work)
     - [Every commit needs to be signed](#every-commit-needs-to-be-signed)
-    - [I didn't sign my commit, now what?!](#i-didnt-sign-my-commit-now-what)
+    - [I didn't sign my commit, now what?](#i-didnt-sign-my-commit-now-what)
   - [Changing the website](#changing-the-website)
-    - [Creating and building a local environment](#creating-and-building-a-local-environment)
     - [Adding a new filter option](#adding-a-new-filter-option)
   - [Listing KEDA Users and Commercial Offerings](#listing-keda-users-and-commercial-offerings)
     - [Become a listed KEDA user](#become-a-listed-keda-user)
     - [Become a listed KEDA commercial offering](#become-a-listed-keda-commercial-offering)
 
+## Getting Help
 
-Learn more how to [create and build a local environment](#creating-and-building-a-local-environment).
+If you have a question about KEDA or how best to contribute, the [#KEDA](https://kubernetes.slack.com/archives/CKZJ36A5D) channel on the Kubernetes Slack ([get an invite if you don't have one already](https://slack.k8s.io/)) is a good place to start.
+We also have regular [community stand-ups](https://github.com/kedacore/keda#community) to track ongoing work and discuss areas of contribution.
+For any issues with the product you can [create an issue](https://github.com/kedacore/keda/issues/new) in this repo.
 
+## Local development
+
+1. Fork and clone this repository.
+2. Install [Node](https://nodejs.org/).
+   Hugo is bundled via the `hugo-extended` npm package — no separate Hugo install needed.
+3. Install dependencies:
+   ```console
+   npm install
+   ```
+4. Serve the site locally at [localhost:8888](http://localhost:8888):
+   ```console
+   npm run serve
+   ```
+5. To do a one-off build (output goes to `public/`):
+   ```console
+   npm run build
+   ```
+6. To check for broken links (runs a build first):
+   ```console
+   npm run check:links
+   ```
+
+## Contributing New Documentation
+
+We provide easy ways to introduce new content:
 
 ### Adding blog post
 
 To add a new post to the [KEDA blog](https://keda.sh/blog):
 
 ```console
-$ hugo new blog/my-new-post.md
+npx hugo new blog/my-new-post.md
 ```
 
 This creates a boilerplate Markdown file in `content/blog/my-new-post.md` whose
@@ -62,7 +83,7 @@ contents you can modify. The following fields are required:
 To add documentation for a new KEDA [scaler](https://keda.sh/docs/scalers):
 
 ```console
-$ hugo new --kind scaler docs/<VERSION>/scalers/my-new-scaler.md
+npx hugo new --kind scaler docs/<VERSION>/scalers/my-new-scaler.md
 ```
 
 This creates a boilerplate Markdown file in
@@ -96,7 +117,7 @@ Here are a few examples:
 To add documentation for a new [provider](https://keda.sh/docs/concepts/authentication):
 
 ```console
-$ hugo new --kind provider docs/<VERSION>/providers/my-new-provider.md
+npx hugo new --kind provider docs/<VERSION>/providers/my-new-provider.md
 ```
 
 This creates a boilerplate Markdown file in
@@ -122,7 +143,7 @@ a = "You're looking at it! 😀"
 To add a new section to the [troubleshooting page](https://keda.sh/docs/troubleshooting):
 
 ```console
-$ hugo new troubleshooting/<VERSION>/my-new-issue.md
+npx hugo new troubleshooting/<VERSION>/my-new-issue.md
 ```
 
 To adjust the order in which the troubleshooting tiles appear, use the `weight`
@@ -133,25 +154,18 @@ parameter in each page's metadata.
 The KEDA documentation is versioned. Each version has its own subdirectory under
 [content/docs](content/docs). To add a new version, follow these steps:
 
-1. Copy the directory for the most recent version. Here's an example:
-
-```console
-$ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
-```
-
-2. Copy the file for the most recent faq data in the `data` directory. Here's an example:
-
-```console
-$ cp -rf data/faq<CurrentVersion> data/faq<NewVersion>
-```
-
-3. Update the `versionData` option in `content/docs/<NewVersion>/reference/faq.md`:
-
-```
-{{< faq20 versionData="NEW_FAQ_FILE_NAME" >}}
-```
-
-Replace `NEW_FAQ_FILE_NAME` with the file name of the faq data for the new version.
+1. Copy the directory for the most recent version:
+   ```console
+   cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
+   ```
+2. Copy the file for the most recent faq data in the `data` directory:
+   ```console
+   cp -rf data/faq<CurrentVersion> data/faq<NewVersion>
+   ```
+3. Update the `versionData` option in `content/docs/<NewVersion>/reference/faq.md`, replacing `NEW_FAQ_FILE_NAME` with the file name of the faq data for the new version:
+   ```text
+   {{< faq20 versionData="NEW_FAQ_FILE_NAME" >}}
+   ```
 
 By default, new documentation versions are not listed as available version so
 it's safe to make changes to them. After every release, the version will be
@@ -185,7 +199,7 @@ because the first element in that list is considered the latest version).
 
 The Developer Certificate of Origin (DCO) is a lightweight way for contributors to certify that they wrote or otherwise have the right to submit the code they are contributing to the project. Here is the full text of the DCO, reformatted for readability:
 
-```
+```text
 By making a contribution to this project, I certify that:
 
     (a) The contribution was created in whole or in part by me and I have the right to submit it under the open source license indicated in the file; or
@@ -199,7 +213,7 @@ By making a contribution to this project, I certify that:
 
 Contributors sign-off that they adhere to these requirements by adding a `Signed-off-by` line to commit messages.
 
-```
+```text
 This is my commit message
 
 Signed-off-by: Random J Developer <random@developer.example.org>
@@ -207,17 +221,17 @@ Signed-off-by: Random J Developer <random@developer.example.org>
 
 Git even has a `-s` command line option to append this automatically to your commit message:
 
-```
-$ git commit -s -m 'This is my commit message'
+```console
+git commit -s -m 'This is my commit message'
 ```
 
 Each Pull Request is checked whether or not commits in a Pull Request do contain a valid Signed-off-by line.
 
-### I didn't sign my commit, now what?!
+### I didn't sign my commit, now what?
 
 No worries - You can easily replay your changes, sign them and force push them!
 
-```
+```console
 git checkout <branch-name>
 git reset $(git merge-base main <branch-name>)
 git add -A
@@ -227,104 +241,66 @@ git push --force
 
 ## Changing the website
 
-### Creating and building a local environment
-
-To build or serve the site locally, follow these steps:
-
-- Fork and clone this repository (for local development only).
-- Install the latest [LTS release](https://nodejs.org/en/about/releases/) of **Node**.
-- Get npm packages and other prerequisites:
-  ```console
-  $ npm install
-  ```
-- To build the site, run:
-  ```console
-  $ npm run build
-  ```
-  You'll find the generated site files under `public`.
-- Serve the site locally at [localhost:8888](http://localhost:8888) using:
-  ```console
-  $ npm run serve
-  ```
-
 ### Adding a new filter option
 
 To add a new filter option, simply follow these steps:
 
 1. Navigate to the doc file you want to annotate.
-2. In the frontmatter, add your new filter option.
-
-```
-+++
-FILTER_NAME = "filter_value"
-+++
-```
-
-Replace FILTER_NAME with any desired name of your choice. Same applies to the value.
-
-3. Navigate to the `list.lunr.json` file to edit: `cd layouts/_default/list.lunr.json`.
-4. Open the file and go down to line 3. You will notice the format of the data represented in a key/value pair. Just before the closing parenthesis, append your new option like this: `"FILTER_NAME" $scalers.Params.FILTER_NAME`.
-
-Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
-
-5. Head over to `config.toml` file. In the `params.lunr` section, you will see two arrays named `vars` and `params`. Add your new filter option's name to each of the arrays:
-
-```toml
-vars = ["title", "maintainer", "description", "availability", "category", "type", "FILTER_NAME"]
-params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
-```
-
-6. In `assets/js/scaler-search.js`, find the `lunr()` callback where `this.field` is called. Append your field:
-
-```javascript
-this.field("FILTER_NAME", {
-  boost: 5,
-});
-```
-
-Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
-
-In the same file, find where `parse[doc.title]` is built and add your field:
-
-```javascript
-parse[doc.title] = {
-  href: doc.href,
-  title: doc.title,
-  maintainer: doc.maintainer,
-  description: doc.description,
-  availability: doc.availability,
-  category: doc.category,
-  type: doc.type,
-  FILTER_NAME: doc.FILTER_NAME,
-};
-```
-
-7. Navigate to `layouts/partials/scaler-layout.html`. Locate the div with a class name of `filter-options`. Within the div, add this new block:
-
-```html
-<div class="has-extra-top-margin">
-  <h6>FILTER_NAME</h6>
-  {{ $FILTER_NAME := slice }} {{ range $scalers := where site.RegularPages
-  ".CurrentSection.Title" "Scalers" }} {{ with $scalers.Params.FILTER_NAME }} {{
-  $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }} {{
-  $FILTER_NAME = uniq $FILTER_NAME }} {{ end }} {{ end }} {{ range $FILTER_NAME
-  }} {{ $item := . }}
-  <div>
-    <input
-      id="{{ . }}"
-      type="checkbox"
-      name="resource_filter"
-      value="FILTER_NAME:{{ . }}"
-    />
-    <label for="{{ . }}">{{ . }}</label>
-  </div>
-  {{ end }}
-</div>
-```
-
-Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
-
-8. Save your changes and rebuild your frontend.
+2. In the frontmatter, add your new filter option:
+   ```toml
+   FILTER_NAME = "filter_value"
+   ```
+   Replace `FILTER_NAME` with any desired name of your choice. Same applies to the value.
+3. In `layouts/_default/list.lunr.json`, just before the closing parenthesis, append your new option:
+   ```text
+   "FILTER_NAME" $scalers.Params.FILTER_NAME
+   ```
+4. In `config.toml`, in the `params.lunr` section, add your new filter option's name to both arrays:
+   ```toml
+   vars = ["title", "maintainer", "description", "availability", "category", "type", "FILTER_NAME"]
+   params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
+   ```
+5. In `assets/js/scaler-search.js`, in the `lunr()` callback where `this.field` is called, append your field:
+   ```javascript
+   this.field("FILTER_NAME", {
+     boost: 5,
+   });
+   ```
+   And where `parse[doc.title]` is built, add your field:
+   ```javascript
+   parse[doc.title] = {
+     href: doc.href,
+     title: doc.title,
+     maintainer: doc.maintainer,
+     description: doc.description,
+     availability: doc.availability,
+     category: doc.category,
+     type: doc.type,
+     FILTER_NAME: doc.FILTER_NAME,
+   };
+   ```
+6. In `layouts/partials/scaler-layout.html`, locate the div with class `filter-options` and add this new block:
+   ```html
+   <div class="has-extra-top-margin">
+     <h6>FILTER_NAME</h6>
+     {{ $FILTER_NAME := slice }} {{ range $scalers := where site.RegularPages
+     ".CurrentSection.Title" "Scalers" }} {{ with $scalers.Params.FILTER_NAME }} {{
+     $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }} {{
+     $FILTER_NAME = uniq $FILTER_NAME }} {{ end }} {{ end }} {{ range $FILTER_NAME
+     }} {{ $item := . }}
+     <div>
+       <input
+         id="{{ . }}"
+         type="checkbox"
+         name="resource_filter"
+         value="FILTER_NAME:{{ . }}"
+       />
+       <label for="{{ . }}">{{ . }}</label>
+     </div>
+     {{ end }}
+   </div>
+   ```
+7. Save your changes and rebuild your frontend.
 
 ## Listing KEDA Users and Commercial Offerings
 
