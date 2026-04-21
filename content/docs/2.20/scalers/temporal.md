@@ -131,7 +131,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    name: my-worker
+    name: my-worker-v2-0-0
   minReplicaCount: 0
   maxReplicaCount: 5
   triggers:
