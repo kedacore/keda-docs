@@ -20,9 +20,11 @@ triggers:
       activationTargetQueueSize: "0"
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
       queueTypes: workflow # optional
-      buildId: 1.0.0 # optional
-      selectAllActive: "false" # optional
-      selectUnversioned: "false" # optional
+      workerDeploymentName: my-deployment # optional
+      workerDeploymentBuildId: v1.0.0 # optional
+      buildId: 1.0.0 # deprecated, use workerDeploymentBuildId
+      selectAllActive: "false" # deprecated
+      selectUnversioned: "false" # deprecated
       minConnectTimeout: "5" # optional
       unsafeSsl: "false" # optional
       tlsServerName: "custom-tls-servername" # optional
@@ -37,9 +39,11 @@ triggers:
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `5`, Optional)
 - `taskQueue` - This parameter specifies the task queue name. (Required)
 - `queueTypes` - Task Queue type can be configured as `workflow`, `activity`, or both, separated by a comma (,) if multiple types are needed. (Default: `workflow`, Optional)
-- `buildId` - Build IDs identify Worker versions for Workflow versioning and task compatibility (Optional)
-- `selectAllActive` - Include all active versions (Default:`false`, Optional)
-- `selectUnversioned` - Include the unversioned queue (Default:`false`, Optional)
+- `workerDeploymentName` - The name of the Temporal [Worker Deployment](https://docs.temporal.io/production-deployment/worker-deployments) to scale. When set together with `workerDeploymentBuildId`, the scaler queries `DescribeWorkerDeploymentVersion` for that specific deployment version's backlog instead of the task queue. Mutually exclusive with `buildId`, `selectAllActive`, and `selectUnversioned`. (Optional)
+- `workerDeploymentBuildId` - The build ID of the worker within the deployment. Required together with `workerDeploymentName`. (Optional)
+- `buildId` - *Deprecated.* Build IDs identify Worker versions under the legacy Rules-Based Versioning APIs, which the Temporal server has deprecated since December 2024 and will stop supporting soon. Use `workerDeploymentName` and `workerDeploymentBuildId` instead. (Optional)
+- `selectAllActive` - *Deprecated.* Include all active versions under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` / `workerDeploymentBuildId` instead. (Default: `false`, Optional)
+- `selectUnversioned` - *Deprecated.* Include the unversioned queue under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` / `workerDeploymentBuildId` instead. (Default: `false`, Optional)
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
@@ -113,4 +117,30 @@ spec:
       endpoint: temporal-frontend.temporal.svc.cluster.local:7233
     authenticationRef:
       name: keda-trigger-auth-temporal
+```
+
+### Example: Worker Deployment Version
+
+When your workers use [Worker Deployment Versioning](https://docs.temporal.io/worker-versioning#deployment-versions), configure the scaler with `workerDeploymentName` and `workerDeploymentBuildId` to scale the backlog of that specific deployment version.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: my-worker-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: my-worker
+  minReplicaCount: 0
+  maxReplicaCount: 5
+  triggers:
+  - type: temporal
+    metadata:
+      namespace: default
+      taskQueue: "my-task-queue"
+      targetQueueSize: "10"
+      endpoint: temporal-frontend.temporal.svc.cluster.local:7233
+      workerDeploymentName: my-worker
+      workerDeploymentBuildId: v2.0.0
 ```
