@@ -1,11 +1,12 @@
 {{ $allVersions := site.Params.versions.docs }}
 {{ $latest      := index $allVersions 0 }}
-{{ $version     := index (split .File.Path "/") 1 }}
+{{ $version     := "" }}
+{{ with .File }}{{ $version = index (split .Path "/") 1 }}{{ end }}
 {{ $isLatest    := eq $latest $version }}
 {{ $onlyOne     := eq (len $allVersions) 1 }}
 <div class="dropdown" x-data="{ open: false }" :class="{ 'is-active': open }">
   <div class="dropdown-trigger">
-    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open" @click.away="open = false">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open" @click.outside="open = false">
       Version
       &nbsp;
       <span class="has-text-weight-bold">

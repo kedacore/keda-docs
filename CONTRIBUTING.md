@@ -107,8 +107,9 @@ Make sure to update the following metadata fields:
 
 ### Add new Frequently Asked Question (FAQ)
 
-To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file at
-`data/faq20.toml`. Here's an example question/answer pair:
+To update the KEDA [FAQ page](https://keda.sh/docs/faq), update the TOML file
+referenced by `versionData` in `content/docs/<VERSION>/reference/faq.md`.
+Here's an example question/answer pair:
 
 ```toml
 [[qna]]
@@ -144,13 +145,7 @@ $ cp -rf content/docs/<CurrentVersion> content/docs/<NewVersion>
 $ cp -rf data/faq<CurrentVersion> data/faq<NewVersion>
 ```
 
-3. Navigate to the new faq file:
-
-```console
-$ cd content/docs/<NewVersion>/reference/faq.md
-```
-
-4. Update the versionData option
+3. Update the `versionData` option in `content/docs/<NewVersion>/reference/faq.md`:
 
 ```
 {{< faq20 versionData="NEW_FAQ_FILE_NAME" >}}
@@ -237,11 +232,7 @@ git push --force
 To build or serve the site locally, follow these steps:
 
 - Fork and clone this repository (for local development only).
-- Install the latest [LTS release][] of **Node**, using **[nvm][]** for example:
-  ```console
-  $ nvm install --lts
-  ```
-  **Note:** on Windows, the argument to install is `lts`.
+- Install the latest [LTS release](https://nodejs.org/en/about/releases/) of **Node**.
 - Get npm packages and other prerequisites:
   ```console
   $ npm install
@@ -251,7 +242,7 @@ To build or serve the site locally, follow these steps:
   $ npm run build
   ```
   You'll find the generated site files under `public`.
-- Serve the site locally at [localhost:8888][] using:
+- Serve the site locally at [localhost:8888](http://localhost:8888) using:
   ```console
   $ npm run serve
   ```
@@ -283,7 +274,7 @@ vars = ["title", "maintainer", "description", "availability", "category", "type"
 params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
 ```
 
-6. Navigate to `javascript.html` and scroll down to where the `lunr()` function is being called. You will notice a callback function is being passed to the `lunr()` function. Within the callback function, you will also notice `this.field` being called with some values passed in. Append this block of code right after the last `this.field` function call:
+6. In `assets/js/scaler-search.js`, find the `lunr()` callback where `this.field` is called. Append your field:
 
 ```javascript
 this.field("FILTER_NAME", {
@@ -293,7 +284,7 @@ this.field("FILTER_NAME", {
 
 Replace FILTER_NAME with the same name represented in the frontmatter (see step 2 above for reference).
 
-Right after the `lunr()` function block, You will find where the `parse` object is being modified. Append your new filter option to the object:
+In the same file, find where `parse[doc.title]` is built and add your field:
 
 ```javascript
 parse[doc.title] = {
@@ -393,8 +384,3 @@ urls = [
   { text = "Learn more about the CMA", url = "https://cloud.redhat.com/blog/custom-metrics-autoscaler-on-openshift" }
 ]
 ```
-
-[localhost:8888]: http://localhost:8888
-[LTS release]: https://nodejs.org/en/about/releases/
-[Netlify]: https://netlify.com
-[nvm]: https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating

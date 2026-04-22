@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 /public
 .idea
 resources/
@@ -9,3 +8,6 @@ resources/
 # Link checker artifacts
 bin/
 tmp/
+
+# Local Netlify folder
+.netlify
