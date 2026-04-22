@@ -20,6 +20,6 @@
     "bulma": "0.8.2",
     "hugo-extended": "0.160.1",
     "lunr": "2.3.9",
-    "netlify-cli": "24.11.1"
+    "netlify-cli": "24.11.3"
   }
 }
