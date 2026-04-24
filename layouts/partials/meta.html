@@ -8,8 +8,11 @@
 {{ $img           := "img/logos/keda-icon-color.png" | absURL }}
 {{ $imgAlt        := printf "%s color logo" site.Title }}
 {{ $locale        := site.Params.locale }}
+{{ $sectionVersions := index site.Params.versions .Section }}
 {{ $version       := "" }}
+{{ if $sectionVersions }}
 {{ with .File }}{{ $version = index (split .Path "/") 1 }}{{ end }}
+{{ end }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -24,8 +27,7 @@ When $version is a released version that is not the latest,
 add a "noindex" meta tag to exclude it from search engines.
 Unreleased and latest versions remain indexable.
 */}}
-{{ $sectionVersions := index site.Params.versions .Section }}
-{{ if and (ne $version "") $sectionVersions }}
+{{ if ne $version "" }}
 {{ $isOldVersion := and (in $sectionVersions $version) (ne $version (index $sectionVersions 0)) }}
 {{ if $isOldVersion }}
 <meta name="robots" content="noindex">
@@ -39,9 +41,12 @@ Unreleased and latest versions remain indexable.
 <meta name="twitter:image" content="{{ $img }}">
 <meta name="twitter:image:alt" content="{{ $imgAlt }}">
 
+{{ $tag := .Section }}
+{{ if ne $version "" }}{{ $tag = printf "%s-%s" .Section $version }}{{ end }}
 <meta name="docsearch:language" content="en" />
 <meta name="docsearch:product" content="{{ .Section }}" />
 <meta name="docsearch:version" content="{{ $version }}" />
+<meta name="docsearch:tag" content="{{ $tag }}" />
 
 {{/* OpenGraph metadata */}}
 <meta property="og:url" content="{{ $url }}">

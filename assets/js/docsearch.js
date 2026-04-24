@@ -6,27 +6,23 @@ function meta(name) {
   return element ? element.content : "";
 }
 
+const currentTag = meta("tag");
 const currentProduct = meta("product");
-const currentVersion = meta("version");
 
-// Start with the latest version of each product (from Hugo config),
-// then override the current product with the version we're actually viewing.
-const versions = {
-  docs: params.latestDocs,
-  "http-add-on": params.latestHttpAddon,
+// Each tag encodes product + version in one value (e.g. "docs-2.19").
+// This avoids needing a cross-attribute filter like (product AND version)
+// which Algolia's filter syntax does not support in OR groups.
+const tags = {
+  docs: "docs-" + params.latestDocs,
+  "http-add-on": "http-add-on-" + params.latestHttpAddon,
 };
-if (currentProduct in versions && currentVersion) {
-  versions[currentProduct] = currentVersion;
+if (currentProduct in tags && currentTag) {
+  tags[currentProduct] = currentTag;
 }
 
-// Build a compound filter so results from both products are always discoverable,
-// each scoped to the version the user is currently viewing.
-const parts = Object.entries(versions).map(
-  ([product, version]) => `(product:"${product}" AND version:${version})`,
-);
-// Always include blog posts in the search results
-parts.push("product:blog");
-const filters = parts.join(" OR ");
+const facetFilters = Object.values(tags)
+  .map((tag) => "tag:" + tag)
+  .concat("tag:blog");
 
 try {
   docsearch({
@@ -35,7 +31,7 @@ try {
     indices: [
       {
         name: params.indexName,
-        searchParameters: { filters: filters },
+        searchParameters: { facetFilters: [facetFilters] },
       },
     ],
     container: "#navbar-search",
