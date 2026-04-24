@@ -34,6 +34,7 @@ triggers:
     host: mssqlinst.namespace.svc.cluster.local
     port: "1433" # optional
     database: test_db_name
+    driverName: "azuresql" # optional
     query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
     targetValue: 1
 ```
@@ -55,6 +56,7 @@ Or provide more detailed connection parameters explicitly (a connection string w
 - `host` - The hostname of the MSSQL instance endpoint.
 - `port` - The port number of the MSSQL instance endpoint. (Default: 1433, Optional)
 - `database` - The name of the database to query.
+- `driverName` - The MSSQL driver to use. Can be set to `sqlserver` or `azuresql`. (Default: `sqlserver`, Optional)
 - `username` - The username credential for connecting to the MSSQL instance.
 - `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MSSQL instance.
 
@@ -83,6 +85,7 @@ As an alternative to using environment variables, you can authenticate with the 
 - `host` - The hostname of the MSSQL instance endpoint.
 - `port` - The port number of the MSSQL instance endpoint. (default 1433)
 - `database` - The name of the database to query.
+- `driverName` - The MSSQL driver to use. Can be set to `sqlserver` or `azuresql`. (Default: `sqlserver`, Optional)
 - `username` - The username credential for connecting to the MSSQL instance.
 - `password` - The password credential for connecting to the MSSQL instance.
 
