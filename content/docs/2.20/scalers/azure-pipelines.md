@@ -23,6 +23,10 @@ triggers:
       organizationURLFromEnv: "AZP_URL"
       # Optional: Azure DevOps Personal Access Token, can use TriggerAuthentication as well
       personalAccessTokenFromEnv: "AZP_TOKEN"
+      # Optional: Azure AD tenant ID for service principal authentication
+      tenantId: "<tenant-id>"
+      # Optional: Azure AD client ID for service principal authentication
+      clientId: "<client-id>"
       # Optional: Target queue length
       targetPipelinesQueueLength: "1" # Default 1
       activationTargetPipelinesQueueLength: "5" # Default 0
@@ -50,6 +54,8 @@ triggers:
 - `poolID` - Id of the pool. (Optional, either `poolID` or `poolName` must be configured)
 - `organizationURLFromEnv` - Name of the environment variable your deployment uses to get the URL for your Azure DevOps organization.
 - `personalAccessTokenFromEnv` - Name of the environment variable that provides the personal access token (PAT) for Azure DevOps. Learn more about how to create one [in the official docs](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page).
+- `tenantId` - Azure AD tenant ID used for service principal authentication.
+- `clientId` - Azure AD client ID used for service principal authentication.
 - `targetPipelinesQueueLength` - Target value for the amount of pending jobs in the queue to scale on. (Default: `1`, Optional)
   - Example - If one pod can handle 10 jobs, set the queue length target to 10. If the actual number of jobs in the queue is 30, the scaler scales to 3 pods.
 - `activationTargetPipelinesQueueLength` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
@@ -63,16 +69,42 @@ triggers:
 
 ### Authentication Parameters
 
-As an alternative to using environment variables, you can authenticate with Azure Devops using a Personal Access Token or Managed identity via `TriggerAuthentication` configuration. If `personalAccessTokenFromEnv` or `personalAccessTokenFrom` is empty `TriggerAuthentication` must be configured using podIdentity.
+As an alternative to using environment variables, you can authenticate with Azure DevOps using `TriggerAuthentication`.
+
+The Azure Pipelines scaler supports the following authentication methods:
+
+1. Personal Access Token (PAT)
+2. Azure AD service principal with client secret
+3. Azure AD service principal with client certificate
+4. Azure AD Workload Identity
+
+If `personalAccessTokenFromEnv` is not provided, either service principal authentication or Azure Workload Identity must be configured.
 
 **Personal Access Token Authentication:**
 
 - `organizationURL` - The URL of the Azure DevOps organization.
 - `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
 
-**Pod Identity Authentication**
+**Service Principal Authentication:**
+
+- `clientSecret` - Azure AD client secret for the service principal.
+
+Or:
+
+- `clientCertificate` - Azure AD client certificate content for the service principal. PEM and PKCS#12/PFX formats are supported.
+- `clientCertificatePassword` - Password for the client certificate when required. (Optional)
+
+> 💡 **NOTE:** `tenantId` and `clientId` are required when using service principal authentication.
+>
+> 💡 **NOTE:** `clientSecret` and `clientCertificate` are mutually exclusive.
+>
+> 💡 **NOTE:** `clientCertificatePassword` can only be used together with `clientCertificate`.
+
+**Azure Workload Identity Authentication**
 
 [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
+
+> 💡 **NOTE:** The scaler acquires an Azure AD token for the Azure DevOps resource and calls the Azure DevOps REST API with bearer authentication. The Azure DevOps organization must be configured to allow the selected identity to query agent pools and job requests.
 
 ### How to determine your pool ID
 
@@ -219,6 +251,96 @@ spec:
       organizationURLFromEnv: "AZP_URL"
       parent: "example-keda-template"
       demands: "maven,docker"
+    authenticationRef:
+     name: pipeline-trigger-auth
+```
+
+### Example for service principal authentication using client secret
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: pipeline-auth
+data:
+  clientSecret: <encoded client secret>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: pipeline-trigger-auth
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: clientSecret
+      name: pipeline-auth
+      key: clientSecret
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-pipelines-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azdevops-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: azure-pipelines
+    metadata:
+      poolID: "1"
+      organizationURLFromEnv: "AZP_URL"
+      tenantId: "<tenant-id>"
+      clientId: "<client-id>"
+    authenticationRef:
+     name: pipeline-trigger-auth
+```
+
+### Example for service principal authentication using client certificate
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: pipeline-auth
+data:
+  clientCertificate: <encoded certificate content>
+  clientCertificatePassword: <encoded certificate password>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: pipeline-trigger-auth
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: clientCertificate
+      name: pipeline-auth
+      key: clientCertificate
+    - parameter: clientCertificatePassword
+      name: pipeline-auth
+      key: clientCertificatePassword
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-pipelines-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azdevops-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: azure-pipelines
+    metadata:
+      poolID: "1"
+      organizationURLFromEnv: "AZP_URL"
+      tenantId: "<tenant-id>"
+      clientId: "<client-id>"
     authenticationRef:
      name: pipeline-trigger-auth
 ```
