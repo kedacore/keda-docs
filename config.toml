@@ -57,9 +57,11 @@ docs = [
   "1.5",
   "1.4",
 ]
+http-add-on = ["0.14"]
 
 [params.unreleased]
 docs = ["2.20"]
+http-add-on = []
 
 # Site fonts served from @fontsource npm packages (see module mounts).
 # Browse available options at https://fonts.google.com.
@@ -183,10 +185,16 @@ pre = "fas fa-lock"
 weight = 5
 
 [[menu.buttons]]
+url = "/http-add-on/"
+name = "HTTP Add-on"
+pre = "fas fa-globe"
+weight = 6
+
+[[menu.buttons]]
 url = "/blog"
 name = "Blog"
 pre = "fas fa-rss"
-weight = 6
+weight = 7
 
 # Navbar and footer menu
 [[menu.docs]]
@@ -291,6 +299,14 @@ url = "/docs/troubleshooting/"
 name = "Troubleshooting Guide"
 parent = "docs"
 weight = 10
+
+[[menu.docs]]
+url = "/http-add-on/"
+name = "HTTP Add-on"
+parent = "docs"
+weight = 11
+[menu.docs.params]
+prependDivider = true
 
 [[menu.main]]
 url = "/blog"

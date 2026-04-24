@@ -1,7 +1,8 @@
 {{ $docsLatest := index site.Params.versions.docs 0 -}}
+{{ $httpAddonLatest := index (index site.Params.versions "http-add-on") 0 -}}
 
-/docs     /docs/{{ $docsLatest }}     301!
-/docs/latest/*     /docs/{{ $docsLatest }}/:splat
+/docs            /docs/{{ $docsLatest }}     302
+/docs/latest/*   /docs/{{ $docsLatest }}/:splat     302
 
 {{ $topLevel := slice "scalers" "faq" "troubleshooting" "operate" "concepts" "deploy" -}}
 {{ range $name := $topLevel -}}
@@ -9,6 +10,9 @@
 {{ $name | printf "/%-29s" }}  /docs/{{ $docsLatest }}/{{ $name }}     301!
 {{ $docp | printf "/%-29s" }}  /docs/{{ $docsLatest }}/{{ $name }}/:splat
 {{ end -}}
+
+/http-add-on             /http-add-on/{{ $httpAddonLatest }}     302
+/http-add-on/latest/*    /http-add-on/{{ $httpAddonLatest }}/:splat     302
 
 {{ $scalers    := where site.RegularPages "Section" "scalers" -}}
 {{- range $scalers -}}
