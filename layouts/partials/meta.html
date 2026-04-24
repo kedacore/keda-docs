@@ -24,8 +24,9 @@ When $version is a released version that is not the latest,
 add a "noindex" meta tag to exclude it from search engines.
 Unreleased and latest versions remain indexable.
 */}}
-{{ if and (ne $version "") (eq .Section "docs") }}
-{{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}
+{{ $sectionVersions := index site.Params.versions .Section }}
+{{ if and (ne $version "") $sectionVersions }}
+{{ $isOldVersion := and (in $sectionVersions $version) (ne $version (index $sectionVersions 0)) }}
 {{ if $isOldVersion }}
 <meta name="robots" content="noindex">
 {{ end }}
@@ -39,6 +40,7 @@ Unreleased and latest versions remain indexable.
 <meta name="twitter:image:alt" content="{{ $imgAlt }}">
 
 <meta name="docsearch:language" content="en" />
+<meta name="docsearch:product" content="{{ .Section }}" />
 <meta name="docsearch:version" content="{{ $version }}" />
 
 {{/* OpenGraph metadata */}}
