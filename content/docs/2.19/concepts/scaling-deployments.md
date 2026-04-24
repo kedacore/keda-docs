@@ -253,3 +253,186 @@ metadata:
     team: backend
     foo.bar/environment: bf5011472247b67cce3ee7b24c9a08c5
     foo.bar/version: "1"
+
+## Multi-Trigger Failover
+
+Multi-trigger failover provides resilient autoscaling by automatically switching between primary and secondary triggers when the primary trigger becomes unhealthy. This ensures your applications continue scaling correctly even when external metric sources experience outages.
+
+### How It Works
+
+1. **Primary trigger** (index 0) serves metrics under normal conditions
+2. **Failure detection**: KEDA tracks consecutive failures for the primary trigger
+3. **Automatic failover**: When failures exceed `failAfter` threshold, KEDA switches to the **secondary trigger** (index 1)
+4. **Recovery**: When primary recovers and failures drop below `recoverAfter` threshold, KEDA returns to the primary trigger
+
+### Key Features
+
+- **Debouncing**: Prevents flapping between triggers on transient errors
+- **Health tracking**: Per-trigger failure counters in `status.health`
+- **Active trigger status**: `status.activeTriggerIndex` shows which trigger is active (0 = primary, 1 = secondary)
+- **Events**: `KEDAScalerFailedOver` and `KEDAScalerRecovered` events emitted on transitions
+- **Transparent to HPA**: Kubernetes HPA sees seamless metric source without interruption
+
+### Configuration
+
+Enable failover by adding a `fallback` configuration to your **primary trigger** (index 0):
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: my-scaledobject
+spec:
+  scaleTargetRef:
+    name: my-deployment
+  triggers:
+    - type: metrics-api
+      name: primary-endpoint
+      metadata:
+        url: "https://primary.example.com/metrics"
+        targetValue: "10"
+        valueLocation: desired_replicas
+      fallback:
+        behavior: "failover"
+        failoverThresholds:
+          failAfter: 3      # Switch to secondary after 3 consecutive failures
+          recoverAfter: 5   # Return to primary when failures < 5
+    - type: metrics-api
+      name: secondary-endpoint
+      metadata:
+        url: "https://secondary.example.com/metrics"
+        targetValue: "10"
+        valueLocation: desired_replicas
+```
+
+**Parameters:**
+
+- `behavior`: Must be `"failover"` for multi-trigger failover
+- `failAfter`: Number of consecutive failures before switching to secondary (minimum: 1)
+- `recoverAfter`: Number of failures below which primary is considered recovered (minimum: 0)
+
+**Important Notes:**
+
+- Failover requires **exactly 2 triggers** (primary at index 0, secondary at index 1)
+- Failover configuration must be on the **primary trigger only**
+- Both triggers should provide the same metric semantics (e.g., both return replica counts)
+- Recovery uses optimistic approach: attempts primary immediately when below threshold
+
+### Monitoring Failover
+
+**Check active trigger:**
+```bash
+kubectl describe scaledobject my-scaledobject
+
+# Look for:
+# Status:
+#   Active Trigger Index: 1
+#   Health:
+#     s0-metrics-api-desired_replicas:
+#       Number Of Failures: 5
+#       Status: Failing
+```
+
+**View failover events:**
+```bash
+kubectl get events --field-selector involvedObject.name=my-scaledobject
+
+# Events:
+# Normal KEDAScalerFailedOver   Failover from trigger 0 to trigger 1 due to health threshold exceeded
+# Normal KEDAScalerRecovered     Recovered from trigger 1 to trigger 0 as health threshold recovered
+```
+
+### Common Patterns
+
+**1. Primary API + Static Fallback:**
+```yaml
+triggers:
+  - type: metrics-api
+    metadata:
+      url: "https://api.example.com/metrics"
+      targetValue: "10"
+    fallback:
+      behavior: "failover"
+      failoverThresholds:
+        failAfter: 3
+        recoverAfter: 5
+  - type: metrics-api
+    metadata:
+      url: "https://static-backup.blob.core.windows.net/metrics.json"
+      targetValue: "10"
+```
+
+**2. Regional Failover:**
+```yaml
+triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: https://prometheus-us-east.example.com
+      query: sum(rate(http_requests_total[2m]))
+      threshold: "100"
+    fallback:
+      behavior: "failover"
+      failoverThresholds:
+        failAfter: 2
+        recoverAfter: 3
+  - type: prometheus
+    metadata:
+      serverAddress: https://prometheus-us-west.example.com
+      query: sum(rate(http_requests_total[2m]))
+      threshold: "100"
+```
+
+### Troubleshooting
+
+**Issue**: `activeTriggerIndex` stays at 0 despite primary failures
+
+**Causes**:
+- Failures not reaching `failAfter` threshold
+- Only one trigger defined (need exactly 2)
+- Fallback config on wrong trigger (must be on index 0)
+
+**Solution**: Check health status:
+```bash
+kubectl get scaledobject my-scaledobject -o jsonpath='{.status.health}'
+```
+
+---
+
+**Issue**: Constant flapping between triggers
+
+**Causes**:
+- `failAfter` threshold too low
+- `recoverAfter` threshold too high or too close to `failAfter`
+
+**Solution**: Increase debouncing gap:
+```yaml
+failAfter: 5        # Allow 5 failures before switching
+recoverAfter: 2     # Require < 2 failures to recover
+```
+
+---
+
+**Issue**: Events not emitted on failover
+
+**Causes**:
+- KEDA event recorder not configured
+- No actual trigger transition occurred
+
+**Solution**: Verify transition in status:
+```bash
+kubectl get scaledobject my-scaledobject -o jsonpath='{.status.activeTriggerIndex}'
+# Should change from 0 → 1 (failover) or 1 → 0 (recovery)
+```
+
+### Comparison with ScaledObject-Level Fallback
+
+KEDA supports two types of fallback:
+
+| Feature | ScaledObject-Level Fallback | Multi-Trigger Failover |
+|---------|----------------------------|------------------------|
+| **Scope** | All triggers fail | Single trigger fails |
+| **Behavior** | Synthetic metrics (fixed replicas) | Switch to secondary trigger |
+| **Configuration** | `spec.fallback` | `spec.triggers[0].fallback` |
+| **Use Case** | Emergency static scaling | High availability metric sources |
+
+You can use both simultaneously: trigger-level failover for HA, ScaledObject-level fallback as last resort.
