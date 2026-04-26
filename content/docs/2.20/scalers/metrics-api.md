@@ -24,6 +24,7 @@ triggers:
       activationTargetValue: "3.8"
       url: "http://api:3232/api/v1/stats"
       valueLocation: "components.worker.tasks"
+      timeout: "1000" # Optional. Custom timeout for the HTTP client used in this scaler
 ```
 
 **Parameter list:**
@@ -43,6 +44,7 @@ triggers:
 - `targetValue` - Target value to scale on. When the metric provided by the API is equal or higher to this value, KEDA will start scaling out. When the metric is 0 or less, KEDA will scale down to 0. (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
+- `timeout` - Timeout for this specific trigger. Can be given as a number (in milliseconds) or in a human-readable format like "30s". This value will override the value defined in KEDA_HTTP_DEFAULT_TIMEOUT. (Optional)
 - `aggregateFromKubeServiceEndpoints` - Whether to treat `url` as a kubernetes service and scrape/aggregate metrics for all of this service's endpoints. (Values: `true`, `false`, Default: `false`, Optional)
 - `aggregationType` - How to aggregate metrics when `aggregateFromKubeServiceEndpoints` is set to `true`, ignored otherwise. (Values: `average`, `sum`, `max`, `min`, Default: `average`, Optional)
 
