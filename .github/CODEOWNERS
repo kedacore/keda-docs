@@ -1,6 +1,6 @@
 # General owners
 *                      @kedacore/keda-docs
-# HTTP Add-on
+# HTTP Add-on
 content/http-add-on/   @kedacore/keda-http-maintainers @kedacore/keda-docs
-# KEDA core
+# KEDA core
 content/docs/          @kedacore/keda-core-maintainers @kedacore/keda-docs
