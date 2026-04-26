@@ -49,8 +49,6 @@ The following metrics are being gathered:
 | `keda.cloudeventsource.events.emitted.count` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
 
-The `keda.scaler.empty.upstream.responses` metric includes the `namespace`, `scaledResource`, `triggerName`, `metricName`, `resourceType`, and `ignoreNullValues` attributes so you can identify which scaler emitted the empty upstream response.
-
 #### Deprecated metrics
 
 The following metrics are exposed as well, but are deprecated and will be removed in KEDA v2.16.
