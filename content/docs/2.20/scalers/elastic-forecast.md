@@ -1,11 +1,17 @@
 +++
-title = "Elastic Forecast"
+title = "Elastic Forecast (Experimental)"
 availability = "v2.20+"
 maintainer = "Community"
 category = "Data & Storage"
 description = "Scale applications based on Elastic ML Forecasts."
 go_file = "elastic_forecast_scaler"
 +++
+
+> **Notice:**
+> - This is an experimental Elastic Forecast scaler [issue #7494](https://github.com/kedacore/keda/issues/7494).
+> - Its future is not guaranteed and depends on real-world usage.
+> - If you use this scaler, share your experience in the linked issue.
+> - Feedback will determine whether this scaler is maintained or phased out.
 
 ### Trigger Specification
 
