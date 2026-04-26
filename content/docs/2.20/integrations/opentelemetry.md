@@ -47,6 +47,8 @@ The following metrics are being gathered:
 | `keda.internal.scale.loop.latency.seconds` | Total deviation between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
 | `keda.cloudeventsource.events.emitted.count` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
+| `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
+| `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
 
 #### Deprecated metrics
 
