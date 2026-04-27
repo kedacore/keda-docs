@@ -86,6 +86,61 @@ As an alternative to using environment variables, you can authenticate with the 
 - `username` - The username credential for connecting to the MSSQL instance.
 - `password` - The password credential for connecting to the MSSQL instance.
 
+**Azure AD Workload Identity authentication:**
+
+> Available in v2.21+
+
+#### Prerequisites:
+- The Azure SQL server has an Azure AD admin configured. See [Microsoft Learn: Configure and manage Microsoft Entra authentication with Azure SQL](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-configure).
+- The user-assigned managed identity (UAMI) is federated to the Kubernetes service account used to authenticate against Azure SQL. See the [Considerations about Federations and Overrides](./../authentication-providers/azure-ad-workload-identity.md#considerations-about-federations-and-overrides) section, and the [azure-workload-identity federated credential docs](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html) for the underlying setup.
+- A contained database user mapped to the UAMI exists in the target database, e.g. `CREATE USER [<UAMI_NAME>] FROM EXTERNAL PROVIDER;`, and has been granted access to the objects referenced in the scaler's query. See [Microsoft Learn: Azure AD authentication overview](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-overview).
+
+When `azure-workload` pod identity is used, KEDA acquires an Azure AD access token and uses it as the credential for each query — no `password` / `passwordFromEnv` is required. The scaler accepts the same individual connection parameters as **Password authentication**, with `username` set to the UAMI's contained-database user name:
+
+- `host` - FQDN of the Azure SQL server (e.g. `<server-name>.database.windows.net`).
+- `port` - The port number of the MSSQL endpoint. (Default: `1433`, Optional)
+- `database` - The name of the database to query.
+- `username` - Name of the UAMI's contained database user.
+
+#### Remarks
+
+KEDA refreshes the Azure AD access token automatically before its expiry. Tokens are scoped to the Azure SQL resource (`https://database.windows.net/.default`).
+
+#### Example
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-mssql-wi-auth
+spec:
+  podIdentity:
+    provider: azure-workload
+    # Optional-> identityId: <UAMI_IDENTITY_ID>
+    # Optional-> identityTenantId: <UAMI_TENANT_ID>
+
+---
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mssql-scaledobject
+spec:
+  scaleTargetRef:
+    name: consumer # e.g. the name of the resource to scale
+  triggers:
+    - type: mssql
+      authenticationRef:
+        name: azure-mssql-wi-auth
+      metadata:
+        host: <AZURE_SQL_SERVER_FQDN>
+        port: "1433"
+        database: <DB_NAME>
+        username: <UAMI_NAME>
+        query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+        targetValue: 1
+```
+
 ### Example
 
 The following is an example of how to deploy a scaled object with the `mssql` scale trigger that uses `TriggerAuthentication` and a connection string.
