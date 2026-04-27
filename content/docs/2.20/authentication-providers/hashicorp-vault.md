@@ -4,12 +4,14 @@ title = "Hashicorp Vault secret"
 
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method. There's multiple methods for authentication; For kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) or provide the serviceAccountName that can authenticate to kubernetes in the namespace of the ScaledObject/ScaledJob resource (usually `default`). If using serviceAccountName make sure to grant KEDA Operator `create serviceaccounts/token` permissions. This is set in the helm chart via `permissions.operator.restrict.allowAllServiceAccountTokenCreation=true` For token auth method provide the token.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method. There's multiple methods for authentication; For kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) or provide the serviceAccountName that can authenticate to kubernetes in the namespace of the ScaledObject/ScaledJob resource (usually `default`). If using serviceAccountName make sure to grant KEDA Operator `create serviceaccounts/token` permissions. This is set in the helm chart via `permissions.operator.restrict.allowAllServiceAccountTokenCreation=true`. For token auth method, we recommend reading the Vault token from a Kubernetes Secret via `credential.tokenFrom.secretKeyRef`.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
 
 > Since version `1.5.0` Vault secrets backend **version 2** is supported. 
 > The support for Vault secrets backend **version 1** was added on version `2.10`.
+>
+> Starting with KEDA `v2.20`, `spec.hashiCorpVault.credential.token` is deprecated and will be removed in a future major release. Use `spec.hashiCorpVault.credential.tokenFrom.secretKeyRef` instead. If both are set, `tokenFrom.secretKeyRef` takes precedence.
 
 ```yaml
 hashiCorpVault:                                               # Optional.
@@ -19,7 +21,11 @@ hashiCorpVault:                                               # Optional.
   role: {hashicorp-vault-role}                                # Optional.
   mount: {hashicorp-vault-mount}                              # Optional.
   credential:                                                 # Optional.
-    token: {hashicorp-vault-token}                            # Optional. Authenticate to vault via a supplied token
+    tokenFrom:                                                # Optional. Recommended for token authentication.
+      secretKeyRef:
+        name: {kubernetes-secret-name}                        # Required when tokenFrom is used.
+        key: {kubernetes-secret-key}                          # Required when tokenFrom is used.
+    token: {hashicorp-vault-token}                            # Optional. Deprecated, kept for backward compatibility.
     serviceAccount: {path-to-service-account-file}            # Optional. Authenticate to vault via JWT token in keda operator pod
     serviceAccountName: {service-account-name-for-auth}       # Optional. Requires serviceaccounts/token create permissions. Authenticate to vault via JWT token from service account in ScaledObject/ScaledJob's namespace
   secrets:                                                    # Required.
@@ -38,8 +44,17 @@ hashiCorpVault:                                               # Optional.
 ```
 
 ### Example
-Vault Secret can be used to provide authentication for a Scaler. If using the [Prometheus scaler](https://keda.sh/docs/2.3/scalers/prometheus/), mTls can be used by the `ScaledObject` to authenticate to the Prometheus server. The following example would request a certificate to Vault dynamically.
+Vault Secret can be used to provide authentication for a Scaler. If using the [Prometheus scaler](https://keda.sh/docs/2.20/scalers/prometheus/), mTls can be used by the `ScaledObject` to authenticate to the Prometheus server. The following example stores the Vault token in a Kubernetes Secret and then requests a certificate from Vault dynamically.
 ```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-token
+  namespace: default
+type: Opaque
+stringData:
+  token: {hashicorp-vault-token}
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
@@ -50,7 +65,10 @@ spec:
     address: {hashicorp-vault-address}
     authentication: token
     credential:
-      token: {hashicorp-vault-token}
+      tokenFrom:
+        secretKeyRef:
+          name: vault-token
+          key: token
     secrets:
       - key: "ca_chain"
         parameter: "ca"
@@ -88,3 +106,5 @@ spec:
       authenticationRef:
         name: { trigger-authentication-mame }
 ```
+
+If you currently use `credential.token`, KEDA still accepts it for backward compatibility, but admission warnings will recommend switching to `credential.tokenFrom.secretKeyRef`.
