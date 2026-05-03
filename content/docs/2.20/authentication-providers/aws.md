@@ -175,3 +175,45 @@ This policy attached to KEDA's role will allow KEDA to assume other roles, now y
   ]
 }
 ```
+
+#### Cross-account isolation with ExternalId
+
+In multi-tenant environments where a shared KEDA operator assumes roles in different accounts, you can enforce [confused deputy protection](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html) by requiring an `ExternalId` in the workload role's trust policy.
+
+Add the `sts:ExternalId` condition to the workload role's trust policy:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::ACCOUNT:role/KEDA_ROLE_NAME"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": {
+          "sts:ExternalId": "YOUR_UNIQUE_EXTERNAL_ID"
+        }
+      }
+    }
+  ]
+}
+```
+
+Then pass the `externalId` via `TriggerAuthentication.podIdentity.externalID` alongside `roleArn`:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: aws-trigger-auth
+  namespace: my-namespace
+spec:
+  podIdentity:
+    externalID: "YOUR_UNIQUE_EXTERNAL_ID"
+    roleArn: "arn:aws:iam::ACCOUNT:role/WORKLOAD_ROLE"
+```
+
+> ℹ️ **NOTE:** `externalId` is optional. If not set, KEDA calls `AssumeRole` without an ExternalId, which is the default behavior. `externalId` is only applied to `AssumeRole` — `AssumeRoleWithWebIdentity` does not accept an ExternalId parameter.
