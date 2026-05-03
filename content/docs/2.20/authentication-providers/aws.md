@@ -214,7 +214,6 @@ spec:
   podIdentity:
     externalID: "YOUR_UNIQUE_EXTERNAL_ID"
     roleArn: "arn:aws:iam::ACCOUNT:role/WORKLOAD_ROLE"
-    
 ```
 
 > ℹ️ **NOTE:** `externalId` is optional. If not set, KEDA calls `AssumeRole` without an ExternalId, which is the default behavior. `externalId` is only applied to `AssumeRole` — `AssumeRoleWithWebIdentity` does not accept an ExternalId parameter.
