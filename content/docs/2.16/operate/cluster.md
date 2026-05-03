@@ -8,11 +8,13 @@ weight = 100
 
 ### Kubernetes Compatibility
 
-The supported window of Kubernetes versions with KEDA is known as "N-2" which means that KEDA will provide support for running on N-2 at least.
+KEDA is community-supported. For all support options, see the [Support](/support/) page.
 
-However, maintainers can decide to extend this by supporting more minor versions based on the required CRDs being used; but there is no guarantee.
+The tested window of Kubernetes versions with KEDA follows an "N-2" approach, which means each KEDA release is generally tested against N-2 Kubernetes minor versions at minimum.
 
-As a reference, this compatibility matrix shows supported k8s versions per KEDA version:
+However, maintainers can decide to extend this by testing more minor versions based on the required CRDs in use, but there is no guarantee.
+
+As a reference, this compatibility matrix shows the Kubernetes versions tested for each KEDA version:
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |

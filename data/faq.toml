@@ -4,7 +4,13 @@ a = "KEDA stands for Kubernetes Event-driven Autoscaler. It is built to be able 
 
 [[qna]]
 q = "What are the prerequisites for using KEDA?"
-a = "KEDA is designed to be run on any Kubernetes cluster. It uses a CRD (custom resource definition) and the Kubernetes metric server so you will have to use a Kubernetes version which supports these. Any Kubernetes cluster >= 1.13.0 has been tested and should work."
+a = """
+KEDA is community-supported. For all support options, see the [Support](/support/) page.
+
+KEDA releases are tested against specific Kubernetes versions. Refer to the documentation for the tested versions for your KEDA release.
+
+KEDA uses a CRD (custom resource definition) and the Kubernetes metric server, so you will need a Kubernetes version that supports these components.
+"""
 
 [[qna]]
 q = "Does KEDA depend on any Azure service?"

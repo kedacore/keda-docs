@@ -60,9 +60,9 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `ensureEvenDistributionOfPartitions` - When set to `true`, the scaler will ensure that the number of replicas is even across the topic partitions. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [sarama](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
-- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication
-- `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication
-- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication
+- `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
+- `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
+- `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `awsRegion` - AWS region of your MSK cluster. (Optional, required for AWS MSK IAM authentication)
 
@@ -87,7 +87,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 
  You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, password or keytab, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
- Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively. For AWS MSK IAM authentication, you only need to set `awsRegion` in ScaledObject and you also need to enable TLS by setting `tls` to enable.
+ Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence. For AWS MSK IAM authentication, you only need to set `awsRegion` in ScaledObject and you also need to enable TLS by setting `tls` to enable.
 
 
 **Credential based authentication:**

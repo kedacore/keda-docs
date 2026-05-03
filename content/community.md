@@ -15,7 +15,7 @@ description = "How you can get involved with the KEDA ecosystem"
 
 ## Partners
 
- KEDA is supported and built by our community, including the following companies:
+ KEDA is community-supported and built by our community, including the following companies:
 
 {{< partners-icons >}}
 
