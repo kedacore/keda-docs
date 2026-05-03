@@ -202,32 +202,19 @@ Add the `sts:ExternalId` condition to the workload role's trust policy:
 }
 ```
 
-Then pass the `awsExternalId` via `TriggerAuthentication.secretTargetRef` alongside `awsRoleArn`:
+Then pass the `externalId` via `TriggerAuthentication.podIdentity.externalID` alongside `roleArn`:
 
 ```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: keda-aws-creds
-  namespace: my-namespace
-type: Opaque
-stringData:
-  AWS_ROLE_ARN: "arn:aws:iam::ACCOUNT:role/WORKLOAD_ROLE"
-  AWS_EXTERNAL_ID: "YOUR_UNIQUE_EXTERNAL_ID"
----
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: aws-trigger-auth
   namespace: my-namespace
 spec:
-  secretTargetRef:
-    - parameter: awsRoleArn
-      name: keda-aws-creds
-      key: AWS_ROLE_ARN
-    - parameter: awsExternalId
-      name: keda-aws-creds
-      key: AWS_EXTERNAL_ID
+  podIdentity:
+    externalID: "YOUR_UNIQUE_EXTERNAL_ID"
+    roleArn: "arn:aws:iam::ACCOUNT:role/WORKLOAD_ROLE"
+    
 ```
 
-> ℹ️ **NOTE:** `awsExternalId` is optional. If not set, KEDA calls `AssumeRole` without an ExternalId, which is the default behavior. `awsExternalId` is only applied to `AssumeRole` — `AssumeRoleWithWebIdentity` does not accept an ExternalId parameter.
+> ℹ️ **NOTE:** `externalId` is optional. If not set, KEDA calls `AssumeRole` without an ExternalId, which is the default behavior. `externalId` is only applied to `AssumeRole` — `AssumeRoleWithWebIdentity` does not accept an ExternalId parameter.
