@@ -88,7 +88,7 @@ As an alternative to using environment variables, you can authenticate with the 
 
 **Azure AD Workload Identity authentication:**
 
-> Available in v2.21+
+> Available in v2.20+
 
 #### Prerequisites:
 - The Azure SQL server has an Azure AD admin configured. See [Microsoft Learn: Configure and manage Microsoft Entra authentication with Azure SQL](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-configure).
