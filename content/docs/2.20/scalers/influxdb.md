@@ -28,14 +28,13 @@ triggers:
       queryType: 'InfluxQL' # Required for Influx v3. Ignored for v2. See details in "Parameter List" section
       influxVersion: '2' # Optional: Defaults to 2.
       database: 'some-influx-db' # Required for Influx v3
-      authToken: some-auth-token
-      authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of `authToken` parameter. See details in "Parameter List" section
+      authTokenFromEnv: INFLUXDB_AUTH_TOKEN # Optional: You can use this instead of providing the auth token via TriggerAuthentication. See details in "Parameter List" section
 ```
 
 **Parameter list:**
 
-- `authToken` - Authentication token needed for the InfluxDB client to communicate with an associated server.
-- `authTokenFromEnv` - Defines the authorization token, similar to `authToken`, but reads it from an environment variable on the scale target.
+- `authToken` - **DEPRECATED**: Setting `authToken` directly in `metadata` is deprecated and removed as of KEDA v2.20. Use `authTokenFromEnv` or provide the token via TriggerAuthentication (`authParams`, see "Authentication Parameters" section) instead.
+- `authTokenFromEnv` - Defines the authorization token by reading it from an environment variable on the scale target.
 - `organizationName` - Organization name needed for the client to locate all information contained in that [organization](https://docs.influxdata.com/influxdb/v2.0/organizations/) such as buckets, tasks, etc (Optional, Required if `influxVersion: '2'`).
 - `organizationNameFromEnv` - Defines the organization name, similar to `organizationName`, but reads it from an environment variable on the scale target.
 - `serverURL` - Holds the url value of the InfluxDB server.
