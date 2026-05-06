@@ -181,12 +181,12 @@ and uses the next version, instead of the current one. Ensure that Kubernetes cl
 
 Ensure that compatibility matrix on `content/docs/{next-version}/operate/cluster.md` is updated with the compatibilities for the incoming version.
 
-Update the new version in the `params.unreleased.docs` list in [config.toml](config.toml).
+Update the new version in the `params.unreleased.docs` list in [hugo.toml](hugo.toml).
 
 ### Publishing a new version
 
 Once a version is ready to be published, we must add the version to the
-`params.versions.docs` list in [config.toml](config.toml).
+`params.versions.docs` list in [hugo.toml](hugo.toml).
 
 More recent versions should be placed first in the list (ordering _does_ matter
 because the first element in that list is considered the latest version).
@@ -255,7 +255,7 @@ To add a new filter option, simply follow these steps:
    ```text
    "FILTER_NAME" $scalers.Params.FILTER_NAME
    ```
-4. In `config.toml`, in the `params.lunr` section, add your new filter option's name to both arrays:
+4. In `hugo.toml`, in the `params.lunr` section, add your new filter option's name to both arrays:
    ```toml
    vars = ["title", "maintainer", "description", "availability", "category", "type", "FILTER_NAME"]
    params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
@@ -311,7 +311,7 @@ Are you using KEDA in production? Do you want to become a [listed user](https://
 You can easily get listed by following these steps:
 
 1. Upload your logo to `static/img/logos/` _(350x180)_
-2. Configure your company as a new user in `config.toml` _(sorted alphabetically)_
+2. Configure your company as a new user in `hugo.toml` _(sorted alphabetically)_
 
 ```toml
 [[params.users]]
@@ -347,7 +347,7 @@ If your organization meets these requirements, you can request to be listed by f
 
 1. Open a pull request and provide evidence in the PR description showing how the requirements above have been met.
 2. Upload your logo to `static/img/logos/` _(350x180)_
-3. Configure your company as a new vendor in `config.toml` _(sorted alphabetically)_
+3. Configure your company as a new vendor in `hugo.toml` _(sorted alphabetically)_
 
 ```toml
 [[params.vendors]]
