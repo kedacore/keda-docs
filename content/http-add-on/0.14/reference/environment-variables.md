@@ -95,8 +95,8 @@ When set, they take precedence over their replacements.
 
 | Variable                                            | Default      | Description                                                                         |
 | --------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- |
-| `KEDAHTTP_OPERATOR_EXTERNAL_SCALER_SERVICE`         | _(required)_ | Name of the Kubernetes Service for the external scaler.                             |
-| `KEDAHTTP_OPERATOR_EXTERNAL_SCALER_PORT`            | `8091`       | Port for the external scaler Service.                                               |
+| `KEDA_HTTP_OPERATOR_EXTERNAL_SCALER_SERVICE`        | _(required)_ | Name of the Kubernetes Service for the external scaler.                             |
+| `KEDA_HTTP_OPERATOR_EXTERNAL_SCALER_PORT`           | `8091`       | Port for the external scaler Service.                                               |
 | `KEDA_HTTP_OPERATOR_NAMESPACE`                      | `""`         | Namespace in which the operator is running.                                         |
 | `KEDA_HTTP_OPERATOR_WATCH_NAMESPACE`                | `""`         | Namespace to watch for resources. Empty watches all namespaces.                     |
 | `KEDA_HTTP_OPERATOR_LEADER_ELECTION_LEASE_DURATION` | _(unset)_    | Leader election lease duration. When unset, the controller-runtime default is used. |
