@@ -9,6 +9,8 @@
 {{ $latest        := index (index site.Params.versions .Section) 0 }}
 {{ $isLatest      := eq $version $latest }}
 {{ $isNextVersion := not (in (index site.Params.versions .Section) $version) }}
+{{ $productNames  := dict "docs" "KEDA" "http-add-on" "HTTP Add-on" }}
+{{ $productName   := index $productNames .Section }}
 
 <!-- Check if latest version of this page exists -->
 {{ $latestUrl := replaceRE $version $latest .RelPermalink }}
@@ -19,11 +21,12 @@
   {{ end }}
 {{ end }}
 
+<span class="docsearch-lvl0" hidden>{{ $productName }} v{{ $version }}</span>
 <section class="hero">
   <div class="hero-body">
     <div class="container">
       <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
-        {{ $title }}
+        <span class="title-text">{{ $title }}</span>
         <sup>
           {{ if $isLatest }}
           <span class="tag is-success">Latest</span>

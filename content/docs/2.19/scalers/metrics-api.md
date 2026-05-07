@@ -29,8 +29,9 @@ triggers:
 **Parameter list:**
 
 - `url` - Full URL of the API operation to call to get the metric value (eg. `http://app:1317/api/v1/stats`).
-  If `aggregateFromKubeServiceEndpoints` is set to `true` then the port from this URL must be the pod port
-  which is targeted by the service
+  If `aggregateFromKubeServiceEndpoints` is set to `true`, the URL must use Kubernetes DNS format:
+  `http://<service>.<namespace>[.svc.cluster.local]:<pod-port>/path`, where the port must be the pod port
+  targeted by the service, not the service port.
 - `format` - One of the following formats: `json`, `xml`, `yaml`, `prometheus`. (Default: `json`, Optional)
 - `valueLocation` - The location of the metric value in the response payload. The value is format specific.
   * `json` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
@@ -50,6 +51,30 @@ triggers:
 when setting `aggregateFromKubeServiceEndpoints: true` in metadata, Metrics API Scaler is able to compute basic `average`, `sum`, `min` or `max` aggregation asked by `aggregationType` metadata from all endpoint targets of a kubernetes API service, which is a handy feature in an environment where one didn't set up a metric aggregator/scraping stack (i.e prometheus), or simply doesn't want to use their monitoring stack to fetch and serve metrics from customers workload in their own kubernetes clusters, and leave the metrics API's responsibility up to the customer
 
 This specific behavior comes from the fact that querying a kubernetes service directly (= setting `aggregateFromKubeServiceEndpoints: false`) would return the metric from a single replica randomly, depending on the load-balancing configuration for the service, and lead to inconsistent HPA average metric computation and eventually to scaling issues as metrics from all replicas won't be taken into account
+
+Here is an example of a ScaledObject using `aggregateFromKubeServiceEndpoints`:
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: http-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: metrics-api
+      metadata:
+        targetValue: "8.8"
+        url: "http://my-service.my-namespace.svc.cluster.local:8080/api/v1/stats"
+        valueLocation: "components.worker.tasks"
+        aggregateFromKubeServiceEndpoints: "true"
+        aggregationType: "sum"
+```
 
 ### Authentication Parameters
 

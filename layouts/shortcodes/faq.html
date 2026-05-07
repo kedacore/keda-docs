@@ -1,4 +1,4 @@
-{{ $faq := site.Data.faq.qna }}
+{{ $faq := hugo.Data.faq.qna }}
 
 {{ range $faq }}
 {{ $question := .q | markdownify }}

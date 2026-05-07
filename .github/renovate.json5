@@ -1,0 +1,35 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    // See https://docs.renovatebot.com/presets-config/#configbest-practices
+    "config:best-practices",
+    "customManagers:githubActionsVersions",
+    "schedule:monthly",
+    ":gitSignOff",
+    ":prHourlyLimitNone",
+  ],
+  commitBodyTable: true,
+  labels: ["dependencies"],
+  // Experimental: OSV-based vulnerability alerts for direct dependencies
+  osvVulnerabilityAlerts: true,
+  postUpdateOptions: ["npmDedupe"],
+  packageRules: [
+    {
+      matchManagers: ["github-actions"],
+      groupName: "GitHub Actions",
+    },
+    {
+      matchManagers: ["npm"],
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "npm Dependencies (non-major)",
+    },
+    {
+      matchFileNames: [".devcontainer/**"],
+      pinDigests: false,
+    },
+  ],
+  vulnerabilityAlerts: {
+    enabled: true,
+    addLabels: ["security"],
+  },
+}

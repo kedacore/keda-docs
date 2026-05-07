@@ -5,9 +5,7 @@
 {{ $docs     := site.Menus.docs }}
 {{ $social   := site.Params.social }}
 {{ $scalers  := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-{{ $versions := site.Params.versions.docs }}
-{{ $latest   := index $versions 0 }}
-<nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false }">
+<nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > $el.offsetHeight" :class="{ 'scrolled': scrolled }">
   <div class="container">
     <div class="navbar-brand is-left-padded" style="align-items: end;">
       <a class="navbar-item" href="{{ $home }}">
@@ -15,7 +13,7 @@
         <img src="{{ $url }}" style="transform: scale(2);" height="28" width="66" alt="Keda logo">
       </a>
 
-      <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.away="open = false" :class="{ 'is-active': open }">
+      <a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false" @click="open = !open" @click.outside="open = false" :class="{ 'is-active': open }">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -28,7 +26,7 @@
           <p class="control has-icons-left">
             <input class="input is-rounded" type="text" placeholder="Search" id="search-bar">
             <span class="icon is-small is-left">
-              <i class="fas fa-search"></i>
+              <i class="fas fa-magnifying-glass"></i>
             </span>
           </p>
         </div>
@@ -45,18 +43,18 @@
         </div>
         
         {{ define "main_nav_item" }}
-        {{ $versions := site.Params.versions.docs }}
-        {{ $latest   := index $versions 0 }}
-        {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+        {{ $url := replace .URL "/docs" "/docs/latest" }}
+        {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
         {{ $isExternal := hasPrefix .URL "http" }}
+        {{ if .Params.prependDivider }}<hr class="navbar-divider">{{ end }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ $url }}"{{ end }} {{ if $isExternal }} target="_blank"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with $url }} href="{{ . }}"{{ end }} {{ if $isExternal }} target="_blank"{{ end }}>
             <span>
               {{ .Name }}
             </span>
             {{ if $isExternal }}
               <span class="icon">
-                <i class="fas fa-xs fa-external-link-alt"></i>
+                <i class="fas fa-xs fa-up-right-from-square"></i>
               </span>
               {{ end }}
               {{ if .HasChildren }}
@@ -79,8 +77,10 @@
         {{ range $docs }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
+        {{ $url := replace .URL "/docs" "/docs/latest" }}
+        {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
         <div class="docs-menu--desktop navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with $url }} href="{{ . }}"{{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -91,15 +91,17 @@
 
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
-            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
             {{ $isExternal := hasPrefix .URL "http" }}
+            {{ $url := replace .URL "/docs" "/docs/latest" }}
+            {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
+            {{ if .Params.prependDivider }}<hr class="navbar-divider">{{ end }}
             <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
               <span>
                 {{ .Name }}
               </span>
               {{ if $isExternal }}
               <span class="icon has-text-white">
-                <i class="fas fa-xs fa-external-link-alt"></i>
+                <i class="fas fa-xs fa-up-right-from-square"></i>
               </span>
               {{ end }}
             </a>
@@ -131,7 +133,7 @@
               </span>
               {{ if $isExternal }}
               <span class="icon has-text-white">
-                <i class="fas fa-xs fa-external-link-alt"></i>
+                <i class="fas fa-xs fa-up-right-from-square"></i>
               </span>
               {{ end }}
             </a>
@@ -145,7 +147,7 @@
           </span>
           {{ if $isExternal }}
           <span class="icon has-text-white">
-            <i class="fas fa-xs fa-external-link-alt"></i>
+            <i class="fas fa-xs fa-up-right-from-square"></i>
           </span>
           {{ end }}
         </a>
@@ -161,16 +163,3 @@
     </div>
   </div>
 </nav>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-<script>
-        $(function () {
-            $(document).scroll(function () {
-                var $nav = $("#mainnav");
-                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-            });
-        });
-    </script>

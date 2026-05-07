@@ -17,6 +17,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaler_metrics_value` - The current value for each scaler's metric that would be used by the HPA in computing the target average.
 - `keda_scaler_metrics_latency_seconds` - The latency of retrieving current metric from each scaler.
 - `keda_scaler_detail_errors_total` - The number of errors encountered for each scaler.
+- `keda_scaler_empty_upstream_responses_total` - The number of times a scaler returned an empty response from its upstream source (e.g. a Prometheus query returning no results).
 - `keda_scaled_object_errors_total` - The number of errors that have occurred for each ScaledObject.
 - `keda_scaled_job_errors_total` - The number of errors that have occurred for each ScaledJob.
 - `keda_resource_registered_total` - Total number of KEDA custom resources per namespace for each custom resource type (CRD) handled by the operator.
