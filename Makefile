@@ -4,6 +4,7 @@ HTMLTEST_ARGS?=--skip-external
 
 DOCS=public/docs
 LATEST_VERSION=$(shell grep -e '^docs' config.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
+HTTP_ADDON_LATEST_VERSION=$(shell grep -e '^http-add-on' config.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
 
 # Use $(HTMLTEST) in PATH, if available; otherwise, we'll get a copy
 ifeq (, $(shell which $(HTMLTEST)))
@@ -22,9 +23,14 @@ make-redirects-for-checking:
 		echo "Failed to extract LATEST_VERSION. Cannot setup symlinks for checking"; \
 		exit 1; \
 	fi
+	@if [ -z $(HTTP_ADDON_LATEST_VERSION) ]; then \
+		echo "Failed to extract HTTP_ADDON_LATEST_VERSION. Cannot setup symlinks for checking"; \
+		exit 1; \
+	fi
 	@echo "Creating symlinks of 'latest' to $(LATEST_VERSION) for the purpose of link checking"
 	(cd public && rm -f scalers && ln -s docs/$(LATEST_VERSION)/scalers scalers)
 	(cd public/docs && rm -f latest && ln -s $(LATEST_VERSION) latest)
+	(cd public/http-add-on && rm -f latest && ln -s $(HTTP_ADDON_LATEST_VERSION) latest)
 
 get-link-checker:
 	rm -Rf $(HTMLTEST_DIR)/bin

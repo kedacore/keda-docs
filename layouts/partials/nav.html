@@ -1,5 +1,5 @@
 {{ $here           := .RelPermalink }}
-{{ $docs           :=  where site.Sections "Section" "docs" }}
+{{ $docs           :=  where site.Sections "Section" .Section }}
 {{ $currentSection := .CurrentSection }}
 {{ $root           := .FirstSection }}
 {{ $thisVersion    := index (split .File.Path "/") 1 }}

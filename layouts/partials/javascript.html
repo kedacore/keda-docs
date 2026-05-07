@@ -10,8 +10,11 @@
 {{ end }}
 
 {{/* DocSearch */}}
-{{ $latest := index site.Params.versions.docs 0 }}
-{{ $docsearchOpts := dict "targetPath" "js/docsearch.js" "params" (dict "latest" $latest "apiKey" site.Params.docsearch.apiKey "appId" site.Params.docsearch.appId "indexName" site.Params.docsearch.indexName) }}
+{{ $latestDocs := index site.Params.versions.docs 0 }}
+{{ $latestHttpAddon := "" }}
+{{ with index site.Params.versions "http-add-on" }}{{ $latestHttpAddon = index . 0 }}{{ end }}
+{{ $dsParams := dict "latestDocs" $latestDocs "latestHttpAddon" $latestHttpAddon "apiKey" site.Params.docsearch.apiKey "appId" site.Params.docsearch.appId "indexName" site.Params.docsearch.indexName }}
+{{ $docsearchOpts := dict "targetPath" "js/docsearch.js" "params" $dsParams }}
 {{ $docsearch := resources.Get "js/docsearch.js" | js.Build $docsearchOpts }}
 {{ if $inDevMode }}
 <script src="{{ $docsearch.RelPermalink }}" defer></script>

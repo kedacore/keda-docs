@@ -27,6 +27,8 @@
             {{ $url := "" }}
             {{ if (hasPrefix .URL "/docs") }}
             {{ $url = replaceRE "/docs" (printf "/docs/%s" $docsL) .URL }}
+            {{ else if (hasPrefix .URL "/http-add-on/") }}
+            {{ $url = replace .URL "/http-add-on/" "/http-add-on/latest/" }}
             {{ else }}
             {{ $url = .URL }}
             {{ end }}

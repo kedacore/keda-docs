@@ -5,8 +5,6 @@
 {{ $docs     := site.Menus.docs }}
 {{ $social   := site.Params.social }}
 {{ $scalers  := where site.RegularPages ".CurrentSection.Title" "Scalers" }}
-{{ $versions := site.Params.versions.docs }}
-{{ $latest   := index $versions 0 }}
 <nav id="mainnav" style="padding:10px" class="navbar is-transparent has-background-pattern is-fixed-top" role="navigation" aria-label="main navigation" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > $el.offsetHeight" :class="{ 'scrolled': scrolled }">
   <div class="container">
     <div class="navbar-brand is-left-padded" style="align-items: end;">
@@ -45,12 +43,12 @@
         </div>
         
         {{ define "main_nav_item" }}
-        {{ $versions := site.Params.versions.docs }}
-        {{ $latest   := index $versions 0 }}
-        {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
+        {{ $url := replace .URL "/docs" "/docs/latest" }}
+        {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
         {{ $isExternal := hasPrefix .URL "http" }}
+        {{ if .Params.prependDivider }}<hr class="navbar-divider">{{ end }}
         <div class="navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ $url }}"{{ end }} {{ if $isExternal }} target="_blank"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with $url }} href="{{ . }}"{{ end }} {{ if $isExternal }} target="_blank"{{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -79,8 +77,10 @@
         {{ range $docs }}
         {{ $isExternal := hasPrefix .URL "http" }}
         {{ if .HasChildren }}
+        {{ $url := replace .URL "/docs" "/docs/latest" }}
+        {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
         <div class="docs-menu--desktop navbar-item is-size-5-desktop has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless"{{ with .URL }} href="{{ . }}{{ $latest }}"{{ end }}>
+          <a class="navbar-link is-arrowless"{{ with $url }} href="{{ . }}"{{ end }}>
             <span>
               {{ .Name }}
             </span>
@@ -91,8 +91,10 @@
 
           <div class="navbar-dropdown is-radiusless">
             {{ range .Children }}
-            {{ $url := replaceRE "/docs" (printf "/docs/%s" $latest) .URL }}
             {{ $isExternal := hasPrefix .URL "http" }}
+            {{ $url := replace .URL "/docs" "/docs/latest" }}
+            {{ $url  = replace $url "/http-add-on/" "/http-add-on/latest/" }}
+            {{ if .Params.prependDivider }}<hr class="navbar-divider">{{ end }}
             <a class="navbar-item" href="{{ $url }}"{{ if $isExternal }} target="_blank"{{ end }}>
               <span>
                 {{ .Name }}
