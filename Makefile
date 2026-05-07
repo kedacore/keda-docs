@@ -3,8 +3,8 @@ HTMLTEST?=htmltest # Specify as make arg if different
 HTMLTEST_ARGS?=--skip-external
 
 DOCS=public/docs
-LATEST_VERSION=$(shell grep -e '^docs' config.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
-HTTP_ADDON_LATEST_VERSION=$(shell grep -e '^http-add-on' config.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
+LATEST_VERSION=$(shell grep -e '^docs' hugo.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
+HTTP_ADDON_LATEST_VERSION=$(shell grep -e '^http-add-on' hugo.toml | grep -oe '[0-9][0-9]*.[0-9][0-9]' | head -1)
 
 # Use $(HTMLTEST) in PATH, if available; otherwise, we'll get a copy
 ifeq (, $(shell which $(HTMLTEST)))
