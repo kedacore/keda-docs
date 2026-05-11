@@ -11,7 +11,7 @@ go_file = "opensearch_scaler"
 
 This specification describes the `opensearch` trigger that scales based on result of an [OpenSearch search template](https://opensearch.org/docs/latest/search-plugins/search-template/) query or [OpenSearch query](https://opensearch.org/docs/latest/query-dsl/).
 
-The trigger requires `addresses`, `index`, `valueLocation`, and `targetValue`. Either `searchTemplateName` **or** `query` must also be specified, but not both. All other parameters are optional.
+The trigger always requires `addresses`, `index`, `valueLocation`, and `targetValue`. Either `searchTemplateName` **or** `query` must also be specified, but not both.
 
 The following example shows all available parameters (use either `searchTemplateName` **or** `query`, not both):
 
@@ -25,23 +25,24 @@ triggers:
       targetValue: "1.1"                         # required
       searchTemplateName: "my-search-template"   # required if query is not set
       # query: "my-query"                        # required if searchTemplateName is not set
-      username: "admin"                          # optional
-      passwordFromEnv: "OPENSEARCH_PASSWORD"     # optional
+      username: "admin"                          # required for basic auth (when enableTLS: "false")
+      passwordFromEnv: "OPENSEARCH_PASSWORD"     # required for basic auth (when enableTLS: "false")
       parameters: "param1:value1;param2:value2"  # optional
       activationTargetValue: "5.5"              # optional, default: 0
       unsafeSsl: "false"                        # optional, default: false
       enableTLS: "false"                        # optional, default: false
-      # caCert: "..."                           # optional, for mTLS (use TriggerAuthentication to avoid plain text)
-      # clientCert: "..."                       # optional, for mTLS (use TriggerAuthentication to avoid plain text)
-      # clientKey: "..."                        # optional, for mTLS (use TriggerAuthentication to avoid plain text)
+      # caCert: "..."                           # optional, for server certificate verification (basic auth and mTLS)
+      # clientCert: "..."                       # for mTLS (required when enableTLS: "true"; use TriggerAuthentication to avoid plain text)
+      # clientKey: "..."                        # for mTLS (required when enableTLS: "true"; use TriggerAuthentication to avoid plain text)
+      # metricName: "my-metric-name"            # optional
       ignoreNullValues: "false"                 # optional, default: false
 ```
 
 **Parameter list:**
 
 - `addresses` - Comma separated list of hosts and ports of the OpenSearch cluster client nodes.
-- `username` - Username to authenticate with to OpenSearch cluster. (Optional)
-- `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the OpenSearch cluster. (Optional)
+- `username` - Username to authenticate with to OpenSearch cluster. Required when `enableTLS` is `false` (default). Prefer providing credentials via `TriggerAuthentication`.
+- `passwordFromEnv` - Environment variable to read the authentication password from to authenticate with the OpenSearch cluster. Required when `enableTLS` is `false` (default).
 - `index` - Index to run the search template query on. It supports multiple indexes separated by a semicolon character ( `;` ).
 - `searchTemplateName` - The search template name to run. (Optional, but either this or `query` must be specified)
 - `query` - The query to run. (Optional, but either this or `searchTemplateName` must be specified)
@@ -49,11 +50,12 @@ triggers:
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `parameters` - Parameters that will be used by the search template or query. It supports multiple params separated by a semicolon character ( `;` ). (Optional)
 - `valueLocation` - [GJSON path notation](https://github.com/tidwall/gjson#path-syntax) to refer to the field in the payload containing the metric value.
+- `metricName` - Custom metric name for this scaler. (Optional)
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `enableTLS` - Enable TLS for connection. Must be set to `true` when using mTLS certificate authentication. (Values: `true`, `false`, Default: `false`, Optional)
-- `caCert` - Certificate authority (CA) certificate for mTLS authentication. (Optional)
-- `clientCert` - Client certificate for mTLS authentication. (Optional)
-- `clientKey` - Client key for mTLS authentication. (Optional)
+- `caCert` - Certificate authority (CA) certificate for server certificate verification. Can be used in both basic auth and mTLS modes. (Optional)
+- `clientCert` - Client certificate for mTLS authentication. Required when `enableTLS: "true"`.
+- `clientKey` - Client key for mTLS authentication. Required when `enableTLS: "true"`.
 - `ignoreNullValues` - Set to `true` to ignore error when Null values are discovered. Set to `false`, the scaler will return error when Null values are discovered. (Values: `true`,`false`, Default: `false`, Optional)
 
 ### Authentication Parameters
@@ -62,14 +64,18 @@ You can authenticate by using username/password or mutual TLS (mTLS) certificate
 
 **Password Authentication:**
 
+Username and password are required when `enableTLS` is `false` (the default). It is recommended to provide credentials via `TriggerAuthentication` rather than inline in the trigger metadata.
+
 - `username` - Username to authenticate with to OpenSearch cluster.
 - `password` - Password for configured user to login to OpenSearch cluster.
 
 **Mutual TLS (mTLS) Certificate Authentication:**
 
-- `caCert` - Certificate authority (CA) certificate for TLS client authentication.
-- `clientCert` - Client certificate for TLS client authentication.
-- `clientKey` - Client key for TLS client authentication.
+When using mTLS, `clientCert` and `clientKey` are required. `caCert` is optional and can also be used to verify the server's certificate in basic auth mode.
+
+- `caCert` - Certificate authority (CA) certificate for server certificate verification. (Optional)
+- `clientCert` - Client certificate for TLS client authentication. (Required for mTLS)
+- `clientKey` - Client key for TLS client authentication. (Required for mTLS)
 
 When using mTLS authentication, you must also set `enableTLS: "true"` in the trigger metadata.
 
