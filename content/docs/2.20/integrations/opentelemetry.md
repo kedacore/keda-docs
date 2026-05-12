@@ -40,6 +40,7 @@ The following metrics are being gathered:
 | `keda.scaler.metrics.latency.seconds` | The latency of retrieving current metric from each scaler. |
 | `keda.scaler.errors` | The number of errors that have occurred for each scaler. |
 | `keda.scaler.errors.total` | The total number of errors encountered for all scalers. |
+| `keda.scaler.empty.upstream.responses` | The number of times a scaler query returned an empty result from its upstream source, such as a Prometheus query returning no results. |
 | `keda.scaled.object.errors` | The number of errors that have occurred for each ScaledObject. |
 | `keda.scaled.job.errors` | The number of errors that have occurred for each ScaledJob. |
 | `keda.resource.registered.count` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
