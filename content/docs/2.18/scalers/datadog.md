@@ -207,7 +207,7 @@ triggers:
 - `query` - The Datadog query to run.
 - `queryValue` - Value to reach to start scaling (This value can be a float).
 - `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](../concepts/scaling-deployments#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `queryAggregator` - When `query` is multiple queries, comma-seperated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
+- `queryAggregator` - When `query` is multiple queries, comma-separated, this sets how to aggregate the multiple results. (Values: `max`, `average`, Required only when `query` contains multiple queries)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `timeWindowOffset`: The delayed time window offset (in seconds) to wait for the metric to be available. The values of some queries might be not available at now and need a small delay to become available, try to adjust `timeWindowOffset` if you encounter this issue. (Default: `0`, Optional)
@@ -320,7 +320,7 @@ between 1 and N.
 
 ### Multi-Query Support
 
-To reduce issues with API rate limiting from Datadog, it is possible to send a single query, which contains multiple queries, comma-seperated.
+To reduce issues with API rate limiting from Datadog, it is possible to send a single query, which contains multiple queries, comma-separated.
 When doing this, the results from each query are aggregated based on the `queryAggregator` value (eg: `max` or `average`).
 
 > 💡 **NOTE:** Because the average/max aggregation operation happens at the scaler level, there won't be any validation or errors if the queries don't make sense to aggregate. Be sure to read and understand the two patterns below before using Multi-Query.
@@ -342,7 +342,7 @@ spec:
   - type: datadog
     metricType: "AverageValue"
     metadata:
-      # Comma-seperated querys count as a single API call:
+      # Comma-separated queries count as a single API call:
       query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300)),per_second(sum:http.requests{service:myservice1}).rollup(avg, 600)"
       # According to aggregated results, how to scale the TargetRef
       queryValue: "100"
@@ -382,7 +382,7 @@ spec:
     # `AverageValue` tracks the query results divided by the number of running containers
     metricType: "AverageValue"
     metadata:
-      # Comma-seperated queries count as a single API call:
+      # Comma-separated queries count as a single API call:
       ## This example returns "http.requests" @ 180 requests-per-second per-pod,
       ## and "http.backlog" size of 30 per-pod
       query: "per_second(sum:http.requests{service:myservice1}).rollup(max, 300))/180,per_second(sum:http.backlog{service:myservice1}).rollup(max, 300)/30"
