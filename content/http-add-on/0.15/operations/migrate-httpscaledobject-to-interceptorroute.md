@@ -98,8 +98,9 @@ spec:
     port: 8080
   coldStart:
     fallback:
-      service: fallback-svc
-      port: 8080
+      service:
+        name: fallback-svc
+        port: 8080
   rules:
     - hosts:
         - app.example.com
@@ -229,9 +230,9 @@ NAMESPACE=default
 | `spec.scaleTargetRef.service`                     | `spec.target.service`                                   |
 | `spec.scaleTargetRef.port`                        | `spec.target.port`                                      |
 | `spec.scaleTargetRef.portName`                    | `spec.target.portName`                                  |
-| `spec.coldStartTimeoutFailoverRef.service`        | `spec.coldStart.fallback.service`                       |
-| `spec.coldStartTimeoutFailoverRef.port`           | `spec.coldStart.fallback.port`                          |
-| `spec.coldStartTimeoutFailoverRef.portName`       | `spec.coldStart.fallback.portName`                      |
+| `spec.coldStartTimeoutFailoverRef.service`        | `spec.coldStart.fallback.service.name`                  |
+| `spec.coldStartTimeoutFailoverRef.port`           | `spec.coldStart.fallback.service.port`                  |
+| `spec.coldStartTimeoutFailoverRef.portName`       | `spec.coldStart.fallback.service.portName`              |
 | `spec.coldStartTimeoutFailoverRef.timeoutSeconds` | `spec.timeouts.readiness` (as `Duration`, e.g. `"30s"`) |
 | `spec.scalingMetric.concurrency.targetValue`      | `spec.scalingMetric.concurrency.targetValue`            |
 | `spec.scalingMetric.requestRate.targetValue`      | `spec.scalingMetric.requestRate.targetValue`            |
