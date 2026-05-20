@@ -167,6 +167,17 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-burst      | cfg.Burst              | 30            | Set the burst for throttling requests sent to the apiserver                                                                                                   |
 | disable-compression | cfg.DisableCompression | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
+## High-Cardinality Metrics
+
+KEDA exposes a small set of high-cardinality metrics for scaler HTTP requests and internal gRPC traffic. These metrics are enabled by default and can be disabled independently on the KEDA Operator and KEDA Metrics Adapter by passing the following command-line flag:
+
+| Deployment      | Flag                            | Default Value | Description                                                                                                                                                                             |
+| --------------- | ------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| KEDA Operator   | enable-high-cardinality-metrics | true          | Enables high-cardinality metrics such as `keda_scaler_http_request_duration_seconds`, `keda.scaler.http.request.duration.seconds`, and `keda_internal_metricsservice_grpc_server_handling_seconds`. |
+| Metrics Adapter | enable-high-cardinality-metrics | true          | Enables high-cardinality metrics such as `keda_internal_metricsservice_grpc_client_handling_seconds`.                                                                                  |
+
+Disabling this flag suppresses only the high-cardinality metrics. Related counters, such as `keda_scaler_http_requests_total`, `keda.scaler.http.requests.count`, `keda_internal_metricsservice_grpc_server_handled_total`, and `keda_internal_metricsservice_grpc_client_handled_total`, remain enabled.
+
 ## gRPC Metrics Service Parameters
 
 The gRPC Metrics Service is part of the KEDA Operator deployment and serves scaling events and metrics from the scalers over gRPC to the Metrics API Service, that in turn serves them to the Kubernetes API Server. The gRPC Metrics Service config used by the KEDA Metrics Adapter to connect to the KEDA Operator can be adjusted by passing the following command-line flags to the Adapter binary:
