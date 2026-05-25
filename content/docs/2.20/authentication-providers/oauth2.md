@@ -2,9 +2,7 @@
 title = "OAuth2"
 +++
 
-You can pull an OAuth2 access token into the trigger by using the `oauth2` spec like so.
-
-
+You can pull an OAuth2 access token into the trigger by using the `oauth2` spec in `TriggerAuthentication` or `ClusterTriggerAuthentication` with the following snippet.
 
 ```yaml
 oauth2:
