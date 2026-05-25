@@ -115,7 +115,7 @@ For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD
 
 
 #### OAuth2 authentication
-For RabbitMQ with OIDC support you can use `TriggerAuthentication` CRD with OAuth2 spec, In this case the `username:password` should be omitted. Currently, only HTTP protocol is supported
+For RabbitMQ with OIDC support you can use `TriggerAuthentication` CRD with OAuth2 spec. In this case, the `username:password` should be omitted. Currently, only HTTP protocol is supported.
 
 
 ### Configuration examples
