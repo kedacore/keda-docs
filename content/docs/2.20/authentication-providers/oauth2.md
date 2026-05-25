@@ -8,7 +8,7 @@ You can pull an OAuth2 access token into the trigger by using the `oauth2` spec 
 oauth2:
   type: clientCredentials # Required.
   clientId: my-client-id  # Required.
-  clientSecret:           # Required
+  clientSecret:           # Required.
     valueFrom:
       secretKeyRef:
         name: oauth-secret
