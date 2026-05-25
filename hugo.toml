@@ -61,7 +61,7 @@ http-add-on = ["0.14"]
 
 [params.unreleased]
 docs = ["2.20"]
-http-add-on = []
+http-add-on = ["0.15"]
 
 # Site fonts served from @fontsource npm packages (see module mounts).
 # Browse available options at https://fonts.google.com.
