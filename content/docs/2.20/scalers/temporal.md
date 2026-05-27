@@ -121,7 +121,7 @@ spec:
 
 ### Example: Worker Deployment Version
 
-When your workers use [Worker Deployment Versioning](https://docs.temporal.io/worker-versioning#deployment-versions), configure the scaler with `workerDeploymentName` and `workerDeploymentBuildId` to scale the backlog of that specific deployment version. Each scale target should map to exactly one [Worker Deployment Version](https://docs.temporal.io/worker-versioning#deployment-versions).
+When your workers use [Worker Deployment Versions](https://docs.temporal.io/worker-versioning#deployment-versions), configure the scaler with `workerDeploymentName` and `workerDeploymentBuildId` to scale the backlog of that specific deployment version. Each scale target should map to exactly one [Worker Deployment Version](https://docs.temporal.io/worker-versioning#deployment-versions).
 
 ```yaml
 apiVersion: keda.sh/v1alpha1
