@@ -17,6 +17,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaler_metrics_value` - The current value for each scaler's metric that would be used by the HPA in computing the target average.
 - `keda_scaler_metrics_latency_seconds` - The latency of retrieving current metric from each scaler.
 - `keda_scaler_detail_errors_total` - The number of errors encountered for each scaler.
+- `keda_scaler_empty_upstream_responses_total` - The number of times a scaler returned an empty response from its upstream source (e.g. a Prometheus query returning no results).
 - `keda_scaled_object_errors_total` - The number of errors that have occurred for each ScaledObject.
 - `keda_scaled_job_errors_total` - The number of errors that have occurred for each ScaledJob.
 - `keda_resource_registered_total` - Total number of KEDA custom resources per namespace for each custom resource type (CRD) handled by the operator.
@@ -24,6 +25,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_internal_scale_loop_latency_seconds` - Total deviation (in seconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
 - `keda_cloudeventsource_events_emitted_total` - Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state.
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
+- `keda_scaler_http_requests_total` - Total number of outbound HTTP requests issued during scaler metric collection.
+- `keda_scaler_http_request_duration_seconds` - Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection.
 - `keda_internal_metricsservice_grpc_server_started_total` - Total number of RPCs started on the server.
 - `keda_internal_metricsservice_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
 - `keda_internal_metricsservice_grpc_server_msg_received_total` - Total number of RPC stream messages received on the server.

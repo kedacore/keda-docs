@@ -121,6 +121,12 @@ The scaler will query the GitHub API in the following order:
 
 GitHub Documentation on Rate Limiting [https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting)
 
+| Authentication Method | Rate Limit (per hour) | Notes |
+|---|---|---|
+| Personal Access Token | 5000 | Standard rate limit |
+| GitHub App | 15000 | Higher rate limit |
+| Hosted Appliance | Unlimited | No rate limits apply |
+
 Example: The GitHub API has a rate limit of standard 5000 requests per hour. By default the scaler will make 1 request per repository to get the list of workflows,
 and 1 request per queued workflow to get the list of jobs. If you have 100 repositories, and 10 queued workflows (across all those repos), the scaler will make 110 requests per scaler check (default: 30 secs). This is 3.6% of the hourly rate limit per 30 seconds.
 
@@ -129,9 +135,7 @@ Careful design of how you design your repository request layout and configure th
 - Using the `repos` parameter as opposed to just `owner` means that the Github API isn't queried to get a list of repositories.
 - Setting `enableEtags` to `true` can reduce the rate limit consumption, as this makes [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API by passing the Etag of the last request to the URL, if a `304: Not modified` response is returned, this will not count against the rate limit. In this case the scaler will use the results from the last query to the URL where the response was `200: Success`.
 
-Note: This does not apply to a hosted appliance as there are no rate limits.
-
-Additional Note: The GitHub App authentication method has a rate limit of 15000 rather than 5000 per hour.
+The github scaler [handles rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2026-03-10#handle-rate-limit-errors-appropriately) by waiting until X-RateLimit-Reset or Retry-After times until the github API is queried when rate limited. During this time it will return the cached queue length which is updated with each successful request. 
 
 **Fine-Tuning**
 

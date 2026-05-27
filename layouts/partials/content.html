@@ -1,28 +1,26 @@
 {{ $notice   := .Params.notice }}
 {{ $isScaler := eq .CurrentSection.Title "Scalers" }}
 {{ $index := eq .File.LogicalName "_index.md"}}
-<section class="section">
-  <div class="container">
-    <div class="content is-medium is-constrained has-bottom-margin">
-      {{ with $notice }}
-      <article class="message is-warning">
-        <div class="message-header">
-          <p class="is-size-5 is-size-6-mobile">
-            Notice
-          </p>
-        </div>
-        <div class="message-body">
-          {{ . }}
-        </div>
-      </article>
-      {{ end }}
+<section>
+  <div class="content is-medium is-constrained has-bottom-margin">
+    {{ with $notice }}
+    <article class="message is-warning">
+      <div class="message-header">
+        <p class="is-size-5 is-size-6-mobile">
+          Notice
+        </p>
+      </div>
+      <div class="message-body">
+        {{ . }}
+      </div>
+    </article>
+    {{ end }}
 
-      {{ .Content | replaceRE "(<h[2-9] id=\"([^\"]+)\".+)(</h[2-9]+>)" `${1} <a class="headline-hash" href="#${2}"><span class="icon hashlink"><i class="fas fa-hashtag"></i></span></a>${3}` | safeHTML }}
+    {{ .Content | replaceRE "(<h[2-9] id=\"([^\"]+)\".+)(</h[2-9]+>)" `${1} <a class="headline-hash" href="#${2}"><span class="icon hashlink"><i class="fas fa-hashtag"></i></span></a>${3}` | safeHTML }}
 
-      {{ if and ($isScaler) ($index) }}
-      {{ partial "scaler-layout" . }}
-      {{ end }}
-    </div>
+    {{ if and ($isScaler) ($index) }}
+    {{ partial "scaler-layout" . }}
+    {{ end }}
   </div>
 </section>
 

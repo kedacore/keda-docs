@@ -2,12 +2,14 @@
 {{ $unreleasedVersions := default slice (index site.Params.unreleased .Section) }}
 {{ $allVersions        := $unreleasedVersions | append $releasedVersions }}
 {{ $latest             := index $releasedVersions 0 }}
-{{ $version            := index (split .File.Path "/") 1 }}
+{{ $version            := "" }}
+{{ with .File }}{{ $version = index (split .Path "/") 1 }}{{ end }}
 {{ $isLatest           := eq $latest $version }}
 {{ $isUnreleased       := in $unreleasedVersions $version }}
 {{ $versionsOfDoc      := slice }}
 {{ $here               := (delimit (after 3 (split (delimit (split .RelPermalink "/") "," "") ",")) "/") }}
-{{ $path               := .File.Path }}
+{{ $path               := "" }}
+{{ with .File }}{{ $path = .Path }}{{ end }}
 {{ $section            := .Section }}
 {{ range $allVersions }}
 {{ $fileToCheck := replace $path $version . }}
@@ -18,7 +20,7 @@
 {{ $onlyOne     := eq (len $versionsOfDoc) 1 }}
 <div class="dropdown" x-data="{ open: false }" :class="{ 'is-active': open }">
   <div class="dropdown-trigger">
-    <button class="button is-black" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open" @click.away="open = false">
+    <button class="button is-black" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open" @click.outside="open = false">
       Version
       &nbsp;
       <span class="has-text-weight-bold">

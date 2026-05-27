@@ -9,6 +9,8 @@
 {{ $latest        := index (index site.Params.versions .Section) 0 }}
 {{ $isLatest      := eq $version $latest }}
 {{ $isNextVersion := not (in (index site.Params.versions .Section) $version) }}
+{{ $productNames  := dict "docs" "KEDA" "http-add-on" "HTTP Add-on" }}
+{{ $productName   := index $productNames .Section }}
 
 <!-- Check if latest version of this page exists -->
 {{ $latestUrl := replaceRE $version $latest .RelPermalink }}
@@ -19,90 +21,89 @@
   {{ end }}
 {{ end }}
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-      <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
-        {{ $title }}
-        <sup>
-          {{ if $isLatest }}
-          <span class="tag is-success">Latest</span>
-          {{ else if and (not $isNextVersion) $latestPageExists }}
-          <a href="{{ $latestUrl }}">
-            <span class="tag is-warning">Click here for latest</span>
-          </a>
-          {{ end }}
-        </sup>
-      </p>
-
-      {{ with $desc }}
-      <p class="subtitle">
-        {{ . }}
-      </p>
+<span class="docsearch-lvl0" hidden>{{ $productName }} v{{ $version }}</span>
+<section class="doc-hero">
+  <p class="title is-size-1 is-size-2-mobile has-text-weight-bold{{ if $desc }} is-spaced{{ end }}">
+    <span class="title-text">{{ $title }}</span>
+    <sup>
+      {{ if $isLatest }}
+      <span class="tag is-success">Latest</span>
+      {{ else if and (not $isNextVersion) $latestPageExists }}
+      <a href="{{ $latestUrl }}">
+        <span class="tag is-warning">Click here for latest</span>
+      </a>
       {{ end }}
+    </sup>
+  </p>
 
-      <div class="field">
-        <p class="control">
-          <div class="tags are-medium">
-            {{ with $availability }}
-            <span class="tag">
-              Availability:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
-            </span>
-            {{ end }}
+  {{ with $desc }}
+  <p class="subtitle">
+    {{ . }}
+  </p>
+  {{ end }}
 
-            {{ with $maintainer }}
-            <span class="tag is-outlined">
-              Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
-            </span>
-            {{ end }}
+  {{ if or $availability $maintainer (and $isScaler (not $isSectionRoot)) }}
+  <div class="field">
+    <p class="control">
+      <div class="tags are-medium">
+        {{ with $availability }}
+        <span class="tag">
+          Availability:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
+        </span>
+        {{ end }}
 
-            {{ if and $isScaler (not $isSectionRoot) }}
-            {{ $url := printf "https://github.com/kedacore/keda/blob/main/pkg/scalers/%s.go" .Params.go_file }}
-            <div class="tag is-black">
-              <span class="icon">
-                <i class="fab fa-github"></i>
-              </span>
-              <a class="has-text-light" href="{{ $url }}" target="_blank">
-                Scaler code
-              </a>
-            </div>
-            {{ end }}
-          </div>
-        </p>
-      </div>
+        {{ with $maintainer }}
+        <span class="tag is-outlined">
+          Maintainer:&nbsp;<span class="has-text-weight-bold">{{ . }}</span>
+        </span>
+        {{ end }}
 
-      <div class="buttons are-small are-spaced">
-        {{ partial "doc-version-selector.html" . }}
-
-        <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
+        {{ if and $isScaler (not $isSectionRoot) }}
+        {{ $url := printf "https://github.com/kedacore/keda/blob/main/pkg/scalers/%s.go" .Params.go_file }}
+        <div class="tag is-black">
           <span class="icon">
             <i class="fab fa-github"></i>
           </span>
-          <span>
-            Suggest a change
-          </span>
-        </a>
+          <a class="has-text-light" href="{{ $url }}" target="_blank">
+            Scaler code
+          </a>
+        </div>
+        {{ end }}
       </div>
-      
-      {{ if and (not $isLatest) $latestPageExists }}
-      <article class="message is-warning">
-        <div class="message-header">
-          <p>Warning</p>  
-        </div>
-        <div class="message-body">
-          You are currently viewing v{{ $version }} of the documentation and it is not the latest. For the most recent documentation, kindly <a href="{{ $latestUrl }}"> click here.</a>
-        </div>
-      </article>
-      {{ else if and (not $isLatest) (not $isNextVersion) }}
-      <article class="message is-info">
-        <div class="message-header">
-          <p>Notice</p>  
-        </div>
-        <div class="message-body">
-          This page does not exist in the latest version ({{ $latest }}). It may have been deprecated or replaced. Check the <a href="/{{ .Section }}/{{ $latest }}/">{{ $latest }} documentation</a> for alternatives.
-        </div>
-      </article>
-      {{ end }}
-    </div>
+    </p>
   </div>
+  {{ end }}
+
+  <div class="buttons are-small are-spaced">
+    {{ partial "doc-version-selector.html" . }}
+
+    <a class="button is-dark is-outlined" href="{{ $src }}" target="_blank">
+      <span class="icon">
+        <i class="fab fa-github"></i>
+      </span>
+      <span>
+        Suggest a change
+      </span>
+    </a>
+  </div>
+
+  {{ if and (not $isLatest) $latestPageExists }}
+  <article class="message is-warning">
+    <div class="message-header">
+      <p>Warning</p>
+    </div>
+    <div class="message-body">
+      You are currently viewing v{{ $version }} of the documentation and it is not the latest. For the most recent documentation, kindly <a href="{{ $latestUrl }}"> click here.</a>
+    </div>
+  </article>
+  {{ else if and (not $isLatest) (not $isNextVersion) }}
+  <article class="message is-info">
+    <div class="message-header">
+      <p>Notice</p>
+    </div>
+    <div class="message-body">
+      This page does not exist in the latest version ({{ $latest }}). It may have been deprecated or replaced. Check the <a href="/{{ .Section }}/{{ $latest }}/">{{ $latest }} documentation</a> for alternatives.
+    </div>
+  </article>
+  {{ end }}
 </section>
