@@ -167,16 +167,15 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-burst      | cfg.Burst              | 30            | Set the burst for throttling requests sent to the apiserver                                                                                                   |
 | disable-compression | cfg.DisableCompression | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
-## High-Cardinality Metrics
+## High-Cardinality Metric Labels
 
-KEDA exposes a small set of high-cardinality metrics for scaler HTTP requests and internal gRPC traffic. These metrics are enabled by default and can be disabled independently on the KEDA Operator and KEDA Metrics Adapter by passing the following command-line flag:
+KEDA can add high-cardinality labels to scaler HTTP request duration metrics. These labels are disabled by default and can be enabled on the KEDA Operator by passing the following command-line flag:
 
-| Deployment      | Flag                            | Default Value | Description                                                                                                                                                                             |
-| --------------- | ------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| KEDA Operator   | enable-high-cardinality-metrics | true          | Enables high-cardinality metrics such as `keda_scaler_http_request_duration_seconds`, `keda.scaler.http.request.duration.seconds`, and `keda_internal_metricsservice_grpc_server_handling_seconds`. |
-| Metrics Adapter | enable-high-cardinality-metrics | true          | Enables high-cardinality metrics such as `keda_internal_metricsservice_grpc_client_handling_seconds`.                                                                                  |
+| Deployment    | Flag                                   | Default Value | Description                                                                                                                                                                |
+| ------------- | -------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| KEDA Operator | enable-high-cardinality-metrics-labels | false         | Adds `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` labels to `keda_scaler_http_request_duration_seconds` and `keda.scaler.http.request.duration.seconds`. |
 
-Disabling this flag suppresses only the high-cardinality metrics. Related counters, such as `keda_scaler_http_requests_total`, `keda.scaler.http.requests.count`, `keda_internal_metricsservice_grpc_server_handled_total`, and `keda_internal_metricsservice_grpc_client_handled_total`, remain enabled.
+When this flag is disabled, the scaler HTTP request duration histograms are still emitted with low-cardinality labels such as `scaler` and `status_code`. The scaler HTTP request counters keep their existing labels, and internal Metrics Service gRPC histograms are not controlled by this flag.
 
 ## gRPC Metrics Service Parameters
 

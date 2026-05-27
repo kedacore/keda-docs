@@ -51,7 +51,7 @@ The following metrics are being gathered:
 | `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
 | `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
 
-High-cardinality duration histograms emitted by the operator are enabled by default and can be disabled with `--enable-high-cardinality-metrics=false` on the `keda-operator` deployment. Related counters remain available.
+By default, `keda.scaler.http.request.duration.seconds` is emitted with low-cardinality attributes such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` attributes with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
 
 #### Deprecated metrics
 
