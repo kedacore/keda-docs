@@ -113,11 +113,28 @@ When both are set, both metrics are reported and KEDA scales based on whichever 
 
 Configures behavior while the target is not ready (scaling from zero).
 
-| Field      | Type                       | Required | Default | Description                                                                                     |
-| ---------- | -------------------------- | -------- | ------- | ----------------------------------------------------------------------------------------------- |
-| `fallback` | [`*TargetRef`](#targetref) | Yes      |         | Fallback service to route to when the target is scaling from zero and the wait timeout expires. |
+| Field      | Type                                       | Required | Default | Description                                                                                          |
+| ---------- | ------------------------------------------ | -------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `fallback` | [`*ColdStartFallback`](#coldstartfallback) | Yes      |         | Fallback service to route to when the target is scaling from zero and the readiness timeout expires. |
 
 **Validation:** The `fallback` field must be set.
+
+### `ColdStartFallback`
+
+| Field     | Type                         | Required | Default | Description                                       |
+| --------- | ---------------------------- | -------- | ------- | ------------------------------------------------- |
+| `service` | [`*ServiceRef`](#serviceref) | No       |         | Kubernetes Service to use as the fallback target. |
+
+### `ServiceRef`
+
+| Field      | Type     | Required | Default | Description                                                                   |
+| ---------- | -------- | -------- | ------- | ----------------------------------------------------------------------------- |
+| `name`     | `string` | Yes      |         | Name of the Kubernetes Service. Minimum length: 1.                            |
+| `port`     | `int32`  | No       |         | Port number on the Service (1--65535). Mutually exclusive with `portName`.    |
+| `portName` | `string` | No       |         | Named port on the Service. Minimum length: 1. Mutually exclusive with `port`. |
+
+**Validation:** Exactly one of `port` or `portName` must be set.
+Setting both or neither produces a validation error.
 
 ### `InterceptorRouteTimeouts`
 
