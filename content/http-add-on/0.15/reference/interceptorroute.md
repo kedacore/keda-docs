@@ -113,11 +113,15 @@ When both are set, both metrics are reported and KEDA scales based on whichever 
 
 Configures behavior while the target is not ready (scaling from zero).
 
-| Field      | Type                                       | Required | Default | Description                                                                                          |
-| ---------- | ------------------------------------------ | -------- | ------- | ---------------------------------------------------------------------------------------------------- |
-| `fallback` | [`*ColdStartFallback`](#coldstartfallback) | Yes      |         | Fallback service to route to when the target is scaling from zero and the readiness timeout expires. |
+| Field         | Type                                             | Required | Default | Description                                                                                          |
+| ------------- | ------------------------------------------------ | -------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `fallback`    | [`*ColdStartFallback`](#coldstartfallback)       | No       |         | Fallback service to route to when the target is scaling from zero and the readiness timeout expires. |
+| `placeholder` | [`*ColdStartPlaceholder`](#coldstartplaceholder) | No       |         | Placeholder response to serve while the target has no ready endpoints.                               |
 
-**Validation:** The `fallback` field must be set.
+**Validation:** At least one of `fallback` or `placeholder` must be set.
+
+When both are configured, the placeholder response is returned immediately while the backend scales up.
+If the backend does not become ready within the readiness timeout, the fallback service is used.
 
 ### `ColdStartFallback`
 
@@ -135,6 +139,35 @@ Configures behavior while the target is not ready (scaling from zero).
 
 **Validation:** Exactly one of `port` or `portName` must be set.
 Setting both or neither produces a validation error.
+
+### `ColdStartPlaceholder`
+
+| Field      | Type                                 | Required | Default | Description                                                                    |
+| ---------- | ------------------------------------ | -------- | ------- | ------------------------------------------------------------------------------ |
+| `response` | [`*StaticResponse`](#staticresponse) | Yes      |         | Static response to return immediately when the backend has no ready endpoints. |
+
+### `StaticResponse`
+
+Defines a static HTTP response.
+
+| Field               | Type                                   | Required | Default | Description                                                                                                                                                   |
+| ------------------- | -------------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `statusCode`        | `int32`                                | No       | `503`   | HTTP status code (100--599).                                                                                                                                  |
+| `body`              | `*string`                              | No       |         | Inline response body. Maximum length: 32,768 characters. Mutually exclusive with `bodyFromConfigMap`.                                                         |
+| `bodyFromConfigMap` | [`*ConfigMapKeyRef`](#configmapkeyref) | No       |         | Response body from a ConfigMap in the same namespace. The ConfigMap must have the label `http.keda.sh/response-body: "true"`. Mutually exclusive with `body`. |
+| `headers`           | `map[string]string`                    | No       |         | HTTP response headers.                                                                                                                                        |
+
+**Validation:** At most one of `body` or `bodyFromConfigMap` may be set.
+If neither is set, the response has an empty body.
+
+### `ConfigMapKeyRef`
+
+References a key within a ConfigMap.
+
+| Field  | Type     | Required | Default | Description                                                                                                                                                                                                                           |
+| ------ | -------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name` | `string` | Yes      |         | Name of the ConfigMap. Minimum length: 1.                                                                                                                                                                                             |
+| `key`  | `string` | No       |         | Key within the ConfigMap. When omitted, the key is derived from the request path (without leading `/`, defaulting to `index.html` for `/`). Content-Type is auto-detected from the file extension unless explicitly set in `headers`. |
 
 ### `InterceptorRouteTimeouts`
 
