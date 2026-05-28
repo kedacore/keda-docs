@@ -19,6 +19,13 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_ENABLE_COLD_START_HEADER`                | `true`       | When enabled, the interceptor adds the `X-KEDA-HTTP-Cold-Start` response header.              |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
 
+### Graceful shutdown
+
+| Variable                   | Default | Description                                                                                                                                                                                     |
+| -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `KEDA_HTTP_SHUTDOWN_DELAY` | `5s`    | Time between receiving SIGTERM and closing the proxy listener. The readiness probe returns 503 immediately, but the server keeps serving, giving Kubernetes time to propagate endpoint removal. |
+| `KEDA_HTTP_DRAIN_TIMEOUT`  | `30s`   | Maximum time to wait for in-flight requests to complete after the proxy listener closes. `0` waits indefinitely (bounded only by `terminationGracePeriodSeconds`).                              |
+
 ### Timeouts
 
 | Variable                            | Default | Description                                                                                                                                                                                                                                         |
