@@ -156,6 +156,36 @@ advanced:
 Conditions can be used within another condition as well.
 If value of `trig_one` is less than 2 AND `trig_one`+`trig_two` is at least 2 then return 5, if only the first is true return 10, if the first condition is false then return 0.
 
+**Example: per-trigger failover with the `??` operator**
+
+```yaml
+spec:
+  advanced:
+    scalingModifiers:
+      formula: "best_metric ?? slower_metric ?? metric_backup ?? 8"
+      target: "2"
+  fallback:
+    failureThreshold: 3
+    replicas: 10
+    behavior: scalingModifiers
+  triggers:
+  - type: prometheus
+    name: best_metric
+    metadata: ...
+  - type: prometheus
+    name: slower_metric
+    metadata: ...
+  - type: metrics-api
+    name: metric_backup
+    metadata: ...
+```
+
+With `fallback.behavior: scalingModifiers`, triggers that have exceeded `fallback.failureThreshold` are passed to the formula as `nil`. The `??` nil-coalescing operator from the `expr` library evaluates each operand in order and returns the first non-`nil` value. In the example above, KEDA prefers `best_metric`; if it has been failing for `failureThreshold` consecutive polls, the formula uses `slower_metric` instead; if that is also unhealthy it falls through to `metric_backup`, and ultimately to the literal `8` when every trigger is failing.
+
+If the trailing literal is omitted (e.g. `best_metric ?? slower_metric`) and every trigger is unhealthy, the formula evaluates to `nil` and KEDA falls back to `spec.fallback.replicas`.
+
+See [`fallback.behavior`](../reference/scaledobject-spec.md#scalingmodifiers-behavior) for the full reference.
+
 Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean). All formulas are internally wrapped with float cast.
 
 ## Activating and Scaling thresholds
