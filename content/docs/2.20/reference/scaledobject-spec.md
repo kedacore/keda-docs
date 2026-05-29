@@ -184,6 +184,35 @@ When using `behavior` with value `currentReplicasIfLower`, the current number of
 
 **Example:** When my Prometheus instance becomes unavailable 3 times in a row, KEDA changes the HPA metric to scale the deployment to 3 replicas when I have `fallback.replicas` set to 6, but the current replicas are 3, with a `behavior` 'currentReplicasILower'.
 
+#### `scalingModifiers` behavior
+When `behavior` is set to `scalingModifiers`, fallback is evaluated at the individual trigger level rather than for the whole `ScaledObject`. Triggers that exceed `failureThreshold` are passed to the `scalingModifiers.formula` as `nil` so the formula can route around them using the `??` nil-coalescing operator. If the formula evaluates to `nil` (every trigger in the chain has failed and no static literal is provided as the final fallback), `fallback.replicas` is used as the ultimate fallback.
+
+This behavior requires `advanced.scalingModifiers.formula` to be defined. It does not require the trigger order in `triggers` to match the order in the formula; the formula expresses the preference order explicitly via `??`.
+
+**Example:** A formula `best_metric ?? slower_metric ?? metric_backup ?? 8` evaluates `best_metric` first, falls back to `slower_metric` when `best_metric` has exceeded `failureThreshold`, falls back to `metric_backup` if `slower_metric` is also failing, and finally returns the literal `8` if every trigger is unhealthy. If the literal `?? 8` is omitted and every trigger fails, KEDA falls back to `fallback.replicas` instead.
+
+```yaml
+spec:
+  advanced:
+    scalingModifiers:
+      formula: best_metric ?? slower_metric ?? metric_backup ?? 8
+      target: "2"
+  fallback:
+    failureThreshold: 3
+    replicas: 10                # ultimate fallback if every trigger fails and no literal is in the formula
+    behavior: scalingModifiers
+  triggers:
+  - type: prometheus
+    name: best_metric
+    metadata: ...
+  - type: prometheus
+    name: slower_metric
+    metadata: ...
+  - type: metrics-api
+    name: metric_backup
+    metadata: ...
+```
+
 ## advanced
 
 ### restoreToOriginalReplicaCount
@@ -260,7 +289,9 @@ There is one important exception to the activation target for scaling modifiers 
 
 #### scalingModifiers.formula
 
-  `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). If the `fallback` scaling feature is in effect, the `formula` will NOT modify its metrics (therefore it modifies metrics only when all of their triggers are healthy). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
+  `formula` composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements using [this external project](https://github.com/antonmedv/expr). Complete language definition of `expr` package can be found [here](https://expr.medv.io/docs/Language-Definition). Formula must return a single value (not boolean).
+
+By default, when `fallback` is in effect for any trigger, the formula is not evaluated and the standard fallback path applies to the whole `ScaledObject`. Setting `fallback.behavior` to [`scalingModifiers`](#scalingmodifiers-behavior) opts into per-trigger fallback: failed triggers are passed to the formula as `nil`, allowing the formula to route around them using the `??` nil-coalescing operator.
 
 For examples of this feature see section [Scaling Modifiers](../concepts/scaling-deployments.md).
 
