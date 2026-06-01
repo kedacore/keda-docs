@@ -1,0 +1,181 @@
++++
+title = "MSSQL"
+availability = "v2.2+"
+maintainer = "Microsoft"
+category = "Data & Storage"
+description = "Scale applications based on Microsoft SQL Server (MSSQL) query results."
+go_file = "mssql_scaler"
++++
+
+### Trigger Specification
+
+This specification describes the `mssql` trigger that scales based on the results of a [Microsoft SQL Server](https://www.microsoft.com/sql-server/) (MSSQL) query result. This trigger supports local [MSSQL containers](https://hub.docker.com/_/microsoft-mssql-server) as well as SQL Server endpoints hosted in the cloud, such as [Azure SQL Database](https://azure.microsoft.com/services/sql-database/).
+
+```yaml
+triggers:
+- type: mssql
+  metadata:
+    connectionStringFromEnv: MSSQL_CONNECTION_STRING
+    query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+    targetValue: "5.5"
+    activationTargetValue: '5'
+```
+
+> 💡 **NOTE:** The connection string format supported by this scaler has some incompatibilities with connection string formats supported by other platforms, like .NET. For example, the MSSQL instance's port number must be separated into its own `Port` property instead of adding it to the `Server` property. You can learn more about all the supported connection string formats for this mssql scaler [here](https://github.com/denisenkom/go-mssqldb#the-connection-string-can-be-specified-in-one-of-three-formats).
+
+Alternatively, you configure connection parameters explicitly instead of providing a connection string:
+
+```yaml
+triggers:
+- type: mssql
+  metadata:
+    username: "kedaUser"
+    passwordFromEnv: MSSQL_PASSWORD
+    host: mssqlinst.namespace.svc.cluster.local
+    port: "1433" # optional
+    database: test_db_name
+    query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+    targetValue: 1
+```
+
+The `mssql` trigger always requires the following information:
+
+- `query` - A [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
+- `targetValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA). (This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+
+> Note that the query must return a single numeric value (integers and floats are both supported). If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [MSSQL documentation](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/coalesce-transact-sql) for more information on the `COALESCE` function.
+
+To connect to the MSSQL instance, you can provide either:
+
+- `connectionStringFromEnv` - The name of an environment variable containing a valid MSSQL connection string.
+
+Or provide more detailed connection parameters explicitly (a connection string will be generated for you at runtime):
+
+- `host` - The hostname of the MSSQL instance endpoint.
+- `port` - The port number of the MSSQL instance endpoint. (Default: 1433, Optional)
+- `database` - The name of the database to query.
+- `username` - The username credential for connecting to the MSSQL instance.
+- `passwordFromEnv` - The name of an environment variable containing the password credential for connecting to the MSSQL instance.
+
+When configuring with a connection string, you can use either a URL format (note the URL encoding of special characters):
+
+```
+sqlserver://user1:Password%231@example.database.windows.net:1433?database=AdventureWorks
+```
+
+Or the more traditional ADO format:
+
+```
+Server=example.database.windows.net;Port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+```
+
+### Authentication parameters
+
+As an alternative to using environment variables, you can authenticate with the MSSQL instance using connection string or password authentication via `TriggerAuthentication` configuration.
+
+**Connection string authentication:**
+
+- `connectionString` - The connection string for the MSSQL instance.
+
+**Password authentication:**
+
+- `host` - The hostname of the MSSQL instance endpoint.
+- `port` - The port number of the MSSQL instance endpoint. (default 1433)
+- `database` - The name of the database to query.
+- `username` - The username credential for connecting to the MSSQL instance.
+- `password` - The password credential for connecting to the MSSQL instance.
+
+**Azure AD Workload Identity authentication:**
+
+> Available in v2.20+
+
+#### Prerequisites:
+- The Azure SQL server has an Azure AD admin configured. See [Microsoft Learn: Configure and manage Microsoft Entra authentication with Azure SQL](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-configure).
+- The user-assigned managed identity (UAMI) is federated to the Kubernetes service account used to authenticate against Azure SQL. See the [Considerations about Federations and Overrides](./../authentication-providers/azure-ad-workload-identity.md#considerations-about-federations-and-overrides) section, and the [azure-workload-identity federated credential docs](https://azure.github.io/azure-workload-identity/docs/topics/federated-identity-credential.html) for the underlying setup.
+- A contained database user mapped to the UAMI exists in the target database, e.g. `CREATE USER [<UAMI_NAME>] FROM EXTERNAL PROVIDER;`, and has been granted access to the objects referenced in the scaler's query. See [Microsoft Learn: Azure AD authentication overview](https://learn.microsoft.com/azure/azure-sql/database/authentication-aad-overview).
+
+When `azure-workload` pod identity is used, KEDA acquires an Azure AD access token and uses it as the credential for each query — no `password` / `passwordFromEnv` is required. The scaler accepts the same individual connection parameters as **Password authentication**, with `username` set to the UAMI's contained-database user name:
+
+- `host` - FQDN of the Azure SQL server (e.g. `<server-name>.database.windows.net`).
+- `port` - The port number of the MSSQL endpoint. (Default: `1433`, Optional)
+- `database` - The name of the database to query.
+- `username` - Name of the UAMI's contained database user.
+
+#### Remarks
+
+KEDA refreshes the Azure AD access token automatically before its expiry. Tokens are scoped to the Azure SQL resource (`https://database.windows.net/.default`).
+
+#### Example
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-mssql-wi-auth
+spec:
+  podIdentity:
+    provider: azure-workload
+    # Optional-> identityId: <UAMI_IDENTITY_ID>
+    # Optional-> identityTenantId: <UAMI_TENANT_ID>
+
+---
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mssql-scaledobject
+spec:
+  scaleTargetRef:
+    name: consumer # e.g. the name of the resource to scale
+  triggers:
+    - type: mssql
+      authenticationRef:
+        name: azure-mssql-wi-auth
+      metadata:
+        host: <AZURE_SQL_SERVER_FQDN>
+        port: "1433"
+        database: <DB_NAME>
+        username: <UAMI_NAME>
+        query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+        targetValue: 1
+```
+
+### Example
+
+The following is an example of how to deploy a scaled object with the `mssql` scale trigger that uses `TriggerAuthentication` and a connection string.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mssql-secrets
+type: Opaque
+data:
+  mssql-connection-string: U2VydmVyPWV4YW1wbGUuZGF0YWJhc2Uud2luZG93cy5uZXQ7cG9ydD0xNDMzO0RhdGFiYXNlPUFkdmVudHVyZVdvcmtzO1BlcnNpc3QgU2VjdXJpdHkgSW5mbz1GYWxzZTtVc2VyIElEPXVzZXIxO1Bhc3N3b3JkPVBhc3N3b3JkIzE7RW5jcnlwdD1UcnVlO1RydXN0U2VydmVyQ2VydGlmaWNhdGU9RmFsc2U7 # base64 encoded value of MSSQL connectionString of format "Server=example.database.windows.net;port=1433;Database=AdventureWorks;Persist Security Info=False;User ID=user1;Password=Password#1;Encrypt=True;TrustServerCertificate=False;"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-mssql-secret
+spec:
+  secretTargetRef:
+  - parameter: connectionString
+    name: mssql-secrets
+    key: mssql-connection-string
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mssql-scaledobject
+spec:
+  scaleTargetRef:
+    name: consumer # e.g. the name of the resource to scale
+  triggers:
+  - type: mssql
+    metadata:
+      targetValue: 1
+      query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+    authenticationRef:
+      name: keda-trigger-auth-mssql-secret
+```
