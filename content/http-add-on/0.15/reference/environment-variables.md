@@ -29,7 +29,6 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_CONNECT_TIMEOUT`         | `500ms` | Per-attempt TCP dial timeout. Bounded by the request context deadline.                                                                                                                                                                              |
 | `KEDA_HTTP_MAX_IDLE_CONNS`          | `1000`  | Maximum idle connections in the connection pool across all backend services.                                                                                                                                                                        |
 | `KEDA_HTTP_MAX_IDLE_CONNS_PER_HOST` | `200`   | Maximum idle connections per backend service.                                                                                                                                                                                                       |
-| `KEDA_HTTP_FORCE_HTTP2`             | `false` | Whether to force HTTP/2 for all proxied requests.                                                                                                                                                                                                   |
 
 #### Deprecated timeout variables
 
