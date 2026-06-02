@@ -225,6 +225,24 @@ Example:
     WATCH_NAMESPACE: keda,production
 ```
 
+## Restrict the Objects KEDA Reconciles by Label
+
+By default, the KEDA controller reconciles every `ScaledObject`, `ScaledJob`, `TriggerAuthentication` and `ClusterTriggerAuthentication` it can see. The set of reconciled objects can be restricted via the `WATCH_LABEL_SELECTOR` environment variable, which accepts a standard Kubernetes label selector.
+
+When set, only objects matching the selector are reconciled. Objects that do not match are filtered out at the informer cache level (so they never enter the operator's memory) and at the controller predicate level. When unset or empty, no label filter is applied (current default behaviour).
+
+The variable mirrors `WATCH_NAMESPACE`, but filters by label instead of by namespace, and accepts the same syntax as `kubectl get -l`:
+
+- equality: `environment=production`
+- set notation: `tier in (gold,silver)`, `!canary`
+
+Example:
+
+```yaml
+- env:
+    WATCH_LABEL_SELECTOR: "environment=production"
+```
+
 ## Certificates used by KEDA Metrics Server
 
 To learn more please refer to [security section](./security#use-your-own-tls-certificates)
