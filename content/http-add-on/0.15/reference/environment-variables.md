@@ -79,6 +79,8 @@ When set, they take precedence over their replacements.
 
 ## Scaler
 
+### Serving
+
 | Variable                                            | Default      | Description                                                                         |
 | --------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- |
 | `KEDA_HTTP_SCALER_PORT`                             | `8080`       | Port for the KEDA-compatible gRPC external scaler interface.                        |
@@ -89,7 +91,27 @@ When set, they take precedence over their replacements.
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                   |
 | `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks.                                               |
 | `KEDA_HTTP_SCALER_STREAM_INTERVAL_MS`               | `200`        | Interval in milliseconds between stream ticks for `IsActive` communication to KEDA. |
-| `PROFILING_BIND_ADDRESS`                            | `""`         | Address (`host:port`) for the pprof endpoint. Empty disables profiling.             |
+
+### Metrics
+
+| Variable                             | Default | Description                                          |
+| ------------------------------------ | ------- | ---------------------------------------------------- |
+| `OTEL_PROM_EXPORTER_ENABLED`         | `true`  | Enable the Prometheus metrics exporter.              |
+| `OTEL_PROM_EXPORTER_PORT`            | `2223`  | Port for the Prometheus-compatible metrics endpoint. |
+| `OTEL_EXPORTER_OTLP_METRICS_ENABLED` | `false` | Enable the OTLP metrics exporter.                    |
+
+### Tracing
+
+| Variable                             | Default   | Description                                                                  |
+| ------------------------------------ | --------- | ---------------------------------------------------------------------------- |
+| `OTEL_EXPORTER_OTLP_TRACES_ENABLED`  | `false`   | Enable OpenTelemetry trace export.                                           |
+| `OTEL_EXPORTER_OTLP_TRACES_PROTOCOL` | `console` | Trace exporter protocol. Must be one of: `console`, `http/protobuf`, `grpc`. |
+
+### Profiling
+
+| Variable                 | Default | Description                                                             |
+| ------------------------ | ------- | ----------------------------------------------------------------------- |
+| `PROFILING_BIND_ADDRESS` | `""`    | Address (`host:port`) for the pprof endpoint. Empty disables profiling. |
 
 ## Operator
 

@@ -1,14 +1,14 @@
 +++
 title = "Configure Observability"
-description = "Prometheus metrics, OpenTelemetry tracing, and request logging configuration for the interceptor"
+description = "Prometheus metrics, OpenTelemetry tracing, and request logging configuration for the interceptor and scaler"
 +++
 
-The interceptor exposes metrics and tracing data to help monitor HTTP traffic and scaling behavior.
-All observability settings are configured via environment variables, set through the `interceptor.extraEnvs` Helm value.
+The interceptor and the external scaler expose metrics and tracing data to help monitor HTTP traffic and scaling behavior.
+Both components share the same set of observability environment variables, configured through the `interceptor.extraEnvs` and `scaler.extraEnvs` Helm values respectively.
 
 ## Prometheus metrics
 
-The interceptor exposes Prometheus metrics at `/metrics` on port `2223`.
+Both the interceptor and the scaler expose Prometheus metrics at `/metrics` on port `2223`.
 This is enabled by default.
 
 | Env var                      | Default | Description                               |
@@ -20,17 +20,22 @@ See [Metrics Reference](../../reference/metrics/) for the full list of metrics a
 
 ## OpenTelemetry tracing
 
-Enable distributed tracing via OTLP:
+Enable distributed tracing via OTLP.
+The following example enables tracing for both the interceptor and the scaler:
 
 ```shell
 helm upgrade http-add-on kedacore/keda-add-ons-http \
   --namespace keda \
   --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_TRACES_ENABLED=true \
   --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc \
-  --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317
+  --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317 \
+  --set scaler.extraEnvs.OTEL_EXPORTER_OTLP_TRACES_ENABLED=true \
+  --set scaler.extraEnvs.OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc \
+  --set scaler.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317
 ```
 
-The interceptor uses W3C TraceContext and Baggage propagation.
+Both components use W3C TraceContext and Baggage propagation.
+The scaler additionally instruments all gRPC server calls via `otelgrpc` when tracing is enabled.
 
 | Env var                              | Default   | Description                                             |
 | ------------------------------------ | --------- | ------------------------------------------------------- |
@@ -48,7 +53,9 @@ Enable OTLP metrics export alongside or instead of Prometheus:
 helm upgrade http-add-on kedacore/keda-add-ons-http \
   --namespace keda \
   --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_METRICS_ENABLED=true \
-  --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317
+  --set interceptor.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317 \
+  --set scaler.extraEnvs.OTEL_EXPORTER_OTLP_METRICS_ENABLED=true \
+  --set scaler.extraEnvs.OTEL_EXPORTER_OTLP_ENDPOINT=http://<your-otel-collector>:4317
 ```
 
 | Env var                              | Default | Description                                         |
@@ -60,7 +67,7 @@ helm upgrade http-add-on kedacore/keda-add-ons-http \
 
 ## Request logging
 
-Enable Combined Log Format request logging:
+Enable Combined Log Format request logging (interceptor only):
 
 ```shell
 helm upgrade http-add-on kedacore/keda-add-ons-http \

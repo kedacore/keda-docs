@@ -3,7 +3,7 @@ title = "Metrics"
 description = "Reference for all Prometheus metrics exposed by the HTTP Add-on"
 +++
 
-The interceptor exposes metrics via OpenTelemetry, with a Prometheus-compatible endpoint enabled by default.
+The interceptor and the external scaler expose metrics via OpenTelemetry, with a Prometheus-compatible endpoint enabled by default on each component.
 
 ## Endpoint configuration
 
@@ -13,10 +13,10 @@ The interceptor exposes metrics via OpenTelemetry, with a Prometheus-compatible 
 | Path    | `/metrics` | Standard Prometheus scrape path.               |
 | Enabled | `true`     | Configurable via `OTEL_PROM_EXPORTER_ENABLED`. |
 
-The interceptor also supports OTLP metric export.
+Both components also support OTLP metric export.
 See [Environment Variables](../environment-variables/#metrics) for configuration.
 
-## Metrics
+## Interceptor metrics
 
 ### Request count
 
@@ -73,10 +73,42 @@ See [Environment Variables](../environment-variables/#metrics) for configuration
 | `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                 |
 | `route_namespace` | Namespace of the matched route resource.                                                                                  |
 
-## Method normalization
+### Method normalization
 
 The `method` label accepts the following standard HTTP methods without modification:
 
 `CONNECT`, `DELETE`, `GET`, `HEAD`, `OPTIONS`, `PATCH`, `POST`, `PUT`, `TRACE`
 
 All other method values are replaced with `_OTHER` to prevent unbounded label cardinality.
+
+## Scaler metrics
+
+### Pinger fetch duration
+
+|                          |                                                                            |
+| ------------------------ | -------------------------------------------------------------------------- |
+| **Prometheus name**      | `scaler_pinger_fetch_duration_seconds`                                     |
+| **OTel instrument name** | `scaler.pinger.fetch.duration`                                             |
+| **Type**                 | Histogram                                                                  |
+| **Unit**                 | Seconds                                                                    |
+| **Description**          | Duration of a queue pinger fetch cycle across all interceptor pods.        |
+
+**Bucket boundaries:** `0.005`, `0.01`, `0.025`, `0.05`, `0.075`, `0.1`, `0.25`, `0.5`, `0.75`, `1`, `2.5`, `5`
+
+### Pinger fetch errors
+
+|                          |                                          |
+| ------------------------ | ---------------------------------------- |
+| **Prometheus name**      | `scaler_pinger_fetch_errors_total`       |
+| **OTel instrument name** | `scaler.pinger.fetch.errors`             |
+| **Type**                 | Counter                                  |
+| **Description**          | Total failed queue pinger fetch cycles.  |
+
+### Pinger endpoints
+
+|                          |                                                              |
+| ------------------------ | ------------------------------------------------------------ |
+| **Prometheus name**      | `scaler_pinger_endpoints`                                    |
+| **OTel instrument name** | `scaler.pinger.endpoints`                                    |
+| **Type**                 | Gauge                                                        |
+| **Description**          | Number of interceptor endpoints the scaler is polling.       |
