@@ -49,6 +49,33 @@ Configure the interceptor's connection pool for backend services:
 | `interceptor.maxIdleConns`        | `KEDA_HTTP_MAX_IDLE_CONNS`          | `1000`  | Maximum idle connections across all backend services. Increase this if you proxy to many backends.                |
 | `interceptor.maxIdleConnsPerHost` | `KEDA_HTTP_MAX_IDLE_CONNS_PER_HOST` | `200`   | Maximum idle connections per backend. Increase this if you observe frequent connection establishments under load. |
 
+## Graceful shutdown
+
+During rolling updates, scale-downs, or node drains, the interceptor drains in-flight requests instead of terminating them immediately.
+When an interceptor pod is deleted, Kubernetes triggers EndpointSlice removal and sends SIGTERM in parallel.
+The interceptor's shutdown sequence on SIGTERM is:
+
+1. The readiness probe returns 503, signaling the pod is no longer ready to receive traffic (e.g. for external load balancers that health-check the pod directly).
+2. The interceptor keeps serving for `shutdownDelay`, allowing endpoint removal to propagate to all nodes.
+3. The proxy listener closes and the interceptor waits up to `drainTimeout` for in-flight requests (including WebSocket connections) to complete.
+4. Infrastructure components (admin server, metrics, routing table) shut down and the pod exits.
+
+| Helm value                                  | Env var                    | Default | Description                                                                                                    |
+| ------------------------------------------- | -------------------------- | ------- | -------------------------------------------------------------------------------------------------------------- |
+| `interceptor.shutdownDelay`                 | `KEDA_HTTP_SHUTDOWN_DELAY` | `5s`    | Time between SIGTERM and closing the proxy listener. Increase this if clients still hit the pod after SIGTERM. |
+| `interceptor.drainTimeout`                  | `KEDA_HTTP_DRAIN_TIMEOUT`  | `30s`   | Maximum time to wait for in-flight requests to complete. `0` waits indefinitely.                               |
+| `interceptor.terminationGracePeriodSeconds` | —                          | `45`    | Time Kubernetes waits before sending SIGKILL.                                                                  |
+
+Ensure `terminationGracePeriodSeconds` is at least `shutdownDelay + drainTimeout` to avoid SIGKILL before drain completes.
+
+```shell
+helm upgrade http-add-on kedacore/keda-add-ons-http \
+  --namespace keda \
+  --set interceptor.shutdownDelay=10s \
+  --set interceptor.drainTimeout=120s \
+  --set interceptor.terminationGracePeriodSeconds=135
+```
+
 ## Interceptor scaling
 
 The interceptor itself is auto-scaled by KEDA via a `ScaledObject` created by the Helm chart.
