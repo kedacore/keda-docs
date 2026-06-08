@@ -9,6 +9,7 @@ weight = 1
 Before installing the HTTP Add-on, ensure you have:
 
 - A Kubernetes cluster (tested against the three most recent minor versions)
+  - Supported architectures: `amd64`, `arm64`, or `s390x` (CI-tested on `amd64` and `arm64`)
 - [Helm 3](https://helm.sh/docs/intro/install/)
 - KEDA core installed ([deployment guide](https://keda.sh/docs/deploy/))
 
