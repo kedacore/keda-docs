@@ -34,6 +34,9 @@ It performs three functions:
 2. **Counting** — Tracks the number of concurrent (in-flight) requests and total request counts per route. These counters are the raw data the scaler uses to compute scaling metrics.
 3. **Buffering** — During cold starts (when a backend has zero replicas), the interceptor holds the request open while waiting for the backend to become ready. Once at least one pod is available, the request is forwarded. If the backend does not become ready within the readiness timeout, the interceptor returns an error or routes to a fallback service if configured.
 
+The interceptor supports HTTP/1.1, HTTP/2 (both h2c and h2 over TLS), gRPC, and WebSocket connections.
+Protocol detection is automatic — the interceptor matches the outbound protocol to whatever the client used on the inbound connection.
+
 The interceptor forwards requests to the backend's Kubernetes Service, relying on standard Kubernetes service load balancing for distribution across pods.
 
 The interceptor deployment is itself auto-scaled by KEDA via a ScaledObject created by the Helm chart.
