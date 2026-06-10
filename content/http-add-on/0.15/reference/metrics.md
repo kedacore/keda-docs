@@ -85,30 +85,30 @@ All other method values are replaced with `_OTHER` to prevent unbounded label ca
 
 ### Pinger fetch duration
 
-|                          |                                                                            |
-| ------------------------ | -------------------------------------------------------------------------- |
-| **Prometheus name**      | `scaler_pinger_fetch_duration_seconds`                                     |
-| **OTel instrument name** | `scaler.pinger.fetch.duration`                                             |
-| **Type**                 | Histogram                                                                  |
-| **Unit**                 | Seconds                                                                    |
-| **Description**          | Duration of a queue pinger fetch cycle across all interceptor pods.        |
+|                          |                                                                     |
+| ------------------------ | ------------------------------------------------------------------- |
+| **Prometheus name**      | `scaler_pinger_fetch_duration_seconds`                              |
+| **OTel instrument name** | `scaler.pinger.fetch.duration`                                      |
+| **Type**                 | Histogram                                                           |
+| **Unit**                 | Seconds                                                             |
+| **Description**          | Duration of a queue pinger fetch cycle across all interceptor pods. |
 
 **Bucket boundaries:** `0.005`, `0.01`, `0.025`, `0.05`, `0.075`, `0.1`, `0.25`, `0.5`, `0.75`, `1`, `2.5`, `5`
 
 ### Pinger fetch errors
 
-|                          |                                          |
-| ------------------------ | ---------------------------------------- |
-| **Prometheus name**      | `scaler_pinger_fetch_errors_total`       |
-| **OTel instrument name** | `scaler.pinger.fetch.errors`             |
-| **Type**                 | Counter                                  |
-| **Description**          | Total failed queue pinger fetch cycles.  |
+|                          |                                         |
+| ------------------------ | --------------------------------------- |
+| **Prometheus name**      | `scaler_pinger_fetch_errors_total`      |
+| **OTel instrument name** | `scaler.pinger.fetch.errors`            |
+| **Type**                 | Counter                                 |
+| **Description**          | Total failed queue pinger fetch cycles. |
 
 ### Pinger endpoints
 
-|                          |                                                              |
-| ------------------------ | ------------------------------------------------------------ |
-| **Prometheus name**      | `scaler_pinger_endpoints`                                    |
-| **OTel instrument name** | `scaler.pinger.endpoints`                                    |
-| **Type**                 | Gauge                                                        |
-| **Description**          | Number of interceptor endpoints the scaler is polling.       |
+|                          |                                                        |
+| ------------------------ | ------------------------------------------------------ |
+| **Prometheus name**      | `scaler_pinger_endpoints`                              |
+| **OTel instrument name** | `scaler.pinger.endpoints`                              |
+| **Type**                 | Gauge                                                  |
+| **Description**          | Number of interceptor endpoints the scaler is polling. |

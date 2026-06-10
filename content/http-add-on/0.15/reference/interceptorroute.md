@@ -57,6 +57,15 @@ Exactly one of `port` or `portName` must be set.
 **Validation:** Exactly one of `port` or `portName` must be set.
 Setting both or neither produces a validation error.
 
+**Protocol selection:** The interceptor determines the backend protocol by inspecting the [`appProtocol`](https://kubernetes.io/docs/concepts/services-networking/service/#application-protocol) field on the matching Service port:
+
+| `appProtocol` value      | Backend protocol            |
+| ------------------------ | --------------------------- |
+| _(unset or other value)_ | HTTP/1.1                    |
+| `kubernetes.io/h2c`      | HTTP/2 cleartext (for gRPC) |
+
+For TLS backends, the protocol is negotiated automatically via ALPN regardless of `appProtocol`.
+
 ### `RoutingRule`
 
 Defines a set of matching criteria for routing requests.
