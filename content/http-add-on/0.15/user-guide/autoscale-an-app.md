@@ -35,6 +35,7 @@ spec:
 Key fields:
 
 - **`target.service`** / **`target.port`** — The Kubernetes Service and port to route traffic to.
+  - For gRPC or HTTP/2 backends, set `appProtocol: kubernetes.io/h2c` on the Service port ([details](../../reference/interceptorroute/#targetref)).
 - **`rules[].hosts`** — Hostnames to match against the HTTP `Host` header. This must match what callers send (see [Step 4](#step-4-route-traffic-through-the-interceptor)):
   - External traffic: your public hostname (e.g., `app.example.com`).
   - In-cluster traffic: the service name callers use (e.g., `<your-service>-proxy`).

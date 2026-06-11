@@ -35,7 +35,8 @@ It performs three functions:
 3. **Buffering** — During cold starts (when a backend has zero replicas), the interceptor holds the request open while waiting for the backend to become ready. Once at least one pod is available, the request is forwarded. If the backend does not become ready within the readiness timeout, the interceptor returns an error or routes to a fallback service if configured.
 
 The interceptor supports HTTP/1.1, HTTP/2 (both h2c and h2 over TLS), gRPC, and WebSocket connections.
-Protocol detection is automatic — the interceptor matches the outbound protocol to whatever the client used on the inbound connection.
+For cleartext backends, the interceptor defaults to HTTP/1.1 unless the target Service port sets `appProtocol: kubernetes.io/h2c`, which switches the backend connection to HTTP/2 cleartext (required for gRPC).
+For TLS backends, the protocol is negotiated automatically via ALPN.
 
 The interceptor forwards requests to the backend's Kubernetes Service, relying on standard Kubernetes service load balancing for distribution across pods.
 
