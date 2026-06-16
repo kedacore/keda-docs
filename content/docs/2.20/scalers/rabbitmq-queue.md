@@ -107,7 +107,9 @@ This allows sensitive credentials to be stored and managed separately from the c
 - `cert` - Certificate for client authentication (optional).
 - `key` - Certificate Key for client authentication (optional).
 
-> 💡 **Note:** Using RabbitMQ host with AMQPS protocol will require enabling the TLS settings and passing the required parameters.
+> 💡 **Notes:**
+> - Using RabbitMQ host with AMQPS protocol will require enabling the TLS settings and passing the required parameters.
+> - When using certificate-based authentication (SASL EXTERNAL via the `rabbitmq_auth_mechanism_ssl` plugin), omit `username` and `password` from both the `host` URI and `TriggerAuthentication`. KEDA will automatically use SASL EXTERNAL when TLS is enabled and no credentials are present. RabbitMQ will derive the user identity from the CN field of the client certificate.
 
 #### Azure Workload Identity authentication
 
