@@ -243,51 +243,30 @@ git push --force
 
 ### Adding a new filter option
 
-To add a new filter option, simply follow these steps:
+Follow these steps:
 
-1. Navigate to the doc file you want to annotate.
-2. In the frontmatter, add your new filter option:
+1. Add the filter field to your scaler's frontmatter:
    ```toml
    FILTER_NAME = "filter_value"
    ```
-   Replace `FILTER_NAME` with any desired name of your choice. Same applies to the value.
-3. In `layouts/_default/list.lunr.json`, just before the closing parenthesis, append your new option:
+   Replace `FILTER_NAME` with any desired name. Same applies to the value.
+2. In `layouts/_default/list.scalers.json`, add the field to the dict call:
    ```text
    "FILTER_NAME" $scalers.Params.FILTER_NAME
    ```
-4. In `hugo.toml`, in the `params.lunr` section, add your new filter option's name to both arrays:
-   ```toml
-   vars = ["title", "maintainer", "description", "availability", "category", "type", "FILTER_NAME"]
-   params = ["availability", "maintainer", "category", "type", "FILTER_NAME"]
-   ```
-5. In `assets/js/scaler-search.js`, in the `lunr()` callback where `this.field` is called, append your field:
-   ```javascript
-   this.field("FILTER_NAME", {
-     boost: 5,
-   });
-   ```
-   And where `parse[doc.title]` is built, add your field:
-   ```javascript
-   parse[doc.title] = {
-     href: doc.href,
-     title: doc.title,
-     maintainer: doc.maintainer,
-     description: doc.description,
-     availability: doc.availability,
-     category: doc.category,
-     type: doc.type,
-     FILTER_NAME: doc.FILTER_NAME,
-   };
-   ```
-6. In `layouts/partials/scaler-layout.html`, locate the div with class `filter-options` and add this new block:
+3. In `layouts/partials/scaler-layout.html`, locate the div with class `filter-options` and add a new checkbox block.
+   The checkbox `value` must use the format `FILTER_NAME:{{ . }}` — the search JS automatically parses this convention:
    ```html
    <div class="has-extra-top-margin">
      <h6>FILTER_NAME</h6>
-     {{ $FILTER_NAME := slice }} {{ range $scalers := where site.RegularPages
-     ".CurrentSection.Title" "Scalers" }} {{ with $scalers.Params.FILTER_NAME }} {{
-     $FILTER_NAME = $categories | append ($scalers.Params.FILTER_NAME) }} {{
-     $FILTER_NAME = uniq $FILTER_NAME }} {{ end }} {{ end }} {{ range $FILTER_NAME
-     }} {{ $item := . }}
+     {{ $FILTER_NAME := slice }}
+     {{ range $scalers := .CurrentSection.RegularPages }}
+       {{ with $scalers.Params.FILTER_NAME }}
+         {{ $FILTER_NAME = $FILTER_NAME | append ($scalers.Params.FILTER_NAME) }}
+         {{ $FILTER_NAME = uniq $FILTER_NAME }}
+       {{ end }}
+     {{ end }}
+     {{ range $FILTER_NAME }}
      <div>
        <input
          id="{{ . }}"
@@ -300,7 +279,7 @@ To add a new filter option, simply follow these steps:
      {{ end }}
    </div>
    ```
-7. Save your changes and rebuild your frontend.
+4. Rebuild the site. No JS changes needed — `scaler-search.js` picks up new filter fields automatically via the `field:value` checkbox convention.
 
 ## Listing KEDA Users and Commercial Offerings
 
