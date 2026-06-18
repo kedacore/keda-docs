@@ -29,17 +29,25 @@ spec:
   scalingMetric:
     concurrency:
       targetValue: 100
+  staticRoutes:
+    - rules:
+        - paths:
+            - value: /healthz
+      response:
+        statusCode: 200
+        body: "OK"
 ```
 
 ## `spec`
 
-| Field           | Type                                                    | Required | Default | Description                                                        |
-| --------------- | ------------------------------------------------------- | -------- | ------- | ------------------------------------------------------------------ |
-| `target`        | [`TargetRef`](#targetref)                               | Yes      |         | Backend service to route traffic to.                               |
-| `rules`         | [`[]RoutingRule`](#routingrule)                         | No       |         | Routing rules that define how requests are matched to this target. |
-| `scalingMetric` | [`ScalingMetricSpec`](#scalingmetricspec)               | Yes      |         | Metric configuration for autoscaling.                              |
-| `coldStart`     | [`ColdStartSpec`](#coldstartspec)                       | No       |         | Cold start behavior when scaling from zero.                        |
-| `timeouts`      | [`InterceptorRouteTimeouts`](#interceptorroutetimeouts) | No       |         | Timeout configuration for request handling.                        |
+| Field           | Type                                                    | Required | Default | Description                                                         |
+| --------------- | ------------------------------------------------------- | -------- | ------- | ------------------------------------------------------------------- |
+| `target`        | [`TargetRef`](#targetref)                               | Yes      |         | Backend service to route traffic to.                                |
+| `rules`         | [`[]RoutingRule`](#routingrule)                         | No       |         | Routing rules that define how requests are matched to this target.  |
+| `scalingMetric` | [`ScalingMetricSpec`](#scalingmetricspec)               | Yes      |         | Metric configuration for autoscaling.                               |
+| `staticRoutes`  | [`[]StaticRoute`](#staticroute)                         | No       |         | Routes that serve a static response without triggering autoscaling. |
+| `coldStart`     | [`ColdStartSpec`](#coldstartspec)                       | No       |         | Cold start behavior when scaling from zero.                         |
+| `timeouts`      | [`InterceptorRouteTimeouts`](#interceptorroutetimeouts) | No       |         | Timeout configuration for request handling.                         |
 
 For usage guidance, see [Configure Routing Rules](../../user-guide/configure-routing/) and [Configure Scaling Metrics](../../user-guide/configure-scaling/).
 
@@ -117,6 +125,27 @@ When both are set, both metrics are reported and KEDA scales based on whichever 
 | `targetValue` | `int32`    | Yes      |         | Target request rate per replica. Minimum: 1.                   |
 | `window`      | `Duration` | No       | `1m`    | Sliding time window over which the request rate is calculated. |
 | `granularity` | `Duration` | No       | `1s`    | Bucket size for rate calculation within the window.            |
+
+### `StaticRoute`
+
+Defines a route that serves a static response without triggering autoscaling.
+When the backend is running, matched requests are forwarded to it by default (configurable via `responseMode`).
+When the backend is scaled to zero, a configurable static response is returned instead.
+
+| Field          | Type                                | Required | Default           | Description                                                                                 |
+| -------------- | ----------------------------------- | -------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| `rules`        | [`[]RoutingRule`](#routingrule)     | Yes      |                   | Matching rules for this static route. A request matching any rule is handled by this route. |
+| `response`     | [`StaticResponse`](#staticresponse) | Yes      |                   | Static response to return.                                                                  |
+| `responseMode` | `string`                            | No       | `WhenUnavailable` | When to serve the static response. See [response modes](#static-route-response-modes).      |
+
+#### Static route response modes
+
+| Mode              | Behavior                                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| `WhenUnavailable` | Forward to the backend when it has ready endpoints; return the static response only when the backend is down. |
+| `Always`          | Always return the static response, even when the backend is running.                                          |
+
+For usage guidance, see [Configure Static Routes](../../user-guide/configure-static-routes/).
 
 ### `ColdStartSpec`
 

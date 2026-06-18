@@ -40,9 +40,14 @@ For example, with a concurrency target of 100 and a current concurrency of 250, 
 
 This calculation happens within the Kubernetes HPA based on the metrics and targets that KEDA provides.
 
+## Requests Excluded from Scaling
+
+Requests that match a static route are not counted toward scaling metrics and will not trigger autoscaling.
+See [Configure Static Routes](../../user-guide/configure-static-routes/) for details.
+
 ## How Metrics Flow
 
-1. A request arrives at the interceptor, which counts it.
+1. A request arrives at the interceptor, which counts it (unless it matches a [static route](../../user-guide/configure-static-routes/)).
 2. The scaler periodically polls all interceptor pods to collect per-route request counts.
 3. The scaler aggregates concurrency across pods and computes request rate for each route.
 4. KEDA queries the scaler for current metrics and determines the desired replica count.
