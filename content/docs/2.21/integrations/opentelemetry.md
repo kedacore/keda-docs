@@ -36,6 +36,7 @@ The following metrics are being gathered:
 | `keda.build.info` | Info metric, with static information about KEDA build like: version, git commit and Golang runtime info. |
 | `keda.scaler.active` | This metric marks whether the particular scaler is active (value == 1) or in-active (value == 0). |
 | `keda.scaled.object.paused` | This metric indicates whether a ScaledObject is paused (value == 1) or un-paused (value == 0). |
+| `keda.scaled.object.ready` | This metric indicates whether a ScaledObject is ready (value == 1) or not (value == 0), based on its `Ready` status condition. |
 | `keda.scaler.metrics.value` | The current value for each scaler's metric that would be used by the HPA in computing the target average. |
 | `keda.scaler.metrics.latency.seconds` | The latency of retrieving current metric from each scaler. |
 | `keda.scaler.errors` | The number of errors that have occurred for each scaler. |
