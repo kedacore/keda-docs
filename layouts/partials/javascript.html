@@ -23,7 +23,7 @@
 <script src="{{ $docsearch.RelPermalink }}" integrity="{{ $docsearch.Data.Integrity }}" defer></script>
 {{ end }}
 
-{{/* Scaler search and filter (bundles Lunr.js) */}}
+{{/* Scaler search and filter */}}
 {{ $scalerSearch := resources.Get "js/scaler-search.js" | js.Build (dict "targetPath" "js/scaler-search.js") }}
 {{ if $inDevMode }}
 <script src="{{ $scalerSearch.RelPermalink }}" defer></script>

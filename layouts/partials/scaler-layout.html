@@ -34,7 +34,7 @@
       <div class="has-extra-top-margin">
         <h6>Category</h6>
         {{ $categories := slice }}
-        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+        {{ range $scalers := .CurrentSection.RegularPages }}
           {{ with $scalers.Params.category }}
               {{ $categories = $categories | append ($scalers.Params.category) }}
               {{ $categories = uniq $categories }}
@@ -51,7 +51,7 @@
       <div class="has-extra-top-margin">
         <h6>Maintainer</h6>
         {{ $maintainers := slice }}
-        {{ range $scalers :=  where site.RegularPages ".CurrentSection.Title" "Scalers" }}
+        {{ range $scalers := .CurrentSection.RegularPages }}
             {{ $maintainers = $maintainers | append ($scalers.Params.maintainer) }}
             {{ $maintainers = uniq $maintainers }}
         {{ end }}
@@ -74,11 +74,17 @@
           <input id="JensWalter" type="checkbox" name="resource_filter" value="maintainer:JensWalter">
           <label for="JensWalter">JensWalter</label>
         </div>
+        <div>
+          <input id="jkremser" type="checkbox" name="resource_filter" value="maintainer:jkremser">
+          <label for="jkremser">jkremser</label>
+        </div>
       </div>
-    </div>   
+    </div>
   </div>
   <div class="results-pane column">
-    <div class="results"></div>
+    <div class="results">
+      <h3 id="search-results" class="subtitle is-size-3"></h3>
+    </div>
     <div
       id="scalers"
       style="margin-top: 20px"
