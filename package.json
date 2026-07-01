@@ -11,14 +11,14 @@
     "serve:hugo": "hugo serve -DFE"
   },
   "devDependencies": {
-    "@docsearch/css": "4.6.2",
-    "@docsearch/js": "4.6.2",
+    "@docsearch/css": "4.6.3",
+    "@docsearch/js": "4.6.3",
     "@fontsource/inria-sans": "5.2.8",
-    "@fontsource/roboto-mono": "5.2.8",
-    "@fortawesome/fontawesome-free": "7.2.0",
-    "alpinejs": "3.15.11",
-    "bulma": "0.8.2",
-    "hugo-extended": "0.160.1",
-    "netlify-cli": "26.0.2"
+    "@fontsource/roboto-mono": "5.2.9",
+    "@fortawesome/fontawesome-free": "7.3.0",
+    "alpinejs": "3.15.12",
+    "bulma": "0.9.4",
+    "hugo-extended": "0.163.3",
+    "netlify-cli": "26.1.0"
   }
 }
