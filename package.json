@@ -17,7 +17,7 @@
     "@fontsource/roboto-mono": "5.2.8",
     "@fortawesome/fontawesome-free": "7.2.0",
     "alpinejs": "3.15.11",
-    "bulma": "0.8.2",
+    "bulma": "1.0.4",
     "hugo-extended": "0.160.1",
     "netlify-cli": "26.0.2"
   }
