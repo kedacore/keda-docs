@@ -28,6 +28,7 @@ triggers:
       minConnectTimeout: "5" # optional
       unsafeSsl: "false" # optional
       tlsServerName: "custom-tls-servername" # optional
+      enableTLS: "true" # optional, only relevant when using apiKey authentication
 ```
 
 **Parameter list:**
@@ -48,6 +49,7 @@ triggers:
 - `minConnectTimeout` - This is the minimum amount of time we are willing to give a connection to complete. (Default:`5`, Optional)
 - `unsafeSsl` - Whether to allow unsafe SSL (Default: `false`, Optional)
 - `tlsServerName` - The custom tls server name (Optional)
+- `enableTLS` - Whether to enable TLS when using `apiKey` authentication. Set to `false` only when connecting to a self-hosted Temporal server over plaintext gRPC (no TLS). Has no effect unless `apiKey` authentication is configured. (Default: `true`, Optional)
 
 > 💡 **NOTE:** Activation based on backlog may not be reliable when scaling to zero.
   This approach fails to account for in-flight tasks or workloads with throughput too low to trigger a backlog.
