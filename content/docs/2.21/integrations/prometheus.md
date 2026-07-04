@@ -27,6 +27,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
 - `keda_scaler_http_requests_total` - Total number of outbound HTTP requests issued during scaler metric collection.
 - `keda_scaler_http_request_duration_seconds` - Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection.
+- `keda_metricsservice_get_metrics_requests_total` - Total number of GetMetrics gRPC requests handled by the operator for the metrics server, labeled by outcome.
+- `keda_metricsservice_get_metrics_duration_seconds` - Histogram of the duration in seconds of GetMetrics gRPC requests handled by the operator for the metrics server.
 - `keda_internal_metricsservice_grpc_server_started_total` - Total number of RPCs started on the server.
 - `keda_internal_metricsservice_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
 - `keda_internal_metricsservice_grpc_server_msg_received_total` - Total number of RPC stream messages received on the server.
@@ -52,6 +54,8 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 - `keda_internal_metricsservice_grpc_client_msg_received_total` - Total number of RPC stream messages received by the client.
 - `keda_internal_metricsservice_grpc_client_msg_sent_total` - Total number of gRPC stream messages sent by the client.
 - `keda_internal_metricsservice_grpc_client_handling_seconds` - Histogram of response latency (seconds) of the gRPC until it is finished by the application.
+- `keda_external_metrics_provider_requests_total` - Total number of external metric requests served to the Kubernetes HPA, labeled by outcome.
+- `keda_external_metrics_provider_request_duration_seconds` - Histogram of the duration in seconds of external metric requests served to the Kubernetes HPA.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 - Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
 
