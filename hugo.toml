@@ -90,25 +90,13 @@ mediaType = "text/netlify"
 baseName = "_redirects"
 
 [outputs]
-home = ["HTML", "RSS", "REDIRECTS", "Lunr"]
+home = ["HTML", "RSS", "REDIRECTS", "scalers"]
 
-[outputFormats.Lunr]
-baseName = "index"
+[outputFormats.scalers]
+baseName = "scalers"
 isPlainText = true
 mediaType = "application/json"
 notAlternative = true
-
-# parameters for lunr search
-[params.lunr]
-vars = [
-  "title",
-  "maintainer",
-  "description",
-  "availability",
-  "category",
-  "type",
-]
-params = ["availability", "maintainer", "category", "type"]
 
 # "Highlighted Samples" section on the main page
 [[params.samples]]
