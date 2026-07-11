@@ -28,7 +28,7 @@ triggers:
 
 > 💡 **Note:** The search scope is limited to the namespace where the `ScaledObject` is deployed.
 
-The count excludes terminated pods, i.e. [pod status](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podstatus-v1-core) `phase` equals `Succeeded` or `Failed`.
+The count excludes terminated pods, i.e. [pod status](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podstatus-v1-core) `phase` equals `Succeeded` or `Failed`.
 
 When `groupByNode` is enabled, KEDA groups matching non-terminated pods by node and excludes matching pods without a node assignment. For example, if `7` matching pods are found and `2` of them run on the same node, the scaler reports `6`.
 
