@@ -1,3 +1,9 @@
+.doc-hero
+  margin-bottom: 1.5rem
+
+  .title sup
+    line-height: 0
+
 .content
   a sup
     margin-left: 0.1rem
@@ -7,6 +13,12 @@
 
   .highlight
     margin-bottom: 1rem
+
+  // Allow horizontal scrolling for larger tables
+  table
+    display: block
+    overflow-x: auto
+    max-width: 100%
 
   &.is-constrained
     max-width: 90ch

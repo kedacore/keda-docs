@@ -18,7 +18,7 @@ As a reference, this compatibility matrix shows the Kubernetes versions tested f
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
-| v2.20 | TBD           |
+| v2.20 | v1.33 - v1.35 |
 | v2.19 | v1.32 - v1.34 |
 | v2.18 | v1.31 - v1.33 |
 | v2.17 | v1.30 - v1.32 |
@@ -115,6 +115,47 @@ For example:
 ```
 
 The following values are allowed: `TLS13`, `TLS12`, `TLS11` and `TLS10`.
+
+## HTTP TLS Ciphersuite List
+
+Some organizations have very specific security requirements and only permit a subset of TLS cipher suites for secure communications. In such scenarios, KEDA can be configured with a list of allowed cipher suites. The TLS handshake will select only from the list of allowed cipher suites using the environment variable `KEDA_HTTP_TLS_CIPHER_LIST`.
+
+For example:
+
+```yaml
+- env:
+    KEDA_HTTP_TLS_CIPHER_LIST: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+```
+
+Allowed values are the names of the cipher suites returned by the Go `crypto/tls` module's `CipherSuites()` function. Invalid cipher suite names will be ignored. If not specified or if only invalid names are specified, the default cipher suites list will be used. Note: the Go TLS library ignores cipher suites specified by this option if TLS13 is used for `KEDA_HTTP_MIN_TLS_VERSION`.
+
+## Service TLS min version
+
+By default, KEDA uses TLS1.3 as a minimum TLS version for TLS-enabled services (such as gRPC & the webhook). However, if you need to use another version you can configure it by using the environment variable `KEDA_SERVICE_MIN_TLS_VERSION`.
+
+For example:
+
+```yaml
+- env:
+    KEDA_SERVICE_MIN_TLS_VERSION: TLS12
+```
+
+The following values are allowed: `TLS13` and `TLS12`.
+
+If not specified, defaults to the value of `KEDA_HTTP_MIN_TLS_VERSION`.
+
+## Service TLS Ciphersuite List
+
+When making a TLS connection to a KEDA TLS-enabled service, the TLS handshake will select only from the list of allowed cipher suites using the environment variable `KEDA_SERVICE_TLS_CIPHER_LIST`.
+
+For example:
+
+```yaml
+- env:
+    KEDA_SERVICE_TLS_CIPHER_LIST: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+```
+
+Allowed values are the names of the cipher suites returned by the Go `crypto/tls` module's `CipherSuites()` function. Invalid cipher suite names will be ignored. If not specified, defaults to the value of `KEDA_HTTP_TLS_CIPHER_LIST`. Note: the Go TLS library ignores cipher suites specified by this option if TLS13 is used for `KEDA_SERVICE_MIN_TLS_VERSION` (which is the default).
 
 ## Kubernetes Client Parameters
 

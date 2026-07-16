@@ -5,11 +5,18 @@
 {{ $devOpts      := (dict "targetPath" $cssOutput "includePaths" $includePaths "enableSourceMap" true) -}}
 {{ $prodOpts     := (dict "targetPath" $cssOutput "includePaths" $includePaths "outputStyle" "compressed") -}}
 {{ $cssOpts      := cond $inDevMode $devOpts $prodOpts -}}
-{{ $css          := resources.Get $sass | resources.ExecuteAsTemplate $sass . | toCSS $cssOpts -}}
+{{ $css          := resources.Get $sass | resources.ExecuteAsTemplate $sass . | css.Sass $cssOpts -}}
 {{ if $inDevMode -}}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 {{ else -}}
   {{ $prodCss := $css | fingerprint -}}
   <link rel="stylesheet" href="{{ $prodCss.RelPermalink }}" integrity="{{ $prodCss.Data.Integrity }}">
 {{ end -}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+{{ range site.Params.fonts -}}
+{{ $fontFile := replace (lower .name) " " "-" -}}
+{{ range .sizes -}}
+<link rel="stylesheet" href="/fonts/{{ $fontFile }}/latin-{{ . }}.css" />
+{{ end -}}
+{{ end -}}
+<link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+<link rel="stylesheet" href="/css/docsearch/style.css" />

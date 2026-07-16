@@ -14,11 +14,12 @@
 {{ errorf "no author specified in the post you created in content/%s" .File.Path }}
 {{ end }}
 
+<span class="docsearch-lvl0" hidden>Blog</span>
 <section class="hero is-dark is-medium has-background-pattern">
   <div class="hero-body">
     <div class="container">
       <p class="title is-size-1 is-size-2-mobile has-text-weight-bold is-spaced">
-        {{ $title }}
+        <span class="title-text">{{ $title }}</span>
       </p>
 
       <p class="subtitle is-size-2 is-size-3-mobile">

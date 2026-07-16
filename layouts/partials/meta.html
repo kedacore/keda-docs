@@ -8,7 +8,11 @@
 {{ $img           := "img/logos/keda-icon-color.png" | absURL }}
 {{ $imgAlt        := printf "%s color logo" site.Title }}
 {{ $locale        := site.Params.locale }}
-{{ $version       := index (split .File.Path "/") 1 }}
+{{ $sectionVersions := index site.Params.versions .Section }}
+{{ $version       := "" }}
+{{ if $sectionVersions }}
+{{ with .File }}{{ $version = index (split .Path "/") 1 }}{{ end }}
+{{ end }}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -19,12 +23,12 @@
 <link rel="canonical" href="{{ $canonical }}">
 
 {{/*
-When $version is lower than $latestVersion, we include
-the extra meta "noindex" to remove the page from search engines.
-Only current version and preview version can be indexed.
+When $version is a released version that is not the latest,
+add a "noindex" meta tag to exclude it from search engines.
+Unreleased and latest versions remain indexable.
 */}}
-{{ if and (ne $version "") (eq .Section "docs") }}
-{{ $isOldVersion := and (in site.Params.versions.docs $version) (ne $version $latestVersion) }}
+{{ if ne $version "" }}
+{{ $isOldVersion := and (in $sectionVersions $version) (ne $version (index $sectionVersions 0)) }}
 {{ if $isOldVersion }}
 <meta name="robots" content="noindex">
 {{ end }}
@@ -37,8 +41,12 @@ Only current version and preview version can be indexed.
 <meta name="twitter:image" content="{{ $img }}">
 <meta name="twitter:image:alt" content="{{ $imgAlt }}">
 
+{{ $tag := .Section }}
+{{ if ne $version "" }}{{ $tag = printf "%s-%s" .Section $version }}{{ end }}
 <meta name="docsearch:language" content="en" />
+<meta name="docsearch:product" content="{{ .Section }}" />
 <meta name="docsearch:version" content="{{ $version }}" />
+<meta name="docsearch:tag" content="{{ $tag }}" />
 
 {{/* OpenGraph metadata */}}
 <meta property="og:url" content="{{ $url }}">
