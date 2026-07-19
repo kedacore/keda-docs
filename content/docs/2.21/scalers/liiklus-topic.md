@@ -31,8 +31,8 @@ triggers:
 - `address` - Address of the gRPC liiklus API endpoint.
 - `group` - Name of consumer group.
 - `topic` - Topic to monitor and scale based on `lagThreshold`.
-- `lagThreshold` - Value to trigger scaling actions for. (Default: `10`, Optional)
-- `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `lagThreshold` - Value to trigger scaling actions for. Must be greater than `0`. (Default: `10`, Optional)
+- `activationLagThreshold` - Target value for activating the scaler. Must be greater than or equal to `0`. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `groupVersion` - Version of the group to consider when looking at messages. See [docs](https://github.com/bsideup/liiklus/blob/22efb7049ebcdd0dcf6f7f5735cdb5af1ae014de/app/src/test/java/com/github/bsideup/liiklus/GroupVersionTest.java). (Default: `0`, Optional)
 
 ### Authentication Parameters
