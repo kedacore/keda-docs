@@ -26,19 +26,19 @@ The Secret must contain `tls.crt` and `tls.key` entries.
 
 ## TLS settings
 
-| Helm value                         | Env var                                 | Default                        | Description                                                                                                                     |
-| ---------------------------------- | --------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `interceptor.tls.enabled`          | `KEDA_HTTP_PROXY_TLS_ENABLED`           | `false`                        | Enable TLS on the proxy.                                                                                                        |
-| `interceptor.tls.port`             | `KEDA_HTTP_PROXY_TLS_PORT`              | `8443`                         | Port the TLS proxy listens on.                                                                                                  |
-| `interceptor.tls.certSecret`       | —                                       | `keda-tls-certs`               | Name of the Kubernetes Secret containing the TLS certificate and key.                                                           |
-| `interceptor.tls.certPath`         | `KEDA_HTTP_PROXY_TLS_CERT_PATH`         | `/certs/tls.crt`               | Path to the certificate file.                                                                                                   |
-| `interceptor.tls.keyPath`          | `KEDA_HTTP_PROXY_TLS_KEY_PATH`          | `/certs/tls.key`               | Path to the private key file.                                                                                                   |
-| —                                  | `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS`  | `""`                           | Comma-separated list of directories with additional cert/key pairs for [SNI-based selection](#sni-based-certificate-selection). |
-| `interceptor.tls.minVersion`       | `KEDA_HTTP_PROXY_TLS_MIN_VERSION`       | Go default (TLS 1.2)           | Minimum TLS version (`"1.2"` or `"1.3"`).                                                                                       |
-| `interceptor.tls.maxVersion`       | `KEDA_HTTP_PROXY_TLS_MAX_VERSION`       | Go default (highest supported) | Maximum TLS version (`"1.2"` or `"1.3"`).                                                                                       |
-| `interceptor.tls.cipherSuites`     | `KEDA_HTTP_PROXY_TLS_CIPHER_SUITES`     | Go defaults                    | Comma-separated list of cipher suite names.                                                                                     |
-| `interceptor.tls.curvePreferences` | `KEDA_HTTP_PROXY_TLS_CURVE_PREFERENCES` | Go defaults                    | Comma-separated list of elliptic curve names (e.g., `X25519,CurveP256`).                                                        |
-| `interceptor.tls.skipVerify`       | `KEDA_HTTP_PROXY_TLS_SKIP_VERIFY`       | `false`                        | Skip TLS verification for upstream (backend) connections.                                                                       |
+| Helm value                         | Env var                                | Default                        | Description                                                                                                                     |
+| ---------------------------------- | -------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `interceptor.tls.enabled`          | `KEDA_HTTP_PROXY_TLS_ENABLED`          | `false`                        | Enable TLS on the proxy.                                                                                                        |
+| `interceptor.tls.port`             | `KEDA_HTTP_PROXY_TLS_PORT`             | `8443`                         | Port the TLS proxy listens on.                                                                                                  |
+| `interceptor.tls.certSecret`       | —                                      | `keda-tls-certs`               | Name of the Kubernetes Secret containing the TLS certificate and key.                                                           |
+| `interceptor.tls.certPath`         | `KEDA_HTTP_PROXY_TLS_CERT_PATH`        | `/certs/tls.crt`               | Path to the certificate file.                                                                                                   |
+| `interceptor.tls.keyPath`          | `KEDA_HTTP_PROXY_TLS_KEY_PATH`         | `/certs/tls.key`               | Path to the private key file.                                                                                                   |
+| —                                  | `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS` | `""`                           | Comma-separated list of directories with additional cert/key pairs for [SNI-based selection](#sni-based-certificate-selection). |
+| `interceptor.tls.minVersion`       | `KEDA_HTTP_TLS_MIN_VERSION`            | Go default (TLS 1.2)           | Minimum TLS version (`"1.2"` or `"1.3"`).                                                                                       |
+| `interceptor.tls.maxVersion`       | `KEDA_HTTP_TLS_MAX_VERSION`            | Go default (highest supported) | Maximum TLS version (`"1.2"` or `"1.3"`).                                                                                       |
+| `interceptor.tls.cipherSuites`     | `KEDA_HTTP_TLS_CIPHER_SUITES`          | Go defaults                    | Comma-separated list of cipher suite names.                                                                                     |
+| `interceptor.tls.curvePreferences` | `KEDA_HTTP_TLS_CURVE_PREFERENCES`      | Go defaults                    | Comma-separated list of elliptic curve names (e.g., `X25519,CurveP256`).                                                        |
+| `interceptor.tls.skipVerify`       | `KEDA_HTTP_TLS_SKIP_VERIFY`            | `false`                        | Skip TLS verification for upstream (backend) connections.                                                                       |
 
 ## SNI-based certificate selection
 
