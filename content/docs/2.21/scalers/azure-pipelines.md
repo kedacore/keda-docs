@@ -63,16 +63,34 @@ triggers:
 
 ### Authentication Parameters
 
-As an alternative to using environment variables, you can authenticate with Azure Devops using a Personal Access Token or Managed identity via `TriggerAuthentication` configuration. If `personalAccessTokenFromEnv` or `personalAccessTokenFrom` is empty `TriggerAuthentication` must be configured using podIdentity.
+The Azure Pipelines scaler supports the following Azure DevOps authentication methods:
 
-**Personal Access Token Authentication:**
+- Personal Access Token (PAT)
+- [Azure AD Workload Identity](../authentication-providers/azure-ad-workload-identity/)
+- [Microsoft Entra service principal](../authentication-providers/azure-service-principal/) using a client secret or certificate
 
-- `organizationURL` - The URL of the Azure DevOps organization.
-- `personalAccessToken` - The Personal Access Token (PAT) for Azure DevOps.
+The Azure DevOps organization URL must be provided through `organizationURL`, `organizationURLFromEnv`, or an authentication parameter. Authentication credentials can be supplied through environment variables or an `authenticationRef`.
 
-**Pod Identity Authentication**
+When more than one authentication method is configured, KEDA uses the following precedence:
 
-[Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/) provider can be used.
+1. Personal Access Token
+2. Azure AD Workload Identity
+3. Microsoft Entra service principal
+
+#### Personal Access Token authentication
+
+- `organizationURL` - URL of the Azure DevOps organization.
+- `personalAccessToken` - Personal Access Token for Azure DevOps.
+
+#### Azure AD Workload Identity authentication
+
+Configure a `TriggerAuthentication` or `ClusterTriggerAuthentication` with `podIdentity.provider` set to `azure-workload`.
+
+#### Microsoft Entra service principal authentication
+
+Configure the reusable `azureServicePrincipal` authentication provider with either a client secret or client certificate. The Azure Pipelines scaler acquires a Microsoft Entra token for Azure DevOps and sends it as a bearer token.
+
+Before using the scaler, add the service principal to the Azure DevOps organization and grant it permission to read the required agent pool and its job requests. When adding it to Azure DevOps, use the service principal object ID from **Enterprise applications**, not the application registration object ID. For detailed setup instructions, see the [Azure DevOps service principal documentation](https://learn.microsoft.com/azure/devops/integrate/get-started/authentication/service-principal-managed-identity?view=azure-devops).
 
 ### How to determine your pool ID
 
@@ -180,7 +198,7 @@ chmod +x ./run-docker.sh
 ./run-docker.sh "$@" --once & wait $!
 ```
 
-### Example for ScaledObject
+### Example using Personal Access Token authentication
 
 ```yaml
 apiVersion: v1
@@ -220,7 +238,55 @@ spec:
       parent: "example-keda-template"
       demands: "maven,docker"
     authenticationRef:
-     name: pipeline-trigger-auth
+      name: pipeline-trigger-auth
+```
+
+### Example using service principal authentication
+
+The following example uses a client secret. Certificate credentials can be configured using the same [`azureServicePrincipal` authentication provider](../authentication-providers/azure-service-principal/).
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-pipelines-service-principal
+  namespace: default
+type: Opaque
+data:
+  clientSecret: <base64-encoded-client-secret>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-pipelines-service-principal
+  namespace: default
+spec:
+  azureServicePrincipal:
+    tenantId: <tenant-id>
+    clientId: <client-id>
+    clientSecret:
+      valueFrom:
+        secretKeyRef:
+          name: azure-pipelines-service-principal
+          key: clientSecret
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-pipelines-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azdevops-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: azure-pipelines
+    metadata:
+      poolID: "1"
+      organizationURL: "https://dev.azure.com/<organization>"
+    authenticationRef:
+      name: azure-pipelines-service-principal
 ```
 
 ### Example for Parent Deployment or StatefulSet
@@ -277,5 +343,5 @@ spec:
       parent: "example-keda-template"
       demands: "maven,docker"
     authenticationRef:
-     name: pipeline-trigger-auth
+      name: pipeline-trigger-auth
 ```
