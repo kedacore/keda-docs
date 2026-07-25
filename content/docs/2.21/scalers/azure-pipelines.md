@@ -69,7 +69,7 @@ The Azure Pipelines scaler supports the following Azure DevOps authentication me
 - [Azure AD Workload Identity](../authentication-providers/azure-ad-workload-identity/)
 - [Microsoft Entra service principal](../authentication-providers/azure-service-principal/) using a client secret or certificate
 
-The Azure DevOps organization URL must be provided through `organizationURL`, `organizationURLFromEnv`, or an authentication parameter. Authentication credentials can be supplied through environment variables or an `authenticationRef`.
+The Azure DevOps organization URL can be supplied directly through `organizationURL`, from the scale target through `organizationURLFromEnv`, or as an authentication parameter. A PAT can be supplied through `personalAccessTokenFromEnv` or an `authenticationRef`. Workload identity and service principal authentication must be configured through an `authenticationRef`.
 
 When more than one authentication method is configured, KEDA uses the following precedence:
 
