@@ -107,11 +107,17 @@ This allows sensitive credentials to be stored and managed separately from the c
 - `cert` - Certificate for client authentication (optional).
 - `key` - Certificate Key for client authentication (optional).
 
-> 💡 **Note:** Using RabbitMQ host with AMQPS protocol will require enabling the TLS settings and passing the required parameters.
+> 💡 **Notes:**
+> - Using RabbitMQ host with AMQPS protocol will require enabling the TLS settings and passing the required parameters.
+> - When using certificate-based authentication (SASL EXTERNAL via the `rabbitmq_auth_mechanism_ssl` plugin), omit `username` and `password` from both the `host` URI and `TriggerAuthentication`. KEDA will automatically use SASL EXTERNAL when TLS is enabled and no credentials are present. RabbitMQ will derive the user identity from the CN field of the client certificate.
 
 #### Azure Workload Identity authentication
 
 For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD with `podIdentity.provider = azure-workload` and with `workloadIdentityResource` parameter, which will hold application identifier of App Registration in Azure AD. In this case `username:password` part in host URI should be omitted and `vHostName` has to be set explicitly in `ScaledObject`. Currently, only HTTP protocol is supported for AKS Workload Identity.
+
+#### OAuth2 authentication
+
+For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD with the `oauth2` spec. See the [OAuth2 authentication provider documentation](https://keda.sh/docs/2.20/authentication-providers/oauth/) for the full `TriggerAuthentication.spec.oauth2` schema. In this case, the `username:password` part in the host URI should be omitted. Currently, only HTTP protocol is supported.
 
 ### Configuration examples
 

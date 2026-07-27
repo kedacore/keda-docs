@@ -43,18 +43,18 @@ When set, they take precedence over their replacements.
 
 ### TLS
 
-| Variable                                | Default          | Description                                                                                     |
-| --------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------- |
-| `KEDA_HTTP_PROXY_TLS_ENABLED`           | `false`          | Enable TLS on the proxy server.                                                                 |
-| `KEDA_HTTP_PROXY_TLS_CERT_PATH`         | `/certs/tls.crt` | Path to the TLS certificate file.                                                               |
-| `KEDA_HTTP_PROXY_TLS_KEY_PATH`          | `/certs/tls.key` | Path to the TLS private key file.                                                               |
-| `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS`  | `""`             | Comma-separated list of paths to certificate/key pairs.                                         |
-| `KEDA_HTTP_PROXY_TLS_SKIP_VERIFY`       | `false`          | Skip TLS verification for upstream connections.                                                 |
-| `KEDA_HTTP_PROXY_TLS_PORT`              | `8443`           | Port for the TLS proxy server.                                                                  |
-| `KEDA_HTTP_PROXY_TLS_MIN_VERSION`       | `""`             | Minimum TLS version (`1.2` or `1.3`). Empty uses the Go default (TLS 1.2).                      |
-| `KEDA_HTTP_PROXY_TLS_MAX_VERSION`       | `""`             | Maximum TLS version (`1.2` or `1.3`). Empty uses the highest version supported by `crypto/tls`. |
-| `KEDA_HTTP_PROXY_TLS_CIPHER_SUITES`     | `""`             | Comma-separated list of TLS cipher suite names. Empty uses Go defaults.                         |
-| `KEDA_HTTP_PROXY_TLS_CURVE_PREFERENCES` | `""`             | Comma-separated list of elliptic curve names. Empty uses Go defaults.                           |
+| Variable                                | Default          | Description                                                                                                                                                                 |
+| --------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `KEDA_HTTP_PROXY_TLS_ENABLED`           | `false`          | Enable TLS on the proxy server.                                                                                                                                             |
+| `KEDA_HTTP_PROXY_TLS_CERT_PATH`         | `/certs/tls.crt` | Path to the TLS certificate file.                                                                                                                                           |
+| `KEDA_HTTP_PROXY_TLS_KEY_PATH`          | `/certs/tls.key` | Path to the TLS private key file.                                                                                                                                           |
+| `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS`  | `""`             | Comma-separated list of directories containing additional certificate/key pairs for [SNI-based selection](../../operations/configure-tls/#sni-based-certificate-selection). |
+| `KEDA_HTTP_PROXY_TLS_SKIP_VERIFY`       | `false`          | Skip TLS verification for upstream connections.                                                                                                                             |
+| `KEDA_HTTP_PROXY_TLS_PORT`              | `8443`           | Port for the TLS proxy server.                                                                                                                                              |
+| `KEDA_HTTP_PROXY_TLS_MIN_VERSION`       | `""`             | Minimum TLS version (`1.2` or `1.3`). Empty uses the Go default (TLS 1.2).                                                                                                  |
+| `KEDA_HTTP_PROXY_TLS_MAX_VERSION`       | `""`             | Maximum TLS version (`1.2` or `1.3`). Empty uses the highest version supported by `crypto/tls`.                                                                             |
+| `KEDA_HTTP_PROXY_TLS_CIPHER_SUITES`     | `""`             | Comma-separated list of TLS cipher suite names. Empty uses Go defaults.                                                                                                     |
+| `KEDA_HTTP_PROXY_TLS_CURVE_PREFERENCES` | `""`             | Comma-separated list of elliptic curve names. Empty uses Go defaults.                                                                                                       |
 
 ### Metrics
 

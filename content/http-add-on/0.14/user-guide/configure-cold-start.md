@@ -25,8 +25,9 @@ spec:
       targetValue: 100
   coldStart:
     fallback:
-      service: <your-fallback-service>
-      port: <your-fallback-port>
+      service:
+        name: <your-fallback-service>
+        port: <your-fallback-port>
   timeouts:
     readiness: 5s
 ```
