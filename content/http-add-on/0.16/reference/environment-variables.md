@@ -18,6 +18,7 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                             |
 | `KEDA_HTTP_ENABLE_COLD_START_HEADER`                | `true`       | When enabled, the interceptor adds the `X-KEDA-HTTP-Cold-Start` response header.              |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
+| `KEDA_HTTP_DIRECT_POD_ROUTING`                      | `true`       | When enabled, route requests to a ready pod IP instead of the Service ClusterIP, bypassing kube-proxy and other Service-layer features (Service-level NetworkPolicy, session affinity, topology-aware routing). |
 
 ### Graceful shutdown
 
