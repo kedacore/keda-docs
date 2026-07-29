@@ -95,7 +95,7 @@ When set, they take precedence over their replacements.
 | `KEDA_HTTP_SCALER_TARGET_ADMIN_DEPLOYMENT`          | _(required)_ | Name of the interceptor Deployment to issue metrics RPC requests to.                |
 | `KEDA_HTTP_SCALER_TARGET_ADMIN_PORT`                | _(required)_ | Port on the interceptor admin Service for metrics RPC requests.                     |
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                   |
-| `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks.                                               |
+| `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks. Also bounds each request to an interceptor pod's `/queue` endpoint (clamped to a minimum of `250ms`), so one unresponsive interceptor cannot stall metric collection. |
 | `KEDA_HTTP_SCALER_STREAM_INTERVAL_MS`               | `200`        | Interval in milliseconds between stream ticks for `IsActive` communication to KEDA. |
 
 ### Metrics
