@@ -7,6 +7,9 @@ description = "Scale applications based on Liiklus Topic."
 go_file = "liiklus_scaler"
 +++
 
+> **Notice:**
+> The Liiklus scaler is DEPRECATED and will be removed in v2.24 - The upstream [Liiklus](https://github.com/bsideup/liiklus) project is no longer maintained.
+
 ### Trigger Specification
 
 This specification describes the `liiklus` trigger for Liiklus Topic.

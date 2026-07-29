@@ -95,7 +95,18 @@ A request that matches any one of these rules is routed to the InterceptorRoute'
 
 This allows a single InterceptorRoute to serve traffic for multiple hostnames or path patterns without requiring separate resources for each.
 
+## Static Routes
+
+An InterceptorRoute can define static routes — sub-routes that serve a static response without triggering autoscaling.
+Matched requests are not counted toward scaling metrics and will not trigger autoscaling.
+Static routes use the same matching dimensions (hosts, paths, headers) as regular routing rules.
+
+A typical use case is a health check endpoint that should return `200 OK` when the backend is scaled to zero, without waking it up.
+
+For configuration details, see [Configure Static Routes](../../user-guide/configure-static-routes/).
+
 ## What's Next
 
 - [Configure Routing Rules](../../user-guide/configure-routing/) — YAML examples for host, path, and header matching.
+- [Configure Static Routes](../../user-guide/configure-static-routes/) — Health checks, maintenance pages, and other non-scaling paths.
 - [InterceptorRoute Reference](../../reference/interceptorroute/) — Complete field definitions for routing rules.
