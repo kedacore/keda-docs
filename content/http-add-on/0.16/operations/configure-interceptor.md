@@ -40,6 +40,24 @@ helm upgrade http-add-on kedacore/keda-add-ons-http \
   --set interceptor.extraEnvs.KEDA_HTTP_ENABLE_COLD_START_HEADER=false
 ```
 
+## Direct pod routing
+
+By default, the interceptor forwards each request to a ready backend pod IP rather than the Service ClusterIP.
+This avoids kube-proxy and other Service-layer features, which improves cold-start latency when EndpointSlice updates have not yet propagated to every node.
+
+Direct pod routing is enabled by default.
+Disable it if you rely on Service-level NetworkPolicy, session affinity, or topology-aware routing:
+
+```shell
+helm upgrade http-add-on kedacore/keda-add-ons-http \
+  --namespace keda \
+  --set interceptor.extraEnvs.KEDA_HTTP_DIRECT_POD_ROUTING=false
+```
+
+| Helm value | Env var                        | Default | Description                                                                                                                                      |
+| ---------- | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| —          | `KEDA_HTTP_DIRECT_POD_ROUTING` | `true`  | Route to a ready pod IP when `true`; forward through the Service ClusterIP when `false`.                                                         |
+
 ## Connection tuning
 
 Configure the interceptor's connection pool for backend services:
