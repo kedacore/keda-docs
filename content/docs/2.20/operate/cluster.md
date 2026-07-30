@@ -84,7 +84,7 @@ The KEDA operator provides these command-line flags for tuning the shared HTTP c
 | Operator Flag | Default Value | Description |
 | ------------- | ------------- | ----------- |
 | `http-max-idle-conns` | `0` | Maximum number of idle HTTP connections across all hosts. Zero means no limit. |
-| `http-max-idle-conns-per-host` | `1000` | Maximum number of idle HTTP connections retained per host. Zero uses Go's default of two. |
+| `http-max-idle-conns-per-host` | `1000` | Maximum number of idle HTTP connections retained per host. Must be greater than zero. |
 | `http-idle-conn-timeout` | `90s` | Maximum time an idle HTTP connection remains in the pool. Must be greater than zero. |
 
 The connection-pool flags can be configured through `extraArgs.keda`, for example:
