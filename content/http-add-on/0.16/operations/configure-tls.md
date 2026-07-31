@@ -38,7 +38,33 @@ The Secret must contain `tls.crt` and `tls.key` entries.
 | `interceptor.tls.maxVersion`       | `KEDA_HTTP_TLS_MAX_VERSION`            | Go default (highest supported) | Maximum TLS version (`"1.2"` or `"1.3"`).                                                                                       |
 | `interceptor.tls.cipherSuites`     | `KEDA_HTTP_TLS_CIPHER_SUITES`          | Go defaults                    | Comma-separated list of cipher suite names.                                                                                     |
 | `interceptor.tls.curvePreferences` | `KEDA_HTTP_TLS_CURVE_PREFERENCES`      | Go defaults                    | Comma-separated list of elliptic curve names (e.g., `X25519,CurveP256`).                                                        |
+| `interceptor.tls.caDirs`           | `KEDA_HTTP_TLS_CA_DIRS`                | `[]`                           | List of directories containing PEM CA certificates to trust for outbound backend connections (in addition to the system CA pool). |
 | `interceptor.tls.skipVerify`       | `KEDA_HTTP_TLS_SKIP_VERIFY`            | `false`                        | Skip TLS verification for upstream (backend) connections.                                                                       |
+
+## Custom CA trust for backend connections
+
+When backends use certificates signed by a private CA, the interceptor needs to trust that CA.
+Mount the CA bundle as a ConfigMap or Secret volume and point `interceptor.tls.caDirs` at the mount path:
+
+```yaml
+interceptor:
+  tls:
+    caDirs:
+      - /custom/ca
+  extraVolumes:
+    - name: ca-bundle
+      configMap:
+        name: my-ca-bundle
+  extraVolumeMounts:
+    - name: ca-bundle
+      mountPath: /custom/ca
+      readOnly: true
+```
+
+Multiple directories can be comma-separated.
+The interceptor loads all PEM files from each directory and adds them to the system CA pool.
+
+If proper CA trust is not possible, `interceptor.tls.skipVerify` disables certificate verification entirely.
 
 ## SNI-based certificate selection
 
