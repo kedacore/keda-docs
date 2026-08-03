@@ -72,24 +72,46 @@ Here is an overview of all KEDA deployments and the HA notes:
 
 ## HTTP Timeouts
 
-Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses its own dedicated HTTP client with its own connection pool, and by default each client is set to time out any HTTP request after 3 seconds.
+Some scalers issue HTTP requests to external servers (i.e. cloud services). Each applicable scaler uses an HTTP client with its own request timeout, and clients with the same TLS verification mode share a connection pool. By default, each client times out HTTP requests after 3 seconds.
 
 You can override this default by setting the `KEDA_HTTP_DEFAULT_TIMEOUT` environment variable on the KEDA operator deployment to your desired timeout in milliseconds.
 
 > ⚠️ All applicable scalers will use this timeout, although some scalers allow you to override this global setting via the `timeout` parameter in the trigger metadata.
 
+## HTTP Connection Pool
+
+The KEDA operator provides these command-line flags for tuning the shared HTTP connection pools:
+
+| Operator Flag | Default Value | Description |
+| ------------- | ------------- | ----------- |
+| `http-max-idle-conns` | `0` | Maximum number of idle HTTP connections across all hosts. Zero means no limit. |
+| `http-max-idle-conns-per-host` | `1000` | Maximum number of idle HTTP connections retained per host. Must be greater than zero. |
+| `http-idle-conn-timeout` | `90s` | Maximum time an idle HTTP connection remains in the pool. Must be greater than zero. |
+
+The connection-pool flags can be configured through `extraArgs.keda`, for example:
+
+```yaml
+extraArgs:
+  keda:
+    http-max-idle-conns: 5000
+    http-max-idle-conns-per-host: 500
+    http-idle-conn-timeout: 2m
+```
+
+All applicable scalers use these settings. Per-scaler connection-pool settings are unsupported.
+
 ## HTTP Connection: Disable Keep Alive
 
-Keep alive behaviour is enabled by default for every HTTP connection, this could stack a huge amount of connections (one per scaler) in some scenarios.
+Keep alive behaviour is enabled by default for every HTTP connection.
 
-You can disable keep alive for every HTTP connection by adding the relevant environment variable to both the KEDA Operator, and KEDA Metrics Server deployments:
+You can disable keep alive for every HTTP connection by adding the relevant environment variable to both the KEDA Operator and KEDA Metrics Server deployments:
 
 ```yaml
 - env:
     KEDA_HTTP_DISABLE_KEEP_ALIVE: true
 ```
 
-All applicable scalers will use this keep alive behaviour. Setting a per-scaler keep alive behaviour is currently unsupported.
+All applicable scalers use this keep alive behaviour. Setting per-scaler keep alive behaviour is currently unsupported.
 
 ## HTTP Proxies
 
