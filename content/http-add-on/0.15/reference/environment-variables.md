@@ -19,6 +19,13 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_ENABLE_COLD_START_HEADER`                | `true`       | When enabled, the interceptor adds the `X-KEDA-HTTP-Cold-Start` response header.              |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
 
+### Graceful shutdown
+
+| Variable                   | Default | Description                                                                                                                                                                                     |
+| -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `KEDA_HTTP_SHUTDOWN_DELAY` | `5s`    | Time between receiving SIGTERM and closing the proxy listener. The readiness probe returns 503 immediately, but the server keeps serving, giving Kubernetes time to propagate endpoint removal. |
+| `KEDA_HTTP_DRAIN_TIMEOUT`  | `30s`   | Maximum time to wait for in-flight requests to complete after the proxy listener closes. `0` waits indefinitely (bounded only by `terminationGracePeriodSeconds`).                              |
+
 ### Timeouts
 
 | Variable                            | Default | Description                                                                                                                                                                                                                                         |
@@ -29,7 +36,6 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_CONNECT_TIMEOUT`         | `500ms` | Per-attempt TCP dial timeout. Bounded by the request context deadline.                                                                                                                                                                              |
 | `KEDA_HTTP_MAX_IDLE_CONNS`          | `1000`  | Maximum idle connections in the connection pool across all backend services.                                                                                                                                                                        |
 | `KEDA_HTTP_MAX_IDLE_CONNS_PER_HOST` | `200`   | Maximum idle connections per backend service.                                                                                                                                                                                                       |
-| `KEDA_HTTP_FORCE_HTTP2`             | `false` | Whether to force HTTP/2 for all proxied requests.                                                                                                                                                                                                   |
 
 #### Deprecated timeout variables
 
@@ -79,6 +85,8 @@ When set, they take precedence over their replacements.
 
 ## Scaler
 
+### Serving
+
 | Variable                                            | Default      | Description                                                                         |
 | --------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- |
 | `KEDA_HTTP_SCALER_PORT`                             | `8080`       | Port for the KEDA-compatible gRPC external scaler interface.                        |
@@ -89,7 +97,27 @@ When set, they take precedence over their replacements.
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                   |
 | `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks.                                               |
 | `KEDA_HTTP_SCALER_STREAM_INTERVAL_MS`               | `200`        | Interval in milliseconds between stream ticks for `IsActive` communication to KEDA. |
-| `PROFILING_BIND_ADDRESS`                            | `""`         | Address (`host:port`) for the pprof endpoint. Empty disables profiling.             |
+
+### Metrics
+
+| Variable                             | Default | Description                                          |
+| ------------------------------------ | ------- | ---------------------------------------------------- |
+| `OTEL_PROM_EXPORTER_ENABLED`         | `true`  | Enable the Prometheus metrics exporter.              |
+| `OTEL_PROM_EXPORTER_PORT`            | `2223`  | Port for the Prometheus-compatible metrics endpoint. |
+| `OTEL_EXPORTER_OTLP_METRICS_ENABLED` | `false` | Enable the OTLP metrics exporter.                    |
+
+### Tracing
+
+| Variable                             | Default   | Description                                                                  |
+| ------------------------------------ | --------- | ---------------------------------------------------------------------------- |
+| `OTEL_EXPORTER_OTLP_TRACES_ENABLED`  | `false`   | Enable OpenTelemetry trace export.                                           |
+| `OTEL_EXPORTER_OTLP_TRACES_PROTOCOL` | `console` | Trace exporter protocol. Must be one of: `console`, `http/protobuf`, `grpc`. |
+
+### Profiling
+
+| Variable                 | Default | Description                                                             |
+| ------------------------ | ------- | ----------------------------------------------------------------------- |
+| `PROFILING_BIND_ADDRESS` | `""`    | Address (`host:port`) for the pprof endpoint. Empty disables profiling. |
 
 ## Operator
 

@@ -32,7 +32,7 @@ triggers:
       # Optional: The name of the application ID from the GitHub App
       applicationID: "{applicatonID}"
       # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
-      installationID: "{installationID}"      
+      installationID: "{installationID}"
     authenticationRef:
       name: personalAccessToken or appKey triggerAuthentication Reference
 ```
@@ -51,7 +51,7 @@ triggers:
 
 *Parameters from Environment Variables*
 
-You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
+You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`,
 the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `labelsFromEnv: "RUNNER_LABELS"` will use the environment variable `RUNNER_LABELS` as the source fo the `labels` parameter.
 
 - `githubApiURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
@@ -86,8 +86,6 @@ You can use the GitHub App to authenticate with GitHub. This is useful if you wa
         - Administration - Read & Write
         - Metadata - Read-only
     - **Organization permissions**
-        - Actions - Read-only
-        - Metadata - Read-only
         - Self-hosted Runners - Read & write
 5. Download the private key for the GitHub App. ([docs](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key))
 6. Install the GitHub App on your organization or repository. ([docs](https://docs.github.com/en/developers/apps/installing-github-apps))
@@ -114,7 +112,7 @@ The scaler will query the GitHub API in the following order:
 
 GitHub Documentation on Rate Limiting [https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting](https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#rate-limiting)
 
-Example: The GitHub API has a rate limit of standard 5000 requests per hour. The scaler will make 1 request per repository to get the list of workflows, 
+Example: The GitHub API has a rate limit of standard 5000 requests per hour. The scaler will make 1 request per repository to get the list of workflows,
 and 1 request per queued workflow to get the list of jobs. If you have 100 repositories, and 10 queued workflows (across all those repos), the scaler will make 110 requests per scaler check (default: 30 secs). This is 3.6% of the hourly rate limit per 30 seconds.
 
 Careful design of how you design your repository request layout can help reduce the number of API calls. Usage of the `repos` parameter is recommended to reduce the number of API calls to the GitHub API.
