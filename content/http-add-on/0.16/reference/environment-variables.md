@@ -17,6 +17,7 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_WATCH_NAMESPACE`                         | `""`         | Namespace to watch for HTTPScaledObjects and InterceptorRoutes. Empty watches all namespaces. |
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                             |
 | `KEDA_HTTP_ENABLE_COLD_START_HEADER`                | `true`       | When enabled, the interceptor adds the `X-KEDA-HTTP-Cold-Start` response header.              |
+| `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS`         | `0`          | Default limit on requests held per route while the backend has no ready endpoints (e.g. during scale-from-zero). `0` means unlimited. Routes override it via `coldStart.maxPendingRequests`. Applies per interceptor replica. |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
 
 ### Graceful shutdown
