@@ -1,6 +1,6 @@
 +++
 title = "Google Cloud Platform Spanner"
-availability = "v2.21+"
+availability = "2.21+"
 maintainer = "Community"
 category = "Data & Storage"
 description = "Scale applications based on the result of a Google Cloud Spanner SQL query."
@@ -31,7 +31,7 @@ triggers:
 - `instanceId` - The Spanner instance ID.
 - `databaseId` - The Spanner database ID.
 - `query` - A SQL statement that returns exactly one row with one `INT64` column. When the query matches no rows the value is treated as `0`.
-- `targetValue` - Average target value to trigger scaling actions. (Default: `5`, Optional)
+- `targetValue` - Average target value to trigger scaling actions. Must be greater than `0`. (Default: `5`, Optional)
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
 The metric name will be generated automatically based on the trigger index and the resource identifiers, for example: **s0-gcp-spanner-instanceId-databaseId-projectId**.
