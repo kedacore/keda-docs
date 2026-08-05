@@ -40,6 +40,19 @@ helm upgrade http-add-on kedacore/keda-add-ons-http \
   --set interceptor.extraEnvs.KEDA_HTTP_ENABLE_COLD_START_HEADER=false
 ```
 
+## Cold-start pending request limit
+
+While a backend has no ready endpoints (e.g. during scale-from-zero), the interceptor holds incoming requests until an endpoint becomes ready.
+By default, the number of held requests per route is unlimited, so a request burst against a scaled-to-zero app can exhaust an interceptor pod's memory and file descriptors.
+Set a cluster-wide default limit to protect the interceptor:
+
+| Helm value                                | Env var                                     | Default | Description                                                                                      |
+| ------------------------------------------ | ------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `interceptor.coldStart.maxPendingRequests` | `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | `0`     | Maximum requests held per route while the backend is not ready. `0` means unlimited.             |
+
+The limit applies per interceptor replica, so the effective cluster-wide capacity scales with the replica count.
+Application developers can override it per route with `coldStart.maxPendingRequests` — see [Configure Cold-Start Behavior](../../user-guide/configure-cold-start/).
+
 ## Direct pod routing
 
 By default, the interceptor forwards each request to a ready backend pod IP rather than the Service ClusterIP.
