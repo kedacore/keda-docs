@@ -50,6 +50,8 @@ The following metrics are being gathered:
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
 | `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
 | `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
+| `keda.metricsservice.get_metrics.requests.count` | Total number of GetMetrics gRPC requests handled by the operator for the metrics server. |
+| `keda.metricsservice.get_metrics.duration.seconds` | Histogram of the duration in seconds of GetMetrics gRPC requests handled by the operator for the metrics server. |
 
 #### Deprecated metrics
 
@@ -59,3 +61,14 @@ The following metrics are exposed as well, but are deprecated and will be remove
 | `keda.resource.totals` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
 | `keda.trigger.totals` | Total number of triggers per trigger type. |
 | `keda.internal.scale.loop.latency` | Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
+
+### Metrics Server
+
+The KEDA Metrics Adapter supports outputting performance metrics to the OpenTelemetry collector. The parameter `--enable-opentelemetry-metrics=true` needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. `OTEL_EXPORTER_OTLP_PROTOCOL` will also be used to choose HTTP or GRPC client.
+
+The following metrics are being gathered:
+
+| Metric | Description |
+| ------ | ----------- |
+| `keda.external_metrics_provider.requests.count` | Total number of external metric requests served to the Kubernetes HPA. |
+| `keda.external_metrics_provider.request.duration.seconds` | Histogram of the duration in seconds of external metric requests served to the Kubernetes HPA. |
