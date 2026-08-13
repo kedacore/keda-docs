@@ -610,6 +610,10 @@ url = "https://nemlig.com"
 logo = "nemlig.png"
 
 [[params.users]]
+url = "https://openchoreo.dev/"
+logo = "openchoreo.png"
+
+[[params.users]]
 url = "https://opsworks.co"
 logo = "opsworks.png"
 
