@@ -247,6 +247,30 @@ Example:
     WATCH_NAMESPACE: keda,production
 ```
 
+## Restrict the Objects KEDA Reconciles by Label
+
+By default, the KEDA controller reconciles every `ScaledObject`, `ScaledJob`, `TriggerAuthentication` and `ClusterTriggerAuthentication` it can see. Two independent environment variables let you restrict the set of reconciled objects by label:
+
+- `WATCH_LABEL_SELECTOR`: filters `ScaledObject` and `ScaledJob` (and their derived `HorizontalPodAutoscaler` objects).
+- `WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH`: filters `TriggerAuthentication` and `ClusterTriggerAuthentication`.
+
+Both accept a standard Kubernetes label selector. When set, only objects matching the selector are reconciled. Non-matching objects are filtered out at the informer cache level (so they never enter the operator's memory) and at the controller predicate level. When unset or empty, no label filter is applied on that resource type.
+
+The variables mirror `WATCH_NAMESPACE`, but filter by label instead of by namespace, and accept the same syntax as `kubectl get -l`:
+
+- equality: `environment=production`
+- set notation: `tier in (gold,silver)`, `!canary`
+
+The two selectors are decoupled so that a cluster-scoped `ClusterTriggerAuthentication` can still be referenced by `ScaledObjects` running under operators scoped to different `WATCH_LABEL_SELECTOR` values. In that case, set `WATCH_LABEL_SELECTOR` per operator but leave `WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH` empty so every operator can see the shared CTA.
+
+Example:
+
+```yaml
+- env:
+    WATCH_LABEL_SELECTOR: "environment=production"
+    WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH: ""
+```
+
 ## Certificates used by KEDA Metrics Server
 
 To learn more please refer to [security section](./security#use-your-own-tls-certificates)
