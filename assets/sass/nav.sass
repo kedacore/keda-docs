@@ -74,14 +74,19 @@
     transition: background 1000ms
 
 .navbar-link, .navbar-item
-	color: white;
+  color: white;
 
 .navbar-link, .navbar-end .navbar-item
-	&:hover
-		color:#00aeff
+  &:hover
+    color:#00aeff
+
+.docs-menu--desktop .navbar-link:hover,
+.navbar-end .navbar-link:hover
+  color: #00aeff !important
+  background-color: transparent !important
 
 .navbar-dropdown .navbar-item
-	color: #4a4a4a
+  color: #4a4a4a
 
 @media screen and (max-width: 1024px)
   .is-fixed-top

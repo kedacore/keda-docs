@@ -2,23 +2,24 @@
   "name": "keda-docs",
   "private": true,
   "scripts": {
-    "build": "hugo --cleanDestinationDir -e dev -DFE",
-    "build:preview": "hugo --cleanDestinationDir --minify -e dev -DFE --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
-    "build:production": "hugo --cleanDestinationDir --minify",
+    "build": "node scripts/hugo-with-dart-sass.mjs --cleanDestinationDir -e dev -DFE",
+    "build:preview": "node scripts/hugo-with-dart-sass.mjs --cleanDestinationDir --minify -e dev -DFE --baseURL \"${DEPLOY_PRIME_URL:-/}\"",
+    "build:production": "node scripts/hugo-with-dart-sass.mjs --cleanDestinationDir --minify",
     "check:links": "HTMLTEST_ARGS='--log-level 1 --skip-external' make --keep-going check-links",
     "precheck:links": "npm run build",
-    "serve": "netlify dev -c \"hugo serve -DFE\" --framework hugo",
-    "serve:hugo": "hugo serve -DFE"
+    "serve": "netlify dev -c \"node scripts/hugo-with-dart-sass.mjs serve -DFE\" --framework hugo",
+    "serve:hugo": "node scripts/hugo-with-dart-sass.mjs serve -DFE"
   },
   "devDependencies": {
-    "@docsearch/css": "4.6.2",
-    "@docsearch/js": "4.6.2",
-    "@fontsource/inria-sans": "5.2.8",
-    "@fontsource/roboto-mono": "5.2.8",
-    "@fortawesome/fontawesome-free": "7.2.0",
-    "alpinejs": "3.15.11",
-    "bulma": "0.8.2",
-    "hugo-extended": "0.160.1",
-    "netlify-cli": "27.0.1"
+    "@docsearch/css": "5.0.1",
+    "@docsearch/js": "5.0.1",
+    "@fontsource/inria-sans": "5.3.0",
+    "@fontsource/roboto-mono": "5.3.0",
+    "@fortawesome/fontawesome-free": "7.3.1",
+    "alpinejs": "3.16.1",
+    "bulma": "1.0.4",
+    "hugo-extended": "0.164.0",
+    "netlify-cli": "27.1.1",
+    "sass-embedded": "1.102.0"
   }
 }

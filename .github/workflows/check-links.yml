@@ -19,7 +19,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      - run: npm install --omit=optional
+      - run: npm ci
 
       - run: npm run check:links
 
