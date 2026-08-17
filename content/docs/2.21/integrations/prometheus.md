@@ -16,6 +16,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaled_object_paused` - This metric indicates whether a ScaledObject is paused (value == 1) or un-paused (value == 0).
 - `keda_scaler_metrics_value` - The current value for each scaler's metric that would be used by the HPA in computing the target average.
 - `keda_scaler_metrics_latency_seconds` - The latency of retrieving current metric from each scaler.
+- `keda_scaler_metrics_duration_seconds` - The latency of retrieving current metric from each scaler, in seconds, as a histogram.
 - `keda_scaler_detail_errors_total` - The number of errors encountered for each scaler.
 - `keda_scaler_empty_upstream_responses_total` - The number of times a scaler returned an empty response from its upstream source (e.g. a Prometheus query returning no results).
 - `keda_scaled_object_errors_total` - The number of errors that have occurred for each ScaledObject.
@@ -23,6 +24,7 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_resource_registered_total` - Total number of KEDA custom resources per namespace for each custom resource type (CRD) handled by the operator.
 - `keda_trigger_registered_total` - Total number of triggers per trigger type handled by the operator.
 - `keda_internal_scale_loop_latency_seconds` - Total deviation (in seconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric.
+- `keda_internal_scale_loop_duration_seconds` - Total deviation (in seconds) between the expected execution time and the actual execution time for the scaling loop, as a histogram. This is an internal metric.
 - `keda_cloudeventsource_events_emitted_total` - Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state.
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
 - `keda_scaler_http_requests_total` - Total number of outbound HTTP requests issued during scaler metric collection.
@@ -35,6 +37,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
 > Note: When you deploy the KEDA Operator without any scalers deployed, the only metric you will see is `keda_build_info`. As you deploy scalers, you will start to see some of the metrics listed above but it is dependant on the types of scalers you have deployed.
+
+> Note: To keep metric cardinality bounded, the `keda_scaler_metrics_duration_seconds` and `keda_internal_scale_loop_duration_seconds` histograms are emitted with a reduced label set by default: `keda_scaler_metrics_duration_seconds` is only labeled by `scaler`, which carries the trigger type from the trigger specification (e.g. `prometheus`, `cron`) rather than the user-defined trigger name, and `keda_internal_scale_loop_duration_seconds` is only labeled by the scaled resource `type` (`scaledobject` or `scaledjob`). To emit them with the same label sets as the `keda_scaler_metrics_latency_seconds` and `keda_internal_scale_loop_latency_seconds` gauges instead, start the KEDA Operator with the `--enable-high-cardinality-metric-labels=true` flag.
 
 ### Admission Webhooks
 
