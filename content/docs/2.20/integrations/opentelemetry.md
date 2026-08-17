@@ -9,7 +9,7 @@ project = "OpenTelemetry"
 
 ### Operator
 
-The KEDA Operator supports outputting metrics to the OpenTelemetry collector. The parameter `--enable-opentelemetry-metrics=true` needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. `OTEL_EXPORTER_OTLP_PROTOCOL` will also be used to choose HTTP or GRPC client. Other environment variables in OpenTelemetry are also supported (https://opentelemetry.io/docs/concepts/sdk-configuration/otlp-exporter-configuration/). Here is an example configuration of the operator: 
+The KEDA Operator supports outputting metrics to the OpenTelemetry collector. The parameter `--enable-opentelemetry-metrics=true` needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. `OTEL_EXPORTER_OTLP_PROTOCOL` will also be used to choose HTTP or GRPC client. Other environment variables in OpenTelemetry are also supported (https://opentelemetry.io/docs/concepts/sdk-configuration/otlp-exporter-configuration/). Here is an example configuration of the operator:
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -50,6 +50,8 @@ The following metrics are being gathered:
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
 | `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
 | `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
+
+By default, `keda.scaler.http.request.duration.seconds` is emitted with low-cardinality attributes such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` attributes with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
 
 #### Deprecated metrics
 
