@@ -423,12 +423,6 @@ parent = "project"
 weight = 11
 
 [[menu.main]]
-url = "https://store.cncf.io/collections/keda"
-name = "Merch"
-parent = "project"
-weight = 12
-
-[[menu.main]]
 url = "/enterprise/"
 name = "Enterprise"
 weight = 5
