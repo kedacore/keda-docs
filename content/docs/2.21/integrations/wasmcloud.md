@@ -56,7 +56,7 @@ This work was contributed upstream to CNCF wasmCloud by Cosmonic in [wasmCloud/w
 
 ## Prerequisites
 
-- A Kubernetes cluster (a local [kind](https://wasmcloud.com/docs/kubernetes-operator) cluster works well for testing).
+- A Kubernetes cluster (a local [kind](https://kind.sigs.k8s.io/) cluster works well for testing).
 - The [wasmCloud operator](https://wasmcloud.com/docs/kubernetes-operator) installed via Helm.
 - [Prometheus](../../integrations/prometheus) collecting metrics from your workloads.
 - [KEDA installed](../../deploy) in the cluster.
