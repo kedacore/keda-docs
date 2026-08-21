@@ -57,6 +57,18 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 - `username` - This is a required field. Provide the username to be used for basic authentication.
 - `password` - Provide the password to be used for authentication. For convenience, this has been marked optional, because many applications implement basic auth with a username as apikey and password as empty.
 
+**OAuth2 authentication:**
+- `authModes`: It must contain `oauth` in case of OAuth2 Authentication. Specify this in trigger configuration. It cannot be combined with `bearer` or `basic`, but it can be combined with `tls`.
+- `oauthTokenURI` - Token endpoint of the OAuth2 provider. This is a required field.
+- `clientID` - Client ID for the OAuth2 provider. This is a required field.
+- `clientSecret` - Client secret for the OAuth2 provider. Only optional if the token endpoint authenticates the client with mutual TLS ([RFC 8705](https://datatracker.ietf.org/doc/html/rfc8705)) - KEDA logs a warning and emits an event when neither `clientSecret` nor `tls` is configured, because such a setup is effectively unauthenticated.
+- `scopes` - A comma-separated list of OAuth2 scopes to request. (Optional)
+- `endpointParams` - Additional parameters for the requests to the token endpoint, as a URL-encoded query string, eg. `audience=prometheus`. (Optional)
+
+Only the client credentials grant is supported. The access token is acquired once and refreshed when it expires, so it is reused across polling intervals instead of being fetched for every query. Requests to the token endpoint use the same `timeout` and TLS settings (`ca`, `unsafeSsl`, client certificates) as the Prometheus queries.
+
+> 💡 **NOTE:** Unlike the other authentication parameters, the OAuth2 parameters can only be provided through a `TriggerAuthentication`/`ClusterTriggerAuthentication` - either with the [`oauth2` spec](./../authentication-providers/oauth2.md) or with `secretTargetRef` entries using the parameter names above. They are ignored when set in the trigger metadata.
+
 **TLS authentication:**
 - `authModes`: It must contain `tls` in case of TLS Authentication. Specify this in trigger configuration.
 - `ca` - Certificate authority file for TLS client authentication.
@@ -394,6 +406,92 @@ spec:
         authModes: "custom"
       authenticationRef:
         name: keda-prom-creds
+```
+
+#### Example: OAuth2 Authentication
+
+Here is an example of a prometheus scaler that authenticates its queries with the OAuth2 client credentials grant, define the `Secret` and `TriggerAuthentication` as follows
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  clientSecret: "Y2xpZW50LXNlY3JldA==" # Must be base64
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  oauth2:
+    type: clientCredentials
+    clientId: keda
+    clientSecret:
+      valueFrom:
+        secretKeyRef:
+          name: keda-prom-secret
+          key: clientSecret
+    tokenUrl: https://<oauth2-provider-host>/token
+    scopes: # Optional
+      - prometheus:read
+    tokenUrlParams: # Optional
+      audience: prometheus
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: keda
+  labels:
+    deploymentName: dummy
+spec:
+  maxReplicaCount: 12
+  scaleTargetRef:
+    name: dummy
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://<prometheus-host>:9090
+        threshold: '100'
+        query: sum(rate(http_requests_total{deployment="my-deployment"}[2m]))
+        authModes: "oauth"
+      authenticationRef:
+        name: keda-prom-creds
+```
+
+Alternatively, the same credentials can be provided with `secretTargetRef` entries, which also allows sourcing the token endpoint and client ID from a `Secret`
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  oauthTokenURI: "aHR0cHM6Ly9vYXV0aDItcHJvdmlkZXItaG9zdC90b2tlbg==" # Must be base64
+  clientID: "a2VkYQ=="
+  clientSecret: "Y2xpZW50LXNlY3JldA=="
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: oauthTokenURI
+      name: keda-prom-secret
+      key: oauthTokenURI
+    - parameter: clientID
+      name: keda-prom-secret
+      key: clientID
+    - parameter: clientSecret
+      name: keda-prom-secret
+      key: clientSecret
 ```
 
 #### Example: Azure Monitor Managed Service for Prometheus
