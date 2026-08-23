@@ -4,7 +4,7 @@ availability = "v2.18+"
 maintainer = "Community"
 category = "CI/CD"
 description = "Scale applications based on pending jobs on Forgejo repository."
-go_file = "forgejo_scaler"
+go_file = "forgejo_runner_scaler"
 +++
 
 ### Trigger Specification
