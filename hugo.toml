@@ -566,6 +566,10 @@ url = "https://www.intercept.cloud"
 logo = "intercept.png"
 
 [[params.users]]
+url = "https://www.isomorphiclabs.com"
+logo = "isomorphic-labs.png"
+
+[[params.users]]
 url = "https://kaufland-ecommerce.com"
 logo = "kaufland-ecommerce.png"
 
