@@ -1,6 +1,6 @@
 +++
 title = "Azure Cosmos DB Change Feed"
-availability = "v2.20+"
+availability = "v2.21+"
 maintainer = "Microsoft"
 category = "Data & Storage"
 description = "Scale applications based on Azure Cosmos DB change feed processor lag."
@@ -36,18 +36,9 @@ triggers:
 - `changeFeedLagThreshold` - Target transaction lag per replica. Must be greater than `0`. (Default: `100`, Optional)
 - `activationChangeFeedLagThreshold` - Total transaction lag required to activate the scaler from zero. Must be greater than or equal to `0` and less than `changeFeedLagThreshold`. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `connectionFromEnv` - Name of an environment variable in the scale target that contains the data account connection string. (Optional)
-- `connection` - Connection string for the data account. Use `TriggerAuthentication` to provide secrets. (Optional)
 - `leaseConnectionFromEnv` - Name of an environment variable in the scale target that contains the lease account connection string. (Optional)
-- `leaseConnection` - Connection string for the lease account. Defaults to `connection` when neither `leaseConnection` nor `leaseEndpoint` is set. (Optional)
-- `endpoint` - Endpoint of the data account. Required for that account when a connection string is not used. (Optional)
-- `leaseEndpoint` - Endpoint of the lease account. When neither this nor `leaseConnection` is set, the lease account inherits the data account configuration. (Optional)
 - `cosmosDBKeyFromEnv` - Name of an environment variable in the scale target that contains the data account key. (Optional)
-- `cosmosDBKey` - Account key for the data account. Provide it through `TriggerAuthentication`; it is used with `endpoint`. (Optional)
 - `leaseCosmosDBKeyFromEnv` - Name of an environment variable in the scale target that contains the lease account key. (Optional)
-- `leaseCosmosDBKey` - Account key used with an explicitly configured `leaseEndpoint`. When the entire lease account configuration is inherited, the data account key is inherited with it. (Optional)
-- `tenantId` - Microsoft Entra tenant ID for service-principal authentication. Provide through `TriggerAuthentication`. (Optional)
-- `clientId` - Microsoft Entra application ID for service-principal authentication. Provide through `TriggerAuthentication`. (Optional)
-- `clientSecret` - Microsoft Entra application secret for service-principal authentication. Provide through `TriggerAuthentication`. (Optional)
 - `cloud` - Azure cloud used to resolve the token authority and Cosmos DB resource scope. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
 - `cosmosDBResourceURL` - Cosmos DB resource URL used to request bearer tokens. It is user-configurable and required only when `cloud` is `Private`. (Optional)
 - `activeDirectoryEndpoint` - Microsoft Entra authority endpoint. It is user-configurable and required only for service-principal authentication when `cloud` is `Private`. (Optional)
@@ -55,6 +46,28 @@ triggers:
 > 💡 **Note:** The scaler supports lease documents written by both the .NET SDK and Java SDK change feed processors, including both PK-range-based (version 0) and EPK-range-based (version 1) lease formats.
 
 ### Authentication Parameters
+
+The following parameters may be provided through `TriggerAuthentication` (they are also accepted in `triggerMetadata`, but sensitive values should be sourced from a secret):
+
+**Connection string authentication:**
+
+- `connection` - Connection string for the data account. Format: `AccountEndpoint=https://<account>.documents.azure.com:443/;AccountKey=<key>`.
+- `leaseConnection` - Connection string for the lease account. Defaults to `connection` when neither `leaseConnection` nor `leaseEndpoint` is set.
+
+**Account key authentication:**
+
+- `endpoint` - Endpoint of the data account. Required when a connection string is not used.
+- `leaseEndpoint` - Endpoint of the lease account. When neither this nor `leaseConnection` is set, the lease account inherits the data account configuration.
+- `cosmosDBKey` - Account key for the data account. Used with `endpoint`.
+- `leaseCosmosDBKey` - Account key used with an explicitly configured `leaseEndpoint`. When the entire lease account configuration is inherited, the data account key is inherited with it.
+
+**Service-principal authentication:**
+
+- `tenantId` - Microsoft Entra tenant ID.
+- `clientId` - Microsoft Entra application ID.
+- `clientSecret` - Microsoft Entra application secret.
+
+---
 
 The data and lease containers can be in the same account or separate accounts. If `leaseConnection` and `leaseEndpoint` are both omitted, the lease account inherits the data account connection string or the data endpoint and key. To use separate accounts, configure `leaseConnection` or `leaseEndpoint` and the corresponding lease credentials.
 
@@ -66,17 +79,7 @@ The scaler selects credentials independently for the data and lease accounts:
 
 This allows one account to use an account key while the other uses bearer-token authentication. When both accounts resolve to account keys, configured bearer-token credentials are not used.
 
-**Connection string authentication:**
-
-The connection string format is `AccountEndpoint=https://<account>.documents.azure.com:443/;AccountKey=<key>`. Provide `connection` and, for a separate lease account, `leaseConnection` through `TriggerAuthentication`, or reference scale-target environment variables with `connectionFromEnv` and `leaseConnectionFromEnv`.
-
-**Account key authentication:**
-
-Provide `endpoint` and `cosmosDBKey`. For a separate lease account, also provide `leaseEndpoint` and `leaseCosmosDBKey`. Account keys can be supplied through `TriggerAuthentication` or referenced with `cosmosDBKeyFromEnv` and `leaseCosmosDBKeyFromEnv`; `TriggerAuthentication` values take precedence over environment variables.
-
-**Service-principal authentication:**
-
-Provide `endpoint` and the conventional `tenantId`, `clientId`, and `clientSecret` parameters through `TriggerAuthentication`. The same service principal is used for every endpoint that does not have an account key.
+Account keys and connection strings can also be sourced from scale-target environment variables using `cosmosDBKeyFromEnv`, `leaseCosmosDBKeyFromEnv`, `connectionFromEnv`, and `leaseConnectionFromEnv`; `TriggerAuthentication` values take precedence over environment variables.
 
 **Azure Workload Identity authentication:**
 
