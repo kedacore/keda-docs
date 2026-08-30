@@ -26,7 +26,7 @@ triggers:
 
 > 💡 **Note:** The search scope is limited to the namespace where the `ScaledObject` is deployed.
 
-The count excludes terminated pods, i.e. [pod status](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podstatus-v1-core) `phase` equals `Succeeded` or `Failed`.
+The count excludes terminated pods, i.e. [pod status](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodStatus) `phase` equals `Succeeded` or `Failed`.
 
 ### Authentication Parameters
 
