@@ -22,9 +22,6 @@ triggers:
       queueTypes: workflow # optional
       workerDeploymentName: my-deployment # optional
       workerDeploymentBuildId: v1.0.0 # optional
-      buildId: 1.0.0 # deprecated, use workerDeploymentBuildId
-      selectAllActive: "false" # deprecated
-      selectUnversioned: "false" # deprecated
       includeRunningWorkflowCount: "false" # optional
       workflowTaskQueueForCount: "" # optional
       minConnectTimeout: "5" # optional
@@ -42,11 +39,11 @@ triggers:
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `5`, Optional)
 - `taskQueue` - This parameter specifies the task queue name. (Required)
 - `queueTypes` - Task Queue type can be configured as `workflow`, `activity`, or both, separated by a comma (,) if multiple types are needed. (Default: `workflow`, Optional)
-- `workerDeploymentName` - The name of the Temporal [Worker Deployment](https://docs.temporal.io/production-deployment/worker-deployments) to scale. When set together with `workerDeploymentBuildId`, the scaler queries `DescribeWorkerDeploymentVersion` for that specific deployment version's backlog instead of the task queue. Mutually exclusive with `buildId`, `selectAllActive`, and `selectUnversioned`. (Optional)
+- `workerDeploymentName` - The name of the Temporal [Worker Deployment](https://docs.temporal.io/production-deployment/worker-deployments) to scale. When set together with `workerDeploymentBuildId`, the scaler queries `DescribeWorkerDeploymentVersion` for that specific deployment version's backlog instead of the task queue. (Optional)
 - `workerDeploymentBuildId` - The build ID of the worker within the deployment. Required together with `workerDeploymentName`. (Optional)
-- `buildId` - *Deprecated.* Build IDs identify Worker versions under the legacy Rules-Based Versioning APIs, which the Temporal server has deprecated since December 2024 and will stop supporting soon. Use `workerDeploymentName` and `workerDeploymentBuildId` instead. (Optional)
-- `selectAllActive` - *Deprecated.* Include all active versions under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` / `workerDeploymentBuildId` instead. (Default: `false`, Optional)
-- `selectUnversioned` - *Deprecated.* Include the unversioned queue under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` / `workerDeploymentBuildId` instead. (Default: `false`, Optional)
+- `buildId` - *Removed in v2.21.* The scaler now rejects this parameter. Build IDs identified Worker versions under the legacy Rules-Based Versioning APIs, which the Temporal server deprecated in December 2024. Use `workerDeploymentName` and `workerDeploymentBuildId` instead.
+- `selectAllActive` - *Removed in v2.21.* The scaler now rejects this parameter. It included all active versions under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` and `workerDeploymentBuildId` instead.
+- `selectUnversioned` - *Removed in v2.21.* The scaler now rejects this parameter. It included the unversioned queue under the legacy Rules-Based Versioning APIs. Use `workerDeploymentName` and `workerDeploymentBuildId` instead.
 - `includeRunningWorkflowCount` - When set to `true`, the scaler stays active if there are running workflows on the task queue even after the backlog drains to zero. This is useful for preventing premature scale-down when workers are fast and the backlog is often empty. It only affects the activity decision (`isActive`); the reported metric value is still the backlog count. See [Preventing premature scale-down](#preventing-premature-scale-down-with-includerunningworkflowcount) below for behavior details and important caveats. (Default: `false`, Optional)
 - `workflowTaskQueueForCount` - Overrides which task queue is used for the running-workflow visibility count when `includeRunningWorkflowCount` is enabled. Useful when scaling activity workers off a workflow-owned queue: set `taskQueue` to the activity queue and `workflowTaskQueueForCount` to the workflow queue whose in-flight workflows should keep the activity workers alive. Has no effect if `includeRunningWorkflowCount` is `false`. (Optional)
 - `apiKeyFromEnv` - API key for authentication similar to `apiKey`, but read from an environment variable (Optional)
