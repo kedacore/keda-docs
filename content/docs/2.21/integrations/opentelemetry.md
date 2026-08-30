@@ -38,6 +38,7 @@ The following metrics are being gathered:
 | `keda.scaled.object.paused` | This metric indicates whether a ScaledObject is paused (value == 1) or un-paused (value == 0). |
 | `keda.scaler.metrics.value` | The current value for each scaler's metric that would be used by the HPA in computing the target average. |
 | `keda.scaler.metrics.latency.seconds` | The latency of retrieving current metric from each scaler. |
+| `keda.scaler.metrics.duration.seconds` | The latency of retrieving current metric from each scaler, as a histogram. |
 | `keda.scaler.errors` | The number of errors that have occurred for each scaler. |
 | `keda.scaler.errors.total` | The total number of errors encountered for all scalers. |
 | `keda.scaler.empty.upstream.responses` | The number of times a scaler query returned an empty result from its upstream source, such as a Prometheus query returning no results. |
@@ -46,10 +47,13 @@ The following metrics are being gathered:
 | `keda.resource.registered.count` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
 | `keda.trigger.registered.count` | Total number of triggers per trigger type. |
 | `keda.internal.scale.loop.latency.seconds` | Total deviation between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
+| `keda.internal.scale.loop.duration.seconds` | Total deviation between the expected execution time and the actual execution time for the scaling loop, as a histogram. This is an internal metric. |
 | `keda.cloudeventsource.events.emitted.count` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
 | `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
 | `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
+
+> Note: To keep metric cardinality bounded, the `keda.scaler.metrics.duration.seconds` and `keda.internal.scale.loop.duration.seconds` histograms are emitted with a reduced attribute set by default: `keda.scaler.metrics.duration.seconds` only has the `scaler` attribute, which carries the trigger type from the trigger specification (e.g. `prometheus`, `cron`) rather than the user-defined trigger name, and `keda.internal.scale.loop.duration.seconds` only has the scaled resource `type` attribute (`scaledobject` or `scaledjob`). To emit them with the same attributes as the `keda.scaler.metrics.latency.seconds` and `keda.internal.scale.loop.latency.seconds` gauges instead, start the KEDA Operator with the `--enable-high-cardinality-metric-labels=true` flag.
 
 #### Deprecated metrics
 
