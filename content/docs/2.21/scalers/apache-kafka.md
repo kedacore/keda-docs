@@ -36,6 +36,7 @@ triggers:
     limitToPartitionsWithLag: 'false'
     ensureEvenDistributionOfPartitions: 'false'
     version: 1.0.0
+    fullMetadata: 'true'
     partitionLimitation: '1,2,10-20,31'
     sasl: plaintext
     tls: enable
@@ -59,6 +60,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `limitToPartitionsWithLag` - When set to `true`, the number of replicas will not exceed the number of partitions having non-zero lag. `topic` must be specified when this parameter is set to `true`. `allowIdleConsumers` cannot be `true` when this parameter is `true`. (Default: `false`, Optional)
 - `ensureEvenDistributionOfPartitions` - When set to `true`, the scaler will ensure that the number of replicas is even across the topic partitions. (Default: `false`, Optional)
 - `version` - Version of your Kafka brokers. See [sarama](https://github.com/Shopify/sarama) version (Default: `1.0.0`, Optional)
+- `fullMetadata` - When set to `false`, the Kafka client fetches metadata only for the configured `topic` instead of the full cluster. Requires `topic` to be set. Reduces memory significantly on large clusters. (Values: `true`, `false`, Default: `true`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
 - `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.

@@ -2,7 +2,7 @@
 
 
 // Site-specific variables here
-$keda-blue: #326de6 
+$keda-blue: #326de6
 $keda-light-blue: #679bf0
 $twitter-blue: rgb(29, 161, 242)
 $slack-green: #2EB67D
@@ -62,11 +62,20 @@ $message-body-padding: $message-header-padding
 $hero-body-padding: 4rem 1.5rem
 
 // Bulma core
-@import "bulma/sass/utilities/_all"
-@import "bulma/sass/base/_all"
-@import "bulma/sass/elements/container"
+@import "bulma/sass/utilities"
+@import "bulma/sass/utilities/mixins"
+@import "bulma/sass/utilities/css-variables"
+@import "bulma/sass/themes"
+@import "bulma/sass/base"
+@import "bulma/sass/helpers"
+
+:root
+  --bulma-family-primary: "Inria Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  --bulma-family-secondary: "Inria Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  --bulma-family-code: "Roboto Mono", monospace
+
+@import "bulma/sass/layout/container"
 @import "bulma/sass/grid/columns"
-@import "bulma/sass/grid/tiles"
 @import "bulma/sass/layout/hero"
 @import "bulma/sass/layout/section"
 @import "bulma/sass/layout/footer"
@@ -97,9 +106,8 @@ $hero-body-padding: 4rem 1.5rem
 // @import "bulma/sass/components/breadcrumb"
 @import "bulma/sass/components/card"
 @import "bulma/sass/components/dropdown"
-@import "bulma/sass/components/level"
-@import "bulma/sass/components/list"
-@import "bulma/sass/components/media"
+@import "bulma/sass/layout/level"
+@import "bulma/sass/layout/media"
 @import "bulma/sass/components/menu"
 @import "bulma/sass/components/message"
 @import "bulma/sass/components/modal"
@@ -113,7 +121,89 @@ $hero-body-padding: 4rem 1.5rem
 @import "content"
 @import "nav"
 
-*, *::before, *::after 
+.columns.is-8:not(.is-variable)
+  --bulma-column-gap: 0.75rem
+
+.section
+  padding-left: 1.5rem
+  padding-right: 1.5rem
+
+.columns.is-variable
+  margin-bottom: -0.75rem
+  margin-top: -0.75rem
+
+  .column
+    padding-bottom: 0.75rem
+    padding-top: 0.75rem
+
+.buttons
+  gap: 0
+  margin-bottom: -0.5rem
+
+  .button
+    margin-bottom: 0.5rem
+    margin-right: 0.5rem
+    padding-left: 1rem
+    padding-right: 1rem
+
+    &:last-child
+      margin-right: 0
+
+.button .icon:first-child:not(:last-child)
+  margin-left: -9px
+
+.doc-hero .buttons.are-small .button
+  border-radius: 2px
+  padding-left: 0.75rem
+  padding-right: 0.75rem
+
+.doc-hero .buttons.are-small .dropdown .button .icon
+  margin-right: -7px
+
+.doc-hero .buttons.are-small > .button .icon
+  margin-left: -7px
+
+.navbar-item
+  gap: 0
+
+.navbar-link
+  gap: 0
+
+#navbar-search .DocSearch-Button
+  width: 152.6px
+
+.navbar-end > .navbar-item:last-child .button
+  padding-left: 16px
+  padding-right: 16px
+  width: 40px
+
+.navbar-end > a.navbar-item:hover
+  background-color: transparent !important
+  color: #00aeff !important
+
+.navbar-end > .navbar-item:last-child .button .icon
+  margin-left: -9px
+  margin-right: -9px
+
+.navbar-end > .navbar-item:last-child .button.is-white
+  color: #0a0a0a
+
+.navbar-end > .navbar-item:last-child .button.is-slack-green
+  background-color: rgb(46, 182, 125)
+
+.button
+  border-radius: 4px
+
+.hero .button.is-black.is-inverted
+  color: #0a0a0a
+
+  &:hover
+    background-color: #f2f2f2 !important
+
+.button.is-twitter-blue
+  background-color: rgb(29, 161, 242)
+
+*, *::before, *::after
   max-width: 100vw
 
 .has-extra-top-margin
@@ -122,12 +212,15 @@ $hero-body-padding: 4rem 1.5rem
 .has-extra-sm-right-margin
   margin-right: 0.5rem
 
+.is-paddingless
+  padding: 0 !important
+
 .list-item
   padding: 1rem 1.5rem
 
   .content
     margin-top: 0.5rem
-  
+
 .title, .subtitle
   &.has-shadow
     text-shadow: 0 0 10px #000
@@ -187,10 +280,10 @@ $hero-body-padding: 4rem 1.5rem
     margin-left: 0.75rem
 
 .has-background-pattern
-	background-color: transparent 
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%2324CEFF' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%232fc2f4' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2337b6e8' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%233daadc' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23419ecf' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%234492c2' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%234587b5' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23467ca8' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%2345719b' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2344668e' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23425c81' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%233f5274' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%233b4867' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%23363f5a' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2331364e' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%232c2d42' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23252536' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%231F1D2B' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E") 
-	background-attachment: fixed 
-	background-size: cover 
+  background-color: transparent
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%2324CEFF' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%232fc2f4' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2337b6e8' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%233daadc' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%23419ecf' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%234492c2' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%234587b5' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23467ca8' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%2345719b' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%2344668e' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23425c81' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%233f5274' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%233b4867' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%23363f5a' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2331364e' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%232c2d42' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23252536' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%231F1D2B' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E")
+  background-attachment: fixed
+  background-size: cover
 
 .has-extra-padding
   margin: 1.5rem 0
@@ -214,10 +307,10 @@ $hero-body-padding: 4rem 1.5rem
 
     &:hover
       color: #00aeff
-	
+
 #cncf
-	&:hover 
-		color: #00aeff
+  &:hover
+    color: #00aeff
 
 hr
   &.is-thick
@@ -238,12 +331,12 @@ hr
   &.are-spaced
     .button:not(:first-child)
       margin-left: 0.5rem
-	
-.has-no-shadow 
-	box-shadow: none !important
+
+.has-no-shadow
+  box-shadow: none !important
 
 .is-info-light
-	background: hsl(206, 70%, 96%)
+  background: hsl(206, 70%, 96%)
 
 .badge
   border: 1px solid #dbdbdb
@@ -252,7 +345,7 @@ hr
   color: blue
   font-size: 1rem
 
-.copyBtn 
+.copyBtn
   padding: 10px
   background: none
   height: 50%
@@ -291,13 +384,13 @@ hr
       transform: rotate(45deg)
       display: none
 
-.copy-text-active .copyBtn:before, .copy-text-active .copyBtn:after,
+.copy-text-active .copyBtn:before, .copy-text-active .copyBtn:after
   display: block
 
 @media screen and (max-width: 1024px)
   .section
     width: 100vw
-	
+
 .underline--magical
   background-image: linear-gradient(to right, rgb(250, 112, 154) 0%, rgb(254, 225, 64) 100%)
   background-repeat: no-repeat
@@ -351,7 +444,7 @@ hr
   transition: background-size 0.25s ease-in-out
   &:hover
     background-size: 100% 88%
- 
+
 @media screen and (min-width: 769px)
   .md-height-desktop
       height: 9rem

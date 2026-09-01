@@ -17,7 +17,9 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_WATCH_NAMESPACE`                         | `""`         | Namespace to watch for HTTPScaledObjects and InterceptorRoutes. Empty watches all namespaces. |
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                             |
 | `KEDA_HTTP_ENABLE_COLD_START_HEADER`                | `true`       | When enabled, the interceptor adds the `X-KEDA-HTTP-Cold-Start` response header.              |
+| `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS`         | `0`          | Default limit on requests held per route while the backend has no ready endpoints (e.g. during scale-from-zero). `0` means unlimited. Routes override it via `coldStart.maxPendingRequests`. Applies per interceptor replica. |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
+| `KEDA_HTTP_DIRECT_POD_ROUTING`                      | `true`       | When enabled, route requests to a ready pod IP instead of the Service ClusterIP, bypassing kube-proxy and other Service-layer features (Service-level NetworkPolicy, session affinity, topology-aware routing). |
 
 ### Graceful shutdown
 
@@ -49,18 +51,19 @@ When set, they take precedence over their replacements.
 
 ### TLS
 
-| Variable                                | Default          | Description                                                                                                                                                                 |
-| --------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `KEDA_HTTP_PROXY_TLS_ENABLED`           | `false`          | Enable TLS on the proxy server.                                                                                                                                             |
-| `KEDA_HTTP_PROXY_TLS_CERT_PATH`         | `/certs/tls.crt` | Path to the TLS certificate file.                                                                                                                                           |
-| `KEDA_HTTP_PROXY_TLS_KEY_PATH`          | `/certs/tls.key` | Path to the TLS private key file.                                                                                                                                           |
-| `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS`  | `""`             | Comma-separated list of directories containing additional certificate/key pairs for [SNI-based selection](../../operations/configure-tls/#sni-based-certificate-selection). |
-| `KEDA_HTTP_PROXY_TLS_SKIP_VERIFY`       | `false`          | Skip TLS verification for upstream connections.                                                                                                                             |
-| `KEDA_HTTP_PROXY_TLS_PORT`              | `8443`           | Port for the TLS proxy server.                                                                                                                                              |
-| `KEDA_HTTP_PROXY_TLS_MIN_VERSION`       | `""`             | Minimum TLS version (`1.2` or `1.3`). Empty uses the Go default (TLS 1.2).                                                                                                  |
-| `KEDA_HTTP_PROXY_TLS_MAX_VERSION`       | `""`             | Maximum TLS version (`1.2` or `1.3`). Empty uses the highest version supported by `crypto/tls`.                                                                             |
-| `KEDA_HTTP_PROXY_TLS_CIPHER_SUITES`     | `""`             | Comma-separated list of TLS cipher suite names. Empty uses Go defaults.                                                                                                     |
-| `KEDA_HTTP_PROXY_TLS_CURVE_PREFERENCES` | `""`             | Comma-separated list of elliptic curve names. Empty uses Go defaults.                                                                                                       |
+| Variable                               | Default          | Description                                                                                                                                                                 |
+| -------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `KEDA_HTTP_PROXY_TLS_CERT_PATH`        | `/certs/tls.crt` | Path to the TLS certificate file.                                                                                                                                           |
+| `KEDA_HTTP_PROXY_TLS_CERT_STORE_PATHS` | `""`             | Comma-separated list of directories containing additional certificate/key pairs for [SNI-based selection](../../operations/configure-tls/#sni-based-certificate-selection). |
+| `KEDA_HTTP_PROXY_TLS_ENABLED`          | `false`          | Enable TLS on the proxy server.                                                                                                                                             |
+| `KEDA_HTTP_PROXY_TLS_KEY_PATH`         | `/certs/tls.key` | Path to the TLS private key file.                                                                                                                                           |
+| `KEDA_HTTP_PROXY_TLS_PORT`             | `8443`           | Port for the TLS proxy server.                                                                                                                                              |
+| `KEDA_HTTP_TLS_CA_DIRS`                | `""`             | Comma-separated list of directories containing PEM-encoded CA certificates to trust for outbound backend connections, in addition to the system CA pool.                    |
+| `KEDA_HTTP_TLS_CIPHER_SUITES`          | `""`             | Comma-separated list of TLS cipher suite names. Empty uses Go defaults.                                                                                                     |
+| `KEDA_HTTP_TLS_CURVE_PREFERENCES`      | `""`             | Comma-separated list of elliptic curve names. Empty uses Go defaults.                                                                                                       |
+| `KEDA_HTTP_TLS_MAX_VERSION`            | `""`             | Maximum TLS version (`1.2` or `1.3`). Empty uses the highest version supported by `crypto/tls`.                                                                             |
+| `KEDA_HTTP_TLS_MIN_VERSION`            | `""`             | Minimum TLS version (`1.2` or `1.3`). Empty uses the Go default (TLS 1.2).                                                                                                  |
+| `KEDA_HTTP_TLS_SKIP_VERIFY`            | `false`          | Skip TLS verification for upstream connections.                                                                                                                             |
 
 ### Metrics
 
@@ -95,7 +98,7 @@ When set, they take precedence over their replacements.
 | `KEDA_HTTP_SCALER_TARGET_ADMIN_DEPLOYMENT`          | _(required)_ | Name of the interceptor Deployment to issue metrics RPC requests to.                |
 | `KEDA_HTTP_SCALER_TARGET_ADMIN_PORT`                | _(required)_ | Port on the interceptor admin Service for metrics RPC requests.                     |
 | `KEDA_HTTP_SCALER_CONFIG_MAP_INFORMER_RSYNC_PERIOD` | `60m`        | Resync interval for the controller-runtime cache.                                   |
-| `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks.                                               |
+| `KEDA_HTTP_QUEUE_TICK_DURATION`                     | `500ms`      | Duration between queue polling ticks. Also bounds each request to an interceptor pod's `/queue` endpoint (clamped to a minimum of `250ms`), so one unresponsive interceptor cannot stall metric collection. |
 | `KEDA_HTTP_SCALER_STREAM_INTERVAL_MS`               | `200`        | Interval in milliseconds between stream ticks for `IsActive` communication to KEDA. |
 
 ### Metrics

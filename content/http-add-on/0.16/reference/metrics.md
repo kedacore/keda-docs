@@ -73,6 +73,22 @@ See [Environment Variables](../environment-variables/#metrics) for configuration
 | `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                 |
 | `route_namespace` | Namespace of the matched route resource.                                                                                  |
 
+### Cold-start rejections
+
+|                          |                                                                             |
+| ------------------------ | --------------------------------------------------------------------------- |
+| **Prometheus name**      | `interceptor_cold_start_rejections_total`                                   |
+| **OTel instrument name** | `interceptor.cold_start.rejections`                                         |
+| **Type**                 | Counter                                                                     |
+| **Description**          | Requests rejected because the cold-start pending request limit was reached. |
+
+**Labels:**
+
+| Label             | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject. |
+| `route_namespace` | Namespace of the matched route resource.                  |
+
 ### Method normalization
 
 The `method` label accepts the following standard HTTP methods without modification:
