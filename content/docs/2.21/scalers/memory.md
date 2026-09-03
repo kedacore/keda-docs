@@ -17,7 +17,7 @@ go_file = "cpu_memory_scaler"
 KEDA uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server, which is not installed by default on certain Kubernetes deployments such as EKS on AWS. Additionally, the `resources` section of the relevant Kubernetes Pods must include at least one of `requests` or `limits`.
 
 - The Kubernetes Metrics Server must be installed. Installation instructions vary based on your Kubernetes provider.
-- The configuration for your Kubernetes Pods must include a `resources` section with specified `requests` (or `limits`), declared either on the containers or on the pod itself. See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar), KEDA checks if the `defaultRequest` (or `default` for limits) is set in `LimitRange` for the `Container` type in the same namespace. If `defaultRequest` (or `default` for limits) is missing too, the error `missing request for {cpu/memory}` occurs.
+- The configuration for your Kubernetes Pods must include a `resources` section with specified `requests` (or `limits`), declared either on the containers or on the pod itself. A pod-level `resources` section only replaces the container-level one for triggers that do not set `containerName`; see the note below the examples. See [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/). If the resources section is empty (`resources: {}` or similar), KEDA checks if the `defaultRequest` (or `default` for limits) is set in `LimitRange` for the `Container` type in the same namespace. If `defaultRequest` (or `default` for limits) is missing too, the error `missing request for {cpu/memory}` occurs.
 
 ```yaml
 # a working example of resources with specified requests
@@ -44,6 +44,8 @@ spec:
 ```
 
 > 💡 **NOTE:** Pod-level `resources` require Kubernetes 1.34 or higher, where the `PodLevelResources` feature gate is beta and enabled by default. Please see [Assign Pod-level CPU and memory resources](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pod-level-resources/) for more information.
+
+> 💡 **NOTE:** Pod-level `resources` do not satisfy the prerequisite when the trigger sets `containerName`. That trigger scales on a container resource metric, whose utilization is computed from the named container's own request, and the HorizontalPodAutoscaler ignores the pod-level request. Declare the request on that container as well.
 
 ### Trigger Specification
 
