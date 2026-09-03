@@ -44,6 +44,10 @@ The `mssql` trigger always requires the following information:
 - `targetValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA). (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 
+The trigger also accepts the following optional parameter:
+
+- `driverName` - The database driver used to open the connection. Either `sqlserver` or `azuresql`. Use `azuresql` to authenticate with Microsoft Entra ID through the driver. (Default: `sqlserver`, Optional, Available in v2.21+)
+
 > Note that the query must return a single numeric value (integers and floats are both supported). If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [MSSQL documentation](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/coalesce-transact-sql) for more information on the `COALESCE` function.
 
 To connect to the MSSQL instance, you can provide either:
@@ -137,6 +141,68 @@ spec:
         port: "1433"
         database: <DB_NAME>
         username: <UAMI_NAME>
+        query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
+        targetValue: 1
+```
+
+**Microsoft Entra ID authentication through the `azuresql` driver:**
+
+> Available in v2.21+
+
+Setting `driverName` to `azuresql` switches the scaler to the [Azure SQL driver](https://github.com/microsoft/go-mssqldb#azure-active-directory-authentication), which reads a `fedauth` option from the connection string and authenticates with Microsoft Entra ID itself. Use it for the authentication methods that `azure-workload` pod identity does not cover, such as service principals, virtual machine managed identities and Entra ID password authentication.
+
+The credentials travel in the connection string, so supply it through a `TriggerAuthentication` backed by a secret rather than in the trigger metadata.
+
+Some of the `fedauth` values the driver supports:
+
+- `ActiveDirectoryDefault` - Uses the default Azure credential chain.
+- `ActiveDirectoryServicePrincipal` - Authenticates with a service principal, with `user id` set to the client ID and `password` to the client secret.
+- `ActiveDirectoryManagedIdentity` - Authenticates with a managed identity assigned to the node.
+- `ActiveDirectoryWorkloadIdentity` - Authenticates with the federated token projected into the KEDA operator pod.
+- `ActiveDirectoryPassword` - Authenticates with an Entra ID user name and password.
+
+See the [driver documentation](https://github.com/microsoft/go-mssqldb#azure-active-directory-authentication) for the full list and the parameters each one expects.
+
+`driverName` cannot be combined with `podIdentity.provider: azure-workload`. That provider acquires the token itself and does not use the driver, so KEDA rejects the combination rather than ignoring the parameter.
+
+#### Example
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mssql-entra-secret
+type: Opaque
+stringData:
+  connectionString: "Server=<AZURE_SQL_SERVER_FQDN>;Database=<DB_NAME>;fedauth=ActiveDirectoryServicePrincipal;user id=<CLIENT_ID>@<TENANT_ID>;password=<CLIENT_SECRET>;Encrypt=true;"
+
+---
+
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-mssql-entra-auth
+spec:
+  secretTargetRef:
+    - parameter: connectionString
+      name: mssql-entra-secret
+      key: connectionString
+
+---
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mssql-scaledobject
+spec:
+  scaleTargetRef:
+    name: consumer # e.g. the name of the resource to scale
+  triggers:
+    - type: mssql
+      authenticationRef:
+        name: azure-mssql-entra-auth
+      metadata:
+        driverName: azuresql
         query: "SELECT COUNT(*) FROM backlog WHERE state='running' OR state='queued'"
         targetValue: 1
 ```
