@@ -24,7 +24,7 @@ triggers:
       targetValue: "400.1"
       # Required: Target value for activating the scaler
       activationTargetValue: "1.1"
-      # Required: Specifies how the Metrics Time Series should be processed, options are "min" (minimum value), "max" (maximum value), and "avg" (average value)
+      # Required: Specifies how the Metric Time Series should be processed. Options are "min" (minimum value), "max" (maximum value), "avg" (average value), "sum" (sum of values), "count" (number of datapoints), and "latest" (most recently received value)
       queryAggregator: "avg"
 ```
 
@@ -34,7 +34,7 @@ triggers:
 - `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
 - `targetValue` - Threshold to reach to start scaling.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
-- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The 'queryAggregator' specifies how this series of metrics should be "rolled up". Valid values for this field are "avg", which returns the average, "min", which returns the minimum of the metrics in the series, and "max", which returns the maximum value.
+- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The `queryAggregator` specifies how this series of metrics should be "rolled up". Valid values are `avg`, which returns the average; `min`, which returns the minimum; `max`, which returns the maximum; `sum`, which returns the sum; `count`, which returns the number of datapoints; and `latest`, which returns the most recently received datapoint.
 
 **Parameter list:**
 
@@ -121,7 +121,7 @@ spec:
         duration: "10"
         queryValue: "400.1"
         activationQueryValue: "1.1"
-        queryAggregator: "max" # 'min', 'max', or 'avg'
+        queryAggregator: "max" # 'min', 'max', 'avg', 'sum', 'count', or 'latest'
       authenticationRef:
         name: keda-trigger-auth-splunk-secret
 ```
