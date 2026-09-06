@@ -24,7 +24,7 @@ triggers:
       targetValue: "400.1"
       # Required: Target value for activating the scaler
       activationTargetValue: "1.1"
-      # Required: Specifies how the Metric Time Series should be processed. Options are "min" (minimum value), "max" (maximum value), "avg" (average value), "sum" (sum of values), "count" (number of datapoints), and "latest" (most recently received value)
+      # Optional: Specifies how the Metric Time Series should be processed. Options are "min" (minimum value), "max" (maximum value), "avg" (average value), "sum" (sum of values), "count" (number of datapoints), and "latest" (most recently received value). Default: "avg"
       queryAggregator: "avg"
 ```
 
@@ -34,7 +34,7 @@ triggers:
 - `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
 - `targetValue` - Threshold to reach to start scaling.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
-- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The `queryAggregator` specifies how this series of metrics should be "rolled up". Valid values are `avg`, which returns the average; `min`, which returns the minimum; `max`, which returns the maximum; `sum`, which returns the sum; `count`, which returns the number of datapoints; and `latest`, which returns the most recently received datapoint.
+- `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The `queryAggregator` specifies how this series of metrics should be "rolled up". (Values: `avg`, `min`, `max`, `sum`, `count`, `latest`, Default: `avg`, Optional)
 
 **Parameter list:**
 
