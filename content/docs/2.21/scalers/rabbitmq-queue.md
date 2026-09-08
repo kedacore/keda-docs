@@ -115,7 +115,7 @@ For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD
 
 #### OAuth2 authentication
 
-For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD with the `oauth2` spec. See the [OAuth2 authentication provider documentation](https://keda.sh/docs/2.21/authentication-providers/oauth/) for the full `TriggerAuthentication.spec.oauth2` schema. In this case, the `username:password` part in the host URI should be omitted. Currently, only HTTP protocol is supported.
+For RabbitMQ with OIDC support (>= 3.11) you can use `TriggerAuthentication` CRD with the `oauth2` spec. See the [OAuth2 authentication provider documentation](https://keda.sh/docs/latest/authentication-providers/oauth2/) for the full `TriggerAuthentication.spec.oauth2` schema. In this case, the `username:password` part in the host URI should be omitted. Currently, only HTTP protocol is supported.
 
 ### Configuration examples
 
