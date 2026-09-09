@@ -87,7 +87,7 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, password or keytab, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
+ You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, exactly one of password, keytab or credential cache, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
  Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence. For AWS MSK IAM authentication, you only need to set `awsRegion` in ScaledObject and you also need to enable TLS by setting `tls` to enable.
 
@@ -100,7 +100,8 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `saslTokenProvider` - Kafka SASL token provider. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional).
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
-- `keytab` - Kerberos keytab.  Either `password` or `keytab` is required in case of `gssapi`.  (Optional)
+- `keytab` - Kerberos keytab. (Optional)
+- `ccacheName` - Name of an existing Kerberos credential cache file, read by KEDA from `/tmp/kerberos/ccache/<ccacheName>` inside the `keda-operator` container.  Must be a file name and not a path.  Exactly one of `password`, `keytab` or `ccacheName` is required in case of `gssapi`.  (Optional)
 - `realm` - Kerberos realm.  (Optional unless sasl mode is `gssapi`)
 - `kerberosConfig` - Kerberos configuration file. (Optional unless sasl mode is `gssapi`)
 - `kerberosServiceName` - Kerberos service name. (Optional takes default value of `kafka` if not provided)
@@ -538,6 +539,109 @@ spec:
   - parameter: kerberosConfig
     name: keda-kafka-secrets
     key: kerberosConfig
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-functions-deployment
+  pollingInterval: 30
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: localhost:9092
+      consumerGroup: my-group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: test-topic
+      # Optional
+      lagThreshold: "50"
+      offsetResetPolicy: latest
+    authenticationRef:
+      name: keda-trigger-auth-kafka-credential
+```
+
+##### `sasl/gssapi` with a Kerberos credential cache in TriggerAuthentication
+
+Instead of a `password` or a `keytab`, you can authenticate with an existing Kerberos credential cache by providing `ccacheName`.
+
+`ccacheName` is the *name of a file*, not a path and not the credential itself. KEDA reads it from `/tmp/kerberos/ccache/<ccacheName>` inside the `keda-operator` container, using the same writable `/tmp/kerberos` volume described above. A value containing a path separator is rejected with `ccacheName must be a file name and not a path`.
+
+The file must already exist when the scaler is built and must be a regular file; a missing file and a directory both fail. Exactly one of `password`, `keytab` or `ccacheName` must be provided - supplying none of them, or more than one, fails with `exactly one of 'password', 'keytab' or 'ccacheName' must be provided for GSSAPI authentication`.
+
+The parameter is a file name rather than the credential content because a credential cache is short-lived and has to be refreshed, while `TriggerAuthentication` values are resolved once when the scaler is built. Supplying the content would capture a snapshot that expires with no way to refresh it, whereas a file name lets the scaler read the current cache from disk.
+
+KEDA creates `/tmp/kerberos` itself, but **not** the `ccache` subdirectory. Whatever writes the credential cache must create `/tmp/kerberos/ccache/` first, otherwise the scaler reports `ccache file /tmp/kerberos/ccache/<ccacheName> does not exist` - the same error as a genuinely missing file.
+
+> **Important:**
+> KEDA only *reads* the credential cache. It does not create it, does not run `kinit` and does not renew it. Something outside KEDA must place the file at `/tmp/kerberos/ccache/<ccacheName>` and keep it valid - typically a sidecar or init container running `kinit` against a keytab and writing into the shared `emptyDir`. When the ticket expires, authentication fails until it is renewed.
+> KEDA also never deletes the file: unlike the keytab and `krb5.conf` that it writes itself, the credential cache is left untouched on scaler shutdown.
+
+An init container on the `keda-operator` Deployment that obtains the ticket, sharing the `/tmp/kerberos` volume already added for GSSAPI:
+
+```yaml
+initContainers:
+- name: kinit
+  image: <an image with krb5-user installed>
+  command:
+  - /bin/sh
+  - -c
+  - |
+    mkdir -p /tmp/kerberos/ccache
+    kinit -k -t /krb5/client.keytab -c /tmp/kerberos/ccache/keda.ccache <principal>@<REALM>
+    chmod 644 /tmp/kerberos/ccache/keda.ccache
+  env:
+  - name: KRB5_CONFIG
+    value: /krb5/krb5.conf
+  volumeMounts:
+  - mountPath: /tmp/kerberos
+    name: temp-kerberos-vol
+  - mountPath: /krb5
+    name: krb5-client
+```
+
+An init container obtains the ticket once, which is enough while it remains valid. Use a sidecar that re-runs `kinit` before expiry if the workload outlives the ticket lifetime.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-kafka-secrets
+  namespace: default
+data:
+  sasl: "gssapi"
+  tls: "disable"
+  username: "admin"
+  realm: <your kerberos realm>
+  kerberosConfig: <your kerberos configuration>
+  ccacheName: <your credential cache file name>       # file name only, e.g. keda.ccache
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-kafka-credential
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: sasl
+    name: keda-kafka-secrets
+    key: sasl
+  - parameter: tls
+    name: keda-kafka-secrets
+    key: tls
+  - parameter: username
+    name: keda-kafka-secrets
+    key: username
+  - parameter: realm
+    name: keda-kafka-secrets
+    key: realm
+  - parameter: kerberosConfig
+    name: keda-kafka-secrets
+    key: kerberosConfig
+  - parameter: ccacheName
+    name: keda-kafka-secrets
+    key: ccacheName
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
