@@ -43,7 +43,7 @@ The `mssql` trigger always requires the following information:
 - `query` - A [T-SQL](https://docs.microsoft.com/sql/t-sql/language-reference) query that returns a single numeric value. This can be a regular query or the name of a stored procedure.
 - `targetValue` - A threshold that is used as `targetValue` or `targetAverageValue` (depending on the trigger metric type) in the Horizontal Pod Autoscaler (HPA). (This value can be a float)
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `driverName` - The database driver used to open the connection. Either `sqlserver` or `azuresql`. Use `azuresql` to authenticate with Microsoft Entra ID through the driver. (Default: `sqlserver`, Optional, Available in v2.21+)
+- `driverName` - The database driver used to open the connection. Either `sqlserver` or `azuresql`. Use `azuresql` to authenticate with Microsoft Entra ID through the driver. (Default: `sqlserver`, Optional)
 
 > Note that the query must return a single numeric value (integers and floats are both supported). If the query has a possibility of returning `null`, a default value can be set using the `COALESCE` function. For example, `SELECT COALESCE(column_name, 0) FROM table_name;`. See [MSSQL documentation](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/coalesce-transact-sql) for more information on the `COALESCE` function.
 
@@ -143,12 +143,9 @@ spec:
 ```
 
 **Microsoft Entra ID authentication through the `azuresql` driver:**
-
-> Available in v2.21+
-
 Setting `driverName` to `azuresql` switches the scaler to the [Azure SQL driver](https://github.com/microsoft/go-mssqldb#azure-active-directory-authentication), which reads a `fedauth` option from the connection string and authenticates with Microsoft Entra ID itself. Use it for the authentication methods that `azure-workload` pod identity does not cover, such as service principals, virtual machine managed identities and Entra ID password authentication.
 
-The credentials travel in the connection string, so supply it through a `TriggerAuthentication` backed by a secret rather than in the trigger metadata.
+If the selected authentication method places a secret in the connection string, such as a service principal client secret or user password, supply it through a `TriggerAuthentication` backed by a `Secret`.
 
 Some of the `fedauth` values the driver supports:
 
