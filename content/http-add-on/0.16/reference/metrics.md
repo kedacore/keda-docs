@@ -29,12 +29,13 @@ See [Environment Variables](../environment-variables/#metrics) for configuration
 
 **Labels:**
 
-| Label             | Description                                                                                                               |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `code`            | HTTP response status code (integer).                                                                                      |
-| `method`          | HTTP request method. Non-standard methods are normalized to `_OTHER` (see [Method normalization](#method-normalization)). |
-| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                 |
-| `route_namespace` | Namespace of the matched route resource.                                                                                  |
+| Label             | Description                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `code`            | HTTP response status code (integer).                                                                                                 |
+| `cold_start`      | `true` when the request waited for backend readiness, including waits that ended before the backend became ready; otherwise `false`. |
+| `method`          | HTTP request method. Non-standard methods are normalized to `_OTHER` (see [Method normalization](#method-normalization)).            |
+| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                            |
+| `route_namespace` | Namespace of the matched route resource.                                                                                             |
 
 ### Request concurrency
 
@@ -62,16 +63,40 @@ See [Environment Variables](../environment-variables/#metrics) for configuration
 | **Unit**                 | Seconds                                         |
 | **Description**          | Time from request received to response written. |
 
-**Bucket boundaries:** `0.005`, `0.01`, `0.025`, `0.05`, `0.075`, `0.1`, `0.25`, `0.5`, `0.75`, `1`, `2.5`, `5`, `7.5`, `10` (following the [OTel HTTP semantic conventions](https://opentelemetry.io/docs/specs/semconv/http/http-metrics/)).
+**Bucket boundaries:** `0.005`, `0.01`, `0.025`, `0.05`, `0.075`, `0.1`, `0.25`, `0.5`, `0.75`, `1`, `2.5`, `5`, `7.5`, `10`, `15`, `30`, `60`, `120`, `300`.
+The first boundaries follow the [OTel HTTP semantic conventions](https://opentelemetry.io/docs/specs/semconv/http/http-metrics/), and the additional boundaries expose longer cold-start request durations.
 
 **Labels:**
 
-| Label             | Description                                                                                                               |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `code`            | HTTP response status code (integer).                                                                                      |
-| `method`          | HTTP request method. Non-standard methods are normalized to `_OTHER` (see [Method normalization](#method-normalization)). |
-| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                 |
-| `route_namespace` | Namespace of the matched route resource.                                                                                  |
+| Label             | Description                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `code`            | HTTP response status code (integer).                                                                                                 |
+| `cold_start`      | `true` when the request waited for backend readiness, including waits that ended before the backend became ready; otherwise `false`. |
+| `method`          | HTTP request method. Non-standard methods are normalized to `_OTHER` (see [Method normalization](#method-normalization)).            |
+| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                            |
+| `route_namespace` | Namespace of the matched route resource.                                                                                             |
+
+### Cold-start duration
+
+|                          |                                                              |
+| ------------------------ | ------------------------------------------------------------ |
+| **Prometheus name**      | `interceptor_cold_start_duration_seconds`                    |
+| **OTel instrument name** | `interceptor.cold_start.duration`                            |
+| **Type**                 | Histogram                                                    |
+| **Unit**                 | Seconds                                                      |
+| **Description**          | Time spent waiting for a cold-start backend to become ready. |
+
+The metric is recorded only when a request waits for backend readiness.
+
+**Bucket boundaries:** `0.005`, `0.01`, `0.025`, `0.05`, `0.075`, `0.1`, `0.25`, `0.5`, `0.75`, `1`, `2.5`, `5`, `7.5`, `10`, `15`, `30`, `60`, `120`, `300`.
+
+**Labels:**
+
+| Label             | Description                                                                                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `outcome`         | Readiness wait result: `ready` when backend became ready, `timeout` when wait ended with another error, or `cancelled` when request context was cancelled. |
+| `route_name`      | Name of the matched InterceptorRoute or HTTPScaledObject.                                                                                                  |
+| `route_namespace` | Namespace of the matched route resource.                                                                                                                   |
 
 ### Cold-start rejections
 
