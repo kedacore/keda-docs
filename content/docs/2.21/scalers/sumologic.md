@@ -49,6 +49,7 @@ triggers:
     queryAggregator: "Max"
     threshold: "50"
     maxRetries: "3"                     # Optional: Maximum retry attempts
+    ignoreNullValues: "true"            # Optional: Return 0 instead of an error when the query returns no data
   authenticationRef:
     name: keda-trigger-auth-sumologic
 ```
@@ -96,6 +97,7 @@ triggers:
 
 - `quantization` - Granularity of data points. (Required when `queryType` is `metrics`)
 - `rollup` - Metrics rollup type. (Values: `Avg`, `Sum`, `Min`, `Max`, `Count`, Default: `Avg`, Optional)
+- `ignoreNullValues` - Set to `true` to return a metric value of `0` when the metrics query returns no data. Set to `false`, the scaler will return an error when the metrics query returns no data. (Values: `true`,`false`, Default: `false`, Optional)
 
 **Multi-Metrics Query Specific Parameters:**
 
