@@ -19,7 +19,7 @@
     "alpinejs": "3.16.1",
     "bulma": "1.0.4",
     "hugo-extended": "0.164.0",
-    "netlify-cli": "27.1.1",
+    "netlify-cli": "27.5.2",
     "sass-embedded": "1.102.0"
   }
 }
