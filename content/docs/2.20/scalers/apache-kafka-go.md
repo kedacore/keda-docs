@@ -33,6 +33,7 @@ triggers:
     consumerGroup: my-group
     topic: test-topic
     lagThreshold: '5'
+    threadsPerConsumer: '1'
     activationLagThreshold: '3'
     offsetResetPolicy: latest
     allowIdleConsumers: false
@@ -51,6 +52,7 @@ triggers:
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
 - `topic` - Name of the topic on which processing the offset lag. (Optional, see note below)
 - `lagThreshold` - Average target value to trigger scaling actions. (Default: `10`, Optional)
+- `threadsPerConsumer` - Number of threads acting as parallel consumers in a single Pod/Replica (Default: `1`, Optional)
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
 - `allowIdleConsumers` - When set to `true`, the number of replicas can exceed the number of
@@ -136,6 +138,39 @@ Below are some examples of what the scaling decision would look like. Consider `
 - For lag between `11 -> 20` we would be running `2` consumer
 - For lag between `21 -> 50` we would be running `5` consumers
 - For lag higher than `51` we would be running `10` consumers
+
+
+### New `threadsPerConsumer` property support
+
+In practice whenever we create a consumer Pod/Replica, then it is often configured to run multiple threads within, all acting as parallel/independent consumers.
+This fact should be taken into consideration when scaling Pods up/down.
+Thus we introduce the concept of `effective consumers`
+
+`Example`:
+
+
+- Assume every Pod is running `2` threads acting as parallel consumers
+- Say we have `3` such Pods
+- Then count of `effective consumers` is `3 x 2 = 6`
+
+
+This property also works in conjugation with another property called `lagThreshold`. Let's understand this with 2 scenarios.
+
+`Assume`:
+
+- Total Lag across all Partitions within a topic = `100`
+- Desired Lag Per Partition (defined by property `lagThreshold`) = `10`
+
+`Scenario-1:  threadsPerConsumer = 1`
+
+Keda will autoscale and aim for Pod count to be = `(100/10) = 10`
+
+`Scenario-2:  threadsPerConsumer = 2`
+
+Keda will autoscale and aim for Pod count to be = `(100/(10*2)) = 5`
+
+Basically while autoscaling, there is no need to create as many Pods/Replicas to achieve the desired lag. We can achieve the desired lag with a lot less Pods/Replicas (less by a factor of `threadsPerConsumer`)
+
 
 ### Example
 
