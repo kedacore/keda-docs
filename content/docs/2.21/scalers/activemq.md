@@ -24,7 +24,7 @@ triggers:
 
 **Parameter list:**
 
-- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`. Can also be set via `TriggerAuthentication` or a resolved environment variable, see [Authentication Parameters](#authentication-parameters) below.
+- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`.
 - `destinationName` - Name of the queue to check for the message count.
 - `brokerName` - Name of the broker as defined in ActiveMQ.
 - `targetQueueSize` - Target value for queue length passed to the scaler. The scaler will cause the replicas to increase if the queue message count is greater than the target value per active replica. (Default: `10`, Optional)
@@ -48,7 +48,7 @@ You can authenticate by using username and password via `TriggerAuthentication` 
 
 **Management Endpoint:**
 
-- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`. (Optional, takes precedence when set in the trigger metadata)
+- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`.
 
 This is useful when the broker address is managed as infrastructure data alongside the credentials, for example synced into a `Secret` by an external secret store, rather than written into each `ScaledObject`.
 
