@@ -125,6 +125,13 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-burst      | cfg.Burst              | 30            | Set the burst for throttling requests sent to the apiserver                                                                                                   |
 | disable-compression | cfg.DisableCompression | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
+## Kubernetes API Timeout
+
+Set the `KEDA_KUBERNETES_API_TIMEOUT` environment variable on the KEDA Operator deployment to limit how long KEDA waits for Kubernetes API operations used by scaling loops.
+When the timeout is reached, the current operation fails and KEDA can retry it during a later polling cycle.
+The value uses the Go duration format, such as `10s` or `1m`. The default is `0s`, which does not add a timeout.
+This setting is useful when a temporary Kubernetes API server or network outage would otherwise keep a scaling loop waiting long after the API server becomes available again.
+
 ## gRPC Metrics Service Parameters
 
 The gRPC Metrics Service is part of the KEDA Operator deployment and serves scaling events and metrics from the scalers over gRPC to the Metrics API Service, that in turn serves them to the Kubernetes API Server. The gRPC Metrics Service config used by the KEDA Metrics Adapter to connect to the KEDA Operator can be adjusted by passing the following command-line flags to the Adapter binary:
