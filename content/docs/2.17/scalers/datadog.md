@@ -79,7 +79,7 @@ triggers:
     datadogMetricName: "nginx-hits"
     datadogMetricNamespace: "default"
     targetValue: "7.75"
-    activationQueryValue: "1.1"
+    activationTargetValue: "1.1"
     type: "global" # Deprecated in favor of trigger.metricType
     metricUnavailableValue: "1.5"
 ```
@@ -90,7 +90,7 @@ triggers:
 - `datadogMetricName` - The name of the `DatadogMetric` object to drive the scaling events.
 - `datadogMetricNamespace` - The namespace of the `DatadogMetric` object to drive the scaling events.
 - `targetValue` - Value to reach to start scaling (This value can be a float).
-- `activationQueryValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
+- `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `type` - Whether to start scaling based on the value or the average between pods. (Values: `average`, `global`, Default:`average`, Optional)
 - `age`: The time window (in seconds) to retrieve metrics from Datadog. (Default: `90`, Optional)
 - `lastAvailablePointOffset`: The offset to retrieve the X to last data point. The value of last data point of some queries might be inaccurate [because of the implicit rollup function](https://docs.datadoghq.com/dashboards/functions/rollup/#rollup-interval-enforced-vs-custom), try to adjust to `1` if you encounter this issue. (Default: `0`, Optional)
