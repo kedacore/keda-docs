@@ -192,15 +192,15 @@ Complete language definition of `expr` package can be found [here](https://expr.
 
 KEDA has 2 different phases during the autoscaling process.
 
-- **Activation phase:** The activating (or deactivating) phase is the moment when KEDA (operator) has to decide if the workload should be scaled from/to zero. KEDA takes responsibility for this action based on the result of the scaler `IsActive` function and only applies to 0<->1 scaling. There are use-cases where the activating value (0-1 and 1-0) is totally different than 0, such as workloads scaled with the Prometheus scaler where the values go from -X to X.
-- **Scaling phase:** The scaling phase is the moment when KEDA has decided to scale out to 1 instance and now it is the HPA controller who takes the scaling decisions based on the configuration defined in the generated HPA (from ScaledObject data) and the metrics exposed by KEDA (metrics server). This phase applies the to 1<->N scaling.
+- **Activation phase:** KEDA (operator) decides whether to scale the workload from or to zero based on trigger activity. When activating a workload from zero, KEDA sets the replica count to [`minReplicaCount`](../reference/scaledobject-spec.md#minreplicacount) if it is greater than 0, or to 1 otherwise. This initial replica count does not depend on the metric value that caused activation. Activation thresholds can differ from zero, such as with Prometheus metrics whose values range from -X to X.
+- **Scaling phase:** Once the workload has replicas, the HPA controller makes scaling decisions based on the configuration in the generated HPA and the metrics exposed by KEDA (metrics server). The HPA scales within its configured minimum and maximum replica counts.
 
 KEDA allows you to specify different values for each scenario:
 
 - **Activation:** Defines when the scaler is active or not and scales from/to 0 based on it.
-- **Scaling:** Defines the target value to scale the workload from 1 to _n_ instances and vice versa. To achieve this, KEDA passes the target value to the Horizontal Pod Autoscaler (HPA) and the built-in HPA controller will handle all the autoscaling.
+- **Scaling:** Defines the target metric value used by the HPA to calculate the desired replica count.
 
-> ⚠️ **NOTE:** If the minimum replicas is >= 1, the scaler is always active and the activation value will be ignored.
+> ⚠️ **NOTE:** If `minReplicaCount` is greater than 0 and `idleReplicaCount` is not set, inactive triggers do not cause the workload to scale to zero. With [`idleReplicaCount: 0`](../reference/scaledobject-spec.md#idlereplicacount), KEDA can scale the workload to zero after the [`cooldownPeriod`](../reference/scaledobject-spec.md#cooldownperiod) and back to `minReplicaCount` when a trigger becomes active.
 
 Each scaler defines parameters for their use-cases, but the activation will always be the same as the scaling value, appended by the prefix `activation` (ie: `threshold` for scaling and `activationThreshold` for activation).
 
