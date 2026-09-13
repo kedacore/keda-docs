@@ -27,7 +27,7 @@ triggers:
       # Optional: Specifies how the Metric Time Series should be processed. Options are "min" (minimum value), "max" (maximum value), "avg" (average value), "sum" (sum of values), "count" (number of datapoints), and "latest" (most recently received value). Default: "avg"
       queryAggregator: "avg"
        # Optional: Keep one SignalFlow job for the scaler lifetime and poll a cached window. Default: "false"
-       persistentStream: "false"
+      persistentStream: "false"
 ```
 
 **Parameter list:**
