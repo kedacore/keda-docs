@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: en-US
+early_access: false
+
+tone_instructions: >-
+  Be concise and actionable. Avoid subjective rewrites, repeating CI results,
+  and suggesting changes outside the PR scope.
+
+reviews:
+  profile: chill
+  high_level_summary: false
+  poem: false
+  request_changes_workflow: false
+  collapse_walkthrough: true
+  enable_prompt_for_ai_agents: false
+  assess_linked_issues: true
+
+  path_filters:
+    - "!public/**"
+    - "!resources/**"
+
+  path_instructions:
+    - path: "content/docs/**/*.md"
+      instructions: |
+        Check that the change targets the intended KEDA documentation version and
+        does not accidentally alter historical-version behavior. Validate Hugo
+        front matter, shortcodes, anchors, internal links, API names, and examples.
+        Prefer concrete correctness findings over subjective prose rewrites.
+
+    - path: "content/docs/*/scalers/*.md"
+      instructions: |
+        Require the documented scaler front matter and parameter-description format.
+        Compare metadata names, defaults, allowed values, authentication options,
+        activation behavior, and YAML examples with kedacore/keda. Examples must not
+        contain real credentials and should use the supported KEDA API version.
+
+    - path: "content/troubleshooting/**/*.md"
+      instructions: |
+        Check that symptoms, diagnosis, commands, expected output, remediation, and
+        version applicability are clear. Flag destructive commands, unsafe secret
+        handling, and advice that could disrupt a production cluster.
+
+    - path: "hugo.toml"
+      instructions: |
+        Version ordering is functional: the first released docs version is treated
+        as latest. Check that added versions have corresponding content and data and
+        that aliases, redirects, menus, and unreleased-version settings remain valid.
+
+    - path: "layouts/**"
+      instructions: |
+        Review escaping, accessible markup and keyboard behavior, responsive output,
+        and compatibility with existing Hugo content. Search-index field changes
+        may require matching changes in assets and hugo.toml.
+
+    - path: "assets/**"
+      instructions: |
+        Review browser compatibility, accessibility, unsafe HTML insertion, and
+        consistency with layouts and hugo.toml. Avoid unrelated style preferences.
+
+    - path: ".github/workflows/**"
+      instructions: |
+        Review permissions, pinned action revisions, fork-controlled inputs, secret
+        exposure, shell injection risks, and consistency with package.json scripts.
+        Do not duplicate findings already reported by CI.
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "CONTRIBUTING.md"
+  learnings:
+    scope: local
+  issues:
+    scope: local
+  pull_requests:
+    scope: local
+  linked_repositories:
+    - repository: "kedacore/keda"
+      instructions: >-
+        This is the source of truth for KEDA APIs, scalers, metadata, defaults,
+        authentication behavior, operational behavior, and supported features.
