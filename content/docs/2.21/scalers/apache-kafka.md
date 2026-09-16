@@ -609,7 +609,7 @@ kind: Secret
 metadata:
   name: keda-kafka-secrets
   namespace: default
-data:
+stringData:
   sasl: "gssapi"
   tls: "disable"
   username: "admin"
