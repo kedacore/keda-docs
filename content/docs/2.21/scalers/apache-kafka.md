@@ -584,13 +584,17 @@ An init container on the `keda-operator` Deployment that obtains the ticket, sha
 initContainers:
 - name: kinit
   image: <an image with krb5-user installed>
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
   command:
   - /bin/sh
   - -c
   - |
     mkdir -p /tmp/kerberos/ccache
     kinit -k -t /krb5/client.keytab -c /tmp/kerberos/ccache/keda.ccache <principal>@<REALM>
-    chmod 644 /tmp/kerberos/ccache/keda.ccache
+    chmod 0600 /tmp/kerberos/ccache/keda.ccache
   env:
   - name: KRB5_CONFIG
     value: /krb5/krb5.conf
@@ -600,6 +604,8 @@ initContainers:
   - mountPath: /krb5
     name: krb5-client
 ```
+
+The default KEDA image runs as UID and GID `65532`. Running the init container with the same identity makes the `0600` credential cache readable by KEDA without exposing it to other users. If you configure a different `runAsUser` or `runAsGroup` for the KEDA operator, use the same values for the init container.
 
 An init container obtains the ticket once, which is enough while it remains valid. Use a sidecar that re-runs `kinit` before expiry if the workload outlives the ticket lifetime.
 
