@@ -131,6 +131,8 @@ If this property is set, KEDA will scale the resource down to this number of rep
 
 Minimum number of replicas KEDA will scale the resource down to. By default, it's scale to zero, but you can use it with some other value as well.
 
+When `minReplicaCount` is greater than 0, KEDA uses that value as `minReplicas` in the generated HPA. If `minReplicaCount` is omitted or set to 0, the HPA's `minReplicas` is 1. KEDA manages scaling to zero separately, as described in [Activating and Scaling thresholds](../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
+
 ## maxReplicaCount
 
 ```yaml
