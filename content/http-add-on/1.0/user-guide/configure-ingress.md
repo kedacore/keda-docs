@@ -12,6 +12,35 @@ The HTTP Add-on is ingress-agnostic — it works with any ingress controller or 
 
 [Gateway API](https://gateway-api.sigs.k8s.io/) is the recommended approach for new Kubernetes clusters.
 
+### Configure the Gateway listener
+
+Gateway listeners accept routes from the same namespace as the Gateway by default.
+Because the HTTPRoute below is in `<your-namespace>` and the Gateway is in `<gateway-namespace>`, configure the listener to allow routes from the HTTPRoute's namespace:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: <your-gateway>
+  namespace: <gateway-namespace>
+spec:
+  gatewayClassName: <your-gateway-class>
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: <your-namespace>
+```
+
+The `kubernetes.io/metadata.name` label identifies the namespace that contains the HTTPRoute.
+If the Gateway already exists, add `allowedRoutes` to its relevant listener instead of creating another Gateway.
+Using `from: All` allows routes from every namespace and should be used only when that access is intended.
+
 ### Step 1: Create an HTTPRoute
 
 Create an HTTPRoute that sends traffic to the interceptor proxy service:
@@ -40,7 +69,7 @@ The `hostnames` in the HTTPRoute should match the `hosts` in your InterceptorRou
 ### Step 2: Create a ReferenceGrant
 
 Cross-namespace backend references require a `ReferenceGrant` in the `keda` namespace.
-This grants the HTTPRoute's namespace permission to reference the interceptor service:
+The `ReferenceGrant` permits the HTTPRoute to reference the interceptor Service as a backend:
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1beta1
@@ -60,6 +89,8 @@ spec:
 ```
 
 If your HTTPRoute is in the same namespace as the interceptor (e.g., `keda`), you do not need a ReferenceGrant.
+A `ReferenceGrant` does not authorize the HTTPRoute to attach to a Gateway.
+The Gateway listener's `allowedRoutes` setting controls HTTPRoute attachment separately.
 
 ## Using Kubernetes Ingress
 
