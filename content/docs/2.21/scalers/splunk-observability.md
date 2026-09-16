@@ -26,15 +26,18 @@ triggers:
       activationTargetValue: "1.1"
       # Optional: Specifies how the Metric Time Series should be processed. Options are "min" (minimum value), "max" (maximum value), "avg" (average value), "sum" (sum of values), "count" (number of datapoints), and "latest" (most recently received value). Default: "avg"
       queryAggregator: "avg"
+      # Optional: Keep one SignalFlow job for the scaler lifetime and poll a cached window. Default: "false"
+      persistentStream: "false"
 ```
 
 **Parameter list:**
 
 - `query` - SignalFlow query for querying the desired metrics.
-- `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
+- `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds. When `persistentStream` is `"true"`, this is the max age of the cached sample window, not how long the SignalFlow job runs.
 - `targetValue` - Threshold to reach to start scaling.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
 - `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The `queryAggregator` specifies how this series of metrics should be "rolled up". (Values: `avg`, `min`, `max`, `sum`, `count`, `latest`, Default: `avg`, Optional)
+- `persistentStream` - When `"true"`, the scaler starts one SignalFlow job at construction and serves metrics from a cached window. Polls do not start a new job. If the newest sample is older than `duration`, the scaler returns an error instead of a stale metric. Websocket drops fail the poll until KEDA rebuilds the scaler. (Values: `true`, `false`, Default: `false`, Optional)
 
 **Parameter list:**
 
