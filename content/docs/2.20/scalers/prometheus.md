@@ -23,7 +23,7 @@ triggers:
     # Optional fields:
     namespace: example-namespace  # for namespaced queries, eg. Thanos
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid,X-Organization-Id=oid # Optional. Custom headers to include in query. In case of auth header, use the custom authentication or relevant authModes.
-    ignoreNullValues: "false" # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
+    ignoreNullValues: "false" # Default is `true`, which means an empty query result is reported as a metric value of 0. Set to `false` and the scaler will return an error instead when the query result is empty (eg. when the Prometheus target is lost)
     queryParameters: key-1=value-1,key-2=value-2
     unsafeSsl: "false" #  Default is `false`, Used for skipping certificate check when having self-signed certs for Prometheus endpoint    
     timeout: "1000" # Optional. Custom timeout for the HTTP client used in this scaler
@@ -37,7 +37,7 @@ triggers:
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `namespace` - A namespace that should be used for namespaced queries. These are required by some highly available Prometheus setups, such as [Thanos](https://thanos.io). (Optional)
 - `customHeaders` - Custom headers to include while querying the prometheus endpoint. In case of authentication headers, use custom authentication or relevant `authModes` instead. (Optional)
-- `ignoreNullValues` - Value to reporting error when Prometheus target is lost (Values: `true`,`false`, Default: `true`, Optional)
+- `ignoreNullValues` - Whether to treat an empty query result (or a `NaN`/`Inf` value) as a metric value of `0`. When set to `true`, the scaler reports `0` instead of an error. Note that `0` does not exceed `activationThreshold`, so an empty query result can scale the workload down, including down to zero when `minReplicaCount` is `0`. When set to `false`, the scaler returns an error instead, in which case KEDA keeps the current replica count or applies `fallback` if configured. (Values: `true`,`false`, Default: `true`, Optional)
 - `queryParameters` - A comma-separated list of query Parameters to include while querying the Prometheus endpoint. (Optional)
 - `unsafeSsl` - Used for skipping certificate check e.g: using self-signed certs  (Values: `true`,`false`, Default: `false`, Optional)
 - `timeout` - Timeout **for this specific trigger**. Can be given as a number (in milliseconds) or in a human-readable format like "30s". This value will override the value defined in `KEDA_HTTP_DEFAULT_TIMEOUT`. (Optional)
