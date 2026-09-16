@@ -35,6 +35,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
 > Note: When you deploy the KEDA Operator without any scalers deployed, the only metric you will see is `keda_build_info`. As you deploy scalers, you will start to see some of the metrics listed above but it is dependant on the types of scalers you have deployed.
+>
+> By default, `keda_scaler_http_request_duration_seconds` is emitted with low-cardinality labels such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` labels with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
 
 ### Admission Webhooks
 
@@ -54,6 +56,8 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 - `keda_internal_metricsservice_grpc_client_handling_seconds` - Histogram of response latency (seconds) of the gRPC until it is finished by the application.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 - Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
+
+The histogram `keda_internal_metricsservice_grpc_client_handling_seconds` is emitted by the KEDA Metrics Adapter and is not controlled by the high-cardinality HTTP duration label flag.
 
 ## Premade Grafana dashboard
 
