@@ -194,7 +194,7 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 
 Set the `KEDA_KUBERNETES_API_TIMEOUT` environment variable on the KEDA Operator deployment to limit how long KEDA waits for Kubernetes API operations used by scaling loops.
 When the timeout is reached, the current operation fails and KEDA can retry it during a later polling cycle.
-The value uses the Go duration format, such as `10s` or `1m`. The default is `0s`, which does not add a timeout.
+The effective timeout is the ScaledObject or ScaledJob `pollingInterval` plus the value of `KEDA_KUBERNETES_API_TIMEOUT`. The value uses the Go duration format, such as `5s` or `1m`. When the environment variable is not set, the additional duration is `0s`; the KEDA Helm chart sets it to `5s` by default. Setting it to `0s` uses the `pollingInterval` as the timeout; the timeout cannot be disabled.
 This setting is useful when a temporary Kubernetes API server or network outage would otherwise keep a scaling loop waiting long after the API server becomes available again.
 
 ## gRPC Metrics Service Parameters
