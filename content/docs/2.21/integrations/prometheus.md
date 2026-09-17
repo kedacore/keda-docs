@@ -27,6 +27,11 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_cloudeventsource_events_queued` - The number of events that are in the emitting queue.
 - `keda_scaler_http_requests_total` - Total number of outbound HTTP requests issued during scaler metric collection.
 - `keda_scaler_http_request_duration_seconds` - Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection.
+- `keda_grpc_client_started_total` - Total number of external scaler gRPC calls started by the client.
+- `keda_grpc_client_handled_total` - Total number of external scaler gRPC calls completed by the client, regardless of success or failure.
+- `keda_grpc_client_msg_received_total` - Total number of external scaler gRPC stream messages received by the client.
+- `keda_grpc_client_msg_sent_total` - Total number of external scaler gRPC stream messages sent by the client.
+- `keda_grpc_client_handling_seconds` - Histogram of external scaler gRPC call duration in seconds.
 - `keda_internal_metricsservice_grpc_server_started_total` - Total number of RPCs started on the server.
 - `keda_internal_metricsservice_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
 - `keda_internal_metricsservice_grpc_server_msg_received_total` - Total number of RPC stream messages received on the server.
@@ -35,6 +40,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 
 > Note: When you deploy the KEDA Operator without any scalers deployed, the only metric you will see is `keda_build_info`. As you deploy scalers, you will start to see some of the metrics listed above but it is dependant on the types of scalers you have deployed.
+
+The external scaler gRPC client metrics include the `scaler`, `grpc_service`, `grpc_method`, and `grpc_type` labels. Completed calls also include `grpc_code`. When `--enable-high-cardinality-metrics-labels=true` is configured, they additionally include `namespace`, `scaled_resource`, `trigger_name`, and `metric_name`.
 
 ### Admission Webhooks
 

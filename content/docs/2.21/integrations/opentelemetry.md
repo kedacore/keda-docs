@@ -50,6 +50,11 @@ The following metrics are being gathered:
 | `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
 | `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
 | `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
+| `keda.rpc.client.call.count` | Total number of completed external scaler gRPC calls. |
+| `keda.rpc.client.call.duration` | Histogram of external scaler gRPC call duration in seconds. |
+| `keda.rpc.client.stream.message.count` | Total number of messages sent or received by external scaler gRPC streams. |
+
+The external scaler gRPC client metrics include the `scaler`, `rpc.system.name`, and `rpc.method` attributes. Completed calls also include `rpc.response.status_code`, while stream messages include `rpc.message.type`. When `--enable-high-cardinality-metrics-labels=true` is configured, they additionally include `namespace`, `scaled_resource`, `trigger_name`, and `metric_name`.
 
 #### Deprecated metrics
 
