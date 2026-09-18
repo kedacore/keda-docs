@@ -29,8 +29,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 - `keda_scaler_http_request_duration_seconds` - Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection.
 - `keda_grpc_client_started_total` - Total number of external scaler gRPC calls started by the client.
 - `keda_grpc_client_handled_total` - Total number of external scaler gRPC calls completed by the client, regardless of success or failure.
-- `keda_grpc_client_msg_received_total` - Total number of external scaler gRPC stream messages received by the client.
-- `keda_grpc_client_msg_sent_total` - Total number of external scaler gRPC stream messages sent by the client.
+- `keda_grpc_client_msg_received_total` - Total number of external scaler gRPC message receive attempts by the client.
+- `keda_grpc_client_msg_sent_total` - Total number of external scaler gRPC message send attempts by the client.
 - `keda_grpc_client_handling_seconds` - Histogram of external scaler gRPC call duration in seconds.
 - `keda_internal_metricsservice_grpc_server_started_total` - Total number of RPCs started on the server.
 - `keda_internal_metricsservice_grpc_server_handled_total` - Total number of RPCs completed on the server, regardless of success or failure.
@@ -42,6 +42,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 > Note: When you deploy the KEDA Operator without any scalers deployed, the only metric you will see is `keda_build_info`. As you deploy scalers, you will start to see some of the metrics listed above but it is dependant on the types of scalers you have deployed.
 
 The external scaler gRPC client metrics include the `scaler`, `grpc_service`, `grpc_method`, and `grpc_type` labels. Completed calls also include `grpc_code`. When `--enable-high-cardinality-metrics-labels=true` is configured, they additionally include `namespace`, `scaled_resource`, `trigger_name`, and `metric_name`.
+
+The message counters follow the upstream Prometheus gRPC middleware semantics: they include unary calls and count attempts, including errors and the final stream receive that returns EOF. For streaming calls, completion and duration are recorded when the stream ends; duration measures the full stream lifetime. The duration histogram uses the default Prometheus buckets (5 milliseconds through 10 seconds, plus the overflow bucket).
 
 ### Admission Webhooks
 
