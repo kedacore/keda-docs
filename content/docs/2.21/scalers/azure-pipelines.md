@@ -38,6 +38,8 @@ triggers:
       jobsToFetch: "{jobsToFetch}"
       # Optional: Whether to only fetch unfinished jobs from the API (default: false)
       fetchUnfinishedJobsOnly: false
+      # Optional: Whether to include jobs already assigned to an agent when calculating queue length (default: true)
+      scaleOnInFlight: true
       # Optional: Property to enable case-insensitive comparison of pipeline job demands (default: false)
       caseInsensitiveDemandsProcessing: false
     authenticationRef:
@@ -57,9 +59,12 @@ triggers:
 - `demands` - Put the demands string that was provided to the ScaledObject. This MUST be a subset of the actual capability list the agent has. e.g. `maven,docker`
 - `jobsToFetch` - The number of the jobs that KEDA will fetch for the pool from Azure Pipeline API. Mutually exclusive with `parent` and `fetchUnfinishedJobsOnly`. (Default: `250`, Optional)
 - `fetchUnfinishedJobsOnly` - Whether to fetch only unfinished jobs from the Azure Pipeline API. Normally both finished, running and pending jobs are returned by the API. When this parameter is set to `true`, the API call is modified so that only running and pending jobs are returned from the API, which reduces the amount of returned jobs considerably. Mutually exclusive with `jobsToFetch`. (Default: `false`, Optional)
+- `scaleOnInFlight` - Whether to include unfinished jobs that have already been assigned to an agent (`ReceiveTime` is set) when calculating the queue length. Finished jobs (`Result` is set) are always excluded. (Default: `true`, Optional)
 - `caseInsensitiveDemandsProcessing` - Property to enable case-insensitive comparison of pipeline job demands. When this parameter is set to `true`, the demands check is case-insensitive. (Default: `false`, Optional)
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
+
+> By default (`scaleOnInFlight: true`), the queue length includes both unassigned jobs and jobs already assigned to an agent. This fits ScaledObjects, where busy agents are part of the replica count, and ScaledJobs with the `default` scaling strategy, which subtracts running jobs itself. Set `scaleOnInFlight: false` to count only unassigned jobs, and combine it with the `accurate` ScaledJob scaling strategy. Learn more about scaling strategies in the [`ScaledJob` specification](./../reference/scaledjob-spec.md#scalingstrategy).
 
 ### Authentication Parameters
 
