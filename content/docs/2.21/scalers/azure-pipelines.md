@@ -64,7 +64,7 @@ triggers:
 
 > 💡 **NOTE:** You can either use `poolID` or `poolName`. If both are specified, then `poolName` will be used.
 
-> By default (`scaleOnInFlight: true`), the metric counts both unassigned jobs and jobs already assigned to an agent. That matches the `default` ScaledJob scaling strategy and ScaledObject/HPA behaviour, where running work is subtracted separately. Set `scaleOnInFlight: false` to count only unassigned jobs, and pair that with a ScaledJob `scalingStrategy` of `accurate`. Learn more about scaling strategies in the [`ScaledJob` specification](./../reference/scaledjob-spec.md#scalingstrategy).
+> By default (`scaleOnInFlight: true`), the queue length includes both unassigned jobs and jobs already assigned to an agent. This fits ScaledObjects, where busy agents are part of the replica count, and ScaledJobs with the `default` scaling strategy, which subtracts running jobs itself. Set `scaleOnInFlight: false` to count only unassigned jobs, and combine it with the `accurate` ScaledJob scaling strategy. Learn more about scaling strategies in the [`ScaledJob` specification](./../reference/scaledjob-spec.md#scalingstrategy).
 
 ### Authentication Parameters
 
