@@ -189,21 +189,6 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-burst      | cfg.Burst              | 30            | Set the burst for throttling requests sent to the apiserver                                                                                                   |
 | disable-compression | cfg.DisableCompression | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
-## Kubernetes API Timeout
-
-Set the `KEDA_KUBERNETES_API_TIMEOUT` environment variable on the KEDA Operator deployment to limit how long KEDA waits for Kubernetes API operations used by scaling loops.
-When the timeout is reached, the current operation fails and KEDA can retry it during a later polling cycle.
-The effective timeout is the ScaledObject or ScaledJob `pollingInterval` plus the value of `KEDA_KUBERNETES_API_TIMEOUT`. The value uses the Go duration format, such as `5s` or `1m`. When the environment variable is not set, the additional duration is `0s` and `pollingInterval`is the effective timeout.
-
-The timeout applies to the following scaling-loop Kubernetes API operations:
-
-- **Status updates for ScaledObjects and ScaledJobs:** KEDA stops waiting for the status update and logs an error. A later polling cycle can try the operation again. A status timeout does not undo scaling operations that already completed, and the failure condition might not be stored while the API server is unavailable.
-- **ScaledObject scale-subresource operations:** If reading or updating the target's scale subresource times out, the current scaling attempt fails. KEDA reports the error in the scaling result and attempts to set the ScaledObject `Ready` condition to `False`; persisting that condition requires a separate status update, which can also time out.
-- **ScaledJob Job creation:** KEDA stops creating Jobs when the operation times out. Jobs created before the timeout remain and are not rolled back, so only part of a requested batch might be created. KEDA reports the creation error in the scaling result, emits a warning event, and attempts to set the ScaledJob `Ready` condition to `False` with reason `KEDAJobCreateFailed`. If the following status update also fails, the condition might not appear on the ScaledJob.
-- **ScaledJob Job deletion:** When deleting completed Jobs to enforce history limits, KEDA stops the current cleanup attempt if a deletion times out. Jobs deleted before the timeout remain deleted, and KEDA can retry the remaining cleanup during a later polling cycle.
-
-This setting is useful when a temporary Kubernetes API server or network outage would otherwise keep a scaling loop waiting long after the API server becomes available again.
-
 ## gRPC Metrics Service Parameters
 
 The gRPC Metrics Service is part of the KEDA Operator deployment and serves scaling events and metrics from the scalers over gRPC to the Metrics API Service, that in turn serves them to the Kubernetes API Server. The gRPC Metrics Service config used by the KEDA Metrics Adapter to connect to the KEDA Operator can be adjusted by passing the following command-line flags to the Adapter binary:
