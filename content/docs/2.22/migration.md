@@ -2,7 +2,15 @@
 title = "Migration Guide"
 +++
 
-## Service account token audiences
+## Upgrading from KEDA 2.20 to 2.21
+
+KEDA 2.21 includes breaking changes that require review before upgrading:
+
+- [Service account token audiences](#service-account-token-audiences)
+- [Azure Pipelines in-flight jobs](#azure-pipelines-in-flight-jobs)
+- [Temporal Rules-Based Versioning settings](#temporal-rules-based-versioning-settings)
+
+### Service account token audiences
 
 KEDA 2.21 defaults to `operator.serviceAccountTokens.mode: enforce-audience`. This is a breaking change for Vault Kubernetes authentication and **all** `boundServiceAccountToken` (BSAT) authentication, not just Vault. Missing approvals or service-account audience mappings fail the affected authentication. The operator can remain healthy while individual scalers fail.
 
@@ -117,6 +125,27 @@ After upgrading, verify:
 The [Vault endpoint filter](../operate/security/#restrict-vault-destinations) remains optional. Start in `warn` to discover destinations, then use `enforce` with reviewed trusted origins. An empty list in enforce mode blocks all Vault authentication.
 
 Rollback must include receiver roles, TA paths, and audience settings as well as Helm. Rolling back to a pre-fix operator restores its forwarding risk. Keep a tested recovery plan, and do not resolve receiver failures by granting broad TokenRequest RBAC or approving an API audience.
+
+### Azure Pipelines in-flight jobs
+
+KEDA 2.21 adds the Azure Pipelines scaler metadata field `scaleOnInFlight`, which defaults to `true`. The reported queue length now includes unfinished jobs that have already been assigned to an agent. Finished jobs remain excluded.
+
+This default avoids subtracting running ScaledJobs twice when using the `default` ScaledJob scaling strategy: assigned Azure Pipelines jobs remain in the scaler metric, and the strategy subtracts the corresponding running Kubernetes Jobs. Review these combinations before upgrading:
+
+- For a ScaledJob using the `default` strategy, retain `scaleOnInFlight: true`.
+- To count only unassigned Azure Pipelines jobs, set `scaleOnInFlight: false` and use the `accurate` ScaledJob strategy.
+- For a ScaledObject, choose whether its metric should include assigned work and test the resulting replica count. Set `scaleOnInFlight: false` to retain the unassigned-only behavior from KEDA 2.20.
+
+See the [Azure Pipelines scaler documentation](../scalers/azure-pipelines/#trigger-specification) and the [ScaledJob scaling strategy reference](../reference/scaledjob-spec/#scalingstrategy).
+
+### Temporal Rules-Based Versioning settings
+
+KEDA 2.21 removes the deprecated Temporal scaler settings `buildId`, `selectAllActive`, and `selectUnversioned`. A ScaledObject or ScaledJob containing any of these fields now fails scaler metadata parsing.
+
+- For unversioned workers, remove the legacy settings; the scaler uses the unversioned task queue when no Worker Deployment fields are configured.
+- For versioned workers, migrate to Temporal Worker Deployment Versioning and configure both `workerDeploymentName` and `workerDeploymentBuildId`. Create separate scaling resources when distinct deployment versions need independent scaling behavior.
+
+See the [Temporal scaler parameters and Worker Deployment Version example](../scalers/temporal/#trigger-specification). Review Temporal's [Worker Deployment documentation](https://docs.temporal.io/production-deployment/worker-deployments) before replacing legacy Rules-Based Versioning configurations.
 
 ## Migrating from KEDA v1 to v2
 
