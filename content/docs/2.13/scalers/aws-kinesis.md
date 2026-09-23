@@ -39,7 +39,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/concepts/authentication).
+You can use `TriggerAuthentication` CRD to configure the authenticate by providing either a role ARN or a set of IAM credentials, or use other [KEDA supported authentication methods](https://keda.sh/docs/latest/concepts/authentication).
 
 #### Delegate auth with TriggerAuthentication
 
