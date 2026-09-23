@@ -18,6 +18,7 @@ As a reference, this compatibility matrix shows the Kubernetes versions tested f
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
+| v2.22 | TBD           |
 | v2.21 | v1.34 - v1.36 |
 | v2.20 | v1.33 - v1.35 |
 | v2.19 | v1.32 - v1.34 |
