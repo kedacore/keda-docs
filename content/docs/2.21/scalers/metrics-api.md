@@ -80,6 +80,11 @@ spec:
 
 ### Authentication Parameters
 
+If a bearer credential is supplied through `boundServiceAccountToken`, KEDA 2.21+
+requires an operator-configured audience and a receiver that accepts it. See
+[BSAT configuration and receiver requirements](../../authentication-providers/bound-service-account-token/).
+Other credential sources are unchanged by this audience policy.
+
 Metrics Scaler API supported four types of authentication - API Key based authentication, basic authentication, TLS
 authentication, and Bearer authentication.
 

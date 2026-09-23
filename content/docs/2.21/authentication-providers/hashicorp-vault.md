@@ -4,9 +4,17 @@ title = "Hashicorp Vault secret"
 
 
 You can pull one or more Hashicorp Vault secrets into the trigger by defining the authentication metadata such as Vault `address` and the `authentication` method (token | kubernetes). If you choose kubernetes auth method you should provide `role` and `mount` as well.
-`credential` defines the Hashicorp Vault credentials depending on the authentication method. There's multiple methods for authentication; For kubernetes you should provide path to service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) or provide the serviceAccountName that can authenticate to kubernetes in the namespace of the ScaledObject/ScaledJob resource (usually `default`). If using serviceAccountName make sure to grant KEDA Operator `create serviceaccounts/token` permissions. This is set in the helm chart via `permissions.operator.restrict.allowAllServiceAccountTokenCreation=true` For token auth method provide the token.
+`credential` defines the Hashicorp Vault credentials depending on the authentication method. For Kubernetes authentication, omit it to use the operator's dedicated Vault token projection, provide `serviceAccount` with a token-file path, or provide `serviceAccountName` to mint a token in the referencing ScaledObject/ScaledJob namespace. Named-service-account minting requires a namespaced Role granting `create` on `serviceaccounts/token`, restricted to the intended service account through `resourceNames`; the default projected-token path requires no additional TokenRequest RBAC. For token authentication, provide the Vault token.
 `secrets` list defines the mapping between the path and the key of the secret in Vault to the parameter.
 `namespace` may be used to target a given Vault Enterprise namespace.
+
+KEDA 2.21 requires operator-approved audiences for Kubernetes authentication by default. The chart projects a token with `hashiCorpVault.kubernetesAuth.audience: vault` at `/var/run/secrets/keda-vault/token`. Configure the Vault role to accept `vault`, or change the chart value to match your intended Vault audience. Approve existing file-token audiences through `operator.serviceAccountTokens.additionalAllowedAudiences`; every audience in the token must be approved.
+
+Named-SA minting instead requires an exact namespace/name/audience entry in `permissions.operator.restrict.serviceAccountTokenCreationRoles`, shared with generic BSAT authentication. The projection's audience is not a minting default. Choose audiences not accepted by kube-apiserver; there is no TA audience override or API-token fallback.
+
+The common mode is `operator.serviceAccountTokens.mode: enforce-audience`. Its explicit `legacy` escape hatch disables the audience protection for **both Vault and BSAT**. Vault must use a separate API-valid credential for TokenReview. See the [migration guide](../../migration/#service-account-token-audiences) and [token security configuration](../../operate/security/#service-account-token-audiences).
+
+The optional `operator.outboundFilter.hashiCorpVault` policy applies to all Vault authentication methods, including ordinary Vault tokens. It is independent of the audience policy and defaults to `off`.
 
 > Since version `1.5.0` Vault secrets backend **version 2** is supported. 
 > The support for Vault secrets backend **version 1** was added on version `2.10`.

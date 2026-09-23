@@ -119,6 +119,16 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 
 ### Example
 
+When using `boundServiceAccountToken` with KEDA 2.21+, first configure an audience
+mapping for the service account and verify that the deployed Cluster Agent's
+external-metrics endpoint accepts that audience. A KEDA audience setting alone
+does not configure the receiver. See [BSAT receiver requirements](../../authentication-providers/bound-service-account-token/#receiver-requirements)
+and the [2.21 migration guide](../../migration/#service-account-token-audiences).
+If the receiver cannot accept a dedicated non-API audience, use a supported
+alternative such as the REST API method below, add receiver support, or explicitly
+accept the operator-wide legacy risk. This requirement does not affect Datadog
+REST API/app-key authentication.
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -137,9 +147,9 @@ metadata:
   name: datadog-cluster-agent-creds
   namespace: my-project
 spec:
-   boundServiceAccountToken:
-     - parameter: token
-       serviceAccountName: my-service-account # Required: service account with permissions to get, watch, list external.metrics.k8s.io
+  boundServiceAccountToken:
+    - parameter: token
+      serviceAccountName: my-service-account # Required: service account with permissions to get, watch, list external.metrics.k8s.io
   configMapTargetRef:
     - parameter: datadogNamespace
       name: datadog-config

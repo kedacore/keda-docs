@@ -44,6 +44,11 @@ triggers:
 
 ### Authentication Parameters
 
+If a bearer credential is supplied through `boundServiceAccountToken`, KEDA 2.21+
+requires an operator-configured audience and a receiver that accepts it. See
+[BSAT configuration and receiver requirements](../../authentication-providers/bound-service-account-token/).
+Other credential sources are unchanged by this audience policy.
+
 Prometheus Scaler supports various types of authentication to help you integrate with Prometheus.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
