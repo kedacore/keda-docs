@@ -33,6 +33,8 @@ triggers:
       enableEtags: "{enableEtags}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
+      # Optional: The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting queued jobs, defaults to 50
+      maxPages: "50" # Default 50
       # Optional: The name of the application ID from the GitHub App
       applicationID: "{applicatonID}"
       # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
@@ -52,6 +54,7 @@ triggers:
 - `matchUnlabeledJobsWithUnlabeledRunners` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `enableEtags` -  Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
+- `maxPages` - The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting a run's queued jobs. Must be greater than or equal to 1. (Optional, Default: 50)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
 - `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
 
@@ -68,6 +71,7 @@ the scaler will use the value from the environment variable. The environment var
 - `noDefaultLabelsFromEnv` - Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false". (Optional)
 - `matchUnlabeledJobsWithUnlabeledRunnersFromEnv` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
+- `maxPagesFromEnv` - The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting a run's queued jobs. (Optional, Default: 50)
 - `applicationIDFromEnv` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
 - `installationIDFromEnv` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
 
@@ -135,7 +139,7 @@ Careful design of how you design your repository request layout and configure th
 
 The github scaler [handles rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2026-03-10#handle-rate-limit-errors-appropriately) by waiting until X-RateLimit-Reset or Retry-After times until the github API is queried when rate limited. During this time it will return the cached queue length which is updated with each successful request.
 
-To prevent excessive requests to the GitHub API, a hardlimit of 50 pages is hard-coded for both of repositories and jobs, resulting in a maximum of 5000 each.
+To prevent excessive requests to the GitHub API when a single workflow run has a very large number of jobs, the scaler stops paginating a run's jobs after `maxPages` pages (100 jobs per page), which defaults to 50 pages (5000 jobs).
 
 **Fine-Tuning**
 
