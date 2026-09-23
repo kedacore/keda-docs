@@ -141,6 +141,26 @@ spec:
     - parameter: {param-name-used-for-auth}                               # Required.
       name: {key-vault-secret-name}                                       # Required.
       version: {key-vault-secret-version}                                 # Optional.
+  azureServicePrincipal:                                                  # Optional.
+    tenantId: {azure-tenant-id}                                           # Required.
+    clientId: {azure-client-id}                                           # Required.
+    cloud: AzurePublicCloud | AzureUSGovernmentCloud | AzureChinaCloud | AzureGermanCloud | AzureStackCloud | Private # Optional. Default: AzurePublicCloud. AzureGermanCloud is legacy; AzureStackCloud requires AZURE_ENVIRONMENT_FILEPATH.
+    activeDirectoryEndpoint: {active-directory-endpoint-for-cloud}        # Required when cloud = Private; not allowed for other clouds.
+    clientSecret:                                                         # Optional. Mutually exclusive with clientCertificate.
+      valueFrom:                                                          # Required.
+        secretKeyRef:                                                     # Required.
+          name: {k8s-secret-with-azure-client-secret}                     # Required.
+          key: {key-within-the-secret}                                    # Required.
+    clientCertificate:                                                    # Optional. Mutually exclusive with clientSecret.
+      valueFrom:                                                          # Required.
+        secretKeyRef:                                                     # Required.
+          name: {k8s-secret-with-azure-client-certificate}                # Required.
+          key: {key-within-the-secret}                                    # Required.
+    clientCertificatePassword:                                            # Optional. Requires clientCertificate.
+      valueFrom:                                                          # Required.
+        secretKeyRef:                                                     # Required.
+          name: {k8s-secret-with-azure-client-certificate-password}       # Required.
+          key: {key-within-the-secret}                                    # Required.
   awsSecretManager:
     podIdentity:                                                          # Optional.
       provider: aws                                                       # Required.

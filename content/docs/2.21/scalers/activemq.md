@@ -46,6 +46,12 @@ You can authenticate by using username and password via `TriggerAuthentication` 
 - `username` - Username for connect to the management endpoint of ActiveMQ.
 - `password` - Password for connect to the management endpoint of ActiveMQ.
 
+**Management Endpoint:**
+
+- `managementEndpoint` - ActiveMQ management endpoint in format: `<hostname>:<port>`.
+
+This is useful when the broker address is managed as infrastructure data alongside the credentials, for example synced into a `Secret` by an external secret store, rather than written into each `ScaledObject`.
+
 ### Example
 
 ```yaml

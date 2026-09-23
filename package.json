@@ -11,15 +11,15 @@
     "serve:hugo": "node scripts/hugo-with-dart-sass.mjs serve -DFE"
   },
   "devDependencies": {
-    "@docsearch/css": "5.0.1",
-    "@docsearch/js": "5.0.1",
+    "@docsearch/css": "5.0.5",
+    "@docsearch/js": "5.0.5",
     "@fontsource/inria-sans": "5.3.0",
     "@fontsource/roboto-mono": "5.3.0",
     "@fortawesome/fontawesome-free": "7.3.1",
-    "alpinejs": "3.16.1",
+    "alpinejs": "3.17.2",
     "bulma": "1.0.4",
-    "hugo-extended": "0.164.0",
-    "netlify-cli": "27.1.1",
-    "sass-embedded": "1.102.0"
+    "hugo-extended": "0.165.0",
+    "netlify-cli": "27.5.2",
+    "sass-embedded": "1.104.0"
   }
 }

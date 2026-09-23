@@ -6,7 +6,7 @@ weight = 100
 
 ## Scaler Schema
 
-KEDA provides a separate scaler's schema for third-party usage ([scalers-metadata-schema.yaml](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-metadata-schema.yaml)/[scalers-metadata-schema.json](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-metadata-schema.json)). The schema file will keep updating according to the scaler's refactor.
+KEDA provides a separate scaler's schema for third-party usage ([scalers-schema.yaml](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-schema.yaml)/[scalers-schema.json](https://github.com/kedacore/keda/blob/main/schema/generated/scalers-schema.json)). The schema file will keep updating according to the scaler's refactor.
 
 *Notice: The schema file still lacks some of the scalers. It will be completed once all scalers are refactored to use the new declarative scaler config.
 
