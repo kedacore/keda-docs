@@ -96,6 +96,11 @@ spec:
   minReplicaCount: 0 # 0 enables scale-to-zero
   maxReplicaCount: 10
   cooldownPeriod: 300 # seconds before scaling to zero after traffic stops
+  triggers:
+    - type: external-push
+      metadata:
+        scalerAddress: keda-add-ons-http-external-scaler.keda:9090
+        interceptorRoute: my-app
 ```
 
 Setting `minReplicaCount: 0` enables scale-to-zero.
