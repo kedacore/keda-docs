@@ -43,6 +43,8 @@ For Vault file tokens, KEDA requires a service-account subject, valid lifetime w
 
 All configured audiences, including a custom `hashiCorpVault.kubernetesAuth.audience` and minting mappings, enter the same global approval set for file tokens. Do not repeat these audiences in `additionalAllowedAudiences`. A TokenRequest instead requests only the audience mapped to that exact service account. There is no TA/CTA audience override and no implicit minting default. Use separate, least-privilege service accounts if minting needs different audiences.
 
+For receivers requiring an API audience, see [Datadog Audience Compatibility](../../scalers/datadog/#datadog-audience-compatibility) and its security caveat.
+
 The allowed set is not a per-tenant or per-destination permission system. A token approved for one service can still be forwarded through another permitted authentication path if resource and credential access allow it. Keep least-privilege service accounts, receiver authorization, [RBAC restrictions](../cluster/#restrict-custom-resources), and admission or network policies where isolation is needed. This policy does not inspect arbitrary Secret values, other file-based credentials, or cloud SDK credentials.
 
 ### Vault token files

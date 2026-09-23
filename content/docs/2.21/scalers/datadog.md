@@ -117,21 +117,110 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 **Bearer authentication:**
 - `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs permission to read the required `external.metrics.k8s.io` resources. Short-lived `boundServiceAccountToken` credentials require a compatible receiver; see the audience compatibility warning below before using this source with KEDA 2.21+.
 
-### Example
+### Audience compatibility
 
-**Audience compatibility:** the unmodified Datadog Cluster Agent **7.83.2**
-external-metrics server does not expose a custom token audience setting. Adding
-an audience mapping in KEDA does not make that receiver accept it. Check later
+The unmodified Datadog Cluster Agent **7.83.2** external-metrics server does not
+expose a custom token audience setting. Adding a dedicated non-API audience
+mapping in KEDA does not make that receiver accept it. Check later
 versions for explicit support; see [BSAT receiver requirements](../../authentication-providers/bound-service-account-token/#receiver-requirements)
 for the implementation references.
 
-The example below requires either a receiver that accepts a dedicated non-API
-audience with a matching KEDA mapping, or explicit acceptance of the operator-wide
-insecure [legacy mode](../../migration/#temporary-legacy-compatibility).
+Prefer a receiver that accepts a dedicated non-API audience with a matching KEDA
+mapping. For versions without this support, the explicit compatibility option
+below keeps audience enforcement enabled instead of switching to global legacy mode.
 Alternatively, use the REST API method below with API/app keys and a Datadog query.
 That is not a drop-in replacement for the DatadogMetric lookup: review the query,
 scaling results, and API rate limits. Do not replace BSAT with a long-lived
 API-valid token Secret or approve an API audience as a secure migration.
+
+### Datadog Audience Compatibility
+
+A dedicated, minimally privileged service account can use a short-lived BSAT
+with an audience accepted by kube-apiserver. This limits the permissions of
+**that token** if it leaks, but does not prevent API replay. A service account
+with no effective metrics permissions will authenticate and then fail Datadog's
+SubjectAccessReview authorization. It needs permission to read the requested
+`external.metrics.k8s.io` metric, not permission to read Secrets or manage workloads.
+
+Approving the Kubernetes API audience also permits Vault file tokens with that audience,
+so a tenant-controlled Vault endpoint could receive the operator's own, more privileged
+API token despite the dedicated Datadog service account. You can optionally restrict
+Vault destinations with the [outbound policy](../../operate/security/#restrict-vault-destinations).
+See [HashiCorp Vault configuration](../../authentication-providers/hashicorp-vault/)
+for token and audience settings.
+
+For the `default/nginx-hits` DatadogMetric used below, create a dedicated service
+account in the TA's namespace and grant access only to that external metric:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: my-project
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: datadog-nginx-hits-reader
+  namespace: default
+rules:
+  - apiGroups: ["external.metrics.k8s.io"]
+    resources: ["datadogmetric@default:nginx-hits"]
+    verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datadog-nginx-hits-reader
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: my-service-account
+    namespace: my-project
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: datadog-nginx-hits-reader
+```
+
+The external-metrics request lists values for the named metric, hence `list`.
+The Role's namespace follows `datadogMetricNamespace`; its resource follows
+`datadogmetric@<namespace>:<name>`. Adjust both for other metrics. This grants no
+access to the DatadogMetric CR itself. Create the namespaces separately.
+
+These values use the default `enforce-audience` mode. Merge them with your
+installation settings. Replace the
+audience placeholder with an actual audience accepted by your Kubernetes API
+server; the literal string `kube-apiserver` is not a portable default.
+
+```yaml
+permissions:
+  operator:
+    restrict:
+      allowAllServiceAccountTokenCreation: false
+      serviceAccountTokenCreationRoles:
+        - name: my-service-account
+          namespace: my-project
+          audience: "<your-cluster-api-audience>"
+```
+
+The chart grants the operator permission to mint for this account, separately
+from the account's metric-reading Role. The TA below continues to use
+`boundServiceAccountToken`; no static token Secret is needed. Disabling automatic
+mounting on the account does not prevent TokenRequest.
+
+Review all effective permissions, including bindings to service-account groups.
+Even an account with no direct bindings normally inherits API discovery and
+self-information permissions through `system:authenticated`; it is not an
+identity that can obtain no information. See [default Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#api-discovery-roles).
+Protect this account and its bindings from untrusted changes, scope all other
+minting permissions, verify the Cluster Agent's TLS certificate, and test metric
+access and scaling. This option retains enforcement but accepts API-valid tokens;
+it is not equivalent to dedicated-audience protection.
+
+### Example
 
 ```yaml
 apiVersion: v1
@@ -153,7 +242,7 @@ metadata:
 spec:
   boundServiceAccountToken:
     - parameter: token
-      serviceAccountName: my-service-account # Required: service account with permissions to get, watch, list external.metrics.k8s.io
+      serviceAccountName: my-service-account # Requires permission to read the requested external metric.
   configMapTargetRef:
     - parameter: datadogNamespace
       name: datadog-config
