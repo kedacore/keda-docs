@@ -115,19 +115,23 @@ You can use `TriggerAuthentication` CRD to configure the authentication. Specify
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: true, false, Default: false, Optional)
 
 **Bearer authentication:**
-- `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs to have permissions to `get`, `watch`, and `list` all `external.metrics.k8s.io` resources. Instead of manually creating long-lived tokens stored in Secrets, it is recommended to use [Bound Service Account Tokens](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#bound-service-account-tokens) via the `boundServiceAccountToken` parameter, which are more secure as they are time-bound and automatically rotated.
+- `token` - The ServiceAccount token to connect to the Datadog Cluster Agent. The service account needs permission to read the required `external.metrics.k8s.io` resources. Short-lived `boundServiceAccountToken` credentials require a compatible receiver; see the audience compatibility warning below before using this source with KEDA 2.21+.
 
 ### Example
 
-When using `boundServiceAccountToken` with KEDA 2.21+, first configure an audience
-mapping for the service account and verify that the deployed Cluster Agent's
-external-metrics endpoint accepts that audience. A KEDA audience setting alone
-does not configure the receiver. See [BSAT receiver requirements](../../authentication-providers/bound-service-account-token/#receiver-requirements)
-and the [2.21 migration guide](../../migration/#service-account-token-audiences).
-If the receiver cannot accept a dedicated non-API audience, use a supported
-alternative such as the REST API method below, add receiver support, or explicitly
-accept the operator-wide legacy risk. This requirement does not affect Datadog
-REST API/app-key authentication.
+**Audience compatibility:** the unmodified Datadog Cluster Agent **7.83.2**
+external-metrics server does not expose a custom token audience setting. Adding
+an audience mapping in KEDA does not make that receiver accept it. Check later
+versions for explicit support; see [BSAT receiver requirements](../../authentication-providers/bound-service-account-token/#receiver-requirements)
+for the implementation references.
+
+The example below requires either a receiver that accepts a dedicated non-API
+audience with a matching KEDA mapping, or explicit acceptance of the operator-wide
+insecure [legacy mode](../../migration/#temporary-legacy-compatibility).
+Alternatively, use the REST API method below with API/app keys and a Datadog query.
+That is not a drop-in replacement for the DatadogMetric lookup: review the query,
+scaling results, and API rate limits. Do not replace BSAT with a long-lived
+API-valid token Secret or approve an API audience as a secure migration.
 
 ```yaml
 apiVersion: v1

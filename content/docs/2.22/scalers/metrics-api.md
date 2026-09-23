@@ -85,6 +85,10 @@ requires an operator-configured audience and a receiver that accepts it. See
 [BSAT configuration and receiver requirements](../../authentication-providers/bound-service-account-token/).
 Other credential sources are unchanged by this audience policy.
 
+Configure the receiving application's token verifier, or its authentication
+proxy, to accept the same audience. For TokenReview-based verification this
+requires `spec.audiences`; changing only the KEDA values is not sufficient.
+
 Metrics Scaler API supported four types of authentication - API Key based authentication, basic authentication, TLS
 authentication, and Bearer authentication.
 

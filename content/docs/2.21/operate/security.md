@@ -20,12 +20,11 @@ See the [2.21 migration guide](../../migration/#service-account-token-audiences)
 | Separately mounted token files | `operator.serviceAccountTokens.additionalAllowedAudiences` | Approves audiences only; creates no volumes or minting mappings |
 | Vault `credential.serviceAccountName` or generic `boundServiceAccountToken` | `permissions.operator.restrict.serviceAccountTokenCreationRoles[].audience` | Configures the audience for an exact namespace/service-account pair and creates scoped token-creation RBAC |
 
-For example:
+Prefer native chart values, for example (audience enforcement is the default):
 
 ```yaml
 operator:
   serviceAccountTokens:
-    mode: enforce-audience
     additionalAllowedAudiences: []
 hashiCorpVault:
   kubernetesAuth:
@@ -42,7 +41,7 @@ permissions:
 
 For Vault file tokens, KEDA requires a service-account subject, valid lifetime with an expiry, and a nonempty audience claim. **Every** audience in the token must be approved. Adding one approved audience to a token that also contains an unapproved audience does not make it acceptable. This is an outgoing-credential check, not signature verification; the recipient must still authenticate the token.
 
-All configured audiences, including minting mappings, enter the same global approval set for file tokens. A TokenRequest instead requests only the audience mapped to that exact service account. There is no TA/CTA audience override and no implicit minting default. Use separate service accounts if minting needs different audiences.
+All configured audiences, including a custom `hashiCorpVault.kubernetesAuth.audience` and minting mappings, enter the same global approval set for file tokens. Do not repeat these audiences in `additionalAllowedAudiences`. A TokenRequest instead requests only the audience mapped to that exact service account. There is no TA/CTA audience override and no implicit minting default. Use separate, least-privilege service accounts if minting needs different audiences.
 
 The allowed set is not a per-tenant or per-destination permission system. A token approved for one service can still be forwarded through another permitted authentication path if resource and credential access allow it. Keep least-privilege service accounts, receiver authorization, [RBAC restrictions](../cluster/#restrict-custom-resources), and admission or network policies where isolation is needed. This policy does not inspect arbitrary Secret values, other file-based credentials, or cloud SDK credentials.
 
@@ -60,7 +59,7 @@ Vault must accept the configured login audience and use a **separate API-valid c
 
 ### Minted tokens and receivers
 
-Vault named-SA authentication and generic BSAT authentication use the same audience mapping and TokenRequest implementation. Existing token-creation RBAC is still required; the audience policy does not grant permissions by itself. Scope `create` on `serviceaccounts/token` to named service accounts in the required namespaces. Kubernetes RBAC does not constrain the audience in a TokenRequest.
+Vault named-SA authentication and generic BSAT authentication use the same audience mapping and TokenRequest implementation. Existing token-creation RBAC is still required; the audience policy does not grant permissions by itself. Scope `create` on `serviceaccounts/token` to named service accounts in the required namespaces. `allowAllServiceAccountTokenCreation: true` instead grants this permission for any service account in any namespace, but does not create audience mappings or bypass enforcement. Kubernetes RBAC does not constrain the audience in a TokenRequest.
 
 Generic BSATs use the TA namespace, or the configured cluster-object namespace for a CTA. Vault `credential.serviceAccountName` uses the referencing ScaledObject/ScaledJob namespace, including when the Vault configuration is in a CTA. Configure mappings for the namespace actually used by that path.
 

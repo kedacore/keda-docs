@@ -20,14 +20,11 @@ For a TriggerAuthentication, the service account is resolved in that authenticat
 
 ## Audience and permissions
 
-Starting in KEDA 2.21, token minting requires an operator-configured audience mapping **as well as** RBAC. The TA/CTA cannot select its audience. Use a dedicated audience accepted by the receiver but not by your Kubernetes API server.
+Starting in KEDA 2.21, token minting requires an operator-configured audience mapping **as well as** RBAC by default. The TA/CTA cannot select its audience. Use a dedicated service account and a receiver-specific audience not accepted by your Kubernetes API server, granting only the permissions the receiver needs. See [Kubernetes service account guidance](https://kubernetes.io/docs/concepts/security/service-accounts/).
 
-With the upstream chart:
+Prefer the native chart values below. These examples use the default `operator.serviceAccountTokens.mode: enforce-audience`; if you previously selected `legacy`, change it back when the receiver is ready.
 
 ```yaml
-operator:
-  serviceAccountTokens:
-    mode: enforce-audience
 permissions:
   operator:
     restrict:
@@ -37,32 +34,19 @@ permissions:
           audience: metrics-api
 ```
 
-Create `apps/metrics-reader` separately before the Helm upgrade. This value creates a Role/RoleBinding allowing the operator to `create` `serviceaccounts/token` for only that named service account, and supplies its exact audience mapping through `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES`. It does not create a service account or grant that account permission to read metrics.
+Create the namespace and service account `apps/metrics-reader` separately. The chart creates a Role/RoleBinding allowing the operator to `create` `serviceaccounts/token` for that named service account and supplies its audience mapping through `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES`. It does not create the service account or grant it permission to read metrics.
 
 The receiver must separately authorize the service account for its operation. For example, a receiver using SubjectAccessReview may require Kubernetes RBAC to read its metrics resource or URL.
 
-An entry without `audience` renders the existing RBAC only; token minting fails in enforce mode unless a mapping is supplied separately. `allowAllServiceAccountTokenCreation` does not bypass the audience policy and grants much broader permissions than needed here. Do not enable it as a migration workaround.
+An entry without `audience` renders the existing RBAC only; token minting fails in enforce mode unless a mapping is supplied separately.
+
+`permissions.operator.restrict.allowAllServiceAccountTokenCreation: true` grants token-creation RBAC for **any service account in any namespace**. Enforce mode still requires an exact audience mapping for each service account; `additionalAllowedAudiences` alone is not a minting mapping. Do not enable broad token-creation RBAC as a migration workaround.
 
 Only one audience mapping is permitted for each namespace/service-account pair. Each TokenRequest uses that audience, not the union of all configured audiences. Use separate service accounts for receivers that need different audiences. `hashiCorpVault.kubernetesAuth.audience` configures an operator-Pod token projection, not a minting default.
 
-For externally managed RBAC, you can instead supply an exact mapping directly through the environment. Clear the chart's default Vault audience and any other native audience settings when using this alternative:
+For externally managed RBAC, the low-level `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES` environment variable can supply the mapping instead. Use the complete [runtime configuration example](../../operate/security/#runtime-configuration): raw environment configuration cannot be combined with native audience values, including the chart's default Vault audience. It creates no RBAC or volumes. The minimum minting permission is a namespaced Role with `resources: ["serviceaccounts/token"]`, `verbs: ["create"]`, and `resourceNames: ["metrics-reader"]`, bound to the operator's service account.
 
-```yaml
-hashiCorpVault:
-  kubernetesAuth:
-    audience: ""
-operator:
-  serviceAccountTokens:
-    additionalAllowedAudiences: []
-env:
-  - name: KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES
-    value: |
-      - namespace: apps
-        serviceAccountName: metrics-reader
-        audience: metrics-api
-```
-
-This example creates neither RBAC nor a Vault token projection. The minimum token-creation permission remains a namespaced Role with `resources: ["serviceaccounts/token"]`, `verbs: ["create"]`, and `resourceNames: ["metrics-reader"]`, bound to the operator's service account. Review the [runtime configuration](../../operate/security/#runtime-configuration) for existing native audience settings, and the [global audience policy](../../operate/security/#approved-audiences-and-token-minting): minting entries also approve their audiences for Vault file tokens and are not per-scaler or per-destination isolation.
+Minting entries also approve their audiences for Vault file tokens. They are not per-scaler or per-destination isolation; see the [global audience policy](../../operate/security/#approved-audiences-and-token-minting).
 
 ## Receiver requirements
 
@@ -79,11 +63,15 @@ spec:
   token: "<token received from KEDA>"
 ```
 
-The receiver must require `status.authenticated: true` and check that `status.audiences` includes `metrics-api`, then apply its normal authorization checks. It submits TokenReview using its **own API-valid credential**, not the caller's token. If `spec.audiences` is omitted, TokenReview defaults to the Kubernetes API audience. See [Kubernetes authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#webhook-token-authentication).
+The receiver must require `status.authenticated: true` and check that `status.audiences` includes `metrics-api`, then apply its normal authorization checks. It submits TokenReview using its **own API-valid credential**, not the caller's token. If `spec.audiences` is omitted, TokenReview defaults to the Kubernetes API audience. See the [TokenReview API](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/token-review-v1/).
 
 This applies to any scaler supplied with a BSAT, including metrics-api, Prometheus, Loki, and the Datadog Cluster Agent path. Receivers using other verification methods must likewise accept and validate the selected audience. Ordinary API keys, OAuth access tokens, and other non-BSAT credentials are not changed by this feature.
 
-For Datadog Cluster Agent, verify audience support in the **external-metrics endpoint** of the deployed version before changing KEDA. Do not assume a Datadog chart value or a generic API-server flag exposes that setting. If the receiver cannot accept a dedicated audience, KEDA configuration alone cannot complete the secure migration. Options include adding receiver support, using [Datadog REST API authentication](../../scalers/datadog/), or explicitly accepting temporary legacy behavior.
+For an endpoint protected by [kube-rbac-proxy](https://github.com/kube-rbac-proxy/kube-rbac-proxy#usage), configure the proxy's `--auth-token-audiences=metrics-api` to match this example. Keep the proxy's TokenReview/SubjectAccessReview permissions and the caller's authorization rules. Prometheus and Loki bearer-token deployments need audience support in their authentication proxy or gateway, not just a KEDA value.
+
+**Datadog Cluster Agent compatibility:** the unmodified Cluster Agent **7.83.2** external-metrics server uses Kubernetes delegated authentication without a configurable token audience. Its configuration passes flags to the metrics adapter, but that adapter does not expose an `api-audiences` option. A dedicated non-API audience therefore does not work merely by adding a KEDA mapping. See the [Datadog server](https://github.com/DataDog/datadog-agent/blob/7.83.2/cmd/cluster-agent/custommetrics/server.go) and its [delegated-authentication options](https://github.com/kubernetes/apiserver/blob/v0.35.5/pkg/server/options/authentication.go). Check newer versions for explicit receiver support before choosing a BSAT migration.
+
+For that integration, use [Datadog REST API authentication](../../scalers/datadog/), obtain receiver support, or explicitly accept temporary operator-wide legacy behavior. REST authentication uses API/app keys and a Datadog query instead of the Cluster Agent's DatadogMetric lookup, so review query results and API rate limits. Do not substitute a long-lived API-valid token Secret or approve the Kubernetes API audience and treat that as a secure migration.
 
 ## Upgrading existing integrations
 

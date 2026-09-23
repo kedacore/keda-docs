@@ -44,6 +44,11 @@ requires an operator-configured audience and a receiver that accepts it. See
 [BSAT configuration and receiver requirements](../../authentication-providers/bound-service-account-token/).
 Other credential sources are unchanged by this audience policy.
 
+For BSAT bearer authentication, configure the matching audience in Loki's
+authentication proxy or gateway. Loki's `auth_enabled` and `X-Scope-OrgID`
+settings select tenant behavior, not Kubernetes token audience validation;
+see [Loki authentication](https://grafana.com/docs/loki/latest/operations/authentication/).
+
 Loki doesn't provide any kind of authentication out of the box. However, most commonly Loki is configured along with a Basic Auth or Bearer Auth, which are the only valid options for authentication here.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:

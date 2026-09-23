@@ -38,7 +38,7 @@ hashiCorpVault:
     projectedTokenMountPath: /var/run/secrets/keda-vault
 ```
 
-The chart projects a rotating token for the operator Pod's service account, leaves its API token intact, and adds no token-creation RBAC. Configure the Vault role to accept `vault`, or change the chart audience to match a dedicated audience already accepted by your Vault role. The chart does not update Vault itself.
+The chart projects a rotating token for the operator Pod's service account, leaves its API token intact, and adds no token-creation RBAC. Configure the Vault role to accept `vault`, or change the chart audience to match a dedicated audience already accepted by your Vault role. This audience is automatically approved; a custom value does not need a duplicate `additionalAllowedAudiences` entry. The chart does not update Vault itself.
 
 In each affected TA/CTA, omit the **entire** `credential` object to select the new default file, or explicitly set `credential.serviceAccount: /var/run/secrets/keda-vault/token`. Leaving the original API-token path or an empty `credential: {}` is not equivalent to selecting the default.
 
@@ -49,7 +49,6 @@ Keep existing mounts and paths if their tokens already have appropriate audience
 ```yaml
 operator:
   serviceAccountTokens:
-    mode: enforce-audience
     additionalAllowedAudiences:
       - vault-a
       - vault-b
@@ -59,12 +58,9 @@ Each actual token must have an expiry and only approved audiences. A projection 
 
 ### Named service accounts and BSAT
 
-Configure an exact namespace/name mapping for each minted token:
+Configure an exact namespace/name mapping for each minted token. Use a dedicated service account with only the permissions each receiver needs. These values rely on the default `enforce-audience` mode; switch back from `legacy` when the receiver is ready:
 
 ```yaml
-operator:
-  serviceAccountTokens:
-    mode: enforce-audience
 permissions:
   operator:
     restrict:
@@ -77,13 +73,15 @@ permissions:
           audience: metrics-api
 ```
 
-Create these namespaces and service accounts separately before the Helm upgrade. The chart creates scoped Roles/RoleBindings and audience mappings, not the service accounts themselves. An entry without `audience` grants RBAC only and is insufficient for minting in enforce mode.
+Create these namespaces and service accounts separately before the Helm upgrade. The chart creates scoped Roles/RoleBindings and audience mappings, not the service accounts themselves. An entry without `audience` grants RBAC only and is insufficient for minting in enforce mode. Existing users of `allowAllServiceAccountTokenCreation: true` also need exact audience mappings; an approval in `additionalAllowedAudiences` is not enough.
 
 Vault's `credential.serviceAccountName` selects a service account in the referencing ScaledObject/ScaledJob namespace. Generic BSAT in a TA uses the TA namespace; in a CTA it uses `KEDA_CLUSTER_OBJECT_NAMESPACE`, defaulting to the operator's namespace. These namespace rules are unchanged.
 
 `hashiCorpVault.kubernetesAuth.audience` does **not** supply a minting default. Each TokenRequest uses its exact service-account mapping. Audience selection is operator configuration, not a TA/CTA setting.
 
-A TokenReview-based receiver must request the dedicated audience, verify it in the response, and use its own API credential for the review. For Datadog Cluster Agent, verify the deployed version's external-metrics authentication supports this before selecting a custom audience. A KEDA Helm value cannot add receiver support. If it does not, use a supported alternative such as Datadog REST authentication, obtain receiver support, or explicitly accept temporary legacy behavior. See [BSAT receiver requirements](../authentication-providers/bound-service-account-token/#receiver-requirements).
+A TokenReview-based receiver must request the dedicated audience, verify it in the response, and use its own API credential for the review. For a Prometheus, Loki, or metrics-api endpoint behind kube-rbac-proxy, configure its `--auth-token-audiences` with the matching audience and retain authorization checks.
+
+**Datadog Cluster Agent 7.83.2 does not expose this audience configuration in its external-metrics server.** Adding only a KEDA audience mapping will not make that BSAT path work. Use Datadog REST API/app-key authentication, obtain receiver support, or explicitly accept temporary legacy behavior. A REST migration also changes the query configuration and API usage; test it rather than only switching `useClusterAgentProxy`. See [BSAT receiver requirements](../authentication-providers/bound-service-account-token/#receiver-requirements) for the implementation references and guidance for other versions.
 
 ### Temporary legacy compatibility
 
