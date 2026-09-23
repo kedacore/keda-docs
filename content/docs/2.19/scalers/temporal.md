@@ -30,7 +30,7 @@ triggers:
 
 **Parameter list:**
 
-- `endpoint` - This parameter specifies the URL of the Temporal gRPC service. You need to provide the service address in the format `<hostname>:<port>`. (Required)
+- `endpoint` - This parameter specifies the URL of the Temporal gRPC service. You need to provide the service address in the format `<hostname>:<port>`. **Temporal Cloud endpoints differ by authentication method:** API Key auth uses the regional endpoint `<region>.<provider>.api.temporal.io:7233` (e.g., `us-east-1.aws.api.temporal.io:7233`); mTLS auth uses the namespace endpoint `<namespace>.<account>.tmprl.cloud:7233` (e.g., `my-ns.a1b2c.tmprl.cloud:7233`).
 - `endpointFromEnv` - Defines the endpoint, similar to the `endpoint` parameter, but the value is read from an environment variable. (Optional)
 - `namespace` - The namespace of the temporal service. (Default:`default`, Optional)
 - `activationTargetQueueSize` - This sets the target value for activating the scaler. More information about activation thresholds can be found  [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
@@ -63,7 +63,13 @@ Temporal supports `apiKey` and `mTLS` for authentication. You can use the follow
 - `key` - Key for client authentication. (Optional)
 - `keyPassword` - If set the keyPassword is used to decrypt the provided key. (Optional)
 
-### Example
+> **Temporal Cloud Authentication:**
+> - **API Key**: Set `apiKey` and use the regional endpoint (`<region>.<provider>.api.temporal.io:7233`). The SDK handles TLS automatically — no certificates needed. For HA namespaces, use the namespace endpoint (`<namespace>.<account>.tmprl.cloud:7233`) instead.
+> - **mTLS**: Set `cert`, `key`, (optionally `ca`) and use the namespace endpoint (`<namespace>.<account>.tmprl.cloud:7233`). Client certificates are required.
+
+### Examples
+
+#### API Key Authentication
 
 ```yaml
 apiVersion: v1
@@ -73,7 +79,7 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  apiKey: TlJBSy0xMjM0NTY3ODkwMTIzNDU2Nwo= # base64 encoding of the new relic api key NRAK-12345678901234567
+  apiKey: TlJBSy0xMjM0NTY3ODkwMTIzNDU2Nwo= # base64 encoded API key
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
@@ -110,7 +116,66 @@ spec:
       taskQueue: "workflow_with_single_noop_activity:test"
       targetQueueSize: "2"
       activationTargetQueueSize: "0"
-      endpoint: temporal-frontend.temporal.svc.cluster.local:7233
+      # Self-hosted: temporal-frontend.temporal.svc.cluster.local:7233
+      # Temporal Cloud (API key): <region>.<provider>.api.temporal.io:7233
+      endpoint: us-east-1.aws.api.temporal.io:7233
     authenticationRef:
       name: keda-trigger-auth-temporal
+```
+
+#### mTLS Authentication
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: temporal-mtls-secret
+  namespace: default
+type: Opaque
+data:
+  cert: <base64 encoded client certificate>
+  key: <base64 encoded client private key>
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-temporal-mtls
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: cert
+    name: temporal-mtls-secret
+    key: cert
+  - parameter: key
+    name: temporal-mtls-secret
+    key: key
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: workload-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: workload-scaledobject
+  pollingInterval: 5
+  cooldownPeriod:  10
+  minReplicaCount: 0
+  maxReplicaCount: 5
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 10
+  triggers:
+  - type: temporal
+    metadata:
+      namespace: my-ns
+      taskQueue: "workflow_with_single_noop_activity:test"
+      targetQueueSize: "2"
+      activationTargetQueueSize: "0"
+      # Temporal Cloud (mTLS): <namespace>.<account>.tmprl.cloud:7233
+      endpoint: my-ns.a1b2c.tmprl.cloud:7233
+    authenticationRef:
+      name: keda-trigger-auth-temporal-mtls
 ```
