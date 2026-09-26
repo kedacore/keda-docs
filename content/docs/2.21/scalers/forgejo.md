@@ -168,7 +168,7 @@ data:
       proxy_port: 0
       # The external cache server URL. Valid only when enable is true.
       # If it's specified, it will be used to set the ACTIONS_CACHE_URL environment variable. The URL should generally end with "/".
-      # Otherwise it will be set to the the URL of the internal cache server.
+      # Otherwise it will be set to the URL of the internal cache server.
       external_server: ""
       # The shared cache secret. When communicating with a cache server, the runner uses this secret to verify the authenticity of the cache requests.
       # When using an external cache server it is required to set the same secret for the runner and the cache server.
