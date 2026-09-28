@@ -167,8 +167,6 @@ When using the `query` parameter (DQL-based queries), your platform token must h
 
 > **Note:** This is different from `metricSelector`, which only requires `metrics.read`.
 
-If a successful DQL response contains a Grail notification with `notificationType: MISSING_BUCKET_PERMISSIONS`, KEDA treats the query as failed instead of accepting the returned metric value. This allows the configured fallback behavior to take effect.
-
 #### Testing Your Query with Dynatrace Swagger UI
 
 You can test your DQL query directly as your token using the Dynatrace Swagger UI before configuring KEDA:
