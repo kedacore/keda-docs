@@ -41,6 +41,8 @@ The KEDA Operator exposes Prometheus metrics which can be scraped on port `8080`
 
 > Note: When you deploy the KEDA Operator without any scalers deployed, the only metric you will see is `keda_build_info`. As you deploy scalers, you will start to see some of the metrics listed above but it is dependant on the types of scalers you have deployed.
 
+By default, `keda_scaler_http_request_duration_seconds` is emitted with low-cardinality labels such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` labels with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
+
 The external scaler gRPC client metrics include the `scaler`, `grpc_service`, `grpc_method`, and `grpc_type` labels. Completed calls also include `grpc_code`. When `--enable-high-cardinality-metrics-labels=true` is configured, they additionally include `namespace`, `scaled_resource`, `trigger_name`, and `metric_name`.
 
 The message counters follow the upstream Prometheus gRPC middleware semantics: they include unary calls and count attempts, including errors and the final stream receive that returns EOF. For streaming calls, completion and duration are recorded when the stream ends; duration measures the full stream lifetime. The duration histogram uses the default Prometheus buckets (5 milliseconds through 10 seconds, plus the overflow bucket).
@@ -63,6 +65,9 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 - `keda_internal_metricsservice_grpc_client_handling_seconds` - Histogram of response latency (seconds) of the gRPC until it is finished by the application.
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 - Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
+
+The `keda_internal_metricsservice_grpc_client_*` metrics are emitted by the KEDA Metrics Adapter and are not controlled by `--enable-high-cardinality-metrics-labels`.
+
 
 ## Premade Grafana dashboard
 
