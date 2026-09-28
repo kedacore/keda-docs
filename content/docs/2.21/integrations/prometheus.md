@@ -66,7 +66,8 @@ The KEDA Metrics Adapter exposes Prometheus metrics which can be scraped on port
 - Metrics exposed by the `Operator SDK` framework as explained [here](https://sdk.operatorframework.io/docs/building-operators/golang/advanced-topics/#metrics).
 - Metrics exposed (prepended with `apiserver_`) by [Kubernetes API Server](https://kubernetes.io/docs/reference/instrumentation/metrics/)
 
-The histogram `keda_internal_metricsservice_grpc_client_handling_seconds` is emitted by the KEDA Metrics Adapter and is not controlled by `--enable-high-cardinality-metrics-labels`.
+The `keda_internal_metricsservice_grpc_client_*` metrics are emitted by the KEDA Metrics Adapter and are not controlled by `--enable-high-cardinality-metrics-labels`.
+
 
 ## Premade Grafana dashboard
 
