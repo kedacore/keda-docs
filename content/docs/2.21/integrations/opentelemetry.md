@@ -58,6 +58,8 @@ The external scaler gRPC client metrics include the `scaler`, `rpc.system.name`,
 
 The stream message counter records payload events with `rpc.message.type` set to `SENT` or `RECEIVED`; it excludes unary messages and failed receives, including EOF. For streaming calls, completion and duration are recorded when the stream ends; duration measures the full stream lifetime.
 
+By default, `keda.scaler.http.request.duration.seconds` is emitted with low-cardinality attributes such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` attributes with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
+
 #### Deprecated metrics
 
 The following metrics are exposed as well, but are deprecated and will be removed in KEDA v2.16.
