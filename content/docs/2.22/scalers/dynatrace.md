@@ -56,8 +56,6 @@ triggers:
 
 > NOTE: Modifying the values of `queryPollingWait` or `queryPollingTries` can increase the response time and the HPA Controller can register timeouts because of this. If your query requires longer times, you should evaluate options like [caching metrics (`useCachedMetrics`)](./../reference/scaledobject-spec.md#triggers) in addition to these parameters.
 
-If a successful DQL response contains a Grail notification with `notificationType: MISSING_BUCKET_PERMISSIONS`, KEDA treats the query as failed instead of accepting the returned metric value. This allows the configured fallback behavior to take effect.
-
 ### Authentication Parameters
 
 You can use `TriggerAuthentication` CRD to configure authentication for the `host` and `token` parameters.
