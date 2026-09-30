@@ -29,7 +29,7 @@ triggers:
 - `projectId` - The GCP project that owns the Spanner instance.
 - `instanceId` - The Spanner instance ID.
 - `databaseId` - The Spanner database ID.
-- `query` - A SQL statement. Only the first column of the first row is used; it must be a non-`NULL` `INT64`. When the query matches no rows the value is treated as `0`. Use `COALESCE(..., 0)` for aggregates (e.g. `SUM`, `MAX`) that may return `NULL`. Note that `AVG` returns `FLOAT64`, so cast it to `INT64` explicitly (e.g. `CAST(AVG(...) AS INT64)`) rather than relying on `COALESCE` alone.
+- `query` - A SQL statement. Only the first column of the first row is used; it must be a non-`NULL` `INT64`. When the query matches no rows the value is treated as `0`. Use `COALESCE(..., 0)` for aggregates (e.g. `SUM`, `MAX`) that may return `NULL`. `AVG` returns `FLOAT64`, so cast it to `INT64` explicitly and still wrap it in `COALESCE` (e.g. `COALESCE(CAST(AVG(...) AS INT64), 0)`), since the cast itself returns `NULL` over an empty set.
 - `targetValue` - Average target value to trigger scaling actions. Must be greater than `0`. (Default: `5`, Optional)
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
