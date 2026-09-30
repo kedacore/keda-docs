@@ -58,6 +58,8 @@ The scaler supports incremental change feed processor leases written by the .NET
 
 For v1 leases, an exact physical-range match is routed by the current physical range ID. A lease covering a subrange of one physical range also uses EPK filtering headers. An interval overlapping multiple physical ranges follows the `410/1002` [split-recovery path](#partition-splits), rather than being sent as a physical range ID. Java `ChangeFeedStateV1` continuation state is decoded to extract the nested server ETag; the Base64-encoded client state is not sent as the server continuation token.
 
+Java v1 state with a null nested continuation token or no composite continuation is valid but does not itself represent a checkpoint. Until a checkpoint exists, the scaler preserves the state's `StartFrom` semantics: `BEGINNING` and `LEGACY_CHECKPOINT` add no starting-position headers, `NOW` sends `If-None-Match: *`, `POINT_IN_TIME` sends `If-Modified-Since`, and `LEASE` uses its configured ETag. A nested checkpoint overrides the starting ETag; the `POINT_IN_TIME` time header is retained even with a subsequent checkpoint. Malformed `StartFrom` state is an error.
+
 Full-fidelity change feed and other unsupported state formats are not supported and fail where detected. Malformed lease ranges or continuation state are errors, not leases to silently skip.
 
 ### Authentication Parameters
@@ -126,7 +128,7 @@ Reading the change feed is non-destructive: it does not change processor checkpo
 
 #### Default lag-based scaling
 
-When `maxActiveLeasesPerReplica` is omitted and `enableHighAvailability` is `false`, existing scaling behavior is unchanged. A lease with estimated lag greater than zero is active. For the default scaling cap only, never-checkpointed active leases are collapsed to one bootstrap lease instead of being counted individually. Let `cappedActiveLeases` denote this adjusted count. The scaler publishes:
+When `maxActiveLeasesPerReplica` is omitted and `enableHighAvailability` is `false`, existing scaling behavior is unchanged. A lease with estimated lag greater than zero is active. For the default scaling cap only, never-checkpointed active leases are collapsed to one bootstrap lease instead of being counted individually. Checkpoint presence is determined from the actual checkpoint, not merely a nonempty Java serialized state wrapper. Let `cappedActiveLeases` denote this adjusted count. The scaler publishes:
 
 `min(totalLag, cappedActiveLeases * changeFeedLagThreshold)`
 
