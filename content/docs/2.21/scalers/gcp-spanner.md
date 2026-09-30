@@ -22,7 +22,6 @@ triggers:
     targetValue: "5"                   # Optional - Default: 5
     activationValue: "0"               # Optional - Default: 0
     credentialsFromEnv: GOOGLE_APPLICATION_CREDENTIALS_JSON  # Optional
-    credentialsFromEnvFile: GOOGLE_APPLICATION_CREDENTIALS_JSON # Optional
 ```
 
 **Parameter list:**
@@ -30,7 +29,7 @@ triggers:
 - `projectId` - The GCP project that owns the Spanner instance.
 - `instanceId` - The Spanner instance ID.
 - `databaseId` - The Spanner database ID.
-- `query` - A SQL statement that returns exactly one row with one `INT64` column. When the query matches no rows the value is treated as `0`.
+- `query` - A SQL statement. Only the first column of the first row is used; it must be a non-`NULL` `INT64`. When the query matches no rows the value is treated as `0`. Use `COALESCE(..., 0)` for aggregates (e.g. `SUM`, `MAX`, `AVG`) that may return `NULL`.
 - `targetValue` - Average target value to trigger scaling actions. Must be greater than `0`. (Default: `5`, Optional)
 - `activationValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 
