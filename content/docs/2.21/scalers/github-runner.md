@@ -33,6 +33,8 @@ triggers:
       enableEtags: "{enableEtags}"
       # Optional: The target number of queued jobs to scale on
       targetWorkflowQueueLength: "1" # Default 1
+      # Optional: The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting queued jobs, defaults to 50
+      maxPages: "50" # Default 50
       # Optional: The name of the application ID from the GitHub App
       applicationID: "{applicatonID}"
       # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
@@ -52,6 +54,7 @@ triggers:
 - `matchUnlabeledJobsWithUnlabeledRunners` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `enableEtags` -  Enable etag headers to make conditional requests to the Github API. Requests do not count against your rate limit if a 304 response is returned. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLength` - The target number of queued jobs to scale on. (Optional, Default: 1)
+- `maxPages` - The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting a run's queued jobs. Must be greater than or equal to 1. (Optional, Default: 50)
 - `applicationID` - The name of the application ID from the GitHub App. (Optional, Required if installationID set)
 - `installationID` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional, Required if applicationID set)
 
@@ -68,6 +71,7 @@ the scaler will use the value from the environment variable. The environment var
 - `noDefaultLabelsFromEnv` - Not scale on default runner labels ("self-hosted", "linux", "x64"), can be either "true" or "false". (Optional)
 - `matchUnlabeledJobsWithUnlabeledRunnersFromEnv` - When enabled unlabeled jobs will not match unlabeled runners. (Values: `true`,`false`, Default: "false", Optional)
 - `targetWorkflowQueueLengthFromEnv` - The target number of queued jobs to scale on. (Optional, Default: 1)
+- `maxPagesFromEnv` - The maximum number of pages (of up to 100 jobs each) to fetch per workflow run when counting a run's queued jobs. (Optional, Default: 50)
 - `applicationIDFromEnv` - The name of the application ID from the GitHub App. (Optional) (Required if installationID set)
 - `installationIDFromEnv` - The name of the installation ID from the GitHub App once installed into Org or repo. (Optional) (Required if applicationID set)
 
@@ -126,7 +130,7 @@ GitHub Documentation on Rate Limiting [https://docs.github.com/en/rest/overview/
 | Hosted Appliance | Unlimited | No rate limits apply |
 
 Example: The GitHub API has a rate limit of standard 5000 requests per hour. By default the scaler will make 1 request per repository to get the list of workflows,
-and 1 request per queued workflow to get the list of jobs. If you have 100 repositories, and 10 queued workflows (across all those repos), the scaler will make 110 requests per scaler check (default: 30 secs). This is 3.6% of the hourly rate limit per 30 seconds.
+and 1 request per 100 jobs or fraction thereof in queued workflow to get the list of jobs. If you have 100 repositories, and 10 queued workflows (across all those repos), the scaler will make 110 requests per scaler check (default: 30 secs). This is 3.6% of the hourly rate limit per 30 seconds.
 
 Careful design of how you design your repository request layout and configure the scaler can help reduce the number of API calls. Here are some recommendations:
 
@@ -134,6 +138,8 @@ Careful design of how you design your repository request layout and configure th
 - Setting `enableEtags` to `true` can reduce the rate limit consumption, as this makes [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API by passing the Etag of the last request to the URL, if a `304: Not modified` response is returned, this will not count against the rate limit. In this case the scaler will use the results from the last query to the URL where the response was `200: Success`.
 
 The github scaler [handles rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2026-03-10#handle-rate-limit-errors-appropriately) by waiting until X-RateLimit-Reset or Retry-After times until the github API is queried when rate limited. During this time it will return the cached queue length which is updated with each successful request.
+
+To prevent excessive requests to the GitHub API when a single workflow run has a very large number of jobs, the scaler stops paginating a run's jobs after `maxPages` pages (100 jobs per page), which defaults to 50 pages (5000 jobs).
 
 **Fine-Tuning**
 
