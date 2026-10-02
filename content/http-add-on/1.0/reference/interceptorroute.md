@@ -40,14 +40,15 @@ spec:
 
 ## `spec`
 
-| Field           | Type                                                    | Required | Default | Description                                                         |
-| --------------- | ------------------------------------------------------- | -------- | ------- | ------------------------------------------------------------------- |
-| `target`        | [`TargetRef`](#targetref)                               | Yes      |         | Backend service to route traffic to.                                |
-| `rules`         | [`[]RoutingRule`](#routingrule)                         | No       |         | Routing rules that define how requests are matched to this target.  |
-| `scalingMetric` | [`ScalingMetricSpec`](#scalingmetricspec)               | Yes      |         | Metric configuration for autoscaling.                               |
-| `staticRoutes`  | [`[]StaticRoute`](#staticroute)                         | No       |         | Routes that serve a static response without triggering autoscaling. |
-| `coldStart`     | [`ColdStartSpec`](#coldstartspec)                       | No       |         | Cold start behavior when scaling from zero.                         |
-| `timeouts`      | [`InterceptorRouteTimeouts`](#interceptorroutetimeouts) | No       |         | Timeout configuration for request handling.                         |
+| Field                | Type                                                    | Required | Default | Description                                                                         |
+| -------------------- | ------------------------------------------------------- | -------- | ------- | ----------------------------------------------------------------------------------- |
+| `target`             | [`TargetRef`](#targetref)                               | Yes      |         | Backend service to route traffic to.                                                |
+| `rules`              | [`[]RoutingRule`](#routingrule)                         | No       |         | Routing rules that define how requests are matched to this target.                  |
+| `scalingMetric`      | [`ScalingMetricSpec`](#scalingmetricspec)               | Yes      |         | Metric configuration for autoscaling.                                               |
+| `staticRoutes`       | [`[]StaticRoute`](#staticroute)                         | No       |         | Routes that serve a static response without triggering autoscaling.                 |
+| `coldStart`          | [`ColdStartSpec`](#coldstartspec)                       | No       |         | Cold start behavior when scaling from zero.                                         |
+| `timeouts`           | [`InterceptorRouteTimeouts`](#interceptorroutetimeouts) | No       |         | Timeout configuration for request handling.                                         |
+| `sessionPersistence` | [`SessionPersistence`](#sessionpersistence)             | No       |         | Pins the requests of a client session to the same backend pod. Disabled when unset. |
 
 For usage guidance, see [Configure Routing Rules](../../user-guide/configure-routing/) and [Configure Scaling Metrics](../../user-guide/configure-scaling/).
 
@@ -151,12 +152,12 @@ For usage guidance, see [Configure Static Routes](../../user-guide/configure-sta
 
 Configures behavior while the target is not ready (scaling from zero).
 
-| Field                | Type                                             | Required | Default                                        | Description                                                                                                          |
-| -------------------- | ------------------------------------------------ | -------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `fallback`           | [`*ColdStartFallback`](#coldstartfallback)       | No       |                                                | Fallback service to route to when the target is scaling from zero and the readiness timeout expires.                 |
-| `placeholder`        | [`*ColdStartPlaceholder`](#coldstartplaceholder) | No       |                                                | Placeholder response to serve while the target has no ready endpoints.                                               |
+| Field                | Type                                             | Required | Default                                            | Description                                                                                                                    |
+| -------------------- | ------------------------------------------------ | -------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `fallback`           | [`*ColdStartFallback`](#coldstartfallback)       | No       |                                                    | Fallback service to route to when the target is scaling from zero and the readiness timeout expires.                           |
+| `placeholder`        | [`*ColdStartPlaceholder`](#coldstartplaceholder) | No       |                                                    | Placeholder response to serve while the target has no ready endpoints.                                                         |
 | `maxPendingRequests` | `*int32`                                         | No       | Global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | Maximum pending requests held while the backend is not ready. Minimum: 1. See [pending request limit](#pending-request-limit). |
-| `overflow`           | `string`                                         | No       | `Reject`                                       | How to handle requests arriving when the pending request limit is reached: `Reject` or `Placeholder`.                |
+| `overflow`           | `string`                                         | No       | `Reject`                                           | How to handle requests arriving when the pending request limit is reached: `Reject` or `Placeholder`.                          |
 
 **Validation:** At least one of `fallback`, `placeholder`, or `maxPendingRequests` must be set.
 When `overflow` is `Placeholder`, `placeholder` must be set.
@@ -231,6 +232,29 @@ When a field is unset, the global interceptor timeout configuration (`KEDA_HTTP_
 | `readiness`      | `*Duration` | No       | Global `KEDA_HTTP_READINESS_TIMEOUT`       | Time to wait for the backend to become ready (e.g., scale from zero). Set to `0s` to disable the dedicated readiness deadline so the full request budget is available for cold starts. When a fallback service is configured and this is `0s`, a 30s default is applied. |
 | `request`        | `*Duration` | No       | Global `KEDA_HTTP_REQUEST_TIMEOUT`         | Total time allowed for the entire request lifecycle. Set to `0s` to disable the request deadline.                                                                                                                                                                        |
 | `responseHeader` | `*Duration` | No       | Global `KEDA_HTTP_RESPONSE_HEADER_TIMEOUT` | Maximum time to wait for response headers from the backend after the request has been sent. Does not include cold-start wait time. Set to `0s` to disable the response header deadline.                                                                                  |
+
+### `SessionPersistence`
+
+Pins the requests of a client session to the same backend pod.
+Follows the semantics of Gateway API [session persistence](https://gateway-api.sigs.k8s.io/geps/gep-1619/) with a session cookie lifetime.
+When omitted, session persistence is disabled.
+Requires direct pod routing (`KEDA_HTTP_DIRECT_POD_ROUTING`, enabled by default); otherwise it has no effect.
+
+| Field             | Type                              | Required | Default | Description                                                                                                                                                                        |
+| ----------------- | --------------------------------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`            | `string`                          | Yes      |         | How the session is tracked. Allowed values: `Cookie` (a cookie managed by the interceptor).                                                                                        |
+| `absoluteTimeout` | `Duration`                        | No       |         | Maximum session age, enforced by the interceptor with second precision. Once exceeded, the next request is assigned a pod again. Minimum: `1s`. When unset, sessions don't expire. |
+| `cookie`          | [`SessionCookie`](#sessioncookie) | No       |         | Cookie configuration. Only allowed when `type` is `Cookie`.                                                                                                                        |
+
+For usage guidance, see [Configure Session Persistence](../../user-guide/configure-session-persistence/).
+
+### `SessionCookie`
+
+When set, at least one field must be specified.
+
+| Field  | Type     | Required | Default               | Description                                                                                                                                      |
+| ------ | -------- | -------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name` | `string` | No       | `keda-session-<hash>` | Name of the cookie. Must be a valid cookie name (RFC 6265 token), 1--256 characters. The default is derived from the route's namespace and name. |
 
 ## `status`
 
