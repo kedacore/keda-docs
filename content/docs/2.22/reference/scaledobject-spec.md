@@ -21,7 +21,9 @@ spec:
   scaleTargetRef:
     apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
     kind:          {kind-of-target-resource}                # Optional. Default: Deployment
-    name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
+    name:          {name-of-target-resource}                # Optional when namePrefix and/or labelSelector identify the target. Must be in the same namespace as the ScaledObject
+    namePrefix:    {name-prefix-of-target-resource}        # Optional. Matches object names by prefix, for targets named dynamically (e.g. GenerateName)
+    labelSelector: {label-selector-of-target-resource}     # Optional. Matches objects by label (standard matchLabels/matchExpressions)
     envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
   pollingInterval:  30                                      # Optional. Default: 30 seconds
   cooldownPeriod:   300                                     # Optional. Default: 300 seconds
@@ -54,13 +56,21 @@ spec:
   scaleTargetRef:
     apiVersion:    {api-version-of-target-resource}  # Optional. Default: apps/v1
     kind:          {kind-of-target-resource}         # Optional. Default: Deployment
-    name:          {name-of-target-resource}         # Mandatory. Must be in the same namespace as the ScaledObject
+    name:          {name-of-target-resource}         # Optional when namePrefix and/or labelSelector identify the target
+    namePrefix:    {name-prefix-of-target-resource}  # Optional. Matches object names by prefix
+    labelSelector: {label-selector-of-target}        # Optional. Matches objects by label (matchLabels/matchExpressions)
     envSourceContainerName: {container-name}         # Optional. Default: .spec.template.spec.containers[0]
 ```
 
 The reference to the resource this ScaledObject is configured for. This is the resource KEDA will scale up/down and set up an HPA for, based on the triggers defined in `triggers:`.
 
 To scale Kubernetes Deployments only `name` need be specified. To scale a different resource such as StatefulSet or Custom Resource (that defines `/scale` subresource), appropriate `apiVersion` (following standard Kubernetes convention, ie. `{api}/{version}`) and `kind` need to be specified.
+
+When the target name is not known upfront — for example Deployments created by controllers with generated names (such as Argo Events sensors) — `namePrefix` and/or `labelSelector` identify the target instead. The clauses are ANDed and must resolve to exactly one object on every reconciliation: zero matches hold replicas (fail closed) and several matches are rejected, both at admission and in the scale loop. The name the selectors currently resolve to is surfaced in `.status.resolvedTargetName`, and the generated HPA retargets from it.
+
+Selector resolution lists the target kind, so the KEDA operator needs `list` permission on that kind. This is granted for the built-in workload kinds (`deployments`, `replicasets`, `statefulsets`) but not for arbitrary custom resources — targeting those by selector fails closed.
+
+If two ScaledObjects converge on the same workload after admission, the winner is deterministic: a fixed `name` always beats a selector, otherwise the oldest ScaledObject wins. The loser holds replicas and its HPA is removed until the refs diverge again.
 
 `envSourceContainerName` is an optional property that specifies the name of container in the target resource, from which KEDA should try to get environment properties holding secrets etc.  If it is not defined, KEDA will try to get environment properties from the first Container, ie. from `.spec.template.spec.containers[0]`.
 
