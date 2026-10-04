@@ -22,8 +22,8 @@ triggers:
     # Optional fields:
     activationThreshold: '5'
     queryType: 'instant'                    # 'instant' (default) or 'range'
-    rangeStart: '2025-01-01T00:00:00Z'      # unix seconds or RFC3339 (range queries)
-    rangeEnd: '2025-01-01T00:05:00Z'        # unix seconds or RFC3339 (range queries)
+    rangeStart: '5m'                        # relative offset before now, or unix seconds / RFC3339 (range queries)
+    rangeEnd: '0s'                          # relative offset before now, or unix seconds / RFC3339 (range queries)
     rangeStep: '60s'                        # default '60s'
     resultAggregation: 'first'              # first (default), last, sum, max, min, avg, count
     customHeaders: X-Client-Id=cid,X-Tenant-Id=tid
@@ -40,8 +40,8 @@ triggers:
 - `threshold` - Value to start scaling for. This value can be a float. (Required)
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `queryType` - Query type: `instant` (default) or `range`. (Optional)
-- `rangeStart` - Start of the range window, as unix seconds or an RFC3339 timestamp. Defaults to now minus 5 minutes. (Optional, range queries)
-- `rangeEnd` - End of the range window, as unix seconds or an RFC3339 timestamp. Defaults to now. (Optional, range queries)
+- `rangeStart` - Start of the range window. Accepts a relative duration (e.g. `5m`, interpreted as that offset before now), unix seconds, or an RFC3339 timestamp. Using a relative duration keeps the window tracking current load; a fixed absolute timestamp freezes the window on a historical range. Defaults to now minus 5 minutes. (Optional, range queries)
+- `rangeEnd` - End of the range window. Accepts a relative duration (e.g. `0s`, meaning now), unix seconds, or an RFC3339 timestamp. Defaults to now. (Optional, range queries)
 - `rangeStep` - Resolution of the range query, e.g. `60s`. (Default: `60s`, Optional, range queries)
 - `resultAggregation` - How to reduce multiple matched series to a single value: `first` (default), `last`, `sum`, `max`, `min`, `avg`, or `count`. Use an aggregation when the query can return more than one series. (Optional)
 - `customHeaders` - Custom headers to include while querying the Parqtel endpoint. For authentication headers, use `authModes` instead. (Optional)
