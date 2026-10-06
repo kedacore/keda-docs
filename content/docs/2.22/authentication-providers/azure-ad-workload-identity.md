@@ -13,6 +13,7 @@ podIdentity:
   identityId: <identity-id>               # Optional. Default: ClientId from annotation on service-account.
   identityTenantId: <tenant-id>           # Optional. Default: TenantId from annotation on service-account.
   identityAuthorityHost: <authority-host> # Optional. Default: AZURE_AUTHORITY_HOST environment variable which is injected by azure-wi-webhook-controller-manager.
+  identityOwner: keda|workload            # Optional. Default: keda. Mutually exclusive with identityId.
 ```
 
 Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
@@ -24,6 +25,10 @@ following flags -
 3. `--set podIdentity.azureWorkload.tenantId={azure-ad-tenant-id}`
 
 You can override the identity that was assigned to KEDA during installation, by specifying an `identityId` parameter under the `podIdentity` field. This allows end-users to use different identities to access various resources which is more secure than using a single identity that has access to multiple resources.
+
+If the scale target already uses Azure Workload Identity, you can set `identityOwner` to `workload` instead of copying its client ID into `identityId`. KEDA then reads the `azure.workload.identity/client-id` annotation from the service account in the scale target's pod template, in the namespace of the ScaledObject or ScaledJob (also when a ClusterTriggerAuthentication is used), and uses that identity. KEDA still authenticates with its own service account, so that identity needs a federated credential for the KEDA operator's service account, the same as when you set `identityId` (see Case 2 below). The `azure.workload.identity/tenant-id` annotation is not read, so set `identityTenantId` if the identity belongs to another tenant.
+
+> ⚠️ **NOTE:** `podIdentity.identityId` and `podIdentity.identityOwner: workload` are mutually exclusive, setting both is not supported.
 
 Additionally, there might be a need for Azure Workload Identity to authenticate across tenants and/or clouds (e.g., AzureCloud, AzureChinaCloud, AzureUSGovernment, AzureGermanCloud). To authenticate against a different tenant within the same cloud, you can specify the `identityTenantId` parameter under the `podIdentity` field. To authenticate against a tenant within a different cloud, you must specify both the `identityTenantId` and `identityAuthorityHost` parameters under the `podIdentity` field. This is useful when you have resources in different tenants or clouds that is different from the tenant and cloud where the KEDA Operator is running.
 
