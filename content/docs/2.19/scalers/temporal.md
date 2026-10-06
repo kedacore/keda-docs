@@ -30,7 +30,7 @@ triggers:
 
 **Parameter list:**
 
-- `endpoint` - This parameter specifies the URL of the Temporal gRPC service. You need to provide the service address in the format `<hostname>:<port>`. **Temporal Cloud endpoints differ by authentication method:** API Key auth uses the regional endpoint `<region>.<provider>.api.temporal.io:7233` (e.g., `us-east-1.aws.api.temporal.io:7233`); mTLS auth uses the namespace endpoint `<namespace>.<account>.tmprl.cloud:7233` (e.g., `my-ns.a1b2c.tmprl.cloud:7233`).
+- `endpoint` - This parameter specifies the URL of the Temporal gRPC service. You need to provide the service address in the format `<hostname>:<port>`. For Temporal Cloud, the recommended endpoint for both API key and mTLS authentication is the namespace endpoint `<namespace>.<account>.tmprl.cloud:7233` (for example, `my-ns.a1b2c.tmprl.cloud:7233`). A regional endpoint (`<region>.<provider>.api.temporal.io:7233`) can also be used; mTLS authentication with a regional endpoint requires `tlsServerName` to be set to the namespace endpoint hostname.
 - `endpointFromEnv` - Defines the endpoint, similar to the `endpoint` parameter, but the value is read from an environment variable. (Optional)
 - `namespace` - The namespace of the temporal service. (Default:`default`, Optional)
 - `activationTargetQueueSize` - This sets the target value for activating the scaler. More information about activation thresholds can be found  [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
@@ -64,8 +64,8 @@ Temporal supports `apiKey` and `mTLS` for authentication. You can use the follow
 - `keyPassword` - If set the keyPassword is used to decrypt the provided key. (Optional)
 
 > **Temporal Cloud Authentication:**
-> - **API Key**: Set `apiKey` and use the regional endpoint (`<region>.<provider>.api.temporal.io:7233`). The SDK handles TLS automatically — no certificates needed. For HA namespaces, use the namespace endpoint (`<namespace>.<account>.tmprl.cloud:7233`) instead.
-> - **mTLS**: Set `cert`, `key`, (optionally `ca`) and use the namespace endpoint (`<namespace>.<account>.tmprl.cloud:7233`). Client certificates are required.
+> - **API Key**: Set `apiKey`, use the full Namespace ID (`<namespace>.<account>`), and use the namespace endpoint (`<namespace>.<account>.tmprl.cloud:7233`). KEDA enables TLS by default; no client certificates are needed.
+> - **mTLS**: Set `cert`, `key`, (optionally `ca`), use the full Namespace ID, and use the namespace endpoint. A regional endpoint can be used when `tlsServerName` is set to the namespace endpoint hostname.
 
 ### Examples
 
@@ -112,13 +112,13 @@ spec:
   triggers:
   - type: temporal
     metadata:
-      namespace: default
+      namespace: my-ns.a1b2c
       taskQueue: "workflow_with_single_noop_activity:test"
       targetQueueSize: "2"
       activationTargetQueueSize: "0"
       # Self-hosted: temporal-frontend.temporal.svc.cluster.local:7233
-      # Temporal Cloud (API key): <region>.<provider>.api.temporal.io:7233
-      endpoint: us-east-1.aws.api.temporal.io:7233
+      # Temporal Cloud: <namespace>.<account>.tmprl.cloud:7233
+      endpoint: my-ns.a1b2c.tmprl.cloud:7233
     authenticationRef:
       name: keda-trigger-auth-temporal
 ```
@@ -170,11 +170,11 @@ spec:
   triggers:
   - type: temporal
     metadata:
-      namespace: my-ns
+      namespace: my-ns.a1b2c
       taskQueue: "workflow_with_single_noop_activity:test"
       targetQueueSize: "2"
       activationTargetQueueSize: "0"
-      # Temporal Cloud (mTLS): <namespace>.<account>.tmprl.cloud:7233
+      # Temporal Cloud: <namespace>.<account>.tmprl.cloud:7233
       endpoint: my-ns.a1b2c.tmprl.cloud:7233
     authenticationRef:
       name: keda-trigger-auth-temporal-mtls
