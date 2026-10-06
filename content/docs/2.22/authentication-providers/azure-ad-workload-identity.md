@@ -13,7 +13,7 @@ podIdentity:
   identityId: <identity-id>               # Optional. Default: ClientId from annotation on service-account.
   identityTenantId: <tenant-id>           # Optional. Default: TenantId from annotation on service-account.
   identityAuthorityHost: <authority-host> # Optional. Default: AZURE_AUTHORITY_HOST environment variable which is injected by azure-wi-webhook-controller-manager.
-  identityOwner: keda|workload            # Optional. Default: keda. Mutually exclusive with identityId.
+  identityOwner: keda|workload            # Optional. Default: keda. When set to workload, identityId must not be set.
 ```
 
 Azure AD Workload Identity will give access to pods with service accounts having appropriate labels and annotations. Refer
