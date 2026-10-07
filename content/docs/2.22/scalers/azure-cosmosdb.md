@@ -191,7 +191,7 @@ On a failed poll, diagnostic values are recorded as `NaN`, not zero backlog or a
 
 ### Error Handling
 
-Lease-query, container or partition metadata, change-feed, authentication, network, and response-parsing failures are returned to KEDA. Invalid lease `FeedRange` or continuation state also fails the polling cycle; invalid leases are not silently skipped to produce a partial total. A never-checkpointed lease is not by itself an invalid lease.
+Lease-query, container or partition metadata, change-feed, authentication, network, and response-parsing failures are returned to KEDA. For documents with a non-empty `LeaseToken`, invalid lease `FeedRange` or continuation state also fails the polling cycle. Documents with a missing or empty `LeaseToken` are treated as non-lease metadata and excluded from lag aggregation; if such a document is an actual lease, its lag can be omitted without a poll error. A never-checkpointed lease is not by itself an invalid lease.
 
 Errors are not converted into zero backlog or a synthetic scale-out metric. KEDA's existing error handling and configured [`fallback`](../reference/scaledobject-spec.md#fallback) apply. For sustained metric failures, consider `spec.fallback` with `failureThreshold: 3` and `replicas: 2`, as shown below. The example uses `AverageValue`, which is compatible with fallback and required by capacity mode. Choose a fallback replica count for your own lease capacity and availability needs; fallback is not a fresh lease-count estimate.
 
