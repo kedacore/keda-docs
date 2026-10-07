@@ -4,7 +4,11 @@ title = "AWS (IRSA) Pod Identity Webhook"
 
 [**AWS IAM Roles for Service Accounts (IRSA) Pod Identity Webhook**](https://github.com/aws/amazon-eks-pod-identity-webhook) ([documentation](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) allows you to provide the role name using an annotation on a service account associated with your pod.
 
-You can tell KEDA to use AWS Pod Identity Webhook via `podIdentity.provider`.
+You can tell KEDA to use AWS Pod Identity Webhook via `podIdentity.provider`. To exchange a token for a specific Kubernetes service account, see [Select a workload service account](#select-a-workload-service-account).
+
+## Use the operator's credentials
+
+The configuration, role overrides, and fallback behavior below apply when `serviceAccountName` is omitted.
 
 ```yaml
 podIdentity:
@@ -72,7 +76,7 @@ annotations:
 
 ## AssumeRole or AssumeRoleWithWebIdentity?
 
-This authentication automatically uses both, falling back from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need `sts:AssumeRole` permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html); in this case, you can add a KEDA service account to the trusted relations of the role.
+Without `serviceAccountName`, this authentication automatically uses both, falling back from [AssumeRoleWithWebIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithWebIdentity.html) to [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) if the first one fails. This extends the capabilities because KEDA doesn't need `sts:AssumeRole` permission if you are already working with [WebIdentities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html); in this case, you can add a KEDA service account to the trusted relations of the role.
 
 ## Setting up KEDA role and policy
 
@@ -217,3 +221,32 @@ spec:
 ```
 
 > ℹ️ **NOTE:** `externalId` is optional. If not set, KEDA calls `AssumeRole` without an ExternalId, which is the default behavior. `externalId` is only applied to `AssumeRole` — `AssumeRoleWithWebIdentity` does not accept an ExternalId parameter.
+
+
+## Select a workload service account
+
+Set `serviceAccountName` to assume an IAM role using a token for a specific Kubernetes service account. Complete the [administrator approval](../../concepts/workload-service-accounts/#administrator-setup) with audience `sts.amazonaws.com` for the account in the ScaledObject or ScaledJob namespace.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: aws-scaling
+  namespace: payments
+spec:
+  podIdentity:
+    provider: aws
+    serviceAccountName: scaling-aws
+    roleArn: arn:aws:iam::123456789012:role/payment-scaling
+```
+
+**Parameter list for selected-account authentication:**
+
+- `serviceAccountName` - Kubernetes service account in the consuming ScaledObject or ScaledJob namespace. Requires administrator approval for that exact namespace/account.
+- `roleArn` - IAM role to assume through `AssumeRoleWithWebIdentity`. Required when `serviceAccountName` is set.
+
+Register the cluster's OIDC issuer with IAM. Configure the role's [trust policy](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to allow `sts:AssumeRoleWithWebIdentity` for that provider, audience `sts.amazonaws.com`, and exact subject `system:serviceaccount:payments:scaling-aws`. Grant the role only the permissions needed by the scaler. Supply the AWS region required by the scaler; KEDA uses the corresponding SDK-resolved regional STS endpoint.
+
+`roleArn` must be explicit; KEDA does not discover it from a service-account annotation. Do not set `identityOwner`, including `identityOwner: keda`, or `externalID` with `serviceAccountName`. KEDA uses only the selected Kubernetes identity for the exchange and does not fall back to `AssumeRole`, operator credentials, or the default SDK credential chain. Other IAM OIDC audience values are unsupported in this mode.
+
+Use `provider: aws`; the deprecated `aws-eks` provider does not support this field. This flow supports IAM OIDC federation, including IRSA. It does not use EKS Pod Identity. The operator's IRSA webhook settings are not required for this flow. See [delegation and credential handling](../../concepts/workload-service-accounts/#delegation-and-credential-handling) for the security boundary and supported combinations.
