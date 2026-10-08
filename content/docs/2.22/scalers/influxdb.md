@@ -33,7 +33,6 @@ triggers:
 
 **Parameter list:**
 
-- `authToken` - **DEPRECATED**: Setting `authToken` directly in `metadata` is deprecated and removed as of KEDA v2.20. Use `authTokenFromEnv` or provide the token via TriggerAuthentication (`authParams`, see "Authentication Parameters" section) instead.
 - `authTokenFromEnv` - Defines the authorization token by reading it from an environment variable on the scale target.
 - `organizationName` - Organization name needed for the client to locate all information contained in that [organization](https://docs.influxdata.com/influxdb/v2.0/organizations/) such as buckets, tasks, etc (Optional, Required if `influxVersion: '2'`).
 - `organizationNameFromEnv` - Defines the organization name, similar to `organizationName`, but reads it from an environment variable on the scale target.
