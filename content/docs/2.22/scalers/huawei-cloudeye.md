@@ -116,7 +116,6 @@ spec:
       dimensionValue: 5e052238-0346-47b0-xxea-92d9f33e29d2
       metricName: mb_l7_qps
       targetMetricValue: "100"
-      activationTargetMetricValue: "1"
     authenticationRef:
       name: keda-trigger-auth-huawei-credential
 ```
