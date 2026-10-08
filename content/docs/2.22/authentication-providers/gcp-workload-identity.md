@@ -10,8 +10,12 @@ You can tell KEDA to use GCP Workload Identity via `podIdentity.provider`.
 podIdentity:
   provider: gcp # Optional. Default: none
 ```
-### Steps to set up Workload Identity
-If you are using podIdentity provider as `gcp`, you need to set up workload identity as below and your GKE cluster must have Workload Identity enabled.
+
+To federate a specific Kubernetes service account through an IAM workload identity pool, see [Select a workload service account](#select-a-workload-service-account).
+
+### Steps to set up Workload Identity for the operator
+
+When `serviceAccountName` is omitted, KEDA uses the operator's Google credentials. For GKE Workload Identity, enable Workload Identity on your GKE cluster and configure the operator as follows.
 
 * You need to create a GCP IAM service account with proper permissions to retrieve metrics for particular scalers.
 
@@ -67,3 +71,35 @@ If you are using podIdentity provider as `gcp`, you need to set up workload iden
 
 
   Refer to GCP official [documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#authenticating_to) for more.
+
+
+## Select a workload service account
+
+Set `serviceAccountName` to authenticate through an explicit IAM workload identity pool and OIDC provider. Complete the [administrator approval](../../concepts/workload-service-accounts/#administrator-setup) for the account in the ScaledObject or ScaledJob namespace.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: google-scaling
+  namespace: payments
+spec:
+  podIdentity:
+    provider: gcp
+    serviceAccountName: scaling-gcp
+    # Optional IAM service-account impersonation:
+    identityId: scaling-reader@application-project.iam.gserviceaccount.com
+```
+
+**Parameter list:**
+
+- `serviceAccountName` - Kubernetes service account in the consuming ScaledObject or ScaledJob namespace. Requires administrator approval for that exact namespace/account. (Optional)
+- `identityId` - Google IAM service-account email to impersonate. When omitted, KEDA uses the federated identity directly. (Optional, Only supported for GCP when `serviceAccountName` is set)
+
+Follow [Google's Kubernetes federation guide](https://cloud.google.com/iam/docs/workload-identity-federation-with-kubernetes) to configure the pool/provider for your cluster's OIDC issuer. Map `google.subject` to `assertion.sub` and grant access to the exact subject `system:serviceaccount:payments:scaling-gcp`. Grant resource permissions directly to that federated principal, or grant it `roles/iam.workloadIdentityUser` on the IAM service account specified by `identityId` and give that IAM account the resource permissions.
+
+The administrator-approved audience must be `https://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL/providers/PROVIDER`, or the equivalent form beginning with `//iam.googleapis.com/`. Custom audience strings are unsupported. KEDA preserves the configured audience in the Kubernetes token and normalizes the provider resource name for Google STS.
+
+Supply resource projects explicitly where the scaler requires them. For [Pub/Sub](../../scalers/gcp-pub-sub/), use `projects/PROJECT/subscriptions/NAME` in `subscriptionName`, or `projects/PROJECT/topics/NAME` in `topicName`, including when resolving these values from environment variables.
+
+This mode does not discover a GKE-managed provider or read the `iam.gke.io/gcp-service-account` annotation. The operator-based GKE configuration above remains available when `serviceAccountName` is omitted. See [delegation and credential handling](../../concepts/workload-service-accounts/#delegation-and-credential-handling) for the security boundary and supported combinations.

@@ -58,6 +58,8 @@ The Google Cloud Platform (GCP) Pub/Sub trigger allows you to scale based on any
 
 - `topicNameFromEnv` - The name of an environment variable on the scale target that holds the topic name. The resolved name is processed the same as `topicName`.
 
+When using [GCP federation with `podIdentity.serviceAccountName`](../../authentication-providers/gcp-workload-identity/#select-a-workload-service-account), the subscription or topic must use its full `projects/PROJECT/subscriptions/NAME` or `projects/PROJECT/topics/NAME` path. This also applies to values resolved from `subscriptionNameFromEnv` and `topicNameFromEnv`.
+
 Here's an [example](https://github.com/kedacore/sample-go-gcppubsub).
 
 ### Authentication Parameters
