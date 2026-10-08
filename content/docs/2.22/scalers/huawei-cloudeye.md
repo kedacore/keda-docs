@@ -21,7 +21,6 @@ triggers:
     dimensionValue: 5e052238-0346-xxb0-86ea-92d9f33e29d2
     targetMetricValue: "5.5"
     activationTargetMetricValue: "1.5"
-    minMetricValue: "1.1" # Deprecated
 ```
 
 **Parameter list:**
@@ -32,7 +31,6 @@ triggers:
 - `dimensionValue` - Value of the metric dimension.
 - `targetMetricValue` - Target value for your metric. (This value can be a float)
 - `activationTargetMetricValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
-- `minMetricValue` - Minimum value for your metric. If the actual value of the metric you get from cloudeye is less than the minimum value, then the scaler is not active. (This value can be a float) (**The 'minMetricValue' setting is DEPRECATED and will be removed in v2.20 - Use 'activationTargetMetricValue' instead**)
 - `metricCollectionTime` - Collection time of the metric in seconds. Equivalent to the earliest start time of the end time. (default: 300)
 - `metricFilter` - Aggregation method of the metric. (Values: `average`, `max`, `min`, `sum`, Default: `average`, Optional)
 - `metricPeriod` - Granularity of the metric in seconds. (Default: 300, Optional)
@@ -118,7 +116,7 @@ spec:
       dimensionValue: 5e052238-0346-47b0-xxea-92d9f33e29d2
       metricName: mb_l7_qps
       targetMetricValue: "100"
-      minMetricValue: "1"
+      activationTargetMetricValue: "1"
     authenticationRef:
       name: keda-trigger-auth-huawei-credential
 ```
