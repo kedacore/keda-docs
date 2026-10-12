@@ -8,7 +8,7 @@ Using **YAML files** offers the most control over your setup, making it perfect 
 
 Each method balances convenience, control, and compatibility differently: Helm is best for extensive customization, Operator Hub for simplicity, YAML files for precise configuration, and MicroK8s for local experimentation. Select the option that aligns with your deployment requirements and environment.
 
-> 💡 **NOTE:** KEDA requires Kubernetes cluster version 1.30 and higher
+> 💡 **NOTE:** KEDA 2.21 is tested with Kubernetes 1.34–1.36. See [Kubernetes compatibility](../operate/cluster/#kubernetes-compatibility).
 
 Don't see what you need? Feel free to [create an issue](https://github.com/kedacore/keda/issues/new) on our GitHub repo.
 
