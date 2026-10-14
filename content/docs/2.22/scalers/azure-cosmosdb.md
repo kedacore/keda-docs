@@ -11,7 +11,7 @@ go_file = "azure_cosmosdb_scaler"
 
 This specification describes the `azure-cosmosdb` trigger for Azure Cosmos DB Change Feed. It estimates the transaction lag of a change feed processor from its checkpoints in the lease container.
 
-Version-1 Effective Partition Key (EPK) leases, lease-capacity scaling, high-availability mode, and the diagnostic metrics described below are new in **KEDA v2.22 (unreleased)**. KEDA v2.21 supports legacy version-0 physical partition-range leases and lag-based scaling only.
+Version-1 Effective Partition Key (EPK) leases, lease-capacity scaling, and high-availability mode are new in **KEDA v2.22 (unreleased)**. KEDA v2.21 supports legacy version-0 physical partition-range leases and lag-based scaling only.
 
 ```yaml
 triggers:
@@ -159,7 +159,7 @@ desired   = min(max(Rlag, Rcapacity), eligibleLeases)
 
 The old bootstrap collapse does not apply to capacity mode. For example, with 12 active leases, total lag of 120, `changeFeedLagThreshold: '100'`, and `maxActiveLeasesPerReplica: '4'`, the lag calculation requests 2 replicas, the capacity calculation requests 3, and the result is 3. All 12 active leases count even if none has checkpointed yet.
 
-In capacity mode, the external HPA metric target is **1**, and the reported metric is the computed desired replica count, not transaction lag. `changeFeedLagThreshold` still controls `Rlag`; use the separate diagnostics below to observe raw lag.
+In capacity mode, the external HPA metric target is **1**, and the reported metric is the computed desired replica count, not transaction lag. `changeFeedLagThreshold` still controls `Rlag`. Raw lag, lease counts, and the separate lag-based and capacity-based recommendations are not exposed as additional diagnostic metrics.
 
 Without HA, activation still requires `totalLag > activationChangeFeedLagThreshold`; capacity alone does not bypass this threshold. With HA enabled, the scaler is active whenever `totalLeases > 0`, even if all leases are caught up. For example, 12 caught-up leases and capacity 4 request 3 replicas in HA mode, but 0 without HA. With no leases, either mode reports 0 and is inactive. Split recovery is an exception described below.
 
@@ -173,27 +173,11 @@ HTTP `410 Gone` with Cosmos DB substatus `1002` is treated as a partition split 
 
 If a stale parent remains after refresh, split recovery can activate the scaler and request at least one worker so the processor can replace parent leases with child leases. In default mode, when no other lag is present, the scaler emits `activationChangeFeedLagThreshold + 1` and uses one active lease for the cap. When other lagging leases exist, it raises the metric above the activation threshold only if needed without adding another lease to the default cap. Capacity mode preserves its target of 1 and reports a desired replica count with the recovery floor applied. HPA and ScaledObject constraints still apply.
 
-### Diagnostic Metrics
-
-The scaler exposes aggregate diagnostics through the existing scaler metric-value collectors: [`keda_scaler_metrics_value` in Prometheus](../integrations/prometheus.md) and the equivalent [OpenTelemetry metrics](../integrations/opentelemetry.md). Each diagnostic uses the existing scaler metric name with a suffix in the metric label, not a new per-lease label:
-
-| Metric-name suffix | Value |
-|---|---|
-| `_total_lag` | Total estimated lag before scaling-cap and split-activation adjustments. |
-| `_active_leases` | Actual active lease count, including individual never-checkpointed active leases without bootstrap collapse. |
-| `_total_leases` | Total processor lease count, including caught-up leases. |
-| `_lag_desired_replicas` | `ceil(totalLag / changeFeedLagThreshold)`, before the lease cap. |
-| `_lease_capacity_desired_replicas` | `ceil(eligibleLeases / maxActiveLeasesPerReplica)` in capacity mode, before the lease cap; 0 when capacity mode is disabled. |
-
-These are diagnostic series only, **not additional HPA scaling inputs**. The normal scaler metric remains capped lag in default mode or the computed desired replica count in capacity mode. Compare diagnostics to see whether lag or lease capacity drives the recommendation and whether the lease cap limits it.
-
-On a failed poll, diagnostic values are recorded as `NaN`, not zero backlog or a successful cached result. Use KEDA's existing scaler error metrics and logs to investigate the failure.
-
 ### Error Handling
 
 Lease-query, container or partition metadata, change-feed, authentication, network, and response-parsing failures are returned to KEDA. For documents with a non-empty `LeaseToken`, invalid lease `FeedRange` or continuation state also fails the polling cycle. Documents with a missing or empty `LeaseToken` are treated as non-lease metadata and excluded from lag aggregation; if such a document is an actual lease, its lag can be omitted without a poll error. A never-checkpointed lease is not by itself an invalid lease.
 
-Errors are not converted into zero backlog or a synthetic scale-out metric. KEDA's existing error handling and configured [`fallback`](../reference/scaledobject-spec.md#fallback) apply. For sustained metric failures, consider `spec.fallback` with `failureThreshold: 3` and `replicas: 2`, as shown below. The example uses `AverageValue`, which is compatible with fallback and required by capacity mode. Choose a fallback replica count for your own lease capacity and availability needs; fallback is not a fresh lease-count estimate.
+Errors are not converted into zero backlog or a synthetic scale-out metric. KEDA's existing error handling and configured [`fallback`](../reference/scaledobject-spec.md#fallback) apply. Use KEDA's existing scaler error metrics and logs to investigate failures. For sustained metric failures, consider `spec.fallback` with `failureThreshold: 3` and `replicas: 2`, as shown below. The example uses `AverageValue`, which is compatible with fallback and required by capacity mode. Choose a fallback replica count for your own lease capacity and availability needs; fallback is not a fresh lease-count estimate.
 
 ### Examples
 
