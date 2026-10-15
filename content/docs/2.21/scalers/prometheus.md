@@ -44,6 +44,16 @@ triggers:
 
 ### Authentication Parameters
 
+If a bearer credential is supplied through `boundServiceAccountToken`, KEDA 2.21+
+requires an operator-configured audience and a receiver that accepts it. See
+[BSAT configuration and receiver requirements](../../authentication-providers/bound-service-account-token/).
+Other credential sources are unchanged by this audience policy.
+
+For BSAT bearer authentication, configure the audience in the authentication
+proxy or gateway protecting Prometheus. For example, kube-rbac-proxy supports
+`--auth-token-audiences`; Prometheus's native [web authentication configuration](https://prometheus.io/docs/prometheus/latest/configuration/https/)
+does not configure Kubernetes TokenReview audiences. Keep the caller's query permissions.
+
 Prometheus Scaler supports various types of authentication to help you integrate with Prometheus.
 
 You can use `TriggerAuthentication` CRD to configure the authentication. It is possible to specify multiple authentication types i.e. `authModes: "tls,basic"` Specify `authModes` and other trigger parameters along with secret credentials in `TriggerAuthentication` as mentioned below:
@@ -61,7 +71,7 @@ You can use `TriggerAuthentication` CRD to configure the authentication. It is p
 - `authModes`: It must contain `tls` in case of TLS Authentication. Specify this in trigger configuration.
 - `ca` - Certificate authority file for TLS client authentication.
 - `cert` - Certificate for client authentication. This is a required field.
-- `key` - Key for client authentication. Optional. This is a required field.
+- `key` - Key for client authentication. This is a required field.
 
 **Custom authentication:**
 - `authModes`: It must contain `custom` in case of Custom Authentication. Specify this in trigger configuration.

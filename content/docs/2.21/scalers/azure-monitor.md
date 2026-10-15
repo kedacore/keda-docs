@@ -22,6 +22,7 @@ triggers:
     metricName: kube_pod_status_ready
     metricFilter: namespace eq 'default'
     metricAggregationInterval: "0:1:0"
+    metricInterval: FULL # Optional. Aggregate the full query window into one data point.
     targetValue: "0.5"
     activationTargetValue: "3.5"
     activeDirectoryClientId: <client id value> # Optional, can use TriggerAuthentication as well
@@ -49,7 +50,8 @@ triggers:
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).(Default: `0`, Optional, This value can be a float)
 - `metricAggregationType` - Aggregation method of the Azure Monitor metric. Options include `Average`, `Total`, `Maximum` with a full list in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported).
 - `metricFilter` - Name of the filter to be more specific by using dimensions listed in the [official documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported). (Optional)
-- `metricAggregationInterval` - Collection time of the metric in format `"hh:mm:ss"` (Default: `"0:5:0"`, Optional)
+- `metricAggregationInterval` - Time window queried for the metric in `"hh:mm:ss"` format. (Default: `"0:5:0"`, Optional)
+- `metricInterval` - Time grain used to aggregate metric values within the query window. Use an [ISO 8601 duration supported by Azure Monitor](https://learn.microsoft.com/en-us/rest/api/monitor/metrics/list?view=rest-monitor-2023-10-01#uri-parameters), such as `PT5M`, or `FULL` to return one data point for the complete `metricAggregationInterval`. When omitted, Azure Monitor uses its default time grain of `PT1M`, preserving the existing KEDA behavior. With `FULL`, `Total` and `Count` cover the complete query window, so configure `targetValue` and `activationTargetValue` for that full-window value. (Optional)
 - `activeDirectoryClientId` - Id of the Active Directory application which requires at least `Monitoring Reader` permissions. (Optional)
 - `activeDirectoryClientPasswordFromEnv` - Name of the environment variable that contains the active directory client password. (Optional)
 - `cloud` - Name of the cloud environment that the Azure resource belongs to. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureGermanCloud`, `AzureChinaCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
