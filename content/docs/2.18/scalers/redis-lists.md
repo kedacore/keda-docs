@@ -19,7 +19,7 @@ triggers:
     usernameFromEnv: REDIS_USERNAME # optional
     passwordFromEnv: REDIS_PASSWORD
     listName: mylist # Required
-    listLength: "5" # Required
+    listLength: "5" # optional
     activationListLength: "5" # optional
     enableTLS: "false" # optional
     unsafeSsl: "false" # optional
