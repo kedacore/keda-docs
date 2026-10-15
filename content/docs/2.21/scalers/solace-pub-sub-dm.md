@@ -46,7 +46,7 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 - `unsafeSSL` - Flag to enable unsafe host urls (self signed certificates). (Default:  `false`, Optional)
 
-- `queuedMessagesFactor` - Flag to to increase weight on queued messages (D-1) and scale faster to avoid discarding messages. (Default:  `3`, Optional)
+- `queuedMessagesFactor` - Flag to increase weight on queued messages (D-1) and scale faster to avoid discarding messages. (Default:  `3`, Optional)
 
 - `aggregatedClientTxMsgRateTarget` - Target number messages per second the clients in the shared subscription are expected to consume, if the actual aggregated messages per second number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
