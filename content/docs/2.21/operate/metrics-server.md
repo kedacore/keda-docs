@@ -63,6 +63,19 @@ And it will show a json like this:
 
 > **Note:** There are 2 exceptions in querying metrics and those are `cpu` and `memory` scalers. When KEDA creates the HPA object, it uses standard `cpu` and `memory` metrics from the Kubernetes Metrics Server. If you want to query these 2 specific values, you should do it using `/apis/metrics.k8s.io/v1beta1` instead of `/apis/external.metrics.k8s.io/v1beta1`.
 
+## Health checks and operator connectivity
+
+The metrics adapter serves HPA external metrics by maintaining a gRPC connection to the KEDA operator Metrics Service (`keda-operator:9666`). Its Kubernetes probes reflect that dependency:
+
+| Probe | Path | Behavior |
+|-------|------|----------|
+| Readiness | `/readyz` | Fails while the gRPC connection is not `Ready`, so the pod is removed from Service Endpoints and stops receiving HPA traffic. |
+| Liveness | `/livez` | Fails after the connection has been continuously non-`Ready` for `--metrics-service-grpc-liveness-timeout` (default `5m`), so kubelet restarts a stuck adapter. |
+
+If the operator is unreachable (for example during leader failover or a bad network path), expect the metrics-apiserver replica to become NotReady and, if the outage lasts longer than the liveness timeout, to be restarted. With multiple metrics-apiserver replicas and aggregator routing enabled, healthy replicas continue to serve while a stuck replica is drained.
+
+Helm chart settings: `metricsServer.readinessProbe`, `metricsServer.livenessProbe`, and `metricsServer.grpcLivenessTimeout`.
+
 ## How to get metric names from ScaledObject
 
 During its work, KEDA updates each ScaledObject with some relevant information which it needs to work. Part of that information is metric names generated from the triggers inside the own ScaledObject.
