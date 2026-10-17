@@ -36,6 +36,7 @@ indexName = "keda"
 
 [params.versions]
 docs = [
+  "2.21",
   "2.20",
   "2.19",
   "2.18",
@@ -60,11 +61,11 @@ docs = [
   "1.5",
   "1.4",
 ]
-http-add-on = ["0.15", "0.14"]
+http-add-on = ["0.16", "0.15", "0.14"]
 
 [params.unreleased]
-docs = ["2.21"]
-http-add-on = ["0.16"]
+docs = ["2.22"]
+http-add-on = ["1.0"]
 
 # Site fonts served from @fontsource npm packages (see module mounts).
 # Browse available options at https://fonts.google.com.
