@@ -28,6 +28,7 @@ triggers:
       nodeMaxSessions: 1 # Optional.
       enableManagedDownloads: true # Optional.
       capabilities: '' # Optional.
+      includeOngoingSessions: true # Optional.
 ```
 
 **Parameter list:**
@@ -42,6 +43,7 @@ triggers:
 - `nodeMaxSessions` - Number of maximum sessions that can run in parallel on a Node. Update this parameter align with node config `--max-sessions` (`SE_NODE_MAX_SESSIONS`) to have the correct scaling behavior. (Default: `1`, Optional).
 - `enableManagedDownloads`- Set this for Node enabled to auto manage files downloaded for a given session on the Node. When the client requests enabling this feature, it can only be assigned to the Node that also enabled it. Otherwise, the request will wait until it timed out. (Default: `true`, Optional).
 - `capabilities` - Add more custom capabilities for matching specific Nodes. It should be in JSON string, see [example](https://www.selenium.dev/documentation/grid/configuration/toml_options/#setting-custom-capabilities-for-matching-specific-nodes) (Optional)
+- `includeOngoingSessions` - Whether on-going sessions are counted towards the metric, in addition to the requests waiting in the session queue. Must be set to `false` when used with a `ScaledJob` that uses the `accurate` or `eager` scaling strategy, see [Scaling with `ScaledJob`](#scaling-with-scaledjob) below. (Values: `true`, `false`, Default: `true`, Optional)
 
 **Trigger Authentication**
 - `username` - Username for basic authentication in GraphQL endpoint instead of embedding in the URL. (Optional)
@@ -519,6 +521,63 @@ spec:
         nodeMaxSessions: 4
         unsafeSsl: 'true'
 ```
+
+---
+#### Scaling with `ScaledJob`
+
+Browser Nodes can also be scaled as Kubernetes Jobs with a `ScaledJob`, so that every Node serves exactly one session and is then torn down. In that setup, the value of `includeOngoingSessions` has to match the `scalingStrategy` of the `ScaledJob`.
+
+By default (`includeOngoingSessions: true`), the scaler reports the number of requests waiting in the session queue **plus** the on-going sessions, which is the total number of Nodes the Grid needs. That total is only correct when the consumer deducts the work already running:
+
+- A `ScaledObject` (via the HPA) deducts running replicas, and a `ScaledJob` with the `default` or `custom` strategy deducts the running Job count. On-going sessions are served by those running Nodes, so they cancel out in the subtraction and the result is the number of **new** Nodes to create.
+- A `ScaledJob` with the `accurate` strategy deducts only the *pending* Job count, and the `eager` strategy deducts running plus pending Jobs bounded by `maxScale`. Neither re-adds the running work, so on-going sessions would be counted again on every polling cycle, creating Nodes that are never needed and never scale back down (see [SeleniumHQ/docker-selenium#3167](https://github.com/SeleniumHQ/docker-selenium/issues/3167)). Set `includeOngoingSessions: "false"` for these strategies, so that the scaler only reports the requests waiting in the session queue.
+
+| Scaled resource | `scalingStrategy` | Recommended `includeOngoingSessions` | Metric reported by the scaler |
+| --- | --- | --- | --- |
+| `ScaledObject` | _n/a_ (HPA) | `true` (default) | queued requests + on-going sessions |
+| `ScaledJob` | `default` | `true` (default) | queued requests + on-going sessions |
+| `ScaledJob` | `custom` | `true` (default) | queued requests + on-going sessions |
+| `ScaledJob` | `accurate` | `false` | queued requests only |
+| `ScaledJob` | `eager` | `false` | queued requests only |
+
+Learn more about the scaling strategies in the [`ScaledJob` specification](./../reference/scaledjob-spec.md#scalingstrategy).
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: selenium-node-chrome
+  namespace: keda
+spec:
+  maxReplicaCount: 8
+  scalingStrategy:
+    strategy: 'accurate'
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+          - name: selenium-node-chrome
+            image: selenium/node-chrome:latest
+            env:
+              - name: SE_NODE_BROWSER_VERSION
+                value: ''
+              - name: SE_NODE_PLATFORM_NAME
+                value: 'Linux'
+        restartPolicy: Never
+  triggers:
+    - type: selenium-grid
+      metadata:
+        url: 'http://selenium-hub:4444/graphql'
+        browserName: 'chrome'
+        platformName: 'Linux'
+        unsafeSsl: 'true'
+        # Required with the `accurate` and `eager` strategies, otherwise on-going
+        # sessions are counted twice and Nodes are created endlessly.
+        includeOngoingSessions: 'false'
+```
+
+> **Notice:**
+> `custom` is a spectrum. Keeping `includeOngoingSessions` at `true` is correct for the common `customScalingRunningJobPercentage: "1"` configuration, which is the equivalent of `default`. A running percentage well below `1` deducts less of the running work, in which case the reported total slightly over-provisions.
 
 ### Authentication Parameters
 
