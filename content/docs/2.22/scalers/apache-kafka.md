@@ -109,9 +109,9 @@ partition will be scaled to zero. See the [discussion](https://github.com/kedaco
 - `kerberosServiceName` - Kerberos service name. (Optional takes default value of `kafka` if not provided)
 - `kerberosDisableFAST` - To disable FAST negotiation, set this to `true` (Values: `true`, `false`, Default: `false`, Optional)
 - `oauthTokenEndpointUri` - OAuth endpoint used to request access tokens. (Required when `sasl` is `oauthbearer` and `saslTokenProvider` is `bearer`)
-- `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
-- `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
-- `oauthToken` - Access token to send directly to Kafka, supplied through `TriggerAuthentication`. Only supported with `saslTokenProvider: static`. Cannot be combined with `oauthTokenEndpointUri`; `username`, `password` and `scopes` are ignored in this mode. (Required when `saslTokenProvider` is `static`)
+- `scopes` - Comma-separated OAuth scopes requested by the `bearer` provider. (Optional)
+- `oauthExtensions` - Comma-separated SASL/OAUTHBEARER extensions in `key=value` format, supported by the `bearer` and `static` providers. (Optional)
+- `oauthToken` - Access token to send directly to Kafka, supplied through `TriggerAuthentication`. Cannot be combined with `oauthTokenEndpointUri`; `username`, `password` and `scopes` are ignored in this mode. (Required when `sasl` is `oauthbearer` and `saslTokenProvider` is `static`; unsupported with other providers)
 
 **TLS:**
 
@@ -676,16 +676,22 @@ spec:
 
 #### Kubernetes service account tokens (SASL/OAUTHBEARER)
 
-Use `saslTokenProvider: static` with `boundServiceAccountToken` when your Kafka broker accepts Kubernetes service account tokens. KEDA sends the token directly to Kafka.
+Use `saslTokenProvider: static` with `boundServiceAccountToken` when your Kafka broker accepts Kubernetes-issued JWTs through SASL/OAUTHBEARER. KEDA requests a token for the service account and sends it directly to Kafka.
 
-Create the `kafka-lag-reader` service account in the `default` namespace, then configure [its audience and KEDA's token-creation permissions](../../authentication-providers/bound-service-account-token/#audience-and-permissions). The broker must validate the token and its audience, and grant the service account access to the topic and consumer group.
+In this example, the ServiceAccount, TriggerAuthentication and ScaledObject must all be in `my-app`; this does not need to be KEDA's namespace. Create the namespace first. The example assumes an existing `kafka-consumer` Deployment in that namespace. Replace the broker address, topic and consumer group with your own values. If the broker's TLS certificate uses a private CA, supply `ca` through TriggerAuthentication as shown in the TLS examples above.
 
 ```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kafka-lag-reader
+  namespace: my-app
+---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: kafka-sa-token
-  namespace: default
+  namespace: my-app
 spec:
   boundServiceAccountToken:
   - parameter: oauthToken
@@ -695,7 +701,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: kafka-scaledobject
-  namespace: default
+  namespace: my-app
 spec:
   scaleTargetRef:
     name: kafka-consumer
@@ -712,7 +718,23 @@ spec:
       name: kafka-sa-token
 ```
 
-Bound tokens are requested with a one-hour lifetime by default. Set `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` to a value between `1h` and `6h` to change it. KEDA requests a new token once 80% of the current token's lifetime has elapsed.
+Add this entry to KEDA's Helm values to allow the operator to create tokens for `my-app/kafka-lag-reader` and configure their audience:
+
+```yaml
+permissions:
+  operator:
+    restrict:
+      serviceAccountTokenCreationRoles:
+        - name: kafka-lag-reader
+          namespace: my-app
+          audience: kafka
+```
+
+The audience (`kafka` here is only an example) must match an audience accepted by the broker's SASL/OAUTHBEARER listener. The broker must validate the Kubernetes-issued JWT and map its identity to a Kafka principal with `Describe` permission on both the topic and consumer group to read lag. If authentication succeeds but lag retrieval fails with an authorization error, check that principal mapping and its permissions.
+
+Bound tokens last one hour by default. Set `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` between `1h` and `6h` to change it. For JWTs, KEDA attempts to refresh the token on the next SASL handshake after 80% of its lifetime has elapsed. Refresh happens during the handshake, without a background timer.
+
+See the [bound service account token guide](../../authentication-providers/bound-service-account-token/) for advanced audience and permission configuration and the different namespace rules for ClusterTriggerAuthentication.
 
 #### Your AWS MSK has IAM auth:
 
