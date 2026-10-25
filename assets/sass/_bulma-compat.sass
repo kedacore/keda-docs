@@ -1,0 +1,195 @@
+// Selector wrappers for the dark scheme: the OS preference, unless the page is
+// pinned to light, or an explicit [data-theme=dark] (set by baseof.html).
+// `dark` nests under a selector, `dark-root` is for the root element itself.
+=dark
+  @media (prefers-color-scheme: dark)
+    :root:not([data-theme=light]) &
+      @content
+
+  [data-theme=dark] &
+    @content
+
+=dark-root
+  @media (prefers-color-scheme: dark)
+    :root:not([data-theme=light])
+      @content
+
+  [data-theme=dark]
+    @content
+
+// Bulma 1.x moved most styling to CSS variables and changed defaults that are
+// not exposed as Sass settings. Pin the ones the site relies on back to the
+// Bulma 0.8 behaviour (see the `@use ... with (...)` settings in style.sass).
+
+:root
+  --bulma-link-text: #3273dc
+  --bulma-link-text-hover: var(--bulma-text-strong)
+  --bulma-link-text-active: var(--bulma-text-strong)
+  --keda-tint-l: 96%
+  --keda-card-shadow: #e4e4e4
+  --keda-card-text: #0a0a0a
+  --bulma-subtitle-weight: 400
+
++dark-root
+  --bulma-link-text: hsl(var(--bulma-link-h), var(--bulma-link-s), var(--bulma-link-on-scheme-l))
+  --keda-tint-l: 14%
+  --keda-card-shadow: rgba(0, 0, 0, 0.5)
+  --keda-card-text: var(--bulma-text-strong)
+
+// Sections that were light-grey in the light scheme
+.has-background-light, .has-background-white-bis
+  +dark
+    background-color: var(--bulma-scheme-main-bis) !important
+
+.button.is-dark.is-outlined
+  +dark
+    border-color: var(--bulma-border)
+    color: var(--bulma-text)
+
+.badge
+  +dark
+    color: var(--bulma-link-text)
+
+// Bulma 1.x applies `is-N` as a gap on every `.columns`, and on all sides;
+// 0.8 only did so with `is-variable`, and only horizontally.
+.columns.is-8:not(.is-variable)
+  --bulma-column-gap: 0.75rem
+
+// Vertical gaps stay 0.75rem; only the horizontal one follows `is-N`
+.columns
+  margin-top: -0.75rem
+
+  &:not(.is-variable)
+    margin-inline: -0.75rem
+
+  &:last-child
+    margin-bottom: -0.75rem
+
+  &:not(:last-child)
+    margin-bottom: 0.75rem
+
+  > .column
+    padding-bottom: 0.75rem
+    padding-top: 0.75rem
+
+// Buttons: 0.8 padding did not subtract the border width, and coloured
+// buttons kept a (transparent) border that 1.x drops
+.button
+  --bulma-button-weight: 400
+  border-width: 1px
+  box-shadow: none
+  padding: calc(0.5em - 1px) 1em
+
+  &:is(.is-white, .is-black, .is-primary, .is-link, .is-info, .is-success, .is-warning, .is-danger, .is-dark, .is-light, .is-secondary, .is-twitter-blue, .is-slack-green, .is-orange):not(.is-outlined)
+    border-color: transparent
+
+  &.is-outlined
+    border-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l))
+
+  .icon
+    &:first-child:not(:last-child)
+      margin-inline: calc(-0.5em - 1px) 0.25em
+
+    &:last-child:not(:first-child)
+      margin-inline: 0.25em calc(-0.5em - 1px)
+
+    &:first-child:last-child
+      margin-inline: calc(-0.5em - 1px)
+
+// `.footer a` is more specific than 1.x's `.button`, which no longer repeats
+// the color on each `.button.is-*` modifier
+.footer a.button
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l))
+
+// 0.8 spaced wrapped buttons/tags with margins rather than `gap`
+.buttons, .tags
+  gap: 0
+  margin-bottom: -0.5rem
+
+  &:not(:last-child)
+    margin-bottom: 1rem
+
+.buttons .button, .tags .tag
+  margin-bottom: 0.5rem
+
+  &:not(:last-child):not(.is-fullwidth)
+    margin-right: 0.5rem
+
+.pagination
+  margin: -0.25rem
+
+.pagination-previous, .pagination-next, .pagination-link, .pagination-ellipsis
+  margin: 0.25rem
+
+.pagination-previous, .pagination-next
+  padding-left: 0.75em
+  padding-right: 0.75em
+
+.pagination-link.is-primary
+  background-color: #326de6
+  border-color: #326de6
+  color: #fff
+
+// Navbar
+.navbar-item, .navbar-link
+  gap: 0
+
+.navbar-dropdown
+  padding-bottom: 0.5rem
+
+  @media screen and (min-width: 1024px)
+    border-top: 2px solid var(--bulma-border)
+    box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1)
+
+.navbar-divider
+  --bulma-navbar-divider-height: 2px
+
+.navbar-burger
+  --bulma-burger-item-height: 1px
+  --bulma-burger-item-width: 16px
+  border-radius: 0
+  height: 4rem
+  margin-inline-end: 0
+  width: 4rem
+
+  &:hover
+    background-color: rgba(10, 10, 10, 0.05)
+
+  &:active
+    background-color: rgba(10, 10, 10, 0.1)
+
+.dropdown-item
+  color: var(--bulma-text)
+
+.hero:is(.is-dark, .is-black, .is-primary) .subtitle
+  color: rgba(255, 255, 255, 0.9)
+
+code
+  background-color: var(--bulma-scheme-main-bis)
+  border-radius: 0
+  color: #326de6
+
+.content li > ul, .content li > ol, .content li > ul:not(:first-child), .content li > ol:not(:first-child)
+  margin-bottom: 0
+  margin-top: 0.5em
+
+// 0.8 tinted the whole message and only coloured the left border of the body
+.message
+  color: var(--bulma-text)
+
+  @each $name in info, success, warning, danger, primary, link, dark
+    &.is-#{$name}
+      background-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--keda-tint-l))
+
+      .message-body
+        border-style: solid
+        border-width: 0 0 0 4px
+        background-color: transparent
+        border-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l))
+
+  .message-header, .message-body
+    color: var(--bulma-text-strong) !important
+
+  .message-body a:not(.button):not(.tag)
+    color: currentColor
+    text-decoration: underline

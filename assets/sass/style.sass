@@ -1,6 +1,5 @@
 @charset "utf-8"
 
-
 // Site-specific variables here
 $keda-blue: #326de6
 $keda-light-blue: #679bf0
@@ -8,200 +7,70 @@ $twitter-blue: rgb(29, 161, 242)
 $slack-green: #2EB67D
 $k8s-blue: #326ce5
 
-// Initial Bulma imports
-@import "bulma/sass/utilities/initial-variables"
-@import "bulma/sass/utilities/functions"
-
-// Bulma-specific overrides
-$primary: $keda-blue
-$secondary: $keda-light-blue
-$footer-color: $white-bis
-$footer-background-color: $black
-$navbar-height: 4rem
-$navbar-burger-color: $primary
-$code: $primary
-$code-background: $white-bis
-$modal-content-width: 50%
-$list-radius: none
-$input-icon-color: $secondary
-$input-icon-active-color: $primary
-$input-color: $black
-
 // Font overrides
+$family-sans-serif: null
+$family-monospace: null
 {{ if $fonts := site.Params.fonts }}
-// Sans-serif font
 {{ with (index (where $fonts ".type" "sans_serif") 0).name }}
 $family-sans-serif: "{{ . }}", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
 {{ end }}
-
-// Monospace font
 {{ with (index (where $fonts ".type" "monospace") 0).name }}
 $family-monospace: "{{ . }}", monospace
 {{ end }}
 {{ end }}
 
-// Final Bulma imports
-@import "bulma/sass/utilities/derived-variables"
+// Bulma is configured through `@use ... with (...)` so every module sees the
+// same settings and is emitted exactly once (`@import` re-emits shared modules
+// and breaks the cascade). The values below keep the Bulma 0.8 look the site
+// was designed with: neutral greys, the 0.8 palette, 0.8 paddings and radii.
+@use "bulma/sass/utilities/functions" as fn
+@use "bulma/sass/utilities/initial-variables" with ($scheme-h: 0, $scheme-s: 0%, $black: #0a0a0a, $black-bis: #121212, $black-ter: #242424, $grey-darker: #363636, $grey-dark: #4a4a4a, $grey: #7a7a7a, $grey-light: #b5b5b5, $grey-lighter: #dbdbdb, $grey-lightest: #ededed, $white-ter: #f5f5f5, $white-bis: #fafafa, $white: #ffffff, $orange: #ff470f, $yellow: #ffdd57, $green: #48c774, $turquoise: #00d1b2, $cyan: #3298dc, $blue: #3273dc, $purple: #b86bff, $red: #f14668, $family-sans-serif: $family-sans-serif, $family-monospace: $family-monospace, $radius-small: 2px, $radius: 4px, $radius-medium: 6px, $radius-large: 6px)
+@use "bulma/sass/utilities/derived-variables" with ($primary: $keda-blue, $info: #3298dc, $success: #48c774, $warning: #ffdd57, $danger: #f14668, $link: #3273dc, $light: #f5f5f5, $dark: #363636, $code: $keda-blue, $code-background: #fafafa, $custom-colors: ("dark": (#363636, #ffffff), "orange": (#ff470f, #ffffff), "success": (#48c774, #ffffff), "info": (#3298dc, #ffffff), "danger": (#f14668, #ffffff), "secondary": ($keda-light-blue, #fafafa), "slack-green": ($slack-green, #ffffff), "twitter-blue": ($twitter-blue, #ffffff)))
+@use "bulma/sass/utilities/css-variables"
+@use "bulma/sass/utilities/mixins" as mx
+@use "bulma/sass/themes"
 
-$card-border: 1.5px solid $grey-lighter
+// Base
+@use "bulma/sass/base/minireset"
+@use "bulma/sass/base/generic" with ($strong-weight: 700)
+@use "bulma/sass/base/animations"
+@use "bulma/sass/helpers"
 
-$colors: mergeColorMaps(("secondary": ($secondary, $white-bis), "slack-green": ($slack-green, $white), "twitter-blue": ($twitter-blue, $white), "orange": ($orange, $white)), $colors)
-
-$card-shadow: none
-$card-color: $black
-//$card-content-padding: 1.5rem 2rem
-//$card-header-padding: 1rem $card-content-padding
-$card-shadow: none
-$card-header-weight: $weight-bold
-$card-header-shadow:  0 0.125em 0.125em rgba($scheme-invert, 0.1)
-$card-footer-border-top: $card-border
-$message-header-color: $dark !important
-$message-body-color: $dark !important
-$message-header-padding: 1em 1.25em
-$message-body-padding: $message-header-padding
-$hero-body-padding: 4rem 1.5rem
-
-// Bulma core
-@import "bulma/sass/utilities"
-@import "bulma/sass/utilities/mixins"
-@import "bulma/sass/utilities/css-variables"
-@import "bulma/sass/themes"
-@import "bulma/sass/base"
-@import "bulma/sass/helpers"
-
-:root
-  --bulma-family-primary: "Inria Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
-  --bulma-family-secondary: "Inria Sans", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
-  --bulma-family-code: "Roboto Mono", monospace
-
-@import "bulma/sass/layout/container"
-@import "bulma/sass/grid/columns"
-@import "bulma/sass/layout/hero"
-@import "bulma/sass/layout/section"
-@import "bulma/sass/layout/footer"
+// Layout
+@use "bulma/sass/layout/container"
+@use "bulma/sass/grid/columns"
+@use "bulma/sass/layout/hero" with ($hero-body-padding: 4rem 1.5rem, $hero-body-padding-tablet: 4rem 1.5rem, $hero-body-padding-medium: 9rem 1.5rem, $hero-body-padding-large: 18rem 1.5rem)
+@use "bulma/sass/layout/section" with ($section-padding-desktop: 3rem 1.5rem, $section-padding-medium: 9rem 1.5rem, $section-padding-large: 18rem 1.5rem)
+@use "bulma/sass/layout/footer" with ($footer-color: #fafafa, $footer-background-color: #0a0a0a)
+@use "bulma/sass/layout/level"
+@use "bulma/sass/layout/media"
 
 // Elements
-
-// @import "bulma/sass/elements/box"
-@import "bulma/sass/elements/button"
-@import "bulma/sass/elements/content"
-@import "bulma/sass/elements/icon"
-// @import "bulma/sass/elements/image"
-// @import "bulma/sass/elements/notification"
-// @import "bulma/sass/elements/progress"
-// @import "bulma/sass/elements/table"
-@import "bulma/sass/elements/tag"
-@import "bulma/sass/elements/title"
-// @import "bulma/sass/elements/other"
+@use "bulma/sass/elements/button" with ($button-padding-vertical: 0.5em, $button-padding-horizontal: calc(1em + 1px), $button-border-width: 1px)
+@use "bulma/sass/elements/content" with ($content-heading-weight: 600)
+@use "bulma/sass/elements/icon"
+@use "bulma/sass/elements/tag"
+@use "bulma/sass/elements/title" with ($title-weight: 600)
 
 // Forms
-@import "bulma/sass/form/shared"
-@import "bulma/sass/form/input-textarea"
-// @import "bulma/sass/form/checkbox-radio"
-// @import "bulma/sass/form/select"
-// @import "bulma/sass/form/file"
-@import "bulma/sass/form/tools"
+@use "bulma/sass/form/shared"
+@use "bulma/sass/form/input-textarea"
+@use "bulma/sass/form/tools"
 
 // Components
-// @import "bulma/sass/components/breadcrumb"
-@import "bulma/sass/components/card"
-@import "bulma/sass/components/dropdown"
-@import "bulma/sass/layout/level"
-@import "bulma/sass/layout/media"
-@import "bulma/sass/components/menu"
-@import "bulma/sass/components/message"
-@import "bulma/sass/components/modal"
-@import "bulma/sass/components/navbar"
-@import "bulma/sass/components/pagination"
-// @import "bulma/sass/components/panel"
-// @import "bulma/sass/components/tabs"
+@use "bulma/sass/components/card" with ($card-radius: 0, $card-shadow: none, $card-color: var(--keda-card-text), $card-header-weight: 700, $card-header-shadow: 0 0.125em 0.125em rgba(#0a0a0a, 0.1), $card-footer-border-top: 1.5px solid #dbdbdb)
+@use "bulma/sass/components/dropdown"
+@use "bulma/sass/components/menu"
+@use "bulma/sass/components/message" with ($message-body-color: #363636, $message-header-padding: 1em 1.25em, $message-body-padding: 1em 1.25em, $message-header-weight: 700, $message-body-radius: 4px)
+@use "bulma/sass/components/modal" with ($modal-content-width: 50%)
+@use "bulma/sass/components/navbar" with ($navbar-height: 4rem, $navbar-burger-color: $keda-blue)
+@use "bulma/sass/components/pagination"
 
 // Custom CSS
+@import "bulma-compat"
 @import "card"
 @import "content"
 @import "nav"
-
-.columns.is-8:not(.is-variable)
-  --bulma-column-gap: 0.75rem
-
-.section
-  padding-left: 1.5rem
-  padding-right: 1.5rem
-
-.columns.is-variable
-  margin-bottom: -0.75rem
-  margin-top: -0.75rem
-
-  .column
-    padding-bottom: 0.75rem
-    padding-top: 0.75rem
-
-.buttons
-  gap: 0
-  margin-bottom: -0.5rem
-
-  .button
-    margin-bottom: 0.5rem
-    margin-right: 0.5rem
-    padding-left: 1rem
-    padding-right: 1rem
-
-    &:last-child
-      margin-right: 0
-
-.button .icon:first-child:not(:last-child)
-  margin-left: -9px
-
-.doc-hero .buttons.are-small .button
-  border-radius: 2px
-  padding-left: 0.75rem
-  padding-right: 0.75rem
-
-.doc-hero .buttons.are-small .dropdown .button .icon
-  margin-right: -7px
-
-.doc-hero .buttons.are-small > .button .icon
-  margin-left: -7px
-
-.navbar-item
-  gap: 0
-
-.navbar-link
-  gap: 0
-
-#navbar-search .DocSearch-Button
-  width: 152.6px
-
-.navbar-end > .navbar-item:last-child .button
-  padding-left: 16px
-  padding-right: 16px
-  width: 40px
-
-.navbar-end > a.navbar-item:hover
-  background-color: transparent !important
-  color: #00aeff !important
-
-.navbar-end > .navbar-item:last-child .button .icon
-  margin-left: -9px
-  margin-right: -9px
-
-.navbar-end > .navbar-item:last-child .button.is-white
-  color: #0a0a0a
-
-.navbar-end > .navbar-item:last-child .button.is-slack-green
-  background-color: rgb(46, 182, 125)
-
-.button
-  border-radius: 4px
-
-.hero .button.is-black.is-inverted
-  color: #0a0a0a
-
-  &:hover
-    background-color: #f2f2f2 !important
-
-.button.is-twitter-blue
-  background-color: rgb(29, 161, 242)
 
 *, *::before, *::after
   max-width: 100vw
@@ -212,8 +81,12 @@ $hero-body-padding: 4rem 1.5rem
 .has-extra-sm-right-margin
   margin-right: 0.5rem
 
+// Bulma 1.x dropped the legacy `is-paddingless` / `is-radiusless` modifiers
 .is-paddingless
   padding: 0 !important
+
+.is-radiusless
+  border-radius: 0 !important
 
 .list-item
   padding: 1rem 1.5rem
@@ -239,7 +112,7 @@ $hero-body-padding: 4rem 1.5rem
 .is-sticky
   position: sticky
   position: -webkit-sticky
-  top: $navbar-height + 2.5rem
+  top: 6.5rem
 
 .is-page
   display: flex
@@ -251,11 +124,11 @@ $hero-body-padding: 4rem 1.5rem
     overflow: hidden
 
 =logo($desk, $tab, $touch)
-  +desktop
+  +mx.desktop
     width: $desk
-  +tablet-only
+  +mx.tablet-only
     width: $tab
-  +mobile
+  +mx.mobile
     width: $touch
 
 .is-cncf-logo
@@ -272,8 +145,8 @@ $hero-body-padding: 4rem 1.5rem
   max-height: 8rem
 
 .is-bold-letter
-  color: $secondary
-  border-bottom: 4px solid $primary
+  color: $keda-light-blue
+  border-bottom: 4px solid $keda-blue
 
 .title
   .icon
@@ -299,11 +172,11 @@ $hero-body-padding: 4rem 1.5rem
 
 .footer
   .buttons
-    +touch
+    +mx.touch
       margin-top: 1rem
 
   a
-    color: $secondary
+    color: $keda-light-blue
 
     &:hover
       color: #00aeff
@@ -318,7 +191,7 @@ hr
 
 .subtitle
   a
-    color: $secondary !important
+    color: $keda-light-blue !important
 
     &:hover
       color: $keda-blue !important
@@ -336,10 +209,10 @@ hr
   box-shadow: none !important
 
 .is-info-light
-  background: hsl(206, 70%, 96%)
+  background: hsl(206, 70%, var(--keda-tint-l))
 
 .badge
-  border: 1px solid #dbdbdb
+  border: 1px solid var(--bulma-border)
   border-radius: 20px
   padding: 3px 6px
   color: blue
