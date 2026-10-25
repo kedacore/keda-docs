@@ -34,6 +34,7 @@
   --keda-tint-l: 96%
   --keda-card-shadow: #e4e4e4
   --keda-card-text: #0a0a0a
+  --keda-text-primary: #326de6
   --keda-dropdown-hover: hsl(0, 0%, 96%)
   --bulma-subtitle-weight: 400
 
@@ -247,7 +248,10 @@ code
         background-color: transparent
         border-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l))
 
-  .message-header, .message-body
+  .message-header
+    color: #363636 !important
+
+  .message-body
     color: var(--bulma-text-strong) !important
 
   .message-body a:not(.button):not(.tag)
@@ -308,3 +312,43 @@ a:focus-visible:not(.button)
 
 .control.has-icons-left .input:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon
   color: $keda-blue
+
+// Text colours Bulma doesn't adapt to the dark scheme (dark greys on a dark
+// background, the primary blue below AA contrast)
++dark-root
+  --keda-text-primary: hsl(var(--bulma-primary-h), var(--bulma-primary-s), var(--bulma-primary-on-scheme-l))
+
+.has-text-dark
+  +dark
+    color: var(--bulma-text-strong) !important
+
+.has-text-grey-dark
+  +dark
+    color: var(--bulma-text) !important
+
+.has-text-grey
+  +dark
+    color: var(--bulma-text) !important
+
+.has-text-primary:not(.button *)
+  +dark
+    color: var(--keda-text-primary) !important
+
+// scaler-search.js sets the badge colour inline, hence `!important`
+.badge, p.badge
+  +dark
+    color: hsl(300, 60%, 78%) !important
+
+code
+  +dark
+    color: var(--keda-text-primary)
+
+.button.is-primary.is-outlined:not(:hover, :focus)
+  +dark
+    color: var(--keda-text-primary)
+
+// Cards are separated from the page by a shadow, which is invisible on a dark
+// background: give them a slightly lighter surface there
+.card:not(.is-dark, .has-no-shadow)
+  +dark
+    background-color: var(--bulma-scheme-main-bis)
