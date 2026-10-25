@@ -28,7 +28,7 @@ $family-monospace: "{{ . }}", monospace
 @use "bulma/sass/utilities/derived-variables" with ($primary: $keda-blue, $info: #3298dc, $success: #48c774, $warning: #ffdd57, $danger: #f14668, $link: #3273dc, $light: #f5f5f5, $dark: #363636, $code: $keda-blue, $code-background: #fafafa, $custom-colors: ("dark": (#363636, #ffffff), "orange": (#ff470f, #ffffff), "success": (#48c774, #ffffff), "warning": (#ffdd57, rgba(0, 0, 0, 0.7)), "info": (#3298dc, #ffffff), "danger": (#f14668, #ffffff), "secondary": ($keda-light-blue, #fafafa), "slack-green": ($slack-green, #ffffff), "twitter-blue": ($twitter-blue, #ffffff)))
 @use "bulma/sass/utilities/css-variables"
 @use "bulma/sass/utilities/mixins" as mx
-@use "bulma/sass/themes"
+@use "light-theme"
 
 // Base
 @use "bulma/sass/base/minireset"
@@ -58,7 +58,7 @@ $family-monospace: "{{ . }}", monospace
 @use "bulma/sass/form/tools"
 
 // Components
-@use "bulma/sass/components/card" with ($card-radius: 0, $card-shadow: none, $card-color: var(--keda-card-text), $card-header-weight: 700, $card-header-shadow: 0 0.125em 0.125em rgba(#0a0a0a, 0.1), $card-footer-border-top: 1.5px solid #dbdbdb)
+@use "bulma/sass/components/card" with ($card-radius: 0, $card-shadow: none, $card-color: #0a0a0a, $card-header-weight: 700, $card-header-shadow: 0 0.125em 0.125em rgba(#0a0a0a, 0.1), $card-footer-border-top: 1.5px solid #dbdbdb)
 @use "bulma/sass/components/dropdown"
 @use "bulma/sass/components/menu"
 @use "bulma/sass/components/message" with ($message-body-color: #363636, $message-header-padding: 1em 1.25em, $message-body-padding: 1em 1.25em, $message-header-weight: 700, $message-body-radius: 4px)
@@ -209,7 +209,7 @@ hr
   box-shadow: none !important
 
 .is-info-light
-  background: hsl(206, 70%, var(--keda-tint-l))
+  background: hsl(206, 70%, 96%)
 
 .badge
   border: 1px solid var(--bulma-border)

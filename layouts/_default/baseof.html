@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html {{- with site.Language.Locale }} lang="{{ . }}" {{- end }}>
   <head>
-    <script>
-      // Follow the OS colour scheme; DocSearch and Bulma both key off [data-theme]
-      (function () {
-        var query = window.matchMedia("(prefers-color-scheme: dark)");
-        var apply = function () { document.documentElement.setAttribute("data-theme", query.matches ? "dark" : "light"); };
-        apply();
-        query.addEventListener("change", apply);
-      })();
-    </script>
     {{ partial "meta.html" . }}
     <title>
       {{- block "title" . -}}

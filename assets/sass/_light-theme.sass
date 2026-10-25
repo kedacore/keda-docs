@@ -1,0 +1,15 @@
+// Bulma's "themes" bundle minus the dark theme: the site has always been
+// light-only, so neither prefers-color-scheme: dark nor [data-theme=dark]
+// must restyle it.
+@use "bulma/sass/utilities/initial-variables" as iv
+@use "bulma/sass/utilities/css-variables" as cv
+@use "bulma/sass/themes/light"
+@use "bulma/sass/themes/setup"
+
+#{iv.$variables-host}
+  @include light.light-theme
+  @include setup.setup-theme
+
+@include cv.bulma-theme($name: "light")
+  @include light.light-theme
+  @include setup.setup-theme
