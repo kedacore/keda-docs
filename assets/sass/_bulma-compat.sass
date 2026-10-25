@@ -25,6 +25,12 @@
   --bulma-link-text: #3273dc
   --bulma-link-text-hover: var(--bulma-text-strong)
   --bulma-link-text-active: var(--bulma-text-strong)
+  // 0.8 darkened by 2.5% on hover for backgrounds and 10% for text colours
+  --bulma-hover-background-l-delta: -2.5%
+  --bulma-active-background-l-delta: -5%
+  --bulma-hover-border-l-delta: -15%
+  --bulma-hover-color-l-delta: -10%
+  --bulma-active-color-l-delta: -15%
   --keda-tint-l: 96%
   --keda-card-shadow: #e4e4e4
   --keda-card-text: #0a0a0a
@@ -99,7 +105,20 @@
 // `.footer a` is more specific than 1.x's `.button`, which no longer repeats
 // the color on each `.button.is-*` modifier
 .footer a.button
-  color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l))
+  &, &:hover, &:focus, &:active
+    color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-color-l))
+
+// 0.8 had a global `a:hover`; keep it at the same (low) specificity so
+// components and helpers still win
+a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .pagination-link, .pagination-previous, .pagination-next, .tag, .title, [class*="has-text-"]))
+  color: var(--bulma-link-text-hover)
+
+// The transparent navbar sits on the dark pattern: items must not get the
+// light hover/active background Bulma 1.x gives them
+.navbar.is-transparent
+  a.navbar-item, .navbar-link
+    &:hover, &:focus, &:focus-within, &:active, &.is-active
+      background-color: transparent
 
 // 0.8 spaced wrapped buttons/tags with margins rather than `gap`
 .buttons, .tags
@@ -120,6 +139,10 @@
 
 .pagination-previous, .pagination-next, .pagination-link, .pagination-ellipsis
   margin: 0.25rem
+
+.pagination-link
+  padding-left: 0.5em
+  padding-right: 0.5em
 
 .pagination-previous, .pagination-next
   padding-left: 0.75em
@@ -193,3 +216,37 @@ code
   .message-body a:not(.button):not(.tag)
     color: currentColor
     text-decoration: underline
+
+.button.is-black.is-inverted:hover
+  background-color: #f2f2f2
+
+// 0.8 filled outlined buttons on hover/focus and ringed coloured buttons in
+// their own colour on focus
+$button-colors: white, primary, link, info, success, warning, danger, dark, black, light, secondary, orange, slack-green, twitter-blue
+
+@each $name in $button-colors
+  .button.is-#{$name}
+    &.is-outlined:is(:hover, :focus)
+      background-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l))
+      border-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l))
+      color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-invert-l))
+
+    &:focus:not(:active)
+      box-shadow: 0 0 0 0.125em hsla(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l), 0.25)
+
+.pagination-link.is-primary:hover
+  background-color: hsl(var(--bulma-primary-h), var(--bulma-primary-s), calc(var(--bulma-primary-l) + var(--bulma-hover-background-l-delta)))
+
+// 0.8 used the browser's default focus ring on links, and none on DocSearch
+a:focus-visible:not(.button)
+  outline: revert
+
+.DocSearch-Button:focus-visible
+  outline: none
+
+.input, .textarea
+  color: var(--keda-card-text)
+
+// 1.x pins icons to their size; 0.8 let them shrink inside tight flex rows
+.icon
+  flex-shrink: 1
