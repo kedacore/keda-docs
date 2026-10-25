@@ -34,6 +34,7 @@
   --keda-tint-l: 96%
   --keda-card-shadow: #e4e4e4
   --keda-card-text: #0a0a0a
+  --keda-dropdown-hover: hsl(0, 0%, 96%)
   --bulma-subtitle-weight: 400
 
 +dark-root
@@ -41,6 +42,7 @@
   --keda-tint-l: 14%
   --keda-card-shadow: rgba(0, 0, 0, 0.5)
   --keda-card-text: var(--bulma-text-strong)
+  --keda-dropdown-hover: hsl(0, 0%, 20%)
 
 // Sections that were light-grey in the light scheme
 .has-background-light, .has-background-white-bis
@@ -122,7 +124,7 @@ a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .paginat
 // get the light hover/active background Bulma 1.x gives them
 @media screen and (min-width: 1024px)
   .navbar.is-transparent
-    a.navbar-item, .navbar-link
+    a.navbar-item:not(.navbar-dropdown *), .navbar-link
       &:hover, &:focus, &:focus-within, &:active, &.is-active
         background-color: transparent
 
@@ -170,12 +172,12 @@ a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .paginat
     border-top: 2px solid var(--bulma-border)
     box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1)
 
-// Dropdown items darken to the strongest text colour on hover (no background)
-.navbar-dropdown a.navbar-item:is(:hover, :focus, :focus-within, :active)
+// Dropdown items: strongest text colour plus a light highlight on hover.
+// Bulma 0.8 declared the highlight too, but an `!important` rule for the
+// transparent navbar hid it, which made the hover almost invisible.
+.navbar .navbar-dropdown a.navbar-item:is(:hover, :focus, :focus-within, :active)
+  background-color: var(--keda-dropdown-hover)
   color: var(--keda-card-text)
-
-  @media screen and (min-width: 1024px)
-    background-color: transparent
 
 .navbar-divider
   --bulma-navbar-divider-height: 2px
