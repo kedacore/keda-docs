@@ -118,12 +118,13 @@
 a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .pagination-link, .pagination-previous, .pagination-next, .tag, .title, [class*="has-text-"]))
   color: var(--bulma-link-text-hover)
 
-// The transparent navbar sits on the dark pattern: items must not get the
-// light hover/active background Bulma 1.x gives them
-.navbar.is-transparent
-  a.navbar-item, .navbar-link
-    &:hover, &:focus, &:focus-within, &:active, &.is-active
-      background-color: transparent
+// On desktop the transparent navbar sits on the dark pattern: items must not
+// get the light hover/active background Bulma 1.x gives them
+@media screen and (min-width: 1024px)
+  .navbar.is-transparent
+    a.navbar-item, .navbar-link
+      &:hover, &:focus, &:focus-within, &:active, &.is-active
+        background-color: transparent
 
 // 0.8 spaced wrapped buttons/tags with margins rather than `gap`
 .buttons, .tags
@@ -169,6 +170,13 @@ a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .paginat
     border-top: 2px solid var(--bulma-border)
     box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1)
 
+// Dropdown items darken to the strongest text colour on hover (no background)
+.navbar-dropdown a.navbar-item:is(:hover, :focus, :focus-within, :active)
+  color: var(--keda-card-text)
+
+  @media screen and (min-width: 1024px)
+    background-color: transparent
+
 .navbar-divider
   --bulma-navbar-divider-height: 2px
 
@@ -179,6 +187,18 @@ a:hover:where(:not(.button, .navbar-item, .navbar-link, .dropdown-item, .paginat
   height: 4rem
   margin-inline-end: 0
   width: 4rem
+
+  // 0.8's bars were 5px apart with the middle one 1px above the centre;
+  // 1.x centres it and spaces the others by `gap`
+  span
+    &:nth-child(1), &:nth-child(2)
+      top: calc(50% - 1px)
+
+    &:nth-child(3)
+      bottom: calc(50% + 5px)
+
+    &:nth-child(4)
+      top: calc(50% + 4px)
 
   &:hover
     background-color: rgba(10, 10, 10, 0.05)
@@ -276,3 +296,13 @@ a:focus-visible:not(.button)
 // 0.8's yellow uses translucent black text
 .tag.is-warning, .button.is-warning
   color: rgba(0, 0, 0, 0.7)
+
+// 0.8 tinted the search icon and focused the input with a thinner ring
+:root
+  --bulma-focus-shadow-size: 0 0 0 0.125em
+
+.control.has-icons-left .icon, .control.has-icons-right .icon
+  color: $keda-light-blue
+
+.control.has-icons-left .input:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon
+  color: $keda-blue
