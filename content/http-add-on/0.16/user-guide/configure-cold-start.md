@@ -1,10 +1,11 @@
 +++
 title = "Configure Cold-Start Behavior"
-description = "Placeholder responses, fallback services, and response headers for cold-start scenarios"
+description = "Placeholder responses, fallback services, pending request limits, and response headers for cold-start scenarios"
 +++
 
 When a request arrives for a backend that has been scaled to zero, the interceptor holds the request until the backend becomes ready.
 You can configure a placeholder response, a fallback service, or both to control what happens during a cold start.
+You can also limit how many requests are held while the backend scales up.
 
 ## Placeholder response
 
@@ -136,6 +137,41 @@ coldStart:
       name: fallback-svc
       port: 8080
 ```
+
+## Limiting pending requests
+
+While a backend has no ready endpoints, the interceptor holds incoming requests until an endpoint becomes ready.
+Each held request keeps a connection and its buffers open, so a request burst against a scaled-to-zero app can exhaust an interceptor pod's memory.
+Use `coldStart.maxPendingRequests` to bound how many requests a route holds:
+
+```yaml
+coldStart:
+  maxPendingRequests: 500
+  overflow: Reject
+```
+
+Requests arriving when the limit is reached are rejected with HTTP `503`.
+Rejections are tracked by the `interceptor_cold_start_rejections_total` metric (see [Metrics Reference](../../reference/metrics/)).
+
+Set `overflow` to `Placeholder` to serve the configured placeholder response instead of an error:
+
+```yaml
+coldStart:
+  maxPendingRequests: 500
+  overflow: Placeholder
+  placeholder:
+    response:
+      body: "<h1>Loading...</h1>"
+      headers:
+        Refresh: "5"
+      statusCode: 503
+```
+
+With this combination, the first 500 requests are held until the backend becomes ready, and only overflowing requests receive the placeholder.
+A placeholder without `maxPendingRequests` keeps its default behavior: every request receives the placeholder immediately and no requests are held.
+
+The limit applies per interceptor replica: with 3 interceptor replicas, up to 1,500 requests can be held cluster-wide.
+When unset, the global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` default applies (`0` — unlimited, see [Configure the Interceptor](../../operations/configure-interceptor/#cold-start-pending-request-limit)).
 
 ## Cold-start response header
 
