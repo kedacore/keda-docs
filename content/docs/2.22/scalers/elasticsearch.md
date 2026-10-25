@@ -46,7 +46,7 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using a username/password or apiKey/cloudID if you're using using ElasticSearch on Elastic Cloud.
+You can authenticate by using a username/password or apiKey/cloudID if you're using ElasticSearch on Elastic Cloud.
 
 **Password Authentication:**
 
