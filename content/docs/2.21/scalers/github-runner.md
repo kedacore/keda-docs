@@ -36,7 +36,7 @@ triggers:
       # Optional: The name of the application ID from the GitHub App
       applicationID: "{applicatonID}"
       # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
-      installationID: "{installationID}"      
+      installationID: "{installationID}"
     authenticationRef:
       name: personalAccessToken or appKey triggerAuthentication Reference
 ```
@@ -57,7 +57,7 @@ triggers:
 
 *Parameters from Environment Variables*
 
-You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
+You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`,
 the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `labelsFromEnv: "RUNNER_LABELS"` will use the environment variable `RUNNER_LABELS` as the source fo the `labels` parameter.
 
 - `githubApiURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
@@ -93,8 +93,6 @@ You can use the GitHub App to authenticate with GitHub. This is useful if you wa
         - Administration - Read & Write
         - Metadata - Read-only
     - **Organization permissions**
-        - Actions - Read-only
-        - Metadata - Read-only
         - Self-hosted Runners - Read & write
 5. Download the private key for the GitHub App. ([docs](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key))
 6. Install the GitHub App on your organization or repository. ([docs](https://docs.github.com/en/developers/apps/installing-github-apps))
@@ -135,7 +133,7 @@ Careful design of how you design your repository request layout and configure th
 - Using the `repos` parameter as opposed to just `owner` means that the Github API isn't queried to get a list of repositories.
 - Setting `enableEtags` to `true` can reduce the rate limit consumption, as this makes [conditional requests](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#use-conditional-requests-if-appropriate) against the Github API by passing the Etag of the last request to the URL, if a `304: Not modified` response is returned, this will not count against the rate limit. In this case the scaler will use the results from the last query to the URL where the response was `200: Success`.
 
-The github scaler [handles rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2026-03-10#handle-rate-limit-errors-appropriately) by waiting until X-RateLimit-Reset or Retry-After times until the github API is queried when rate limited. During this time it will return the cached queue length which is updated with each successful request. 
+The github scaler [handles rate limit errors appropriately](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2026-03-10#handle-rate-limit-errors-appropriately) by waiting until X-RateLimit-Reset or Retry-After times until the github API is queried when rate limited. During this time it will return the cached queue length which is updated with each successful request.
 
 **Fine-Tuning**
 

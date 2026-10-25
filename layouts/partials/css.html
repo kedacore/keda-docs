@@ -2,8 +2,9 @@
 {{ $includePaths := (slice "node_modules") -}}
 {{ $sass         := "sass/style.sass" -}}
 {{ $cssOutput    := "css/style.css" -}}
-{{ $devOpts      := (dict "targetPath" $cssOutput "includePaths" $includePaths "enableSourceMap" true) -}}
-{{ $prodOpts     := (dict "targetPath" $cssOutput "includePaths" $includePaths "outputStyle" "compressed") -}}
+{{ $deprecations := (slice "import") -}}
+{{ $devOpts      := (dict "targetPath" $cssOutput "includePaths" $includePaths "transpiler" "dartsass" "enableSourceMap" true "silenceDeprecations" $deprecations "silenceDependencyDeprecations" true) -}}
+{{ $prodOpts     := (dict "targetPath" $cssOutput "includePaths" $includePaths "transpiler" "dartsass" "outputStyle" "compressed" "silenceDeprecations" $deprecations "silenceDependencyDeprecations" true) -}}
 {{ $cssOpts      := cond $inDevMode $devOpts $prodOpts -}}
 {{ $css          := resources.Get $sass | resources.ExecuteAsTemplate $sass . | css.Sass $cssOpts -}}
 {{ if $inDevMode -}}

@@ -38,7 +38,9 @@ The interceptor supports HTTP/1.1, HTTP/2 (both h2c and h2 over TLS), gRPC, and 
 For cleartext backends, the interceptor defaults to HTTP/1.1 unless the target Service port sets `appProtocol: kubernetes.io/h2c`, which switches the backend connection to HTTP/2 cleartext (required for gRPC).
 For TLS backends, the protocol is negotiated automatically via ALPN.
 
-The interceptor forwards requests to the backend's Kubernetes Service, relying on standard Kubernetes service load balancing for distribution across pods.
+By default, the interceptor routes each request directly to a ready pod IP instead of the Service ClusterIP, bypassing kube-proxy and other Service-layer features such as Service-level NetworkPolicy, session affinity, and topology-aware routing.
+Set `KEDA_HTTP_DIRECT_POD_ROUTING=false` to forward through the Service and use standard Kubernetes service load balancing instead.
+See [Configure the Interceptor](../../operations/configure-interceptor/#direct-pod-routing).
 
 The interceptor deployment is itself auto-scaled by KEDA via a ScaledObject created by the Helm chart.
 

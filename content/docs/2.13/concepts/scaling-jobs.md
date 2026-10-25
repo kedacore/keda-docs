@@ -167,7 +167,7 @@ Select a Scaling Strategy. Possible values are `default`, `custom`, or `accurate
  >```go
  >maxScale = min(scaledJob.MaxReplicaCount(), divideWithCeil(queueLength, targetAverageValue))
  >```
- >That means it will use the value of `queueLength` divided by `targetAvarageValue` unless it is exceeding the `MaxReplicaCount`.
+ >That means it will use the value of `queueLength` divided by `targetAverageValue` unless it is exceeding the `MaxReplicaCount`.
 >
 >`RunningJobCount` represents the number of jobs that are currently running or have not finished yet.
 >

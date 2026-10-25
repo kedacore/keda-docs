@@ -36,7 +36,7 @@ triggers:
       # Optional: The name of the application ID from the GitHub App
       applicationID: "{applicatonID}"
       # Optional: The name of the installation ID from the GitHub App once installed into Org or repo.
-      installationID: "{installationID}"      
+      installationID: "{installationID}"
     authenticationRef:
       name: personalAccessToken or appKey triggerAuthentication Reference
 ```
@@ -57,7 +57,7 @@ triggers:
 
 *Parameters from Environment Variables*
 
-You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`, 
+You can access each parameter from above using environment variables. When you specify the parameter in metadata with a suffix of `FromEnv`,
 the scaler will use the value from the environment variable. The environment variable must be available to the manifest. e.g. `labelsFromEnv: "RUNNER_LABELS"` will use the environment variable `RUNNER_LABELS` as the source fo the `labels` parameter.
 
 - `githubApiURLFromEnv` - The URL of the GitHub API, defaults to https://api.github.com. You should only need to modify this if you have your own GitHub Appliance. (Optional)
@@ -93,8 +93,6 @@ You can use the GitHub App to authenticate with GitHub. This is useful if you wa
         - Administration - Read & Write
         - Metadata - Read-only
     - **Organization permissions**
-        - Actions - Read-only
-        - Metadata - Read-only
         - Self-hosted Runners - Read & write
 5. Download the private key for the GitHub App. ([docs](https://docs.github.com/en/developers/apps/authenticating-with-github-apps#generating-a-private-key))
 6. Install the GitHub App on your organization or repository. ([docs](https://docs.github.com/en/developers/apps/installing-github-apps))

@@ -1,0 +1,70 @@
++++
+title= "Integrate with OpenTelemetry Collector (Experimental)"
+description= "Detail of integrating OpenTelemetry Collector in KEDA"
+availability = "v2.12+"
+project = "OpenTelemetry"
++++
+
+## Push Metrics to OpenTelemetry Collector (Experimental)
+
+### Operator
+
+The KEDA Operator supports outputting metrics to the OpenTelemetry collector. The parameter `--enable-opentelemetry-metrics=true` needs to be set. KEDA will push metrics to the OpenTelemetry collector specified by the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable. `OTEL_EXPORTER_OTLP_PROTOCOL` will also be used to choose HTTP or GRPC client. Other environment variables in OpenTelemetry are also supported (https://opentelemetry.io/docs/concepts/sdk-configuration/otlp-exporter-configuration/). Here is an example configuration of the operator: 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keda-operator
+  ...
+      containers:
+        - name: keda-operator
+          image: ghcr.io/kedacore/keda:latest
+          command:
+            - /keda
+          args:
+            --enable-opentelemetry-metrics=true
+            ...
+          ...
+          env:
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://opentelemetry-collector.default.svc.cluster.local:4318"
+```
+The following metrics are being gathered:
+
+| Metric | Description |
+| ------ | ----------- |
+| `keda.build.info` | Info metric, with static information about KEDA build like: version, git commit and Golang runtime info. |
+| `keda.scaler.active` | This metric marks whether the particular scaler is active (value == 1) or in-active (value == 0). |
+| `keda.scaled.object.paused` | This metric indicates whether a ScaledObject is paused (value == 1) or un-paused (value == 0). |
+| `keda.scaler.metrics.value` | The current value for each scaler's metric that would be used by the HPA in computing the target average. |
+| `keda.scaler.metrics.latency.seconds` | The latency of retrieving current metric from each scaler. |
+| `keda.scaler.errors` | The number of errors that have occurred for each scaler. |
+| `keda.scaler.errors.total` | The total number of errors encountered for all scalers. |
+| `keda.scaler.empty.upstream.responses` | The number of times a scaler query returned an empty result from its upstream source, such as a Prometheus query returning no results. |
+| `keda.scaled.object.errors` | The number of errors that have occurred for each ScaledObject. |
+| `keda.scaled.job.errors` | The number of errors that have occurred for each ScaledJob. |
+| `keda.resource.registered.count` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
+| `keda.trigger.registered.count` | Total number of triggers per trigger type. |
+| `keda.internal.scale.loop.latency.seconds` | Total deviation between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
+| `keda.cloudeventsource.events.emitted.count` | Measured emitted cloudevents with destination of this emitted event (eventsink) and emitted state. |
+| `keda.cloudeventsource.events.queued` | The number of events that are in the emitting queue. |
+| `keda.scaler.http.requests.count` | Total number of outbound HTTP requests issued during scaler metric collection. |
+| `keda.scaler.http.request.duration.seconds` | Histogram of the duration in seconds of outbound HTTP requests issued during scaler metric collection. |
+| `keda.rpc.client.call.count` | Total number of completed external scaler gRPC calls. |
+| `keda.rpc.client.call.duration` | Histogram of external scaler gRPC call duration in seconds. |
+| `keda.rpc.client.stream.message.count` | Total number of payloads successfully sent or received by external scaler gRPC streams. |
+
+The external scaler gRPC client metrics include the `scaler`, `rpc.system.name`, and `rpc.method` attributes. Completed calls also include `rpc.response.status_code`, while stream messages include `rpc.message.type`. When `--enable-high-cardinality-metrics-labels=true` is configured, they additionally include `namespace`, `scaled_resource`, `trigger_name`, and `metric_name`.
+
+The stream message counter records payload events with `rpc.message.type` set to `SENT` or `RECEIVED`; it excludes unary messages and failed receives, including EOF. For streaming calls, completion and duration are recorded when the stream ends; duration measures the full stream lifetime.
+
+By default, `keda.scaler.http.request.duration.seconds` is emitted with low-cardinality attributes such as `scaler` and `status_code`. You can add the high-cardinality `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` attributes with `--enable-high-cardinality-metrics-labels=true` on the `keda-operator` deployment.
+
+#### Deprecated metrics
+
+The following metrics are exposed as well, but are deprecated and will be removed in KEDA v2.16.
+
+| `keda.scaler.metrics.latency` | The latency of retrieving current metric from each scaler. |
+| `keda.resource.totals` | Total number of KEDA custom resources per namespace for each custom resource type (CRD). |
+| `keda.trigger.totals` | Total number of triggers per trigger type. |
+| `keda.internal.scale.loop.latency` | Total deviation (in milliseconds) between the expected execution time and the actual execution time for the scaling loop. This latency could be produced due to accumulated scalers latencies or high load. This is an internal metric. |
