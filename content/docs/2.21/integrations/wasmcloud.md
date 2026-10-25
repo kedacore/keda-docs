@@ -10,13 +10,13 @@ maintainer = "Cosmonic"
 
 [wasmCloud](https://wasmcloud.com/) is a CNCF project for running WebAssembly (Wasm) components across clouds, Kubernetes, and edge environments. Its [Kubernetes operator](https://wasmcloud.com/docs/kubernetes-operator) schedules Wasm workloads onto wasmCloud hosts using a native Custom Resource Definition, the [`WorkloadDeployment`](https://wasmcloud.com/docs/kubernetes-operator/crds).
 
-Because each wasmCloud host packs many components into a single pod, scaling host pods is the wrong approach: this would undermine the workload density that makes Wasm attractive in the first place. Instead, one should scale the number of *component instances* serving a workload. To make that possible, the `WorkloadDeployment` CRD exposes a `/scale` subresource, which means KEDA (and the underlying Horizontal Pod Autoscaler) can drive it exactly as it would a `Deployment`, without scaling the host pods themselves.
+Because each wasmCloud host packs many components into a single pod, scaling host pods is the wrong approach: it would undermine the workload density that makes Wasm attractive in the first place. Instead, scale the number of *component instances* serving a workload. To make that possible, the `WorkloadDeployment` CRD exposes a `/scale` subresource, which means KEDA (and the underlying Horizontal Pod Autoscaler) can drive it exactly as it would a `Deployment`, without scaling the host pods themselves.
 
-This integration was contributed to wasmCloud by [Cosmonic](https://cosmonic.com/). A full walkthrough is demonstrated in this video:
+This integration was contributed to wasmCloud by [Cosmonic](https://cosmonic.com/) in [wasmCloud/wasmCloud#5244](https://github.com/wasmCloud/wasmCloud/pull/5244). A full walkthrough is demonstrated in this video:
 
 {{< youtube JZpeuglct6c >}}
 
-> No new scaler is required. KEDA's existing [Prometheus scaler](../../scalers/prometheus) supplies the metric, and the `scaleTargetRef` points at the `WorkloadDeployment` custom resource.
+> 💡 **NOTE:** No new scaler is required. KEDA's existing [Prometheus scaler](../../scalers/prometheus) supplies the metric, and the `scaleTargetRef` points at the `WorkloadDeployment` custom resource.
 
 ## How it works
 
@@ -51,8 +51,6 @@ Because the subresource is wired correctly, you can also scale a workload impera
 ```shell
 kubectl scale workloaddeployment hello-world --replicas=5
 ```
-
-This work was contributed upstream to CNCF wasmCloud by Cosmonic in [wasmCloud/wasmCloud#5244](https://github.com/wasmCloud/wasmCloud/pull/5244).
 
 ## Prerequisites
 
@@ -134,9 +132,9 @@ spec:
         threshold: "10"
 ```
 
-> The `query` and metric names depend on how your OpenTelemetry meters and Prometheus are configured; adjust them to match the metrics your workload exports. Metrics like `http_server_requests_total` come from your component's own OpenTelemetry instrumentation, not from a built-in wasmCloud host metric (those live under the `wasmcloud_host.*` namespace), so the exact names are whatever your component emits. In production you would typically scale on ingress back-pressure (such as request latency) rather than a flat request count.
+> 💡 **NOTE:** The `query` and metric names depend on how your OpenTelemetry meters and Prometheus are configured; adjust them to match the metrics your workload exports. Metrics like `http_server_requests_total` come from your component's own OpenTelemetry instrumentation, not from a built-in wasmCloud host metric (those live under the `wasmcloud_host.*` namespace), so the exact names are whatever your component emits. In production you would typically scale on ingress back-pressure (such as request latency) rather than a flat request count.
 
-Because wasmCloud workloads run on wasmCloud hosts rather than as individual Pods, Pod and Resource metrics don't apply — scale on external or object metrics such as a request rate. KEDA's Prometheus trigger (shown above) is the most direct option. If you prefer a plain HPA, the same target works with an `External` metric; unlike the KEDA Prometheus trigger, however, a bare HPA needs an external metrics provider (such as the [Prometheus Adapter](https://github.com/kubernetes-sigs/prometheus-adapter)) to serve the metric through the External Metrics API:
+Because wasmCloud workloads run on wasmCloud hosts rather than as individual Pods, Pod and Resource metrics don't apply (so KEDA's CPU and Memory scalers can't be used). Scale on external or object metrics such as a request rate instead. KEDA's Prometheus trigger (shown above) is the most direct option. If you prefer a plain HPA, the same target works with an `External` metric; unlike the KEDA Prometheus trigger, however, a bare HPA needs an external metrics provider (such as the [Prometheus Adapter](https://github.com/kubernetes-sigs/prometheus-adapter)) to serve the metric through the External Metrics API:
 
 ```yaml
 apiVersion: autoscaling/v2
