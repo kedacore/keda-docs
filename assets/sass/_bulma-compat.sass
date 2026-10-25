@@ -61,6 +61,11 @@
 .columns.is-8:not(.is-variable)
   --bulma-column-gap: 0.75rem
 
+// Every `is-variable` row resets the gap (0.8 re-declared it), so nested rows
+// don't inherit their parent's `is-N`. `:where` keeps `.columns.is-N` winning.
+:where(.columns.is-variable)
+  --bulma-column-gap: 0.75rem
+
 // Vertical gaps stay 0.75rem; only the horizontal one follows `is-N`
 .columns
   margin-top: -0.75rem
@@ -192,9 +197,19 @@ code
   border-radius: 0
   color: #326de6
 
-.content li > ul, .content li > ol, .content li > ul:not(:first-child), .content li > ol:not(:first-child)
-  margin-bottom: 0
+.content ul, .content ol
+  margin-top: 1em
+
+// 0.8 only tightened `ol ol`, `ul ol` and `ul ul` (not `ol ul`)
+.content ol ol, .content ul ol, .content ul ul, .content ol ol:not(:first-child), .content ul ol:not(:first-child), .content ul ul:not(:first-child)
   margin-top: 0.5em
+
+  &:last-child
+    margin-bottom: 0
+
+  &:not(:last-child)
+    margin-bottom: 1em
+
 
 // 0.8 tinted the whole message and only coloured the left border of the body
 .message
@@ -206,7 +221,7 @@ code
 
       .message-body
         border-style: solid
-        border-width: 0 0 0 4px
+        border-width: 0
         background-color: transparent
         border-color: hsl(var(--bulma-#{$name}-h), var(--bulma-#{$name}-s), var(--bulma-#{$name}-l))
 
@@ -250,3 +265,14 @@ a:focus-visible:not(.button)
 // 1.x pins icons to their size; 0.8 let them shrink inside tight flex rows
 .icon
   flex-shrink: 1
+
+// 1.x added cards/fields/media to the "block" spacing; 0.8 did not
+.card:not(:last-child), .media:not(:last-child)
+  margin-bottom: 0
+
+.field:not(:last-child)
+  margin-bottom: 0.75rem
+
+// 0.8's yellow uses translucent black text
+.tag.is-warning, .button.is-warning
+  color: rgba(0, 0, 0, 0.7)
