@@ -43,9 +43,7 @@ triggers:
 - `leaseConnectionFromEnv` - Name of an environment variable in the scale target that contains the lease account connection string. (Optional)
 - `cosmosDBKeyFromEnv` - Name of an environment variable in the scale target that contains the data account key. (Optional)
 - `leaseCosmosDBKeyFromEnv` - Name of an environment variable in the scale target that contains the lease account key. (Optional)
-- `cloud` - Azure cloud used to resolve the token authority and Cosmos DB resource scope. (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, Default: `AzurePublicCloud`, Optional)
-- `cosmosDBResourceURL` - Cosmos DB resource URL used to request bearer tokens. It is user-configurable and required only when `cloud` is `Private`. (Optional)
-- `activeDirectoryEndpoint` - Microsoft Entra authority endpoint. It is user-configurable and required only for service-principal authentication when `cloud` is `Private`. (Optional)
+- `cloud` - Trusted Azure environment used to validate account endpoints and resolve the token authority and Cosmos DB resource scope. `Private` and `AzureStackCloud` require an operator-managed environment file (see [Sovereign and private clouds](#sovereign-and-private-clouds)). (Values: `AzurePublicCloud`, `AzureUSGovernmentCloud`, `AzureChinaCloud`, `AzureGermanCloud`, `Private`, `AzureStackCloud`, Default: `AzurePublicCloud`, Optional)
 
 #### Supported lease formats
 
@@ -106,11 +104,32 @@ For both bearer-token methods, the identity needs Cosmos DB data-plane permissio
 
 #### Sovereign and private clouds
 
-The `cloud` setting affects bearer-token authentication only; account endpoints must still be supplied through connection strings or `endpoint` and `leaseEndpoint`.
+The `cloud` setting applies to **all authentication methods**, including account keys and connection strings. Both the data and lease endpoints must use HTTPS and have a hostname below the selected environment's Cosmos DB DNS suffix. For example, the public-cloud suffix is `documents.azure.com`, the US Government suffix is `documents.azure.us`, and the China suffix is `documents.azure.cn`. Supply account endpoints through connection strings or `endpoint` and `leaseEndpoint`; separate data and lease accounts in the selected cloud remain supported.
 
-For a known sovereign cloud, the scaler resolves the Microsoft Entra authority for service-principal authentication and the Cosmos DB resource URL from KEDA's Azure environment configuration. The token scope is that resource URL with `/.default` appended. For `cloud: Private`, set `cosmosDBResourceURL` to the token resource for both service-principal and workload identity authentication. This parameter is not used to override the resource URL for known clouds. Also set `activeDirectoryEndpoint` when using a service principal.
+Endpoints must not contain user information, query strings, fragments, or paths other than `/`. IP literals, the suffix itself, unrelated DNS aliases, and endpoints from another cloud are rejected. The scaler does not follow HTTP redirects, even to the same origin, and only authenticates requests to the configured account origins. These checks also apply to the inherited lease endpoint.
 
-For workload identity, the authority host comes from the workload identity configuration, such as the `AZURE_AUTHORITY_HOST` environment variable injected by the webhook; `activeDirectoryEndpoint` trigger metadata is not used.
+For a known public or sovereign cloud, KEDA uses its built-in Azure environment configuration for the Microsoft Entra service-principal authority and Cosmos DB resource URL. The token scope is the resource URL with `/.default` appended; it is not derived from the account hostname. In particular, public, US Government, and China clouds use `https://cosmos.azure.com/.default`.
+
+For `cloud: Private` (or `AzureStackCloud`), the **KEDA operator administrator** must configure `AZURE_ENVIRONMENT_FILEPATH` on the operator to point to a readable JSON environment file. At minimum, the file must contain:
+
+```json
+{
+  "name": "AzureStackCloud",
+  "cosmosDBDNSSuffix": "documents.private.example",
+  "activeDirectoryEndpoint": "https://login.private.example/",
+  "resourceIdentifiers": {
+    "cosmosDB": "https://cosmos.private.example"
+  }
+}
+```
+
+The DNS suffix must be a valid DNS name, not a wildcard, URL, IP address, or `N/A`. Both the authority and Cosmos DB resource URL must be HTTPS origins without user information, query strings, fragments, or non-root paths. A missing, unreadable, malformed, or incomplete environment file fails scaler creation; there is no fallback to trigger metadata.
+
+Mount this file read-only into the operator and restrict write access to trusted cluster administrators. Do not let application tenants change the file, its backing ConfigMap or Secret, the operator's environment, or its volume mounts: this configuration determines where credentials and tokens may be sent. Private-cloud credentials disable Microsoft Entra instance discovery, so administrators must verify the configured authority's trustworthiness. Credential HTTP redirects are rejected.
+
+For workload identity, `AZURE_AUTHORITY_HOST`, when set by the operator's workload identity configuration (typically the webhook), remains the administrator-controlled authority host. Otherwise the selected environment's authority is used. Trigger metadata cannot override it.
+
+**Compatibility and migration:** `cosmosDBResourceURL` and `activeDirectoryEndpoint` trigger metadata are now rejected in every cloud, including when account keys are used. Remove these fields and migrate private-cloud configuration to the administrator-managed environment file. HTTP endpoints, custom DNS aliases outside the trusted suffix, redirecting proxies, and cross-cloud account pairs are no longer accepted. Use the account's canonical HTTPS endpoint and the matching `cloud` instead. Key authentication, separate accounts within the selected cloud, and the default lease-account inheritance remain supported.
 
 ### How It Works
 
