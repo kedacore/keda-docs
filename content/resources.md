@@ -8,6 +8,7 @@ description = "Materials for learning more about KEDA"
 - ["Scale container applications in Azure Kubernetes Services using KEDA"](https://docs.microsoft.com/en-us/learn/modules/aks-app-scale-keda/) on Microsoft Learn
 - ["Kubernetes Autoscaling"](https://learn.kodekloud.com/courses/kubernetes-autoscaling) on KodeKloud
 - ["Mastering Kubernetes Event-driven Autoscaling with KEDA (LFS257)"](https://training.linuxfoundation.org/training/mastering-kubernetes-event-driven-autoscaling-with-keda-lfs257/) on Linux Foundation
+- ["KEDA Tutorial: Scale Kubernetes Workers from a Redis Queue, Down to Zero"](https://prepare.sh/tutorial/keda-tutorial-scale-kubernetes-workers-from-a-redis-queue-down-to-zero) on Prepare.sh
 
 ## Videos
 
