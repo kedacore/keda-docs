@@ -11,5 +11,6 @@ Guides for application developers using the HTTP Add-on to autoscale their servi
 - **[Configure Ingress](configure-ingress/)** — Point your Gateway API or Ingress at the interceptor proxy.
 - **[Configure Routing Rules](configure-routing/)** — Host, path, and header matching.
 - **[Configure Scaling Metrics](configure-scaling/)** — Choose between concurrency and request rate metrics.
+- **[Configure Session Persistence](configure-session-persistence/)** — Route the requests of a client session to the same pod.
 - **[Configure Static Routes](configure-static-routes/)** — Serve static responses for requests that should not trigger autoscaling.
 - **[Configure Timeouts](configure-timeouts/)** — Per-route timeout overrides.
