@@ -50,6 +50,10 @@ When the time window starts, it will scale from the minimum number of replicas t
 
 What the CRON scaler does **not** do, is scale your workloads based on a recurring schedule.
 
+> 💡 **NOTE**: The Cron scaler defines an active **time window** (between `start` and `end`) during which target replicas/workloads remain scaled out or in. It is not designed to trigger periodic or recurring execution of tasks (e.g., executing a task every 15 minutes or once a day).
+>
+> If you need to run scheduled recurring workloads rather than scaling continuous workloads across time intervals, consider using Kubernetes native [CronJobs](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) or KEDA [`ScaledJobs`](./../concepts/scaling-jobs.md) with an event-based trigger.
+
 ### Scale to 0 during off hours
 
 If you want to scale your deployment to 0 outside office hours / working hours,

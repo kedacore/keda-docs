@@ -18,6 +18,14 @@ When validation enforcement is enabled, it's possible to run into a race conditi
 ```
 This will ensure that if getting the `scaleTargetRef` from the cached client returns `IsNotFound` error, the webhook will attempt to get the object directly from Kubernetes API.
 
+The flag defaults to `false` to avoid extra Kubernetes API traffic on cache misses. With the Helm chart, enable it through `extraArgs.webhooks`:
+
+```yaml
+extraArgs:
+  webhooks:
+    cache-miss-to-direct-client: "true"
+```
+
 
 ## Custom Validations using Kubernetes ValidatingAdmissionPolicy
 

@@ -18,7 +18,7 @@ As a reference, this compatibility matrix shows the Kubernetes versions tested f
 
 | KEDA  | Kubernetes    |
 | ----- | ------------- |
-| v2.21 | TBD           |
+| v2.21 | v1.34 - v1.36 |
 | v2.20 | v1.33 - v1.35 |
 | v2.19 | v1.32 - v1.34 |
 | v2.18 | v1.31 - v1.33 |
@@ -190,6 +190,31 @@ The Kubernetes client config used within KEDA Operator and KEDA Metrics Adapter 
 | kube-api-burst      | cfg.Burst              | 30            | Set the burst for throttling requests sent to the apiserver                                                                                                   |
 | disable-compression | cfg.DisableCompression | true          | Disable compression for response in k8s restAPI in client-go, see [this Kubernetes issue](https://github.com/kubernetes/kubernetes/issues/112296) for details |
 
+## Kubernetes API Timeout
+
+Set the `KEDA_KUBERNETES_API_TIMEOUT` environment variable on the KEDA Operator deployment to limit how long KEDA waits for Kubernetes API operations used by scaling loops.
+When the timeout is reached, the current operation fails and KEDA can retry it during a later polling cycle.
+The effective timeout is the ScaledObject or ScaledJob `pollingInterval` plus the value of `KEDA_KUBERNETES_API_TIMEOUT`. The value uses the Go duration format, such as `5s` or `1m`. When the environment variable is not set, the additional duration is `0s` and `pollingInterval` is the effective timeout.
+
+The timeout applies to the following scaling-loop Kubernetes API operations:
+
+- **Status updates for ScaledObjects and ScaledJobs:** KEDA stops waiting for the status update and logs an error. A later polling cycle can try the operation again. A status timeout does not undo scaling operations that already completed, and the failure condition might not be stored while the API server is unavailable.
+- **ScaledObject scale-subresource operations:** If reading or updating the target's scale subresource times out, the current scaling attempt fails. KEDA reports the error in the scaling result and attempts to set the ScaledObject `Ready` condition to `False`; persisting that condition requires a separate status update, which can also time out.
+- **ScaledJob Job creation:** KEDA stops creating Jobs when the operation times out. Jobs created before the timeout remain and are not rolled back, so only part of a requested batch might be created. KEDA reports the creation error in the scaling result, emits a warning event, and attempts to set the ScaledJob `Ready` condition to `False` with reason `KEDAJobCreateFailed`. If the following status update also fails, the condition might not appear on the ScaledJob.
+- **ScaledJob Job deletion:** When deleting completed Jobs to enforce history limits, KEDA stops the current cleanup attempt if a deletion times out. Jobs deleted before the timeout remain deleted, and KEDA can retry the remaining cleanup during a later polling cycle.
+
+This setting is useful when a temporary Kubernetes API server or network outage would otherwise keep a scaling loop waiting long after the API server becomes available again.
+
+## High-Cardinality Metric Labels
+
+KEDA can add high-cardinality labels to scaler HTTP request duration and external scaler gRPC client metrics. These labels are disabled by default and can be enabled on the KEDA Operator by passing the following command-line flag:
+
+| Deployment    | Flag                                   | Default Value | Description                                                                                                                                           |
+| ------------- | -------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| KEDA Operator | enable-high-cardinality-metrics-labels | false         | Adds `namespace`, `scaled_resource`, `trigger_name`, and `metric_name` labels to scaler HTTP request duration and external scaler gRPC client metrics. |
+
+When this flag is disabled, these metrics are still emitted with low-cardinality labels such as `scaler` and, for HTTP request duration, `status_code`. The scaler HTTP request counters keep their existing labels, and internal Metrics Service gRPC metrics are not controlled by this flag.
+
 ## gRPC Metrics Service Parameters
 
 The gRPC Metrics Service is part of the KEDA Operator deployment and serves scaling events and metrics from the scalers over gRPC to the Metrics API Service, that in turn serves them to the Kubernetes API Server. The gRPC Metrics Service config used by the KEDA Metrics Adapter to connect to the KEDA Operator can be adjusted by passing the following command-line flags to the Adapter binary:
@@ -245,6 +270,30 @@ Example:
 ```yaml
 - env:
     WATCH_NAMESPACE: keda,production
+```
+
+## Restrict the Objects KEDA Reconciles by Label
+
+By default, the KEDA controller reconciles every `ScaledObject`, `ScaledJob`, `TriggerAuthentication` and `ClusterTriggerAuthentication` it can see. Two independent environment variables let you restrict the set of reconciled objects by label:
+
+- `WATCH_LABEL_SELECTOR`: filters `ScaledObject` and `ScaledJob` (and their derived `HorizontalPodAutoscaler` objects).
+- `WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH`: filters `TriggerAuthentication` and `ClusterTriggerAuthentication`.
+
+Both accept a standard Kubernetes label selector. When set, only objects matching the selector are reconciled. Non-matching objects are filtered out at the informer cache level (so they never enter the operator's memory) and at the controller predicate level. When unset or empty, no label filter is applied on that resource type.
+
+The variables mirror `WATCH_NAMESPACE`, but filter by label instead of by namespace, and accept the same syntax as `kubectl get -l`:
+
+- equality: `environment=production`
+- set notation: `tier in (gold,silver)`, `!canary`
+
+The two selectors are decoupled so that a cluster-scoped `ClusterTriggerAuthentication` can still be referenced by `ScaledObjects` running under operators scoped to different `WATCH_LABEL_SELECTOR` values. In that case, set `WATCH_LABEL_SELECTOR` per operator but leave `WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH` empty so every operator can see the shared CTA.
+
+Example:
+
+```yaml
+- env:
+    WATCH_LABEL_SELECTOR: "environment=production"
+    WATCH_LABEL_SELECTOR_FOR_TRIGGERAUTH: ""
 ```
 
 ## Certificates used by KEDA Metrics Server
@@ -312,6 +361,12 @@ To limit this permissions, you can review and adapt the RBAC generated by KEDA b
 
 > It is always recommended to review the final generated role for KEDA components to ensure no broad permissions are assigned if the Helm template was customized. To quickly verify typical cases like blocked access to secrets, any tool used to analyze K8s RBAC can be used (e.g. https://github.com/aquasecurity/kubectl-who-can).
 
+
+## Harden Service Account Authentication and Vault Destinations
+
+KEDA 2.21 requires operator-configured audiences for Vault Kubernetes authentication and generic `boundServiceAccountToken` authentication. Approve dedicated non-API audiences for mounted files and configure exact service-account mappings for token minting. Missing settings fail the affected authentication; the explicit operator-wide legacy mode restores the insecure behavior.
+
+Vault destination filtering is separate and optional. It defaults to `off`, with an informational startup message. Select `warn` to report unlisted destinations or `enforce` to block them. This filter does not cover other scalers. See [service account token security](../security/#service-account-token-audiences) and the [2.21 migration guide](../../migration/#service-account-token-audiences).
 
 ## Logs
 
