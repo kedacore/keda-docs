@@ -20,6 +20,8 @@ triggers:
       query: "data('demo.trans.latency').max().publish()"
       # Required: Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds
       duration: "10"
+      # Optional: Historical window to query, in seconds. Defaults to "0" for live-stream behavior
+      lookbackDuration: "60"
       # Required: Threshold to reach to start scaling
       targetValue: "400.1"
       # Required: Target value for activating the scaler
@@ -32,6 +34,7 @@ triggers:
 
 - `query` - SignalFlow query for querying the desired metrics.
 - `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
+- `lookbackDuration` - Historical window to query, in seconds. A positive value queries from that many seconds before now through now; `duration` remains the local execution timeout. (Default: `0`, Optional)
 - `targetValue` - Threshold to reach to start scaling.
 - `activationTargetValue` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds).
 - `queryAggregator` - When querying metrics from Splunk Observability Cloud, initially a Metric Time Series (MTS) is returned, a list consisting of several datapoints. The `queryAggregator` specifies how this series of metrics should be "rolled up". (Values: `avg`, `min`, `max`, `sum`, `count`, `latest`, Default: `avg`, Optional)
