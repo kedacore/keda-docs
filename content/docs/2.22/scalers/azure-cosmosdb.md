@@ -114,7 +114,6 @@ For `cloud: Private` (or `AzureStackCloud`), the **KEDA operator administrator**
 
 ```json
 {
-  "name": "AzureStackCloud",
   "cosmosDBDNSSuffix": "documents.private.example",
   "activeDirectoryEndpoint": "https://login.private.example/",
   "resourceIdentifiers": {
