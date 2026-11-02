@@ -46,8 +46,11 @@ triggers:
 **Parameter list:**
 
 - `bootstrapServers` - Comma separated list of Kafka brokers "hostname:port" to connect to for bootstrap.
+- `bootstrapServersFromEnv` - Name of the environment variable on the scale target to resolve the comma separated list of Kafka brokers from. (Optional)
 - `consumerGroup` - Name of the consumer group used for checking the offset on the topic and processing the related lag.
+- `consumerGroupFromEnv` - Name of the environment variable on the scale target to resolve the consumer group name from. (Optional)
 - `topic` - Name of the topic on which processing the offset lag. (Optional, see note below)
+- `topicFromEnv` - Name of the environment variable on the scale target to resolve the topic name from. (Optional)
 - `lagThreshold` - Target value for the total lag (sum of all partition lags) to trigger scaling actions. (Default: `10`, Optional)
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `offsetResetPolicy` - The offset reset policy for the consumer. (Values: `latest`, `earliest`, Default: `latest`, Optional)
