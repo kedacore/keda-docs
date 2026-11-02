@@ -68,7 +68,7 @@ spec:
 
 ## Creating Hundreds of ScaledObjects at Once (KEDA 2.20.2 and later)
 
-Since KEDA 2.20.2 the operator mirrors the HPA's `ScalingActive` condition into an `HPAActive` condition on each `ScaledObject`. A newly created `ScaledObject` therefore costs at least one extra status write, and it shares the `--kube-api-qps` budget with HPA creation. When many `ScaledObject` resources are created together, their HPAs appear later than on KEDA 2.20.1.
+Since KEDA 2.20.2 the operator mirrors the HPA's `ScalingActive` condition into an `HPAActive` condition on each `ScaledObject`. A newly created `ScaledObject` therefore typically costs one extra status write, made when `HPAActive` is first set or changes, and it shares the `--kube-api-qps` budget with HPA creation. This is a one-time cost at creation: in steady state the operator skips status updates when nothing has changed. When many `ScaledObject` resources are created together, their HPAs appear later than on KEDA 2.20.1.
 
 The table shows the time from `ScaledObject` creation to HPA creation (p95) on a kind cluster running Kubernetes 1.35. 500 `ScaledObject` resources were applied at once, each with an inactive trigger and a `Deployment` at zero replicas, with two runs per setting:
 
