@@ -37,12 +37,12 @@ triggers:
 **Parameter list:**
 
 - `dataset` - Slug of the Honeycomb dataset to query. Use `__all__` to query all datasets in the environment.
-- `query` - Honeycomb query specification as a JSON object. It uses the same format as the body of the [Create a Query](https://api-docs.honeycomb.io/api/queries/createquery) API, for example `calculations`, `filters`, `breakdowns`, `orders`, `limit`, and `time_range`. Use a relative `time_range` (in seconds) and do not set `start_time` or `end_time`, so that each run covers the most recent data.
+- `query` - Honeycomb query specification as a JSON object. It uses the same format as the body of the [Create a Query](https://api-docs.honeycomb.io/api/queries/createquery) API, for example `calculations`, `filters`, `breakdowns`, `orders`, `limit`, and `time_range`. The query must be a non-empty object and must use a relative `time_range` (in seconds), so that each run covers the most recent data. The scaler rejects a query that sets `start_time` or `end_time`.
 - `resultField` - Name of the field in the query result to use as the metric value. Honeycomb names result fields after the calculation, for example `COUNT`, `P99(duration_ms)`, or `AVG(duration_ms)`. When this is not set, the first result row must contain exactly one numeric field. (Optional, Required when the result has more than one numeric field)
 - `threshold` - Target value for the metric, used by the HPA to calculate the number of replicas.
 - `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `apiHost` - Honeycomb API host. Use `https://api.eu1.honeycomb.io` for Honeycomb EU accounts. (Default: `https://api.honeycomb.io`, Optional)
-- `timeout` - Timeout for each HTTP request to the Honeycomb API, for example `5s`. (Default: the KEDA global HTTP timeout, Optional)
+- `timeout` - Timeout for each HTTP request to the Honeycomb API, for example `5s`. This does not extend the time allowed for a query: creating and polling a query result is limited to 15 seconds in total. (Default: the KEDA global HTTP timeout, Optional)
 
 The metric name is generated from the trigger index and the dataset, for example `s0-honeycomb-checkout`.
 
