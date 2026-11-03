@@ -48,6 +48,8 @@ For externally managed RBAC, the low-level `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES
 
 Minting entries also approve their audiences for Vault file tokens. They are not per-scaler or per-destination isolation; see the [global audience policy](../../operate/security/#approved-audiences-and-token-minting).
 
+The same mapping and token-creation RBAC also approve [cloud workload service account authentication](../../concepts/workload-service-accounts/). A namespace user who can configure scaling resources and their authentication can select a cloud-approved account through generic BSAT authentication and send the raw federation JWT to an endpoint they control. Cloud approval therefore delegates the account's identity beyond its use in a scaler. Review [delegation and credential handling](../../concepts/workload-service-accounts/#delegation-and-credential-handling) before approving an account.
+
 ## Receiver requirements
 
 Minting a token with a custom audience is only half of the configuration. The receiver must verify that audience.
