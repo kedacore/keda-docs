@@ -30,7 +30,7 @@
   .headline-hash
     display: none
     margin-left: 0.25rem
-    color: $secondary
+    color: $keda-light-blue
 
   @for $i from 1 through 6
     h#{$i}
@@ -38,7 +38,7 @@
         display: inline
 
   figure img
-    +desktop
+    @media screen and (min-width: 1024px)
       width: 100%
 
   @media screen and (min-width: 769px)
