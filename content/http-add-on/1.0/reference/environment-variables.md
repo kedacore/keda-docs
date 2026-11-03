@@ -20,6 +20,7 @@ These are set via the `extraEnvs` Helm value for each component or directly in t
 | `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS`         | `0`          | Default limit on requests held per route while the backend has no ready endpoints (e.g. during scale-from-zero). `0` means unlimited. Routes override it via `coldStart.maxPendingRequests`. Applies per interceptor replica. |
 | `KEDA_HTTP_LOG_REQUESTS`                            | `false`      | Enable logging of incoming requests.                                                          |
 | `KEDA_HTTP_DIRECT_POD_ROUTING`                      | `true`       | When enabled, route requests to a ready pod IP instead of the Service ClusterIP, bypassing kube-proxy and other Service-layer features (Service-level NetworkPolicy, session affinity, topology-aware routing). |
+| `KEDA_HTTP_LOAD_BALANCING`                          | `random`     | How a ready pod is picked with direct pod routing. `random` picks a random pod; `least-request` picks two random pods and sends the request to the one with fewer in-flight requests from the same interceptor replica. |
 
 ### Graceful shutdown
 
