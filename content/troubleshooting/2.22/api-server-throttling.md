@@ -6,7 +6,7 @@ weight = 500
 
 # Troubleshooting KEDA API Server Throttling
 
-If you are experiencing messages like "Waited for ... due to client-side throttling" in your KEDA operator logs, it might indicate that the KEDA operator is being throttled by the Kubernetes API server. This can happen in environments with a large number of `ScaledObject` resources.
+If you are experiencing messages like "Waited for ... due to client-side throttling" in your KEDA operator logs, it indicates that the Kubernetes client inside the KEDA operator is limiting its own request rate (client-side throttling), which does not by itself mean the API server is overloaded. This can happen in environments with a large number of `ScaledObject` resources.
 
 KEDA provides several command-line flags to control its interaction with the Kubernetes API server. Adjusting these flags can help alleviate client-side throttling.
 
@@ -56,7 +56,7 @@ spec:
   template:
     spec:
       containers:
-      - name: keda-operator # Or keda-metrics-apiserver, depending on which component is throttled
+      - name: keda-operator
         args:
         - "--kube-api-qps=40"
         - "--kube-api-burst=60"
@@ -81,7 +81,7 @@ Doubling both flags roughly halves the time on both versions and halves the extr
 
 ## Status Update Optimization
 
-As of recent versions of KEDA, the operator includes built-in optimizations to reduce unnecessary ScaledObject status updates. The operator now:
+KEDA releases that include this optimization reduce unnecessary ScaledObject status updates (check the CHANGELOG linked below for the release that introduced it, as it may not be in older versions). The operator:
 
 - **Compares condition states**: Before updating status, KEDA compares the new conditions (Type, Status, Reason, and Message) with existing ones
 - **Skips redundant updates**: Status updates are only performed when conditions have actually changed
@@ -96,7 +96,7 @@ For the most up-to-date information about this optimization, refer to the [KEDA 
 With proper configuration and built-in optimizations, users typically experience:
 
 - **Reduced throttling messages**: Fewer "client-side throttling" warnings in KEDA operator logs
-- **Lower API server load**: Decreased request volume from KEDA operations to the Kubernetes API server
+- **Fewer redundant writes**: Fewer unchanged ScaledObject status updates sent to the Kubernetes API server. Raising the QPS, burst or reconcile limits allows more requests, so watch API server load after changing them
 - **Improved performance**: Better responsiveness in environments with 100+ ScaledObjects
 - **More stable scaling**: Consistent autoscaling behavior without throttling-related delays
 
