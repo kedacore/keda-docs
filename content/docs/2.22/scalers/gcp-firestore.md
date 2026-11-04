@@ -30,7 +30,7 @@ triggers:
 **Parameter list:**
 
 - `projectId` - The GCP project that owns the Firestore database.
-- `collection` - The collection to count, as a collection ID (`jobs`) or as the path of a subcollection (`users/alice/jobs`). The path must have an odd number of segments, and a segment cannot be empty, `.`, `..` or of the form `__name__`.
+- `collection` - The collection to count, as a collection ID (`jobs`) or as the path of a subcollection (`users/alice/jobs`). The path must have an odd number of segments, and a segment cannot be empty, `.`, `..`, or begin and end with `__`.
 - `databaseId` - The Firestore database ID. (Default: `(default)`, Optional)
 - `filterField` - The field the filter applies to. A nested field is written with dots (`address.city`). Without it, every document of the collection is counted. (Optional)
 - `filterOperator` - How the field is compared with `filterValue`. It can be set only together with `filterField`. The `!=` operator does not count documents that lack the field or hold `null` in it. The operators that take a list of values (`in`, `not-in` and `array-contains-any`) are not supported. (Values: `==`, `!=`, `<`, `<=`, `>`, `>=`, `array-contains`, Default: `==`, Optional)
@@ -48,8 +48,8 @@ A trigger counts the documents of one collection with at most one filter. The fi
 The metric name will be generated automatically based on the trigger index and the resource identifiers, for example: **s0-gcp-firestore-projectId-databaseId-collection**. For the default database the name has `default` in place of `(default)`, and each `/` of a collection path becomes `-`.
 
 You can provide in the metadata either `credentialsFromEnv` or `credentialsFromEnvFile`.
-- `credentialsFromEnv` - Set to the name of the environment variable that holds the credential information.
-- `credentialsFromEnvFile` - Set to the name of a json file that holds the credential information.
+- `credentialsFromEnv` - Set to the name of the environment variable that holds the credential information. (Optional)
+- `credentialsFromEnvFile` - Set to the name of the environment variable that holds the path of a json file with the credential information. (Optional)
 
 ### Authentication Parameters
 
