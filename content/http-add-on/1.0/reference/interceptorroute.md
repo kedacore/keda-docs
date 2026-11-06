@@ -159,7 +159,7 @@ Configures behavior while the target is not ready (scaling from zero).
 | -------------------- | ------------------------------------------------ | -------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `fallback`           | [`*ColdStartFallback`](#coldstartfallback)       | No       |                                                | Fallback service to route to when the target is scaling from zero and the readiness timeout expires.                 |
 | `placeholder`        | [`*ColdStartPlaceholder`](#coldstartplaceholder) | No       |                                                | Placeholder response to serve while the target has no ready endpoints.                                               |
-| `maxPendingRequests` | `*int32`                                         | No       | Global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | Maximum pending requests held while the backend is not ready. Minimum: 1. See [pending request limit](#pending-request-limit). |
+| `maxPendingRequests` | `*int32`                                         | No       | Global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | Maximum pending requests held while the backend is not ready. Minimum: 0 (`0` means unlimited). See [pending request limit](#pending-request-limit). |
 | `overflow`           | `string`                                         | No       | `Reject`                                       | How to handle requests arriving when the pending request limit is reached: `Reject` or `Placeholder`.                |
 
 **Validation:** At least one of `fallback`, `placeholder`, or `maxPendingRequests` must be set.
@@ -173,7 +173,10 @@ If the backend does not become ready within the readiness timeout, the fallback 
 `maxPendingRequests` bounds how many requests the interceptor holds for a route while the backend has no ready endpoints.
 Requests arriving when the limit is reached are handled according to `overflow`: `Reject` returns HTTP 503, while `Placeholder` serves the configured placeholder response.
 
-The limit applies per interceptor replica: the effective cluster-wide capacity is `maxPendingRequests` multiplied by the number of interceptor replicas.
+When unset, the route inherits `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` (default: `0`, unlimited).
+Setting `maxPendingRequests: 0` allows unlimited pending requests for the route, overriding even a finite global limit.
+
+Positive limits apply per interceptor replica: the effective cluster-wide capacity is `maxPendingRequests` multiplied by the number of interceptor replicas.
 
 Setting `maxPendingRequests` together with a placeholder and `overflow: Placeholder` holds requests up to the limit instead of serving the placeholder immediately; only overflowing requests receive it.
 
