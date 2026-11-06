@@ -57,10 +57,9 @@ See [Scaling](../scaling/) for details on how these metrics drive scaling decisi
 
 ### Operator
 
-The operator is a Kubernetes controller manager that reconciles HTTP Add-on custom resources:
+The operator is a Kubernetes controller manager that reconciles the HTTP Add-on custom resource:
 
 - **InterceptorRoute** (`http.keda.sh/v1beta1`) — Defines routing rules, scaling metrics, target service, and timeout/cold-start configuration in a single resource. Users pair it with a KEDA ScaledObject they create and manage.
-- **HTTPScaledObject** (`http.keda.sh/v1alpha1`, deprecated) — Combines routing, scaling, and ScaledObject management in one resource. The operator automatically creates the corresponding ScaledObject.
 
 See the [InterceptorRoute reference](../../reference/interceptorroute/) for the full API specification.
 

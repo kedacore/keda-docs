@@ -173,6 +173,13 @@ A placeholder without `maxPendingRequests` keeps its default behavior: every req
 The limit applies per interceptor replica: with 3 interceptor replicas, up to 1,500 requests can be held cluster-wide.
 When unset, the global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` default applies (`0` — unlimited, see [Configure the Interceptor](../../operations/configure-interceptor/#cold-start-pending-request-limit)).
 
+To allow unlimited pending requests for one route even when the global limit is finite, set `maxPendingRequests` to `0`:
+
+```yaml
+coldStart:
+  maxPendingRequests: 0
+```
+
 ## Cold-start response header
 
 The interceptor adds an `X-KEDA-HTTP-Cold-Start` response header to indicate whether a cold start occurred:

@@ -86,6 +86,8 @@ Multiple rules use OR semantics (any rule can match).
 | `paths`   | [`[]PathMatch`](#pathmatch)     | No       |         | Path prefixes to match. When multiple paths match, the longest prefix wins.                                                                                                                                                                           |
 | `headers` | [`[]HeaderMatch`](#headermatch) | No       |         | Headers that must all match the request (AND semantics).                                                                                                                                                                                              |
 
+**Validation:** At most 16 `rules` per route, and per rule (in `rules` or `staticRoutes`) at most 16 hosts of up to 253 characters each, 64 paths of up to 1024 characters each, and 16 headers. At most 16 `staticRoutes` entries with at most 16 rules each.
+
 ### `PathMatch`
 
 | Field   | Type     | Required | Default | Description                                                                        |
@@ -126,6 +128,8 @@ When both are set, both metrics are reported and KEDA scales based on whichever 
 | `window`      | `Duration` | No       | `1m`    | Sliding time window over which the request rate is calculated. |
 | `granularity` | `Duration` | No       | `1s`    | Bucket size for rate calculation within the window.            |
 
+**Validation:** `window` must be between `0s` and `24h`, and `granularity` must be at least `1s`.
+
 ### `StaticRoute`
 
 Defines a route that serves a static response without triggering autoscaling.
@@ -155,7 +159,7 @@ Configures behavior while the target is not ready (scaling from zero).
 | -------------------- | ------------------------------------------------ | -------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `fallback`           | [`*ColdStartFallback`](#coldstartfallback)       | No       |                                                | Fallback service to route to when the target is scaling from zero and the readiness timeout expires.                 |
 | `placeholder`        | [`*ColdStartPlaceholder`](#coldstartplaceholder) | No       |                                                | Placeholder response to serve while the target has no ready endpoints.                                               |
-| `maxPendingRequests` | `*int32`                                         | No       | Global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | Maximum pending requests held while the backend is not ready. Minimum: 1. See [pending request limit](#pending-request-limit). |
+| `maxPendingRequests` | `*int32`                                         | No       | Global `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` | Maximum pending requests held while the backend is not ready. Minimum: 0 (`0` means unlimited). See [pending request limit](#pending-request-limit). |
 | `overflow`           | `string`                                         | No       | `Reject`                                       | How to handle requests arriving when the pending request limit is reached: `Reject` or `Placeholder`.                |
 
 **Validation:** At least one of `fallback`, `placeholder`, or `maxPendingRequests` must be set.
@@ -169,7 +173,10 @@ If the backend does not become ready within the readiness timeout, the fallback 
 `maxPendingRequests` bounds how many requests the interceptor holds for a route while the backend has no ready endpoints.
 Requests arriving when the limit is reached are handled according to `overflow`: `Reject` returns HTTP 503, while `Placeholder` serves the configured placeholder response.
 
-The limit applies per interceptor replica: the effective cluster-wide capacity is `maxPendingRequests` multiplied by the number of interceptor replicas.
+When unset, the route inherits `KEDA_HTTP_COLD_START_MAX_PENDING_REQUESTS` (default: `0`, unlimited).
+Setting `maxPendingRequests: 0` allows unlimited pending requests for the route, overriding even a finite global limit.
+
+Positive limits apply per interceptor replica: the effective cluster-wide capacity is `maxPendingRequests` multiplied by the number of interceptor replicas.
 
 Setting `maxPendingRequests` together with a placeholder and `overflow: Placeholder` holds requests up to the limit instead of serving the placeholder immediately; only overflowing requests receive it.
 
@@ -231,6 +238,8 @@ When a field is unset, the global interceptor timeout configuration (`KEDA_HTTP_
 | `readiness`      | `*Duration` | No       | Global `KEDA_HTTP_READINESS_TIMEOUT`       | Time to wait for the backend to become ready (e.g., scale from zero). Set to `0s` to disable the dedicated readiness deadline so the full request budget is available for cold starts. When a fallback service is configured and this is `0s`, a 30s default is applied. |
 | `request`        | `*Duration` | No       | Global `KEDA_HTTP_REQUEST_TIMEOUT`         | Total time allowed for the entire request lifecycle. Set to `0s` to disable the request deadline.                                                                                                                                                                        |
 | `responseHeader` | `*Duration` | No       | Global `KEDA_HTTP_RESPONSE_HEADER_TIMEOUT` | Maximum time to wait for response headers from the backend after the request has been sent. Does not include cold-start wait time. Set to `0s` to disable the response header deadline.                                                                                  |
+
+**Validation:** All fields must be non-negative durations.
 
 ## `status`
 

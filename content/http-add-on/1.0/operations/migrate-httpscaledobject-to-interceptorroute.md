@@ -5,6 +5,11 @@ description = "How to migrate existing HTTPScaledObject resources to the Interce
 
 This guide shows you how to migrate existing `HTTPScaledObject` (v1alpha1) resources to the `InterceptorRoute` (v1beta1) API.
 
+> **Warning:** The `HTTPScaledObject` API is removed in v1.0. Migrate all `HTTPScaledObject` resources while running v0.14.0 to v0.16.x, before you upgrade to v1.0.
+> Upgrading the Helm chart removes the `HTTPScaledObject` CRD, which deletes all `HTTPScaledObject` resources and the `ScaledObject`s they own, and your applications stop scaling.
+> The Helm chart refuses to install or upgrade while `HTTPScaledObject` resources exist in the cluster.
+> To keep the `ScaledObject`s when you delete an `HTTPScaledObject`, add the orphan annotation as described [below](#apply-the-migration-without-downtime).
+
 ## Prerequisites
 
 - KEDA HTTP Add-on v0.14.0 or later deployed on the cluster
