@@ -66,6 +66,19 @@ spec:
         # ... other existing arguments for the KEDA operator
 ```
 
+## Creating Hundreds of ScaledObjects at Once (KEDA 2.20.2 and later)
+
+Since KEDA 2.20.2 the operator mirrors the HPA's `ScalingActive` condition into an `HPAActive` condition on each `ScaledObject`. A newly created `ScaledObject` therefore typically costs one extra status write, made when `HPAActive` is first set or changes, and it shares the `--kube-api-qps` budget with HPA creation. This is a one-time cost at creation: in steady state the operator skips status updates when nothing has changed. When many `ScaledObject` resources are created together, their HPAs appear later than on KEDA 2.20.1.
+
+The table shows the time from `ScaledObject` creation to HPA creation (p95) on a kind cluster running Kubernetes 1.35. 500 `ScaledObject` resources were applied at once, each with an inactive trigger and a `Deployment` at zero replicas, with two runs per setting:
+
+| Operator flags | KEDA 2.20.1 | KEDA 2.20.2 |
+|---|---|---|
+| default (`--kube-api-qps=20`, `--kube-api-burst=30`) | 210 s, 210 s | 231 s, 232 s |
+| `--kube-api-qps=40`, `--kube-api-burst=60` | 95 s, 103 s | 108 s, 111 s |
+
+Doubling both flags roughly halves the time on both versions and halves the extra delay of the new status write (about 21 s to about 11 s), but it does not remove it, because the extra requests still use the same budget. If you create hundreds of `ScaledObject` resources in one go, raise `--kube-api-qps` and `--kube-api-burst` as shown in the example under How to Apply Changes, and watch the API server load. Absolute times depend on your cluster and API server capacity.
+
 ## Status Update Optimization
 
 As of recent versions of KEDA, the operator includes built-in optimizations to reduce unnecessary ScaledObject status updates. The operator now:
