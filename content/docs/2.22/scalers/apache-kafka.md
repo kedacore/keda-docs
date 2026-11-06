@@ -64,7 +64,7 @@ If 'false' (the default): with `offsetResetPolicy: latest`, the scaler reports a
 - `fullMetadata` - When set to `false`, the Kafka client fetches metadata only for the configured `topic` instead of the full cluster. Requires `topic` to be set. Reduces memory significantly on large clusters. (Values: `true`, `false`, Default: `true`, Optional)
 - `partitionLimitation` - Comma separated list of partition ids to scope the scaling on. Allowed patterns are "x,y" and/or ranges "x-y". If set, the calculation of the lag will only take these ids into account.  (Default: All partitions, Optional)
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer`, or `none`, Default: `none`, Optional). This parameter could also be specified in `sasl` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
-- `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
+- `saslTokenProvider` - Kafka SASL token provider when `sasl` is `oauthbearer`. `static` uses the supplied `oauthToken`. (Values: `bearer`, `aws_msk_iam`, `static`, Default: `bearer`, Optional). This parameter could also be specified in `saslTokenProvider` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
 - `tls` - To enable SSL auth for Kafka, set this to `enable`. If not set, TLS for Kafka is not used. (Values: `enable`, `disable`, Default: `disable`, Optional). This parameter could also be specified in `tls` in TriggerAuthentication. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence.
 - `unsafeSsl` - Skip certificate validation when connecting over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 - `awsRegion` - AWS region of your MSK cluster. (Optional, required for AWS MSK IAM authentication)
@@ -88,7 +88,9 @@ If 'false' (the default): with `offsetResetPolicy: latest`, the scaler reports a
 >  - or use multiple triggers where one supplies `topic` to ensure lag for that topic will always be detected;
 ### Authentication Parameters
 
- You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, exactly one of password, keytab or credential cache, realm and krb5.conf file. If you are using SASL/OAuthbearer you will need to provide `oauthTokenEndpointUri` and `scopes` as required by your OAuth2 provider. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
+ You can use `TriggerAuthentication` CRD to configure the authentication by providing `sasl`, `username` and `password`, in case your Kafka cluster has SASL authentication turned on.  If you are using SASL/GSSAPI, you will need to provide Kerberos user, exactly one of password, keytab or credential cache, realm and krb5.conf file.
+
+ For SASL/OAUTHBEARER, the default `bearer` provider requires `oauthTokenEndpointUri` and any `scopes` required by your OAuth2 provider. With `saslTokenProvider: static`, supply `oauthToken` through `TriggerAuthentication` instead. You can also add custom SASL extension for OAuthbearer (see [KIP-342](https://cwiki.apache.org/confluence/display/KAFKA/KIP-342%3A+Add+support+for+Custom+SASL+extensions+in+OAuthBearer+authentication)) using `oauthExtensions`.
  If TLS is required you should set `tls` to `enable`. If required for your Kafka configuration, you may also provide a `ca`, `cert`, `key` and `keyPassword`. `cert` and `key` must be specified together.
  Another alternative is to specify `tls` and `sasl` in ScaledObject instead of `tls` and `sasl` in TriggerAuthentication, respectively. If specified in both ScaledObject and TriggerAuthentication, the value in ScaledObject takes precedence. For AWS MSK IAM authentication, you only need to set `awsRegion` in ScaledObject and you also need to enable TLS by setting `tls` to enable.
 
@@ -98,7 +100,7 @@ If 'false' (the default): with `offsetResetPolicy: latest`, the scaler reports a
 **SASL:**
 
 - `sasl` - Kafka SASL auth mode. (Values: `plaintext`, `scram_sha256`, `scram_sha512`, `gssapi`, `oauthbearer` or `none`, Default: `none`, Optional)
-- `saslTokenProvider` - Kafka SASL token provider. (Values: `bearer`, `aws_msk_iam`, Default: `bearer`, Optional).
+- `saslTokenProvider` - Kafka SASL token provider. (Values: `bearer`, `aws_msk_iam`, `static`, Default: `bearer`, Optional).
 - `username` - Username used for sasl authentication. (Optional)
 - `password` - Password used for sasl authentication. (Optional)
 - `keytab` - Kerberos keytab. (Optional)
@@ -107,9 +109,10 @@ If 'false' (the default): with `offsetResetPolicy: latest`, the scaler reports a
 - `kerberosConfig` - Kerberos configuration file. (Optional unless sasl mode is `gssapi`)
 - `kerberosServiceName` - Kerberos service name. (Optional takes default value of `kafka` if not provided)
 - `kerberosDisableFAST` - To disable FAST negotiation, set this to `true` (Values: `true`, `false`, Default: `false`, Optional)
-- `oauthTokenEndpointUri` - The OAuth Access Token URI used for oauthbearer token requests. (Optional unless sasl mode set to oauthbearer)
-- `scopes` - A comma separated lists of OAuth scopes used in the oauthbearer token requests. (Optional)
-- `oauthExtensions` - A comma separated lists of key value pairs in the format key=value OAuth extensions used in the oauthbearer token. (Optional)
+- `oauthTokenEndpointUri` - OAuth endpoint used to request access tokens. (Required when `sasl` is `oauthbearer` and `saslTokenProvider` is `bearer`)
+- `scopes` - Comma-separated OAuth scopes requested by the `bearer` provider. (Optional)
+- `oauthExtensions` - Comma-separated SASL/OAUTHBEARER extensions in `key=value` format, supported by the `bearer` and `static` providers. (Optional)
+- `oauthToken` - Access token to send directly to Kafka, supplied through `TriggerAuthentication`. Cannot be combined with `oauthTokenEndpointUri`; `username`, `password` and `scopes` are ignored in this mode. (Required when `sasl` is `oauthbearer` and `saslTokenProvider` is `static`; unsupported with other providers)
 
 **TLS:**
 
@@ -671,6 +674,68 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-kafka-credential
 ```
+
+#### Kubernetes service account tokens (SASL/OAUTHBEARER)
+
+Use `saslTokenProvider: static` with `boundServiceAccountToken` when your Kafka broker accepts Kubernetes-issued JWTs through SASL/OAUTHBEARER. KEDA requests a token for the service account and sends it directly to Kafka.
+
+In this example, the ServiceAccount, TriggerAuthentication and ScaledObject must all be in `my-app`; this does not need to be KEDA's namespace. Create the namespace first. The example assumes an existing `kafka-consumer` Deployment in that namespace. Replace the broker address, topic and consumer group with your own values. If the broker's TLS certificate uses a private CA, supply `ca` through TriggerAuthentication as shown in the TLS examples above.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kafka-lag-reader
+  namespace: my-app
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: kafka-sa-token
+  namespace: my-app
+spec:
+  boundServiceAccountToken:
+  - parameter: oauthToken
+    serviceAccountName: kafka-lag-reader
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: my-app
+spec:
+  scaleTargetRef:
+    name: kafka-consumer
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: kafka-kafka-bootstrap.kafka.svc:9093
+      consumerGroup: my-group
+      topic: test-topic
+      sasl: oauthbearer
+      saslTokenProvider: static
+      tls: enable
+    authenticationRef:
+      name: kafka-sa-token
+```
+
+Add this entry to KEDA's Helm values to allow the operator to create tokens for `my-app/kafka-lag-reader` and configure their audience:
+
+```yaml
+permissions:
+  operator:
+    restrict:
+      serviceAccountTokenCreationRoles:
+        - name: kafka-lag-reader
+          namespace: my-app
+          audience: kafka
+```
+
+The audience (`kafka` here is only an example) must match an audience accepted by the broker's SASL/OAUTHBEARER listener. The broker must validate the Kubernetes-issued JWT and map its identity to a Kafka principal with `Describe` permission on both the topic and consumer group to read lag. If authentication succeeds but lag retrieval fails with an authorization error, check that principal mapping and its permissions.
+
+Bound tokens last one hour by default. Set `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` between `1h` and `6h` to change it. For JWTs, KEDA attempts to refresh the token on the next SASL handshake after 80% of its lifetime has elapsed. Refresh happens during the handshake, without a background timer.
+
+See the [bound service account token guide](../../authentication-providers/bound-service-account-token/) for advanced audience and permission configuration and the different namespace rules for ClusterTriggerAuthentication.
 
 #### Your AWS MSK has IAM auth:
 
