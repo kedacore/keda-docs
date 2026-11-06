@@ -79,14 +79,14 @@ The CRDs are included as Helm templates (not in the `crds/` directory), so they 
 2. CRDs are **not** automatically removed on uninstall. To remove them manually:
 
    ```shell
-   kubectl delete crd httpscaledobjects.http.keda.sh interceptorroutes.http.keda.sh
+   kubectl delete crd interceptorroutes.http.keda.sh
    ```
 
-   > **Warning:** Deleting the CRDs removes all `HTTPScaledObject` and `InterceptorRoute` resources in the cluster. Make sure you no longer need them before proceeding.
+   > **Warning:** Deleting the CRDs removes all `InterceptorRoute` resources in the cluster. Make sure you no longer need them before proceeding.
 
 ## Namespace-Scoped Installation
 
-By default, the operator watches all namespaces for `HTTPScaledObject` and `InterceptorRoute` resources.
+By default, the operator watches all namespaces for `InterceptorRoute` resources.
 To restrict the operator to a single namespace:
 
 ```shell

@@ -24,8 +24,8 @@ If you are new to the HTTP Add-on, follow the [Getting Started guide](getting-st
 
 ## Upgrading from a Previous Version
 
-v0.14.0 introduces the `InterceptorRoute` (v1beta1) API, which replaces `HTTPScaledObject` (v1alpha1).
-If you have existing `HTTPScaledObject` resources, see [Migrate from HTTPScaledObject to InterceptorRoute](operations/migrate-httpscaledobject-to-interceptorroute/).
+v1.0 removes the `HTTPScaledObject` (v1alpha1) API in favor of `InterceptorRoute` (v1beta1).
+If you have existing `HTTPScaledObject` resources, migrate them before upgrading, see [Migrate from HTTPScaledObject to InterceptorRoute](operations/migrate-httpscaledobject-to-interceptorroute/).
 
 ## Documentation Sections
 
