@@ -77,7 +77,7 @@ helm upgrade http-add-on kedacore/keda-add-ons-http \
 With direct pod routing, the interceptor picks a random ready pod for each request by default.
 Set `KEDA_HTTP_LOAD_BALANCING=least-request` to pick two random ready pods and send the request to the one with fewer in-flight requests instead.
 This helps when request durations vary, so a pod busy with slow requests gets fewer new ones.
-Each interceptor replica only counts its own in-flight requests.
+Each interceptor replica only counts its own in-flight requests, and counts them per pod and port, so requests a pod serves on another port aren't taken into account.
 
 ```shell
 helm upgrade http-add-on kedacore/keda-add-ons-http \
