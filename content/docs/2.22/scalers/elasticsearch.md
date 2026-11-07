@@ -46,19 +46,24 @@ triggers:
 
 ### Authentication Parameters
 
-You can authenticate by using a username/password or apiKey/cloudID if you're using ElasticSearch on Elastic Cloud.
+You can authenticate with `addresses` and either a username/password or an API key, or with `cloudID` and an API key if you're using Elasticsearch on Elastic Cloud.
 
 **Password Authentication:**
 
 - `username` - Username to authenticate with to Elasticsearch cluster.
 - `password` - Password for configured user to login to Elasticsearch cluster.
 
-**Cloud ID and API Key Authentication:**
+**API Key Authentication:**
 
-[Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html) and API Key can be used for Elastic Cloud Service.
+An [API key](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-api-key) can be used with `addresses` (self-managed clusters) or with `cloudID` (Elastic Cloud). It can't be combined with `username`/`password`.
+
+- `apiKey` - The `encoded` value returned when creating the API key.
+
+**Cloud ID Authentication:**
+
+[Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html) can be used for Elastic Cloud Service, together with `apiKey`. It can't be combined with `addresses`.
 
 - `cloudID` - CloudID to connect with ElasticSearch on Elastic Cloud.
-- `apiKey` - API key to authenticate with ElasticSearch on Elastic Cloud.
 
 ### Examples
 
@@ -173,4 +178,49 @@ spec:
         targetValue: "1000"
       authenticationRef:
         name: keda-trigger-auth-elasticsearch-secret
+```
+
+Here is an example of how to deploy a scaled object with the `elasticsearch` scale trigger which authenticates against a self-managed cluster with an API key.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: elasticsearch-secrets
+type: Opaque
+stringData:
+  apiKey: "<encoded API key>"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-elasticsearch-apikey
+spec:
+  secretTargetRef:
+  - parameter: apiKey
+    name: elasticsearch-secrets
+    key: apiKey
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: elasticsearch-scaledobject
+spec:
+  scaleTargetRef:
+    name: "deployment-name"
+  triggers:
+    - type: elasticsearch
+      metadata:
+        addresses: "https://elasticsearch.example.com:9200"
+        index: "my-index"
+        query: |
+          {
+            "size": 0,
+            "track_total_hits": true,
+            "query": { "range": { "@timestamp": { "gte": "now-5m" } } }
+          }
+        valueLocation: "hits.total.value"
+        targetValue: "100"
+      authenticationRef:
+        name: keda-trigger-auth-elasticsearch-apikey
 ```
