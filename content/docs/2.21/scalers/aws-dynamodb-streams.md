@@ -58,6 +58,18 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 The user will need access to read properties from the specified AWS DynamoDB and DynamoDB Streams.
 
+### Scaling on consumer lag
+
+This scaler scales on the number of open shards only. It does not scale on backlog, such as the number of records waiting or how far behind a consumer is, because DynamoDB Streams does not expose that information without consuming the stream:
+
+- DynamoDB Streams has no consumer groups or service-side checkpoints. Each consumer tracks its own progress (for example in a KCL lease table, or inside Lambda), so KEDA cannot read it in a generic way.
+- `DescribeStream` returns only the starting sequence number for open shards. Finding the latest record would require `GetRecords`, which competes with your consumers for the per-shard read limits (AWS recommends no more than two readers per shard) and adds read cost.
+- Sequence numbers are not contiguous, so the difference between two of them is not a record count.
+
+Shard count comes from a cheap management call with no side effects on the stream.
+
+To scale on backlog, have the consumer publish its own lag metric to CloudWatch or Prometheus, and add an [`aws-cloudwatch`](./aws-cloudwatch.md) or [`prometheus`](./prometheus.md) trigger next to this one in the same `ScaledObject`. A simple lag metric is the age of the latest record the consumer has processed, that is, the current time minus the record's `ApproximateCreationDateTime`. When a `ScaledObject` has several triggers, the HPA uses the one that asks for the most replicas. The shard count therefore acts as a floor, the lag metric scales above it, and `maxReplicaCount` caps the total. See [Combining shard count with a consumer lag metric](#combining-shard-count-with-a-consumer-lag-metric) for an example.
+
 ### Example
 
 #### Scaling a deployment using IAM Role
@@ -148,4 +160,45 @@ spec:
       awsRegion: ap-northeast-1
       tableName: keda-events
       shardCount: "2"
+```
+
+#### Combining shard count with a consumer lag metric
+
+In this example, the consumer publishes a `ConsumerLagSeconds` metric to CloudWatch, in a custom namespace, with a `TableName` dimension. The `aws-dynamodb-streams` trigger keeps one replica for every two open shards, and the `aws-cloudwatch` trigger adds replicas when the lag rises above 30 seconds. The `TriggerAuthentication` is the one from the examples above. The IAM identity also needs `cloudwatch:GetMetricData` for the second trigger.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name:  aws-dynamodb-streams-scaledobject
+  namespace: keda-test
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 10                 # Upper limit across both triggers.
+  triggers:
+  # Floor: one replica for every two open shards.
+  - type: aws-dynamodb-streams
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      awsRegion: ap-northeast-1
+      tableName: keda-events
+      shardCount: "2"
+  # Scales above the floor when the consumer falls behind.
+  - type: aws-cloudwatch
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      awsRegion: ap-northeast-1
+      namespace: MyApp/StreamConsumer  # Custom namespace the consumer publishes to.
+      metricName: ConsumerLagSeconds
+      dimensionName: TableName
+      dimensionValue: keda-events
+      metricStat: Maximum
+      metricStatPeriod: "60"
+      metricCollectionTime: "180"
+      targetMetricValue: "30"
+      minMetricValue: "0"
 ```
