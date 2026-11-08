@@ -31,6 +31,7 @@ triggers:
 - `activationTargetQueueSize` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `restAPITemplate` - Template to build REST API url to get queue size. (Default: `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize"`, Optional)
 - `corsHeader` - Value to populate the Origin header field for CORS filtering. (Default: `"http://<<managmentEndpoint>>"`, Optional)
+- `usePost` - Read the queue size with a Jolokia POST request with a JSON body instead of a GET. Recent ActiveMQ Classic releases only allow POST requests to Jolokia. The request goes to the part of the URL before `/read/`, so this works with the default template and with a custom `restAPITemplate` that contains `/read/`. (Values: `true`, `false`, Default: `false`, Optional)
 
 **Parameter Requirements:**
 
