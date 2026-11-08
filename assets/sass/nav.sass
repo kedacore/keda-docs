@@ -1,8 +1,8 @@
 =active
-  font-weight: $weight-bold
+  font-weight: 700
 
   a
-    color: $primary !important
+    color: $keda-blue !important
 
 =split-x
   display: flex
@@ -16,7 +16,7 @@
     &-title
       a
         font-weight: 500
-        color: $dark
+        color: var(--bulma-text-strong)
 
       +split-x
 
@@ -27,7 +27,7 @@
     &-title
       a
         font-weight: 600
-        color: $dark
+        color: var(--bulma-text-strong)
 
       +split-x
 
@@ -40,7 +40,7 @@
       //padding: 0.75rem 0 0.75rem 1rem
 
       li a
-        color: $grey
+        color: var(--bulma-text-weak)
 
       ul + ul
         margin-top: 0.3rem
@@ -52,7 +52,7 @@
         font-size: 1.1rem
 
         a
-          color: $dark
+          color: var(--bulma-text-strong)
 
         &.is-active
           +active
@@ -80,13 +80,8 @@
   &:hover
     color:#00aeff
 
-.docs-menu--desktop .navbar-link:hover,
-.navbar-end .navbar-link:hover
-  color: #00aeff !important
-  background-color: transparent !important
-
 .navbar-dropdown .navbar-item
-  color: #4a4a4a
+  color: var(--bulma-text)
 
 @media screen and (max-width: 1024px)
   .is-fixed-top
@@ -103,4 +98,4 @@
 
 @media screen and (max-width: 1023px)
   .navbar-link, .navbar-item
-    color: $dark
+    color: var(--bulma-text-strong)
