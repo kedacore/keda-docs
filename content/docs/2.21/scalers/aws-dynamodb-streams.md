@@ -58,6 +58,25 @@ You can use `TriggerAuthentication` CRD to configure the authenticate by providi
 
 The user will need access to read properties from the specified AWS DynamoDB and DynamoDB Streams.
 
+### Scaling on consumer lag
+
+This scaler scales on the number of shards that `DescribeStream` returns for the stream, which can include recently closed shards as well as open ones. It does not scale on backlog, such as the number of records waiting or how far behind a consumer is, because DynamoDB Streams does not expose that information without consuming the stream:
+
+- DynamoDB Streams has no consumer groups or service-side checkpoints. Each consumer tracks its own progress (for example in a KCL lease table, or inside Lambda), so KEDA cannot read it in a generic way.
+- `DescribeStream` returns only the starting sequence number for open shards. Finding the latest record would require `GetRecords`, which competes with your consumers for the per-shard read limits (AWS recommends no more than two readers per shard) and adds read cost.
+- Sequence numbers are not contiguous, so the difference between two of them is not a record count.
+
+Shard count comes from a cheap management call with no side effects on the stream.
+
+To scale on backlog, have the consumer publish its own lag metric to CloudWatch or Prometheus, and add an [`aws-cloudwatch`](./aws-cloudwatch.md) or [`prometheus`](./prometheus.md) trigger next to this one in the same `ScaledObject`. When a `ScaledObject` has several triggers, the HPA uses the one that asks for the most replicas. The shard count therefore acts as a floor, the lag metric scales above it, and `maxReplicaCount` caps the total. Extra replicas only help up to one per shard. With the KCL, each shard is leased to one worker at a time, so replicas beyond the shard count stay idle, and adding replicas does not clear a single hot shard faster. See [Combining shard count with a consumer lag metric](#combining-shard-count-with-a-consumer-lag-metric) for an example.
+
+A few points make the lag metric safe to scale on:
+
+- It should report the age of the oldest record the consumer has read but not finished processing (the current time minus its `ApproximateCreationDateTime`), and drop toward `0` only while the consumer keeps reading without finding new records. A metric such as the time since the last processed record keeps rising on an idle stream and would scale out with no backlog.
+- A single empty read is not proof that the consumer is caught up. `GetRecords` can return no records even when later parts of the shard contain records, so the consumer should keep following `NextShardIterator` rather than treat one empty response as the end of the backlog.
+- Publish it on a timer, separately from record processing, and include how long it has been since the consumer last completed a read, empty or not. Report the larger of that value and the record age. A reader that stalls then reports a rising lag even when it has not seen the records that arrived after it stopped. If one consumer reads several shards, track both values per shard and publish the largest, so a stalled shard is not hidden by others that are still moving.
+- Decide what happens when the metric is missing. By default, the `aws-cloudwatch` scaler treats an empty response as `minMetricValue`, which is `0`, so a consumer that stops publishing looks caught up. Setting `ignoreNullValues: "false"` makes the trigger return an error instead. The HPA then does not scale down while that metric is unavailable, and it can still scale up on the shard count. You can also configure a [`fallback`](./../reference/scaledobject-spec.md#fallback). This setting covers a query that returns no data points. If CloudWatch returns no metric result at all, the scaler still uses `minMetricValue`, so also monitor the metric itself, for example with a CloudWatch alarm that treats missing data as breaching.
+
 ### Example
 
 #### Scaling a deployment using IAM Role
@@ -148,4 +167,45 @@ spec:
       awsRegion: ap-northeast-1
       tableName: keda-events
       shardCount: "2"
+```
+
+#### Combining shard count with a consumer lag metric
+
+In this example, the consumer publishes a `ConsumerLagSeconds` metric to CloudWatch, in a custom namespace, with a `TableName` dimension. The `aws-dynamodb-streams` trigger requests one replica for every two shards that `DescribeStream` returns. The `aws-cloudwatch` trigger uses the default `AverageValue` target, so it requests about `ceil(lag / 30)` replicas, for example four replicas at 120 seconds of lag. The HPA uses whichever request is higher, up to `maxReplicaCount`. The `TriggerAuthentication` is the one from the examples above. The IAM identity also needs `cloudwatch:GetMetricData` for the second trigger.
+
+```yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name:  aws-dynamodb-streams-scaledobject
+  namespace: keda-test
+spec:
+  scaleTargetRef:
+    name: nginx-deployment
+  minReplicaCount: 1
+  maxReplicaCount: 10                 # Upper limit across both triggers.
+  triggers:
+  # Floor: one replica for every two shards returned by DescribeStream.
+  - type: aws-dynamodb-streams
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      awsRegion: ap-northeast-1
+      tableName: keda-events
+      shardCount: "2"
+  # Requests about ceil(lag / 30) replicas when the consumer falls behind.
+  - type: aws-cloudwatch
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      awsRegion: ap-northeast-1
+      namespace: MyApp/StreamConsumer  # Custom namespace the consumer publishes to.
+      metricName: ConsumerLagSeconds
+      dimensionName: TableName
+      dimensionValue: keda-events
+      metricStat: Maximum
+      metricStatPeriod: "60"
+      metricCollectionTime: "180"
+      targetMetricValue: "30"
+      ignoreNullValues: "false"        # A missing metric is an error, not zero lag.
 ```
