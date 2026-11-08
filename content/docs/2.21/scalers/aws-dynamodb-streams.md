@@ -72,8 +72,9 @@ To scale on backlog, have the consumer publish its own lag metric to CloudWatch 
 
 A few points make the lag metric safe to scale on:
 
-- It should report `0` when the consumer is caught up. For example, use the age of the record the consumer is currently processing (the current time minus its `ApproximateCreationDateTime`), and `0` when the consumer's latest read returned no new records. A metric such as the time since the last processed record keeps rising on an idle stream and would scale out with no backlog.
-- Publish it on a timer, separately from record processing, so that a stalled consumer keeps reporting a rising lag instead of going silent.
+- It should report the age of the oldest record the consumer has read but not finished processing (the current time minus its `ApproximateCreationDateTime`), and drop toward `0` only while the consumer keeps reading without finding new records. A metric such as the time since the last processed record keeps rising on an idle stream and would scale out with no backlog.
+- A single empty read is not proof that the consumer is caught up. `GetRecords` can return no records even when later parts of the shard contain records, so the consumer should keep following `NextShardIterator` rather than treat one empty response as the end of the backlog.
+- Publish it on a timer, separately from record processing, and include how long it has been since the consumer last completed a read, empty or not. Report the larger of that value and the record age. A reader that stalls then reports a rising lag even when it has not seen the records that arrived after it stopped.
 - Decide what happens when the metric is missing. By default, the `aws-cloudwatch` scaler treats an empty response as `minMetricValue`, which is `0`, so a consumer that stops publishing looks caught up. Setting `ignoreNullValues: "false"` makes the trigger return an error instead. The HPA then does not scale down while that metric is unavailable, and it can still scale up on the shard count. You can also configure a [`fallback`](./../reference/scaledobject-spec.md#fallback).
 
 ### Example
