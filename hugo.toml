@@ -691,6 +691,10 @@ url = "https://www.teamleader.eu"
 logo = "teamleader.png"
 
 [[params.users]]
+url = "https://theloops.live/"
+logo = "theloops.png"
+
+[[params.users]]
 url = "https://www.unitary.ai/"
 logo = "unitary.png"
 
