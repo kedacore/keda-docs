@@ -41,6 +41,8 @@ With the default `lagStrategy: all`, the lag is `num_pending + num_ack_pending`,
 
 A message also stays in `num_ack_pending` while a consumer deliberately delays it, for example by negatively acknowledging it with a backoff (`NakWithDelay`) or by holding it for a long `AckWait`. No consumer is working on such a message and adding replicas cannot help it, yet it still counts towards the lag and can keep a workload scaled up for as long as the backoff lasts. Set `lagStrategy: pending` to count only undelivered messages in that case.
 
+> 💡 **WARNING:** Messages waiting to be redelivered stay in `num_ack_pending`, so `lagStrategy: pending` reports no lag for them. With `minReplicaCount: 0`, the workload can scale to zero while those messages are still unacknowledged and nothing will activate it to process the redeliveries. Only use `lagStrategy: pending` when a consumer stays available to handle them, for example by setting `minReplicaCount` to at least `1`.
+
 ### Authentication Parameters
 
 Some parameters of the JetStream details can be pulled from `TriggerAuthentication` objects:
