@@ -58,12 +58,12 @@ Both resources use the same scalers and event sources. The difference is what KE
 | **What KEDA scales** | A Deployment, StatefulSet, or custom resource with a `/scale` subresource | Kubernetes Jobs, created from the `jobTargetRef` template |
 | **Who sets the count** | The KEDA operator scales between 0 and 1. The HPA that KEDA manages scales between 1 and N | The KEDA operator creates new Jobs on each polling interval, based on pending events and the `scalingStrategy`. No HPA is involved |
 | **How work is processed** | Replicas keep running, and each one pulls many events | Each Job typically pulls one event, processes it to completion, and exits |
-| **Scale-in** | The HPA removes replicas. It can't choose which one, so a pod can be stopped in the middle of an event | KEDA starts fewer new Jobs. Running Jobs finish their work |
+| **Scale down** | The HPA removes replicas. It can't choose which one, so a pod can be stopped in the middle of an event | KEDA starts fewer new Jobs. Running Jobs finish their work |
 | **Reference** | [ScaledObject specification](../reference/scaledobject-spec.md) | [ScaledJob specification](../reference/scaledjob-spec.md) |
 
 **Use a ScaledObject** when your app is a long-running consumer or service, events are quick to process, and you want to keep processing semantics such as in-order processing, retries, or checkpointing.
 
-**Use a ScaledJob** when each event is a long or heavy task, such as video encoding or a batch run, that should not be cut off when the workload scales in. If you'd rather keep a ScaledObject, you can delay pod termination instead. See [Long-running executions](./scaling-deployments.md#long-running-executions).
+**Use a ScaledJob** when each event is a long or heavy task, such as video encoding or a batch run, that should not be cut off when the workload scales down. If you'd rather keep a ScaledObject, you can delay pod termination instead. See [Long-running executions](./scaling-deployments.md#long-running-executions).
 
 ## Scaling Deployments, StatefulSets, and Custom Resources
 
