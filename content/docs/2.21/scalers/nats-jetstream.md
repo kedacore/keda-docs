@@ -29,6 +29,7 @@ triggers:
 
 - `natsServerMonitoringEndpoint` - Location of the NATS server monitoring endpoint.
 - `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `accountID` - ID of the NATS account. Use this when the account's name and ID differ, for example with JWT-based (decentralized) authentication. When not set, the value of `account` is used as the ID. (Optional)
 - `stream` - Name of the JS stream within the account.
 - `consumer` - Name of the consumer for a given stream.
 - `lagThreshold` - Average target value to trigger scaling actions.
@@ -41,6 +42,7 @@ Some parameters of the JetStream details can be pulled from `TriggerAuthenticati
 
 - `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
 - `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `accountID` - ID of the NATS account. Use this when the account's name and ID differ, for example with JWT-based (decentralized) authentication. When not set, the value of `account` is used as the ID. (Optional)
 
 ### Example
 
