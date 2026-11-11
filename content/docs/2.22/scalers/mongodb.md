@@ -103,6 +103,14 @@ As an alternative to environment variables, You can authenticate with the MongoD
 - `password` - Password for the configured user to login to MongoDB server.
 - `dbName` - Name of the database.
 
+**TLS Parameters:**
+
+- `tls` - To enable TLS for the MongoDB connection, set this to `enable`. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - Certificate authority file for TLS client authentication. (Optional)
+- `cert` - Certificate for client authentication. (Optional)
+- `key` - Key for client authentication. (Optional)
+- `keyPassword` - Password for the client certificate key, when the key is encrypted. (Optional)
+
 ### Example
 
 Here is an example of how to deploy a scaled Job with the `MongoDB` scale trigger which uses `TriggerAuthentication`.
