@@ -50,19 +50,11 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 - `aggregatedClientTxMsgRateTarget` - Target number messages per second the clients in the shared subscription are expected to consume, if the actual aggregated messages per second number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `activationAggregatedClientTxMsgRateTarget` - Target value for activating the scaler, compared against the aggregated messages per second of the clients in the shared subscription. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-
 - `aggregatedClientTxByteRateTarget` - Target number bytes per second the clients in the shared subscription are expected to consume, if the actual aggregated bytes per second number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `activationAggregatedClientTxByteRateTarget` - Target value for activating the scaler, compared against the aggregated bytes per second of the clients in the shared subscription. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `aggregatedClientAverageTxByteRateTarget` - Target average number bytes per minute the clients in the shared subscription are expected to consume, if the actual aggregated bytes per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `aggregatedClientAverageTxByteRateTarget` - Target average number messages per minute the clients in the shared subscription are expected to consume, if the actual aggregated messages per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
-
-- `activationAggregatedClientAverageTxByteRateTarget` - Target value for activating the scaler, compared against the aggregated average bytes per minute of the clients in the shared subscription. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
-
-- `aggregatedClientAverageTxMsgRateTarget` - Target average number bytes per minute the clients in the shared subscription are expected to consume, if the actual aggregated bytes per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
-
-- `activationAggregatedClientAverageTxMsgRateTarget` - Target value for activating the scaler, compared against the aggregated average messages per minute of the clients in the shared subscription. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `aggregatedClientAverageTxMsgRateTarget` - Target average number messages per minute the clients in the shared subscription are expected to consume, if the actual aggregated messages per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
 - `usernameFromEnv` - Environment variable set with SEMP user account. (Optional)
 

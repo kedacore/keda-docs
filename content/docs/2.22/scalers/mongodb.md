@@ -105,10 +105,10 @@ As an alternative to environment variables, You can authenticate with the MongoD
 
 **TLS Parameters:**
 
-- `tls` - To enable TLS for the MongoDB connection, set this to `enable`. (Values: `enable`, `disable`, Default: `disable`, Optional)
-- `ca` - Certificate authority file for TLS client authentication. (Optional)
-- `cert` - Certificate for client authentication. (Optional)
-- `key` - Key for client authentication. (Optional)
+- `tls` - To enable TLS for the MongoDB connection, set this to `enable`. When enabled, at least one of `ca` or the `cert` and `key` pair must be provided. (Values: `enable`, `disable`, Default: `disable`, Optional)
+- `ca` - PEM-encoded CA certificate used to verify the MongoDB server certificate. (Optional)
+- `cert` - PEM-encoded client certificate for client certificate authentication. Must be provided together with `key`. (Optional)
+- `key` - PEM-encoded private key for the client certificate. Must be provided together with `cert`. (Optional)
 - `keyPassword` - Password for the client certificate key, when the key is encrypted. (Optional)
 
 ### Example
