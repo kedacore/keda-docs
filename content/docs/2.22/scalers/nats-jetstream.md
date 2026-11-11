@@ -28,7 +28,7 @@ triggers:
 **Parameter list:**
 
 - `natsServerMonitoringEndpoint` - Location of the NATS server monitoring endpoint.
-- `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `account` - Name of the NATS account. At least one of `account` or `accountID` must be set; the scaler returns an error when both are omitted.
 - `accountID` - ID of the NATS account. Use this when the account's name and ID differ, for example with JWT-based (decentralized) authentication. When not set, the value of `account` is used as the ID. (Optional)
 - `stream` - Name of the JS stream within the account.
 - `consumer` - Name of the consumer for a given stream.
@@ -41,7 +41,7 @@ triggers:
 Some parameters of the JetStream details can be pulled from `TriggerAuthentication` objects:
 
 - `natsServerMonitoringEndpoint` - Location of the NATS Streaming monitoring endpoint.
-- `account` - Name of the NATS account. "$G" is default when no account is configured.
+- `account` - Name of the NATS account. At least one of `account` or `accountID` must be set; the scaler returns an error when both are omitted.
 - `accountID` - ID of the NATS account. Use this when the account's name and ID differ, for example with JWT-based (decentralized) authentication. When not set, the value of `account` is used as the ID. (Optional)
 
 ### Example
