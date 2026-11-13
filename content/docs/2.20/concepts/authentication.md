@@ -417,7 +417,7 @@ The `credentials` section specifies AWS credentials, including the `accessKey` a
 
 The `region` parameter is optional and represents the AWS region where the secret resides, defaulting to the default region if not specified.
 
-The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, the AWS Secret Manager secret name, an optional `secretKey` to pick one key out of a JSON secret, and optionally the secret version to read: `versionId` selects an exact version, `versionStage` a staging label such as `AWSPREVIOUS`. When neither is set, AWS returns the version with the `AWSCURRENT` label.
+The `secrets` list within `awsSecretManager` defines the mapping between the AWS Secret Manager secret and the authentication parameter used in your application, including the parameter name, the AWS Secret Manager secret name, an optional `secretKey` to pick one key out of a JSON secret, and optionally the secret version to read: `versionId` selects an exact version, `versionStage` a staging label such as `AWSPREVIOUS`. When neither is set, AWS returns the version with the `AWSCURRENT` label. If both are set they must refer to the same version, otherwise AWS rejects the request.
 
 ```yaml
 awsSecretManager:
