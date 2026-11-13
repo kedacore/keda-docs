@@ -22,6 +22,7 @@ triggers:
     consumer: "pull_consumer"
     lagThreshold: "10"
     activationLagThreshold: "15"
+    lagStrategy: "all"
     useHttps: "false"
 ```
 
@@ -33,7 +34,14 @@ triggers:
 - `consumer` - Name of the consumer for a given stream.
 - `lagThreshold` - Average target value to trigger scaling actions.
 - `activationLagThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
+- `lagStrategy` - Which consumer messages count towards the lag. `all` counts undelivered messages plus messages that were delivered but not acknowledged yet. `pending` counts only undelivered messages. (Values: `all`, `pending`, Default: `all`, Optional)
 - `useHttps` - Specifies if the NATS server monitoring endpoint is using HTTPS. (Default: `false`, Optional)
+
+With the default `lagStrategy: all`, the lag is `num_pending + num_ack_pending`, so a message stays counted while a consumer is working on it and until it is acknowledged. This also keeps counting messages that are waiting to be redelivered, which is what you want when a consumer leaves messages unacknowledged and relies on redelivery.
+
+A message also stays in `num_ack_pending` while a consumer deliberately delays it, for example by negatively acknowledging it with a backoff (`NakWithDelay`) or by holding it for a long `AckWait`. No consumer is working on such a message and adding replicas cannot help it, yet it still counts towards the lag and can keep a workload scaled up for as long as the backoff lasts. Set `lagStrategy: pending` to count only undelivered messages in that case.
+
+> 💡 **WARNING:** Messages waiting to be redelivered stay in `num_ack_pending`, so `lagStrategy: pending` reports no lag for them. With `minReplicaCount: 0`, the workload can scale to zero while those messages are still unacknowledged and nothing will activate it to process the redeliveries. Only use `lagStrategy: pending` when a consumer stays available to handle them, for example by setting `minReplicaCount` to at least `1`.
 
 ### Authentication Parameters
 
