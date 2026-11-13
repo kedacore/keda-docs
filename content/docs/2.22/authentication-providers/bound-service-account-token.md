@@ -20,7 +20,7 @@ For a TriggerAuthentication, the service account is resolved in that authenticat
 
 ## Token lifetime
 
-KEDA requests each token through the Kubernetes TokenRequest API with the lifetime set in the `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` environment variable of the KEDA operator. The value is a Go duration such as `30m` or `2h`. When the variable is unset or empty, tokens are requested with a lifetime of `1h`. The operator refuses to start if the value cannot be parsed. The Kubernetes API server can still adjust the requested lifetime according to its own policy, for example it enforces a minimum of 10 minutes.
+KEDA requests each token through the Kubernetes TokenRequest API with the lifetime set in the `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` environment variable of the KEDA operator. The value is a Go duration such as `30m` or `2h`. When the variable is unset or empty, tokens are requested with a lifetime of `1h`. The operator refuses to start if the value cannot be parsed. The same lifetime is used for the tokens KEDA mints for HashiCorp Vault's `credential.serviceAccountName` authentication. The Kubernetes API server can still adjust the requested lifetime according to its own policy, for example it enforces a minimum of 10 minutes.
 
 ```yaml
 env:
