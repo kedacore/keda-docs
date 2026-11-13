@@ -18,6 +18,16 @@ spec:
 
 For a TriggerAuthentication, the service account is resolved in that authentication's namespace. For a ClusterTriggerAuthentication, it is resolved in `KEDA_CLUSTER_OBJECT_NAMESPACE`, defaulting to the operator's namespace. It is not automatically the namespace of each referencing workload. Vault's separate `credential.serviceAccountName` path continues to use the referencing ScaledObject/ScaledJob namespace.
 
+## Token lifetime
+
+KEDA requests each token through the Kubernetes TokenRequest API with the lifetime set in the `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` environment variable of the KEDA operator. The value is a Go duration such as `30m` or `2h`. When the variable is unset or empty, tokens are requested with a lifetime of `1h`. The operator refuses to start if the value cannot be parsed. The Kubernetes API server can still adjust the requested lifetime according to its own policy, for example it enforces a minimum of 10 minutes.
+
+```yaml
+env:
+  - name: KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY
+    value: "30m"
+```
+
 ## Audience and permissions
 
 Starting in KEDA 2.21, token minting requires an operator-configured audience mapping **as well as** RBAC by default. The TA/CTA cannot select its audience. Use a dedicated service account and a receiver-specific audience not accepted by your Kubernetes API server, granting only the permissions the receiver needs. See [Kubernetes service account guidance](https://kubernetes.io/docs/concepts/security/service-accounts/).
