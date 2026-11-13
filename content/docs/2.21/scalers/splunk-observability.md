@@ -15,6 +15,8 @@ This specification describes the `splunk-observability` trigger that scales base
 ```yaml
 triggers:
   - type: splunk-observability
+    # Optional: "AverageValue" or "Value". Default: "Value"
+    metricType: Value
     metadata:
       # Required: SignalFlow query to retrieve the desired metric time series
       query: "data('demo.trans.latency').max().publish()"
@@ -29,7 +31,7 @@ triggers:
 ```
 
 **Parameter list:**
-
+- `metricType` - The HPA metric target type, set on the trigger rather than in `metadata`. `Value` compares the query result directly with `targetValue`; `AverageValue` divides it by the current replica count, which scales to `ceil(result / targetValue)` replicas. (Values: `AverageValue`, `Value`, Default: `Value`, Optional). Note that the default differs from most other scalers, which default to `AverageValue`.
 - `query` - SignalFlow query for querying the desired metrics.
 - `duration` - Duration of the stream being created to query a Metric Time Series (MTS) from Splunk Observability Cloud. The specified duration is in seconds.
 - `targetValue` - Threshold to reach to start scaling.
