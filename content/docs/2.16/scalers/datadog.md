@@ -80,7 +80,6 @@ triggers:
     datadogMetricNamespace: "default"
     targetValue: "7.75"
     activationTargetValue: "1.1"
-    type: "global" # Deprecated in favor of trigger.metricType
     metricUnavailableValue: "1.5"
 ```
 
@@ -189,7 +188,6 @@ triggers:
     queryValue: "7.75"
     activationQueryValue: "1.1"
     queryAggregator: "max"
-    type: "global" # Deprecated in favor of trigger.metricType
     age: "120"
     timeWindowOffset: "30"
     lastAvailablePointOffset: "1"
