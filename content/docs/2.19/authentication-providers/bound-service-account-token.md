@@ -12,6 +12,16 @@ boundServiceAccountToken:                   # Optional.
 
 **Assumptions:** `namespace` is in the same resource as referenced by `scaleTargetRef.name` in the ScaledObject, unless specified otherwise.
 
+## Token lifetime
+
+KEDA requests each token through the Kubernetes TokenRequest API with the lifetime set in the `KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY` environment variable of the KEDA operator. The value is a Go duration between `1h` and `6h`, for example `2h`. When the variable is unset or empty, tokens are requested with a lifetime of `1h`. The operator refuses to start if the value cannot be parsed or is outside that range. The same lifetime is used for the tokens KEDA mints for HashiCorp Vault's `credential.serviceAccountName` authentication.
+
+```yaml
+env:
+  - name: KEDA_BOUND_SERVICE_ACCOUNT_TOKEN_EXPIRY
+    value: "2h"
+```
+
 ## Permissions for KEDA to request service account tokens
 
 By default, the KEDA operator does not have the necessary permissions to request service account tokens from an arbitrary service account. This is to prevent a privilege escalation where a bad actor could use KEDA to request tokens on behalf of any service account in the cluster.
