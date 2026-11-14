@@ -52,9 +52,9 @@ If you need to use **Guaranteed messaging** (Solace PubSub+ Event Broker queue) 
 
 - `aggregatedClientTxByteRateTarget` - Target number bytes per second the clients in the shared subscription are expected to consume, if the actual aggregated bytes per second number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `aggregatedClientAverageTxByteRateTarget` - Target average number messages per minute the clients in the shared subscription are expected to consume, if the actual aggregated messages per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
+- `aggregatedClientAverageTxByteRateTarget` - Target average number bytes per minute the clients in the shared subscription are expected to consume, if the actual aggregated bytes per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
-- `aggregatedClientAverageTxMsgRateTarget` - Target average number bytes per minute the clients in the shared subscription are expected to consume, if the actual aggregated bytes per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
+- `aggregatedClientAverageTxMsgRateTarget` - Target average number messages per minute the clients in the shared subscription are expected to consume, if the actual aggregated messages per minute number is greater the number of replicas will be increased. (Default: `0`, Optional)
 
 - `usernameFromEnv` - Environment variable set with SEMP user account. (Optional)
 
