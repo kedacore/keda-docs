@@ -67,9 +67,23 @@ helm upgrade http-add-on kedacore/keda-add-ons-http \
   --set interceptor.extraEnvs.KEDA_HTTP_DIRECT_POD_ROUTING=false
 ```
 
-| Helm value | Env var                        | Default | Description                                                                                                                                      |
-| ---------- | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| —          | `KEDA_HTTP_DIRECT_POD_ROUTING` | `true`  | Route to a ready pod IP when `true`; forward through the Service ClusterIP when `false`.                                                         |
+| Helm value | Env var                        | Default  | Description                                                                              |
+| ---------- | ------------------------------ | -------- | ---------------------------------------------------------------------------------------- |
+| —          | `KEDA_HTTP_DIRECT_POD_ROUTING` | `true`   | Route to a ready pod IP when `true`; forward through the Service ClusterIP when `false`. |
+| —          | `KEDA_HTTP_LOAD_BALANCING`     | `random` | How a ready pod is picked: `random` or `least-request`.                                  |
+
+### Load balancing
+
+With direct pod routing, the interceptor picks a random ready pod for each request by default.
+Set `KEDA_HTTP_LOAD_BALANCING=least-request` to pick two random ready pods and send the request to the one with fewer in-flight requests instead.
+This helps when request durations vary, so a pod busy with slow requests gets fewer new ones.
+Each interceptor replica only counts its own in-flight requests, and counts them per pod IP and port, so requests a pod serves on another port or IP address (for example on a dual-stack pod) aren't taken into account.
+
+```shell
+helm upgrade http-add-on kedacore/keda-add-ons-http \
+  --namespace keda \
+  --set interceptor.extraEnvs.KEDA_HTTP_LOAD_BALANCING=least-request
+```
 
 ## Connection tuning
 
