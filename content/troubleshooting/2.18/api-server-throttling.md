@@ -6,7 +6,7 @@ weight = 500
 
 # Troubleshooting KEDA API Server Throttling
 
-If you are experiencing messages like "Waited for ... due to client-side throttling" in your KEDA operator logs, it might indicate that the KEDA operator is being throttled by the Kubernetes API server. This can happen in environments with a large number of `ScaledObject` resources.
+If you are experiencing messages like "Waited for ... due to client-side throttling" in your KEDA operator logs, it indicates that the Kubernetes client inside the KEDA operator is limiting its own request rate (client-side throttling), which does not by itself mean the API server is overloaded. This can happen in environments with a large number of `ScaledObject` resources.
 
 KEDA provides several command-line flags to control its interaction with the Kubernetes API server. Adjusting these flags can help alleviate client-side throttling.
 
@@ -56,7 +56,7 @@ spec:
   template:
     spec:
       containers:
-      - name: keda-operator # Or keda-metrics-apiserver, depending on which component is throttled
+      - name: keda-operator
         args:
         - "--kube-api-qps=40"
         - "--kube-api-burst=60"
@@ -66,9 +66,22 @@ spec:
         # ... other existing arguments for the KEDA operator
 ```
 
+## Creating Hundreds of ScaledObjects at Once (KEDA 2.20.2 and later)
+
+Since KEDA 2.20.2 the operator mirrors the HPA's `ScalingActive` condition into an `HPAActive` condition on each `ScaledObject`. A newly created `ScaledObject` therefore typically costs one extra status write, made when `HPAActive` is first set or changes, and it shares the `--kube-api-qps` budget with HPA creation. This is a one-time cost at creation: in steady state the operator skips status updates when nothing has changed. When many `ScaledObject` resources are created together, their HPAs appear later than on KEDA 2.20.1.
+
+The table shows the time from `ScaledObject` creation to HPA creation (p95) on a kind cluster running Kubernetes 1.35. 500 `ScaledObject` resources were applied at once, each with an inactive trigger and a `Deployment` at zero replicas, with two runs per setting:
+
+| Operator flags | KEDA 2.20.1 | KEDA 2.20.2 |
+|---|---|---|
+| default (`--kube-api-qps=20`, `--kube-api-burst=30`) | 210 s, 210 s | 231 s, 232 s |
+| `--kube-api-qps=40`, `--kube-api-burst=60` | 95 s, 103 s | 108 s, 111 s |
+
+Doubling both flags roughly halves the time on both versions and halves the extra delay of the new status write (about 21 s to about 11 s), but it does not remove it, because the extra requests still use the same budget. If you create hundreds of `ScaledObject` resources in one go, raise `--kube-api-qps` and `--kube-api-burst` as shown in the example under How to Apply Changes, and watch the API server load. Absolute times depend on your cluster and API server capacity.
+
 ## Status Update Optimization
 
-As of recent versions of KEDA, the operator includes built-in optimizations to reduce unnecessary ScaledObject status updates. The operator now:
+KEDA releases that include this optimization reduce unnecessary ScaledObject status updates (check the CHANGELOG linked below for the release that introduced it, as it may not be in older versions). The operator:
 
 - **Compares condition states**: Before updating status, KEDA compares the new conditions (Type, Status, Reason, and Message) with existing ones
 - **Skips redundant updates**: Status updates are only performed when conditions have actually changed
@@ -83,7 +96,7 @@ For the most up-to-date information about this optimization, refer to the [KEDA 
 With proper configuration and built-in optimizations, users typically experience:
 
 - **Reduced throttling messages**: Fewer "client-side throttling" warnings in KEDA operator logs
-- **Lower API server load**: Decreased request volume from KEDA operations to the Kubernetes API server
+- **Fewer redundant writes**: Fewer unchanged ScaledObject status updates sent to the Kubernetes API server. Raising the QPS, burst or reconcile limits allows more requests, so watch API server load after changing them
 - **Improved performance**: Better responsiveness in environments with 100+ ScaledObjects
 - **More stable scaling**: Consistent autoscaling behavior without throttling-related delays
 
