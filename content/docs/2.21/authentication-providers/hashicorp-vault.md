@@ -35,7 +35,7 @@ hashiCorpVault:                                               # Optional.
     key: {hashicorp-vault-secret-key-name}                    # Required.
     path: {hashicorp-vault-secret-path}                       # Required.
     type: {hashicorp-vault-secret-type}                       # Optional. Default to `""`. Allowed values: `secret`, `secretV2`, `pki`
-    pkidata: {hashicorp-vault-secret-pkidata}                 # Optional. Data to be send with the secret  if `hashicorp-vault-secret-type` is pki request
+    pkiData: {hashicorp-vault-secret-pkidata}                 # Optional. Data to be send with the secret  if `hashicorp-vault-secret-type` is pki request
       commonName: {hashicorp-vault-secret-pkidata-commonName} # Optional.
       altNames: {hashicorp-vault-secret-pkidata-altNames}     # Optional.
       ipSans: {hashicorp-vault-secret-pkidata-ipSans}         # Optional.
@@ -64,20 +64,20 @@ spec:
         parameter: "ca"
         path: {hashicorp-vault-secret-path}
         type: pki
-        pki_data:
-          common_name: {hashicorp-vault-secret-pkidata-commonName}
+        pkiData:
+          commonName: {hashicorp-vault-secret-pkidata-commonName}
       - key: "private_key"
         parameter: "key"
         path: {hashicorp-vault-secret-path}
         type: pki
-        pki_data:
-          common_name: {hashicorp-vault-secret-pkidata-commonName}
+        pkiData:
+          commonName: {hashicorp-vault-secret-pkidata-commonName}
       - key: "certificate"
         parameter: "cert"
         path: {hashicorp-vault-secret-path}
         type: pki
-        pki_data:
-          common_name: {hashicorp-vault-secret-pkidata-commonName}
+        pkiData:
+          commonName: {hashicorp-vault-secret-pkidata-commonName}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
