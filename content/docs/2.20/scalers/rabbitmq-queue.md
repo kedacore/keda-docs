@@ -106,6 +106,7 @@ This allows sensitive credentials to be stored and managed separately from the c
 - `ca` - Certificate authority file for TLS client authentication (optional).
 - `cert` - Certificate for client authentication (optional).
 - `key` - Certificate Key for client authentication (optional).
+- `keyPassword` - Password for the client certificate key, when the key is encrypted (optional).
 
 > 💡 **Notes:**
 > - Using RabbitMQ host with AMQPS protocol will require enabling the TLS settings and passing the required parameters.

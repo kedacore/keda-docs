@@ -86,7 +86,9 @@ triggers:
 - `timezone` - Timezone for query execution. (Default: `UTC`, Optional)
 - `queryAggregator` - Aggregation method. (Values: `Latest`, `Avg`, `Sum`, `Count`, `Min`, `Max`, Default: `Avg`, Optional)
 - `threshold` - Target value for scaling.
+- `activationThreshold` - Target value for activating the scaler. Learn more about activation [here](./../concepts/scaling-deployments.md#activating-and-scaling-thresholds). (Default: `0`, Optional)
 - `maxRetries` - Maximum number of retry attempts for API requests. (Default: `3`, Optional)
+- `unsafeSsl` - Skip certificate validation when connecting to the Sumo Logic API over HTTPS. (Values: `true`, `false`, Default: `false`, Optional)
 
 **Logs Query Specific Parameters:**
 
