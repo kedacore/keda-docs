@@ -60,7 +60,7 @@ What the CRON scaler does **not** do, is scale your workloads based on a recurri
 
 When many ScaledObjects share a schedule, they all scale at the same moment. Use `H` (hash), as in
 [Jenkins](https://www.jenkins.io/doc/book/pipeline/syntax/#cron-syntax), in any field of `start` or `end`
-to give each ScaledObject its own time within a range.
+to spread them across a range. Times are not unique: some ScaledObjects can land on the same minute.
 
 ```yaml
 start: H(0-29) 8 * * *   # between 8:00 and 8:29
@@ -88,7 +88,7 @@ with H                           ▲   ▲   ▲     worker 8:19 · web 8:23 · 
 | `H(a-b)/n` | Every `n` from `a` to `b`, from an offset  | `H(0-29)/10 * * * *` → `7-29/10 * * * *` |
 
 - The value comes from the ScaledObject's namespace, name and trigger index. It stays the same across restarts; renaming the ScaledObject or reordering its triggers can change it.
-- `start` and `end` share the hash. With the **same `H` range** in both, the window length is preserved, as in the table above.
+- `start` and `end` share the hash. The **same `H` token** (same range and step, in the same field) in both keeps the window length, as in the table above. Different tokens can change it, e.g. `H(0-29)` and `H(0-29)/10`.
 - Bare `H` in day of month picks 1–28. `H/1` is the same as `H`. The step can't be larger than the range.
 - Schedules have minute precision; widen the range to spread more ScaledObjects.
 
