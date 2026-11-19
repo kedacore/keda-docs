@@ -10,6 +10,8 @@ KEDA 2.21 requires operator-configured audiences for Vault Kubernetes authentica
 
 The default `operator.serviceAccountTokens.mode: enforce-audience` applies even when no audience settings are supplied. The chart projects and approves a token with audience `vault` at `/var/run/secrets/keda-vault/token` by default; it does not create token-creation RBAC or named-service-account audience mappings. Missing approvals or minting mappings fail the affected authentication without an API-token fallback. Unrelated authentication methods, including Vault's ordinary token authentication, do not acquire a service-account audience requirement.
 
+[Cloud federation with workload service account providers](../../concepts/workload-service-accounts/) requires `podIdentity.serviceAccountName`, an exact namespace/service-account audience mapping, and scoped token-creation RBAC. The providers are `gcp-workload-service-account`, `azure-workload-service-account`, and `aws-workload-service-account`. They always require audience enforcement; `legacy` is not supported. Their exchange flows send Kubernetes assertions only to supported cloud identity endpoints and reject redirects. The shared approval also permits generic BSAT and Vault minting, as described below; it does not confine assertions to these exchange flows.
+
 See the [2.21 migration guide](../../migration/#service-account-token-audiences) before upgrading.
 
 ### Approved audiences and token minting
@@ -18,7 +20,7 @@ See the [2.21 migration guide](../../migration/#service-account-token-audiences)
 | --- | --- | --- |
 | Operator Pod's dedicated Vault projection | `hashiCorpVault.kubernetesAuth.audience` | Creates a projected token and approves its audience; does not configure named-SA minting |
 | Separately mounted token files | `operator.serviceAccountTokens.additionalAllowedAudiences` | Approves audiences only; creates no volumes or minting mappings |
-| Vault `credential.serviceAccountName` or generic `boundServiceAccountToken` | `permissions.operator.restrict.serviceAccountTokenCreationRoles[].audience` | Configures the audience for an exact namespace/service-account pair and creates scoped token-creation RBAC |
+| Vault `credential.serviceAccountName`, generic `boundServiceAccountToken`, or cloud `podIdentity.serviceAccountName` | `permissions.operator.restrict.serviceAccountTokenCreationRoles[].audience` | Configures the audience for an exact namespace/service-account pair and creates scoped token-creation RBAC |
 
 Prefer native chart values, for example (audience enforcement is the default):
 
@@ -61,9 +63,13 @@ Vault must accept the configured login audience and use a **separate API-valid c
 
 ### Minted tokens and receivers
 
-Vault named-SA authentication and generic BSAT authentication use the same audience mapping and TokenRequest implementation. Existing token-creation RBAC is still required; the audience policy does not grant permissions by itself. Scope `create` on `serviceaccounts/token` to named service accounts in the required namespaces. `allowAllServiceAccountTokenCreation: true` instead grants this permission for any service account in any namespace, but does not create audience mappings or bypass enforcement. Kubernetes RBAC does not constrain the audience in a TokenRequest.
+Vault named-SA authentication, generic BSAT authentication, and cloud workload service account authentication use the same audience mapping and TokenRequest implementation. Existing token-creation RBAC is still required; the audience policy does not grant permissions by itself. Scope `create` on `serviceaccounts/token` to named service accounts in the required namespaces. `allowAllServiceAccountTokenCreation: true` instead grants this permission for any service account in any namespace, but does not create audience mappings or bypass enforcement. Kubernetes RBAC does not constrain the audience in a TokenRequest.
 
-Generic BSATs use the TA namespace, or the configured cluster-object namespace for a CTA. Vault `credential.serviceAccountName` uses the referencing ScaledObject/ScaledJob namespace, including when the Vault configuration is in a CTA. Configure mappings for the namespace actually used by that path.
+Generic BSATs use the TA namespace, or the configured cluster-object namespace for a CTA. Vault `credential.serviceAccountName` and cloud `podIdentity.serviceAccountName` use the referencing ScaledObject/ScaledJob namespace, including when the configuration is in a CTA. Configure mappings for the namespace actually used by that path.
+
+**Approving an account for cloud federation delegates its identity to namespace users who can configure scaling resources and their authentication.** They can also select it through generic `boundServiceAccountToken` authentication and send its raw federation JWT to an endpoint they control. Vault named-SA authentication shares that approval, subject to any configured Vault destination filter. Approvals do not restrict assertions to cloud exchanges, particular scalers, or destinations. KEDA does not check whether the scale target's Pods use the approved account.
+
+Use dedicated accounts with least-privilege cloud permissions and exact issuer, subject, and audience trust. Authentication fields such as `roleArn` and `identityId` are user-selected configuration, not administrator-enforced limits on the delegation. An exported assertion can access any cloud identity whose trust policy accepts it. Removing approval takes effect for future minting after the operator configuration is applied; already issued assertions and cloud credentials can remain valid until expiry. See [delegation and credential handling](../../concepts/workload-service-accounts/#delegation-and-credential-handling) for credential handling and revocation limits.
 
 A receiver that uses Kubernetes TokenReview must request its dedicated audience and check that the authenticated response includes it. Omitting `spec.audiences` asks about the API server's audience, not the dedicated service audience. The receiver uses its own API-valid credential to submit TokenReview and must retain its authorization checks. Changing only KEDA's minting configuration is insufficient. See the [BSAT provider guide](../../authentication-providers/bound-service-account-token/#receiver-requirements), including Datadog Cluster Agent compatibility.
 
