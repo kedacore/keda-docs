@@ -33,7 +33,7 @@ spec:
   maxReplicaCount: 100                        # Optional. Default: 100
   rolloutStrategy: gradual                    # Deprecated: Use rollout.strategy instead (see below).
   rollout:
-    strategy: gradual                         # Optional. Default: default. Which Rollout Strategy KEDA will use.
+    strategy: gradual                         # Optional. Default: immediate. Which Rollout Strategy KEDA will use.
     propagationPolicy: foreground             # Optional. Default: background. Kubernetes propagation policy for cleaning up existing jobs during rollout.
   scalingStrategy:
     strategy: "custom"                        # Optional. Default: default. Which Scaling Strategy to use. 
@@ -131,13 +131,13 @@ The max number of pods that is created within a single polling period. If there 
 
 ```yaml
   rollout:
-    strategy: gradual                         # Optional. Default: default. Which Rollout Strategy KEDA will use.
-    propagationPolicy: foreground             # Optional. Default: background. Kubernetes propagation policy for cleaning up existing jobs during 
+    strategy: gradual                         # Optional. Default: immediate. Which Rollout Strategy KEDA will use.
+    propagationPolicy: foreground             # Optional. Default: background. Kubernetes propagation policy for cleaning up existing jobs during rollout.
 ```
 
 The optional property rollout.strategy specifies the rollout strategy KEDA will use while updating an existing ScaledJob.
-Possible values are `default` or `gradual`. \
-When using the `default` rolloutStrategy, KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default, the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
+Possible values are `immediate` or `gradual`. \
+When using the `immediate` rolloutStrategy (the default behavior if omitted), KEDA will terminate existing Jobs whenever a ScaledJob is being updated. Then, it will recreate those Jobs with the latest specs. The order in which this termination happens can be configured via the rollout.propagationPolicy property. By default, the kubernetes background propagation is used. To change this behavior specify set propagationPolicy to `foreground`. For further information see [Kubernetes Documentation](https://kubernetes.io/docs/tasks/administer-cluster/use-cascading-deletion/#use-foreground-cascading-deletion).
 On the `gradual` rolloutStrategy, whenever a ScaledJob is being updated, KEDA will not delete existing Jobs. Only new Jobs will be created with the latest specs. 
 
 
