@@ -70,8 +70,9 @@ The scaler reports as **active** when either:
 - at least one non-retained message has arrived within the current window, **or**
 - a retained message has been seen on the topic within the current window.
 
-This means a topic that carries a persistent retained value keeps the workload running even
-when the live message rate drops to zero.
+A retained message can activate the scaler even when no live messages are arriving.
+It counts toward activation only for `windowSeconds` after the scaler receives it.
+A retained value stored on the broker does not keep the scaler active indefinitely.
 
 ### Example
 
