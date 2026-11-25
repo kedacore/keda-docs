@@ -9,8 +9,8 @@ go_file = "openstack_metrics_scaler"
 ### Trigger Specification
 
 This specification describes the `openstack-metric` trigger for OpenStack metrics.
-> The OpenStack metric API follows [Gnocchi](https://gnocchi.xyz/) API. Attempt to the fact that Gnocchi API is an open-source time series database embedded in OpenStack system and every parameter on OpenStack Metric API follows its patterns but you don't need to reference anything from Gnocchi. It scales based on a specific measure from a given resource metric.
-It's highly recommended to check [Gnocchi](https://gnocchi.xyz/) docs.
+> The OpenStack metric API follows [Gnocchi](https://gnocchi.osci.io/) API. Attempt to the fact that Gnocchi API is an open-source time series database embedded in OpenStack system and every parameter on OpenStack Metric API follows its patterns but you don't need to reference anything from Gnocchi. It scales based on a specific measure from a given resource metric.
+It's highly recommended to check [Gnocchi](https://gnocchi.osci.io/) docs.
 
 ```yaml
 triggers:
@@ -29,7 +29,7 @@ triggers:
 **Parameter list:**
 - `metricsURL` - The URL to check for the metrics API, based. It must contain the hostname, the metric port, the API version, and the resource ID. The pattern is: `http://<host>:<metric_port>/<openstack_metric_api_version>/<resource_id>/metric`.
 - `metricID` - The Id of the intended metric.
-- `aggregationMethod` - The aggregation method that will be used to calculate metrics, it must follows the configured possible metrics derived from gnocchi API like: `mean`, `min`, `max`, `std`, `sum`, `count`, the complete aggregation methods list can be found [here](https://gnocchi.xyz/rest.html#archive-policy).
+- `aggregationMethod` - The aggregation method that will be used to calculate metrics, it must follows the configured possible metrics derived from gnocchi API like: `mean`, `min`, `max`, `std`, `sum`, `count`, the complete aggregation methods list can be found [here](https://gnocchi.osci.io/rest.html#archive-policy).
 - `granularity` - The configured granularity from metric collection in seconds. it must follow the same value configured in OpenStack, but it must be counted in seconds. Sample: If you have a 5 minutes time window granularity defined, so you must input a value of 300 seconds (5*60).
 - `threshold` - The target value that, when reached, will scale the application.
 - `timeout` - The timeout, in seconds, for the HTTP client requests that will query the Metric API.  (Default: `30`, Optional)
