@@ -707,6 +707,10 @@ url = "https://www.wingie.com"
 logo = "wingie-enuygun.png"
 
 [[params.users]]
+url = "https://wordfully.ai"
+logo = "wordfully.png"
+
+[[params.users]]
 url = "https://www.workiva.com"
 logo = "workiva.png"
 
