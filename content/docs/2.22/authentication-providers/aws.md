@@ -20,6 +20,8 @@ podIdentity:
 
 > ⚠️ **NOTE:** `podIdentity.roleArn` and `podIdentity.identityOwner` are mutually exclusive, setting both is not supported.
 
+> ⚠️ **NOTE:** The [PostgreSQL scaler](./../scalers/postgresql.md) doesn't use the KEDA operator's role by default. Set `roleArn`, `identityOwner: workload`, or `identityOwner: keda` explicitly.
+
 ## How to use 
 
 AWS IRSA will give access to pods with service accounts having appropriate annotations. ([official docs](https://aws.amazon.com/es/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/)) You can set these annotations on the KEDA Operator service account.
