@@ -109,6 +109,16 @@ The total is an estimate of pending **transactions**, not an exact item count. A
 
 Reading the change feed is non-destructive: it does not change processor checkpoints or consume data.
 
+#### All-versions-and-deletes processors
+
+A .NET processor built with `GetChangeFeedProcessorBuilderWithAllVersionsAndDeletes` records `"Mode": "Full-Fidelity Feed"` in its leases. For those leases the scaler reads the all-versions-and-deletes change feed, so deletes and TTL expirations count as lag. No trigger configuration is needed.
+
+In this mode a lease without a checkpoint has no position to count from: the trigger reads it from the time of each read, and the processor from the time it started. Changes made before the processor started are never processed, and changes made before a trigger read are not counted. A processor that has never checkpointed therefore cannot be activated from zero by this trigger: keep `minReplicaCount` at `1` or more until every lease has a checkpoint.
+
+The all-versions-and-deletes feed keeps changes only for the account's continuous backup retention period (7 or 30 days). If a processor is stopped for longer than that while changes keep arriving, its checkpoint falls outside the window: the feed read fails and the trigger returns an error instead of a lag.
+
+Java processors in all-versions-and-deletes mode do not record the mode in their leases, so the scaler reads the latest-version feed for them and does not count deletes.
+
 #### Active-partition scaling cap
 
 The scaler counts only partitions with lag greater than zero as active. Before publishing the metric, it caps the total lag to:
