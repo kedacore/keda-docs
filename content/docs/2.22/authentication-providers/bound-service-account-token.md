@@ -48,6 +48,8 @@ For externally managed RBAC, the low-level `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES
 
 Minting entries also approve their audiences for Vault file tokens. They are not per-scaler or per-destination isolation; see the [global audience policy](../../operate/security/#approved-audiences-and-token-minting).
 
+[Cloud workload service account authentication](../../concepts/workload-service-accounts/) (`podIdentity.provider: gcp-workload-service-account`) does not use `serviceAccountTokenCreationRoles` or `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES`. It uses a separate, isolated configuration (`permissions.operator.restrict.cloudWorkloadIdentityTokenCreationRoles` and `KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES`) so cloud federation assertions cannot be minted or exported through generic `boundServiceAccountToken` or Vault authentication. Keep separate service accounts for generic BSAT and cloud workload identity federation.
+
 ## Receiver requirements
 
 Minting a token with a custom audience is only half of the configuration. The receiver must verify that audience.

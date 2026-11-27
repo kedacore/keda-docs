@@ -112,11 +112,12 @@ By utilizing Prometheus scaler, you can seamlessly integrate it with the GCP man
 
 See the following steps to configure the scaler integration.
 
-- Setup [GCP Workload Identity](./../authentication-providers/gcp-workload-identity) on KEDA operator;
-- Assign the [Monitoring Viewer](https://cloud.google.com/iam/docs/understanding-roles#monitoring.viewer) role (namely `roles/monitoring.viewer`) to the Google Service Account on Identity Access and Management (IAM).
+- Setup [GCP Workload Identity](./../authentication-providers/gcp-workload-identity) on KEDA operator (`provider: gcp`), or configure an administrator-approved Kubernetes service account with [`provider: gcp-workload-service-account`](../../authentication-providers/gcp-workload-identity/#select-a-workload-service-account) and `serviceAccountName`;
+- Assign the [Monitoring Viewer](https://cloud.google.com/iam/docs/understanding-roles#monitoring.viewer) role (namely `roles/monitoring.viewer`) to the Google Service Account (or federated principal) on Identity Access and Management (IAM).
 - No other auth (via `authModes`) should be provided other than GCP workload identity auth;
 - Prometheus server address should follow the Google's Monitoring API for [Prometheus HTTP API](https://cloud.google.com/stackdriver/docs/managed-prometheus/query#api-prometheus):
   - Example: `https://monitoring.googleapis.com/v1/projects/GOOGLE_PROJECT_ID/location/global/prometheus` - where `GOOGLE_PROJECT_ID` should be replaced by your Google project ID.
+- When using `provider: gcp-workload-service-account`, KEDA enforces additional endpoint security constraints: `serverAddress` must use `https://monitoring.googleapis.com` (with optional `:443`) and no query string or fragment, `unsafeSsl: "true"` is rejected, competing `authModes` or `awsRegion` settings are rejected, and HTTP redirects are restricted to the same origin.
 
 To gain a better understanding of creating a Prometheus trigger for Google Managed Prometheus, refer to [this example](#example-google-managed-prometheus).
 
