@@ -47,6 +47,24 @@ KEDA uses **Custom Resource Definitions (CRDs)** to manage scaling behavior:
 
 These CRDs give you control over scaling while keeping your apps secure and responsive to demand.
 
+### ScaledObject or ScaledJob?
+
+Both resources use KEDA scalers to watch event sources, with one exception: the CPU and memory scalers only work with a ScaledObject. The main difference is what KEDA scales, and what happens to work that is already running when demand drops.
+
+![ScaledObject scales long-running pods through the HPA, while ScaledJob creates Kubernetes Jobs for pending events](/img/scaledobject-vs-scaledjob.svg)
+
+|  | ScaledObject | ScaledJob |
+|---|---|---|
+| **What KEDA scales** | A Deployment, StatefulSet, or custom resource with a `/scale` subresource | Kubernetes Jobs, created from the `jobTargetRef` template |
+| **Who sets the count** | The KEDA operator scales to and from 0: it starts the workload when a trigger becomes active, and scales it back to 0 once the `cooldownPeriod` has passed. The HPA that KEDA manages handles everything above 0. Setting `minReplicaCount` above 0 turns off scaling to 0, unless you also set [`idleReplicaCount`](../reference/scaledobject-spec.md#idlereplicacount) to 0 | The KEDA operator creates new Jobs on each polling interval, based on pending events, the trigger's target value, and the `scalingStrategy`. No HPA is involved |
+| **How work is processed** | Replicas keep running, and each one pulls many events | Each Job pulls work from the event source itself, runs to completion, and exits. The trigger's target value only sets how many Jobs KEDA starts, for example one Job per message |
+| **Scale down** | The HPA removes replicas, and once the `cooldownPeriod` has passed, KEDA can scale straight down from any replica count. You can't control which pods are removed, so a pod can be stopped in the middle of an event | KEDA starts fewer new Jobs, and running Jobs finish their work. Updating a ScaledJob is different: by default it deletes running Jobs. Set [`rollout.strategy`](../reference/scaledjob-spec.md#rollout) to `gradual` to let them finish |
+| **Reference** | [ScaledObject specification](../reference/scaledobject-spec.md) | [ScaledJob specification](../reference/scaledjob-spec.md) |
+
+**Use a ScaledObject** when your app is a long-running consumer or service, events are quick to process, and you want to keep processing semantics such as in-order processing, retries, or checkpointing.
+
+**Use a ScaledJob** when each event is a long or heavy task, such as video encoding or a batch run, that should not be cut off when the workload scales down. If you'd rather keep a ScaledObject, you can delay pod termination instead. See [Long-running executions](./scaling-deployments.md#long-running-executions).
+
 ## Scaling Deployments, StatefulSets, and Custom Resources
 
 KEDA goes beyond CPU or memory-based scaling by connecting to external data sources like message queues, databases, or APIs. This means your apps scale in real-time based on actual workload needs.
