@@ -92,10 +92,11 @@ metadata:
   namespace: default # must be same namespace as the ScaledObject
 spec:
   podIdentity:
-      provider: none | azure-workload | aws | aws-eks | gcp  # Optional. Default: none
-      identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
-      roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
-      identityOwner: keda|workload                                        # Optional. Only used by aws provider.
+      provider: none | azure-workload | aws | aws-eks | gcp | gcp-workload-service-account # Optional. Default: none
+      serviceAccountName: <service-account-name>                                           # Required for gcp-workload-service-account; rejected by other providers.
+      identityId: <identity-id>                                                            # Optional. Used by azure, azure-workload, and gcp-workload-service-account (GCP IAM service-account email).
+      roleArn: <role-arn>                                                                  # Optional. Only used by aws provider.
+      identityOwner: keda|workload                                                         # Optional. Only used by aws provider.
   secretTargetRef:                                                        # Optional.
   - parameter: {scaledObject-parameter-name}                              # Required.
     name: {secret-name}                                                   # Required.
@@ -222,6 +223,8 @@ Each `TriggerAuthentication` is defined in one namespace and can only be used by
 ```
 
 By default, Secrets loaded from a `secretTargetRef` must be in the same namespace as KEDA is deployed in (usually `keda`). This can be overridden by setting a `KEDA_CLUSTER_OBJECT_NAMESPACE` environment variable for the `keda-operator` container.
+
+For `podIdentity.serviceAccountName`, the service account always belongs to the consuming `ScaledObject` or `ScaledJob` namespace, including with a `ClusterTriggerAuthentication`. Each namespace/account pair requires [administrator approval](../workload-service-accounts/#administrator-setup). `KEDA_CLUSTER_OBJECT_NAMESPACE` does not change that selection.
 
 Defining a `ClusterTriggerAuthentication` works almost identically to a `TriggerAuthentication`, except there is no `metadata.namespace` value:
 
@@ -392,11 +395,16 @@ Currently we support the following:
 
 ```yaml
 podIdentity:
-  provider: none | azure-workload | aws | aws-eks | gcp               # Optional. Default: none
-  identityId: <identity-id>                                           # Optional. Only used by azure & azure-workload providers.
-  roleArn: <role-arn>                                                 # Optional. Only used by aws provider.
-  identityOwner: keda|workload                                        # Optional. Only used by aws provider.
+  provider: none | azure-workload | aws | aws-eks | gcp | gcp-workload-service-account # Optional. Default: none
+  serviceAccountName: <service-account-name>                                           # Required for gcp-workload-service-account; rejected by other providers.
+  identityId: <identity-id>                                                            # Optional. Used by azure, azure-workload, and gcp-workload-service-account (GCP IAM service-account email).
+  roleArn: <role-arn>                                                                  # Optional. Only used by aws provider.
+  identityOwner: keda|workload                                                         # Optional. Only used by aws provider.
 ```
+
+Use `gcp-workload-service-account` to select an administrator-approved [workload service account](../workload-service-accounts/) for GCP federation. This provider requires `serviceAccountName` and is supported only in top-level `spec.podIdentity`, not the nested secret-provider `podIdentity` blocks. The existing `gcp`, `azure-workload`, `aws`, and `aws-eks` providers retain their behavior and reject `serviceAccountName`.
+
+Workload service account approvals are configured separately from Vault and generic `boundServiceAccountToken` mappings, and delegate the approved account's cloud identities to users who can configure scaling resources and authentication in that namespace. Review [delegation and credential handling](../workload-service-accounts/#delegation-and-credential-handling) before approving an account.
 
 #### Azure Workload Identity
 

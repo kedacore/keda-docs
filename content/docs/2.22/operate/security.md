@@ -10,6 +10,8 @@ KEDA 2.21 requires operator-configured audiences for Vault Kubernetes authentica
 
 The default `operator.serviceAccountTokens.mode: enforce-audience` applies even when no audience settings are supplied. The chart projects and approves a token with audience `vault` at `/var/run/secrets/keda-vault/token` by default; it does not create token-creation RBAC or named-service-account audience mappings. Missing approvals or minting mappings fail the affected authentication without an API-token fallback. Unrelated authentication methods, including Vault's ordinary token authentication, do not acquire a service-account audience requirement.
 
+[Cloud workload service account federation](../../concepts/workload-service-accounts/) (`podIdentity.provider: gcp-workload-service-account` with `podIdentity.serviceAccountName`) requires an exact namespace/service-account audience mapping in its own isolated configuration (`permissions.operator.restrict.cloudWorkloadIdentityTokenCreationRoles` / `KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES`) and scoped token-creation RBAC. It always requires `enforce-audience` mode (`legacy` is unsupported), sends Kubernetes assertions only to Google STS with redirects disabled, and is never shared with Vault or generic `boundServiceAccountToken`.
+
 See the [2.21 migration guide](../../migration/#service-account-token-audiences) before upgrading.
 
 ### Approved audiences and token minting
@@ -19,6 +21,7 @@ See the [2.21 migration guide](../../migration/#service-account-token-audiences)
 | Operator Pod's dedicated Vault projection | `hashiCorpVault.kubernetesAuth.audience` | Creates a projected token and approves its audience; does not configure named-SA minting |
 | Separately mounted token files | `operator.serviceAccountTokens.additionalAllowedAudiences` | Approves audiences only; creates no volumes or minting mappings |
 | Vault `credential.serviceAccountName` or generic `boundServiceAccountToken` | `permissions.operator.restrict.serviceAccountTokenCreationRoles[].audience` | Configures the audience for an exact namespace/service-account pair and creates scoped token-creation RBAC |
+| Cloud workload service account (`podIdentity.serviceAccountName`) | `permissions.operator.restrict.cloudWorkloadIdentityTokenCreationRoles` | Configures an isolated Google federation audience for an exact namespace/service-account pair and creates scoped token-creation RBAC (never shared with Vault or generic BSAT) |
 
 Prefer native chart values, for example (audience enforcement is the default):
 
@@ -67,6 +70,40 @@ Generic BSATs use the TA namespace, or the configured cluster-object namespace f
 
 A receiver that uses Kubernetes TokenReview must request its dedicated audience and check that the authenticated response includes it. Omitting `spec.audiences` asks about the API server's audience, not the dedicated service audience. The receiver uses its own API-valid credential to submit TokenReview and must retain its authorization checks. Changing only KEDA's minting configuration is insufficient. See the [BSAT provider guide](../../authentication-providers/bound-service-account-token/#receiver-requirements), including Datadog Cluster Agent compatibility.
 
+### Cloud workload identity audiences
+
+Cloud workload service account federation (`podIdentity.provider: gcp-workload-service-account`) is configured independently from Vault and generic `boundServiceAccountToken`. Prefer native chart values under `permissions.operator.restrict.cloudWorkloadIdentityTokenCreationRoles`:
+
+```yaml
+operator:
+  serviceAccountTokens:
+    mode: enforce-audience
+permissions:
+  operator:
+    restrict:
+      cloudWorkloadIdentityTokenCreationRoles:
+        - name: scaling-gcp
+          namespace: payments
+          audience: https://iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/kubernetes/providers/production-cluster
+```
+
+The chart creates a namespaced `Role` and `RoleBinding` granting `create` on `serviceaccounts/token` for each named service account and serializes the mappings into `KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES` (max 64 KiB). Each entry requires an exact DNS-valid namespace and service account name (no wildcards, no duplicate namespace/account pairs) and a valid Google IAM Workload Identity Pool provider or GKE `identitynamespace` audience.
+
+When managing RBAC externally instead, supply `KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES` directly via `env` (or `operator.env`) and leave `cloudWorkloadIdentityTokenCreationRoles` empty:
+
+```yaml
+env:
+  - name: KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES
+    value: |
+      - audience: https://iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/kubernetes/providers/production-cluster
+        namespace: payments
+        serviceAccountName: scaling-gcp
+```
+
+`KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES` cannot be combined with `cloudWorkloadIdentityTokenCreationRoles` or with `operator.serviceAccountTokens.mode: legacy`. Entries here do **not** approve audiences for Vault file tokens, Vault named-SA minting, or generic `boundServiceAccountToken` minting.
+
+Unlike generic BSAT (which uses `KEDA_CLUSTER_OBJECT_NAMESPACE` for a `ClusterTriggerAuthentication`), `podIdentity.serviceAccountName` always resolves in the referencing `ScaledObject` or `ScaledJob` namespace. **Approving an account delegates its cloud identities to namespace users who can configure scaling resources and their authentication.** Use dedicated service accounts separate from `serviceAccountTokenCreationRoles`, grant least-privilege cloud permissions, and review [delegation and credential handling](../../concepts/workload-service-accounts/#delegation-and-credential-handling) for rotation and revocation behavior.
+
 ### Runtime configuration
 
 The chart serializes approvals and minting mappings into `KEDA_SERVICE_ACCOUNT_TOKEN_AUDIENCES`. When managing this environment variable directly instead, clear the chart's default Vault audience and any other native audience settings:
@@ -93,7 +130,7 @@ Use this raw environment form when RBAC or volumes are managed separately. Remov
 
 The runtime accepts one YAML or JSON document; unknown fields and malformed configuration fail startup. The chart limits its generated value to 64 KiB. Changes require an operator rollout.
 
-`--service-account-token-mode` defaults to `enforce-audience`; `legacy` is the explicit insecure bypass for both Vault and BSAT. `--vault-kubernetes-auth-token-file` selects the implicit Vault file, defaulting to `/var/run/secrets/keda-vault/token`; it does not set minting audiences. Prefer native chart values for these options. See [temporary compatibility](../../migration/#temporary-legacy-compatibility) before using legacy mode.
+`--service-account-token-mode` defaults to `enforce-audience`; `legacy` is the explicit insecure bypass for Vault and generic BSAT and cannot be combined with configured audiences (including `KEDA_CLOUD_WORKLOAD_IDENTITY_AUDIENCES`) or workload service account providers. `--vault-kubernetes-auth-token-file` selects the implicit Vault file, defaulting to `/var/run/secrets/keda-vault/token`; it does not set minting audiences. Prefer native chart values for these options. See [temporary compatibility](../../migration/#temporary-legacy-compatibility) before using legacy mode.
 
 ## Restrict Vault destinations
 
